@@ -3,7 +3,8 @@ package main;
 import smp.MPWindow;
 
 /**
- * Super Mario Paint, aka. MPC3.0
+ * Super Mario Paint, aka. MPC3.0 or MPCv4.0 depending on
+ * how you view Advanced Mario Sequencer
  * Based on the old SNES game from 1992, Mario Paint
  * Inspired by:<br>
  * Robby Mulvany's Mario Paint Composer 1.0 / 2.0 <br>
