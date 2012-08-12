@@ -5,6 +5,11 @@ import javax.swing.JTextField;
 
 import java.awt.Color;
 
+/**
+ * 
+ * @author RehdBlob
+ * @since 2012.08.07
+ */
 public class MPWindow extends JFrame {
 	
 	/**
