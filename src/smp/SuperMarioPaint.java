@@ -17,10 +17,24 @@ import smp.components.MPWindow;
 public class SuperMarioPaint {
 
 	/**
-	 * Initializes the MPWindow.
+	 * Initializes an ImageLoader object and a 
+	 * SoundfontLoader as Threads. These will initialize
+	 * the necessary resources in memory such that they
+	 * will be much easier to access later on. Hopefully
+	 * most people have >30MB of RAM.
 	 * @param args As per a main class.
 	 */
 	public static void main(String[] args) {
+		Thread imgLd = new Thread(new ImageLoader());
+		Thread sfLd = new Thread(new SoundfontLoader());
+		imgLd.start();
+		sfLd.start();
+		while(imgLd.isAlive() || sfLd.isAlive())
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		MPWindow mp = new MPWindow();
 		mp.setVisible(true);
 	}

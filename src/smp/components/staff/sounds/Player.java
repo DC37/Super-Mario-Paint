@@ -7,6 +7,9 @@ import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 
 import smp.components.staff.Note;
+import smp.stateMachine.State;
+import smp.stateMachine.StateMachine;
+
 import com.sun.media.sound.*;
 
 /**
@@ -33,6 +36,7 @@ public class Player {
 		try {
 			Sequencer sq = MidiSystem.getSequencer();
 			sq.setSequence(s);
+			StateMachine.setState(State.SONG_PLAYING);
 			sq.start();
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
@@ -41,7 +45,25 @@ public class Player {
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}
-		
+	}
+	
+	/**
+	 * Plays a Super Mario Paint song.
+	 * @param s A sequence of events to be played on the staff.
+	 */
+	public void playArr(Sequence s) {
+		try {
+			Sequencer sq = MidiSystem.getSequencer();
+			sq.setSequence(s);
+			StateMachine.setState(State.ARR_PLAYING);
+			sq.start();
+		} catch (MidiUnavailableException e) {
+			e.printStackTrace();
+		} catch (InvalidMidiDataException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

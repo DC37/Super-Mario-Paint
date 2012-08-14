@@ -1,8 +1,8 @@
 package smp.components.general;
 
-import java.awt.Panel;
+import javax.swing.JPanel;
 
-public abstract class ImagePanel extends Panel {
+public abstract class ImagePanel extends JPanel {
 
 	/**
 	 * Generated serial ID.

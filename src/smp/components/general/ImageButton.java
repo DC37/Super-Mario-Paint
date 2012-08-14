@@ -1,7 +1,8 @@
 package smp.components.general;
 
-import java.io.File;
-import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.JPanel;
 
 /**
  * A button that is actually a displayed image.
@@ -10,15 +11,26 @@ import java.awt.Component;
  * @author RehdBlob
  * @since 2012.08.14
  */
-public abstract class ImageButton extends Component {
+public abstract class ImageButton extends JPanel {
+	
+	protected Image image;
+	protected int x, y;
 	
 	/**
 	 * Generated serial ID.
 	 */
 	private static final long serialVersionUID = -6399800186540401167L;
-
-	public abstract void display(File f);
 	
+	public ImageButton(Image i, int xVal, int yVal) {
+		image = i;
+		x = xVal;
+		y = yVal;
+	}
 	
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(image, x, y, null);
+	}
 	
 }

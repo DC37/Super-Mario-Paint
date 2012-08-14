@@ -1,8 +1,6 @@
 package smp.components;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
-
 import static smp.components.Constants.*;
 import smp.components.bottomPanel.BottomPanel;
 import smp.components.controls.Controls;
@@ -18,12 +16,11 @@ import java.awt.Color;
  */
 public class MPWindow extends JFrame {
 	
+	
 	/**
-	 * Default serial version id.
+	 * Generated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
-	
-	
+	private static final long serialVersionUID = -8618539640178025658L;
 	private InstrumentPanel panel;
 	private Staff staff;
 	private BottomPanel bPanel;
