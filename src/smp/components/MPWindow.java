@@ -1,7 +1,12 @@
-package smp;
+package smp.components;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import smp.components.bottomPanel.BottomPanel;
+import smp.components.controls.Controls;
+import smp.components.instrumentLine.InstrumentPanel;
+import smp.components.staff.Staff;
 
 import java.awt.Color;
 
@@ -17,7 +22,11 @@ public class MPWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JTextField nameEntry;
+	private InstrumentPanel panel;
+	private Staff staff;
+	private BottomPanel bPanel;
+	private Controls controls;
+	
 	
 	/**
 	 * Sets the background of the window to Color.GRAY,
