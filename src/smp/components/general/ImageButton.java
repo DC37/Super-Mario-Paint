@@ -1,5 +1,7 @@
-package smp.components.controls;
+package smp.components.general;
 
+import java.io.File;
+import java.awt.image.BufferedImage;
 import java.awt.Button;
 
 /**
@@ -16,7 +18,7 @@ public abstract class ImageButton extends Button {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public abstract void display();
+	public abstract void display(File f);
 	
 	
 }

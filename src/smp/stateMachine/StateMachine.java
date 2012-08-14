@@ -14,6 +14,16 @@ public class StateMachine {
 	 */
 	private static State state = State.EDITING;
 	
+	/**
+	 * Do not make an instance of this class! The implementation is such
+	 * that several classes may check the overall state of the program, 
+	 * so there should only ever be just the class and its static variables
+	 * and methods around.
+	 * @deprecated
+	 */
+	private StateMachine(){
+	}
+	
 	public static State getState() {
 		return state;
 	}
