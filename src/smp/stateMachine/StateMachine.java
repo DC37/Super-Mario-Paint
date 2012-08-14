@@ -8,17 +8,18 @@ package smp.stateMachine;
  */
 public class StateMachine {
 
-	private int state = State.EDITING;
+	/**
+	 * The default state that the program is in is the 
+	 * EDITING state, in which notes are being placed on the staff.
+	 */
+	private static State state = State.EDITING;
 	
-	
-	public int getState() {
+	public static State getState() {
 		return state;
 	}
 	
-	public void setState(int s) throws InvalidStateException {
-		if (State.isValid(s))
-			state = s;
-		else
-			throw new InvalidStateException();
+	public static void setState(State s) {
+		state = s;
 	}
+	
 }

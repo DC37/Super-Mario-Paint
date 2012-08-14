@@ -2,6 +2,11 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
+import javax.sound.midi.MidiEvent;
+
+import smp.components.staff.sounds.Player;
+
+
 /**
  * The staff on which notes go.
  * @author RehdBlob
@@ -9,6 +14,8 @@ import java.util.ArrayList;
  */
 public class Staff {
 	
-	private ArrayList<NoteLine> noteList = new ArrayList<NoteLine>();
+	private Player musicPlayer;
+	private ArrayList<MidiEvent> events = new ArrayList<MidiEvent>();
+	
 
 }

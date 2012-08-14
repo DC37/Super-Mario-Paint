@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import smp.components.staff.sounds.Player;
+
 
 /**
  * This is a panel that holds instruments, to be placed
@@ -18,5 +20,6 @@ public class InstrumentPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private Player soundPlayer;
 
 }
