@@ -8,11 +8,11 @@ import javax.swing.JPanel;
 import smp.stateMachine.State;
 
 public class Controls extends JPanel {
-
+	
 	/**
-	 * Default serial ID.
+	 * Genereated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7128020032635313050L;
 	
 	private PlayButton play;
 	private StopButton stop;

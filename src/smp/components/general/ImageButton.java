@@ -1,8 +1,7 @@
 package smp.components.general;
 
 import java.io.File;
-import java.awt.image.BufferedImage;
-import java.awt.Button;
+import java.awt.Component;
 
 /**
  * A button that is actually a displayed image.
@@ -11,14 +10,15 @@ import java.awt.Button;
  * @author RehdBlob
  * @since 2012.08.14
  */
-public abstract class ImageButton extends Button {
-
+public abstract class ImageButton extends Component {
+	
 	/**
-	 * Default serial ID.
+	 * Generated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6399800186540401167L;
 
 	public abstract void display(File f);
+	
 	
 	
 }

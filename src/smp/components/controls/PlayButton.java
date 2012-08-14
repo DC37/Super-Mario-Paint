@@ -7,9 +7,9 @@ public class PlayButton extends ImageButton {
 
 
 	/**
-	 * Default serial ID.
+	 * Generated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5719468280926472887L;
 
 	@Override
 	public void display(File f) {

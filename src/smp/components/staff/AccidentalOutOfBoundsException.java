@@ -9,8 +9,9 @@ package smp.components.staff;
 public class AccidentalOutOfBoundsException extends Exception {
 
 	/**
-	 * Default serial ID.
+	 * Generated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7341269941433906507L;
+
 
 }

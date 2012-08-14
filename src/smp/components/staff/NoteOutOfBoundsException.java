@@ -10,8 +10,9 @@ package smp.components.staff;
 public class NoteOutOfBoundsException extends Exception {
 
 	/**
-	 * Default serial ID.
+	 * Generated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2497135573737999619L;
+
 
 }

@@ -3,6 +3,7 @@ package smp.components;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import static smp.components.Constants.*;
 import smp.components.bottomPanel.BottomPanel;
 import smp.components.controls.Controls;
 import smp.components.instrumentLine.InstrumentPanel;
@@ -22,6 +23,7 @@ public class MPWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	private InstrumentPanel panel;
 	private Staff staff;
 	private BottomPanel bPanel;
@@ -35,11 +37,16 @@ public class MPWindow extends JFrame {
 	 */
 	public MPWindow() {
 		super("Super Mario Paint v1.00");
-		setSize(800, 630);
+		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);
 		getContentPane().setBackground(Color.GRAY);
-		
+		/*
+		this.add(panel);
+		this.add(staff);
+		this.add(controls);
+		this.add(bPanel);
+		*/
 		
 		/* I'll change this eventually. */
 		setResizable(false);
