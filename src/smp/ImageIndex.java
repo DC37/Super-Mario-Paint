@@ -17,6 +17,6 @@ public enum ImageIndex {
 	
 	STAFF_BG, STAFF_LINE, STAFF_MLINE,
 	
-	ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO;
+	INST_LINE;
 	
 }

@@ -38,7 +38,7 @@ public class MPWindow extends JFrame {
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);
-		getContentPane().setBackground(Color.GRAY);
+		getContentPane().setBackground(new Color(192, 192, 192));
 		/*
 		this.add(panel);
 		this.add(staff);

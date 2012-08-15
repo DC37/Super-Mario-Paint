@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Hashtable;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 /**
@@ -15,24 +16,27 @@ import javax.imageio.ImageIO;
  * @since 2012.08.14
  */
 public class ImageLoader implements Runnable {
-
-	private static final int NUM_SPRITES = 0;
 	
 	private static Hashtable<ImageIndex, BufferedImage> sprites;
 	private String extension = ".bmp";
+	private String path = "./sprites/";
 	
 	public ImageLoader() {
 		sprites = new Hashtable<ImageIndex, BufferedImage>();
 	}
 
+	/**
+	 * Loads all of the image files that will be used in drawing
+	 * the main window and all of the buttons of Super Mario Paint.
+	 */
 	@Override
 	public void run() {
 		File f;
 		try {
 			ImageIndex [] ind = ImageIndex.values();
-			for (int i = 0; i < NUM_SPRITES; i++) {
-				f = new File("SPR_" + i + extension);
-				sprites.put(ind[i], ImageIO.read(f));
+			for (ImageIndex i : ind) {
+				f = new File(path + i.toString() + extension);
+				sprites.put(i, ImageIO.read(f));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -47,7 +51,7 @@ public class ImageLoader implements Runnable {
 	 * @return A BufferedImage based on the image request.
 	 */
 	public static BufferedImage getSprite(ImageIndex index) 
-			throws IndexOutOfBoundsException {
+	        throws NullPointerException {
 		return sprites.get(index);
 	}
 	
