@@ -3,6 +3,7 @@ package smp;
 import java.awt.BorderLayout;
 
 import smp.components.MPWindow;
+import smp.components.instrumentLine.InstrumentPanel;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffFrame;
 
@@ -51,9 +52,11 @@ public class SuperMarioPaint {
 	 */
 	public static void testThings() {
 		StaffFrame x = new StaffFrame(0, 0);
-		Staff y = new Staff(0, 0);
-		mp.add(x, BorderLayout.NORTH);
-		x.add(y, BorderLayout.NORTH);
+		Staff y = new Staff(4, 4);
+		InstrumentPanel z = new InstrumentPanel(0, 0);
+		//mp.add(x, BorderLayout.CENTER);
+		//x.add(y, BorderLayout.CENTER);
+		mp.add(z, BorderLayout.CENTER);
 	}
 
 }

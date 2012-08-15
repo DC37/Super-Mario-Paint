@@ -14,6 +14,7 @@ public class StaffFrame extends ImagePanel {
 	public StaffFrame(int x, int y) {
 		super(x, y);
 		background = ImageLoader.getSprite(ImageIndex.STAFF_FRAME);
+		this.setOpaque(false);
 	}
 	
 

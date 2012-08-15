@@ -1,9 +1,10 @@
 package smp.components.general;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 /**
  * An image panel, to be used as a background-type object.
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
  * @since 2012.08.14
  * @see ImageButton
  */
-public abstract class ImagePanel extends JPanel {
+public abstract class ImagePanel extends JComponent {
 
 	/**
 	 * Generated serial ID.
@@ -27,6 +28,7 @@ public abstract class ImagePanel extends JPanel {
 	public ImagePanel(int x, int y) {
 		super();
 		loc = new Coordinates(x, y);
+		setLayout(new BorderLayout());
 	}
 
 	@Override
@@ -36,7 +38,6 @@ public abstract class ImagePanel extends JPanel {
 		int height = background.getHeight();
 		int width = background.getWidth();
 		setSize(width, height);
-		paintChildren(g);
 	}
 	
 }

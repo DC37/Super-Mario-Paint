@@ -7,6 +7,6 @@ package smp.components;
  * @since 2012.08.14
  */
 public class Constants {
-	public static final int DEFAULT_WIDTH = 800;
-	public static final int DEFAULT_HEIGHT = 630;
+	public static final int DEFAULT_WIDTH = 805;
+	public static final int DEFAULT_HEIGHT = 635;
 }

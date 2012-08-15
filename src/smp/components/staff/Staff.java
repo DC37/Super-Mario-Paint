@@ -33,6 +33,7 @@ public class Staff extends ImagePanel {
 	public Staff(int x, int y) {
 		super(x, y);
 		background = ImageLoader.getSprite(ImageIndex.STAFF_BG);
+		setOpaque(false);
 	}
 	
 

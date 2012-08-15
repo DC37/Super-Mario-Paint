@@ -13,17 +13,18 @@ import smp.components.staff.sounds.Player;
  * @since 2012.08.13
  */
 public class InstrumentPanel extends ImagePanel {
-
+	
 	/**
-	 * Default serial ID
+	 * Generated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1917709647981152606L;
 	
 	private Player soundPlayer;
 	
 	public InstrumentPanel(int x, int y) {
 		super(x, y);
 		background = ImageLoader.getSprite(ImageIndex.INST_LINE);
+		setOpaque(false);
 	}
 
 }

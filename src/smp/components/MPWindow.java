@@ -1,14 +1,17 @@
 package smp.components;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import static smp.components.Constants.*;
 import smp.components.bottomPanel.BottomPanel;
 import smp.components.controls.Controls;
 import smp.components.instrumentLine.InstrumentPanel;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 
 /**
  * 
@@ -24,6 +27,7 @@ public class MPWindow extends JFrame {
 	private static final long serialVersionUID = -8618539640178025658L;
 	
 	private InstrumentPanel panel;
+	private StaffFrame staffFrame;
 	private Staff staff;
 	private BottomPanel bPanel;
 	private Controls controls;
@@ -41,6 +45,7 @@ public class MPWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);
 		getContentPane().setBackground(new Color(192, 192, 192));
+		
 		/*
 		this.add(panel);
 		this.add(staff);
@@ -49,8 +54,6 @@ public class MPWindow extends JFrame {
 		*/
 		
 		/* I'll change this eventually. */
-		setResizable(false);
+		setResizable(true);
 	}
-	
-	
 }
