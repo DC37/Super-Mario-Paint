@@ -1,7 +1,12 @@
 package smp;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Hashtable;
+
+import javax.imageio.ImageIO;
 
 /**
  * A class that loads all the necessary images for the 
@@ -11,24 +16,29 @@ import java.util.ArrayList;
  */
 public class ImageLoader implements Runnable {
 
-	private ArrayList<BufferedImage> sprites = new ArrayList<BufferedImage>();
-	private boolean isReady;
+	private static final int NUM_SPRITES = 0;
+	
+	private static Hashtable<ImageIndex, BufferedImage> sprites;
+	private String extension = ".bmp";
 	
 	public ImageLoader() {
-		isReady = false;
-	}
-
-	public ArrayList<BufferedImage> getSprites() {
-		return sprites;
-	}
-
-	public void setSprites(ArrayList<BufferedImage> sp) {
-		sprites = sp;
+		sprites = new Hashtable<ImageIndex, BufferedImage>();
 	}
 
 	@Override
 	public void run() {
-		isReady = true;
+		File f;
+		try {
+			ImageIndex [] ind = ImageIndex.values();
+			for (int i = 0; i < NUM_SPRITES; i++) {
+				f = new File("SPR_" + i + extension);
+				sprites.put(ind[i], ImageIO.read(f));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -36,8 +46,9 @@ public class ImageLoader implements Runnable {
 	 * @param index The index at which to access an image
 	 * @return A BufferedImage based on the image request.
 	 */
-	public static BufferedImage getImage(int index) {
-		return null;
+	public static BufferedImage getSprite(ImageIndex index) 
+			throws IndexOutOfBoundsException {
+		return sprites.get(index);
 	}
 	
 }

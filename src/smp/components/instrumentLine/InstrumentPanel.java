@@ -1,7 +1,5 @@
 package smp.components.instrumentLine;
 
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
 
 import smp.components.staff.sounds.Player;

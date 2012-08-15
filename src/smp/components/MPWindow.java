@@ -21,6 +21,7 @@ public class MPWindow extends JFrame {
 	 * Generated serial ID.
 	 */
 	private static final long serialVersionUID = -8618539640178025658L;
+	
 	private InstrumentPanel panel;
 	private Staff staff;
 	private BottomPanel bPanel;

@@ -24,11 +24,11 @@ public class StateMachine {
 	private StateMachine(){
 	}
 	
-	public static State getState() {
+	public static synchronized State getState() {
 		return state;
 	}
 	
-	public static void setState(State s) {
+	public static synchronized void setState(State s) {
 		state = s;
 	}
 	
