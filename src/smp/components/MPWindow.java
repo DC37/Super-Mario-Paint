@@ -7,6 +7,7 @@ import smp.components.controls.Controls;
 import smp.components.instrumentLine.InstrumentPanel;
 import smp.components.staff.Staff;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 /**
@@ -35,6 +36,7 @@ public class MPWindow extends JFrame {
 	 */
 	public MPWindow() {
 		super("Super Mario Paint v1.00");
+		setLayout(new BorderLayout());
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);

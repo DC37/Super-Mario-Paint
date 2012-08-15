@@ -1,7 +1,8 @@
 package smp.components.instrumentLine;
 
-import javax.swing.JPanel;
-
+import smp.ImageIndex;
+import smp.ImageLoader;
+import smp.components.general.ImagePanel;
 import smp.components.staff.sounds.Player;
 
 
@@ -11,7 +12,7 @@ import smp.components.staff.sounds.Player;
  * @author RehdBlob
  * @since 2012.08.13
  */
-public class InstrumentPanel extends JPanel {
+public class InstrumentPanel extends ImagePanel {
 
 	/**
 	 * Default serial ID
@@ -19,5 +20,10 @@ public class InstrumentPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private Player soundPlayer;
+	
+	public InstrumentPanel(int x, int y) {
+		super(x, y);
+		background = ImageLoader.getSprite(ImageIndex.INST_LINE);
+	}
 
 }

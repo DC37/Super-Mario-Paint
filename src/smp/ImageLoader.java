@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 /**

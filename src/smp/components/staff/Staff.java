@@ -1,15 +1,12 @@
 package smp.components.staff;
 
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.sound.midi.MidiEvent;
-import javax.swing.JPanel;
-
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.staff.sounds.Player;
+import smp.components.general.ImagePanel;
 
 
 /**
@@ -17,9 +14,7 @@ import smp.components.staff.sounds.Player;
  * @author RehdBlob
  * @since 2012.08.13
  */
-public class Staff extends JPanel {
-	
-	private BufferedImage background;
+public class Staff extends ImagePanel {
 	
 	/**
 	 * Generated serial ID.
@@ -29,14 +24,15 @@ public class Staff extends JPanel {
 	private Player musicPlayer;
 	private ArrayList<MidiEvent> events = new ArrayList<MidiEvent>();
 	
-	public Staff() {
+	/**
+	 * Creates a new Staff object and gives it the x and y coordinates
+	 * as specified by the user.
+	 * @param x The x-location that the staff is to be placed at.
+	 * @param y The y-location that the staff is to be placed at.
+	 */
+	public Staff(int x, int y) {
+		super(x, y);
 		background = ImageLoader.getSprite(ImageIndex.STAFF_BG);
-	}
-	
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(background, 0, 0, null);
 	}
 	
 

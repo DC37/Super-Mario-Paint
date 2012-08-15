@@ -10,7 +10,7 @@ import smp.stateMachine.State;
 public class Controls extends JPanel {
 	
 	/**
-	 * Genereated serial ID.
+	 * Generated serial ID.
 	 */
 	private static final long serialVersionUID = -7128020032635313050L;
 	

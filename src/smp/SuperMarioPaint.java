@@ -1,7 +1,10 @@
 package smp;
 
+import java.awt.BorderLayout;
+
 import smp.components.MPWindow;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffFrame;
 
 /**
  * Super Mario Paint
@@ -47,7 +50,10 @@ public class SuperMarioPaint {
 	 * Debug method for GUI.
 	 */
 	public static void testThings() {
-		mp.add(new Staff());
+		StaffFrame x = new StaffFrame(0, 0);
+		Staff y = new Staff(0, 0);
+		mp.add(x, BorderLayout.NORTH);
+		x.add(y, BorderLayout.NORTH);
 	}
 
 }

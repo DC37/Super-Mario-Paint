@@ -9,8 +9,9 @@ package smp.stateMachine;
 public class InvalidStateException extends Exception {
 
 	/**
-	 * Default serial ID.
+	 * Generated serial ID.
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1177091373502333725L;
+
 
 }
