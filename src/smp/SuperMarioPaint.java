@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import javafx.*;
+import javafx.application.Application;
 
 import smp.components.MPWindow;
 import smp.components.controls.PlayButton;
@@ -27,6 +27,7 @@ import smp.components.staff.StaffFrame;
  * @author RehdBlob
  * @version 1.00
  */
+@SuppressWarnings("unused")
 public class SuperMarioPaint {
 
 	static MPWindow mp;
