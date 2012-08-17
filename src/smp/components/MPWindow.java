@@ -46,6 +46,12 @@ public class MPWindow extends JFrame {
 		setFocusable(true);
 		getContentPane().setBackground(new Color(192, 192, 192));
 		
+		
+		/* I'll change this eventually. */
+		setResizable(true);
+	}
+	
+	public void addThings() {
 		/*
 		this.add(panel);
 		this.add(staff);
@@ -53,7 +59,5 @@ public class MPWindow extends JFrame {
 		this.add(bPanel);
 		*/
 		
-		/* I'll change this eventually. */
-		setResizable(true);
 	}
 }

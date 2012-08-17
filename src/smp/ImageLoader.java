@@ -42,23 +42,33 @@ public class ImageLoader implements Runnable {
 	/**
 	 * Loads all of the image files that will be used in drawing
 	 * the main window and all of the buttons of Super Mario Paint.
+	 * There will be a future implementation of a splash screen while this
+	 * all takes place.
 	 */
 	@Override
 	public void run() {
 		File f;
 		try {
+			//boolean splashStarted = false;
 			ImageIndex [] ind = ImageIndex.values();
 			for (ImageIndex i : ind) {
 				f = new File(path + i.toString() + extension);
 				BufferedImage temp = ImageIO.read(f);
+				/*if (!splashStarted && i.ordinal() > ImageIndex.SHARP.ordinal()) {
+					Thread splashScreen = new Thread(new SplashScreen());
+					splashScreen.start();
+					splashScreen.setDaemon(true);
+					splashStarted = true;
+				}*/
 				temp = makeColorTransparent(temp, background);
 				sprites.put(i, temp);
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
+			// If the images fail to load, don't start the program!
+			// this.showFailedDialog();
 			e.printStackTrace();
-		}
+			System.exit(0);
+		} 
 	}
 	
 	/**

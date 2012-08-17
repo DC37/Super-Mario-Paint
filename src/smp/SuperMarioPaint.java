@@ -1,8 +1,14 @@
 package smp;
 
 import java.awt.BorderLayout;
+import java.io.FileNotFoundException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import smp.components.MPWindow;
+import smp.components.controls.PlayButton;
 import smp.components.instrumentLine.InstrumentPanel;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffFrame;
@@ -51,12 +57,22 @@ public class SuperMarioPaint {
 	 * Debug method for GUI.
 	 */
 	public static void testThings() {
-		StaffFrame x = new StaffFrame(0, 0);
-		Staff y = new Staff(4, 4);
+		StaffFrame x = new StaffFrame();
+		Staff y = new Staff();
 		InstrumentPanel z = new InstrumentPanel(0, 0);
-		//mp.add(x, BorderLayout.CENTER);
+		x.add(y, BorderLayout.CENTER);
+		mp.add(z, BorderLayout.NORTH);
+		mp.add(x, BorderLayout.CENTER);
+        mp.add(new PlayButton(), BorderLayout.SOUTH);
+		//mp.add(new JButton("test"), BorderLayout.NORTH);
+        //x.add(new JButton("Test"), BorderLayout.CENTER);
+		/*mp.add(new JButton("Test"), BorderLayout.CENTER);
+		mp.add(new JButton("TestSouth"), BorderLayout.SOUTH);
+		mp.add(new JButton("TestEast"), BorderLayout.EAST);*/
 		//x.add(y, BorderLayout.CENTER);
-		mp.add(z, BorderLayout.CENTER);
+		//a.add(z, BorderLayout.SOUTH);
+		//ImageIcon i = new ImageIcon(ImageLoader.getSprite(ImageIndex.STAFF_BG));
+		//mp.add(new JButton(i), BorderLayout.NORTH);
 	}
 
 }

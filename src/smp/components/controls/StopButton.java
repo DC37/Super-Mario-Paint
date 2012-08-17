@@ -1,5 +1,6 @@
 package smp.components.controls;
 
+import smp.ImageIndex;
 import smp.components.general.ImageButton;
 
 public class StopButton extends ImageButton {
@@ -9,7 +10,7 @@ public class StopButton extends ImageButton {
 	 */
 	private static final long serialVersionUID = 1199248578383281876L;
 
-	public StopButton(int x, int y) {
-		super(x, y);
+	public StopButton() {
+		super(ImageIndex.STOP_PRESSED);
 	}
 }

@@ -1,12 +1,13 @@
 package smp.components.staff;
 
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.sound.midi.MidiEvent;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.staff.sounds.Player;
-import smp.components.general.ImagePanel;
+import smp.components.general.ImageButton;
 
 
 /**
@@ -14,14 +15,13 @@ import smp.components.general.ImagePanel;
  * @author RehdBlob
  * @since 2012.08.13
  */
-public class Staff extends ImagePanel {
+public class Staff extends ImageButton {
 	
 	/**
 	 * Generated serial ID.
 	 */
 	private static final long serialVersionUID = 5368970028913902003L;
 	
-	private Player musicPlayer;
 	private ArrayList<MidiEvent> events = new ArrayList<MidiEvent>();
 	
 	/**
@@ -30,10 +30,8 @@ public class Staff extends ImagePanel {
 	 * @param x The x-location that the staff is to be placed at.
 	 * @param y The y-location that the staff is to be placed at.
 	 */
-	public Staff(int x, int y) {
-		super(x, y);
-		background = ImageLoader.getSprite(ImageIndex.STAFF_BG);
-		setOpaque(false);
+	public Staff() {
+		super(ImageIndex.STAFF_BG);
 	}
 	
 

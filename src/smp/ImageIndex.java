@@ -9,13 +9,43 @@ package smp;
  */
 public enum ImageIndex {
 
+	//SPLASHSCREEN,
+	
+	/*
+	 * Instruments.
+	 */
 	MARIO, MUSHROOM, YOSHI, STAR, FLOWER, GAMEBOY, DOG, CAT, PIG, SWAN,
-	FACE, PLANE, BOAT, CAR, HEART, PIRANHA, COIN, SHYGUY, BOO,
+	FACE, PLANE, BOAT, CAR, HEART, PIRANHA, COIN, SHYGUY, BOO, LUIGI,
+	
 	SHARP, FLAT,
 	
+	/*
+	 * Clefs.
+	 */
 	TREBLE_CLEF, BASS_CLEF,
 	
+	/*
+	 * Staff elements
+	 */
 	STAFF_FRAME, STAFF_BG, STAFF_LINE, STAFF_MLINE,
+	PLAY_BAR1,
+	
+	/*
+	 * Controls elements
+	 */
+	CONTROLS_LEFT, CONTROLS_MID, CONTROLS_RIGHT,
+	
+	/*
+	 * Button elements
+	 */
+	STOP_PRESSED, STOP_RELEASED, STOP_LABEL,
+	PLAY_PRESSED, PLAY_RELEASED, PLAY_LABEL,
+	LOOP_PRESSED, LOOP_RELEASED, LOOP_LABEL,
+	
+	/*
+	 * Tempo stuff.
+	 */
+	TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL,
 	
 	INST_LINE;
 	
