@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import javafx.*;
+
 import smp.components.MPWindow;
 import smp.components.controls.PlayButton;
 import smp.components.instrumentLine.InstrumentPanel;
@@ -60,6 +62,7 @@ public class SuperMarioPaint {
 		StaffFrame x = new StaffFrame();
 		Staff y = new Staff();
 		InstrumentPanel z = new InstrumentPanel(0, 0);
+		x.setBackground(null);
 		x.add(y, BorderLayout.CENTER);
 		mp.add(z, BorderLayout.NORTH);
 		mp.add(x, BorderLayout.CENTER);

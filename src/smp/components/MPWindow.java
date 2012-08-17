@@ -40,9 +40,9 @@ public class MPWindow extends JFrame {
 	 */
 	public MPWindow() {
 		super("Super Mario Paint v1.00");
-		setLayout(new BorderLayout());
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		setFocusable(true);
 		getContentPane().setBackground(new Color(192, 192, 192));
 		
@@ -52,12 +52,12 @@ public class MPWindow extends JFrame {
 	}
 	
 	public void addThings() {
-		/*
-		this.add(panel);
-		this.add(staff);
-		this.add(controls);
-		this.add(bPanel);
-		*/
+		staffFrame = new StaffFrame();
+		staff = new Staff();
+		staffFrame.add(staff);
+		this.add(staffFrame);
+		//this.add(controls);
+		//this.add(bPanel);
 		
 	}
 }
