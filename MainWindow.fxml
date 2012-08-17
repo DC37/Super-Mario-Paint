@@ -12,6 +12,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml">
   <children>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
     <BorderPane id="MainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
       <bottom>
         <Pane id="BottomPane" blendMode="SRC_OVER" prefHeight="56.0" prefWidth="798.0">
