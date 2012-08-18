@@ -42,7 +42,7 @@ public class MPWindow extends JFrame {
 		super("Super Mario Paint v1.00");
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		setLayout(new BorderLayout());
 		setFocusable(true);
 		getContentPane().setBackground(new Color(192, 192, 192));
 		

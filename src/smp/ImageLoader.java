@@ -10,7 +10,6 @@ import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Hashtable;
 
@@ -24,6 +23,9 @@ import javax.imageio.ImageIO;
  */
 public class ImageLoader implements Runnable {
 	
+	/**
+	 * Contains references to all the loaded sprites.
+	 */
 	private static Hashtable<ImageIndex, BufferedImage> sprites;
 	
 	private static final int R = 255;
