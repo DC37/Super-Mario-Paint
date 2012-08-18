@@ -100,7 +100,7 @@ public class SuperMarioPaintFX extends Application {
 				(Parent) FXMLLoader.load(new File(mainFxml).toURI().toURL());
 			primaryStage.setTitle("Super Mario Paint");
 			dummyPreloader.updateStatus(60.0);
-			primaryStage.setResizable(false);
+			primaryStage.setResizable(true);
 			primaryStage.setScene(new Scene(root, 800, 600));
 			dummyPreloader.updateStatus(100);
 			primaryStage.show();

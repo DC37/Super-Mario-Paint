@@ -71,13 +71,13 @@ public class SMPFXController implements Initializable {
 	 * by the FXMLLoader class.
 	 * @param resources A ResourceBundle.
 	 */
+	@Override
 	public void initialize(URL fileLocation, ResourceBundle resources) {
 
 	}
 	
 	public static void check() {
-		System.out.println(topBoxTop);
-		System.out.println(instLine);
+		
 	}
 	
 
