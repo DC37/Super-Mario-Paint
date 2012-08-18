@@ -10,9 +10,8 @@
 <?import javafx.scene.shape.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="smp.fx.SMPFXController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml">
   <children>
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
     <BorderPane id="MainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
       <bottom>
         <Pane id="BottomPane" blendMode="SRC_OVER" prefHeight="56.0" prefWidth="798.0">
@@ -59,14 +58,14 @@
                     <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="123.0" layoutX="3.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
                     <StackPane id="ControlsStack" layoutX="14.0" layoutY="7.0">
                       <children>
-                        <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">
+                        <HBox id="ControlsHolder" prefHeight="100.0" prefWidth="763.0">
                           <children>
                             <ImageView id="ConrolsLeft" fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                 <Image url="@sprites/CONTROLS_LEFT.png" preserveRatio="false" smooth="false" />
                               </image>
                             </ImageView>
-                            <ImageView id="ControlsMid" fitHeight="80.0" fitWidth="738.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                            <ImageView id="ControlsMid" fitHeight="80.0" fitWidth="216.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
                               <image>
                                 <Image url="@sprites/CONTROLS_MID.png" preserveRatio="false" smooth="false" />
                               </image>
@@ -79,15 +78,26 @@
                                 <Image url="@sprites/CONTROLS_RIGHT.png" preserveRatio="false" smooth="false" />
                               </image>
                             </ImageView>
+                            <ListView prefHeight="100.0" prefWidth="315.0" />
+                            <ImageView id="ConrolsLeft" fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image url="@sprites/CONTROLS_LEFT.png" preserveRatio="false" smooth="false" />
+                              </image>
+                            </ImageView>
+                            <ImageView id="ControlsMid" fitHeight="80.0" fitWidth="153.0" pickOnBounds="true">
+                              <image>
+                                <Image url="@sprites/CONTROLS_MID.png" preserveRatio="false" smooth="false" />
+                              </image>
+                            </ImageView>
+                            <ImageView id="ControlsRight" fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image url="@sprites/CONTROLS_RIGHT.png" preserveRatio="false" smooth="false" />
+                              </image>
+                            </ImageView>
                           </children>
                         </HBox>
                       </children>
                     </StackPane>
-                    <HBox id="ScrollbarHolder" alignment="CENTER" layoutX="17.0" layoutY="91.0" prefWidth="770.0" spacing="5.0">
-                      <children>
-                        <Rectangle id="ScrollbarMid" arcHeight="5.0" arcWidth="5.0" fill="#1e90ff00" height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="700.0" />
-                      </children>
-                    </HBox>
                   </children>
                 </Pane>
               </children>
@@ -98,7 +108,7 @@
       <top>
         <Pane id="TopPane" prefHeight="64.0" prefWidth="798.0">
           <children>
-            <HBox id="TopBoxRight" layoutX="591.0" layoutY="8.0" prefHeight="56.0" prefWidth="200.0" />
+            <HBox id="TopBoxRight" layoutX="591.0" layoutY="8.0" prefHeight="56.0" prefWidth="199.99990000000253" />
             <HBox id="InstLine" layoutX="60.0" layoutY="22.0" prefHeight="28.0" prefWidth="531.0" />
             <Pane id="SelectedInst" layoutY="12.0" prefHeight="44.0" prefWidth="60.0" />
           </children>
