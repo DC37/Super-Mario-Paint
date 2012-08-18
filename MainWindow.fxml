@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="smp.fx.SMPFXController">
   <children>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
     <BorderPane id="MainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
@@ -98,7 +98,7 @@
       <top>
         <Pane id="TopPane" prefHeight="64.0" prefWidth="798.0">
           <children>
-            <HBox id="TopBoxRight" layoutX="591.0" layoutY="8.0" prefHeight="56.0" prefWidth="199.99990000000253" />
+            <HBox id="TopBoxRight" layoutX="591.0" layoutY="8.0" prefHeight="56.0" prefWidth="200.0" />
             <HBox id="InstLine" layoutX="60.0" layoutY="22.0" prefHeight="28.0" prefWidth="531.0" />
             <Pane id="SelectedInst" layoutY="12.0" prefHeight="44.0" prefWidth="60.0" />
           </children>

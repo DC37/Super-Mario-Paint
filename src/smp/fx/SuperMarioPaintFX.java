@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import javafx.application.Application;
@@ -23,29 +24,38 @@ import javafx.stage.Stage;
  * @since 2012.08.16
  */
 public class SuperMarioPaintFX extends Application {
-
-	private static Parent root;
 	
-	@SuppressWarnings("deprecation")
+	private String fxml = "./MainWindow.fxml";
+	
+	/**
+	 * Starts the application and loads the FXML file that contains
+	 * a lot of the class hierarchy.
+	 */
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		
-		primaryStage.setTitle("Super Mario Paint");
-		primaryStage.setResizable(false);
-		primaryStage.setScene(new Scene(root, 800, 600));
-		primaryStage.show();
+	public void start(Stage primaryStage) {
+		try {
+			Parent root = 
+				(Parent) FXMLLoader.load(new File(fxml).toURI().toURL());
+			primaryStage.setTitle("Super Mario Paint");
+			primaryStage.setResizable(false);
+			primaryStage.setScene(new Scene(root, 800, 600));
+			primaryStage.show();
+		} catch (MalformedURLException e) {
+			// Can't recover.
+			e.printStackTrace();
+			System.exit(0);
+		} catch (IOException e) {
+			// Can't recover.
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
 
-	@SuppressWarnings("deprecation")
-	public static void main(String[] args) throws Exception {
-		File file = new File("MainWindow.fxml");
-		// Convert the file object to a URL
-		URL url = null;
-		url = file.toURL();          // file:/d:/almanac1.4/java.io/filename
-		System.out.println(url);
-		root = (Parent) FXMLLoader.load(url);
-		System.err.println("FXML resource: " + SuperMarioPaintFX.class.getResource("file:/.MainWindow.fxml"));
-	    FXMLLoader.load(url);
+	/**
+	 * Launches the application.
+	 * @param args String args.
+	 */
+	public static void main(String[] args) {
 		launch(args);
 	}
 }
