@@ -10,10 +10,10 @@
 <?import javafx.scene.shape.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="smp.fx.SMPFXController">
+<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="smp.fx.SMPFXController">
   <children>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
-    <BorderPane id="MainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
+    <BorderPane id="MainLayout" fx:id="mainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
       <bottom>
         <Pane id="BottomPane" blendMode="SRC_OVER" prefHeight="56.0" prefWidth="798.0">
           <children>
@@ -30,14 +30,14 @@
               <children>
                 <Pane id="StaffFrame" prefHeight="293.0" prefWidth="798.0">
                   <children>
-                    <StackPane id="StackPane" prefHeight="296.0" prefWidth="798.0">
+                    <StackPane fx:id="staffPane" prefHeight="296.0" prefWidth="798.0">
                       <children>
                         <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="294.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
                           <fill>
                             <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
                           </fill>
                         </Rectangle>
-                        <ImageView id="Staff" fitHeight="276.0" fitWidth="758.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="staff" fitHeight="276.0" fitWidth="758.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/STAFF_BG_TREBLE.png" preserveRatio="false" smooth="false" />
                           </image>
@@ -49,15 +49,19 @@
                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                   </padding>
                 </Pane>
-                <Pane id="VolPane" prefHeight="64.0" prefWidth="798.0">
+                <Pane id="VolPaneHolder" prefHeight="64.0" prefWidth="798.0">
                   <children>
-                    <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="64.0" layoutX="3.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-3.0" />
+                    <StackPane fx:id="volPane" layoutX="3.0">
+                      <children>
+                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="64.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-3.0" />
+                      </children>
+                    </StackPane>
                   </children>
                 </Pane>
                 <Pane id="ControlsPane" prefHeight="121.0" prefWidth="798.0">
                   <children>
                     <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="123.0" layoutX="3.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
-                    <StackPane id="ControlsStack" layoutX="14.0" layoutY="7.0">
+                    <StackPane fx:id="controls" layoutX="14.0" layoutY="7.0">
                       <children>
                         <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">
                           <children>
@@ -85,7 +89,11 @@
                     </StackPane>
                     <HBox id="ScrollbarHolder" alignment="CENTER" layoutX="17.0" layoutY="91.0" prefWidth="770.0" spacing="5.0">
                       <children>
-                        <Rectangle id="ScrollbarMid" arcHeight="5.0" arcWidth="5.0" fill="#1e90ff00" height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="700.0" />
+                        <StackPane id="StackPane">
+                          <children>
+                            <Rectangle id="ScrollbarMid" arcHeight="5.0" arcWidth="5.0" fill="#1e90ff00" height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="700.0" />
+                          </children>
+                        </StackPane>
                       </children>
                     </HBox>
                   </children>
@@ -96,11 +104,16 @@
         </Pane>
       </center>
       <top>
-        <Pane id="TopPane" prefHeight="64.0" prefWidth="798.0">
+        <Pane fx:id="topPane" prefHeight="64.0" prefWidth="798.0">
           <children>
-            <HBox id="TopBoxRight" layoutX="591.0" layoutY="8.0" prefHeight="56.0" prefWidth="200.0" />
-            <HBox id="InstLine" layoutX="60.0" layoutY="22.0" prefHeight="28.0" prefWidth="531.0" />
-            <Pane id="SelectedInst" layoutY="12.0" prefHeight="44.0" prefWidth="60.0" />
+            <HBox fx:id="topBoxRight" layoutX="591.0" prefHeight="64.0" prefWidth="200.0" />
+            <HBox fx:id="topBoxTop" layoutX="60.0" prefHeight="28.0" prefWidth="531.0" />
+            <HBox fx:id="instLine" layoutX="60.0" layoutY="30.0" prefHeight="28.0" prefWidth="531.0">
+              <children>
+                <ImageView fitHeight="28.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </HBox>
+            <StackPane fx:id="selectedInst" layoutX="3.0" layoutY="14.0" prefHeight="44.00010681152344" prefWidth="57.000099999997474" />
           </children>
         </Pane>
       </top>

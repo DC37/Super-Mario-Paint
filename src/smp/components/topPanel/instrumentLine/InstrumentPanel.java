@@ -1,4 +1,4 @@
-package smp.components.instrumentLine;
+package smp.components.topPanel.instrumentLine;
 
 import java.awt.Dimension;
 

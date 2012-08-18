@@ -95,14 +95,17 @@ public class SuperMarioPaintFX extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			for (int i = 0; i < Integer.MAX_VALUE; i++);
+			dummyPreloader.updateStatus(30.0);
 			Parent root = 
 				(Parent) FXMLLoader.load(new File(mainFxml).toURI().toURL());
 			primaryStage.setTitle("Super Mario Paint");
+			dummyPreloader.updateStatus(60.0);
 			primaryStage.setResizable(false);
 			primaryStage.setScene(new Scene(root, 800, 600));
+			dummyPreloader.updateStatus(100);
 			primaryStage.show();
 			dummyPreloader.dispose();
+			SMPFXController.check();
 		} catch (MalformedURLException e) {
 			// Can't recover.
 			e.printStackTrace();

@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import static smp.components.Constants.*;
 import smp.components.bottomPanel.BottomPanel;
 import smp.components.controls.Controls;
-import smp.components.instrumentLine.InstrumentPanel;
+import smp.components.topPanel.instrumentLine.InstrumentPanel;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffFrame;
 

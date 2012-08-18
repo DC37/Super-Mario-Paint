@@ -11,7 +11,7 @@ import javafx.application.Application;
 
 import smp.components.MPWindow;
 import smp.components.controls.PlayButton;
-import smp.components.instrumentLine.InstrumentPanel;
+import smp.components.topPanel.instrumentLine.InstrumentPanel;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffFrame;
 

@@ -21,13 +21,14 @@ public class SplashScreen extends JFrame implements Runnable {
 	private static final long serialVersionUID = 6705972583468020200L;
 	
 	private JButton loading;
+	private boolean isUpdateable;
 	
 	/**
 	 * Displays a dummy window that says "Loading!"
 	 */
 	@Override
 	public void run() {
-		loading = new JButton("Loading!");
+		loading = new JButton("Loading: 0.0");
 		loading.setBorder(BorderFactory.createEmptyBorder());
 		loading.setContentAreaFilled(false);
 		add(loading, BorderLayout.CENTER);
@@ -35,6 +36,16 @@ public class SplashScreen extends JFrame implements Runnable {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		setUpdateable(true);
+	}
+	
+	public void setUpdateable(boolean tf) {
+		isUpdateable = tf;
+	}
+	
+	public void updateStatus(double d) {
+		if (isUpdateable)
+		    loading.setText(String.format("Loading: " + Math.floor(d)));
 	}
 	
 
