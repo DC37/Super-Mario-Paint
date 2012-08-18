@@ -28,8 +28,19 @@ public class ImageLoader implements Runnable {
 	 */
 	private static Hashtable<ImageIndex, BufferedImage> sprites;
 	
+	/**
+	 * Red value of the "transparent" background color.
+	 */
 	private static final int R = 255;
+	
+	/**
+	 * Green value of the "transparent" background color.
+	 */
 	private static final int G = 255;
+	
+	/**
+	 * Blue value of the "transparent" background color.
+	 */
 	private static final int B = 255;
 	
 	private String extension = ".bmp";
@@ -51,17 +62,10 @@ public class ImageLoader implements Runnable {
 	public void run() {
 		File f;
 		try {
-			//boolean splashStarted = false;
 			ImageIndex [] ind = ImageIndex.values();
 			for (ImageIndex i : ind) {
 				f = new File(path + i.toString() + extension);
 				BufferedImage temp = ImageIO.read(f);
-				/*if (!splashStarted && i.ordinal() > ImageIndex.SHARP.ordinal()) {
-					Thread splashScreen = new Thread(new SplashScreen());
-					splashScreen.start();
-					splashScreen.setDaemon(true);
-					splashStarted = true;
-				}*/
 				temp = makeColorTransparent(temp, background);
 				sprites.put(i, temp);
 			}

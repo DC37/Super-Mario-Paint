@@ -13,16 +13,40 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
+ * Super Mario Paint <br>
+ * Based on the old SNES game from 1992, Mario Paint <br>
+ * Inspired by:<br>
+ * MarioSequencer (2002) <br>
+ * TrioSequencer <br>
+ * Robby Mulvany's Mario Paint Composer 1.0 / 2.0 (2007-2008) <br>
+ * FordPrefect's Advanced Mario Sequencer (2009) <br>
  * JavaFX2.2 has been released. Testing some application development.
  * It might take a little longer to do this, but it promises to be 
  * faster than working with swing... at least in the maintenance
- * aspect...
+ * aspect... <br>
  * @author RehdBlob
  * @since 2012.08.16
+ * @version 1.00
  */
 public class SuperMarioPaintFX extends Application {
 	
-	private String fxml = "./MainWindow.fxml";
+	/**
+	 * Location of the Main Window fxml file.
+	 */
+	private String mainFxml = "./MainWindow.fxml";
+	
+	/**
+	 * Location of the Arrangement Window fxml file.
+	 */
+	@SuppressWarnings("unused")
+	private String arrFxml = "./ArrWindow.fxml";
+	
+	/**
+	 * Location of the Advanced Mode (super secret!!)
+	 * fxml file.
+	 */
+	@SuppressWarnings("unused")
+	private String advFxml = "./AdvWindow.fxml";
 	
 	/**
 	 * Until I figure out the mysteries of the Preloader class in 
@@ -30,11 +54,29 @@ public class SuperMarioPaintFX extends Application {
 	 */
 	private SplashScreen dummyPreloader = new SplashScreen();
 	
+	/**
+	 * Loads all the sprites that will be used in Super Mario Paint.
+	 */
+	private ImageLoader imgLoader = new ImageLoader();
+	
+	/**
+	 * Loads the soundfonts that will be used in Super Mario Paint.
+	 */
+	private SoundfontLoader sfLoader = new SoundfontLoader();
+	
+	/**
+	 * Starts three <code>Thread</code>s. One of them is currently 
+	 * a dummy splash screen, the second an <code>ImageLoader</code>,
+	 * and the third one a <code>SoundfontLoader</code>.
+	 * @see ImageLoader
+	 * @see SoundfontLoader
+	 * @see SplashScreen
+	 */
 	@Override
-	public void init() throws Exception {
+	public void init() {
 		Thread splash = new Thread(dummyPreloader);
-		Thread imgLd = new Thread(new ImageLoader());
-		Thread sfLd = new Thread(new SoundfontLoader());
+		Thread imgLd = new Thread(imgLoader);
+		Thread sfLd = new Thread(sfLoader);
 		splash.start();
 		imgLd.start();
 		sfLd.start();
@@ -49,18 +91,18 @@ public class SuperMarioPaintFX extends Application {
 	/**
 	 * Starts the application and loads the FXML file that contains
 	 * a lot of the class hierarchy.
-	 * @throws Exception 
 	 */
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		try {
 			for (int i = 0; i < Integer.MAX_VALUE; i++);
 			Parent root = 
-				(Parent) FXMLLoader.load(new File(fxml).toURI().toURL());
+				(Parent) FXMLLoader.load(new File(mainFxml).toURI().toURL());
 			primaryStage.setTitle("Super Mario Paint");
 			primaryStage.setResizable(false);
 			primaryStage.setScene(new Scene(root, 800, 600));
 			primaryStage.show();
+			dummyPreloader.dispose();
 		} catch (MalformedURLException e) {
 			// Can't recover.
 			e.printStackTrace();
@@ -75,7 +117,6 @@ public class SuperMarioPaintFX extends Application {
 	/**
 	 * Launches the application.
 	 * @param args String args.
-	 * @throws Exception 
 	 */
 	public static void main(String[] args) {
 		launch(args);
