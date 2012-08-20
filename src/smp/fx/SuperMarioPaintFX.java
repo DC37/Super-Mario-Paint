@@ -49,6 +49,12 @@ public class SuperMarioPaintFX extends Application {
 	private String advFxml = "./AdvWindow.fxml";
 	
 	/**
+	 * The number of threads that are running to load things for Super Mario
+	 * Paint.
+	 */
+	private static final int NUM_THREADS = 2;
+	
+	/**
 	 * Until I figure out the mysteries of the Preloader class in 
 	 * JavaFX, I will stick to what I know, which is swing, unfortunately.
 	 */
@@ -82,6 +88,7 @@ public class SuperMarioPaintFX extends Application {
 		sfLd.start();
 		while(imgLd.isAlive() || sfLd.isAlive())
 			try {
+				dummyPreloader.updateStatus(imgLoader.getLoadStatus(), NUM_THREADS);
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -95,14 +102,12 @@ public class SuperMarioPaintFX extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			dummyPreloader.updateStatus(30.0);
 			Parent root = 
 				(Parent) FXMLLoader.load(new File(mainFxml).toURI().toURL());
 			primaryStage.setTitle("Super Mario Paint");
-			dummyPreloader.updateStatus(60.0);
 			primaryStage.setResizable(true);
 			primaryStage.setScene(new Scene(root, 800, 600));
-			dummyPreloader.updateStatus(100);
+			dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
 			primaryStage.show();
 			dummyPreloader.dispose();
 			SMPFXController.check();

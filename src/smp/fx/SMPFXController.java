@@ -5,11 +5,9 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -21,22 +19,13 @@ import javafx.scene.layout.StackPane;
 public class SMPFXController implements Initializable {
 	
 	/**
-	 * Top pane, box at the right.
-	 */
-	@FXML
-	private static HBox topBoxRight;
-	
-	/**
-	 * Top pane, box in the top-mid-center. 
-	 */
-	@FXML
-	private static HBox topBoxTop;
-	
-	/**
 	 * Top pane, box in the bottom-mid-center.
 	 */
 	@FXML
 	private static HBox instLine;
+	
+	@FXML
+	private static ImageView instLineImg;
 	
 	/**
 	 * Top pane, box at the left.
@@ -44,26 +33,8 @@ public class SMPFXController implements Initializable {
 	@FXML
 	private static StackPane selectedInst;
 	
-	/**
-	 * Middle pane, stackpane holding the staff.
-	 */
 	@FXML
-	private static StackPane staffPane;
-	
-	/**
-	 * Middle pane, staff image.
-	 */
-	@FXML
-	private static ImageView staff;
-	
-	/**
-	 * Middle pane, volume control stackPane.
-	 */
-	@FXML
-	private static StackPane volPane;
-	
-	@FXML
-	private static StackPane controls;
+	private static Slider scrollbar;
 	
 	/**
 	 * Initializes the Controller class for Super Mario Paint
@@ -77,7 +48,6 @@ public class SMPFXController implements Initializable {
 	}
 	
 	public static void check() {
-		
 	}
 	
 

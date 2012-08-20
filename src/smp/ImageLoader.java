@@ -43,10 +43,21 @@ public class ImageLoader implements Runnable {
 	 */
 	private static final int B = 255;
 	
+	/**
+	 * The amount of loading that the imageLoader has done,
+	 * anywhere between 0 to 1.
+	 */
+	private static double loadStatus = 0.0;
+	
 	private String extension = ".bmp";
 	private String path = "./sprites/";
 	private Color background;
 	
+	/**
+	 * Initializes the sprites hashtable and sets the color that is to be
+	 * made transparent (the background) to the R, G, B values defined at
+	 * the top of this class.
+	 */
 	public ImageLoader() {
 		sprites = new Hashtable<ImageIndex, BufferedImage>();
 		background = new Color(R, G, B);
@@ -64,6 +75,7 @@ public class ImageLoader implements Runnable {
 		try {
 			ImageIndex [] ind = ImageIndex.values();
 			for (ImageIndex i : ind) {
+				setLoadStatus((i.ordinal() + 1) / ind.length);
 				f = new File(path + i.toString() + extension);
 				BufferedImage temp = ImageIO.read(f);
 				temp = makeColorTransparent(temp, background);
@@ -91,7 +103,7 @@ public class ImageLoader implements Runnable {
 	/**
 	 * From StackOverflow - "PhiLo" and "corgrath" made this.
 	 * @param image An Image to be converted to a BufferedImage
-	 * @return
+	 * @return A BufferedImage from an Image.
 	 */
 	private static BufferedImage imageToBufferedImage(Image image) {
 
@@ -105,12 +117,12 @@ public class ImageLoader implements Runnable {
 
     }
 	
-	
 	/**
 	 * From StackOverflow - "PhiLo" and "corgrath" made this.
 	 * @param im An image to have its background be made transparent.
 	 * @param color The color to be made transparent.
-	 * @return A BufferedImage that now has a transparent background.
+	 * @return A BufferedImage that now has all of <code>color</code>
+	 * removed.
 	 */
 	private static BufferedImage makeColorTransparent(BufferedImage im, 
 			final Color color) {
@@ -135,4 +147,13 @@ public class ImageLoader implements Runnable {
         		Toolkit.getDefaultToolkit().createImage(ip));
     }
 	
+	public double getLoadStatus() {
+		return loadStatus;
+	}
+	
+	public void setLoadStatus(double d) {
+		if (d >= 0 && d <= 1)
+			loadStatus = d;
+	}
+
 }

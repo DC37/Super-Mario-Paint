@@ -43,9 +43,10 @@ public class SplashScreen extends JFrame implements Runnable {
 		isUpdateable = tf;
 	}
 	
-	public void updateStatus(double d) {
+	public void updateStatus(double d, int numOfThreads) {
 		if (isUpdateable)
-		    loading.setText(String.format("Loading: " + Math.floor(d)));
+		    loading.setText(String.format("Loading: " 
+		        + (Math.floor(d) / numOfThreads)));
 	}
 	
 
