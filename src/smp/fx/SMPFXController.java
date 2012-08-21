@@ -29,7 +29,7 @@ public class SMPFXController implements Initializable {
 	/**
 	 * The picture that displays the currently-selected instrument.
 	 */
-	private static SelectedInstrument _selectedInst;
+	private static SelectedInstrument selectedInstPic;
 	
 	@FXML
 	private static Slider scrollbar;
@@ -54,14 +54,13 @@ public class SMPFXController implements Initializable {
 	 * and into other classes.
 	 */
 	public static void castCustom() {
-		_selectedInst = (SelectedInstrument) selectedInst.getChildren().get(0);
+		selectedInstPic = (SelectedInstrument) selectedInst.getChildren().get(0);
 	}
 	
 	/**
 	 * Sets up event handlers for the different parts of the Super Mario Paint GUI.
 	 */
 	public static void initializeHandlers() {
-		
 	}
 
 
