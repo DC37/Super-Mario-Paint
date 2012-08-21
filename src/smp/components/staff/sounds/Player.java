@@ -1,8 +1,6 @@
 package smp.components.staff.sounds;
 
 import java.io.File;
-import java.io.IOException;
-
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
@@ -11,8 +9,6 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Soundbank;
-import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
 
 import com.sun.media.sound.SF2Instrument;
@@ -54,6 +50,7 @@ public class Player {
 				System.out.println(i.getName());
 			}
 
+			// Test code. Not going to be in the full version.
 			try {
 				Sequencer player = MidiSystem.getSequencer();
 				player.open();
@@ -75,6 +72,8 @@ public class Player {
 				// Does not actually handle anything yet.
 			} 
 		} catch (Exception e) {
+			// Screw exception handling right now. I want 
+			// to test things.
 			e.printStackTrace();
 		} finally {
 			System.exit(0);

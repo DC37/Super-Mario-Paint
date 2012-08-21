@@ -20,7 +20,6 @@ public class SoundTest {
 	 * @param args Normal args params.
 	 */
 	public static void main(String[] args) {
-
 		Player p = new Player();
 	}
 

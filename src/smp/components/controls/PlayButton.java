@@ -2,15 +2,11 @@ package smp.components.controls;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-
 import javax.swing.ImageIcon;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.general.ImageButton;
-import smp.stateMachine.State;
-import smp.stateMachine.StateMachine;
 
 public class PlayButton extends ImageButton {
 

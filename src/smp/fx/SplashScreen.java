@@ -35,6 +35,7 @@ public class SplashScreen extends JFrame implements Runnable {
 		setSize(new Dimension(400, 400));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
+		this.setTitle("Super Mario Paint");
 		setVisible(true);
 		setUpdateable(true);
 	}

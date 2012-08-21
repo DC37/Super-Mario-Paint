@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
+import smp.components.topPanel.SelectedInstrument;
+
 /**
  * The Controller class for most of the program. This will
  * handle the events that happen on the screen.
@@ -19,19 +21,15 @@ import javafx.scene.layout.StackPane;
 public class SMPFXController implements Initializable {
 	
 	/**
-	 * Top pane, box in the bottom-mid-center.
-	 */
-	@FXML
-	private static HBox instLine;
-	
-	@FXML
-	private static ImageView instLineImg;
-	
-	/**
 	 * Top pane, box at the left.
 	 */
 	@FXML
 	private static StackPane selectedInst;
+	
+	/**
+	 * The picture that displays the currently-selected instrument.
+	 */
+	private static SelectedInstrument _selectedInst;
 	
 	@FXML
 	private static Slider scrollbar;
@@ -48,8 +46,23 @@ public class SMPFXController implements Initializable {
 	}
 	
 	public static void check() {
+		
 	}
 	
+	/**
+	 * Basically allows me to move some code out of the controller class
+	 * and into other classes.
+	 */
+	public static void castCustom() {
+		_selectedInst = (SelectedInstrument) selectedInst.getChildren().get(0);
+	}
+	
+	/**
+	 * Sets up event handlers for the different parts of the Super Mario Paint GUI.
+	 */
+	public static void initializeHandlers() {
+		
+	}
 
 
 }

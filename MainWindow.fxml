@@ -24,7 +24,7 @@
                 <HBox id="BottomLeftBox" prefHeight="56.0001220703125" prefWidth="232.0" />
                 <VBox id="VBox" alignment="CENTER" spacing="5.0">
                   <children>
-                    <TextArea fx:id="songName" prefHeight="32.0" prefWidth="390.0" promptText="Song Name" />
+                    <TextArea fx:id="songName" focusTraversable="false" prefHeight="32.0" prefWidth="390.0" promptText="Song Name" />
                   </children>
                 </VBox>
                 <HBox id="BottomRightBox" prefHeight="56.0" prefWidth="163.0" />
@@ -64,6 +64,11 @@
                     <AnchorPane id="AnchorPane" layoutX="3.0">
                       <children>
                         <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="64.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-3.0" />
+                        <ImageView fitHeight="24.0" fitWidth="72.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@sprites/VOL_LABEL.PNG" preserveRatio="false" smooth="false" />
+                          </image>
+                        </ImageView>
                       </children>
                     </AnchorPane>
                   </children>
@@ -109,24 +114,20 @@
                             <Image url="@sprites/SCROLLBAR_LEFT1.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <AnchorPane id="AnchorPane">
+                        <StackPane id="StackPane">
                           <children>
-                            <StackPane id="StackPane">
-                              <children>
-                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="700.0">
-                                  <rotationAxis>
-                                    <Point3D />
-                                  </rotationAxis>
-                                </Rectangle>
-                                <Slider fx:id="scrollbar" blockIncrement="4.0" max="384.0" minorTickCount="1" prefWidth="690.0">
-                                  <rotationAxis>
-                                    <Point3D />
-                                  </rotationAxis>
-                                </Slider>
-                              </children>
-                            </StackPane>
+                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="700.0">
+                              <rotationAxis>
+                                <Point3D />
+                              </rotationAxis>
+                            </Rectangle>
+                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="384.0" min="1.0" minorTickCount="1" prefWidth="690.0">
+                              <rotationAxis>
+                                <Point3D />
+                              </rotationAxis>
+                            </Slider>
                           </children>
-                        </AnchorPane>
+                        </StackPane>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_RIGHT1.PNG" preserveRatio="false" smooth="false" />
@@ -151,7 +152,7 @@
           <children>
             <HBox fx:id="topBoxRight" layoutX="591.0" prefHeight="64.0" prefWidth="200.0" />
             <HBox fx:id="topBoxTop" layoutX="60.0" prefHeight="28.0" prefWidth="531.0" />
-            <HBox fx:id="instLine" layoutX="60.0" layoutY="30.0" prefHeight="28.0" prefWidth="531.0" spacing="2.0">
+            <HBox fx:id="instLine" alignment="BASELINE_LEFT" layoutX="60.0" layoutY="30.0" prefHeight="28.0" prefWidth="531.0" spacing="2.0">
               <children>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -188,18 +189,66 @@
                     <Image url="@sprites/DOG_SM.PNG" preserveRatio="false" smooth="false" />
                   </image>
                 </ImageView>
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/CAT_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/PIG_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/SWAN_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/FACE_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/PLANE_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/BOAT_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/CAR_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/HEART_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/PIRANHA_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/COIN_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/SHYGUY_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/BOO_SM.PNG" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
               </children>
             </HBox>
             <StackPane fx:id="selectedInst" layoutX="6.0" layoutY="24.0" prefHeight="38.0" prefWidth="52.0">
@@ -217,7 +266,7 @@
     </BorderPane>
     <Pane layoutX="800.0" layoutY="2.0" prefHeight="598.0" prefWidth="100.0">
       <children>
-        <Button layoutX="4.0" layoutY="289.0" mnemonicParsing="false" text="Secret Button">
+        <Button focusTraversable="false" layoutX="4.0" layoutY="289.0" mnemonicParsing="false" text="Secret Button">
           <font>
             <Font size="12.0" />
           </font>
