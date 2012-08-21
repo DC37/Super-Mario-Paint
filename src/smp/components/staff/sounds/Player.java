@@ -46,8 +46,9 @@ public class Player {
 				synth.unloadInstrument(i);
 			}
 			for (Instrument i : bank.getInstruments()) {
-				System.out.println(i.getName());
-				System.out.println(synth.loadInstrument(i));
+				if (synth.loadInstrument(i))
+					System.out.println(i.getName());
+				
 			}
 			
 			for (Instrument i : synth.getLoadedInstruments()) {
