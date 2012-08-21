@@ -86,13 +86,13 @@ public class SuperMarioPaintFX extends Application {
 		splash.start();
 		imgLd.start();
 		sfLd.start();
-		dummyPreloader.updateStatus(NUM_THREADS * 30, NUM_THREADS);
 		while(imgLd.isAlive() || sfLd.isAlive())
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		dummyPreloader.updateStatus(NUM_THREADS * 30, NUM_THREADS);
 	}
 	
 	/**
