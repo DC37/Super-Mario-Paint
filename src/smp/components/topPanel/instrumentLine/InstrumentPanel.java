@@ -21,8 +21,6 @@ public class InstrumentPanel extends ImageButton {
 	 */
 	private static final long serialVersionUID = -1917709647981152606L;
 	
-	private Player soundPlayer;
-	
 	public InstrumentPanel(int x, int y) {
 		super(ImageIndex.INST_LINE);
 	}

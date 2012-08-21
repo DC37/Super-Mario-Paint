@@ -6,14 +6,18 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Receiver;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Soundbank;
+import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
 
 import com.sun.media.sound.SF2Instrument;
 import com.sun.media.sound.SF2Sample;
 import com.sun.media.sound.SF2Soundbank;
+import com.sun.media.sound.SF2SoundbankReader;
 import com.sun.media.sound.SoftSynthesizer;
 
 import smp.components.staff.Note;
@@ -27,21 +31,21 @@ import smp.stateMachine.StateMachine;
  */
 public class Player {
 	
-	private SoftSynthesizer synth;
-	private SF2Soundbank bank;
-	private String soundset = "NewSF2.sf2";
+	private Synthesizer synth;
+	private Soundbank bank;
+	private String soundset = "soundset3.sf2";
 	
 	public Player() {
 		File f = new File("./" + soundset);
 		try {
-			synth = (SoftSynthesizer) MidiSystem.getSynthesizer();
+			synth = MidiSystem.getSynthesizer();
+			bank = MidiSystem.getSoundbank(f);
+			synth.open();
 			System.out.println("Latency: " + synth.getLatency());
-			bank = (SF2Soundbank) MidiSystem.getSoundbank(f);
-			for (SF2Sample s : bank.getSamples()) {
-				System.out.println(s.getName());
+			for (Instrument i : synth.getLoadedInstruments()) {
+				synth.unloadInstrument(i);
 			}
-			
-			for (SF2Instrument i : bank.getInstruments()) {
+			for (Instrument i : bank.getInstruments()) {
 				System.out.println(i.getName());
 				System.out.println(synth.loadInstrument(i));
 			}
@@ -49,33 +53,21 @@ public class Player {
 			for (Instrument i : synth.getLoadedInstruments()) {
 				System.out.println(i.getName());
 			}
+			
+			ShortMessage myMsg = new ShortMessage();
+		    // Play the note Middle C (60) moderately loud
+		    // (velocity = 93)on channel 4 (zero-based).
 
-			// Test code. Not going to be in the full version.
-			try {
-				Sequencer player = MidiSystem.getSequencer();
-				player.open();
-				Sequence seq = new Sequence(Sequence.PPQ, 4);
-				Track track = seq.createTrack();
-				ShortMessage a = new ShortMessage();
-				a.setMessage(144, 10, 60, 100);
-				MidiEvent noteOn = new MidiEvent(a, 1);
-				track.add(noteOn);
-				a = new ShortMessage();
-				a.setMessage(128, 10, 60, 100);
-				MidiEvent noteOff = new MidiEvent(a, 16);
-				track.add(noteOff);
-				player.setSequence(seq);
-				player.start();
-				Thread.sleep(3000);
-			} catch (Exception e) {
-				e.printStackTrace();
-				// Does not actually handle anything yet.
-			} 
+		    myMsg.setMessage(ShortMessage.NOTE_ON, 8, 60, 93); 
+		    Receiver synthRcvr = synth.getReceiver();
+		    synthRcvr.send(myMsg, -1); // -1 means no time stamp
+			Thread.sleep(3000);
 		} catch (Exception e) {
 			// Screw exception handling right now. I want 
 			// to test things.
 			e.printStackTrace();
 		} finally {
+			synth.close();
 			System.exit(0);
 		}
 	}
