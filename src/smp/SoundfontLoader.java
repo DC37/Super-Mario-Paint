@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
@@ -13,7 +14,9 @@ import javax.sound.midi.Synthesizer;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
 /**
- * Loads the soundfont that initially will be used to play sounds.
+ * Loads the soundfonts that will be used to play sounds.
+ * Also holds a Synthesizer and Soundbank that will be used 
+ * to play more sounds.
  * @author RehdBlob
  * @since 2012.08.14
  */
@@ -47,7 +50,13 @@ public class SoundfontLoader implements Runnable {
 			for (Instrument i : bank.getInstruments())
 				if (synth.loadInstrument(i))
 				    System.out.println("Loaded: " + i.getName());
-
+			
+			for (InstrumentIndex i : InstrumentIndex.values()) {
+				MidiChannel [] chan = synth.getChannels();
+				chan[i.ordinal()].programChange(i.ordinal());
+				System.out.println("Initialized: " + i.toString());
+			}
+			
 		} catch (MidiUnavailableException e) {
 			// Can't recover.
 			e.printStackTrace();
@@ -67,8 +76,17 @@ public class SoundfontLoader implements Runnable {
 	 * @param i The InstrumentIndex for the instrument
 	 */
 	public static void playSound(InstrumentIndex i) {
-		// TODO Auto-generated method stub
-		
+		MidiChannel [] chan = synth.getChannels(); 
+		if (chan[i.ordinal()] != null) {
+	         chan[i.ordinal()].noteOn(57, 127);
+	    }
+	}
+	
+	/**
+	 * Closes the synthesizer.
+	 */
+	public void close() {
+		synth.close();
 	}
 
 

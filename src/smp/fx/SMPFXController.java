@@ -10,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.topPanel.instrumentLine.ButtonLine;
 
 /**
@@ -54,7 +56,8 @@ public class SMPFXController implements Initializable {
 	}
 	
 	/**
-	 * Sets up event handlers for the different parts of the Super Mario Paint GUI.
+	 * Sets up event handlers for the different parts of the Super Mario
+	 * Paint GUI.
 	 */
 	public static void initializeHandlers() {
 		// Initialize the selected instrument handlers.
@@ -63,6 +66,7 @@ public class SMPFXController implements Initializable {
 			toButtonLine.add((ImageView) i);
 		instBLine = new ButtonLine(toButtonLine);
 		instBLine.setup(selectedInst);
+		selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
 		
 		// Initialize play button
 		// Initialize stop button

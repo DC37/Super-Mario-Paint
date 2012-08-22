@@ -40,7 +40,8 @@ public class ButtonLine {
 				@Override
 				public void handle(MouseEvent event) {
 					SoundfontLoader.playSound(i);
-					try {selectedInst.setImage(
+					try {
+						selectedInst.setImage(
 							ImageLoader.getSpriteFX(
 									ImageIndex.valueOf(i.toString())));
 					} catch (IllegalArgumentException e) {

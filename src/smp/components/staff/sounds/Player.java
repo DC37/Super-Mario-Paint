@@ -3,6 +3,7 @@ package smp.components.staff.sounds;
 import java.io.File;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
@@ -45,14 +46,11 @@ public class Player {
 			for (Instrument i : synth.getLoadedInstruments()) {
 				System.out.println(i.getName());
 			}
-			
-			ShortMessage myMsg = new ShortMessage();
-		    // Play the note Middle C (60) moderately loud
-		    // (velocity = 93)on channel 4 (zero-based).
-
-		    myMsg.setMessage(ShortMessage.NOTE_ON, 8, 60, 93); 
-		    Receiver synthRcvr = synth.getReceiver();
-		    synthRcvr.send(myMsg, -1); // -1 means no time stamp
+			MidiChannel [] chan = synth.getChannels(); 
+			if (chan[10] != null) {
+		         chan[10].programChange(4);
+		         chan[10].noteOn(60, 127);
+		    }
 			Thread.sleep(3000);
 		} catch (Exception e) {
 			// Screw exception handling right now. I want 
