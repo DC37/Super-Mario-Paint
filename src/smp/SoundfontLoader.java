@@ -10,6 +10,8 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
+import smp.components.topPanel.instrumentLine.InstrumentIndex;
+
 /**
  * Loads the soundfont that initially will be used to play sounds.
  * @author RehdBlob
@@ -17,8 +19,19 @@ import javax.sound.midi.Synthesizer;
  */
 public class SoundfontLoader implements Runnable {
 
-	private Synthesizer synth;
-	private Soundbank bank;
+	/**
+	 * The sound synthesizer we'll be using to produce sound for the program.
+	 */
+	private static Synthesizer synth;
+	
+	/**
+	 * The soundbank that will hold the sounds that we're trying to play.
+	 */
+	private static Soundbank bank;
+	
+	/**
+	 * The default soundset name.
+	 */
 	private String soundset = "soundset3.sf2";
 	
 	@Override
@@ -48,6 +61,14 @@ public class SoundfontLoader implements Runnable {
 			e.printStackTrace();
 			System.exit(0);
 		}
+	}
+
+	/**
+	 * @param i The InstrumentIndex for the instrument
+	 */
+	public static void playSound(InstrumentIndex i) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

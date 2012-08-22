@@ -1,16 +1,16 @@
 package smp.fx;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-
-import smp.components.topPanel.SelectedInstrument;
+import smp.components.topPanel.instrumentLine.ButtonLine;
 
 /**
  * The Controller class for most of the program. This will
@@ -21,15 +21,23 @@ import smp.components.topPanel.SelectedInstrument;
 public class SMPFXController implements Initializable {
 	
 	/**
-	 * Top pane, box at the left.
+	 * The image that shows the selected instrument.
 	 */
 	@FXML
-	private static StackPane selectedInst;
+	private static ImageView selectedInst;
 	
 	/**
-	 * The picture that displays the currently-selected instrument.
+	 * Instrument line.
 	 */
-	private static SelectedInstrument selectedInstPic;
+	@FXML
+	private static HBox instLine;
+	
+	/**
+	 * The line of buttons that corresponds with the line of images
+	 * at the top of the frame.
+	 */
+	private static ButtonLine instBLine;
+	
 	
 	@FXML
 	private static Slider scrollbar;
@@ -45,22 +53,20 @@ public class SMPFXController implements Initializable {
 
 	}
 	
-	public static void check() {
-		
-	}
-	
-	/**
-	 * Basically allows me to move some code out of the controller class
-	 * and into other classes.
-	 */
-	public static void castCustom() {
-		selectedInstPic = (SelectedInstrument) selectedInst.getChildren().get(0);
-	}
-	
 	/**
 	 * Sets up event handlers for the different parts of the Super Mario Paint GUI.
 	 */
 	public static void initializeHandlers() {
+		// Initialize the selected instrument handlers.
+		ArrayList<ImageView> toButtonLine = new ArrayList<ImageView>();
+		for (Node i : instLine.getChildren())
+			toButtonLine.add((ImageView) i);
+		instBLine = new ButtonLine(toButtonLine);
+		instBLine.setup(selectedInst);
+		
+		// Initialize play button
+		// Initialize stop button
+		// Initialize loop button
 	}
 
 

@@ -1,12 +1,9 @@
 package smp.components.staff;
 
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.sound.midi.MidiEvent;
 import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.components.staff.sounds.Player;
 import smp.components.general.ImageButton;
 
 

@@ -1,11 +1,7 @@
 package smp.components.topPanel.instrumentLine;
 
-import java.awt.Dimension;
-
 import smp.ImageIndex;
-import smp.ImageLoader;
 import smp.components.general.ImageButton;
-import smp.components.staff.sounds.Player;
 
 
 /**

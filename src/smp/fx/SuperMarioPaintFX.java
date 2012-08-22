@@ -81,11 +81,11 @@ public class SuperMarioPaintFX extends Application {
 	@Override
 	public void init() {
 		Thread splash = new Thread(dummyPreloader);
+		splash.start();
 		Thread imgLd = new Thread(imgLoader);
 		Thread sfLd = new Thread(sfLoader);
-		splash.start();
-		imgLd.start();
 		sfLd.start();
+		imgLd.start();
 		while(imgLd.isAlive() || sfLd.isAlive())
 			try {
 				Thread.sleep(10);
@@ -108,10 +108,10 @@ public class SuperMarioPaintFX extends Application {
 			primaryStage.setTitle("Super Mario Paint");
 			primaryStage.setResizable(true);
 			primaryStage.setScene(new Scene(root, 800, 600));
+			SMPFXController.initializeHandlers();
 			dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
 			primaryStage.show();
 			dummyPreloader.dispose();
-			SMPFXController.check();
 		} catch (MalformedURLException e) {
 			// Can't recover.
 			e.printStackTrace();

@@ -3,7 +3,6 @@ package smp.components.staff.sounds;
 import java.io.File;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
@@ -12,14 +11,6 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
-import javax.sound.midi.Track;
-
-import com.sun.media.sound.SF2Instrument;
-import com.sun.media.sound.SF2Sample;
-import com.sun.media.sound.SF2Soundbank;
-import com.sun.media.sound.SF2SoundbankReader;
-import com.sun.media.sound.SoftSynthesizer;
-
 import smp.components.staff.Note;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;

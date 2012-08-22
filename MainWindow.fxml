@@ -251,13 +251,14 @@
                 </ImageView>
               </children>
             </HBox>
-            <StackPane fx:id="selectedInst" layoutX="6.0" layoutY="24.0" prefHeight="38.0" prefWidth="52.0">
+            <StackPane layoutX="6.0" layoutY="24.0" prefHeight="38.0" prefWidth="52.0">
               <children>
-                <ImageView fitHeight="38.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="selectedInstHolder" fitHeight="38.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                     <Image url="@sprites/SEL_INST_BG.png" preserveRatio="false" smooth="false" />
                   </image>
                 </ImageView>
+                <ImageView fx:id="selectedInst" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
               </children>
             </StackPane>
           </children>
