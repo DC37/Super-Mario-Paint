@@ -71,7 +71,7 @@ public class ImageLoader implements Runnable {
 						new javafx.scene.image.Image(f.toURI().toString());
 				sprites.put(i, temp);
 				spritesFX.put(i, temp2);
-				System.out.println("Loaded: " + i.toString() + extension);
+				System.out.println("Loaded Image: " + i.toString() + extension);
 			}
 		} catch (IOException e) {
 			// If the images fail to load, don't start the program!
