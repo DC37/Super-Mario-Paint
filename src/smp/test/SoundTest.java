@@ -1,9 +1,6 @@
 package smp.test;
 
-import javax.sound.midi.*;
-
 import smp.components.staff.sounds.*;
-import smp.components.staff.*;
 
 
 /**
@@ -19,6 +16,7 @@ public class SoundTest {
 	 * Main.
 	 * @param args Normal args params.
 	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Player p = new Player();
 	}

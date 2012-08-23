@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
-
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;

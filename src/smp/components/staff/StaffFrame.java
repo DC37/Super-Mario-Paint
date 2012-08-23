@@ -1,10 +1,6 @@
 package smp.components.staff;
 
-import java.awt.Dimension;
-
-
 import smp.ImageIndex;
-import smp.ImageLoader;
 import smp.components.general.ImageButton;
 
 public class StaffFrame extends ImageButton {

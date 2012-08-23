@@ -13,6 +13,7 @@ import javax.sound.midi.Synthesizer;
 
 import com.sun.media.sound.SoftSynthesizer;
 
+import smp.components.staff.Note;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
 /**
@@ -25,14 +26,37 @@ import smp.components.topPanel.instrumentLine.InstrumentIndex;
 public class SoundfontLoader implements Runnable {
 
 	/**
+	 * The largest value that a note velocity can be;
+	 * a note played at this will be played as loudly 
+	 * as possible.
+	 */
+	public static final int MAX_VELOCITY = 127;
+	
+	/**
+	 * The smallest value that a note velocity can be;
+	 * a note will basically be silent if played at this.
+	 */
+	public static final int MIN_VELOCITY = 0;
+	
+	/**
 	 * The sound synthesizer used to hold instruments 1-16.
 	 */
 	private static Synthesizer synth1;
 	
 	/**
+	 * The MIDI channels associated with synthesizer 1.
+	 */
+	private static MidiChannel [] chan1;
+	
+	/**
 	 * The sound synthesizer used to hold instruments 17-32
 	 */
 	private static Synthesizer synth2;
+	
+	/**
+	 * The MIDI channels associated with synthesizer 2.
+	 */
+	private static MidiChannel [] chan2;
 	
 	/**
 	 * The soundbank that will hold the sounds that we're trying to play.
@@ -43,6 +67,8 @@ public class SoundfontLoader implements Runnable {
 	 * The default soundset name.
 	 */
 	private String soundset = "soundset3.sf2";
+	
+	
 	
 	/**
 	 * Intializes two sound synthesizers with the default soundset.
@@ -66,8 +92,8 @@ public class SoundfontLoader implements Runnable {
 				    System.out.println("Loaded Instrument: " + i.getName());
 			
 			for (InstrumentIndex i : InstrumentIndex.values()) {
-				MidiChannel [] chan1 = synth1.getChannels();
-				MidiChannel [] chan2 = synth2.getChannels();
+				chan1 = synth1.getChannels();
+				chan2 = synth2.getChannels();
 				if (i.ordinal() < 16) {
 				    chan1[i.ordinal()].programChange(i.ordinal());
 				    System.out.println("Initialized Instrument: " 
@@ -95,17 +121,16 @@ public class SoundfontLoader implements Runnable {
 	}
 
 	/**
+	 * Plays the default "A" sound when selecting an instrument.
 	 * @param i The InstrumentIndex for the instrument
 	 */
 	public static void playSound(InstrumentIndex i) {
 		if (i.ordinal() < 16) {
-			MidiChannel [] chan = synth1.getChannels();
-			if (chan[i.ordinal()] != null)
-			    chan[i.ordinal()].noteOn(57, 127);
+			if (chan1[i.ordinal()] != null)
+			    chan1[i.ordinal()].noteOn(Note.A3.getKeyNum(), MAX_VELOCITY);
 		} else {
-			MidiChannel [] chan = synth2.getChannels();
-			if (chan[i.ordinal() - 16] != null)
-				chan[i.ordinal() - 16].noteOn(57,127);
+			if (chan2[i.ordinal() - 16] != null)
+				chan2[i.ordinal() - 16].noteOn(Note.A3.getKeyNum(), MAX_VELOCITY);
 		}
 	}
 	

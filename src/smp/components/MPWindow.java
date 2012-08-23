@@ -1,6 +1,5 @@
 package smp.components;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import static smp.components.Constants.*;
 import smp.components.bottomPanel.BottomPanel;
@@ -11,7 +10,6 @@ import smp.components.staff.StaffFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 
 /**
  * 

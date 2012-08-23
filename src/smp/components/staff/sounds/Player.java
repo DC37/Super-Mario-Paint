@@ -2,26 +2,18 @@ package smp.components.staff.sounds;
 
 import java.io.File;
 import javax.sound.midi.Instrument;
-import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Receiver;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
-import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
 import com.sun.media.sound.SoftSynthesizer;
 
-import smp.components.staff.Note;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
-import smp.stateMachine.State;
-import smp.stateMachine.StateMachine;
 
 /**
  * Plays a sequence of notes, or a single note.
+ * Allocated to test class status.
  * @author RehdBlob
  * @since 2012.08.14
  */
@@ -77,15 +69,6 @@ public class Player {
 			synth2.close();
 			System.exit(0);
 		}
-	}
-	
-	/**
-	 * Plays a single note sound. This is not to be used to play
-	 * songs.
-	 * @param n The Note that is to be played as a single note sound.
-	 */
-	public void playSound(Note n) {
-		
 	}
 	
 	
