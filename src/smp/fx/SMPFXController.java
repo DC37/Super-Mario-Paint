@@ -52,7 +52,7 @@ public class SMPFXController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL fileLocation, ResourceBundle resources) {
-
+		// Currently does nothing.
 	}
 	
 	/**

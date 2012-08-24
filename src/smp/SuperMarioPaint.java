@@ -1,82 +1,134 @@
 package smp;
 
-import java.awt.BorderLayout;
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
+import smp.fx.SMPFXController;
+import smp.fx.SplashScreen;
 import javafx.application.Application;
-
-import smp.components.MPWindow;
-import smp.components.controls.PlayButton;
-import smp.components.topPanel.instrumentLine.InstrumentPanel;
-import smp.components.staff.Staff;
-import smp.components.staff.StaffFrame;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
- * Super Mario Paint
- * Based on the old SNES game from 1992, Mario Paint
+ * Super Mario Paint <br>
+ * Based on the old SNES game from 1992, Mario Paint <br>
  * Inspired by:<br>
  * MarioSequencer (2002) <br>
  * TrioSequencer <br>
  * Robby Mulvany's Mario Paint Composer 1.0 / 2.0 (2007-2008) <br>
  * FordPrefect's Advanced Mario Sequencer (2009) <br>
- * @since 2012.08.07
+ * JavaFX2.2 has been released. Testing some application development.
+ * It might take a little longer to do this, but it promises to be 
+ * faster than working with swing... at least in the maintenance
+ * aspect... <br>
  * @author RehdBlob
+ * @since 2012.08.16
  * @version 1.00
  */
-@SuppressWarnings("unused")
-public class SuperMarioPaint {
-
-	static MPWindow mp;
+public class SuperMarioPaint extends Application {
 	
 	/**
-	 * Initializes an ImageLoader object and a 
-	 * SoundfontLoader as Threads. These will initialize
-	 * the necessary resources in memory such that they
-	 * will be much easier to access later on. Hopefully
-	 * most people have >30MB of RAM.
-	 * @param args As per a main class.
+	 * Location of the Main Window fxml file.
 	 */
-	public static void main(String[] args) {
-		Thread imgLd = new Thread(new ImageLoader());
-		Thread sfLd = new Thread(new SoundfontLoader());
-		imgLd.start();
+	private String mainFxml = "./MainWindow.fxml";
+	
+	/**
+	 * Location of the Arrangement Window fxml file.
+	 */
+	@SuppressWarnings("unused")
+	private String arrFxml = "./ArrWindow.fxml";
+	
+	/**
+	 * Location of the Advanced Mode (super secret!!)
+	 * fxml file.
+	 */
+	@SuppressWarnings("unused")
+	private String advFxml = "./AdvWindow.fxml";
+	
+	/**
+	 * The number of threads that are running to load things for Super Mario
+	 * Paint.
+	 */
+	private static final int NUM_THREADS = 2;
+	
+	/**
+	 * Until I figure out the mysteries of the Preloader class in 
+	 * JavaFX, I will stick to what I know, which is swing, unfortunately.
+	 */
+	private SplashScreen dummyPreloader = new SplashScreen();
+	
+	/**
+	 * Loads all the sprites that will be used in Super Mario Paint.
+	 */
+	private ImageLoader imgLoader = new ImageLoader();
+	
+	/**
+	 * Loads the soundfonts that will be used in Super Mario Paint.
+	 */
+	private SoundfontLoader sfLoader = new SoundfontLoader();
+	
+	/**
+	 * Starts three <code>Thread</code>s. One of them is currently 
+	 * a dummy splash screen, the second an <code>ImageLoader</code>,
+	 * and the third one a <code>SoundfontLoader</code>.
+	 * @see ImageLoader
+	 * @see SoundfontLoader
+	 * @see SplashScreen
+	 */
+	@Override
+	public void init() {
+		Thread splash = new Thread(dummyPreloader);
+		splash.start();
+		Thread imgLd = new Thread(imgLoader);
+		Thread sfLd = new Thread(sfLoader);
 		sfLd.start();
+		imgLd.start();
 		while(imgLd.isAlive() || sfLd.isAlive())
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		mp = new MPWindow();
-		testThings();
-		mp.setVisible(true);
+		dummyPreloader.updateStatus(NUM_THREADS * 30, NUM_THREADS);
 	}
 	
 	/**
-	 * Debug method for GUI.
+	 * Starts the application and loads the FXML file that contains
+	 * a lot of the class hierarchy.
 	 */
-	public static void testThings() {
-		StaffFrame x = new StaffFrame();
-		Staff y = new Staff();
-		InstrumentPanel z = new InstrumentPanel(0, 0);
-		x.setBackground(null);
-		x.add(y, BorderLayout.CENTER);
-		mp.add(z, BorderLayout.NORTH);
-		mp.add(x, BorderLayout.CENTER);
-        mp.add(new PlayButton(), BorderLayout.SOUTH);
-		//mp.add(new JButton("test"), BorderLayout.NORTH);
-        //x.add(new JButton("Test"), BorderLayout.CENTER);
-		/*mp.add(new JButton("Test"), BorderLayout.CENTER);
-		mp.add(new JButton("TestSouth"), BorderLayout.SOUTH);
-		mp.add(new JButton("TestEast"), BorderLayout.EAST);*/
-		//x.add(y, BorderLayout.CENTER);
-		//a.add(z, BorderLayout.SOUTH);
-		//ImageIcon i = new ImageIcon(ImageLoader.getSprite(ImageIndex.STAFF_BG));
-		//mp.add(new JButton(i), BorderLayout.NORTH);
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			Parent root = 
+				(Parent) FXMLLoader.load(new File(mainFxml).toURI().toURL());
+			dummyPreloader.updateStatus(NUM_THREADS * 60, NUM_THREADS);
+			primaryStage.setTitle("Super Mario Paint");
+			primaryStage.setResizable(true);
+			primaryStage.setScene(new Scene(root, 800, 600));
+			SMPFXController.initializeHandlers();
+			dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
+			primaryStage.show();
+			dummyPreloader.dispose();
+		} catch (MalformedURLException e) {
+			// Can't recover.
+			e.printStackTrace();
+			System.exit(0);
+		} catch (IOException e) {
+			// Can't recover.
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
 
+	/**
+	 * Launches the application.
+	 * @param args String args.
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
 }

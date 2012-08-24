@@ -2,6 +2,7 @@ package smp;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
@@ -13,7 +14,6 @@ import javax.sound.midi.Synthesizer;
 
 import com.sun.media.sound.SoftSynthesizer;
 
-import smp.components.staff.Note;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
 /**
@@ -24,19 +24,6 @@ import smp.components.topPanel.instrumentLine.InstrumentIndex;
  * @since 2012.08.14
  */
 public class SoundfontLoader implements Runnable {
-
-	/**
-	 * The largest value that a note velocity can be;
-	 * a note played at this will be played as loudly 
-	 * as possible.
-	 */
-	public static final int MAX_VELOCITY = 127;
-	
-	/**
-	 * The smallest value that a note velocity can be;
-	 * a note will basically be silent if played at this.
-	 */
-	public static final int MIN_VELOCITY = 0;
 	
 	/**
 	 * The sound synthesizer used to hold instruments 1-16.
@@ -104,7 +91,8 @@ public class SoundfontLoader implements Runnable {
 					    + i.toString());
 				}
 			}
-			
+			System.out.println("Synth1 Latency: " + synth1.getLatency());
+			System.out.println("Synth2 Latency: " + synth2.getLatency());
 		} catch (MidiUnavailableException e) {
 			// Can't recover.
 			e.printStackTrace();
@@ -119,19 +107,27 @@ public class SoundfontLoader implements Runnable {
 			System.exit(0);
 		}
 	}
-
+	
 	/**
-	 * Plays the default "A" sound when selecting an instrument.
-	 * @param i The InstrumentIndex for the instrument
+	 * @return An ArrayList of Synthesizer object references needed to 
+	 * play sounds.
 	 */
-	public static void playSound(InstrumentIndex i) {
-		if (i.ordinal() < 16) {
-			if (chan1[i.ordinal()] != null)
-			    chan1[i.ordinal()].noteOn(Note.A3.getKeyNum(), MAX_VELOCITY);
-		} else {
-			if (chan2[i.ordinal() - 16] != null)
-				chan2[i.ordinal() - 16].noteOn(Note.A3.getKeyNum(), MAX_VELOCITY);
-		}
+	public static ArrayList<Synthesizer> getSynths() {
+		ArrayList<Synthesizer> synths = new ArrayList<Synthesizer>();
+		synths.add(synth1);
+		synths.add(synth2);
+		return synths;
+	}
+	
+	/**
+	 * @return An ArrayList of references for MidiChannel arrays needed to 
+	 * play sounds.
+	 */
+	public static ArrayList<MidiChannel []> getChannels() {
+		ArrayList<MidiChannel []> chans = new ArrayList<MidiChannel []>();
+		chans.add(chan1);
+		chans.add(chan2);
+		return chans;
 	}
 	
 	/**
