@@ -33,12 +33,12 @@ public class SMPSequencer {
 	private Sequencer theSequencer;
 	
 	/**
-	 * The song that is to be played, currently displayed on the staff.
+	 * The song that is to be played, displayed on the staff.
 	 */
 	private Sequence theSong;
 	
 	/**
-	 * The arrangement that is to be played, currently displayed on the staff.
+	 * The arrangement that is to be played, displayed on the staff.
 	 */
 	private Sequence theArrangement;
 	

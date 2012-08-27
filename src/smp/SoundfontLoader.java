@@ -59,6 +59,8 @@ public class SoundfontLoader implements Runnable {
 	
 	/**
 	 * Intializes two sound synthesizers with the default soundset.
+	 * Current plan may be to write a custom synthesizer class that takes
+	 * multiple synthesizers and creates new synths when needed.
 	 */
 	@Override
 	public void run() {
