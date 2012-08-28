@@ -48,10 +48,33 @@ public class MultiSynthesizer implements Synthesizer {
 	 */
 	public MultiSynthesizer() throws MidiUnavailableException {
 		theSynths = new ArrayList<Synthesizer>();
-		theSynths.add(MidiSystem.getSynthesizer());
+		addDefaultSynthesizer();
 		initialized = true;
 	}
 	
+	/**
+	 * @param s The Synthesizer to remove all instruments from.
+	 * @return A Synthesizer with no instruments loaded.
+	 */
+	private Synthesizer unloadEverything(Synthesizer s) {
+		for (Instrument i : s.getLoadedInstruments())
+			s.unloadInstrument(i);
+		return s;
+	}
+	
+	/**
+	 * 
+	 * @param s The Synthesizer to initialize with this class's loaded
+	 * Instruments.
+	 * @return The same Synthesizer reference, but with all of the (hopefully)
+	 * correctly loaded instruments.
+	 */
+	private Synthesizer loadCustom(Synthesizer s) {
+		for (Instrument inst : this.getLoadedInstruments()) 
+			s.loadInstrument(inst);
+		return s;
+	}
+
 	/**
 	 * Add a synthesizer to the list of synthesizers for this
 	 * aggregate class.
@@ -60,8 +83,11 @@ public class MultiSynthesizer implements Synthesizer {
 	 * initialized.
 	 */
 	public void addSynths(Synthesizer s1) throws MidiUnavailableException {
-		if (!initialized)
+		if (!initialized || !isOpen())
 			throw new MidiUnavailableException();
+		s1.open();
+		s1 = unloadEverything(s1);
+		s1 = loadCustom(s1);
 		theSynths.add(s1);
 	}
 	
@@ -75,10 +101,8 @@ public class MultiSynthesizer implements Synthesizer {
 	 */
 	public void addSynths(Synthesizer s1, Synthesizer s2) 
 			throws MidiUnavailableException {
-		if (!initialized)
-			throw new MidiUnavailableException();
-		theSynths.add(s1);
-		theSynths.add(s2);
+		addSynths(s1);
+		addSynths(s2);
 	}
 	
 	/**
@@ -92,23 +116,21 @@ public class MultiSynthesizer implements Synthesizer {
 	 */
 	public void addSynths(Synthesizer s1, Synthesizer s2, Synthesizer... s) 
 			throws MidiUnavailableException {
-		if (!initialized)
-			throw new MidiUnavailableException();
-		theSynths.add(s1);
-		theSynths.add(s2);
+		addSynths(s1);
+		addSynths(s2);
 		for (Synthesizer more : s)
-			theSynths.add(more);
+			addSynths(more);
 	}
 
 	/**
-	 * Adds the default Synthesizer into the list of Synthesizers.
+	 * Adds the default Synthesizer into the list of Synthesizers, and also
+	 * unloads all of the instruments that are by default included.
 	 * @throws MidiUnavailableException If the MidiSystem.getSynthesizer()
 	 * call fails.
 	 */
-	public void addDefaultSynthesizer() throws MidiUnavailableException {
-		if (!initialized)
-			throw new MidiUnavailableException();
-		theSynths.add(MidiSystem.getSynthesizer());
+	private void addDefaultSynthesizer() throws MidiUnavailableException {
+		Synthesizer s = MidiSystem.getSynthesizer();
+		theSynths.add(s);
 	}
 	
 	/**
@@ -128,8 +150,10 @@ public class MultiSynthesizer implements Synthesizer {
 	public void open() throws MidiUnavailableException {
 		if (!initialized)
 			throw new MidiUnavailableException();
-		for (Synthesizer s : theSynths)
+		for (Synthesizer s : theSynths) {
 		    s.open();
+		    s = unloadEverything(s);
+		}
 	}
 
 	/**
@@ -269,8 +293,11 @@ public class MultiSynthesizer implements Synthesizer {
 	 */
 	@Override
 	public MidiChannel[] getChannels() {
-		MidiChannel[] all = theSynths.get(0).getChannels();
-		if (theSynths.size() > 1) {
+		MidiChannel[] all;
+		if (theSynths.size() == 1) 
+			all = theSynths.get(0).getChannels();
+		else {
+			all = new MidiChannel[0];
 			for (Synthesizer s : theSynths) {
 				MidiChannel[] temp = s.getChannels();
 				MidiChannel[] concat = 
@@ -293,8 +320,11 @@ public class MultiSynthesizer implements Synthesizer {
 	 */
 	@Override
 	public VoiceStatus[] getVoiceStatus() {
-		VoiceStatus[] all = theSynths.get(0).getVoiceStatus();
-		if (theSynths.size() > 1) {
+		VoiceStatus[] all;
+		if (theSynths.size() == 1) 
+			all = theSynths.get(0).getVoiceStatus();
+		else {
+			all = new VoiceStatus[0];
 			for (Synthesizer s : theSynths) {
 				VoiceStatus[] temp = s.getVoiceStatus();
 				VoiceStatus[] concat = 
@@ -460,5 +490,11 @@ public class MultiSynthesizer implements Synthesizer {
 		int repeat = (int) Math.floor((double)i / 16);
 		for (int j = 0; j < repeat; j++)
 			theSynths.add(new SoftSynthesizer());
+		for (int j = oldSize - 1; j < theSynths.size(); j++) {
+			Synthesizer s = theSynths.get(j);
+			s.open();
+			for (Instrument inst : this.getLoadedInstruments()) 
+				s.loadInstrument(inst);
+		}
 	}
 }

@@ -56,9 +56,11 @@ public class SoundfontLoader implements Runnable {
 			theSynthesizer = new MultiSynthesizer();
 			bank = MidiSystem.getSoundbank(f);
 			theSynthesizer.open();
+			/* if (advanced mode on)
+			 * theSynthesizer.ensureCapacity(50);
+			 */
 			theSynthesizer.ensureCapacity(19);
-			for (Instrument i : theSynthesizer.getLoadedInstruments())
-				theSynthesizer.unloadInstrument(i);
+			
 			for (Instrument i : bank.getInstruments())
 				if (theSynthesizer.loadInstrument(i))
 				    System.out.println("Loaded Instrument: " + i.getName());

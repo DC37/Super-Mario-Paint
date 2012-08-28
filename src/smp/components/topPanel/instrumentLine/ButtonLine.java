@@ -7,6 +7,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.staff.Note;
+import smp.stateMachine.Settings;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +23,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class ButtonLine {
 
+	
 	/**
 	 * The largest value that a note velocity can be;
 	 * a note played at this will be played as loudly 
@@ -103,8 +105,13 @@ public class ButtonLine {
 	 * @param i The InstrumentIndex for the instrument
 	 */
 	public void playSound(InstrumentIndex i) {
-		if (chan[i.ordinal()] != null)
+		if (chan[i.ordinal()] != null) {
 			chan[i.ordinal()].noteOn(Note.A3.getKeyNum(), MAX_VELOCITY);
+			if (Settings.DEBUG)
+				System.out.println(
+						"Channel " + (i.ordinal() + 1)
+						+ " Instrument: " + i.name());
+		}
 	}
 	
 	private void setSelectedInstrument(InstrumentIndex i) {

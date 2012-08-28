@@ -26,7 +26,7 @@ public class Utilities {
 	 * @return A BufferedImage that now has all of <code>color</code>
 	 * removed.
 	 */
-	private static BufferedImage makeColorTransparent(BufferedImage im, 
+	public static BufferedImage makeColorTransparent(BufferedImage im, 
 			final Color color) {
         ImageFilter filter = new RGBImageFilter() {
 

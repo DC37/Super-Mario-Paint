@@ -9,7 +9,7 @@ package smp;
  */
 public enum ImageIndex {
 
-	//SPLASHSCREEN,
+	// SPLASHSCREEN,
 	
 	/*
 	 * Instruments.
