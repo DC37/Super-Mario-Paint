@@ -15,8 +15,10 @@ import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Transmitter;
 import javax.sound.midi.VoiceStatus;
 
+import com.sun.media.sound.SoftSynthesizer;
+
 /**
- * Skeleton class for multiple synthesizers in one class.
+ * Class for multiple synthesizers in one class.
  * Should make it simpler to call synthesizers with more than
  * 16 MIDI channels. One can add multiple different types of
  * Synthesizers into this class because of the abstraction
@@ -39,10 +41,14 @@ public class MultiSynthesizer implements Synthesizer {
 	private ArrayList<Synthesizer> theSynths;
 	
 	/**
-	 * Initializes the ArrayList of Synthesizers.
+	 * Initializes the ArrayList of Synthesizers and adds the default
+	 * Synthesizer into the ArrayList.
+	 * @throws MidiUnavailableException If MidiSystem.getSynthesizer()
+	 * fails. 
 	 */
-	public MultiSynthesizer() {
+	public MultiSynthesizer() throws MidiUnavailableException {
 		theSynths = new ArrayList<Synthesizer>();
+		theSynths.add(MidiSystem.getSynthesizer());
 		initialized = true;
 	}
 	
@@ -312,7 +318,7 @@ public class MultiSynthesizer implements Synthesizer {
 	@Override
 	public boolean isSoundbankSupported(Soundbank soundbank) {
 		for (Synthesizer s : theSynths)
-			if (!isSoundbankSupported(soundbank))
+			if (!s.isSoundbankSupported(soundbank))
 				return false;
 		return true;
 	}
@@ -335,6 +341,7 @@ public class MultiSynthesizer implements Synthesizer {
 	/**
 	 * Unloads the specified instrument from ALL of the Synthesizers in the
 	 * list of Synthesizers.
+	 * @param instrument The Instrument to unload.
 	 */
 	@Override
 	public void unloadInstrument(Instrument instrument) {
@@ -436,5 +443,22 @@ public class MultiSynthesizer implements Synthesizer {
 	public void unloadInstruments(Soundbank soundbank, Patch[] patchList) {
 		for (Synthesizer s : theSynths)
 			s.unloadInstruments(soundbank, patchList);
+	}
+
+	/**
+	 * Adds SoftSynthesizer objects to the MultiSynthesizer such that
+	 * it has enough Synthesizers to accommodate the number of channels
+	 * that one wishes to have.
+	 * @param i The number of channels that one wishes to have.
+	 * @throws MidiUnavailableException If the MultiSynthesizer isn't
+	 * initialized.
+	 */
+	public void ensureCapacity(int i) throws MidiUnavailableException {
+		if (!initialized)
+			throw new MidiUnavailableException();
+		int oldSize = theSynths.size();
+		int repeat = (int) Math.floor((double)i / 16);
+		for (int j = 0; j < repeat; j++)
+			theSynths.add(new SoftSynthesizer());
 	}
 }

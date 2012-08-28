@@ -45,7 +45,7 @@ public class SMPSequencer {
 	/**
 	 * A Synthesizer object reference that will be used to generate sound.
 	 */
-	private Synthesizer synth1, synth2;
+	private Synthesizer synth;
 	
 	/**
 	 * Initializes the sequencer and its dependencies.

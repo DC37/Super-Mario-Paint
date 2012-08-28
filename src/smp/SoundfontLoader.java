@@ -2,8 +2,6 @@ package smp;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
@@ -12,8 +10,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
-import com.sun.media.sound.SoftSynthesizer;
-
+import smp.components.staff.sounds.MultiSynthesizer;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
 /**
@@ -26,24 +23,14 @@ import smp.components.topPanel.instrumentLine.InstrumentIndex;
 public class SoundfontLoader implements Runnable {
 	
 	/**
-	 * The sound synthesizer used to hold instruments 1-16.
+	 * The sound synthesizer used to hold as many instruments as needed.
 	 */
-	private static Synthesizer synth1;
+	private static MultiSynthesizer theSynthesizer;
 	
 	/**
-	 * The MIDI channels associated with synthesizer 1.
+	 * The MIDI channels associated with the MultiSynthsizer.
 	 */
-	private static MidiChannel [] chan1;
-	
-	/**
-	 * The sound synthesizer used to hold instruments 17-32
-	 */
-	private static Synthesizer synth2;
-	
-	/**
-	 * The MIDI channels associated with synthesizer 2.
-	 */
-	private static MidiChannel [] chan2;
+	private static MidiChannel [] chan;
 	
 	/**
 	 * The soundbank that will hold the sounds that we're trying to play.
@@ -66,35 +53,23 @@ public class SoundfontLoader implements Runnable {
 	public void run() {
 		try {
 			File f = new File("./" + soundset);
-			synth1 = MidiSystem.getSynthesizer();
-			synth2 = new SoftSynthesizer();
+			theSynthesizer = new MultiSynthesizer();
 			bank = MidiSystem.getSoundbank(f);
-			synth1.open();
-			synth2.open();
-			for (Instrument i : synth1.getLoadedInstruments()) { 
-				synth1.unloadInstrument(i);
-				synth2.unloadInstrument(i);
-			}
-			
+			theSynthesizer.open();
+			theSynthesizer.ensureCapacity(19);
+			for (Instrument i : theSynthesizer.getLoadedInstruments())
+				theSynthesizer.unloadInstrument(i);
 			for (Instrument i : bank.getInstruments())
-				if (synth1.loadInstrument(i) && synth2.loadInstrument(i))
+				if (theSynthesizer.loadInstrument(i))
 				    System.out.println("Loaded Instrument: " + i.getName());
 			
 			for (InstrumentIndex i : InstrumentIndex.values()) {
-				chan1 = synth1.getChannels();
-				chan2 = synth2.getChannels();
-				if (i.ordinal() < 16) {
-				    chan1[i.ordinal()].programChange(i.ordinal());
-				    System.out.println("Initialized Instrument: " 
-				        + i.toString());
-				} else {
-					chan2[i.ordinal()-16].programChange(i.ordinal());
-				    System.out.println("Initialized Instrument: " 
-					    + i.toString());
+				chan = theSynthesizer.getChannels();
+				chan[i.ordinal()].programChange(i.ordinal());
+				System.out.println("Initialized Instrument: " 
+						+ i.toString());
 				}
-			}
-			System.out.println("Synth1 Latency: " + synth1.getLatency());
-			System.out.println("Synth2 Latency: " + synth2.getLatency());
+			System.out.println("Synth Latency: " + theSynthesizer.getLatency());
 		} catch (MidiUnavailableException e) {
 			// Can't recover.
 			e.printStackTrace();
@@ -114,30 +89,23 @@ public class SoundfontLoader implements Runnable {
 	 * @return An ArrayList of Synthesizer object references needed to 
 	 * play sounds.
 	 */
-	public static ArrayList<Synthesizer> getSynths() {
-		ArrayList<Synthesizer> synths = new ArrayList<Synthesizer>();
-		synths.add(synth1);
-		synths.add(synth2);
-		return synths;
+	public static Synthesizer getSynth() {
+		return theSynthesizer;
 	}
 	
 	/**
 	 * @return An ArrayList of references for MidiChannel arrays needed to 
 	 * play sounds.
 	 */
-	public static ArrayList<MidiChannel []> getChannels() {
-		ArrayList<MidiChannel []> chans = new ArrayList<MidiChannel []>();
-		chans.add(chan1);
-		chans.add(chan2);
-		return chans;
+	public static MidiChannel[] getChannels() {
+		return chan;
 	}
 	
 	/**
 	 * Closes the synthesizers.
 	 */
 	public void close() {
-		synth1.close();
-		synth2.close();
+		theSynthesizer.close();
 	}
 
 

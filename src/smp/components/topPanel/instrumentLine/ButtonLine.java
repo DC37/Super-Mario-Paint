@@ -51,7 +51,7 @@ public class ButtonLine {
 	 * The MidiChannel array objects that will be holding references for
 	 * sound-playing capabilities.
 	 */
-	private MidiChannel [] chan1, chan2;
+	private MidiChannel [] chan;
 	
 	/**
 	 * Initializes the ImageView ArrayList.
@@ -91,9 +91,7 @@ public class ButtonLine {
 			});
 		}
 		try {
-		    ArrayList<MidiChannel []> chans = SoundfontLoader.getChannels();
-		    chan1 = chans.get(0);
-		    chan2 = chans.get(1);
+		    chan = SoundfontLoader.getChannels();
 		} catch (NullPointerException e) {
 			// Can't recover
 			System.exit(0);
@@ -105,15 +103,8 @@ public class ButtonLine {
 	 * @param i The InstrumentIndex for the instrument
 	 */
 	public void playSound(InstrumentIndex i) {
-		if (i.ordinal() < 16) {
-			if (chan1[i.ordinal()] != null)
-			    chan1[i.ordinal()].noteOn(
-			    		Note.A3.getKeyNum(), MAX_VELOCITY);
-		} else {
-			if (chan2[i.ordinal() - 16] != null)
-				chan2[i.ordinal() - 16].noteOn(
-						Note.A3.getKeyNum(), MAX_VELOCITY);
-		}
+		if (chan[i.ordinal()] != null)
+			chan[i.ordinal()].noteOn(Note.A3.getKeyNum(), MAX_VELOCITY);
 	}
 	
 	private void setSelectedInstrument(InstrumentIndex i) {
