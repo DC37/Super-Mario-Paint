@@ -22,7 +22,7 @@ import com.sun.media.sound.SoftSynthesizer;
  * Should make it simpler to call synthesizers with more than
  * 16 MIDI channels. One can add multiple different types of
  * Synthesizers into this class because of the abstraction
- * that was implemented; this class all Synthesizer type
+ * that was implemented; this class holds Synthesizer type
  * objects.
  * @author RehdBlob
  * @since 2012.08.24
@@ -38,7 +38,7 @@ public class MultiSynthesizer implements Synthesizer {
 	/**
 	 * The list of synthesizers that this class holds.
 	 */
-	private ArrayList<Synthesizer> theSynths;
+	protected ArrayList<Synthesizer> theSynths;
 	
 	/**
 	 * Initializes the ArrayList of Synthesizers and adds the default
@@ -57,8 +57,9 @@ public class MultiSynthesizer implements Synthesizer {
 	 * @return A Synthesizer with no instruments loaded.
 	 */
 	private Synthesizer unloadEverything(Synthesizer s) {
-		for (Instrument i : s.getLoadedInstruments())
+		for (Instrument i : s.getLoadedInstruments()) {
 			s.unloadInstrument(i);
+		}
 		return s;
 	}
 	
@@ -487,7 +488,7 @@ public class MultiSynthesizer implements Synthesizer {
 		if (!initialized)
 			throw new MidiUnavailableException();
 		int oldSize = theSynths.size();
-		int repeat = (int) Math.floor((double)i / 16);
+		int repeat = (int) Math.floor((double)i / 15);
 		for (int j = 0; j < repeat; j++)
 			theSynths.add(new SoftSynthesizer());
 		for (int j = oldSize - 1; j < theSynths.size(); j++) {

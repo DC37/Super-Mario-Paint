@@ -10,6 +10,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
+import smp.components.staff.sounds.MPSynthesizer;
 import smp.components.staff.sounds.MultiSynthesizer;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
@@ -25,7 +26,7 @@ public class SoundfontLoader implements Runnable {
 	/**
 	 * The sound synthesizer used to hold as many instruments as needed.
 	 */
-	private static MultiSynthesizer theSynthesizer;
+	private static MPSynthesizer theSynthesizer;
 	
 	/**
 	 * The MIDI channels associated with the MultiSynthsizer.
@@ -45,20 +46,19 @@ public class SoundfontLoader implements Runnable {
 	
 	
 	/**
-	 * Intializes two sound synthesizers with the default soundset.
-	 * Current plan may be to write a custom synthesizer class that takes
-	 * multiple synthesizers and creates new synths when needed.
+	 * Initializes a MultiSynthesizer with the soundfont.
 	 */
 	@Override
 	public void run() {
 		try {
 			File f = new File("./" + soundset);
-			theSynthesizer = new MultiSynthesizer();
+			theSynthesizer = new MPSynthesizer();
 			bank = MidiSystem.getSoundbank(f);
 			theSynthesizer.open();
 			/* if (advanced mode on)
-			 * theSynthesizer.ensureCapacity(50);
-			 */
+			 *     theSynthesizer.ensureCapacity(50);
+			 * else
+			 bv*/
 			theSynthesizer.ensureCapacity(19);
 			
 			for (Instrument i : bank.getInstruments())
@@ -88,19 +88,18 @@ public class SoundfontLoader implements Runnable {
 	}
 	
 	/**
-	 * @return An ArrayList of Synthesizer object references needed to 
-	 * play sounds.
+	 * @return The MultiSynthesizer that holds a list of Synthesizers.
 	 */
 	public static Synthesizer getSynth() {
 		return theSynthesizer;
 	}
 	
 	/**
-	 * @return An ArrayList of references for MidiChannel arrays needed to 
+	 * @return An Array of references for MidiChannel objects needed to 
 	 * play sounds.
 	 */
 	public static MidiChannel[] getChannels() {
-		return chan;
+		return theSynthesizer.getChannels();
 	}
 	
 	/**

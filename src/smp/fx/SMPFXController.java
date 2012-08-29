@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.controls.Controls;
 import smp.components.topPanel.instrumentLine.ButtonLine;
 
 /**
@@ -60,7 +61,7 @@ public class SMPFXController implements Initializable {
 	 * Paint GUI.
 	 */
 	public static void initializeHandlers() {
-		// Initialize the selected instrument handlers.
+		// Initialize the selected instrument handlers in the ButtonLine.
 		ArrayList<ImageView> toButtonLine = new ArrayList<ImageView>();
 		for (Node i : instLine.getChildren())
 			toButtonLine.add((ImageView) i);
@@ -69,8 +70,13 @@ public class SMPFXController implements Initializable {
 		selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
 		
 		// Initialize play button
+		// Controls.setPlayButton();
+		
 		// Initialize stop button
+		// Controls.setStopButton();
+		
 		// Initialize loop button
+		// Controls.setLoopButton();
 	}
 
 
