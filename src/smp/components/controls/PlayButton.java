@@ -1,5 +1,6 @@
 package smp.components.controls;
 
+import smp.components.general.ImageButton;
 import javafx.scene.image.ImageView;
 
 /**
@@ -9,14 +10,13 @@ import javafx.scene.image.ImageView;
  * @author RehdBlob
  * @since 2012.08.28
  */
-public class PlayButton  {
+public class PlayButton extends ImageButton {
 
 	private boolean isPressed;
 	
-	private ImageView theImage;
 	
 	public PlayButton(ImageView i) {
-	    theImage = i;
+	    super(i);
 	}
 	
 	public boolean getIsPressed() {
@@ -29,5 +29,11 @@ public class PlayButton  {
 	
 	public ImageView getImage() {
 	    return theImage;
+	}
+
+	@Override
+	protected void react() {
+		// TODO Auto-generated method stub
+		
 	}
 }

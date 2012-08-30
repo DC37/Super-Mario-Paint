@@ -1,44 +1,52 @@
 package smp.components.general;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import smp.ImageIndex;
-import smp.ImageLoader;
+import javafx.event.EventHandler;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * An image button, to be used as a background-type object.
  * To be extended by more concrete classes that use
- * images as backgrounds.
+ * images as backgrounds. Updated 2012-August-30 to 
+ * reflect change to JavaFX2.2
  * @author RehdBlob
  * @since 2012.08.14
- * @see ImageButton
  */
-public abstract class ImageButton extends JButton {
-
+public abstract class ImageButton {
+	
 	/**
-	 * Generated serial ID.
+	 * This is the object that this class will be manipulating
+	 * to act like a button.
 	 */
-	private static final long serialVersionUID = -3828471220970675344L;
-
-	protected BufferedImage background;
+	protected ImageView theImage;
 	
-	
-	public ImageButton(ImageIndex i) {
-		super(new ImageIcon(ImageLoader.getSprite(i)));
-		setLayout(new BorderLayout());
-		background = ImageLoader.getSprite(i);
-		Dimension d = new Dimension(background.getWidth(), 
-				background.getHeight());
-		setPreferredSize(d);
-		setBorder(BorderFactory.createEmptyBorder());
-		setContentAreaFilled(false);
-		validate();
+	/**
+	 * @param i The ImageView passed to the Button
+	 * wrapper.
+	 */
+	public ImageButton(ImageView i) {
+		theImage = i;
+		initializeHandler();
 	}
 
+	/**
+	 * Initializes the button click handler. Every time
+	 * the button is pressed, the react() method in this
+	 * class is called.
+	 */
+	private void initializeHandler() {
+		theImage.setOnMouseClicked(
+				new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				react();
+			}
+		});
+	}
+
+	/**
+	 * This method is called every time the button is pressed.
+	 */
+	protected abstract void react();
 	
 }
