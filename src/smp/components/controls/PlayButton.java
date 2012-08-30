@@ -1,8 +1,6 @@
 package smp.components.controls;
 
 import javafx.scene.image.ImageView;
-import smp.ImageIndex;
-import smp.ImageLoader;
 
 /**
  * Wrapper class for an ImageView that holds the play button
@@ -21,4 +19,15 @@ public class PlayButton  {
 	    theImage = i;
 	}
 	
+	public boolean getIsPressed() {
+		return isPressed;
+	}
+	
+	public void setImage(ImageView i) {
+		theImage = i;
+	}
+	
+	public ImageView getImage() {
+	    return theImage;
+	}
 }

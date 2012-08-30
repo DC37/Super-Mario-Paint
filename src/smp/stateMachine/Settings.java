@@ -8,7 +8,14 @@ import java.io.Serializable;
  * @author RehdBlob
  * @since 2012.08.28
  */
+@SuppressWarnings("unused")
 public class Settings implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7243683035937693416L;
+
 
 	/**
 	 * Classic debug on/off.

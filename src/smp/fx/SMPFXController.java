@@ -1,18 +1,15 @@
 package smp.fx;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
-import smp.components.controls.Controls;
 import smp.components.topPanel.instrumentLine.ButtonLine;
 
 /**
@@ -21,6 +18,7 @@ import smp.components.topPanel.instrumentLine.ButtonLine;
  * @author RehdBlob
  * @since 2012.08.16
  */
+@SuppressWarnings("unused")
 public class SMPFXController implements Initializable {
 	
 	/**

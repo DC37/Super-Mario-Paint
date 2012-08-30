@@ -2,6 +2,7 @@ package smp.components.controls;
 
 import smp.stateMachine.State;
 
+@SuppressWarnings("unused")
 public class Controls {
 	
 	/**
@@ -11,7 +12,7 @@ public class Controls {
 	
 	private PlayButton play;
 	private StopButton stop;
-	private PauseButton pause;
+	/*private PauseButton pause;
 	private LoopButton loop;
 	private TimeSigButton timeSig;
 	private SoundfontSelector selector;
@@ -19,7 +20,7 @@ public class Controls {
 	private EraseButton erase;
 	private TempoEntry tempo;
 	private ScrollBar scroll;
-	
+	*/
 	public Controls() {
 		
 	}

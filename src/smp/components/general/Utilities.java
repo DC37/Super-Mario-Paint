@@ -16,7 +16,6 @@ import java.awt.image.RGBImageFilter;
  * @author RehdBlob
  * @since 2012.08.20
  */
-@SuppressWarnings("unused")
 public class Utilities {
 
 	/**

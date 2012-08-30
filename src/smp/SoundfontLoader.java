@@ -11,7 +11,6 @@ import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
 import smp.components.staff.sounds.MPSynthesizer;
-import smp.components.staff.sounds.MultiSynthesizer;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 import smp.stateMachine.Settings;
 
@@ -67,14 +66,15 @@ public class SoundfontLoader implements Runnable {
 			theSynthesizer.loadAllInstruments(bank);
 			
 			int ordinal = 0;
+			if (Settings.DEBUG){
+				System.out.println("Loaded Instruments: ");
+				for (Instrument j : theSynthesizer.getLoadedInstruments())
+					System.out.println(j.getName());
+			}
 			for (InstrumentIndex i : InstrumentIndex.values()) {
 				chan = theSynthesizer.getChannels();
 				chan[ordinal].programChange(ordinal);
 				ordinal++;
-				if (Settings.DEBUG){
-					for (Instrument j : theSynthesizer.getLoadedInstruments())
-						System.out.println(j.getName());
-				}
 				System.out.println("Initialized Instrument: " 
 						+ i.toString());
 				}

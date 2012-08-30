@@ -15,6 +15,7 @@ import javax.sound.midi.Synthesizer;
  * @since 2012.08.24
  *
  */
+@SuppressWarnings("unused")
 public class SMPSequencer {
 
 	/**
@@ -45,6 +46,7 @@ public class SMPSequencer {
 	/**
 	 * A Synthesizer object reference that will be used to generate sound.
 	 */
+
 	private Synthesizer synth;
 	
 	/**

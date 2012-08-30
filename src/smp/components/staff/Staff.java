@@ -12,7 +12,8 @@ import smp.components.general.ImageButton;
  * @author RehdBlob
  * @since 2012.08.13
  */
-public class Staff extends ImageButton {
+@SuppressWarnings("unused")
+public class Staff {
 	
 	/**
 	 * Generated serial ID.
@@ -28,7 +29,6 @@ public class Staff extends ImageButton {
 	 * @param y The y-location that the staff is to be placed at.
 	 */
 	public Staff() {
-		super(ImageIndex.STAFF_BG);
 	}
 	
 
