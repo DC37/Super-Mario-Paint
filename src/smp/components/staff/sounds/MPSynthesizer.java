@@ -1,11 +1,10 @@
 package smp.components.staff.sounds;
 
-import javax.sound.midi.Instrument;
+import java.util.ArrayList;
+
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
-
-import com.sun.media.sound.SoftSynthesizer;
 
 /**
  * The Mario Paint Synthesizer class. Holds multiple SoftSynthesizers
@@ -33,41 +32,24 @@ public class MPSynthesizer extends MultiSynthesizer {
 	 */
 	@Override
 	public MidiChannel[] getChannels() {
-		MidiChannel[] oldC = super.getChannels();
-		int newSize = theSynths.size() * 15;
-		MidiChannel[] newC = new MidiChannel[newSize];
-		int ordinal = 0;
-		for (int i = 0; i < oldC.length; i++) {
-			// Skip MidiChannel 10
-			if ((i + 1) % 16 == 10) {
-				continue;
-			} else {
-				newC[ordinal] = oldC[i];
-				ordinal++;
+		// TODO: Debug!
+		ArrayList<MidiChannel> all = new ArrayList<MidiChannel>();
+		if (theSynths.size() == 1) 
+			return theSynths.get(0).getChannels();
+		else {
+			for (Synthesizer s : theSynths) {
+				MidiChannel[] temp = s.getChannels();
+				for (MidiChannel m : temp)
+					all.add(m);
 			}
 		}
-		return newC;
-	}
-	
-	/**
-	 * Ensures capacity in a program-specific manner. Adds SoftSynthesizers
-	 * to <code>theSynths</code> until there are definitely enough Synthesizers
-	 * to handle all the required channels.
-	 */
-	@Override
-	public void ensureCapacity(int i) throws MidiUnavailableException {
-		if (!initialized)
-			throw new MidiUnavailableException();
-		int oldSize = theSynths.size();
-		int repeat = (int) Math.floor((double)i / 15);
-		for (int j = 0; j < repeat; j++)
-			theSynths.add(new SoftSynthesizer());
-		for (int j = oldSize - 1; j < theSynths.size(); j++) {
-			Synthesizer s = theSynths.get(j);
-			s.open();
-			for (Instrument inst : this.getLoadedInstruments()) 
-				s.loadInstrument(inst);
+		MidiChannel[] ret = new MidiChannel[all.size() - theSynths.size()];
+		int ord = 0;
+		for (int i = 0; i < all.size(); i++) {
+			ret[ord] = m;
+			ord++;
 		}
+		return ret;
 	}
 
 }

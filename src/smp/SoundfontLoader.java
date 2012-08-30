@@ -52,8 +52,8 @@ public class SoundfontLoader implements Runnable {
 	public void run() {
 		try {
 			File f = new File("./" + soundset);
-			theSynthesizer = new MPSynthesizer();
 			bank = MidiSystem.getSoundbank(f);
+			theSynthesizer = new MPSynthesizer();
 			theSynthesizer.open();
 			/* if (advanced mode on)
 			 *     theSynthesizer.ensureCapacity(50);
@@ -62,18 +62,19 @@ public class SoundfontLoader implements Runnable {
 			theSynthesizer.ensureCapacity(19);
 			for (Instrument i : theSynthesizer.getLoadedInstruments()) 
 				theSynthesizer.unloadInstrument(i);
-			
 			theSynthesizer.loadAllInstruments(bank);
-			
 			int ordinal = 0;
 			if (Settings.DEBUG){
 				System.out.println("Loaded Instruments: ");
 				for (Instrument j : theSynthesizer.getLoadedInstruments())
 					System.out.println(j.getName());
+				
 			}
+			chan = theSynthesizer.getChannels();
 			for (InstrumentIndex i : InstrumentIndex.values()) {
-				chan = theSynthesizer.getChannels();
 				chan[ordinal].programChange(ordinal);
+				if (Settings.DEBUG)
+					System.out.println(chan[ordinal].getProgram());
 				ordinal++;
 				System.out.println("Initialized Instrument: " 
 						+ i.toString());
