@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Synthesizer;
 
 /**
  * The Mario Paint Synthesizer class. Holds multiple SoftSynthesizers
@@ -32,23 +31,23 @@ public class MPSynthesizer extends MultiSynthesizer {
 	 */
 	@Override
 	public MidiChannel[] getChannels() {
-		// TODO: Debug!
-		ArrayList<MidiChannel> all = new ArrayList<MidiChannel>();
-		if (theSynths.size() == 1) 
-			return theSynths.get(0).getChannels();
-		else {
-			for (Synthesizer s : theSynths) {
-				MidiChannel[] temp = s.getChannels();
-				for (MidiChannel m : temp)
-					all.add(m);
+		MidiChannel[] oldC = super.getChannels();
+		ArrayList<MidiChannel> rem = new ArrayList<MidiChannel>();
+		int ordinal = 1;
+		for (MidiChannel m : oldC) {
+			if (ordinal == 10) {
+				ordinal++;
+				continue; 
+			} else {
+				rem.add(m);
+				ordinal++;
+				if (ordinal > 16)
+					ordinal = 1;
 			}
 		}
-		MidiChannel[] ret = new MidiChannel[all.size() - theSynths.size()];
-		int ord = 0;
-		for (int i = 0; i < all.size(); i++) {
-			ret[ord] = m;
-			ord++;
-		}
+		MidiChannel[] ret = new MidiChannel[rem.size()];
+		for (int i = 0; i < rem.size(); i++)
+			ret[i] = rem.get(i);
 		return ret;
 	}
 

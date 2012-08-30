@@ -280,7 +280,7 @@ public class MultiSynthesizer implements Synthesizer {
 			}
 		}
 		MidiChannel[] ret = new MidiChannel[all.size()];
-		for (int i = 0; i < all.size(); i++) 
+		for (int i = 0; i < all.size(); i++)
 			ret[i] = all.get(i);
 		return ret;
 	}
