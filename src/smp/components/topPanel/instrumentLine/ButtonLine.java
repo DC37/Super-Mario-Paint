@@ -9,8 +9,10 @@ import smp.SoundfontLoader;
 import smp.components.staff.Note;
 import smp.stateMachine.Settings;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 
 /**
  * The line of buttons that appear for the Instrument
@@ -60,16 +62,18 @@ public class ButtonLine {
 	 * @param i An ArrayList of ImageView references intended to be displayed
 	 * as an instrument line.
 	 */
-	public ButtonLine(ArrayList<ImageView> i) {
-		buttons = i;
+	public ButtonLine(HBox instLine, ImageView selected) {
+		for (Node i : instLine.getChildren())
+			buttons.add((ImageView) i);
+		selectedInst = selected;
+		setupButtons();
+		
 	}
 
 	/**
 	 * Initializes the buttons with event handlers.
 	 */
-	public void setup(ImageView inst) {
-		selectedInst = inst;
-		selectedInstrument = InstrumentIndex.MARIO;
+	public void setupButtons() {
 		for (final InstrumentIndex i : InstrumentIndex.values()) {
 			buttons.get(i.ordinal()).setOnMouseClicked(
 					new EventHandler<MouseEvent>() {

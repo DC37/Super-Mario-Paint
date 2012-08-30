@@ -13,6 +13,7 @@ import javax.sound.midi.Synthesizer;
 import smp.components.staff.sounds.MPSynthesizer;
 import smp.components.staff.sounds.MultiSynthesizer;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
+import smp.stateMachine.Settings;
 
 /**
  * Loads the soundfonts that will be used to play sounds.
@@ -60,14 +61,20 @@ public class SoundfontLoader implements Runnable {
 			 * else
 			 bv*/
 			theSynthesizer.ensureCapacity(19);
+			for (Instrument i : theSynthesizer.getLoadedInstruments()) 
+				theSynthesizer.unloadInstrument(i);
 			
-			for (Instrument i : bank.getInstruments())
-				if (theSynthesizer.loadInstrument(i))
-				    System.out.println("Loaded Instrument: " + i.getName());
+			theSynthesizer.loadAllInstruments(bank);
 			
+			int ordinal = 0;
 			for (InstrumentIndex i : InstrumentIndex.values()) {
 				chan = theSynthesizer.getChannels();
-				chan[i.ordinal()].programChange(i.ordinal());
+				chan[ordinal].programChange(ordinal);
+				ordinal++;
+				if (Settings.DEBUG){
+					for (Instrument j : theSynthesizer.getLoadedInstruments())
+						System.out.println(j.getName());
+				}
 				System.out.println("Initialized Instrument: " 
 						+ i.toString());
 				}
@@ -99,7 +106,7 @@ public class SoundfontLoader implements Runnable {
 	 * play sounds.
 	 */
 	public static MidiChannel[] getChannels() {
-		return theSynthesizer.getChannels();
+		return chan;
 	}
 	
 	/**

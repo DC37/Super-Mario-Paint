@@ -62,11 +62,7 @@ public class SMPFXController implements Initializable {
 	 */
 	public static void initializeHandlers() {
 		// Initialize the selected instrument handlers in the ButtonLine.
-		ArrayList<ImageView> toButtonLine = new ArrayList<ImageView>();
-		for (Node i : instLine.getChildren())
-			toButtonLine.add((ImageView) i);
-		instBLine = new ButtonLine(toButtonLine);
-		instBLine.setup(selectedInst);
+		instBLine = new ButtonLine(instLine, selectedInst);
 		selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
 		
 		// Initialize play button

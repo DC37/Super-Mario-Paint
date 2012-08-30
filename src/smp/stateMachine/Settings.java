@@ -17,7 +17,8 @@ public class Settings implements Serializable {
 	
 	
 	/**
-	 * 
+	 * For initialization purposes, if Advanced mode is unlocked,
+	 * there are some things that are supposed to be initialized.
 	 */
 	private boolean advModeUnlocked;
 	

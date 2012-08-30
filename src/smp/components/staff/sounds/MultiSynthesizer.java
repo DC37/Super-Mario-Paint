@@ -33,7 +33,7 @@ public class MultiSynthesizer implements Synthesizer {
 	 * Indicates whether this Synthesizer is actually initialized
 	 * or not. Many methods will not work if this is not <b>True</b>.
 	 */
-	private boolean initialized;
+	protected boolean initialized;
 	
 	/**
 	 * The list of synthesizers that this class holds.
@@ -62,6 +62,7 @@ public class MultiSynthesizer implements Synthesizer {
 		}
 		return s;
 	}
+	
 	
 	/**
 	 * 
@@ -488,7 +489,7 @@ public class MultiSynthesizer implements Synthesizer {
 		if (!initialized)
 			throw new MidiUnavailableException();
 		int oldSize = theSynths.size();
-		int repeat = (int) Math.floor((double)i / 15);
+		int repeat = (int) Math.floor((double)i / 16);
 		for (int j = 0; j < repeat; j++)
 			theSynths.add(new SoftSynthesizer());
 		for (int j = oldSize - 1; j < theSynths.size(); j++) {

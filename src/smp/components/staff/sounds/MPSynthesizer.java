@@ -1,7 +1,11 @@
 package smp.components.staff.sounds;
 
+import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Synthesizer;
+
+import com.sun.media.sound.SoftSynthesizer;
 
 /**
  * The Mario Paint Synthesizer class. Holds multiple SoftSynthesizers
@@ -24,7 +28,8 @@ public class MPSynthesizer extends MultiSynthesizer {
 	/**
 	 * @return An array of MidiChannels that happens to not contain 
 	 * Channel 10 of any Synthesizer object, since that would break the
-	 * ability of that channel to play any sound.
+	 * ability of that channel to play any sound, since Channel 10 is 
+	 * reserved for percussion
 	 */
 	@Override
 	public MidiChannel[] getChannels() {
@@ -42,6 +47,27 @@ public class MPSynthesizer extends MultiSynthesizer {
 			}
 		}
 		return newC;
+	}
+	
+	/**
+	 * Ensures capacity in a program-specific manner. Adds SoftSynthesizers
+	 * to <code>theSynths</code> until there are definitely enough Synthesizers
+	 * to handle all the required channels.
+	 */
+	@Override
+	public void ensureCapacity(int i) throws MidiUnavailableException {
+		if (!initialized)
+			throw new MidiUnavailableException();
+		int oldSize = theSynths.size();
+		int repeat = (int) Math.floor((double)i / 15);
+		for (int j = 0; j < repeat; j++)
+			theSynths.add(new SoftSynthesizer());
+		for (int j = oldSize - 1; j < theSynths.size(); j++) {
+			Synthesizer s = theSynths.get(j);
+			s.open();
+			for (Instrument inst : this.getLoadedInstruments()) 
+				s.loadInstrument(inst);
+		}
 	}
 
 }

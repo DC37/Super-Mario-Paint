@@ -2,6 +2,7 @@ package smp.fx;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,7 +23,7 @@ public class SplashScreen extends JFrame implements Runnable {
 	
 	private JButton loading;
 	private boolean isUpdateable;
-	
+	private Image splashScreen;
 	/**
 	 * Displays a dummy window that says "Loading!"
 	 */
@@ -31,6 +32,7 @@ public class SplashScreen extends JFrame implements Runnable {
 		loading = new JButton("Loading: 0.0");
 		loading.setBorder(BorderFactory.createEmptyBorder());
 		loading.setContentAreaFilled(false);
+		// loading.add(splashScreen);
 		add(loading, BorderLayout.CENTER);
 		setSize(new Dimension(400, 400));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
