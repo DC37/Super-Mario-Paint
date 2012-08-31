@@ -8,6 +8,8 @@ import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 
+import smp.SoundfontLoader;
+
 /**
  * The Super Mario Paint Sequencer. It holds the sequence of notes
  * that is to be played back to the user.
@@ -15,7 +17,6 @@ import javax.sound.midi.Synthesizer;
  * @since 2012.08.24
  *
  */
-@SuppressWarnings("unused")
 public class SMPSequencer {
 
 	/**
@@ -47,7 +48,7 @@ public class SMPSequencer {
 	 * A Synthesizer object reference that will be used to generate sound.
 	 */
 
-	private Synthesizer synth;
+	private Synthesizer theSynthesizer;
 	
 	/**
 	 * Initializes the sequencer and its dependencies.
@@ -57,6 +58,7 @@ public class SMPSequencer {
 			theSequencer = MidiSystem.getSequencer();
 			theSong = new Sequence(Sequence.PPQ, 4, NUM_TRACKS);
 			theArrangement = new Sequence(Sequence.PPQ, 4 , NUM_TRACKS);
+			theSynthesizer = SoundfontLoader.getSynth();
 		} catch (MidiUnavailableException e) {
 			// Probably can't recover from this since if you can't get a 
 			// sequencer, you can't make long sequences of sound.
@@ -68,6 +70,14 @@ public class SMPSequencer {
 		}
 	}
 	
+	public void addNote() {
+		
+	}
+	
+	public void removeNote() {
+		
+	}
+	
 	/**
 	 * @param BPM The beats per minute that we're intending to set the sequencer
 	 * to run at.
@@ -75,6 +85,8 @@ public class SMPSequencer {
 	public void setTempo(float BPM) {
 		theSequencer.setTempoInBPM(BPM);
 	}
+	
+	
 	
 	/**
 	 * Adds a MidiEvent onto the song sequence.

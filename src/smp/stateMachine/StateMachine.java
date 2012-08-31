@@ -24,10 +24,17 @@ public class StateMachine {
 	private StateMachine(){
 	}
 	
+	/**
+	 * Get the current <code>State</code> of the <code>StateMachine</code>
+	 * @return The current <code>State</code>.
+	 */
 	public static synchronized State getState() {
 		return state;
 	}
 	
+	/**
+	 * @param s Set the <code>StateMachine</code> to a certain State.
+	 */
 	public static synchronized void setState(State s) {
 		state = s;
 	}

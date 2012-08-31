@@ -2,25 +2,33 @@ package smp.components.staff;
 
 
 import java.util.ArrayList;
-import javax.sound.midi.MidiEvent;
-import smp.ImageIndex;
-import smp.components.general.ImageButton;
+
+import javafx.scene.image.ImageView;
 
 
 /**
- * The staff on which notes go.
+ * The staff on which notes go. The way that the Staff keeps track of
+ * notes is that there is a matrix
  * @author RehdBlob
  * @since 2012.08.13
  */
-@SuppressWarnings("unused")
 public class Staff {
 	
 	/**
-	 * Generated serial ID.
+	 * The Sequencer object that will be used to play sounds.
 	 */
-	private static final long serialVersionUID = 5368970028913902003L;
+	private SMPSequencer seq;
 	
-	private ArrayList<MidiEvent> events = new ArrayList<MidiEvent>();
+	/**
+	 * A matrix of notes, which will be displayed on the screen
+	 * at any time.
+	 */
+	private ArrayList<ArrayList<ImageView>> noteImageMatrix;
+	
+	/**
+	 * Holds whatever notes that the user decides to put on the staff.
+	 */
+	private ArrayList<ArrayList<StaffNote>> noteMatrix;
 	
 	/**
 	 * Creates a new Staff object and gives it the x and y coordinates
@@ -29,7 +37,72 @@ public class Staff {
 	 * @param y The y-location that the staff is to be placed at.
 	 */
 	public Staff() {
+		seq = new SMPSequencer();
+		noteImageMatrix = new ArrayList<ArrayList<ImageView>>();
+		initializeNoteMatrix();
 	}
 	
-
+	
+	public void addNote(Note n) {
+		
+	}
+	
+	/**
+	 * Puts a note on the Staff.
+	 */
+	public void placeNote() {
+		
+	}
+	
+	/**
+	 * Initializes the note matrix with ImageViews as notes.
+	 */
+	private void initializeNoteMatrix() {
+		
+	}
+	
+	/**
+	 * Moves the staff and notes left by 1.
+	 */
+	public void moveLeft() {
+		
+	}
+	
+	/**
+	 * Moves the staff and notes right by 1.
+	 */
+	public void moveRight() {
+		
+	}
+	
+	/**
+	 * Begins animation of the Staff.
+	 */
+	public void startAnimation() {
+		
+	}
+	
+	/**
+	 * Loads a Super Mario Paint song.
+	 */
+	public void loadSong() {
+		
+	}
+	
+	/**
+	 * Saves a Super Mario Paint song.
+	 */
+	public void saveSong() {
+		
+	}
+	
+	/**
+	 * Imports a Mario Paint Composer song.
+	 * @throws MPCException If for some reason the load fails.
+	 */
+	public void importMPCSong() throws MPCException {
+		
+	}
+	
+	
 }

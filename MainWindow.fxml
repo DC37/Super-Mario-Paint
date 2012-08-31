@@ -132,6 +132,16 @@
                     <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="123.0" layoutX="3.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
                     <StackPane fx:id="controls" layoutX="14.0" layoutY="7.0">
                       <children>
+                        <HBox prefHeight="76.0" prefWidth="474.0">
+                          <children>
+                            <HBox prefHeight="100.0" prefWidth="200.0" />
+                            <HBox prefHeight="100.0" prefWidth="200.0" />
+                            <HBox prefHeight="100.0" prefWidth="200.0" />
+                          </children>
+                          <padding>
+                            <Insets left="8.0" right="8.0" />
+                          </padding>
+                        </HBox>
                         <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">
                           <children>
                             <ImageView id="ConrolsLeft" fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">

@@ -14,7 +14,6 @@ import javax.swing.JFrame;
  * @author RehdBlob
  * @since 2012.08.17
  */
-@SuppressWarnings("unused")
 public class SplashScreen extends JFrame implements Runnable {
 
 	/**

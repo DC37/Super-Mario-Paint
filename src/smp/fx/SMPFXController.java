@@ -18,7 +18,6 @@ import smp.components.topPanel.instrumentLine.ButtonLine;
  * @author RehdBlob
  * @since 2012.08.16
  */
-@SuppressWarnings("unused")
 public class SMPFXController implements Initializable {
 	
 	/**

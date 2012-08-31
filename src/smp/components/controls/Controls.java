@@ -2,13 +2,7 @@ package smp.components.controls;
 
 import smp.stateMachine.State;
 
-@SuppressWarnings("unused")
 public class Controls {
-	
-	/**
-	 * Generated serial ID.
-	 */
-	private static final long serialVersionUID = -7128020032635313050L;
 	
 	private PlayButton play;
 	private StopButton stop;
