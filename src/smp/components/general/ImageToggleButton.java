@@ -10,6 +10,10 @@ import javafx.scene.image.ImageView;
  */
 public abstract class ImageToggleButton extends ImageButton {
 
+	/**
+	 * @param i The ImageView passed to the Button
+	 * wrapper.
+	 */
 	public ImageToggleButton(ImageView i) {
 		super(i);
 	}

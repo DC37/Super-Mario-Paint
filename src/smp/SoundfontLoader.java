@@ -24,6 +24,12 @@ import smp.stateMachine.Settings;
 public class SoundfontLoader implements Runnable {
 	
 	/**
+	 * A number between 0 and 1 that indicates the
+	 * completion of the loading Thread's tasks.
+	 */
+	private double loadStatus = 0.0;
+	
+	/**
 	 * The sound synthesizer used to hold as many instruments as needed.
 	 */
 	private static MPSynthesizer theSynthesizer;
@@ -43,8 +49,6 @@ public class SoundfontLoader implements Runnable {
 	 */
 	private String soundset = "soundset3.sf2";
 	
-	
-	
 	/**
 	 * Initializes a MultiSynthesizer with the soundfont.
 	 */
@@ -55,23 +59,30 @@ public class SoundfontLoader implements Runnable {
 			bank = MidiSystem.getSoundbank(f);
 			theSynthesizer = new MPSynthesizer();
 			theSynthesizer.open();
+			setLoadStatus(0.1);
 			/* if (advanced mode on)
 			 *     theSynthesizer.ensureCapacity(50);
 			 * else
 			 bv*/
+			
 			theSynthesizer.ensureCapacity(19);
 			for (Instrument i : theSynthesizer.getLoadedInstruments()) 
 				theSynthesizer.unloadInstrument(i);
+			setLoadStatus(0.2);
 			theSynthesizer.loadAllInstruments(bank);
-			int ordinal = 0;
+			setLoadStatus(0.3);
+			
 			if (Settings.DEBUG){
 				System.out.println("Loaded Instruments: ");
 				for (Instrument j : theSynthesizer.getLoadedInstruments())
 					System.out.println(j.getName());
-				
 			}
+			
+			int ordinal = 0;
 			chan = theSynthesizer.getChannels();
 			for (InstrumentIndex i : InstrumentIndex.values()) {
+				setLoadStatus(0.3 + 0.7
+						* ordinal / InstrumentIndex.values().length);
 				chan[ordinal].programChange(ordinal);
 				if (Settings.DEBUG)
 					System.out.println(chan[ordinal].getProgram());
@@ -80,6 +91,7 @@ public class SoundfontLoader implements Runnable {
 						+ i.toString());
 				}
 			System.out.println("Synth Latency: " + theSynthesizer.getLatency());
+		    setLoadStatus(1);
 		} catch (MidiUnavailableException e) {
 			// Can't recover.
 			e.printStackTrace();
@@ -115,6 +127,15 @@ public class SoundfontLoader implements Runnable {
 	 */
 	public void close() {
 		theSynthesizer.close();
+	}
+	
+	public double getLoadStatus() {
+		return loadStatus;
+	}
+	
+	public void setLoadStatus(double d) {
+		if (d >= 0 && d <= 1)
+			loadStatus = d;
 	}
 
 

@@ -13,7 +13,8 @@ import javafx.scene.image.ImageView;
 public abstract class ImageRadioButton extends ImageButton {
 
 	/**
-	 * @see ImageButton
+	 * @param i The ImageView passed to the Button
+	 * wrapper.
 	 */
 	public ImageRadioButton(ImageView i) {
 		super(i);

@@ -72,6 +72,7 @@ public class ImageLoader implements Runnable {
 				sprites.put(i, temp);
 				spritesFX.put(i, temp2);
 				System.out.println("Loaded Image: " + i.toString() + extension);
+				setLoadStatus(1);
 			}
 		} catch (IOException e) {
 			// If the images fail to load, don't start the program!

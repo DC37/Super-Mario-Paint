@@ -44,6 +44,9 @@ public class ButtonLine {
 	 */
 	private ArrayList<ImageView> buttons = new ArrayList<ImageView>();
 	
+	/**
+	 * The InstrumentIndex of the selected instrument.
+	 */
 	private InstrumentIndex selectedInstrument;
 	
 	/**
