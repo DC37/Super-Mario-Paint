@@ -27,9 +27,9 @@
               <children>
                 <HBox id="BottomLeftBox" alignment="TOP_RIGHT" prefHeight="56.0" prefWidth="267.0">
                   <children>
-                    <Pane prefHeight="56.0" prefWidth="239.0">
+                    <Pane prefHeight="56.0" prefWidth="228.0">
                       <children>
-                        <HBox alignment="CENTER" prefHeight="56.0" prefWidth="242.0" spacing="14.0">
+                        <HBox alignment="CENTER" prefHeight="56.0" prefWidth="228.0" spacing="14.0">
                           <children>
                             <ImageView fitHeight="28.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -52,24 +52,33 @@
                     </Pane>
                   </children>
                 </HBox>
-                <VBox id="VBox" alignment="CENTER" prefHeight="56.0" prefWidth="360.0" spacing="5.0">
+                <VBox id="VBox" alignment="TOP_CENTER" prefHeight="56.0" prefWidth="360.0" spacing="5.0">
                   <children>
-                    <StackPane id="StackPane">
+                    <AnchorPane id="AnchorPane" prefHeight="48.0" prefWidth="399.0">
                       <children>
-                        <TextArea fx:id="songName" focusTraversable="false" prefHeight="32.0" prefWidth="390.0" promptText="Song Name">
-                          <StackPane.margin>
-                            <Insets />
-                          </StackPane.margin>
-                        </TextArea>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8c090" height="32.0" layoutX="4.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="390.0" />
+                        <StackPane id="StackPane" layoutY="2.0">
+                          <children>
+                            <TextArea fx:id="songName" focusTraversable="false" prefHeight="30.0" prefWidth="390.0" promptText="Song Name">
+                              <StackPane.margin>
+                                <Insets />
+                              </StackPane.margin>
+                            </TextArea>
+                            <Rectangle fill="#1e90ff00" height="30.0" mouseTransparent="true" stroke="#d09048" strokeType="INSIDE" strokeWidth="2.0" width="390.0" />
+                          </children>
+                        </StackPane>
                       </children>
-                    </StackPane>
+                    </AnchorPane>
                   </children>
+                  <padding>
+                    <Insets top="8.0" />
+                  </padding>
                 </VBox>
                 <HBox id="BottomRightBox" prefHeight="56.0" prefWidth="144.0">
                   <children>
                     <Pane prefHeight="56.0" prefWidth="116.0">
                       <children>
-                        <HBox alignment="CENTER" prefHeight="55.9998779296875" prefWidth="116.0">
+                        <HBox alignment="CENTER" prefHeight="55.9998779296875" prefWidth="100.0">
                           <children>
                             <ImageView fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -101,7 +110,7 @@
                             <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
                           </fill>
                         </Rectangle>
-                        <ImageView fx:id="staff" fitHeight="276.0" fitWidth="758.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="" fitHeight="276.0" fitWidth="758.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/STAFF_BG_TREBLE.png" preserveRatio="false" smooth="false" />
                           </image>
@@ -322,7 +331,7 @@
                     <Image url="@sprites/SEL_INST_SM.png" preserveRatio="false" smooth="false" />
                   </image>
                 </ImageView>
-                <ImageView fx:id="selectedInst" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="selectedInst" fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
               </children>
             </StackPane>
           </children>

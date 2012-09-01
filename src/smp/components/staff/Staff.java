@@ -104,5 +104,13 @@ public class Staff {
 		
 	}
 	
+	/**
+	 * Imports an Advanced Mario Sequencer song.
+	 * @throws AMSException If for some reason the load fails.
+	 */
+	public void importAMSSong() throws AMSException {
+		
+	}
+	
 	
 }
