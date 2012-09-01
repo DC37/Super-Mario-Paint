@@ -6,7 +6,7 @@ import javax.sound.midi.MidiChannel;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
-import smp.components.staff.Note;
+import smp.components.staff.sequences.Note;
 import smp.stateMachine.Settings;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

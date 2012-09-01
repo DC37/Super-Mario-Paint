@@ -1,4 +1,4 @@
-package smp.components.staff;
+package smp.components.staff.sequences;
 
 /**
  * This gives some note names to values that are used in

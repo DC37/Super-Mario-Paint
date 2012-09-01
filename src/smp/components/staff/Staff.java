@@ -3,6 +3,12 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
+import smp.components.staff.sequences.AMSException;
+import smp.components.staff.sequences.MPCException;
+import smp.components.staff.sequences.Note;
+import smp.components.staff.sequences.SMPSequencer;
+import smp.components.staff.sequences.StaffNote;
+
 import javafx.scene.image.ImageView;
 
 

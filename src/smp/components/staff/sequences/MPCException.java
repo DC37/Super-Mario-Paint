@@ -1,4 +1,4 @@
-package smp.components.staff;
+package smp.components.staff.sequences;
 
 /**
  * An Exception class thrown when things go wrong with loading Mario

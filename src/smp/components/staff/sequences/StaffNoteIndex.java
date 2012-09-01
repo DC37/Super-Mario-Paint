@@ -1,4 +1,4 @@
-package smp.components.staff;
+package smp.components.staff.sequences;
 
 /**
  * Tells where a StaffNote is located in a line of notes.

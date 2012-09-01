@@ -1,6 +1,7 @@
 package smp.components.controls;
 
 import smp.components.general.ImageButton;
+import smp.components.general.ImageRadioButton;
 import javafx.scene.image.ImageView;
 
 /**
@@ -10,7 +11,7 @@ import javafx.scene.image.ImageView;
  * @author RehdBlob
  * @since 2012.08.28
  */
-public class PlayButton extends ImageButton {
+public class PlayButton extends ImageRadioButton {
 
 	private boolean isPressed;
 	
@@ -33,6 +34,12 @@ public class PlayButton extends ImageButton {
 
 	@Override
 	protected void react() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void link() {
 		// TODO Auto-generated method stub
 		
 	}

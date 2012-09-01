@@ -1,4 +1,4 @@
-package smp.components.staff;
+package smp.components.staff.sequences;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
@@ -37,12 +37,12 @@ public class SMPSequencer {
 	/**
 	 * The song that is to be played, displayed on the staff.
 	 */
-	private Sequence theSong;
+	private SMPSequence theSong;
 	
 	/**
 	 * The arrangement that is to be played, displayed on the staff.
 	 */
-	private Sequence theArrangement;
+	private SMPSequence theArrangement;
 	
 	/**
 	 * A Synthesizer object reference that will be used to generate sound.
@@ -56,8 +56,8 @@ public class SMPSequencer {
 	public SMPSequencer() {
 		try {
 			theSequencer = MidiSystem.getSequencer();
-			theSong = new Sequence(Sequence.PPQ, 4, NUM_TRACKS);
-			theArrangement = new Sequence(Sequence.PPQ, 4 , NUM_TRACKS);
+			theSong = new SMPSequence(NUM_TRACKS);
+			theArrangement = new SMPSequence(NUM_TRACKS);
 			theSynthesizer = SoundfontLoader.getSynth();
 		} catch (MidiUnavailableException e) {
 			// Probably can't recover from this since if you can't get a 

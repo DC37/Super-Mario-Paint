@@ -1,4 +1,4 @@
-package smp.components.staff;
+package smp.components.staff.sequences;
 
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
