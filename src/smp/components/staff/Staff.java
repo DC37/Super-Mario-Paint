@@ -58,7 +58,8 @@ public class Staff {
 	 * Initializes the note matrix with ImageViews as notes.
 	 */
 	private void initializeNoteMatrix() {
-		
+		noteImageMatrix = new ArrayList<ArrayList<ImageView>>();
+		noteMatrix = new ArrayList<ArrayList<StaffNote>>();
 	}
 	
 	/**

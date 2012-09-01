@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
  * An image button, to be used as a background-type object.
  * To be extended by more concrete classes that use
  * images as backgrounds. Updated 2012-August-30 to 
- * reflect change to JavaFX2.2
+ * reflect change to JavaFX2.2.
  * @author RehdBlob
  * @since 2012.08.14
  */

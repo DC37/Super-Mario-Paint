@@ -11,5 +11,9 @@ import smp.components.topPanel.instrumentLine.InstrumentIndex;
 public class StaffNote {
 	
 	private InstrumentIndex theInstrument;
+	
+	private StaffNoteIndex noteLocation;
+	
+	private Note theNote;
 
 }

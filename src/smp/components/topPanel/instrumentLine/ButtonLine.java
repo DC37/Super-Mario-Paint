@@ -31,13 +31,15 @@ public class ButtonLine {
 	 * a note played at this will be played as loudly 
 	 * as possible.
 	 */
-	public static final int MAX_VELOCITY = 127;
+	private static final int MAX_VELOCITY = 127;
 	
 	/**
 	 * The smallest value that a note velocity can be;
 	 * a note will basically be silent if played at this.
 	 */
-	public static final int MIN_VELOCITY = 0;
+	private static final int MIN_VELOCITY = 0;
+	
+	private static int DEFAULT_NOTE;
 	
 	/**
 	 * An ArrayList of ImageView objects being used as buttons.
@@ -70,7 +72,7 @@ public class ButtonLine {
 			buttons.add((ImageView) i);
 		selectedInst = selected;
 		setupButtons();
-		
+		DEFAULT_NOTE = Note.A3.getKeyNum();
 	}
 
 	/**
@@ -113,7 +115,7 @@ public class ButtonLine {
 	 */
 	public void playSound(InstrumentIndex i) {
 		if (chan[i.ordinal()] != null) {
-			chan[i.ordinal()].noteOn(Note.A3.getKeyNum(), MAX_VELOCITY);
+			chan[i.ordinal()].noteOn(DEFAULT_NOTE, MAX_VELOCITY);
 			if (Settings.DEBUG)
 				System.out.println(
 						"Channel " + (i.ordinal() + 1)
@@ -127,6 +129,14 @@ public class ButtonLine {
 	
 	public InstrumentIndex getSelectedInstrument() {
 		return selectedInstrument;
+	}
+	
+	/**
+	 * @param n The Note that all of the InstrumentLine instruments
+	 * will play when clicked on.
+	 */
+	public void setDefaultNote(Note n) {
+		DEFAULT_NOTE = n.getKeyNum();
 	}
 	
 }
