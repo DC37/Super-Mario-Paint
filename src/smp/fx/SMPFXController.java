@@ -38,6 +38,24 @@ public class SMPFXController implements Initializable {
 	 */
 	private static ButtonLine instBLine;
 	
+	/**
+	 * The staff measure lines.
+	 */
+	@FXML
+	private static HBox staffMLines;
+	
+	/**
+	 * The staff layer that displays the bar that plays notes.
+	 */
+	@FXML
+	private static HBox staffPlayBars;
+	
+	/**
+	 * The staff layer that displays the instruments that have been placed
+	 * on the staff.
+	 */
+	@FXML
+	private static HBox staffInstruments;
 	
 	@FXML
 	private static Slider scrollbar;

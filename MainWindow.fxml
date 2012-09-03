@@ -117,6 +117,33 @@
                         </ImageView>
                       </children>
                     </StackPane>
+                    <HBox fx:id="staffMLines" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
+                      <children>
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                      <padding>
+                        <Insets left="144.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
+                      <padding>
+                        <Insets left="144.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
+                      <padding>
+                        <Insets left="144.0" />
+                      </padding>
+                    </HBox>
                   </children>
                   <padding>
                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
