@@ -8,15 +8,15 @@ package smp.components.staff.sequences;
  */
 public enum StaffNoteIndex {
 
-	Low_A (0), A(12), High_A(24);
-	
-	private int coordinate;
-	
-	private StaffNoteIndex(int num) {
-		coordinate = num;
-	}
-	
-	public int coordinate() {
-		return coordinate;
-	}
+    Low_A (0), A(12), High_A(24);
+
+    private int coordinate;
+
+    private StaffNoteIndex(int num) {
+        coordinate = num;
+    }
+
+    public int coordinate() {
+        return coordinate;
+    }
 }

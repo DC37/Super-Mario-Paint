@@ -1,8 +1,7 @@
 package smp.components.controls;
 
-import smp.components.general.ImageButton;
-import smp.components.general.ImageRadioButton;
 import javafx.scene.image.ImageView;
+import smp.components.general.ImageRadioButton;
 
 /**
  * Wrapper class for an ImageView that holds the play button
@@ -13,34 +12,34 @@ import javafx.scene.image.ImageView;
  */
 public class PlayButton extends ImageRadioButton {
 
-	private boolean isPressed;
-	
-	
-	public PlayButton(ImageView i) {
-	    super(i);
-	}
-	
-	public boolean getIsPressed() {
-		return isPressed;
-	}
-	
-	public void setImage(ImageView i) {
-		theImage = i;
-	}
-	
-	public ImageView getImage() {
-	    return theImage;
-	}
+    private boolean isPressed;
 
-	@Override
-	protected void react() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void link() {
-		// TODO Auto-generated method stub
-		
-	}
+    public PlayButton(ImageView i) {
+        super(i);
+    }
+
+    public boolean getIsPressed() {
+        return isPressed;
+    }
+
+    public void setImage(ImageView i) {
+        theImage = i;
+    }
+
+    public ImageView getImage() {
+        return theImage;
+    }
+
+    @Override
+    protected void react() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void link() {
+        // TODO Auto-generated method stub
+
+    }
 }

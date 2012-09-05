@@ -7,12 +7,12 @@ package smp.components.topPanel.instrumentLine;
  * @since 2012.08.20
  */
 public enum InstrumentIndex {
-	
-	/*
-	 * The standard 19-instrument range.
-	 */
-	
-	MARIO, MUSHROOM, YOSHI, STAR, FLOWER, GAMEBOY, DOG, CAT, PIG, SWAN,
-	FACE, PLANE, BOAT, CAR, HEART, PIRANHA, COIN, SHYGUY, BOO;
-	
+
+    /*
+     * The standard 19-instrument range.
+     */
+
+    MARIO, MUSHROOM, YOSHI, STAR, FLOWER, GAMEBOY, DOG, CAT, PIG, SWAN,
+    FACE, PLANE, BOAT, CAR, HEART, PIRANHA, COIN, SHYGUY, BOO;
+
 }

@@ -11,54 +11,54 @@ import java.io.Serializable;
 @SuppressWarnings("unused")
 public class Settings implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7243683035937693416L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7243683035937693416L;
 
 
-	/**
-	 * Classic debug on/off.
-	 */
-	public static final boolean DEBUG = true;
-	
-	
-	/**
-	 * For initialization purposes, if Advanced mode is unlocked,
-	 * there are some things that are supposed to be initialized.
-	 */
-	private boolean advModeUnlocked;
-	
-	
-	
-	public Settings() {
-		
-	}
-	
-	
-	/**
-	 * 
-	 */
-	private void setOptions() {
-		
-	}
-	
-	/**
-	 * 
-	 */
-	private void load() {
-		
-	}
-	
-	/**
-	 * 
-	 */
-	private void save() {
-		
-	}
-	
-	
-	
-	
-	
+    /**
+     * Classic debug on/off.
+     */
+    public static final boolean DEBUG = true;
+
+
+    /**
+     * For initialization purposes, if Advanced mode is unlocked,
+     * there are some things that are supposed to be initialized.
+     */
+    private boolean advModeUnlocked;
+
+
+
+    public Settings() {
+
+    }
+
+
+    /**
+     * 
+     */
+    private void setOptions() {
+
+    }
+
+    /**
+     * 
+     */
+    private void load() {
+
+    }
+
+    /**
+     * 
+     */
+    private void save() {
+
+    }
+
+
+
+
+
 }

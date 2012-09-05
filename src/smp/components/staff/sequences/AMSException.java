@@ -8,9 +8,9 @@ package smp.components.staff.sequences;
  */
 public class AMSException extends Exception {
 
-	/**
-	 * Generated serial ID.
-	 */
-	private static final long serialVersionUID = 8584676102025336846L;
+    /**
+     * Generated serial ID.
+     */
+    private static final long serialVersionUID = 8584676102025336846L;
 
 }

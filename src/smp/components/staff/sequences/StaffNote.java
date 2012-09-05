@@ -9,11 +9,11 @@ import smp.components.topPanel.instrumentLine.InstrumentIndex;
  * @since 2012.08.31
  */
 public class StaffNote {
-	
-	private InstrumentIndex theInstrument;
-	
-	private StaffNoteIndex noteLocation;
-	
-	private Note theNote;
+
+    private InstrumentIndex theInstrument;
+
+    private StaffNoteIndex noteLocation;
+
+    private Note theNote;
 
 }

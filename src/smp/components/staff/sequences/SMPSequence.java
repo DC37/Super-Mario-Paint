@@ -10,26 +10,26 @@ import javax.sound.midi.Sequence;
  */
 public class SMPSequence {
 
-	/**
-	 * The Sequence type that this class wraps.
-	 */
-	private Sequence theSequence;
-	
-	/**
-	 * @param numTracks The number of tracks we want this sequence to hold.
-	 * @throws InvalidMidiDataException If for some reason the Sequence
-	 * initialization fails.
-	 */
-	public SMPSequence(int numTracks) throws InvalidMidiDataException {
-		setSequence(new Sequence(Sequence.PPQ, 4 , numTracks));
-	}
+    /**
+     * The Sequence type that this class wraps.
+     */
+    private Sequence theSequence;
 
-	public Sequence getSequence() {
-		return theSequence;
-	}
+    /**
+     * @param numTracks The number of tracks we want this sequence to hold.
+     * @throws InvalidMidiDataException If for some reason the Sequence
+     * initialization fails.
+     */
+    public SMPSequence(int numTracks) throws InvalidMidiDataException {
+        setSequence(new Sequence(Sequence.PPQ, 4 , numTracks));
+    }
 
-	public void setSequence(Sequence seq) {
-		theSequence = seq;
-	}
-	
+    public Sequence getSequence() {
+        return theSequence;
+    }
+
+    public void setSequence(Sequence seq) {
+        theSequence = seq;
+    }
+
 }

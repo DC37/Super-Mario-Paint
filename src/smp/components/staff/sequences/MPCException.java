@@ -8,9 +8,9 @@ package smp.components.staff.sequences;
  */
 public class MPCException extends Exception {
 
-	/**
-	 * Generated serial ID.
-	 */
-	private static final long serialVersionUID = -217080679211250184L;
+    /**
+     * Generated serial ID.
+     */
+    private static final long serialVersionUID = -217080679211250184L;
 
 }

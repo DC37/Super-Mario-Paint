@@ -7,9 +7,9 @@ package smp.components.staff.sequences;
  * @since 2012.09.01
  */
 public class MPCDecoder {
-	
-	public static String decode(String in) {
-		return null;
-	}
-	
+
+    public static String decode(String in) {
+        return null;
+    }
+
 }
