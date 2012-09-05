@@ -19,6 +19,17 @@ public class PlayButton extends ImageRadioButton {
         super(i);
     }
 
+    private void setIsPressed(boolean b) {
+        isPressed = b;
+    }
+
+    private void toggle() {
+        if (isPressed)
+            isPressed = false;
+        else
+            isPressed = true;
+    }
+
     public boolean getIsPressed() {
         return isPressed;
     }

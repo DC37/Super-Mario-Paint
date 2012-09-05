@@ -20,10 +20,7 @@ import smp.fx.SplashScreen;
  * TrioSequencer <br>
  * Robby Mulvany's Mario Paint Composer 1.0 / 2.0 (2007-2008) <br>
  * FordPrefect's Advanced Mario Sequencer (2009) <br>
- * JavaFX2.2 has been released. Testing some application development.
- * It might take a little longer to do this, but it promises to be
- * faster than working with swing... at least in the maintenance
- * aspect... <br>
+ * The GUI is primarily written with JavaFX2.2. <br>
  * @author RehdBlob
  * @since 2012.08.16
  * @version 1.00

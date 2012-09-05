@@ -1,6 +1,7 @@
 package smp.components.general;
 
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -15,6 +16,21 @@ import javafx.scene.input.MouseEvent;
 public abstract class ImageButton {
 
     /**
+     * Indicates whether the button is currently pressed.
+     */
+    protected boolean isPressed;
+
+    /**
+     * The image that displays when the button is not pressed.
+     */
+    protected Image notPressed;
+
+    /**
+     * The image that displays when the button is pressed.
+     */
+    protected Image pressed;
+
+    /**
      * This is the object that this class will be manipulating
      * to act like a button.
      */
@@ -27,6 +43,7 @@ public abstract class ImageButton {
     public ImageButton(ImageView i) {
         theImage = i;
         initializeHandler();
+        getImages();
     }
 
     /**
@@ -39,14 +56,37 @@ public abstract class ImageButton {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        react();
+                        react(event);
                     }
                 });
     }
 
     /**
-     * This method is called every time the button is pressed.
+     * "Presses" the button by setting the image to <code>pressed</code>.
      */
-    protected abstract void react();
+    protected void press() {
+        isPressed = true;
+        theImage.setImage(pressed);
+    }
+
+    /**
+     * "Releases" the button by setting the image to <code>notPressed</code>.
+     */
+    protected void release() {
+        isPressed = false;
+        theImage.setImage(notPressed);
+    }
+
+
+    /**
+     * This method is called every time the button is clicked.
+     */
+    protected abstract void react(MouseEvent event);
+
+    /**
+     * Gets the images for the <code>pressed</code> and <code>notPressed</code>
+     * versions of the button.
+     */
+    protected abstract void getImages();
 
 }

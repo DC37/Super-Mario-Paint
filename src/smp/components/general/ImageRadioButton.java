@@ -1,5 +1,7 @@
 package smp.components.general;
 
+import java.util.ArrayList;
+
 import javafx.scene.image.ImageView;
 
 /**
@@ -13,11 +15,17 @@ import javafx.scene.image.ImageView;
 public abstract class ImageRadioButton extends ImageButton {
 
     /**
+     * THe list of radio buttons that are linked to this button.
+     */
+    protected ArrayList<ImageRadioButton> linkedButtons;
+
+    /**
      * @param i The ImageView passed to the Button
      * wrapper.
      */
     public ImageRadioButton(ImageView i) {
         super(i);
+        linkedButtons = new ArrayList<ImageRadioButton>();
     }
 
     /**
@@ -25,7 +33,10 @@ public abstract class ImageRadioButton extends ImageButton {
      * such that if it is depressed, the other buttons in the list will
      * be reverted to an unpressed state.
      */
-    public abstract void link();
+    public void link(ImageRadioButton b) {
+        linkedButtons.add(b);
+    }
+
 
 
 }
