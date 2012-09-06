@@ -65,7 +65,7 @@ public abstract class ImageButton {
      * "Presses" the button by setting the image to <code>pressed</code>.
      */
     protected void press() {
-        isPressed = true;
+        setPressed(true);
         theImage.setImage(pressed);
     }
 
@@ -73,10 +73,18 @@ public abstract class ImageButton {
      * "Releases" the button by setting the image to <code>notPressed</code>.
      */
     protected void release() {
-        isPressed = false;
+        setPressed(false);
         theImage.setImage(notPressed);
     }
 
+    /**
+     * Sets the <code>isPressed</code> parameter to <b>true</b> or <b>false</b>
+     * but also allows room for other code to execute when this method
+     * is called.
+     * @param b Boolean telling whether the button should be pressed
+     * or released.
+     */
+    protected abstract void setPressed(boolean b);
 
     /**
      * This method is called every time the button is clicked.

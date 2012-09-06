@@ -37,6 +37,25 @@ public abstract class ImageRadioButton extends ImageButton {
         linkedButtons.add(b);
     }
 
-
+    /**
+     * Sets <code>isPressed</code> to <b>true</b> and all of the linked
+     * <code>ImageRadioButton</code> objects' <code>isPressed</code> to
+     * <b>false</b>.
+     * @param b Boolean telling whether the button should be pressed
+     * or released.
+     */
+    @Override
+    protected void setPressed(boolean b) {
+        isPressed = b;
+        if (isPressed) {
+            for (ImageRadioButton bt : linkedButtons) {
+                bt.setPressed(false);
+            }
+        } else {
+            for (ImageRadioButton bt : linkedButtons) {
+                bt.setPressed(true);
+            }
+        }
+    }
 
 }

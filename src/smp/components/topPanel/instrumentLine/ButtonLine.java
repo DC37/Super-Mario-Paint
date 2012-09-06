@@ -82,7 +82,7 @@ public class ButtonLine {
      */
     public void setupButtons() {
         for (final InstrumentIndex i : InstrumentIndex.values()) {
-            buttons.get(i.ordinal()).setOnMouseClicked(
+            buttons.get(i.ordinal()).setOnMousePressed(
                     new EventHandler<MouseEvent>() {
 
                         @Override
@@ -91,7 +91,8 @@ public class ButtonLine {
                             try {
                                 selectedInst.setImage(
                                         ImageLoader.getSpriteFX(
-                                                ImageIndex.valueOf(i.toString())));
+                                                ImageIndex.valueOf(
+                                                        i.toString())));
                                 setSelectedInstrument(i);
                             } catch (IllegalArgumentException e) {
                                 // Do nothing.
