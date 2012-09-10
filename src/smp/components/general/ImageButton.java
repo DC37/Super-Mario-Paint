@@ -56,7 +56,21 @@ public abstract class ImageButton {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        react(event);
+                        reactClick(event);
+                    }
+                });
+        theImage.setOnMousePressed(
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        reactPressed(event);
+                    }
+                });
+        theImage.setOnMouseReleased(
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        reactReleased(event);
                     }
                 });
     }
@@ -64,18 +78,22 @@ public abstract class ImageButton {
     /**
      * "Presses" the button by setting the image to <code>pressed</code>.
      */
-    protected void press() {
-        setPressed(true);
+    protected void pressImage() {
         theImage.setImage(pressed);
     }
 
     /**
      * "Releases" the button by setting the image to <code>notPressed</code>.
      */
-    protected void release() {
-        setPressed(false);
+    protected void releaseImage() {
         theImage.setImage(notPressed);
     }
+
+    /**
+     * 
+     * @param b
+     */
+    protected abstract void setPressedState(boolean b);
 
     /**
      * Sets the <code>isPressed</code> parameter to <b>true</b> or <b>false</b>
@@ -87,9 +105,28 @@ public abstract class ImageButton {
     protected abstract void setPressed(boolean b);
 
     /**
-     * This method is called every time the button is clicked.
+     * Override this method if there should be an action when a
+     * MouseClicked event occurs.
+     * @param event The event that occurred.
      */
-    protected abstract void react(MouseEvent event);
+    protected void reactClick(MouseEvent event) {
+    }
+
+    /**
+     * Override this method if there should be an action when a
+     * MousePressed event occurs.
+     * @param event The event that occurred.
+     */
+    protected void reactPressed(MouseEvent event) {
+    }
+
+    /**
+     * Override this method if there should be an action when a
+     * MouseReleased event occurs.
+     * @param event The event that occurred.
+     */
+    protected void reactReleased(MouseEvent event) {
+    }
 
     /**
      * Gets the images for the <code>pressed</code> and <code>notPressed</code>

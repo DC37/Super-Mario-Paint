@@ -46,14 +46,11 @@ public abstract class ImageRadioButton extends ImageButton {
      */
     @Override
     protected void setPressed(boolean b) {
-        isPressed = b;
-        if (isPressed) {
+        setPressedState(b);
+        if (!isPressed) {
             for (ImageRadioButton bt : linkedButtons) {
+                bt.releaseImage();
                 bt.setPressed(false);
-            }
-        } else {
-            for (ImageRadioButton bt : linkedButtons) {
-                bt.setPressed(true);
             }
         }
     }
