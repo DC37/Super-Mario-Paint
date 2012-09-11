@@ -3,6 +3,7 @@ package smp.components.general;
 import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Image radio button that toggles between a list
@@ -38,6 +39,21 @@ public abstract class ImageRadioButton extends ImageButton {
     }
 
     /**
+     * Sets this button's <code>isPressed</code> to true and also presses
+     * the button image down.
+     */
+    @Override
+    protected void reactPressed(MouseEvent e) {
+        setPressed(true);
+        pressImage();
+    }
+
+    @Override
+    protected void setPressedState(boolean b) {
+        isPressed = b;
+    }
+
+    /**
      * Sets <code>isPressed</code> to <b>true</b> and all of the linked
      * <code>ImageRadioButton</code> objects' <code>isPressed</code> to
      * <b>false</b>.
@@ -54,5 +70,4 @@ public abstract class ImageRadioButton extends ImageButton {
             }
         }
     }
-
 }

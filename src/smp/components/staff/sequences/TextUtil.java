@@ -75,7 +75,7 @@ public class TextUtil
      * @return The time signature of the song text file.
      */
     public static String getStart(String read) {
-        return read.substring(0,read.indexOf('*')+1);
+        return read.substring(0,read.indexOf('*') + 1);
     }
 
     /**
@@ -84,7 +84,7 @@ public class TextUtil
      * @return The tempo of the song text file.
      */
     public static String getEnd(String read) {
-        return read.substring(read.lastIndexOf(':')+1);
+        return read.substring(read.lastIndexOf(':') + 1);
     }
 
     /**

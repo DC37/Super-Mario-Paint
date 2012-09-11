@@ -90,8 +90,8 @@ public abstract class ImageButton {
     }
 
     /**
-     * 
-     * @param b
+     * Sets whether this button is pressed or not.
+     * @param b Whether the button is pressed or not.
      */
     protected abstract void setPressedState(boolean b);
 
