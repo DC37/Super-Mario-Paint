@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package smp.components.staff.sequences.ams;
 
 /**
  * An Exception class thrown when things go wrong with loading Advanced
