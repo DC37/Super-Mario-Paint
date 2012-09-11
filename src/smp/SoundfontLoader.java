@@ -85,8 +85,6 @@ public class SoundfontLoader implements Runnable {
                 setLoadStatus(0.3 + 0.7
                         * ordinal / InstrumentIndex.values().length);
                 chan[ordinal].programChange(ordinal);
-                if (Settings.DEBUG)
-                    System.out.println(chan[ordinal].getProgram());
                 ordinal++;
                 System.out.println("Initialized Instrument: "
                         + i.toString());

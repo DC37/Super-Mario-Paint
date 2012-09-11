@@ -9,10 +9,10 @@ package smp.components.topPanel.instrumentLine;
 public enum InstrumentIndex {
 
     /*
-     * The standard 19-instrument range.
+     * The instruments of Super Mario Paint
      */
 
     MARIO, MUSHROOM, YOSHI, STAR, FLOWER, GAMEBOY, DOG, CAT, PIG, SWAN,
-    FACE, PLANE, BOAT, CAR, HEART, PIRANHA, COIN, SHYGUY, BOO;
+    FACE, PLANE, BOAT, CAR, HEART, PIRANHA, COIN, SHYGUY, BOO, LUIGI;
 
 }

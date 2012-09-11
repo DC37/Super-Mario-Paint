@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Settings implements Serializable {
 
     /**
-     * 
+     * Generated serial ID.
      */
     private static final long serialVersionUID = -7243683035937693416L;
 
@@ -24,8 +24,7 @@ public class Settings implements Serializable {
 
 
     /**
-     * For initialization purposes, if Advanced mode is unlocked,
-     * there are some things that are supposed to be initialized.
+     * If Advanced mode is unlocked, this is set to <b>true</b>
      */
     private boolean advModeUnlocked;
 

@@ -12,7 +12,7 @@ public class StateMachine {
      * The default state that the program is in is the
      * EDITING state, in which notes are being placed on the staff.
      */
-    private static State state = State.EDITING;
+    private static State currentState = State.EDITING;
 
     /**
      * Do not make an instance of this class! The implementation is such
@@ -29,14 +29,14 @@ public class StateMachine {
      * @return The current <code>State</code>.
      */
     public static synchronized State getState() {
-        return state;
+        return currentState;
     }
 
     /**
      * @param s Set the <code>StateMachine</code> to a certain State.
      */
     public static synchronized void setState(State s) {
-        state = s;
+        currentState = s;
     }
 
 }

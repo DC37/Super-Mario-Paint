@@ -81,7 +81,11 @@ public class ButtonLine {
      * Initializes the buttons with event handlers.
      */
     public void setupButtons() {
+        int ind = 0;
         for (final InstrumentIndex i : InstrumentIndex.values()) {
+            if (ind > 18) {
+                break;
+            }
             buttons.get(i.ordinal()).setOnMousePressed(
                     new EventHandler<MouseEvent>() {
 
@@ -103,6 +107,7 @@ public class ButtonLine {
                             }
                         }
                     });
+            ind++;
         }
         try {
             chan = SoundfontLoader.getChannels();

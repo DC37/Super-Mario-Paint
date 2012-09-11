@@ -15,6 +15,7 @@ public enum State {
     ARR_PLAYING,
     PAUSE,
     MENU_OPEN,
+    RPG,
     EDITING_ADV,
     SONG_PLAYING_ADV,
     ARR_PLAYING_ADV,
