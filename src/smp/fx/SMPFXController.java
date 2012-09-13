@@ -36,6 +36,7 @@ public class SMPFXController implements Initializable {
      * The line of buttons that corresponds with the line of images
      * at the top of the frame.
      */
+    @SuppressWarnings("unused")
     private static ButtonLine instBLine;
 
     /**

@@ -6,15 +6,6 @@ public class Controls {
 
     private PlayButton play;
     private StopButton stop;
-    /*private PauseButton pause;
-	private LoopButton loop;
-	private TimeSigButton timeSig;
-	private SoundfontSelector selector;
-	private MuteButton mute;
-	private EraseButton erase;
-	private TempoEntry tempo;
-	private ScrollBar scroll;
-     */
     public Controls() {
 
     }

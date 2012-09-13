@@ -100,7 +100,8 @@ public class SuperMarioPaint extends Application {
     public void start(Stage primaryStage) {
         try {
             Parent root =
-                    (Parent) FXMLLoader.load(new File(mainFxml).toURI().toURL());
+                    (Parent) FXMLLoader.load(
+                            new File(mainFxml).toURI().toURL());
             dummyPreloader.updateStatus(NUM_THREADS * 60, NUM_THREADS);
             primaryStage.setTitle("Super Mario Paint");
             primaryStage.setResizable(true);

@@ -72,7 +72,15 @@ public class MPCDecoder {
      * @return The MIDI events in the MPC sequence
      */
     private static SongData decodeSong(ArrayList<String> songData) {
-        // TODO Auto-generated method stub
+        for (String s : songData) {
+            String[] sp = songData.split("+");
+            for (String s : sp) {
+                char[] c = s.toCharArray();
+                InstrumentIndex i = MPCInstrumentIndex.valueOf(c[0]);
+
+                // TODO: Fix everything!
+            }
+        }
         return null;
     }
 }

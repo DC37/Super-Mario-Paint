@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
  * to other ImageRadioButtons that it's linked to.
  * @author RehdBlob
  * @since 2012.08.30
- *
  */
 public abstract class ImageRadioButton extends ImageButton {
 
@@ -33,6 +32,8 @@ public abstract class ImageRadioButton extends ImageButton {
      * Links the ImageRadioButton to another ImageRadioButton
      * such that if it is depressed, the other buttons in the list will
      * be reverted to an unpressed state.
+     * @param b The <code>ImageRadioButton</code> to link this
+     * <code>ImageRadioButton</code> to.
      */
     public void link(ImageRadioButton b) {
         linkedButtons.add(b);
