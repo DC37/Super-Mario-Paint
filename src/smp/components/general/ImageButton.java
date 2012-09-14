@@ -1,5 +1,7 @@
 package smp.components.general;
 
+import smp.ImageIndex;
+import smp.ImageLoader;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,7 +45,6 @@ public abstract class ImageButton {
     public ImageButton(ImageView i) {
         theImage = i;
         initializeHandler();
-        getImages();
     }
 
     /**
@@ -90,19 +91,28 @@ public abstract class ImageButton {
     }
 
     /**
-     * Sets whether this button is pressed or not.
+     * Sets the <code>isPressed</code> parameter to <b>true</b> or <b>false</b>
+     * but does <b>not</b> define what happens afterwards.
+     * @param b Boolean telling whether the button should be pressed
+     * or released.
+     */
+    protected void setPressed(boolean b) {
+        isPressed = b;
+    }
+
+    /**
+     * Call <code>setPressed()</code> first and then execute
+     * code from there.
      * @param b Whether the button is pressed or not.
      */
     protected abstract void setPressedState(boolean b);
 
     /**
-     * Sets the <code>isPressed</code> parameter to <b>true</b> or <b>false</b>
-     * but also allows room for other code to execute when this method
-     * is called.
-     * @param b Boolean telling whether the button should be pressed
-     * or released.
+     * @return Whether this button is actually pressed or not.
      */
-    protected abstract void setPressed(boolean b);
+    protected boolean isPressed() {
+        return isPressed();
+    }
 
     /**
      * Override this method if there should be an action when a
@@ -132,6 +142,23 @@ public abstract class ImageButton {
      * Gets the images for the <code>pressed</code> and <code>notPressed</code>
      * versions of the button.
      */
-    protected abstract void getImages();
+    protected void getImages(ImageIndex pressed, ImageIndex notPressed) {
+        this.pressed = ImageLoader.getSpriteFX(pressed);
+        this.notPressed = ImageLoader.getSpriteFX(notPressed);
+    }
+
+    /**
+     * Called whenever the <code>ImageToggleButton</code> has
+     * called its <code>setPressedState()</code> method, and
+     * has decided that the button has been pressed.
+     */
+    protected abstract void doPressBehavior();
+
+    /**
+     * Called whenever the <code>ImageToggleButton</code> has
+     * called its <code>setPressedState()</code> method, and
+     * has decided that the button has been released.
+     */
+    protected abstract void doReleaseBehavior();
 
 }

@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 public abstract class ImageRadioButton extends ImageButton {
 
     /**
-     * THe list of radio buttons that are linked to this button.
+     * The list of radio buttons that are linked to this button.
      */
     protected ArrayList<ImageRadioButton> linkedButtons;
 
@@ -45,29 +45,33 @@ public abstract class ImageRadioButton extends ImageButton {
      */
     @Override
     protected void reactPressed(MouseEvent e) {
-        setPressed(true);
-        pressImage();
-    }
-
-    @Override
-    protected void setPressedState(boolean b) {
-        isPressed = b;
+        setPressedState(true);
     }
 
     /**
      * Sets <code>isPressed</code> to <b>true</b> and all of the linked
      * <code>ImageRadioButton</code> objects' <code>isPressed</code> to
-     * <b>false</b>.
+     * <b>false</b>. If one is attempting to set the button's pressed state
+     * to the state that it's already in, then this method is useless.
      * @param b Boolean telling whether the button should be pressed
      * or released.
      */
     @Override
-    protected void setPressed(boolean b) {
-        setPressedState(b);
-        if (!isPressed) {
+    protected void setPressedState(boolean b) {
+        if (b == isPressed()) {
+            return;
+        }
+        setPressed(b);
+        pressImage();
+        if (b) {
+            doPressBehavior();
+        } else {
+            doReleaseBehavior();
+        }
+        if (isPressed()) {
             for (ImageRadioButton bt : linkedButtons) {
                 bt.releaseImage();
-                bt.setPressed(false);
+                bt.setPressedState(false);
             }
         }
     }

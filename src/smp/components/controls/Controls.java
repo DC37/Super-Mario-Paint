@@ -4,8 +4,19 @@ import smp.stateMachine.State;
 
 public class Controls {
 
+    /**
+     * The reference to the play button on the staff.
+     */
     private PlayButton play;
+
+    /**
+     * The reference to the stop button on the staff.
+     */
     private StopButton stop;
+
+    /**
+     * Initializes the set of controls that will be used in Super Mario Paint.
+     */
     public Controls() {
 
     }

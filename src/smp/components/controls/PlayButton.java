@@ -1,6 +1,7 @@
 package smp.components.controls;
 
 import javafx.scene.image.ImageView;
+import smp.ImageIndex;
 import smp.components.general.ImageRadioButton;
 
 /**
@@ -12,45 +13,26 @@ import smp.components.general.ImageRadioButton;
  */
 public class PlayButton extends ImageRadioButton {
 
-    private boolean isPressed;
 
-
+    /**
+     * Instantiates the Play button on the staff
+     * @param i The ImageView object that will be manipulated by this class.
+     */
     public PlayButton(ImageView i) {
         super(i);
-    }
-
-    private void setIsPressed(boolean b) {
-        isPressed = b;
-    }
-
-    private void toggle() {
-        if (isPressed)
-            isPressed = false;
-        else
-            isPressed = true;
-    }
-
-    public boolean getIsPressed() {
-        return isPressed;
-    }
-
-    public void setImage(ImageView i) {
-        theImage = i;
-    }
-
-    public ImageView getImage() {
-        return theImage;
+        getImages(ImageIndex.PLAY_PRESSED, ImageIndex.PLAY_RELEASED);
     }
 
     @Override
-    protected void react() {
+    protected void doPressBehavior() {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void link() {
+    protected void doReleaseBehavior() {
         // TODO Auto-generated method stub
 
     }
+
 }
