@@ -3,6 +3,7 @@ package smp.components.staff;
 import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sequences.SMPSequencer;
 import smp.components.staff.sequences.StaffNote;
@@ -18,6 +19,12 @@ import smp.components.staff.sequences.mpc.MPCException;
  * @since 2012.08.13
  */
 public class Staff {
+
+    /**
+     * The HBox that holds a series of ImageView objects that are meant to
+     * display the staff measure lines.
+     */
+    private HBox measureLines;
 
     /**
      * The Sequencer object that will be used to play sounds.
@@ -36,18 +43,20 @@ public class Staff {
     private ArrayList<ArrayList<StaffNote>> noteMatrix;
 
     /**
-     * Creates a new Staff object and gives it the x and y coordinates
-     * as specified by the user.
-     * @param x The x-location that the staff is to be placed at.
-     * @param y The y-location that the staff is to be placed at.
+     * Creates a new Staff object.
      */
     public Staff() {
         seq = new SMPSequencer();
         noteImageMatrix = new ArrayList<ArrayList<ImageView>>();
+        initializeMeasureLines();
         initializeNoteMatrix();
     }
 
 
+    /**
+     * Adds a note to the staff.
+     * @param n
+     */
     public void addNote(Note n) {
 
     }
@@ -65,6 +74,14 @@ public class Staff {
     private void initializeNoteMatrix() {
         noteImageMatrix = new ArrayList<ArrayList<ImageView>>();
         noteMatrix = new ArrayList<ArrayList<StaffNote>>();
+    }
+
+    /**
+     * Initializes the staff measure lines with ImageViews as display
+     * elements.
+     */
+    private void initializeMeasureLines() {
+
     }
 
     /**

@@ -52,8 +52,8 @@ public enum MPCInstrumentIndex {
     }
 
     /**
-     * @param c Some <b>char</b>
-     * @return
+     * @param c Some <b>char</b> in a Mario Paint Composer song.
+     * @return The <code>InstrumentIndex</code> of the
      */
     public static InstrumentIndex valueOf(char c) {
         String str = "" + c;

@@ -66,4 +66,13 @@ public class Utilities {
 
     }
 
+    /**
+     * Opens a file dialog that people can choose a file from.
+     * @return A File reference that the user has chosen.
+     */
+    public static File openFileDialog() {
+        // TODO: Actually code this.
+        return null;
+    }
+
 }

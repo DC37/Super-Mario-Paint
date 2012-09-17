@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.staff.Staff;
 import smp.components.topPanel.instrumentLine.ButtonLine;
 
 
@@ -38,6 +39,12 @@ public class SMPFXController implements Initializable {
      */
     @SuppressWarnings("unused")
     private static ButtonLine instBLine;
+
+    /**
+     * The staff that notes, measure lines, and sprites will be placed
+     * on.
+     */
+    private static Staff staff;
 
     /**
      * The staff measure lines.
@@ -80,6 +87,7 @@ public class SMPFXController implements Initializable {
         // Initialize the selected instrument handlers in the ButtonLine.
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
+        staff = new Staff();
 
         // Initialize play button
         // Controls.setPlayButton();

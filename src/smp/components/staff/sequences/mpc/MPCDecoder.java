@@ -24,6 +24,16 @@ public class MPCDecoder {
     private static final int NUM_TRACKS = 19;
 
     /**
+     * Opens a file and decodes the Mario Paint Composer song data from
+     * it.
+     * @param f
+     * @return
+     */
+    public static SMPSequence decode(File f) {
+
+    }
+
+    /**
      * Decodes a Mario Paint Composer song into an SMP-readable format.
      * Uses <code>TextUtil</code> from <code>MPCTxtTools</code>.
      * @param in The input String that contains (supposedly) Mario Paint
@@ -67,7 +77,8 @@ public class MPCDecoder {
     }
 
     /**
-     * 
+     * Decodes a Mario Paint Composer song and puts the song data into a
+     * Super Mario Paint sequence.
      * @param songData
      * @return The MIDI events in the MPC sequence
      */
@@ -77,7 +88,6 @@ public class MPCDecoder {
             for (String s : sp) {
                 char[] c = s.toCharArray();
                 InstrumentIndex i = MPCInstrumentIndex.valueOf(c[0]);
-
                 // TODO: Fix everything!
             }
         }
