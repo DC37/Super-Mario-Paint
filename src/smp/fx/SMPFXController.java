@@ -84,7 +84,7 @@ public class SMPFXController implements Initializable {
      * Paint GUI.
      */
     public static void initializeHandlers() {
-        // Initialize the selected instrument handlers in the ButtonLine.
+        /* Initialize the selected instrument handlers in the ButtonLine. */
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
         staff = new Staff();

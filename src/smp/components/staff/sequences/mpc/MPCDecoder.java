@@ -1,5 +1,6 @@
 package smp.components.staff.sequences.mpc;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -25,12 +26,15 @@ public class MPCDecoder {
 
     /**
      * Opens a file and decodes the Mario Paint Composer song data from
-     * it.
-     * @param f
-     * @return
+     * it, changing it into a Super Mario Paint sequence.
+     * @param f A File, that supposedly contains Mario Paint Composer
+     * song data.
+     * @return An <code>SMPSequence</code> that has been converted from the
+     * Mario Paint Composer song.
      */
     public static SMPSequence decode(File f) {
 
+        return null;
     }
 
     /**

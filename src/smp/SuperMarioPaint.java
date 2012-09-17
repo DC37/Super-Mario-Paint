@@ -83,7 +83,7 @@ public class SuperMarioPaint extends Application {
         Thread sfLd = new Thread(sfLoader);
         sfLd.start();
         imgLd.start();
-        while(imgLd.isAlive() || sfLd.isAlive())
+        while (imgLd.isAlive() || sfLd.isAlive())
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -95,6 +95,8 @@ public class SuperMarioPaint extends Application {
     /**
      * Starts the application and loads the FXML file that contains
      * a lot of the class hierarchy.
+     * @param primaryStage The primary stage that will be showing the
+     * main window of Super Mario Paint.
      */
     @Override
     public void start(Stage primaryStage) {
@@ -111,11 +113,11 @@ public class SuperMarioPaint extends Application {
             primaryStage.show();
             dummyPreloader.dispose();
         } catch (MalformedURLException e) {
-            // Can't recover.
+            /* Can't recover. */
             e.printStackTrace();
             System.exit(0);
         } catch (IOException e) {
-            // Can't recover.
+            /* Can't recover. */
             e.printStackTrace();
             System.exit(0);
         }
@@ -123,10 +125,10 @@ public class SuperMarioPaint extends Application {
 
     /**
      * Launches the application.
-     * @param args String args.
+     * @param unused Currrently unused arguments for run configs.
      */
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(String... unused) {
+        launch(unused);
     }
 
 }

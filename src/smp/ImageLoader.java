@@ -1,11 +1,9 @@
 package smp;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
 
-import javax.imageio.ImageIO;
+import javafx.scene.image.Image;
 
 /**
  * A class that loads all the necessary images for the
@@ -14,11 +12,6 @@ import javax.imageio.ImageIO;
  * @since 2012.08.14
  */
 public class ImageLoader implements Runnable {
-
-    /**
-     * Contains references to all the loaded sprites in Java AWT BufferedImage form.
-     */
-    private static Hashtable<ImageIndex, BufferedImage> sprites;
 
     /**
      * Contains references to all the loaded sprites in JavaFX Image form.
@@ -48,7 +41,6 @@ public class ImageLoader implements Runnable {
      * Image class is better: java.awt.Image, or javafx.scene.image.Image.
      */
     public ImageLoader() {
-        sprites = new Hashtable<ImageIndex, BufferedImage>();
         spritesFX = new Hashtable<ImageIndex, javafx.scene.image.Image>();
     }
 
@@ -61,47 +53,44 @@ public class ImageLoader implements Runnable {
     @Override
     public void run() {
         File f;
-        try {
-            ImageIndex [] ind = ImageIndex.values();
-            for (ImageIndex i : ind) {
-                setLoadStatus((i.ordinal() + 1) / ind.length);
-                f = new File(path + i.toString() + extension);
-                BufferedImage temp = ImageIO.read(f);
-                javafx.scene.image.Image temp2 =
-                        new javafx.scene.image.Image(f.toURI().toString());
-                sprites.put(i, temp);
-                spritesFX.put(i, temp2);
-                System.out.println("Loaded Image: " + i.toString() + extension);
-                setLoadStatus(1);
-            }
-        } catch (IOException e) {
-            // If the images fail to load, don't start the program!
-            // this.showFailedDialog();
-            e.printStackTrace();
-            System.exit(0);
+        ImageIndex [] ind = ImageIndex.values();
+        for (ImageIndex i : ind) {
+            setLoadStatus((i.ordinal() + 1) / ind.length);
+            f = new File(path + i.toString() + extension);
+            Image temp2 =
+                    new Image(f.toURI().toString());
+            spritesFX.put(i, temp2);
+            System.out.println("Loaded Image: " + i.toString() + extension);
+            setLoadStatus(1);
         }
 
     }
 
     /**
-     * 
-     * @param index The index at which to access an image
-     * @return A BufferedImage based on the image request.
+     * Gets an image from whatever <code>ImageIndex</code> that was passed
+     * to it.
+     * @param index An ImageIndex, presumably the one that one wants to
+     * retreive an image with.
+     * @return An <code>Image</code> that was loaded by the ImageLoader in the
+     * beginning, linked by the ImageIndex in a Hashtable.
+     * @throws NullPointerException
      */
-    public static BufferedImage getSprite(ImageIndex index)
-            throws NullPointerException {
-        return sprites.get(index);
-    }
-
-    public static javafx.scene.image.Image getSpriteFX(ImageIndex index)
+    public static Image getSpriteFX(ImageIndex index)
             throws NullPointerException {
         return spritesFX.get(index);
     }
 
+    /**
+     * @return The current load status, which is anywhere between 0 and 1.
+     */
     public double getLoadStatus() {
         return loadStatus;
     }
 
+    /**
+     * Sets the load status of the Thread version of ImageLoader.
+     * @param d A <b>double</b> that is anywhere between 0 and 1.
+     */
     public void setLoadStatus(double d) {
         if (d >= 0 && d <= 1)
             loadStatus = d;

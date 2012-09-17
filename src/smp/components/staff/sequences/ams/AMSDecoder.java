@@ -3,7 +3,9 @@ package smp.components.staff.sequences.ams;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import smp.components.staff.sequences.Bookmark;
 import smp.components.staff.sequences.SMPSequence;
+import smp.components.staff.sequences.Speedmark;
 
 /**
  * A class for decoding Advanced Mario Sequencer songs.
