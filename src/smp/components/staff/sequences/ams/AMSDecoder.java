@@ -4,8 +4,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import smp.components.staff.sequences.Bookmark;
-import smp.components.staff.sequences.SMPSequence;
 import smp.components.staff.sequences.Speedmark;
+import smp.components.staff.sounds.SMPSequence;
+import smp.components.staff.sounds.SMPSoundfont;
 
 /**
  * A class for decoding Advanced Mario Sequencer songs.

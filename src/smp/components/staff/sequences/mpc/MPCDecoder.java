@@ -7,8 +7,8 @@ import java.util.Hashtable;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-import smp.components.staff.sequences.SMPSequence;
-import smp.components.staff.sequences.TextUtil;
+import smp.components.staff.sequences.SongData;
+import smp.components.staff.sounds.SMPSequence;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
 /**
@@ -88,9 +88,9 @@ public class MPCDecoder {
      */
     private static SongData decodeSong(ArrayList<String> songData) {
         for (String s : songData) {
-            String[] sp = songData.split("+");
-            for (String s : sp) {
-                char[] c = s.toCharArray();
+            String[] sp = s.split("+");
+            for (String s1 : sp) {
+                char[] c = s1.toCharArray();
                 InstrumentIndex i = MPCInstrumentIndex.valueOf(c[0]);
                 // TODO: Fix everything!
             }

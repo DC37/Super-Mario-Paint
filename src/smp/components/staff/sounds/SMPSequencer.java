@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package smp.components.staff.sounds;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;

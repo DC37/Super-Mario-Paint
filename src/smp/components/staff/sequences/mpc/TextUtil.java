@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package smp.components.staff.sequences.mpc;
 
 import java.util.ArrayList;
 

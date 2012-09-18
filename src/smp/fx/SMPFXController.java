@@ -44,6 +44,7 @@ public class SMPFXController implements Initializable {
      * The staff that notes, measure lines, and sprites will be placed
      * on.
      */
+    @SuppressWarnings("unused")
     private static Staff staff;
 
     /**

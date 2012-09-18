@@ -8,6 +8,12 @@ import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * A somewhat useful utilities class for images and such. Not
@@ -68,11 +74,26 @@ public class Utilities {
 
     /**
      * Opens a file dialog that people can choose a file from.
+     * This is a Java Swing version.
      * @return A File reference that the user has chosen.
+     * @throws IOException
      */
-    public static File openFileDialog() {
-        // TODO: Actually code this.
-        return null;
+    public static File openFileDialog()
+            throws IOException, NullPointerException {
+        JFileChooser fd = new JFileChooser(".");
+        FileFilter filter = new FileNameExtensionFilter(
+                "Java Source File (*.java)", "java");
+        fd.addChoosableFileFilter(filter);
+        fd.setFileFilter(filter);
+        int returnVal = fd.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            return fd.getSelectedFile();
+        } else if (returnVal == JFileChooser.CANCEL_OPTION) {
+            throw new NullPointerException();
+        } else {
+            System.out.print("Error opening file!");
+            throw new IOException();
+        }
     }
 
 }

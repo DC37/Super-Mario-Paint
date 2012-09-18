@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.components.staff.sequences.Note;
-import smp.components.staff.sequences.SMPSequencer;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.ams.AMSException;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.staff.sequences.mpc.MPCException;
+import smp.components.staff.sounds.SMPSequencer;
 
 
 

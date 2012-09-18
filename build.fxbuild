@@ -1,2 +1,3 @@
 jfx.build.stagingdir = ${workspace}/Super Mario PaintFX/build
-jfx.build.apptitle = Super Mario PaintFX
+jfx.build.apptitle = Super Mario Paint
+jfx.build.appversion = 1.00

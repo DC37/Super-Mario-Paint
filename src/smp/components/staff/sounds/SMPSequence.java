@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package smp.components.staff.sounds;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.Sequence;
@@ -24,10 +24,18 @@ public class SMPSequence {
         setSequence(new Sequence(Sequence.PPQ, 4 , numTracks));
     }
 
+    /**
+     * @return theSequence - A sequence of MIDI events that this program can
+     * read.
+     */
     public Sequence getSequence() {
         return theSequence;
     }
 
+    /**
+     * @param seq A sequence that one wishes to set this Super Mario Paint
+     * Sequence to hold.
+     */
     public void setSequence(Sequence seq) {
         theSequence = seq;
     }
