@@ -79,6 +79,14 @@ public class Staff {
 
     }
 
+
+    /**
+     * Stops animation of the Staff.
+     */
+    public void stopAnimation() {
+
+    }
+
     /**
      * Loads a Super Mario Paint song.
      */
