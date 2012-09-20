@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.ams.AMSException;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.staff.sequences.mpc.MPCException;
@@ -106,7 +107,7 @@ public class Staff {
      * @throws MPCException If for some reason the load fails.
      */
     public void importMPCSong() throws MPCException {
-
+        MPCDecoder.decode(getFile());
     }
 
     /**
@@ -114,7 +115,7 @@ public class Staff {
      * @throws AMSException If for some reason the load fails.
      */
     public void importAMSSong() throws AMSException {
-
+        AMSDecoder.decode(getFile());
     }
 
 

@@ -1,4 +1,4 @@
-package smp.components.topPanel.instrumentLine;
+package smp.components;
 
 /**
  * An enum that keeps track of the different instrument types that one can

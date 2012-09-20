@@ -4,12 +4,14 @@ import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiEvent;
 
+import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.SongData;
 import smp.components.staff.sounds.SMPSequence;
-import smp.components.topPanel.instrumentLine.InstrumentIndex;
 
 /**
  * Decodes Mario Paint Composer songs into Super Mario Paint-
@@ -33,8 +35,12 @@ public class MPCDecoder {
      * Mario Paint Composer song.
      */
     public static SMPSequence decode(File f) {
-
-        return null;
+        Scanner s = new Scanner(f);
+        String str = "";
+        while (s.hasNext()) {
+            str += s.nextLine();
+        }
+        return decode(str);
     }
 
     /**
@@ -86,7 +92,7 @@ public class MPCDecoder {
      * @param songData
      * @return The MIDI events in the MPC sequence
      */
-    private static SongData decodeSong(ArrayList<String> songData) {
+    private static ArrayList<MidiEvent> decodeSong(ArrayList<String> songData) {
         for (String s : songData) {
             String[] sp = s.split("+");
             for (String s1 : sp) {

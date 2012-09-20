@@ -11,8 +11,8 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
+import smp.components.InstrumentIndex;
 import smp.components.staff.sounds.SMPSynthesizer;
-import smp.components.topPanel.instrumentLine.InstrumentIndex;
 import smp.stateMachine.Settings;
 
 /**

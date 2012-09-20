@@ -1,5 +1,6 @@
 package smp.components.staff.sequences.ams;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -14,6 +15,11 @@ import smp.components.staff.sounds.SMPSoundfont;
  * @since 2012.09.10
  */
 public class AMSDecoder {
+
+    public static void decode(File file) {
+        // TODO Auto-generated method stub
+
+    }
 
     /**
      * Decodes an Advanced Mario Sequencer song into an SMP-readable format.
@@ -51,4 +57,5 @@ public class AMSDecoder {
             ArrayList<Bookmark> bookmarks) {
         return null;
     }
+
 }

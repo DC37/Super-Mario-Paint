@@ -1,6 +1,6 @@
 package smp.components.staff.sequences;
 
-import smp.components.topPanel.instrumentLine.InstrumentIndex;
+import smp.components.InstrumentIndex;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff

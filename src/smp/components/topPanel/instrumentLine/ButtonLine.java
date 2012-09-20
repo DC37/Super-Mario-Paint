@@ -13,6 +13,7 @@ import javax.sound.midi.MidiChannel;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
+import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
 import smp.stateMachine.Settings;
 

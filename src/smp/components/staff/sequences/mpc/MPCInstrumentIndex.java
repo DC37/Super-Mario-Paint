@@ -1,6 +1,6 @@
 package smp.components.staff.sequences.mpc;
 
-import smp.components.topPanel.instrumentLine.InstrumentIndex;
+import smp.components.InstrumentIndex;
 
 /**
  * Links an <code>InstrumentIndex</code> to a character that

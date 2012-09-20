@@ -1,6 +1,9 @@
 package smp.components.staff.sounds;
 
+import java.util.ArrayList;
+
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiEvent;
 import javax.sound.midi.Sequence;
 
 /**
@@ -38,6 +41,39 @@ public class SMPSequence {
      */
     public void setSequence(Sequence seq) {
         theSequence = seq;
+    }
+
+
+    /**
+     * Sets the time signature of this sequence to the String that is passed
+     * to this method.
+     * @param timeSig The time signature that we are trying to set the sequence
+     * to.
+     */
+    public void setTime(String timeSig) {
+        // TODO: Actually code this
+    }
+
+    /**
+     * Sets the tempo of this song to whatever we input.
+     * @param tempo The tempo that we are trying to set the song to.
+     */
+    public void setTempo(String t) {
+        int baseline = Integer.parseInt(t);
+        double d = baseline / 4;
+        // TODO: Actually code this
+    }
+
+    /**
+     * Populates this sequence's data with the events that have supposedely
+     * been decoded from either a Mario Paint Composer or Advanced Mario
+     * Sequencer file.
+     * @param data The ArrayList of MidiData that we wish to send to this
+     * sequence.
+     */
+    public void setData(ArrayList<MidiEvent> data) {
+        // TODO: Actually code this
+
     }
 
 }
