@@ -11,7 +11,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
-import smp.components.staff.sounds.MPSynthesizer;
+import smp.components.staff.sounds.SMPSynthesizer;
 import smp.components.topPanel.instrumentLine.InstrumentIndex;
 import smp.stateMachine.Settings;
 
@@ -33,7 +33,7 @@ public class SoundfontLoader implements Runnable {
     /**
      * The sound synthesizer used to hold as many instruments as needed.
      */
-    private static MPSynthesizer theSynthesizer;
+    private static SMPSynthesizer theSynthesizer;
 
     /**
      * The MIDI channels associated with the MultiSynthsizer.
@@ -58,7 +58,7 @@ public class SoundfontLoader implements Runnable {
         try {
             File f = new File("./" + soundset);
             bank = MidiSystem.getSoundbank(f);
-            theSynthesizer = new MPSynthesizer();
+            theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();
             setLoadStatus(0.1);
             /* if (advanced mode on)

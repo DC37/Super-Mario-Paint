@@ -12,14 +12,14 @@ import javax.sound.midi.MidiUnavailableException;
  * @author RehdBlob
  * @since 2012.08.28
  */
-public class MPSynthesizer extends MultiSynthesizer {
+public class SMPSynthesizer extends MultiSynthesizer {
 
     /**
      * Initializes the <code>MPSynthesizer</code> just like the
      * <code>MultiSynthesizer</code>.
      * @see MultiSynthesizer
      */
-    public MPSynthesizer() throws MidiUnavailableException {
+    public SMPSynthesizer() throws MidiUnavailableException {
         super();
     }
 
