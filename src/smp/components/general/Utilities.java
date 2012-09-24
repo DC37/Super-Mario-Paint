@@ -82,8 +82,11 @@ public class Utilities {
             throws IOException, NullPointerException {
         JFileChooser fd = new JFileChooser(".");
         FileFilter filter = new FileNameExtensionFilter(
-                "Java Source File (*.java)", "java");
+                "Text File (*.txt)", "txt");
+        FileFilter filter2 = new FileNameExtensionFilter(
+                "AMS Sequence (*.mss)", "mss");
         fd.addChoosableFileFilter(filter);
+        fd.addChoosableFileFilter(filter2);
         fd.setFileFilter(filter);
         int returnVal = fd.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {

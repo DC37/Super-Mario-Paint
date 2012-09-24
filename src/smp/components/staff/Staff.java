@@ -1,9 +1,12 @@
 package smp.components.staff;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import smp.components.general.Utilities;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.ams.AMSDecoder;
@@ -44,7 +47,7 @@ public class Staff {
 
     /**
      * Adds a note to the staff.
-     * @param n
+     * @param n The note to be added to the staff.
      */
     public void addNote(Note n) {
 
@@ -52,8 +55,9 @@ public class Staff {
 
     /**
      * Puts a note on the Staff.
+     * @param n The note to be added to the staff.
      */
-    public void placeNote() {
+    public void placeNote(Note n) {
 
     }
 
@@ -105,18 +109,20 @@ public class Staff {
     /**
      * Imports a Mario Paint Composer song.
      * @throws MPCException If for some reason the load fails.
+     * @throws IOException
+     * @throws NullPointerException
      */
-    public void importMPCSong() throws MPCException {
-        MPCDecoder.decode(getFile());
+    public void importMPCSong() throws NullPointerException, IOException {
+        MPCDecoder.decode(Utilities.openFileDialog());
     }
 
     /**
      * Imports an Advanced Mario Sequencer song.
      * @throws AMSException If for some reason the load fails.
+     * @throws IOException
+     * @throws NullPointerException
      */
-    public void importAMSSong() throws AMSException {
-        AMSDecoder.decode(getFile());
+    public void importAMSSong() throws NullPointerException, IOException {
+        AMSDecoder.decode(Utilities.openFileDialog());
     }
-
-
 }
