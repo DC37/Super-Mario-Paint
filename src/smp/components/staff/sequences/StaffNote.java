@@ -11,6 +11,11 @@ import smp.components.InstrumentIndex;
 public class StaffNote {
 
     /**
+     * The offset that this note will have.
+     */
+    private int accidental;
+
+    /**
      * The Instrument that the note on the staff is to use.
      */
     private InstrumentIndex theInstrument;
@@ -21,8 +26,16 @@ public class StaffNote {
     private StaffNoteIndex noteLocation;
 
     /**
-     * The actual note that this note holds.
+     * The actual note that this note holds, which holds an int value
+     * that a MIDI event can handle.
      */
     private Note theNote;
+
+    /**
+     * Plays this note's sound. Use for placing notes.
+     */
+    public void playSound() {
+
+    }
 
 }

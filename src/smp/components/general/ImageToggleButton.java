@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
  * @author RehdBlob
  * @since 2012.08.30
  */
-public abstract class ImageToggleButton extends ImageButton {
+public abstract class ImageToggleButton extends AbstractImageButton {
 
     /**
      * @param i The ImageView passed to the Button

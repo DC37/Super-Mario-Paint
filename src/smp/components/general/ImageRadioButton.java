@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
  * @author RehdBlob
  * @since 2012.08.30
  */
-public abstract class ImageRadioButton extends ImageButton {
+public abstract class ImageRadioButton extends AbstractImageButton {
 
     /**
      * The list of radio buttons that are linked to this button.

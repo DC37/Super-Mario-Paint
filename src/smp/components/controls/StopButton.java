@@ -2,6 +2,7 @@ package smp.components.controls;
 
 import javafx.scene.image.ImageView;
 import smp.ImageIndex;
+import smp.components.general.ImageButton;
 import smp.components.general.ImageRadioButton;
 
 /**
@@ -11,7 +12,7 @@ import smp.components.general.ImageRadioButton;
  * @author Derek Chou
  * @since 2012.09.14
  */
-public class StopButton extends ImageRadioButton {
+public class StopButton extends ImageRadioButton implements ImageButton {
 
     /**
      * Instantiates the stop button.
@@ -23,12 +24,12 @@ public class StopButton extends ImageRadioButton {
     }
 
     @Override
-    protected void doPressBehavior() {
+    public void doPressBehavior() {
 
     }
 
     @Override
-    protected void doReleaseBehavior() {
+    public void doReleaseBehavior() {
 
     }
 }

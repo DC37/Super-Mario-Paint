@@ -7,6 +7,7 @@ import javax.sound.midi.InvalidMidiDataException;
 
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.Note;
+import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.staff.sounds.SMPSequencer;
@@ -15,7 +16,7 @@ import smp.components.staff.sounds.SMPSequencer;
 
 /**
  * The staff on which notes go. The way that the Staff keeps track of
- * notes is that there is a matrix
+ * notes is that there is a matrix.
  * @author RehdBlob
  * @since 2012.08.13
  */
@@ -45,6 +46,14 @@ public class Staff {
      * @param n The note to be added to the staff.
      */
     public void placeNote(Note n) {
+
+    }
+
+    /**
+     * Removes a note from the staff.
+     * @param n The note to be removed from the staff.
+     */
+    public void eraseNote(StaffNote n) {
 
     }
 
