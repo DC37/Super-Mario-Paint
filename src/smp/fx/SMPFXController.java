@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.staff.Staff;
-import smp.components.topPanel.instrumentLine.ButtonLine;
+import smp.components.topPanel.ButtonLine;
 
 
 /**

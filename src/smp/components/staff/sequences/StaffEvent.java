@@ -28,4 +28,5 @@ public interface StaffEvent {
      */
     public int getMeasureLineNum();
 
+
 }

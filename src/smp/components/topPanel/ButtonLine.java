@@ -1,4 +1,4 @@
-package smp.components.topPanel.instrumentLine;
+package smp.components.topPanel;
 
 import java.util.ArrayList;
 

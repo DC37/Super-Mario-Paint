@@ -6,12 +6,24 @@ package smp.components.staff.sequences;
  * @author RehdBlob
  * @since 2012.09.17
  */
-public class Bookmark {
+public class Bookmark extends AbstractStaffEvent {
 
     /**
      * Currently does nothing.
      */
-    public Bookmark() {
+    public Bookmark(int num) {
+        super(num);
+    }
+
+    @Override
+    protected void setMeasureNum(int num) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    protected void setMeasureLineNum(int num) {
+        // TODO Auto-generated method stub
 
     }
 

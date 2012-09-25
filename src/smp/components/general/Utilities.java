@@ -99,4 +99,13 @@ public class Utilities {
         }
     }
 
+    /**
+     * Opens some dialog box that contains some text in it. Whether
+     * this is done in Swing or JavaFX is TBD.
+     * @param in What should be shown in this dialog box.
+     */
+    public static void openDialog(String in) {
+
+    }
+
 }

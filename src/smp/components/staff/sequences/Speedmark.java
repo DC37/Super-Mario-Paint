@@ -7,7 +7,7 @@ package smp.components.staff.sequences;
  * @author RehdBlob
  * @since 2012.09.17
  */
-public class Speedmark {
+public class Speedmark extends AbstractStaffEvent {
 
     /**
      * The tempo that this speedmark designates.
@@ -18,10 +18,10 @@ public class Speedmark {
 
     /**
      * Creates a speedmark that designates a tempo.
-     * @param t The tempo that the song is to change to.
+     * @param num The tempo that the song is to change to.
      */
-    public Speedmark(int t) {
-        setTempo(t);
+    public Speedmark(int num) {
+        super(num);
     }
 
     /**
@@ -38,5 +38,17 @@ public class Speedmark {
      */
     public int getTempo() {
         return tempo;
+    }
+
+    @Override
+    protected void setMeasureNum(int num) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    protected void setMeasureLineNum(int num) {
+        // TODO Auto-generated method stub
+
     }
 }

@@ -17,8 +17,6 @@ import smp.components.staff.sounds.SMPSoundfont;
 public class AMSDecoder {
 
     public static void decode(File file) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -29,16 +27,29 @@ public class AMSDecoder {
      * text file.
      */
     public static SMPSequence decode(String in) throws ParseException {
-        if (/* Some condition */) {
+        if (!isValid(in)) {
             throw new ParseException("Invalid File", 0);
         }
-        String timeSig, tempo;
-        SMPSoundfont soundfont;
-        ArrayList<Speedmark> speedmarks;
-        ArrayList<Bookmark> bookmarks;
+        String timeSig = null, tempo = null;
+        SMPSoundfont soundfont = null;
+        ArrayList<Speedmark> speedmarks = null;
+        ArrayList<Bookmark> bookmarks = null;
         ArrayList<String> data = new ArrayList<String>();
         return populateSequence(timeSig, soundfont, speedmarks,
                 bookmarks, data, tempo);
+    }
+
+    /**
+     * Determines whether an input file is a valid Advanced Mario Sequencer
+     * file.
+     * @param in The String that is supposedly a representation of the Advanced
+     * Mario Sequencer file.
+     * @return <b>True</b> if the file happens to be valid. <b>False</b>
+     * otherwise.
+     */
+    private static boolean isValid(String in) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     /**
@@ -49,12 +60,14 @@ public class AMSDecoder {
      * song.
      * @param bookmarks The bookmarks present in the Advanced Mario Sequencer
      * song.
+     * @param tempo
+     * @param data
      * @return A new Super Mario Paint sequence that is to be loaded
      * immediately upon creation.
      */
     private static SMPSequence populateSequence(String timeSig,
             SMPSoundfont soundfont, ArrayList<Speedmark> speedmarks,
-            ArrayList<Bookmark> bookmarks) {
+            ArrayList<Bookmark> bookmarks, ArrayList<String> data, String tempo) {
         return null;
     }
 

@@ -1,18 +1,14 @@
 package smp.components.staff;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.ParseException;
 
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javax.sound.midi.InvalidMidiDataException;
+
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.Note;
-import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.ams.AMSDecoder;
-import smp.components.staff.sequences.ams.AMSException;
 import smp.components.staff.sequences.mpc.MPCDecoder;
-import smp.components.staff.sequences.mpc.MPCException;
 import smp.components.staff.sounds.SMPSequencer;
 
 
@@ -44,15 +40,6 @@ public class Staff {
         staffImages = new StaffImages();
     }
 
-
-    /**
-     * Adds a note to the staff.
-     * @param n The note to be added to the staff.
-     */
-    public void addNote(Note n) {
-
-    }
-
     /**
      * Puts a note on the Staff.
      * @param n The note to be added to the staff.
@@ -60,8 +47,6 @@ public class Staff {
     public void placeNote(Note n) {
 
     }
-
-
 
     /**
      * Moves the staff and notes left by 1.
@@ -74,6 +59,22 @@ public class Staff {
      * Moves the staff and notes right by 1.
      */
     public void moveRight() {
+
+    }
+
+    /**
+     * Shifts the staff left by <code>num</code> spaces.
+     * @param num The number of spaces to shift left.
+     */
+    private void shiftLeft(int num) {
+
+    }
+
+    /**
+     * Shifts the staff right by <code>num</code> spaces.
+     * @param num The number of spaces to shift left.
+     */
+    private void shiftRight(int num) {
 
     }
 
@@ -108,21 +109,37 @@ public class Staff {
 
     /**
      * Imports a Mario Paint Composer song.
-     * @throws MPCException If for some reason the load fails.
-     * @throws IOException
-     * @throws NullPointerException
      */
-    public void importMPCSong() throws NullPointerException, IOException {
-        MPCDecoder.decode(Utilities.openFileDialog());
+    public void importMPCSong() {
+        try {
+            MPCDecoder.decode(Utilities.openFileDialog());
+        } catch (NullPointerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvalidMidiDataException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
      * Imports an Advanced Mario Sequencer song.
-     * @throws AMSException If for some reason the load fails.
-     * @throws IOException
-     * @throws NullPointerException
      */
-    public void importAMSSong() throws NullPointerException, IOException {
-        AMSDecoder.decode(Utilities.openFileDialog());
+    public void importAMSSong() {
+        try {
+            AMSDecoder.decode(Utilities.openFileDialog());
+        } catch (NullPointerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

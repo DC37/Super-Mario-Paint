@@ -14,6 +14,16 @@ import javax.sound.midi.Sequence;
 public class SMPSequence {
 
     /**
+     * The number of tracks in a normal Super Mario Paint sequence.
+     */
+    private static final int NUMTRACKS = 19;
+
+    /**
+     * The number of tracks in an advanced Super Mario Paint sequence.
+     */
+    private static final int NUMTRACKSADV = 50;
+
+    /**
      * The Sequence type that this class wraps.
      */
     private Sequence theSequence;
@@ -23,8 +33,8 @@ public class SMPSequence {
      * @throws InvalidMidiDataException If for some reason the Sequence
      * initialization fails.
      */
-    public SMPSequence(int numTracks) throws InvalidMidiDataException {
-        setSequence(new Sequence(Sequence.PPQ, 4 , numTracks));
+    public SMPSequence() throws InvalidMidiDataException {
+        setSequence(new Sequence(Sequence.PPQ, 4 , NUMTRACKS));
     }
 
     /**

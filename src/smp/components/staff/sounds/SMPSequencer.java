@@ -55,8 +55,8 @@ public class SMPSequencer {
     public SMPSequencer() {
         try {
             theSequencer = MidiSystem.getSequencer();
-            theSong = new SMPSequence(NUM_TRACKS);
-            theArrangement = new SMPSequence(NUM_TRACKS);
+            theSong = new SMPSequence();
+            theArrangement = new SMPSequence();
             theSynthesizer = SoundfontLoader.getSynth();
         } catch (MidiUnavailableException e) {
             // Probably can't recover from this since if you can't get a

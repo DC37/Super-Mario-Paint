@@ -1,16 +1,15 @@
 package smp.components.staff.sequences.mpc;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Scanner;
-
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 
 import smp.components.InstrumentIndex;
-import smp.components.staff.sequences.SongData;
 import smp.components.staff.sounds.SMPSequence;
 
 /**
@@ -33,13 +32,22 @@ public class MPCDecoder {
      * song data.
      * @return An <code>SMPSequence</code> that has been converted from the
      * Mario Paint Composer song.
+     * @throws InvalidMidiDataException If the file does not have valid
+     * Mario Paint Composer data.
+     * @throws ParseException If for some reason the parsing fails at some
+     * point in the conversion process.
+     * @throws IOException IF some error occurs during the decoding process.
      */
-    public static SMPSequence decode(File f) {
-        Scanner s = new Scanner(f);
+    public static SMPSequence decode(File f)
+            throws ParseException, InvalidMidiDataException, IOException {
+        BufferedReader bf = new BufferedReader(new FileReader(f));
+        String line = "";
         String str = "";
-        while (s.hasNext()) {
-            str += s.nextLine();
-        }
+        do {
+            str += line;
+            line = bf.readLine();
+        } while (line != null);
+        bf.close();
         return decode(str);
     }
 
@@ -79,7 +87,7 @@ public class MPCDecoder {
     private static SMPSequence populateSequence(String timeSig,
             ArrayList<String> songData, String tempo)
                     throws InvalidMidiDataException {
-        SMPSequence song = new SMPSequence(NUM_TRACKS);
+        SMPSequence song = new SMPSequence();
         song.setTime(timeSig);
         song.setData(decodeSong(songData));
         song.setTempo(tempo);

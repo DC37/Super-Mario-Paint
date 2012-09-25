@@ -22,9 +22,9 @@ public class StaffNoteLine {
     private ArrayList<StaffNote> notes;
 
     /**
-     * This ArrayList holds
+     * This ArrayList holds staff events in it.
      */
-    private ArrayList<Mark> marks;
+    private ArrayList<StaffEvent> marks;
 
 
 
