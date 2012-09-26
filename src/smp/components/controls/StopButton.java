@@ -4,6 +4,8 @@ import javafx.scene.image.ImageView;
 import smp.ImageIndex;
 import smp.components.general.ImageButton;
 import smp.components.general.ImageRadioButton;
+import smp.stateMachine.State;
+import smp.stateMachine.StateMachine;
 
 /**
  * Wrapper class for an ImageView that holds the stop button
@@ -25,11 +27,14 @@ public class StopButton extends ImageRadioButton implements ImageButton {
 
     @Override
     public void doPressBehavior() {
-
+        if (isPressed)
+            return;
+        StateMachine.setState(State.EDITING);
     }
 
     @Override
     public void doReleaseBehavior() {
-
+        if (!isPressed)
+            return;
     }
 }

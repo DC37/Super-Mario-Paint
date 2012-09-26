@@ -151,4 +151,11 @@ public class Staff {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Starts playing a Super Mario Paint Song.
+     */
+    public static void startSong() {
+
+    }
 }

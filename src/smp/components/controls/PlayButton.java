@@ -3,6 +3,9 @@ package smp.components.controls;
 import javafx.scene.image.ImageView;
 import smp.ImageIndex;
 import smp.components.general.ImageRadioButton;
+import smp.components.staff.Staff;
+import smp.stateMachine.State;
+import smp.stateMachine.StateMachine;
 
 /**
  * Wrapper class for an ImageView that holds the play button
@@ -24,15 +27,17 @@ public class PlayButton extends ImageRadioButton {
     }
 
     @Override
-    protected void doPressBehavior() {
-        // TODO Auto-generated method stub
-
+    public void doPressBehavior() {
+        if (isPressed)
+            return;
+        StateMachine.setState(State.SONG_PLAYING);
+        Staff.startSong();
     }
 
     @Override
-    protected void doReleaseBehavior() {
-        // TODO Auto-generated method stub
-
+    public void doReleaseBehavior() {
+        if (!isPressed)
+            return;
     }
 
 }

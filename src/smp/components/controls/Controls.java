@@ -1,6 +1,7 @@
 package smp.components.controls;
 
 import smp.stateMachine.State;
+import smp.stateMachine.StateMachine;
 
 public class Controls {
 
@@ -21,7 +22,12 @@ public class Controls {
 
     }
 
-    public void changeState(State s) {
+    /**
+     * Change
+     * @param s The state that the program is supposed to be changed to.
+     */
+    public void checkState() {
+        State s = StateMachine.getState();
         switch(s) {
         case EDITING:
             break;
