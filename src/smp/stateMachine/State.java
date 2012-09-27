@@ -10,15 +10,38 @@ package smp.stateMachine;
  */
 public enum State {
 
+    /**
+     * This is the default state of the program, which allows
+     * the staff to be edited, moved, etc.
+     */
     EDITING,
-    SONG_PLAYING,
-    ARR_PLAYING,
-    PAUSE,
-    MENU_OPEN,
-    RPG,
-    EDITING_ADV,
-    SONG_PLAYING_ADV,
-    ARR_PLAYING_ADV,
-    PAUSE_ADV;
 
+    /**
+     * This state disables everything except for the instrument button line
+     * and the stop and loop buttons.
+     */
+    SONG_PLAYING,
+
+    /**
+     * Just like the SONG_PLAYING state, this state disables many things, but
+     * ARR_PLAYING also disables all of the arrangement functions.
+     */
+    ARR_PLAYING,
+
+    /**
+     * This state disables all buttons except for the play and the stop
+     * buttons, since the song is paused in this case.
+     */
+    PAUSE,
+
+    /**
+     * Whenever a menu is open, all buttons are disabled except for those in
+     * the menu.
+     */
+    MENU_OPEN,
+
+    /**
+     * Easter egg.
+     */
+    RPG;
 }

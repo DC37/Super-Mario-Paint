@@ -14,7 +14,7 @@ import smp.stateMachine.StateMachine;
  * @author Derek Chou
  * @since 2012.09.14
  */
-public class StopButton extends ImageRadioButton implements ImageButton {
+public class StopButton extends ImageRadioButton {
 
     /**
      * Instantiates the stop button.

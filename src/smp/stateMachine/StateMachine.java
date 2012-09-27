@@ -39,4 +39,7 @@ public class StateMachine {
         currentState = s;
     }
 
+    public static synchronized void resetState() {
+        currentState = State.EDITING;
+    }
 }
