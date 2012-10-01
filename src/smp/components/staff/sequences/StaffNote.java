@@ -1,6 +1,10 @@
 package smp.components.staff.sequences;
 
+import javax.sound.midi.MidiChannel;
+
+import smp.SoundfontLoader;
 import smp.components.InstrumentIndex;
+import smp.stateMachine.Settings;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff
@@ -13,7 +17,7 @@ public class StaffNote {
     /**
      * The offset that this note will have.
      */
-    private int accidental;
+    private int accidental = 0;
 
     /**
      * The Instrument that the note on the staff is to use.
@@ -32,10 +36,11 @@ public class StaffNote {
     private Note theNote;
 
     /**
-     * Plays this note's sound. Use for placing notes.
+     * Plays this note's sound.
+     * @param i The InstrumentIndex for the instrument
      */
     public void playSound() {
-
+        SoundfontLoader.playSound(theNote, theInstrument);
     }
 
 }

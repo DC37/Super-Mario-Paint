@@ -12,6 +12,7 @@ import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
 import smp.components.InstrumentIndex;
+import smp.components.staff.sequences.Note;
 import smp.components.staff.sounds.SMPSynthesizer;
 import smp.stateMachine.Settings;
 
@@ -135,6 +136,11 @@ public class SoundfontLoader implements Runnable {
     public void setLoadStatus(double d) {
         if (d >= 0 && d <= 1)
             loadStatus = d;
+    }
+
+    public static void playSound(Note n, InstrumentIndex i) {
+        // TODO Auto-generated method stub
+
     }
 
 

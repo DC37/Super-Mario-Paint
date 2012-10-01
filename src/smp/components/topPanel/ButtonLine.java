@@ -87,7 +87,7 @@ public class ButtonLine {
             if (ind > 18) {
                 break;
             }
-            buttons.get(i.ordinal()).setOnMousePressed(
+            buttons.get(i.getChannel() - 1).setOnMousePressed(
                     new EventHandler<MouseEvent>() {
 
                         @Override
@@ -123,15 +123,20 @@ public class ButtonLine {
      * @param i The InstrumentIndex for the instrument
      */
     public void playSound(InstrumentIndex i) {
-        if (chan[i.ordinal()] != null) {
-            chan[i.ordinal()].noteOn(DEFAULT_NOTE, MAX_VELOCITY);
+        if (chan[i.getChannel() - 1] != null) {
+            chan[i.getChannel() - 1].noteOn(DEFAULT_NOTE, MAX_VELOCITY);
             if (Settings.DEBUG)
                 System.out.println(
-                        "Channel " + (i.ordinal() + 1)
+                        "Channel " + (i.getChannel())
                         + " Instrument: " + i.name());
         }
     }
 
+    /**
+     * Sets the currently selected instrument.
+     * @param i The <code>InstrumentIndex</code> that one
+     * wants to set the currently selected instrument by.
+     */
     private void setSelectedInstrument(InstrumentIndex i) {
         selectedInstrument = i;
     }
