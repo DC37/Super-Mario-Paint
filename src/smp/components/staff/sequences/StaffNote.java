@@ -37,10 +37,23 @@ public class StaffNote {
 
     /**
      * Plays this note's sound.
-     * @param i The InstrumentIndex for the instrument
      */
     public void playSound() {
         SoundfontLoader.playSound(theNote, theInstrument);
+    }
+
+    /**
+     * @return the noteLocation
+     */
+    public StaffNoteIndex getNoteLocation() {
+        return noteLocation;
+    }
+
+    /**
+     * @param noteLocation the noteLocation to set
+     */
+    public void setNoteLocation(StaffNoteIndex noteLocation) {
+        this.noteLocation = noteLocation;
     }
 
 }

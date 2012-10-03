@@ -13,6 +13,7 @@ import javax.sound.midi.MidiChannel;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
+import smp.components.Constants;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
 import smp.stateMachine.Settings;
@@ -28,19 +29,6 @@ import smp.stateMachine.Settings;
  */
 public class ButtonLine {
 
-
-    /**
-     * The largest value that a note velocity can be;
-     * a note played at this will be played as loudly
-     * as possible.
-     */
-    private static final int MAX_VELOCITY = 127;
-
-    /**
-     * The smallest value that a note velocity can be;
-     * a note will basically be silent if played at this.
-     */
-    private static final int MIN_VELOCITY = 0;
 
     private static int DEFAULT_NOTE;
 
@@ -124,7 +112,8 @@ public class ButtonLine {
      */
     public void playSound(InstrumentIndex i) {
         if (chan[i.getChannel() - 1] != null) {
-            chan[i.getChannel() - 1].noteOn(DEFAULT_NOTE, MAX_VELOCITY);
+            chan[i.getChannel() - 1].noteOn(DEFAULT_NOTE,
+                    Constants.MAX_VELOCITY);
             if (Settings.DEBUG)
                 System.out.println(
                         "Channel " + (i.getChannel())

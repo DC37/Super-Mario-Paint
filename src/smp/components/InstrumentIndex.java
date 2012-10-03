@@ -47,6 +47,11 @@ public enum InstrumentIndex {
         channel = n;
     }
 
+    /**
+     * Gives the channel that this Instrument should be located at.
+     * @return An integer that represents what channel the instrument
+     * is located at.
+     */
     public int getChannel() {
         return channel;
     }

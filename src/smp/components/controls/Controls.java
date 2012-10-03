@@ -37,14 +37,6 @@ public class Controls {
             break;
         case PAUSE:
             break;
-        case EDITING_ADV:
-            break;
-        case SONG_PLAYING_ADV:
-            break;
-        case ARR_PLAYING_ADV:
-            break;
-        case PAUSE_ADV:
-            break;
         default:
             break;
         }

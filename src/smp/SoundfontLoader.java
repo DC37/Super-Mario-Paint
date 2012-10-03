@@ -11,6 +11,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
+import smp.components.Constants;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sounds.SMPSynthesizer;
@@ -129,18 +130,31 @@ public class SoundfontLoader implements Runnable {
         theSynthesizer.close();
     }
 
+    /**
+     * @return A double value between 0 and 1, representing the
+     * load status of this class.
+     */
     public double getLoadStatus() {
         return loadStatus;
     }
 
+    /**
+     * Set the load status of the SoundfontLoader.
+     * @param d A double value between 0 and 1 that represents the
+     * load state of this class.
+     */
     public void setLoadStatus(double d) {
         if (d >= 0 && d <= 1)
             loadStatus = d;
     }
 
+    /**
+     * Plays a certain sound given a Note and some instrument.
+     * @param n The Note to play
+     * @param i The Instrument to play it with.
+     */
     public static void playSound(Note n, InstrumentIndex i) {
-        // TODO Auto-generated method stub
-
+        chan[i.getChannel()].noteOn(n.getKeyNum(), Constants.MAX_VELOCITY);
     }
 
 
