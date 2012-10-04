@@ -43,7 +43,7 @@ public class StaffNote {
     }
 
     /**
-     * @return the noteLocation
+     * @return The location of the note in the staff matrix.
      */
     public StaffNoteIndex getNoteLocation() {
         return noteLocation;
