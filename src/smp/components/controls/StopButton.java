@@ -26,14 +26,14 @@ public class StopButton extends ImageRadioButton {
     }
 
     @Override
-    public void doPressBehavior() {
+    public void press() {
         if (isPressed)
             return;
         StateMachine.setState(State.EDITING);
     }
 
     @Override
-    public void doReleaseBehavior() {
+    public void release() {
         if (!isPressed)
             return;
     }

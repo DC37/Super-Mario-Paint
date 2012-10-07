@@ -26,7 +26,23 @@ public class StaffNoteLine {
      */
     private ArrayList<StaffEvent> marks;
 
+    /**
+     * Creates a new staff note line.
+     */
+    public StaffNoteLine() {
 
+    }
 
+    public void add(StaffNote n) {
+
+    }
+
+    public void delete(int index) {
+
+    }
+
+    public void delete(StaffNote n) {
+
+    }
 
 }

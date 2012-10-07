@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  * @author RehdBlob
  * @since 2012.08.14
  */
-public abstract class AbstractImageButton implements ImageButton {
+public abstract class AbstractImageButton {
 
     /**
      * Indicates whether the button is currently pressed.
@@ -142,9 +142,25 @@ public abstract class AbstractImageButton implements ImageButton {
      * Gets the images for the <code>pressed</code> and <code>notPressed</code>
      * versions of the button.
      */
-    protected void getImages(ImageIndex pressed, ImageIndex notPressed) {
-        this.pressed = ImageLoader.getSpriteFX(pressed);
-        this.notPressed = ImageLoader.getSpriteFX(notPressed);
+    protected void getImages(ImageIndex pr, ImageIndex notPr) {
+        pressed = ImageLoader.getSpriteFX(pr);
+        notPressed = ImageLoader.getSpriteFX(notPr);
     }
+
+    /**
+     * Call this method to press the button and apply all the effects
+     * of pressing this button. Exactly when this method is called is
+     * defined by the abstract classes that ImageButton is implemented
+     * by.
+     */
+    public abstract void press();
+
+    /**
+     * Call this method to release the button and apply all the effects
+     * of releasing the button. Exactly when this method is called is
+     * defined by the abstract classes that ImageButton is implemented
+     * by.
+     */
+    public abstract void release();
 
 }

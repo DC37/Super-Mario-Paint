@@ -27,7 +27,7 @@ public class PlayButton extends ImageRadioButton {
     }
 
     @Override
-    public void doPressBehavior() {
+    public void press() {
         if (isPressed)
             return;
         StateMachine.setState(State.SONG_PLAYING);
@@ -35,7 +35,7 @@ public class PlayButton extends ImageRadioButton {
     }
 
     @Override
-    public void doReleaseBehavior() {
+    public void release() {
         if (!isPressed)
             return;
     }

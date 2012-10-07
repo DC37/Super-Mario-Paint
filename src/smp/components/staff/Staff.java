@@ -15,8 +15,8 @@ import smp.components.staff.sounds.SMPSequencer;
 
 
 /**
- * The staff on which notes go. The way that the Staff keeps track of
- * notes is that there is a matrix.
+ * The staff on which notes go. The staff keeps track of notes
+ * in terms of discrete StaffNoteLines, placed inside an array.
  * @author RehdBlob
  * @since 2012.08.13
  */
