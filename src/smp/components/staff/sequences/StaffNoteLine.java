@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class StaffNoteLine {
 
     /**
-     * The line number of this StaffNoteLine. For a standard 96-measure
+     * The line number of this StaffNoteLine. For a standard 96-measure 4/4
      * song, this number is between 0 and 383.
      */
     private int lineNum;
@@ -33,16 +33,30 @@ public class StaffNoteLine {
 
     }
 
+    /**
+     * Adds a note to the staff.
+     * @param n The note to add to this StaffNoteLine.
+     */
     public void add(StaffNote n) {
-
+        notes.add(n);
     }
 
-    public void delete(int index) {
-
+    /**
+     * Deletes the note at the index provided.
+     * @param index The index to delete a note from.
+     */
+    private void delete(int index) {
+        notes.remove(index);
     }
 
+    /**
+     * Deletes a note from the staff.
+     * @param n The note to delete.
+     */
     public void delete(StaffNote n) {
-
+        if (!(notes.indexOf(n) >= 0))
+            return;
+        delete(notes.indexOf(n));
     }
 
 }

@@ -152,9 +152,11 @@ public class SoundfontLoader implements Runnable {
      * Plays a certain sound given a Note and some instrument.
      * @param n The Note to play
      * @param i The Instrument to play it with.
+     * @param acc The offset from this note, in half-steps.
      */
-    public static void playSound(Note n, InstrumentIndex i) {
-        chan[i.getChannel()].noteOn(n.getKeyNum(), Constants.MAX_VELOCITY);
+    public static void playSound(Note n, InstrumentIndex i, int acc) {
+        chan[i.getChannel() - 1].noteOn(n.getKeyNum() + acc,
+                Constants.MAX_VELOCITY);
     }
 
 

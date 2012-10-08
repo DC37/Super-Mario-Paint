@@ -2,7 +2,6 @@ package smp.components.controls;
 
 import javafx.scene.image.ImageView;
 import smp.ImageIndex;
-import smp.components.general.ImageButton;
 import smp.components.general.ImageRadioButton;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;

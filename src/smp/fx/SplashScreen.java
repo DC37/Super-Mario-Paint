@@ -42,10 +42,18 @@ public class SplashScreen extends JFrame implements Runnable {
         setUpdateable(true);
     }
 
+    /**
+     * @param tf Whether the splash screen may begin updating statuses.
+     */
     public void setUpdateable(boolean tf) {
         isUpdateable = tf;
     }
 
+    /**
+     * Sets the loading progress to some value between 0 and 100%.
+     * @param d The sum of all of the loader thread statuses.
+     * @param numOfThreads The number of threads.
+     */
     public void updateStatus(double d, int numOfThreads) {
         if (isUpdateable)
             loading.setText(String.format("Loading: "

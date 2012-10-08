@@ -1,6 +1,7 @@
 package smp.components.staff.sounds;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
@@ -22,6 +23,11 @@ public class SMPSequence {
      * The number of tracks in an advanced Super Mario Paint sequence.
      */
     private static final int NUMTRACKSADV = 50;
+
+    /**
+     * List of things that happen during the course of some sequence.
+     */
+    private LinkedList<MidiEvent> sequenceEvents;
 
     /**
      * The Sequence type that this class wraps.
@@ -82,8 +88,27 @@ public class SMPSequence {
      * sequence.
      */
     public void setData(ArrayList<MidiEvent> data) {
+        populateSequence(data);
         // TODO: Actually code this
+    }
 
+    /**
+     * Populates the sequence with the events stored in the LinkedList
+     * <code>sequenceEvents</code>.
+     */
+    public void populateSequence() {
+        for (MidiEvent m : sequenceEvents){
+            // TODO: Actually add something here.
+        }
+
+    }
+
+    /**
+     * Populates the sequence with the events given in some list of MidiEvents.
+     * @param data The list of MidiEvents.
+     */
+    public void populateSequence(ArrayList<MidiEvent> data) {
+        // TODO: Actually code this.
     }
 
 }
