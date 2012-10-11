@@ -45,7 +45,7 @@ public class Staff {
      * Puts a note on the Staff.
      * @param n The note to be added to the staff.
      */
-    public void placeNote(Note n) {
+    public void placeNote(StaffNote n) {
 
     }
 

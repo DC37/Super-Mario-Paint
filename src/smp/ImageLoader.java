@@ -61,8 +61,13 @@ public class ImageLoader implements Runnable {
                     new Image(f.toURI().toString());
             spritesFX.put(i, temp2);
             System.out.println("Loaded Image: " + i.toString() + extension);
-            setLoadStatus(1);
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        setLoadStatus(1);
 
     }
 

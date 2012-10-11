@@ -69,8 +69,14 @@ public class SoundfontLoader implements Runnable {
 			 bv*/
 
             theSynthesizer.ensureCapacity(19);
-            for (Instrument i : theSynthesizer.getLoadedInstruments())
+            for (Instrument i : theSynthesizer.getLoadedInstruments()) {
                 theSynthesizer.unloadInstrument(i);
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             setLoadStatus(0.2);
             theSynthesizer.loadAllInstruments(bank);
             setLoadStatus(0.3);
@@ -90,6 +96,11 @@ public class SoundfontLoader implements Runnable {
                 ordinal++;
                 System.out.println("Initialized Instrument: "
                         + i.toString());
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             System.out.println("Synth Latency: " + theSynthesizer.getLatency());
             setLoadStatus(1);
