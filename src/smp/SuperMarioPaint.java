@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
+import smp.stateMachine.Settings;
 
 /**
  * Super Mario Paint <br>
@@ -83,15 +84,17 @@ public class SuperMarioPaint extends Application {
         Thread sfLd = new Thread(sfLoader);
         sfLd.start();
         imgLd.start();
-        while (imgLd.isAlive() || sfLd.isAlive())
+        while (imgLd.isAlive() || sfLd.isAlive()) {
             try {
                 Thread.sleep(1);
-                double imgStatus = imgLoader.getLoadStatus();
-                double sfStatus = sfLoader.getLoadStatus();
-                dummyPreloader.updateStatus((imgStatus + sfStatus) * 100, NUM_THREADS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            double imgStatus = imgLoader.getLoadStatus();
+            double sfStatus = sfLoader.getLoadStatus();
+            dummyPreloader.updateStatus((imgStatus + sfStatus) * 100, NUM_THREADS);
+        }
+
     }
 
     /**
@@ -129,6 +132,7 @@ public class SuperMarioPaint extends Application {
      * @param unused Currrently unused arguments for run configs.
      */
     public static void main(String... unused) {
+        Settings.setVerbose(true);
         launch(unused);
     }
 

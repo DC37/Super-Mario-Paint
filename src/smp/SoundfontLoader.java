@@ -81,7 +81,7 @@ public class SoundfontLoader implements Runnable {
             theSynthesizer.loadAllInstruments(bank);
             setLoadStatus(0.3);
 
-            if (Settings.DEBUG){
+            if (Settings.debug){
                 System.out.println("Loaded Instruments: ");
                 for (Instrument j : theSynthesizer.getLoadedInstruments())
                     System.out.println(j.getName());

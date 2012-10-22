@@ -20,7 +20,7 @@ public class Settings implements Serializable {
     /**
      * Classic debug on/off.
      */
-    public static final boolean DEBUG = true;
+    public static boolean debug = true;
 
 
     /**
@@ -30,6 +30,10 @@ public class Settings implements Serializable {
 
 
 
+    /**
+     * Initializes the settings that are currently stored in the program.
+     * Unpacks the object from a serialized version.
+     */
     public Settings() {
 
     }
@@ -43,21 +47,24 @@ public class Settings implements Serializable {
     }
 
     /**
-     * 
+     * Loads the settings from some file.
      */
     private void load() {
 
     }
 
     /**
-     * 
+     * Saves the settings into some file.
      */
     private void save() {
 
     }
 
-
-
-
-
+    /**
+     * Sets whether we want to see debug mode or not.
+     * @param b True or false.
+     */
+    public static void setVerbose(boolean b) {
+        debug = b;
+    }
 }

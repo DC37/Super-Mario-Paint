@@ -56,4 +56,13 @@ public class StaffNote {
         this.noteLocation = noteLocation;
     }
 
+    /**
+     * Sets the accidental of this note to whatever <code>a</code>
+     * is.
+     * @param a The accidental that we're trying to set this note to.
+     */
+    public void setAccidental(int a) {
+        accidental = a;
+    }
+
 }

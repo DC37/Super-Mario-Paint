@@ -114,7 +114,7 @@ public class ButtonLine {
         if (chan[i.getChannel() - 1] != null) {
             chan[i.getChannel() - 1].noteOn(DEFAULT_NOTE,
                     Constants.MAX_VELOCITY);
-            if (Settings.DEBUG)
+            if (Settings.debug)
                 System.out.println(
                         "Channel " + (i.getChannel())
                         + " Instrument: " + i.name());

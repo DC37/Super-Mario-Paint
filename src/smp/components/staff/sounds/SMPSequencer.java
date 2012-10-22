@@ -69,10 +69,16 @@ public class SMPSequencer {
         }
     }
 
+    /**
+     * Adds some note into the sequence of notes that we're working with.
+     */
     public void addNote() {
 
     }
 
+    /**
+     * Removes a note from the sequence of notes that we're working with.
+     */
     public void removeNote() {
 
     }
