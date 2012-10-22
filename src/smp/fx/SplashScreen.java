@@ -21,15 +21,28 @@ public class SplashScreen extends JFrame implements Runnable {
      */
     private static final long serialVersionUID = 6705972583468020200L;
 
+    /**
+     * A button that displays the load status.
+     */
     private JButton loading;
+
+    /**
+     * Tells whether it is legal to update the status.
+     */
     private boolean isUpdateable;
+
+    /**
+     * The nice looking splash screen that we may be implementing
+     * in the near future.
+     */
     private Image splashScreen;
+
     /**
      * Displays a dummy window that says "Loading!"
      */
     @Override
     public void run() {
-        loading = new JButton("Loading: 0.0");
+        loading = new JButton("Loading: 0.00");
         loading.setBorder(BorderFactory.createEmptyBorder());
         loading.setContentAreaFilled(false);
         // loading.add(splashScreen);
@@ -56,8 +69,8 @@ public class SplashScreen extends JFrame implements Runnable {
      */
     public void updateStatus(double d, int numOfThreads) {
         if (isUpdateable)
-            loading.setText(String.format("Loading: "
-                    + (Math.floor(d) / numOfThreads)));
+            loading.setText(String.format("Loading: %3.2f",
+                    (d / numOfThreads)));
     }
 
 

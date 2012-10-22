@@ -85,11 +85,13 @@ public class SuperMarioPaint extends Application {
         imgLd.start();
         while (imgLd.isAlive() || sfLd.isAlive())
             try {
-                Thread.sleep(10);
+                Thread.sleep(1);
+                double imgStatus = imgLoader.getLoadStatus();
+                double sfStatus = sfLoader.getLoadStatus();
+                dummyPreloader.updateStatus((imgStatus + sfStatus) * 100, NUM_THREADS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        dummyPreloader.updateStatus(NUM_THREADS * 30, NUM_THREADS);
     }
 
     /**
@@ -104,7 +106,6 @@ public class SuperMarioPaint extends Application {
             Parent root =
                     (Parent) FXMLLoader.load(
                             new File(mainFxml).toURI().toURL());
-            dummyPreloader.updateStatus(NUM_THREADS * 60, NUM_THREADS);
             primaryStage.setTitle("Super Mario Paint");
             primaryStage.setResizable(true);
             primaryStage.setScene(new Scene(root, 800, 600));

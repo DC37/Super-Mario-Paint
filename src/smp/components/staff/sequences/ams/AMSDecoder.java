@@ -67,7 +67,8 @@ public class AMSDecoder {
      */
     private static SMPSequence populateSequence(String timeSig,
             SMPSoundfont soundfont, ArrayList<Speedmark> speedmarks,
-            ArrayList<Bookmark> bookmarks, ArrayList<String> data, String tempo) {
+            ArrayList<Bookmark> bookmarks, ArrayList<String> data,
+            String tempo) {
         return null;
     }
 

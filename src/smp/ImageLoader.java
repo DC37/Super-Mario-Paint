@@ -55,7 +55,7 @@ public class ImageLoader implements Runnable {
         File f;
         ImageIndex [] ind = ImageIndex.values();
         for (ImageIndex i : ind) {
-            setLoadStatus((i.ordinal() + 1) / ind.length);
+            setLoadStatus((i.ordinal() + 1.0) / ind.length);
             f = new File(path + i.toString() + extension);
             Image temp2 =
                     new Image(f.toURI().toString());
