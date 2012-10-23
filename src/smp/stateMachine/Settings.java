@@ -1,5 +1,11 @@
 package smp.stateMachine;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -43,20 +49,6 @@ public class Settings implements Serializable {
      * 
      */
     private void setOptions() {
-
-    }
-
-    /**
-     * Loads the settings from some file.
-     */
-    private void load() {
-
-    }
-
-    /**
-     * Saves the settings into some file.
-     */
-    private void save() {
 
     }
 

@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
  * @author RehdBlob
  * @since 2012.08.14
  */
-public class ImageLoader implements Runnable {
+public class ImageLoader implements Loader {
 
     /**
      * Contains references to all the loaded sprites in JavaFX Image form.
@@ -88,6 +88,7 @@ public class ImageLoader implements Runnable {
     /**
      * @return The current load status, which is anywhere between 0 and 1.
      */
+    @Override
     public double getLoadStatus() {
         return loadStatus;
     }
@@ -96,6 +97,7 @@ public class ImageLoader implements Runnable {
      * Sets the load status of the Thread version of ImageLoader.
      * @param d A <b>double</b> that is anywhere between 0 and 1.
      */
+    @Override
     public void setLoadStatus(double d) {
         if (d >= 0 && d <= 1)
             loadStatus = d;

@@ -61,12 +61,12 @@ public class SuperMarioPaint extends Application {
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
      */
-    private ImageLoader imgLoader = new ImageLoader();
+    private Loader imgLoader = new ImageLoader();
 
     /**
      * Loads the soundfonts that will be used in Super Mario Paint.
      */
-    private SoundfontLoader sfLoader = new SoundfontLoader();
+    private Loader sfLoader = new SoundfontLoader();
 
     /**
      * Starts three <code>Thread</code>s. One of them is currently

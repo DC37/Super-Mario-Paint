@@ -24,7 +24,7 @@ import smp.stateMachine.Settings;
  * @author RehdBlob
  * @since 2012.08.14
  */
-public class SoundfontLoader implements Runnable {
+public class SoundfontLoader implements Loader {
 
     /**
      * A number between 0 and 1 that indicates the
@@ -145,6 +145,7 @@ public class SoundfontLoader implements Runnable {
      * @return A double value between 0 and 1, representing the
      * load status of this class.
      */
+    @Override
     public double getLoadStatus() {
         return loadStatus;
     }
@@ -154,6 +155,7 @@ public class SoundfontLoader implements Runnable {
      * @param d A double value between 0 and 1 that represents the
      * load state of this class.
      */
+    @Override
     public void setLoadStatus(double d) {
         if (d >= 0 && d <= 1)
             loadStatus = d;
