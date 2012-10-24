@@ -29,7 +29,14 @@ import smp.stateMachine.Settings;
  */
 public class ButtonLine {
 
+    /**
+     * The Settings that we want to load.
+     */
+    private static Settings settings;
 
+    /**
+     * The default note number.
+     */
     private static int DEFAULT_NOTE;
 
     /**
@@ -114,7 +121,7 @@ public class ButtonLine {
         if (chan[i.getChannel() - 1] != null) {
             chan[i.getChannel() - 1].noteOn(DEFAULT_NOTE,
                     Constants.MAX_VELOCITY);
-            if (Settings.debug)
+            if (settings.debug)
                 System.out.println(
                         "Channel " + (i.getChannel())
                         + " Instrument: " + i.name());

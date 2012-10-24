@@ -69,6 +69,11 @@ public class SuperMarioPaint extends Application {
     private Loader sfLoader = new SoundfontLoader();
 
     /**
+     * Loads the settings file.
+     */
+    private Loader setLoader = new SettingsLoader();
+
+    /**
      * Starts three <code>Thread</code>s. One of them is currently
      * a dummy splash screen, the second an <code>ImageLoader</code>,
      * and the third one a <code>SoundfontLoader</code>.
@@ -82,9 +87,11 @@ public class SuperMarioPaint extends Application {
         splash.start();
         Thread imgLd = new Thread(imgLoader);
         Thread sfLd = new Thread(sfLoader);
+        Thread setLd = new Thread(setLoader);
+        setLd.start();
         sfLd.start();
         imgLd.start();
-        while (imgLd.isAlive() || sfLd.isAlive()) {
+        while (imgLd.isAlive() || sfLd.isAlive() || setLd.isAlive()) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -129,10 +136,9 @@ public class SuperMarioPaint extends Application {
 
     /**
      * Launches the application.
-     * @param unused Currrently unused arguments for run configs.
+     * @param unused Currently unused arguments for run configs.
      */
     public static void main(String... unused) {
-        Settings.setVerbose(true);
         launch(unused);
     }
 
