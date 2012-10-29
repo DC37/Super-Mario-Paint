@@ -83,6 +83,8 @@ public class SuperMarioPaint extends Application {
      */
     @Override
     public void init() {
+        Settings s = new Settings();
+        SoundfontLoader.setSettings(s);
         Thread splash = new Thread(dummyPreloader);
         splash.start();
         Thread imgLd = new Thread(imgLoader);

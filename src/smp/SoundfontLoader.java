@@ -177,5 +177,8 @@ public class SoundfontLoader implements Loader {
                 Constants.MAX_VELOCITY);
     }
 
+    public static void setSettings(Settings s) {
+        settings = s;
+    }
 
 }
