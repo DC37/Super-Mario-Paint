@@ -60,8 +60,8 @@ public class AMSDecoder {
      * song.
      * @param bookmarks The bookmarks present in the Advanced Mario Sequencer
      * song.
-     * @param tempo
-     * @param data
+     * @param tempo The tempo that this song is to run at.
+     * @param data The song data that has been parsed.
      * @return A new Super Mario Paint sequence that is to be loaded
      * immediately upon creation.
      */

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 
@@ -97,7 +98,7 @@ public class MPCDecoder {
     /**
      * Decodes a Mario Paint Composer song and puts the song data into a
      * Super Mario Paint sequence.
-     * @param songData
+     * @param songData The song data that we've read in through a text file.
      * @return The MIDI events in the MPC sequence
      */
     private static ArrayList<MidiEvent> decodeSong(ArrayList<String> songData) {

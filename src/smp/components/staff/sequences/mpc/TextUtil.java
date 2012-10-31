@@ -1,7 +1,8 @@
 package smp.components.staff.sequences.mpc;
 
 import java.util.ArrayList;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Pulled from MPCTxtTools; this should be useful in decoding
@@ -10,8 +11,8 @@ import java.util.ArrayList;
  * @since MPCTxtTools 1.05
  * @since 2011.09.02
  */
-public class TextUtil
-{
+public class TextUtil {
+
     /**
      * @since MPCTxtTools 1.05
      * @since 2011.09.02
@@ -24,14 +25,14 @@ public class TextUtil
         if (i == -1)
             return t.substring(0,t.indexOf('"')) + t.substring(t.indexOf('"') + 1);
         String out = "";
-        while(t.indexOf(':')!=-1) {
-            String piece = t.substring(0,t.indexOf(':')+1);
-            if(piece.indexOf("++++++")!= -1 & piece.indexOf("++++++")==0) {
+        while(t.indexOf(':') != -1) {
+            String piece = t.substring(0, t.indexOf(':')+1);
+            if (piece.indexOf("++++++") != -1 & piece.indexOf("++++++") == 0) {
                 out += ":";
-                t = t.substring(t.indexOf(':')+1);
+                t = t.substring(t.indexOf(':') + 1);
             } else {
                 out += piece;
-                t = t.substring(t.indexOf(':')+1);
+                t = t.substring(t.indexOf(':') + 1);
             }
         }
         out += t;

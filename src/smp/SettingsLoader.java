@@ -17,7 +17,16 @@ import smp.stateMachine.Settings;
  */
 public class SettingsLoader implements Loader {
 
+    /**
+     * The settings that we load from some file.
+     */
     public Settings set;
+
+    /**
+     * A double between zero and one that denotes the amount that this
+     * class has completed its loading function.
+     */
+    private double loadStatus = 0;
 
     /**
      * Loads the settings from some file.
@@ -25,13 +34,17 @@ public class SettingsLoader implements Loader {
     private void load() {
         FileInputStream fin;
         ObjectInputStream oIn;
+        setLoadStatus(0);
         try {
             fin = new FileInputStream("settings.txt");
             oIn = new ObjectInputStream(fin);
             set = (Settings) oIn.readObject();
+        } catch (FileNotFoundException e) {
+            set = new Settings();
         } catch (IOException e) {
-
+            set = new Settings();
         } catch (ClassNotFoundException e) {
+            System.err.println("Error reading file: Class not found.");
             e.printStackTrace();
         }
     }
@@ -64,13 +77,13 @@ public class SettingsLoader implements Loader {
 
     @Override
     public double getLoadStatus() {
-        // TODO Auto-generated method stub
-        return 0;
+        return loadStatus;
     }
 
     @Override
     public void setLoadStatus(double d) {
-        // TODO Auto-generated method stub
-
+        if (d >= 0 && d <= 1) {
+            loadStatus = d;
+        }
     }
 }

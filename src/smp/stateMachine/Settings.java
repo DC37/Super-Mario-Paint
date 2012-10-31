@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import smp.SettingsLoader;
+
 /**
  * A loadable settings file that determines whatever is supposed
  * to display eventually on the screen.
@@ -31,17 +33,7 @@ public class Settings implements Serializable {
     /**
      * If Advanced mode is unlocked, this is set to <b>true</b>
      */
-    private boolean advModeUnlocked;
-
-
-
-    /**
-     * Initializes the settings that are currently stored in the program.
-     * Unpacks the object from a serialized version.
-     */
-    public Settings() {
-
-    }
+    private boolean advModeUnlocked = false;
 
 
     /**
@@ -101,9 +93,6 @@ public class Settings implements Serializable {
      * true...
      */
     public boolean ADV_MODE = false;
-
-
-
 
     /**
      * Sets whether we want to see debug mode or not.
