@@ -97,21 +97,19 @@ public class ButtonLine {
                                                         i.toString())));
                                 setSelectedInstrument(i);
                             } catch (IllegalArgumentException e) {
-                                // Do nothing.
                                 e.printStackTrace();
                             } catch (NullPointerException e) {
-                                // Do nothing.
                                 e.printStackTrace();
                             }
                         }
+
                     });
             ind++;
         }
         try {
             chan = SoundfontLoader.getChannels();
         } catch (NullPointerException e) {
-            // Can't recover
-            System.exit(0);
+            System.exit(1);
         }
     }
 

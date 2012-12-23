@@ -16,6 +16,7 @@ import smp.SoundfontLoader;
  * @since 2012.08.24
  *
  */
+@SuppressWarnings("unused")
 public class SMPSequencer {
 
     /**

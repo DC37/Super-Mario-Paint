@@ -40,9 +40,9 @@ public class SettingsLoader implements Loader {
             oIn = new ObjectInputStream(fin);
             set = (Settings) oIn.readObject();
         } catch (FileNotFoundException e) {
-            set = new Settings();
+            set = new Settings(false);
         } catch (IOException e) {
-            set = new Settings();
+            set = new Settings(false);
         } catch (ClassNotFoundException e) {
             System.err.println("Error reading file: Class not found.");
             e.printStackTrace();

@@ -50,7 +50,7 @@ public class SuperMarioPaint extends Application {
      * The number of threads that are running to load things for Super Mario
      * Paint.
      */
-    private static final int NUM_THREADS = 3;
+    private static final int NUM_THREADS = 2;
 
     /**
      * Until I figure out the mysteries of the Preloader class in
@@ -124,13 +124,11 @@ public class SuperMarioPaint extends Application {
             primaryStage.show();
             dummyPreloader.dispose();
         } catch (MalformedURLException e) {
-            /* Can't recover. */
             e.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         } catch (IOException e) {
-            /* Can't recover. */
             e.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
 

@@ -1,14 +1,6 @@
 package smp.stateMachine;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import smp.SettingsLoader;
 
 /**
  * A loadable settings file that determines whatever is supposed
@@ -101,4 +93,16 @@ public class Settings implements Serializable {
     public void setVerbose(boolean b) {
         debug = b;
     }
+
+    /**
+     * Instantiates a Settings object with whether we want to do debugging or
+     * not.
+     * @param d True if we want to do debug mode.
+     */
+    public Settings(boolean d) {
+        if (d) {
+            debug = true;
+        }
+    }
+
 }
