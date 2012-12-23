@@ -20,7 +20,7 @@ public class SettingsLoader implements Loader {
     /**
      * The settings that we load from some file.
      */
-    public Settings set;
+    private static Settings set;
 
     /**
      * A double between zero and one that denotes the amount that this
@@ -85,5 +85,13 @@ public class SettingsLoader implements Loader {
         if (d >= 0 && d <= 1) {
             loadStatus = d;
         }
+    }
+
+    /**
+     * Gives the loaded settings. This *can* be null.
+     * @return The loaded settings file.
+     */
+    public static Settings getSettings() {
+        return set;
     }
 }

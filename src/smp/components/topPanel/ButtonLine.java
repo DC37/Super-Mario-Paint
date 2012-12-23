@@ -12,6 +12,7 @@ import javax.sound.midi.MidiChannel;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.SettingsLoader;
 import smp.SoundfontLoader;
 import smp.components.Constants;
 import smp.components.InstrumentIndex;
@@ -71,6 +72,7 @@ public class ButtonLine {
         selectedInst = selected;
         setupButtons();
         DEFAULT_NOTE = Note.A3.getKeyNum();
+        settings = SettingsLoader.getSettings();
     }
 
     /**

@@ -50,7 +50,7 @@ public class SuperMarioPaint extends Application {
      * The number of threads that are running to load things for Super Mario
      * Paint.
      */
-    private static final int NUM_THREADS = 2;
+    private static final int NUM_THREADS = 3;
 
     /**
      * Until I figure out the mysteries of the Preloader class in
@@ -83,17 +83,15 @@ public class SuperMarioPaint extends Application {
      */
     @Override
     public void init() {
-        Settings s = new Settings();
-        SoundfontLoader.setSettings(s);
+        setLoader.run();
+        SoundfontLoader.setSettings(SettingsLoader.getSettings());
         Thread splash = new Thread(dummyPreloader);
         splash.start();
         Thread imgLd = new Thread(imgLoader);
         Thread sfLd = new Thread(sfLoader);
-        Thread setLd = new Thread(setLoader);
-        setLd.start();
         sfLd.start();
         imgLd.start();
-        while (imgLd.isAlive() || sfLd.isAlive() || setLd.isAlive()) {
+        while (imgLd.isAlive() || sfLd.isAlive()) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
