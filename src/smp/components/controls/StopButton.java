@@ -10,7 +10,7 @@ import smp.stateMachine.StateMachine;
  * Wrapper class for an ImageView that holds the stop button
  * image. Pressing the button changes the image and also changes
  * the state of the program.
- * @author Derek Chou
+ * @author RehdBlob
  * @since 2012.09.14
  */
 public class StopButton extends ImageRadioButton {
