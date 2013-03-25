@@ -30,11 +30,23 @@ public class StaffNoteLine {
      * Creates a new staff note line.
      */
     public StaffNoteLine() {
-
+        notes = new ArrayList<StaffNote>();
+        marks = new ArrayList<StaffEvent>();
     }
 
     /**
-     * Adds a note to the staff.
+     * Creates a new staff note line with the specified
+     * line number.
+     * @param num The line number identifier of this staff note line.
+     */
+    public StaffNoteLine(int num) {
+        lineNum = num;
+        notes = new ArrayList<StaffNote>();
+        marks = new ArrayList<StaffEvent>();
+    }
+
+    /**
+     * Adds a note to the staff note line.
      * @param n The note to add to this StaffNoteLine.
      */
     public void add(StaffNote n) {
@@ -42,21 +54,45 @@ public class StaffNoteLine {
     }
 
     /**
-     * Deletes the note at the index provided.
-     * @param index The index to delete a note from.
+     * Adds an event to this staff note line.
+     * @param e The event that we are trying to add.
      */
-    private void delete(int index) {
-        notes.remove(index);
+    public void addEvent(StaffEvent e) {
+        marks.add(e);
     }
 
     /**
      * Deletes a note from the staff.
      * @param n The note to delete.
+     * @return True if we successfully removed the note.
      */
-    public void delete(StaffNote n) {
-        if (!(notes.indexOf(n) >= 0))
-            return;
-        delete(notes.indexOf(n));
+    public boolean delete(StaffNote n) {
+        return notes.remove(n);
+    }
+
+    /**
+     * Deletes an event from this staff note line.
+     * @param e The event that we are trying to remove.
+     * @return True if we successfully removed the event.
+     */
+    public boolean deleteEvent(StaffEvent e) {
+        return marks.remove(e);
+    }
+
+    /**
+     * @return The line number that this staff event is located at
+     */
+    public int getLineNum() {
+        return lineNum;
+    }
+
+    /**
+     * Sets the line number to whatever we feed this method.
+     * @param num The line number that we want this staff note line to
+     * occur at.
+     */
+    public void setLineNum(int num) {
+        lineNum = num;
     }
 
 }
