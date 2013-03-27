@@ -40,15 +40,5 @@ public class Speedmark extends AbstractStaffEvent {
         return tempo;
     }
 
-    @Override
-    protected void setMeasureNum(int num) {
-        // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    protected void setMeasureLineNum(int num) {
-        // TODO Auto-generated method stub
-
-    }
 }

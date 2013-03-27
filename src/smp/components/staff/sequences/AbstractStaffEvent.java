@@ -1,4 +1,5 @@
 package smp.components.staff.sequences;
+import smp.stateMachine.Settings;
 
 /**
  * An event on the Super Mario Paint staff.
@@ -36,8 +37,20 @@ public abstract class AbstractStaffEvent implements StaffEvent {
      * @param num An integer representation that denotes
      * the location of the event.
      */
-    protected abstract void setMeasureNum(int num);
+    protected void setMeasureNum(int num) {
+        if (isMeasureNumValid(num)) {
 
+        }
+    }
+
+    /**
+     * Tells us whether this measure number is valid.
+     * @param num The measure number we want to check.
+     * @return
+     */
+    protected static boolean isMeasureNumValid(int num) {
+        return (!Settings.LIM_96_MEASURES && num >= 0) || (num >= 0 && num <= 96);
+    }
 
     /**
      * Sets the measure line number of this staff event
@@ -46,7 +59,9 @@ public abstract class AbstractStaffEvent implements StaffEvent {
      * @param num An integer representation that denotes the
      * location of the event.
      */
-    protected abstract void setMeasureLineNum(int num);
+    protected void setMeasureLineNum(int num) {
+        ;
+    }
 
     @Override
     public int getLineNum() {

@@ -48,11 +48,6 @@ public class SoundfontLoader implements Loader {
     private static Soundbank bank;
 
     /**
-     * The Settings that define what this class does.
-     */
-    private static Settings settings;
-
-    /**
      * The default soundset name.
      */
     private String soundset = "soundset3.sf2";
@@ -86,7 +81,7 @@ public class SoundfontLoader implements Loader {
             theSynthesizer.loadAllInstruments(bank);
             setLoadStatus(0.3);
 
-            if (settings.debug){
+            if (Settings.debug){
                 System.out.println("Loaded Instruments: ");
                 for (Instrument j : theSynthesizer.getLoadedInstruments())
                     System.out.println(j.getName());
@@ -175,10 +170,6 @@ public class SoundfontLoader implements Loader {
     public static void playSound(Note n, InstrumentIndex i, int acc) {
         chan[i.getChannel() - 1].noteOn(n.getKeyNum() + acc,
                 Constants.MAX_VELOCITY);
-    }
-
-    public static void setSettings(Settings s) {
-        settings = s;
     }
 
 }

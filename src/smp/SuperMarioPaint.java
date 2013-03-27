@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
-import smp.stateMachine.Settings;
 
 /**
  * Super Mario Paint <br>
@@ -69,11 +68,6 @@ public class SuperMarioPaint extends Application {
     private Loader sfLoader = new SoundfontLoader();
 
     /**
-     * Loads the settings file.
-     */
-    private Loader setLoader = new SettingsLoader();
-
-    /**
      * Starts three <code>Thread</code>s. One of them is currently
      * a dummy splash screen, the second an <code>ImageLoader</code>,
      * and the third one a <code>SoundfontLoader</code>.
@@ -83,8 +77,6 @@ public class SuperMarioPaint extends Application {
      */
     @Override
     public void init() {
-        setLoader.run();
-        SoundfontLoader.setSettings(SettingsLoader.getSettings());
         Thread splash = new Thread(dummyPreloader);
         splash.start();
         Thread imgLd = new Thread(imgLoader);

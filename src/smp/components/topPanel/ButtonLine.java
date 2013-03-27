@@ -72,7 +72,6 @@ public class ButtonLine {
         selectedInst = selected;
         setupButtons();
         DEFAULT_NOTE = Note.A3.getKeyNum();
-        settings = SettingsLoader.getSettings();
     }
 
     /**
