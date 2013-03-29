@@ -12,7 +12,6 @@ import javax.sound.midi.MidiChannel;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
-import smp.SettingsLoader;
 import smp.SoundfontLoader;
 import smp.components.Constants;
 import smp.components.InstrumentIndex;
@@ -120,7 +119,7 @@ public class ButtonLine {
         if (chan[i.getChannel() - 1] != null) {
             chan[i.getChannel() - 1].noteOn(DEFAULT_NOTE,
                     Constants.MAX_VELOCITY);
-            if (settings.debug)
+            if (Settings.debug)
                 System.out.println(
                         "Channel " + (i.getChannel())
                         + " Instrument: " + i.name());
