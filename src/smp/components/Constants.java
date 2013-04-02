@@ -8,8 +8,10 @@ package smp.components;
  */
 public class Constants {
 
+    /** Default width */
     public static final int DEFAULT_WIDTH = 805;
 
+    /** Default height */
     public static final int DEFAULT_HEIGHT = 635;
 
     /**

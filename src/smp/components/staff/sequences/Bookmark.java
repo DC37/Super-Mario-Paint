@@ -15,16 +15,4 @@ public class Bookmark extends AbstractStaffEvent {
         super(num);
     }
 
-    @Override
-    protected void setMeasureNum(int num) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    protected void setMeasureLineNum(int num) {
-        // TODO Auto-generated method stub
-
-    }
-
 }

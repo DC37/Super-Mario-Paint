@@ -38,15 +38,16 @@ public abstract class AbstractStaffEvent implements StaffEvent {
      * the location of the event.
      */
     protected void setMeasureNum(int num) {
-        if (isMeasureNumValid(num)) {
-
-        }
+        if (isMeasureNumValid(num))
+            measureNum = num;
     }
 
     /**
      * Tells us whether this measure number is valid.
      * @param num The measure number we want to check.
-     * @return
+     * @return If the measure number is greater than or equal to 0. If the
+     * Settings feature for limiting to 96 measures is on, then we check for
+     * that too.
      */
     protected static boolean isMeasureNumValid(int num) {
         return (!Settings.LIM_96_MEASURES && num >= 0) || (num >= 0 && num <= 96);

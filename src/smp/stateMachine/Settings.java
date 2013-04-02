@@ -1,5 +1,10 @@
 package smp.stateMachine;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -10,16 +15,13 @@ import java.io.Serializable;
  */
 public class Settings implements Serializable {
 
-    /**
-     * Generated serial ID.
-     */
-    private static final long serialVersionUID = -7243683035937693416L;
-
+    /** The name of the file that we write to. */
+    private transient final static String settingsFile = "settings.data";
 
     /**
      * Classic debug on/off.
      */
-    public static boolean debug = true;
+    public transient static boolean debug;
 
 
     /**
@@ -94,5 +96,52 @@ public class Settings implements Serializable {
         debug = b;
     }
 
+    /**
+     * Saves the settings of the program.
+     * @throws IOException If we can't write the object.
+     */
+    public static void serialize() throws IOException {
+        FileOutputStream f_out = new
+                FileOutputStream(settingsFile);
+        ObjectOutputStream obj_out = new
+                ObjectOutputStream (f_out);
+        obj_out.writeObject(Settings.class);
+        obj_out.close();
+    }
 
+    /**
+     * Unserializes this Settings file.
+     * @throws IOException If for some reason we can't load
+     * the settings.
+     * @throws ClassNotFoundException If for some reason we can't find
+     * the settings file file.
+     */
+    public static void unserialize()
+            throws IOException, ClassNotFoundException {
+        FileInputStream f_in = new
+                FileInputStream (settingsFile);
+        ObjectInputStream obj_in = new
+                ObjectInputStream (f_in);
+        obj_in.readObject();
+        obj_in.close();
+    }
+
+    /**
+     * Sets the debug switch on or off.
+     * @param b Whether we want debug mode to be on or not.
+     */
+    public static void setDebug(boolean b) {
+        debug = b;
+    }
+
+    /** Turns debug mode on. */
+    public static void setDebug() {
+        debug = true;
+    }
+
+    /** Turns debug mode off. */
+    public static void resetDebug() {
+        debug = false;
+    }
 }
+
