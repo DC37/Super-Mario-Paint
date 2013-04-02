@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.io.Serializable;
+import java.util.Scanner;
 
 /**
  * A loadable settings file that determines whatever is supposed
@@ -16,12 +18,12 @@ import java.io.Serializable;
 public class Settings implements Serializable {
 
     /** The name of the file that we write to. */
-    private transient final static String settingsFile = "settings.data";
+    private final static String settingsFile = "settings.data";
 
     /**
      * Classic debug on/off.
      */
-    public transient static boolean debug;
+    public static boolean debug;
 
 
     /**
@@ -100,13 +102,24 @@ public class Settings implements Serializable {
      * Saves the settings of the program.
      * @throws IOException If we can't write the object.
      */
-    public static void serialize() throws IOException {
+    public static void save() throws IOException {
+        Settings dummySettings = new Settings();
         FileOutputStream f_out = new
                 FileOutputStream(settingsFile);
-        ObjectOutputStream obj_out = new
-                ObjectOutputStream (f_out);
-        obj_out.writeObject(Settings.class);
-        obj_out.close();
+        PrintStream p = new PrintStream(f_out);
+        p.println(advModeUnlocked);
+        p.println(LIM_NOTESPERLINE);
+        p.println(LIM_96_MEASURES);
+        p.println(LIM_VOLUME_LINE);
+        p.println(LIM_LOWA);
+        p.println(LIM_HIGHD);
+        p.println(LOW_A_ON);
+        p.println(NEG_TEMPO_FUN);
+        p.println(LIM_TEMPO_GAPS);
+        p.println(RESIZE_WIN);
+        p.println(ADV_MODE);
+        p.close();
+        f_out.close();
     }
 
     /**
@@ -116,14 +129,34 @@ public class Settings implements Serializable {
      * @throws ClassNotFoundException If for some reason we can't find
      * the settings file file.
      */
-    public static void unserialize()
+    public static void load()
             throws IOException, ClassNotFoundException {
         FileInputStream f_in = new
                 FileInputStream (settingsFile);
-        ObjectInputStream obj_in = new
-                ObjectInputStream (f_in);
-        obj_in.readObject();
-        obj_in.close();
+        Scanner file = new Scanner(f_in);
+        advModeUnlocked = file.nextBoolean();
+        file.nextLine();
+        LIM_NOTESPERLINE = file.nextBoolean();
+        file.nextLine();
+        LIM_96_MEASURES = file.nextBoolean();
+        file.nextLine();
+        LIM_VOLUME_LINE = file.nextBoolean();
+        file.nextLine();
+        LIM_LOWA = file.nextBoolean();
+        file.nextLine();
+        LIM_HIGHD = file.nextBoolean();
+        file.nextLine();
+        LOW_A_ON = file.nextBoolean();
+        file.nextLine();
+        NEG_TEMPO_FUN = file.nextBoolean();
+        file.nextLine();
+        LIM_TEMPO_GAPS = file.nextBoolean();
+        file.nextLine();
+        RESIZE_WIN = file.nextBoolean();
+        file.nextLine();
+        ADV_MODE = file.nextBoolean();
+        file.close();
+        f_in.close();
     }
 
     /**

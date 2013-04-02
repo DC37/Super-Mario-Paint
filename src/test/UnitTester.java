@@ -13,8 +13,11 @@ public class UnitTester {
      * @param unused Unused Strings.
      */
     public static void main(String[] unused) {
-        TestRunner.run(ImagesTest.class);
-        TestRunner.run(SoundsTest.class);
+
+        TestRunner.run(SettingsTest.class);
+        // TestRunner.run(ImagesTest.class);
+        // TestRunner.run(SoundsTest.class);
+
     }
 
 }
