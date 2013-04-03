@@ -5,9 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.io.Serializable;
-import java.util.Scanner;
 
 /**
  * A loadable settings file that determines whatever is supposed
@@ -15,7 +13,7 @@ import java.util.Scanner;
  * @author RehdBlob
  * @since 2012.08.28
  */
-public class Settings implements Serializable {
+public class Settings {
 
     /** The name of the file that we write to. */
     private final static String settingsFile = "settings.data";
@@ -98,27 +96,49 @@ public class Settings implements Serializable {
         debug = b;
     }
 
+    /** Used to save settings via object serialization. */
+    private static class SettingsSaver implements Serializable {
+
+        /**
+         * Generated Serial ID.
+         */
+        private static final long serialVersionUID = -3844082395768911493L;
+
+        /** The number of setting types that we have. */
+        private transient final int NUM_SETTINGS = 11;
+
+        /** The array of settings that we are going to initialize. */
+        public boolean[] set = new boolean[NUM_SETTINGS];
+
+        /** Initializes all of the fields in here. */
+        public SettingsSaver() {
+            set[0] = advModeUnlocked;
+            set[1] = LIM_NOTESPERLINE;
+            set[2] = LIM_96_MEASURES;
+            set[3] = LIM_VOLUME_LINE;
+            set[4] = LIM_LOWA;
+            set[5] = LIM_HIGHD;
+            set[6] = LOW_A_ON;
+            set[7] = NEG_TEMPO_FUN;
+            set[8] = LIM_TEMPO_GAPS;
+            set[9] = RESIZE_WIN;
+            set[10] = ADV_MODE;
+        }
+
+    }
+
     /**
      * Saves the settings of the program.
      * @throws IOException If we can't write the object.
      */
     public static void save() throws IOException {
-        Settings dummySettings = new Settings();
         FileOutputStream f_out = new
                 FileOutputStream(settingsFile);
-        PrintStream p = new PrintStream(f_out);
-        p.println(advModeUnlocked);
-        p.println(LIM_NOTESPERLINE);
-        p.println(LIM_96_MEASURES);
-        p.println(LIM_VOLUME_LINE);
-        p.println(LIM_LOWA);
-        p.println(LIM_HIGHD);
-        p.println(LOW_A_ON);
-        p.println(NEG_TEMPO_FUN);
-        p.println(LIM_TEMPO_GAPS);
-        p.println(RESIZE_WIN);
-        p.println(ADV_MODE);
-        p.close();
+        ObjectOutputStream o_out = new
+                ObjectOutputStream(f_out);
+        SettingsSaver s = new SettingsSaver();
+        o_out.writeObject(s);
+        o_out.close();
         f_out.close();
     }
 
@@ -133,29 +153,21 @@ public class Settings implements Serializable {
             throws IOException, ClassNotFoundException {
         FileInputStream f_in = new
                 FileInputStream (settingsFile);
-        Scanner file = new Scanner(f_in);
-        advModeUnlocked = file.nextBoolean();
-        file.nextLine();
-        LIM_NOTESPERLINE = file.nextBoolean();
-        file.nextLine();
-        LIM_96_MEASURES = file.nextBoolean();
-        file.nextLine();
-        LIM_VOLUME_LINE = file.nextBoolean();
-        file.nextLine();
-        LIM_LOWA = file.nextBoolean();
-        file.nextLine();
-        LIM_HIGHD = file.nextBoolean();
-        file.nextLine();
-        LOW_A_ON = file.nextBoolean();
-        file.nextLine();
-        NEG_TEMPO_FUN = file.nextBoolean();
-        file.nextLine();
-        LIM_TEMPO_GAPS = file.nextBoolean();
-        file.nextLine();
-        RESIZE_WIN = file.nextBoolean();
-        file.nextLine();
-        ADV_MODE = file.nextBoolean();
-        file.close();
+        ObjectInputStream o_in = new
+                ObjectInputStream(f_in);
+        SettingsSaver loaded = (SettingsSaver) o_in.readObject();
+        advModeUnlocked  = loaded.set[0];
+        LIM_NOTESPERLINE = loaded.set[1];
+        LIM_96_MEASURES  = loaded.set[2];
+        LIM_VOLUME_LINE  = loaded.set[3];
+        LIM_LOWA         = loaded.set[4];
+        LIM_HIGHD        = loaded.set[5];
+        LOW_A_ON         = loaded.set[6];
+        NEG_TEMPO_FUN    = loaded.set[7];
+        LIM_TEMPO_GAPS   = loaded.set[8];
+        RESIZE_WIN       = loaded.set[9];
+        ADV_MODE         = loaded.set[10];
+        o_in.close();
         f_in.close();
     }
 
