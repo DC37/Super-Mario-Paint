@@ -28,7 +28,7 @@ import com.sun.media.sound.SoftSynthesizer;
  * @since 2012.08.24
  */
 @SuppressWarnings("restriction")
-public class MultiSynthesizer implements Synthesizer {
+public class MultiSynthesizer extends SoftSynthesizer implements Synthesizer {
 
     /**
      * Indicates whether this Synthesizer is actually initialized
@@ -51,6 +51,7 @@ public class MultiSynthesizer implements Synthesizer {
         theSynths = new ArrayList<Synthesizer>();
         addDefaultSynthesizer();
         initialized = true;
+
     }
 
     /**

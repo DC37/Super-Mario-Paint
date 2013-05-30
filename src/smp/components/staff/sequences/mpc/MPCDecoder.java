@@ -67,9 +67,10 @@ public class MPCDecoder {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
             throw new ParseException("Invalid MPC Text File.", 0);
         }
-        ArrayList<String> everything = TextUtil.extract(in);
-        String timeSig = everything.remove(0);
-        String tempo = everything.remove(everything.size() - 1);
+        // TODO: Fix
+        ArrayList<String> everything = null;
+        String timeSig = null;
+        String tempo = null;
         return populateSequence(timeSig, everything, tempo);
     }
 
