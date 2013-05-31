@@ -30,11 +30,6 @@ import smp.stateMachine.Settings;
 public class ButtonLine {
 
     /**
-     * The Settings that we want to load.
-     */
-    private static Settings settings;
-
-    /**
      * The default note number.
      */
     private static int DEFAULT_NOTE;

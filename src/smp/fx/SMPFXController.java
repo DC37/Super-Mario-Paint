@@ -44,7 +44,6 @@ public class SMPFXController implements Initializable {
      * The staff that notes, measure lines, and sprites will be placed
      * on.
      */
-    @SuppressWarnings("unused")
     private static Staff staff;
 
     /**
@@ -88,8 +87,7 @@ public class SMPFXController implements Initializable {
         /* Initialize the selected instrument handlers in the ButtonLine. */
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
-        staff = new Staff();
-
+        staff = new Staff(staffMLines, staffPlayBars, staffInstruments);
         // Initialize play button
         // Controls.setPlayButton();
 

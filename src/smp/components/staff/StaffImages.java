@@ -120,7 +120,7 @@ public class StaffImages {
     /**
      * Draws the pictures on the staff.
      */
-    private void draw() {
+    void draw() {
 
     }
 

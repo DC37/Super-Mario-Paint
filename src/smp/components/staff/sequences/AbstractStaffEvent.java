@@ -24,6 +24,10 @@ public abstract class AbstractStaffEvent implements StaffEvent {
      */
     protected int measureLineNum;
 
+    /**
+     * Sets up an event at measure <code>num</code>.
+     * @param num The measure number that we're starting at.
+     */
     public AbstractStaffEvent(int num) {
         lineNum = num;
         setMeasureNum(num);

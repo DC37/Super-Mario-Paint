@@ -16,7 +16,9 @@ import smp.components.staff.sounds.SMPSoundfont;
  */
 public class AMSDecoder {
 
-    public static void decode(File file) {
+    public static SMPSequence decode(File file) {
+        // TODO: Fix this.
+        return null;
     }
 
     /**

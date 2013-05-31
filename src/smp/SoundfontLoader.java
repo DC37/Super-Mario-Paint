@@ -93,7 +93,7 @@ public class SoundfontLoader implements Loader {
                 setLoadStatus(0.3 + 0.7
                         * ordinal / InstrumentIndex.values().length);
                 chan[ordinal].programChange(ordinal);
-                chan[ordinal].controlChange(91, 0);
+                chan[ordinal].controlChange(Constants.REVERB, 0);
                 ordinal++;
                 System.out.println("Initialized Instrument: "
                         + i.toString());
