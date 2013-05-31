@@ -116,12 +116,13 @@ public class ButtonLine {
      * @param i The InstrumentIndex for the instrument
      */
     public void playSound(InstrumentIndex i) {
-        if (chan[i.getChannel() - 1] != null) {
-            chan[i.getChannel() - 1].noteOn(DEFAULT_NOTE,
+        int ind = i.getChannel() - 1;
+        if (chan[ind] != null) {
+            chan[ind].noteOn(DEFAULT_NOTE,
                     Constants.MAX_VELOCITY);
             if (Settings.debug)
                 System.out.println(
-                        "Channel " + (i.getChannel())
+                        "Channel " + (ind + 1)
                         + " Instrument: " + i.name());
         }
     }

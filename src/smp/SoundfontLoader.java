@@ -66,7 +66,7 @@ public class SoundfontLoader implements Loader {
             /* if (advanced mode on)
              *     theSynthesizer.ensureCapacity(50);
              * else
-			 bv*/
+             */
 
             theSynthesizer.ensureCapacity(19);
             for (Instrument i : theSynthesizer.getLoadedInstruments()) {
@@ -93,6 +93,7 @@ public class SoundfontLoader implements Loader {
                 setLoadStatus(0.3 + 0.7
                         * ordinal / InstrumentIndex.values().length);
                 chan[ordinal].programChange(ordinal);
+                chan[ordinal].controlChange(91, 0);
                 ordinal++;
                 System.out.println("Initialized Instrument: "
                         + i.toString());
@@ -165,10 +166,12 @@ public class SoundfontLoader implements Loader {
      * Plays a certain sound given a Note and some instrument.
      * @param n The Note to play
      * @param i The Instrument to play it with.
-     * @param acc The offset from this note, in half-steps.
+     * @param acc The offset from this note, in half-steps, short for
+     * "accidental."
      */
     public static void playSound(Note n, InstrumentIndex i, int acc) {
-        chan[i.getChannel() - 1].noteOn(n.getKeyNum() + acc,
+        int ind = i.getChannel() - 1;
+        chan[ind].noteOn(n.getKeyNum() + acc,
                 Constants.MAX_VELOCITY);
     }
 
