@@ -56,7 +56,7 @@ public class SMPFXController implements Initializable {
      * The staff measure lines.
      */
     @FXML
-    private static HBox staffMLines;
+    private static HBox staffMeasureLines;
 
     /**
      * The staff layer that displays the bar that plays notes.
@@ -102,7 +102,7 @@ public class SMPFXController implements Initializable {
         /* Initialize the selected instrument handlers in the ButtonLine. */
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
-        staff = new Staff(staffMLines, staffPlayBars, staffInstruments,
+        staff = new Staff(staffMeasureLines, staffPlayBars, staffInstruments,
                 staffAccidentals, staffExpLines);
         staff.draw();
 
