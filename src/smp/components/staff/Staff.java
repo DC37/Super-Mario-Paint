@@ -41,14 +41,26 @@ public class Staff {
 
     /**
      * Creates a new Staff object.
-     * @param staffInstruments The instrument image boxes that hold the
-     * instruments that should appear on the staff.
      * @param staffPlayBars The bars that show when a line of notes is played.
      * @param staffMLines These are the lines where notes are placed.
+     * @param staffInstruments The instrument image boxes that hold the
+     * instruments that should appear on the staff.
+     * @param staffAccidentals These are the sharps and flats that you can
+     * place.
+     * @param staffExpLines These are the lines that appear under notes for the
+     * lower and upper portions of the staff.
      */
-    public Staff(HBox staffMLines, HBox staffPlayBars, HBox staffInstruments) {
+    public Staff(HBox staffMLines, HBox staffPlayBars, HBox staffInstruments,
+            HBox staffAccidentals, HBox staffExpLines) {
         seq = new SMPSequencer();
-        staffImages = new StaffImages();
+        try {
+            currentSong = new SMPSequence();
+        } catch (InvalidMidiDataException e) {
+            // Do nothing
+            e.printStackTrace();
+        }
+        staffImages = new StaffImages(staffMLines, staffPlayBars,
+                staffInstruments, staffAccidentals, staffExpLines);
         staffImages.draw();
     }
 

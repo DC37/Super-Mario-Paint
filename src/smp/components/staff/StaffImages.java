@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
  * @author RehdBlob
  * @since 2012.09.17
  */
+@SuppressWarnings("unused")
 public class StaffImages {
 
     /**
@@ -36,23 +37,31 @@ public class StaffImages {
      */
     private HBox measureNums;
 
+
+
     /**
      * The HBox that holds the ImageView objects that are meant to hold the
      * note highlighters.
      */
-    private HBox noteHighlight;
+    private HBox playBar;
 
     /**
      * The HBox that contains the ImageView objects that are meant to
      * hold measure lines.
      */
-    private HBox staffMLines;
+    private HBox mLines;
 
     /**
      * The HBox that contains the ImageView objects that are meant to hold
      * note images on the staff.
      */
-    private HBox staffNoteImages;
+    private HBox instruments;
+
+    /**
+     * The HBox that contains the ImageView objects that are meant to hold
+     * the accidental (flat / sharp) images on the staff.
+     */
+    private HBox accidentals;
 
     /**
      * The Image for a key measure line.
@@ -79,8 +88,17 @@ public class StaffImages {
      * Instantiates this wrapper class with the correct HBox objects
      * such that it can begin keeping track of whatever's happening
      * on the staff, at least on the measure lines side.
+     * @param staffPlayBars The bars that show when a line of notes is played.
+     * @param staffMLines These are the lines where notes are placed.
+     * @param staffInstruments The instrument image boxes that hold the
+     * instruments that should appear on the staff.
+     * @param staffAccidentals These are the sharps and flats that you can
+     * place.
+     * @param staffExpLines These are the lines that appear under notes for the
+     * lower and upper portions of the staff.
      */
-    public StaffImages() {
+    public StaffImages(HBox staffMLines, HBox staffPlayBars,
+            HBox staffInstruments, HBox staffAccidentals, HBox staffExpLines) {
         initializeMeasureNums();
         initializeStaffMLines();
         initializeStaffNoteLines();

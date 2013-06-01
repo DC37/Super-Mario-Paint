@@ -40,7 +40,7 @@ public class SMPSequence {
      * initialization fails.
      */
     public SMPSequence() throws InvalidMidiDataException {
-        setSequence(new Sequence(Sequence.PPQ, 4 , NUMTRACKS));
+        setSequence(new Sequence(Sequence.PPQ, 4, NUMTRACKS));
     }
 
     /**
