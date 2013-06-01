@@ -7,6 +7,7 @@ import smp.components.staff.sequences.StaffNoteLine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * Wrapper class for all of the images that appear on the Staff of
@@ -37,13 +38,11 @@ public class StaffImages {
      */
     private HBox measureNums;
 
-
-
     /**
      * The HBox that holds the ImageView objects that are meant to hold the
      * note highlighters.
      */
-    private HBox playBar;
+    private HBox playBars;
 
     /**
      * The HBox that contains the ImageView objects that are meant to
@@ -62,6 +61,13 @@ public class StaffImages {
      * the accidental (flat / sharp) images on the staff.
      */
     private HBox accidentals;
+
+    /**
+     * This holds the lines that contain the ImageView objects that are meant
+     * to hold the lines that appear when one places notes on the higher and
+     * lower portions of the staff.
+     */
+    private HBox expLines;
 
     /**
      * The Image for a key measure line.
@@ -85,6 +91,17 @@ public class StaffImages {
     private ArrayList<Image> digits;
 
     /**
+     * These are the lines in which instrument sprite objects appear.
+     */
+    private ArrayList<VBox> noteLines;
+
+    /**
+     * These are the lines in which instrument accidental flat / sharp sprite
+     * objects appear.
+     */
+    private ArrayList<VBox> accidentalLines;
+
+    /**
      * Instantiates this wrapper class with the correct HBox objects
      * such that it can begin keeping track of whatever's happening
      * on the staff, at least on the measure lines side.
@@ -99,18 +116,23 @@ public class StaffImages {
      */
     public StaffImages(HBox staffMLines, HBox staffPlayBars,
             HBox staffInstruments, HBox staffAccidentals, HBox staffExpLines) {
+        mLines = staffMLines;
+        playBars = staffPlayBars;
+        instruments = staffInstruments;
+        accidentals = staffAccidentals;
+        expLines = staffExpLines;
+
         initializeMeasureNums();
-        initializeStaffMLines();
+        initializeStaffMeasureLines();
         initializeStaffNoteLines();
         initalizeNoteHighlights();
-        draw();
 
     }
 
     /**
      * Sets up the staff measure lines with their
      */
-    private void initializeStaffMLines() {
+    private void initializeStaffMeasureLines() {
 
     }
 
