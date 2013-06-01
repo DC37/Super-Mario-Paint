@@ -99,11 +99,11 @@
       <center>
         <Pane id="MidPane" prefHeight="200.0" prefWidth="200.0">
           <children>
-            <VBox id="MidHolder" blendMode="MULTIPLY" prefHeight="478.0" prefWidth="798.0">
+            <VBox id="MidHolder" blendMode="MULTIPLY" layoutY="-4.0" prefHeight="490.0" prefWidth="798.0">
               <children>
-                <Pane id="StaffFrame" prefHeight="293.0" prefWidth="798.0">
+                <Pane id="StaffFrame" prefHeight="300.0" prefWidth="798.0">
                   <children>
-                    <HBox id="staffInstruments" fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" prefHeight="300.0" prefWidth="758.0" spacing="32.0">
+                    <HBox id="staffInstruments" fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="2.0" prefHeight="300.0" prefWidth="758.0" spacing="32.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0" HBox.hgrow="NEVER">
                           <children>
@@ -333,7 +333,7 @@
                         <Insets left="161.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" prefHeight="300.0" prefWidth="758.0" spacing="32.0">
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="2.0" prefHeight="300.0" prefWidth="758.0" spacing="32.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
@@ -560,7 +560,7 @@
                         <Insets left="129.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="8.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
+                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
                       <children>
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
@@ -577,7 +577,7 @@
                         <Insets left="117.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffMLines" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
+                    <HBox fx:id="staffMLines" alignment="CENTER_LEFT" layoutX="20.0" layoutY="12.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
                       <children>
                         <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
@@ -596,7 +596,7 @@
                     </HBox>
                     <StackPane fx:id="staffPane" prefHeight="296.0" prefWidth="798.0">
                       <children>
-                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="294.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
+                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="300.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
                           <fill>
                             <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
                           </fill>
@@ -629,7 +629,7 @@
                 </Pane>
                 <Pane id="ControlsPane" prefHeight="121.0" prefWidth="798.0">
                   <children>
-                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="123.0" layoutX="3.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
+                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="120.0" layoutX="3.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
                     <StackPane fx:id="controls" layoutX="14.0" layoutY="7.0">
                       <children>
                         <HBox prefHeight="76.0" prefWidth="474.0">
