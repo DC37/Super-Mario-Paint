@@ -18,6 +18,7 @@ User interface draft II (done - August 22, 2012)
 Sprites rework (done - August 30, 2012)
 Latency fix (done - September 6, 2012)
 Settings framework (done - October 31, 2012)
+Staff notes images framework (done - May 31, 2013
 
 Place notes on the staff
 Navigate the staff
