@@ -103,26 +103,447 @@
               <children>
                 <Pane id="StaffFrame" prefHeight="293.0" prefWidth="798.0">
                   <children>
-                    <StackPane fx:id="staffPane" prefHeight="296.0" prefWidth="798.0">
+                    <HBox id="staffInstruments" fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" prefHeight="281.0" prefWidth="758.0" spacing="32.0">
                       <children>
-                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="294.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
-                          <fill>
-                            <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
-                          </fill>
-                        </Rectangle>
-                        <ImageView id="" fitHeight="276.0" fitWidth="758.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                            <Image url="@sprites/STAFF_BG_TREBLE.png" preserveRatio="false" smooth="false" />
-                          </image>
-                        </ImageView>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0" HBox.hgrow="NEVER">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                          <HBox.margin>
+                            <Insets />
+                          </HBox.margin>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
                       </children>
-                    </StackPane>
-                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
                       <padding>
-                        <Insets left="144.0" />
+                        <Insets left="129.0" />
                       </padding>
                     </HBox>
-                    <HBox id="staffMLines" fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="8.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" prefHeight="281.0" prefWidth="758.0" spacing="32.0">
+                      <children>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0" HBox.hgrow="NEVER">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                          <HBox.margin>
+                            <Insets />
+                          </HBox.margin>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </VBox>
+                      </children>
+                      <padding>
+                        <Insets left="129.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="8.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
                       <children>
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
@@ -136,7 +557,7 @@
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                       </children>
                       <padding>
-                        <Insets left="116.0" />
+                        <Insets left="117.0" />
                       </padding>
                     </HBox>
                     <HBox fx:id="staffMLines" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
@@ -156,6 +577,20 @@
                         <Insets left="144.0" />
                       </padding>
                     </HBox>
+                    <StackPane fx:id="staffPane" prefHeight="296.0" prefWidth="798.0">
+                      <children>
+                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="294.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
+                          <fill>
+                            <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
+                          </fill>
+                        </Rectangle>
+                        <ImageView id="" fitHeight="276.0" fitWidth="758.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@sprites/STAFF_BG_TREBLE.png" preserveRatio="false" smooth="false" />
+                          </image>
+                        </ImageView>
+                      </children>
+                    </StackPane>
                   </children>
                   <padding>
                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

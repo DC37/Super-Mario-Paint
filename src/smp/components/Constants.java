@@ -22,6 +22,12 @@ public class Constants {
     public static final int MAX_VELOCITY = 127;
 
     /**
+     * The median value that a note velocity can be. This
+     * should be the half-volume level.
+     */
+    public static final int HALF_VELOCITY = 64;
+
+    /**
      * The smallest value that a note velocity can be;
      * a note will basically be silent if played at this.
      */

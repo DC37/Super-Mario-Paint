@@ -88,6 +88,8 @@ public class SMPFXController implements Initializable {
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
         staff = new Staff(staffMLines, staffPlayBars, staffInstruments);
+        staff.draw();
+
         // Initialize play button
         // Controls.setPlayButton();
 

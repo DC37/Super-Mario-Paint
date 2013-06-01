@@ -176,4 +176,18 @@ public class Staff {
     public static void stopSong() {
 
     }
+
+    /**
+     * Draws the staff.
+     */
+    public void draw() {
+
+    }
+
+    /**
+     * Does a refresh-draw of the staff.
+     */
+    public void redraw() {
+
+    }
 }
