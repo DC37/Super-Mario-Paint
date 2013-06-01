@@ -320,7 +320,7 @@
                         </VBox>
                       </children>
                       <padding>
-                        <Insets left="129.0" />
+                        <Insets left="161.0" />
                       </padding>
                     </HBox>
                     <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" prefHeight="281.0" prefWidth="758.0" spacing="32.0">

@@ -65,6 +65,13 @@ public class SMPFXController implements Initializable {
     @FXML
     private static HBox staffInstruments;
 
+    /**
+     * The staff layer that displays the instrument accidentals that have
+     * been placed on the staff.
+     */
+    @FXML
+    private static HBox staffAccidentals;
+
     @FXML
     private static Slider scrollbar;
 
