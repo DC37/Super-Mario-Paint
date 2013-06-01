@@ -37,7 +37,6 @@ public class SMPFXController implements Initializable {
      * The line of buttons that corresponds with the line of images
      * at the top of the frame.
      */
-    @SuppressWarnings("unused")
     private static ButtonLine instBLine;
 
     /**
@@ -45,6 +44,13 @@ public class SMPFXController implements Initializable {
      * on.
      */
     private static Staff staff;
+
+    /**
+     * These are the lines that appear when one places notes on the higher and
+     * lower portions of the staff.
+     */
+    @FXML
+    private static HBox staffExpLines;
 
     /**
      * The staff measure lines.
@@ -72,6 +78,8 @@ public class SMPFXController implements Initializable {
     @FXML
     private static HBox staffAccidentals;
 
+
+    /** The scrollbar that moves the staff. */
     @FXML
     private static Slider scrollbar;
 
@@ -94,7 +102,8 @@ public class SMPFXController implements Initializable {
         /* Initialize the selected instrument handlers in the ButtonLine. */
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
-        staff = new Staff(staffMLines, staffPlayBars, staffInstruments);
+        staff = new Staff(staffMLines, staffPlayBars, staffInstruments,
+                staffAccidentals, staffExpLines);
         staff.draw();
 
         // Initialize play button
