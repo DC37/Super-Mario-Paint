@@ -66,7 +66,7 @@ public class SMPFXController implements Initializable {
 
     /**
      * The staff layer that displays the instruments that have been placed
-     * on the staff.
+     * on the staff. Note: Images should be spaced 16 px.
      */
     @FXML
     private static HBox staffInstruments;
