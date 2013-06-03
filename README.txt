@@ -21,9 +21,11 @@ Settings framework (done - October 31, 2012)
 Staff notes images framework (done - May 31, 2013)
 
 Place notes on the staff
+Staff MIDI framework
 Navigate the staff
 Play back notes on the staff
 Splash screen is actually a splash screen
+Splash screen animation and other extras
 Save songs
 Load songs
 Primary stage done
