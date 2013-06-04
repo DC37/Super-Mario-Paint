@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -105,7 +106,8 @@ public class Utilities {
      * @param in What should be shown in this dialog box.
      */
     public static void openDialog(String in) {
-
+        JOptionPane.showMessageDialog(null, in, "Information",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
 }
