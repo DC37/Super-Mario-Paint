@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.topPanel.ButtonLine;
 
@@ -44,6 +45,12 @@ public class SMPFXController implements Initializable {
      * on.
      */
     private static Staff staff;
+
+    /**
+     * The controls line that includes the play button, stop button,
+     * loop button, etc.
+     */
+    private static Controls controls;
 
     /**
      * These are the lines that appear when one places notes on the higher and
@@ -105,7 +112,7 @@ public class SMPFXController implements Initializable {
         staff = new Staff(staffMeasureLines, staffPlayBars, staffInstruments,
                 staffAccidentals, staffExpLines);
         staff.draw();
-
+        controls = new Controls();
         // Initialize play button
         // Controls.setPlayButton();
 

@@ -192,7 +192,7 @@ public class Staff {
     /**
      * Draws the staff.
      */
-    private void draw() {
+    public void draw() {
 
     }
 

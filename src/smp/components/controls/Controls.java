@@ -1,5 +1,6 @@
 package smp.components.controls;
 
+import javafx.scene.image.ImageView;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
