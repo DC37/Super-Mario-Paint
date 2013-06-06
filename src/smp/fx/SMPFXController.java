@@ -53,17 +53,35 @@ public class SMPFXController implements Initializable {
     private static Controls controls;
 
     /**
-     * These are the lines that appear when one places notes on the higher and
-     * lower portions of the staff.
+     * Lines that appear when a note is placed above the standard
+     * staff lines. High C lines.
      */
     @FXML
-    private static HBox staffExpLines;
+    public static HBox staffExtLinesHighC;
 
     /**
-     * The staff measure lines.
+     * Lines that appear when a note is placed above the standard
+     * staff lines. High A lines.
      */
     @FXML
+    public static HBox staffExtLinesHighA;
+
+    /**
+     * Lines that appear when a note is placed above the standard
+     * staff lines. Low C lines.
+     */
+    @FXML
+    public static HBox staffExtLinesLowC;
+
+
+
+    /** The staff measure lines. */
+    @FXML
     private static HBox staffMeasureLines;
+
+    /** The staff measure numbers. */
+    @FXML
+    private static HBox staffMeasureNumbers;
 
     /**
      * The staff layer that displays the bar that plays notes.
@@ -109,8 +127,10 @@ public class SMPFXController implements Initializable {
         /* Initialize the selected instrument handlers in the ButtonLine. */
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
+        HBox[] staffExtLines = {staffExtLinesHighC, staffExtLinesHighA,
+                staffExtLinesLowC};
         staff = new Staff(staffMeasureLines, staffPlayBars, staffInstruments,
-                staffAccidentals, staffExpLines);
+                staffAccidentals, staffExtLines);
         staff.draw();
         controls = new Controls();
         // Initialize play button

@@ -185,7 +185,7 @@
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffExtLinesLowA" alignment="CENTER_LEFT" layoutX="21.0" layoutY="234.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                    <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowC" alignment="CENTER_LEFT" layoutX="21.0" layoutY="234.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
                       <children>
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />

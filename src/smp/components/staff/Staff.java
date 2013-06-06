@@ -47,11 +47,11 @@ public class Staff {
      * instruments that should appear on the staff.
      * @param staffAccidentals These are the sharps and flats that you can
      * place.
-     * @param staffExpLines These are the lines that appear under notes for the
+     * @param staffExtLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
      */
     public Staff(HBox staffMLines, HBox staffPlayBars, HBox staffInstruments,
-            HBox staffAccidentals, HBox staffExpLines) {
+            HBox staffAccidentals, HBox[] staffExtLines) {
         seq = new SMPSequencer();
         try {
             currentSong = new SMPSequence();
@@ -60,7 +60,7 @@ public class Staff {
             e.printStackTrace();
         }
         staffImages = new StaffImages(staffMLines, staffPlayBars,
-                staffInstruments, staffAccidentals, staffExpLines);
+                staffInstruments, staffAccidentals, staffExtLines);
         staffImages.draw();
     }
 

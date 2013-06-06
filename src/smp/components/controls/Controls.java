@@ -23,24 +23,15 @@ public class Controls {
 
     }
 
-    /**
-     * Change
-     * @param s The state that the program is supposed to be changed to.
-     */
-    public void checkState() {
+    /** Starts the song. */
+    public void play() {
         State s = StateMachine.getState();
-        switch(s) {
-        case EDITING:
-            break;
-        case SONG_PLAYING:
-            break;
-        case ARR_PLAYING:
-            break;
-        case PAUSE:
-            break;
-        default:
-            break;
-        }
+
+    }
+
+    /** Stops the song. */
+    public void stop() {
+        State s = StateMachine.getState();
     }
 
 }

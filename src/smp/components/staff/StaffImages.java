@@ -111,16 +111,16 @@ public class StaffImages {
      * instruments that should appear on the staff.
      * @param staffAccidentals These are the sharps and flats that you can
      * place.
-     * @param staffExpLines These are the lines that appear under notes for the
+     * @param staffExtLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
      */
     public StaffImages(HBox staffMLines, HBox staffPlayBars,
-            HBox staffInstruments, HBox staffAccidentals, HBox staffExpLines) {
+            HBox staffInstruments, HBox staffAccidentals, HBox[] staffExtLines) {
         mLines = staffMLines;
         playBars = staffPlayBars;
         instruments = staffInstruments;
         accidentals = staffAccidentals;
-        expLines = staffExpLines;
+        expLines = staffExtLines;
 
         initializeMeasureNums();
         initializeStaffMeasureLines();
