@@ -67,7 +67,7 @@ public class StaffImages {
      * to hold the lines that appear when one places notes on the higher and
      * lower portions of the staff.
      */
-    private HBox expLines;
+    private HBox[] expLines;
 
     /**
      * The Image for a key measure line.
@@ -111,16 +111,16 @@ public class StaffImages {
      * instruments that should appear on the staff.
      * @param staffAccidentals These are the sharps and flats that you can
      * place.
-     * @param staffExtLines These are the lines that appear under notes for the
+     * @param staffExpLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
      */
     public StaffImages(HBox staffMLines, HBox staffPlayBars,
-            HBox staffInstruments, HBox staffAccidentals, HBox[] staffExtLines) {
+            HBox staffInstruments, HBox staffAccidentals, HBox[] staffExpLines) {
         mLines = staffMLines;
         playBars = staffPlayBars;
         instruments = staffInstruments;
         accidentals = staffAccidentals;
-        expLines = staffExtLines;
+        expLines = staffExpLines;
 
         initializeMeasureNums();
         initializeStaffMeasureLines();
