@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.controls.Controls;
@@ -50,7 +51,14 @@ public class SMPFXController implements Initializable {
      * The controls line that includes the play button, stop button,
      * loop button, etc.
      */
-    private static Controls controls;
+    @FXML
+    private static StackPane controls;
+
+
+    /**
+     * The controls line object that holds the FXML controls object..
+     */
+    private static Controls controlPanel;
 
     /**
      * Lines that appear when a note is placed above the standard
@@ -132,7 +140,7 @@ public class SMPFXController implements Initializable {
         staff = new Staff(staffMeasureLines, staffPlayBars, staffInstruments,
                 staffAccidentals, staffExtLines);
         staff.draw();
-        controls = new Controls();
+        controlPanel = new Controls();
         // Initialize play button
         // Controls.setPlayButton();
 
