@@ -39,6 +39,9 @@ public class StateMachine {
         currentState = s;
     }
 
+    /**
+     * Sets the state back to "Editing" by default.
+     */
     public static synchronized void resetState() {
         currentState = State.EDITING;
     }

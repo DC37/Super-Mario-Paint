@@ -139,7 +139,6 @@ public class SMPFXController implements Initializable {
                 staffExtLinesLowC};
         staff = new Staff(staffMeasureLines, staffPlayBars, staffInstruments,
                 staffAccidentals, staffExtLines);
-        staff.draw();
         controlPanel = new Controls();
         // Initialize play button
         // Controls.setPlayButton();
@@ -149,6 +148,9 @@ public class SMPFXController implements Initializable {
 
         // Initialize loop button
         // Controls.setLoopButton();
+
+        // At this point, everything should be initizalized and ready to
+        // respond to user input.
     }
 
 
