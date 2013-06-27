@@ -81,8 +81,6 @@ public class SMPFXController implements Initializable {
     @FXML
     public static HBox staffExtLinesLowC;
 
-
-
     /** The staff measure lines. */
     @FXML
     private static HBox staffMeasureLines;
