@@ -2,7 +2,7 @@ package smp.stateMachine;
 
 /**
  * This is the state machine that keeps track of what state the
- * MPWindow is in.
+ * main window is in.
  * @author RehdBlob
  * @since 2012.08.07
  */
@@ -13,6 +13,17 @@ public class StateMachine {
      * EDITING state, in which notes are being placed on the staff.
      */
     private static State currentState = State.EDITING;
+
+    /**
+     * The default time signature that we start out with is 4/4 time.
+     */
+    private static TimeSignature currentTimeSignature = TimeSignature.FOUR_FOUR;
+
+    /**
+     * The current measure line number that the program is on. Typically
+     * a number between 0 and 383. This is zero by default.
+     */
+    private static int currentLine = 0;
 
     /**
      * Do not make an instance of this class! The implementation is such
@@ -44,5 +55,45 @@ public class StateMachine {
      */
     public static synchronized void resetState() {
         currentState = State.EDITING;
+    }
+
+    /**
+     * @return The current time signature that we are running at.
+     */
+    public static synchronized TimeSignature getTimeSignature() {
+        return currentTimeSignature;
+    }
+
+    /**
+     * Sets the time signature to whatever that we give this method.
+     * @param t The new time signature.
+     */
+    public static synchronized void setTimeSignature(TimeSignature t) {
+        currentTimeSignature = t;
+    }
+
+    /** Sets the time signature back to "4/4" by default. */
+    public static synchronized void resetTimeSignature() {
+        currentTimeSignature = TimeSignature.FOUR_FOUR;
+    }
+
+
+    /**
+     * Gets the current line number that we're on. Typically a value
+     * between 0 and 383 for most files unless you've done fun stuff
+     * and removed the 96-measure limit.
+     * @return
+     */
+    public static synchronized int getMeasureLineNum() {
+        return currentLine;
+    }
+
+    /**
+     * Sets the current line number to whatever is given to this method.
+     * @param num The number that we're trying to set our current
+     * line number to.
+     */
+    public static synchronized void setMeasureLineNum(int num) {
+        currentLine = num;
     }
 }

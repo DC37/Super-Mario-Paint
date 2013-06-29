@@ -65,21 +65,21 @@ public class SMPFXController implements Initializable {
      * staff lines. High C lines.
      */
     @FXML
-    public static HBox staffExtLinesHighC;
+    private static HBox staffExtLinesHighC;
 
     /**
      * Lines that appear when a note is placed above the standard
      * staff lines. High A lines.
      */
     @FXML
-    public static HBox staffExtLinesHighA;
+    private static HBox staffExtLinesHighA;
 
     /**
      * Lines that appear when a note is placed above the standard
      * staff lines. Low C lines.
      */
     @FXML
-    public static HBox staffExtLinesLowC;
+    private static HBox staffExtLinesLowC;
 
     /** The staff measure lines. */
     @FXML

@@ -29,15 +29,15 @@ public class Staff {
      * The wrapper that holds a series of ImageView objects that are meant to
      * display the staff measure lines.
      */
-    private StaffImages staffImages;
+    private static StaffImages staffImages;
 
     /**
      * The Sequencer object that will be used to play sounds.
      */
-    private SMPSequencer seq;
+    private static SMPSequencer seq;
 
     /** The song that we are currently editing. */
-    private SMPSequence currentSong;
+    private static SMPSequence currentSong;
 
     /**
      * Creates a new Staff object.

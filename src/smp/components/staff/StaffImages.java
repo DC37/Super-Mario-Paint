@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -37,6 +40,12 @@ public class StaffImages {
      * hold measure numbers.
      */
     private HBox measureNums;
+
+    /**
+     * The list of images that the measureNums are supposed to actually
+     * hold.
+     */
+    private ArrayList<ImageView> measureNumImages;
 
     /**
      * The HBox that holds the ImageView objects that are meant to hold the
@@ -116,23 +125,27 @@ public class StaffImages {
      */
     public StaffImages(HBox staffMLines, HBox staffPlayBars,
             HBox staffInstruments, HBox staffAccidentals, HBox[] staffExpLines) {
-        mLines = staffMLines;
-        playBars = staffPlayBars;
+        mLines      = staffMLines;
+        playBars    = staffPlayBars;
         instruments = staffInstruments;
         accidentals = staffAccidentals;
-        expLines = staffExpLines;
+        expLines    = staffExpLines;
 
-        initializeMeasureNums();
         initializeStaffMeasureLines();
+        initializeStaffMeasureNums();
         initializeStaffNoteLines();
-        initalizeNoteHighlights();
+        initalizeNotePlayBar();
 
     }
 
     /**
-     * Sets up the staff measure lines with their
+     * Sets up the staff measure lines with their measure numbers.
      */
-    private void initializeStaffMeasureLines() {
+    private void initializeStaffMeasureNums() {
+        ObservableList<Node> nums = measureNums.getChildren();
+        measureNumImages = new ArrayList<ImageView>();
+        for(Node num : nums)
+            measureNumImages.add((ImageView) num);
 
     }
 
@@ -144,16 +157,16 @@ public class StaffImages {
     }
 
     /**
-     * Propagates the measure numbers across the staff.
+     * These are the lines that divide up the staff.
      */
-    private void initializeMeasureNums() {
+    private void initializeStaffMeasureLines() {
 
     }
 
     /**
      * Sets up the note highlighting functionality.
      */
-    private void initalizeNoteHighlights() {
+    private void initalizeNotePlayBar() {
 
     }
 
@@ -190,5 +203,12 @@ public class StaffImages {
 
     }
 
-
+    /**
+     * Gets the current position that the staff is set to. This returns a line
+     * number generally between 0 and 383 for 96-measure / 128-measure 4/4 and
+     * 3/4 time, respectively.
+     */
+    private int getMeasurePosition() {
+        return 0;
+    }
 }
