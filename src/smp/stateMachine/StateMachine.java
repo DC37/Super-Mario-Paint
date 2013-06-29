@@ -26,6 +26,12 @@ public class StateMachine {
     private static int currentLine = 0;
 
     /**
+     * This is the current tempo that the program is running at.
+     */
+    private static double tempo = 240;
+
+
+    /**
      * Do not make an instance of this class! The implementation is such
      * that several classes may check the overall state of the program,
      * so there should only ever be just the class and its static variables
@@ -78,11 +84,28 @@ public class StateMachine {
     }
 
 
+
+    /**
+     * @return The tempo that this program is running at.
+     */
+    public static synchronized double getTempo() {
+        return tempo;
+    }
+
+    /**
+     * Sets the tempo to what we give it here.
+     * @param num The tempo we want to set the program to run at.
+     * @return
+     */
+    public static synchronized void setTempo(double num) {
+        tempo = num;
+    }
+
     /**
      * Gets the current line number that we're on. Typically a value
      * between 0 and 383 for most files unless you've done fun stuff
      * and removed the 96-measure limit.
-     * @return
+     * @return The current line number (left justify)
      */
     public static synchronized int getMeasureLineNum() {
         return currentLine;

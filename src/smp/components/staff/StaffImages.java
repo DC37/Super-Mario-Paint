@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -60,6 +61,12 @@ public class StaffImages {
     private HBox mLines;
 
     /**
+     * The ArrayList that holds the ImageView objects that the measure lines
+     * object holds.
+     */
+    private ArrayList<ImageView> measureLines;
+
+    /**
      * The HBox that contains the ImageView objects that are meant to hold
      * note images on the staff.
      */
@@ -70,6 +77,12 @@ public class StaffImages {
      * the accidental (flat / sharp) images on the staff.
      */
     private HBox accidentals;
+
+    /**
+     * These are the lines in which instrument accidental flat / sharp sprite
+     * objects appear.
+     */
+    private ArrayList<VBox> accidentalLines;
 
     /**
      * This holds the lines that contain the ImageView objects that are meant
@@ -104,11 +117,7 @@ public class StaffImages {
      */
     private ArrayList<VBox> noteLines;
 
-    /**
-     * These are the lines in which instrument accidental flat / sharp sprite
-     * objects appear.
-     */
-    private ArrayList<VBox> accidentalLines;
+
 
     /**
      * Instantiates this wrapper class with the correct HBox objects
@@ -134,33 +143,46 @@ public class StaffImages {
         initializeStaffMeasureLines();
         initializeStaffMeasureNums();
         initializeStaffNoteLines();
+        initializeStaffAccidentals();
         initalizeNotePlayBar();
 
     }
 
     /**
-     * Sets up the staff measure lines with their measure numbers.
+     * These are the numbers above each successive measure.
      */
     private void initializeStaffMeasureNums() {
-        ObservableList<Node> nums = measureNums.getChildren();
         measureNumImages = new ArrayList<ImageView>();
-        for(Node num : nums)
+        for(Node num : measureNums.getChildren())
             measureNumImages.add((ImageView) num);
 
     }
 
     /**
-     * Sets up the various staff note lines on the staff.
+     * Sets up the various note lines of the staff. These
+     * are the notes that can appear on the staff.
      */
     private void initializeStaffNoteLines() {
-
+        noteLines = new ArrayList<VBox>();
+        for (Node n : instruments.getChildren())
+            noteLines.add((VBox) n);
     }
 
     /**
      * These are the lines that divide up the staff.
      */
     private void initializeStaffMeasureLines() {
+        measureLines = new ArrayList<ImageView>();
+        for (Node n : mLines.getChildren())
+            measureLines.add((ImageView) n);
+    }
 
+
+    /** These are the sharps, flats, etc */
+    private void initializeStaffAccidentals() {
+        accidentalLines = new ArrayList<VBox>();
+        for (Node n : accidentals.getChildren())
+            accidentalLines.add((VBox) n);
     }
 
     /**
