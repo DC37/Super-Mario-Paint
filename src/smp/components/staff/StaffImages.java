@@ -152,10 +152,10 @@ public class StaffImages {
      * These are the numbers above each successive measure.
      */
     private void initializeStaffMeasureNums() {
-        measureNumImages = new ArrayList<ImageView>();
+        /*measureNumImages = new ArrayList<ImageView>();
         for(Node num : measureNums.getChildren())
             measureNumImages.add((ImageView) num);
-
+         */
     }
 
     /**
