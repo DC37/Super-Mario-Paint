@@ -49,9 +49,11 @@ public class Staff {
      * place.
      * @param staffExtLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
+     * @param staffMeasureNumbers The container for the staff measure numbers.
      */
     public Staff(HBox staffMLines, HBox staffPlayBars, HBox staffInstruments,
-            HBox staffAccidentals, HBox[] staffExtLines) {
+            HBox staffAccidentals, HBox[] staffExtLines,
+            HBox staffMeasureNumbers) {
         seq = new SMPSequencer();
         try {
             currentSong = new SMPSequence();
@@ -60,7 +62,8 @@ public class Staff {
             e.printStackTrace();
         }
         staffImages = new StaffImages(staffMLines, staffPlayBars,
-                staffInstruments, staffAccidentals, staffExtLines);
+                staffInstruments, staffAccidentals, staffExtLines,
+                staffMeasureNumbers);
         staffImages.draw();
     }
 

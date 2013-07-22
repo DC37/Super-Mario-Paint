@@ -43,10 +43,10 @@ public class StaffImages {
     private HBox measureNums;
 
     /**
-     * The list of images that the measureNums are supposed to actually
+     * The list of HBoxes that the measureNums are supposed to actually
      * hold.
      */
-    private ArrayList<ImageView> measureNumImages;
+    private ArrayList<HBox> measureNumBoxes;
 
     /**
      * The HBox that holds the ImageView objects that are meant to hold the
@@ -131,14 +131,18 @@ public class StaffImages {
      * place.
      * @param staffExpLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
+     * @param staffMeasureNumbers These are the numbers above each measure
+     * line.
      */
     public StaffImages(HBox staffMLines, HBox staffPlayBars,
-            HBox staffInstruments, HBox staffAccidentals, HBox[] staffExpLines) {
+            HBox staffInstruments, HBox staffAccidentals, HBox[] staffExpLines,
+            HBox staffMeasureNumbers) {
         mLines      = staffMLines;
         playBars    = staffPlayBars;
         instruments = staffInstruments;
         accidentals = staffAccidentals;
         expLines    = staffExpLines;
+        measureNums = staffMeasureNumbers;
 
         initializeStaffMeasureLines();
         initializeStaffMeasureNums();
@@ -152,10 +156,9 @@ public class StaffImages {
      * These are the numbers above each successive measure.
      */
     private void initializeStaffMeasureNums() {
-        /*measureNumImages = new ArrayList<ImageView>();
+        measureNumBoxes = new ArrayList<HBox>();
         for(Node num : measureNums.getChildren())
-            measureNumImages.add((ImageView) num);
-         */
+            measureNumBoxes.add((HBox) num);
     }
 
     /**

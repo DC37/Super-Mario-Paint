@@ -136,7 +136,7 @@ public class SMPFXController implements Initializable {
         HBox[] staffExtLines = {staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC};
         staff = new Staff(staffMeasureLines, staffPlayBars, staffInstruments,
-                staffAccidentals, staffExtLines);
+                staffAccidentals, staffExtLines, staffMeasureNumbers);
         controlPanel = new Controls();
         // Initialize play button
         // Controls.setPlayButton();
