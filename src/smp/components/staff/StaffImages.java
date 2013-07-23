@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.stateMachine.StateMachine;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -22,7 +23,6 @@ import javafx.scene.layout.VBox;
  * @author RehdBlob
  * @since 2012.09.17
  */
-@SuppressWarnings("unused")
 public class StaffImages {
 
     /**
@@ -53,6 +53,9 @@ public class StaffImages {
      * note highlighters.
      */
     private HBox playBars;
+
+    /** These are the bars that highlight notes. */
+    private ArrayList<ImageView> staffPlayBars;
 
     /**
      * The HBox that contains the ImageView objects that are meant to
@@ -148,7 +151,7 @@ public class StaffImages {
         initializeStaffMeasureNums();
         initializeStaffNoteLines();
         initializeStaffAccidentals();
-        initalizeNotePlayBar();
+        initalizeNotePlayBars();
 
     }
 
@@ -191,8 +194,10 @@ public class StaffImages {
     /**
      * Sets up the note highlighting functionality.
      */
-    private void initalizeNotePlayBar() {
-
+    private void initalizeNotePlayBars() {
+        staffPlayBars = new ArrayList<ImageView>();
+        for (Node n : playBars.getChildren())
+            staffPlayBars.add((ImageView) n);
     }
 
     /**
@@ -234,6 +239,6 @@ public class StaffImages {
      * 3/4 time, respectively.
      */
     private int getMeasurePosition() {
-        return 0;
+        return StateMachine.getMeasureLineNum();
     }
 }
