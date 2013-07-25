@@ -42,7 +42,7 @@ public class ButtonLine {
     /**
      * The InstrumentIndex of the selected instrument.
      */
-    private InstrumentIndex selectedInstrument;
+    private static InstrumentIndex selectedInstrument;
 
     /**
      * The picture of the currently-selected instrument.
@@ -131,7 +131,8 @@ public class ButtonLine {
         selectedInstrument = i;
     }
 
-    public InstrumentIndex getSelectedInstrument() {
+    /** @return The current selected instrument. */
+    public static InstrumentIndex getSelectedInstrument() {
         return selectedInstrument;
     }
 

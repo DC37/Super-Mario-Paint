@@ -2,14 +2,20 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
+import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.StateMachine;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -108,7 +114,13 @@ public class StaffImages {
      * A matrix of notes, which will be displayed on the screen
      * at any time.
      */
-    private ArrayList<StaffNoteLine> noteMatrix;
+    private ArrayList<ArrayList<StackPane>> noteMatrix;
+
+    /**
+     * The StaffNoteLines that will be associated with the note matrix
+     * of images above.
+     */
+    private ArrayList<StaffNoteLine> staffNoteLines;
 
     /**
      * The digits, 0-9, to be used for numbering the staff measures.
@@ -148,10 +160,10 @@ public class StaffImages {
         measureNums = staffMeasureNumbers;
 
         initializeStaffMeasureLines();
+        initalizeStaffPlayBars();
         initializeStaffMeasureNums();
-        initializeStaffNoteLines();
+        initializeStaffInstruments();
         initializeStaffAccidentals();
-        initalizeNotePlayBars();
 
     }
 
@@ -168,10 +180,36 @@ public class StaffImages {
      * Sets up the various note lines of the staff. These
      * are the notes that can appear on the staff.
      */
-    private void initializeStaffNoteLines() {
+    private void initializeStaffInstruments() {
         noteLines = new ArrayList<VBox>();
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
+        for (VBox v : noteLines) {
+            ArrayList<StackPane> a = new ArrayList<StackPane>();
+            for (Node s : v.getChildren()) {
+                addListeners((StackPane) s, 0);
+                a.add((StackPane) s);
+            }
+            noteMatrix.add(a);
+        }
+    }
+
+    /**
+     * Adds the requisite listeners to the StackPanes of the instrument
+     * note matrix.
+     * @param s The StackPane that will be holding some instrument.
+     * @param pos The position that this StackPane will be associated with.
+     */
+    private void addListeners(StackPane s, int pos) {
+        s.setOnMousePressed(
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                    }
+
+                });
+
     }
 
     /**
@@ -194,7 +232,7 @@ public class StaffImages {
     /**
      * Sets up the note highlighting functionality.
      */
-    private void initalizeNotePlayBars() {
+    private void initalizeStaffPlayBars() {
         staffPlayBars = new ArrayList<ImageView>();
         for (Node n : playBars.getChildren())
             staffPlayBars.add((ImageView) n);

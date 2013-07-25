@@ -119,4 +119,9 @@ public class StateMachine {
     public static synchronized void setMeasureLineNum(int num) {
         currentLine = num;
     }
+
+    /** @return Whatever key is pressed at the moment on the keyboard. */
+    public static synchronized int getKeyPressed() {
+        return 0;
+    }
 }
