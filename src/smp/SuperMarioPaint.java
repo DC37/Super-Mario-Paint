@@ -9,10 +9,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
+import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -129,7 +131,8 @@ public class SuperMarioPaint extends Application {
 
     /**
      * Creates the keyboard listeners that we will be using for various
-     * other portions of the program.
+     * other portions of the program. Ctrl, alt, and shift are of interest
+     * here, but the arrow keys will also be considered.
      * @param primaryScene The main window.
      */
     private void makeKeyboardListeners(Scene primaryScene) {
@@ -138,12 +141,18 @@ public class SuperMarioPaint extends Application {
 
             @Override
             public void handle(KeyEvent ke) {
-                if (ke.isShiftDown()) {
-                    StateMachine.setShiftPressed();
-                } else if (ke.isAltDown()) {
-                    StateMachine.setAltPressed();
-                } else if (ke.isControlDown()) {
+                KeyCode n = ke.getCode();
+                if (n == KeyCode.CONTROL) {
                     StateMachine.setCtrlPressed();
+                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                    StateMachine.setAltPressed();
+                } else if (n == KeyCode.SHIFT) {
+                    StateMachine.setShiftPressed();
+                }
+                if (Settings.debug){
+                    System.out.println("Alt: " + StateMachine.isAltPressed() +
+                            "\nCtrl: " + StateMachine.isCtrlPressed() +
+                            "\nShift: " + StateMachine.isShiftPressed());
                 }
                 ke.consume();
             }
@@ -154,15 +163,18 @@ public class SuperMarioPaint extends Application {
 
             @Override
             public void handle(KeyEvent ke) {
-                if (StateMachine.isShiftPressed()) {
-                    System.out.println("Released shift");
-                    StateMachine.resetShiftPressed();
-                } else if (StateMachine.isAltPressed()) {
-                    System.out.println("Released alt");
-                    StateMachine.resetAltPressed();
-                } else if (StateMachine.isCtrlPressed()) {
-                    System.out.println("Released ctrl");
+                KeyCode n = ke.getCode();
+                if (n == KeyCode.CONTROL) {
                     StateMachine.resetCtrlPressed();
+                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                    StateMachine.resetAltPressed();
+                } else if (n == KeyCode.SHIFT) {
+                    StateMachine.resetShiftPressed();
+                }
+                if (Settings.debug){
+                    System.out.println("Alt: " + StateMachine.isAltPressed() +
+                            "\nCtrl: " + StateMachine.isCtrlPressed() +
+                            "\nShift: " + StateMachine.isShiftPressed());
                 }
                 ke.consume();
             }
@@ -172,10 +184,17 @@ public class SuperMarioPaint extends Application {
 
     /**
      * Launches the application.
-     * @param unused Currently unused arguments for run configs.
+     * @param args Sets debug options on or off.
      */
-    public static void main(String... unused) {
-        launch(unused);
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            launch(args);
+        } else if (args.length > 0 && (args[0].equals("--debug")
+                || args[0].equals("--d"))) {
+            Settings.debug = true;
+            launch(args);
+        }
+
     }
 
 }

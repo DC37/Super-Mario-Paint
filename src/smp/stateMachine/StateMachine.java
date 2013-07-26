@@ -166,17 +166,17 @@ public class StateMachine {
 
     /** Sets that we've released the shift key. */
     public static void resetShiftPressed() {
-        shiftPressed = true;
+        shiftPressed = false;
     }
 
     /** Sets that we've released the alt key. */
     public static void resetAltPressed() {
-        altPressed = true;
+        altPressed = false;
     }
 
     /** Sets that we've released the ctrl key. */
     public static void resetCtrlPressed() {
-        ctrlPressed = true;
+        ctrlPressed = false;
     }
 
 
