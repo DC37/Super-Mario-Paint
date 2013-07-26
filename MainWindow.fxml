@@ -219,7 +219,7 @@
                         <Insets left="117.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="2.0" prefHeight="300.0" prefWidth="758.0" spacing="32.0">
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" prefHeight="312.0" prefWidth="758.0" spacing="32.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
