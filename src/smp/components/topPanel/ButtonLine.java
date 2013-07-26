@@ -93,6 +93,8 @@ public class ButtonLine {
                                 e.printStackTrace();
                             } catch (NullPointerException e) {
                                 e.printStackTrace();
+                            } finally {
+                                event.consume();
                             }
                         }
 

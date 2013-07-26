@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
+import smp.stateMachine.StateMachine;
 
 /**
  * Super Mario Paint <br>
@@ -131,6 +133,40 @@ public class SuperMarioPaint extends Application {
      * @param primaryScene The main window.
      */
     private void makeKeyboardListeners(Scene primaryScene) {
+        primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
+                new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.isShiftDown()) {
+                    StateMachine.setShiftPressed();
+                } else if (ke.isAltDown()) {
+                    StateMachine.setAltPressed();
+                } else if (ke.isControlDown()) {
+                    StateMachine.setCtrlPressed();
+                }
+                ke.consume();
+            }
+        });
+
+        primaryScene.addEventHandler(KeyEvent.KEY_RELEASED,
+                new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent ke) {
+                if (StateMachine.isShiftPressed()) {
+                    System.out.println("Released shift");
+                    StateMachine.resetShiftPressed();
+                } else if (StateMachine.isAltPressed()) {
+                    System.out.println("Released alt");
+                    StateMachine.resetAltPressed();
+                } else if (StateMachine.isCtrlPressed()) {
+                    System.out.println("Released ctrl");
+                    StateMachine.resetCtrlPressed();
+                }
+                ke.consume();
+            }
+        });
 
     }
 

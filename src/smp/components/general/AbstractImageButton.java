@@ -58,6 +58,7 @@ public abstract class AbstractImageButton {
                     @Override
                     public void handle(MouseEvent event) {
                         reactClick(event);
+                        event.consume();
                     }
                 });
         theImage.setOnMousePressed(
@@ -65,6 +66,7 @@ public abstract class AbstractImageButton {
                     @Override
                     public void handle(MouseEvent event) {
                         reactPressed(event);
+                        event.consume();
                     }
                 });
         theImage.setOnMouseReleased(
@@ -72,6 +74,7 @@ public abstract class AbstractImageButton {
                     @Override
                     public void handle(MouseEvent event) {
                         reactReleased(event);
+                        event.consume();
                     }
                 });
     }

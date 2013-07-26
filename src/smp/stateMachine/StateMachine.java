@@ -8,6 +8,15 @@ package smp.stateMachine;
  */
 public class StateMachine {
 
+    /** Whether we've pressed down the shift key. */
+    private static boolean shiftPressed = false;
+
+    /** Whether we've pressed down the alt key. */
+    private static boolean altPressed = false;
+
+    /** Whether we've pressed down the ctrl key. */
+    private static boolean ctrlPressed = false;
+
     /**
      * The default state that the program is in is the
      * EDITING state, in which notes are being placed on the staff.
@@ -124,4 +133,51 @@ public class StateMachine {
     public static synchronized int getKeyPressed() {
         return 0;
     }
+
+    /** Sets that we've pressed down the shift key. */
+    public static void setShiftPressed() {
+        shiftPressed = true;
+    }
+
+    /** @return Is shift pressed down? */
+    public static boolean isShiftPressed() {
+        return shiftPressed;
+    }
+
+    /** Sets that we've pressed down the alt key. */
+    public static void setAltPressed() {
+        altPressed = true;
+    }
+
+    /** @return Is alt pressed down? */
+    public static boolean isAltPressed() {
+        return altPressed;
+    }
+
+    /** Sets that we've pressed down the ctrl key. */
+    public static void setCtrlPressed() {
+        ctrlPressed = true;
+    }
+
+    /** @return Is ctrl pressed down? */
+    public static boolean isCtrlPressed() {
+        return ctrlPressed;
+    }
+
+    /** Sets that we've released the shift key. */
+    public static void resetShiftPressed() {
+        shiftPressed = true;
+    }
+
+    /** Sets that we've released the alt key. */
+    public static void resetAltPressed() {
+        altPressed = true;
+    }
+
+    /** Sets that we've released the ctrl key. */
+    public static void resetCtrlPressed() {
+        ctrlPressed = true;
+    }
+
+
 }

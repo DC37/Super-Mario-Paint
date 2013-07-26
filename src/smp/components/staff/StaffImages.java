@@ -184,7 +184,7 @@ public class StaffImages {
         noteLines = new ArrayList<VBox>();
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
-        for (VBox v : noteLines) {
+        /*for (VBox v : noteLines) {
             ArrayList<StackPane> a = new ArrayList<StackPane>();
             for (Node s : v.getChildren()) {
                 addListeners((StackPane) s, 0);
@@ -192,6 +192,7 @@ public class StaffImages {
             }
             noteMatrix.add(a);
         }
+         */
     }
 
     /**
@@ -205,7 +206,7 @@ public class StaffImages {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-
+                        event.consume();
                     }
 
                 });
