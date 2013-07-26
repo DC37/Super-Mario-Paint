@@ -103,7 +103,9 @@ public class SoundfontLoader implements Loader {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Synth Latency: " + theSynthesizer.getLatency());
+            if (Settings.debug)
+                System.out.println(
+                        "Synth Latency: " + theSynthesizer.getLatency());
             setLoadStatus(1);
         } catch (MidiUnavailableException e) {
             // Can't recover.

@@ -3,6 +3,8 @@ package smp;
 import java.io.File;
 import java.util.Hashtable;
 
+import smp.stateMachine.Settings;
+
 import javafx.scene.image.Image;
 
 /**
@@ -60,7 +62,9 @@ public class ImageLoader implements Loader {
             Image temp2 =
                     new Image(f.toURI().toString());
             spritesFX.put(i, temp2);
-            System.out.println("Loaded Image: " + i.toString() + extension);
+            if (Settings.debug)
+                System.out.println(
+                        "Loaded Image: " + i.toString() + extension);
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

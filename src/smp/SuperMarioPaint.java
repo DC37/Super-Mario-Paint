@@ -149,11 +149,6 @@ public class SuperMarioPaint extends Application {
                 } else if (n == KeyCode.SHIFT) {
                     StateMachine.setShiftPressed();
                 }
-                if (Settings.debug){
-                    System.out.println("Alt: " + StateMachine.isAltPressed() +
-                            "\nCtrl: " + StateMachine.isCtrlPressed() +
-                            "\nShift: " + StateMachine.isShiftPressed());
-                }
                 ke.consume();
             }
         });
@@ -170,11 +165,6 @@ public class SuperMarioPaint extends Application {
                     StateMachine.resetAltPressed();
                 } else if (n == KeyCode.SHIFT) {
                     StateMachine.resetShiftPressed();
-                }
-                if (Settings.debug){
-                    System.out.println("Alt: " + StateMachine.isAltPressed() +
-                            "\nCtrl: " + StateMachine.isCtrlPressed() +
-                            "\nShift: " + StateMachine.isShiftPressed());
                 }
                 ke.consume();
             }
