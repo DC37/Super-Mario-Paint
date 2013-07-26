@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.SoundfontLoader;
 import smp.components.Constants;
+import smp.components.InstrumentIndex;
+import smp.components.staff.sequences.Note;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.topPanel.ButtonLine;
@@ -203,17 +206,23 @@ public class StaffImages {
      * @param s The StackPane that will be holding some instrument.
      * @param pos The position that this StackPane will be associated with.
      */
-    private void addListeners(final StackPane s, int pos) {
+    private void addListeners(final StackPane s, final int pos) {
         s.setOnMousePressed(
                 new EventHandler<MouseEvent>() {
+
+                    /** The position of this note. */
+                    private int position = pos;
+
                     @Override
                     public void handle(MouseEvent event) {
                         ImageView theImage = new ImageView();
+                        InstrumentIndex theInd =
+                                ButtonLine.getSelectedInstrument();
                         theImage.setImage(
                                 ImageLoader.getSpriteFX(
-                                        ButtonLine.getSelectedInstrument()
-                                        .imageIndex()));
+                                        theInd.imageIndex()));
                         s.getChildren().add(theImage);
+                        playSound(theInd, position);
                         event.consume();
                     }
 
@@ -288,5 +297,19 @@ public class StaffImages {
      */
     private int getMeasurePosition() {
         return StateMachine.getMeasureLineNum();
+    }
+
+    /**
+     * Plays a sound given an index and a position.
+     * @param theInd The index at which this instrument is located at.
+     * @param pos The position at which this note is located at.
+     */
+    private void playSound(InstrumentIndex theInd, int pos) {
+        int acc = 0;
+        if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
+            acc = -1;
+        else if (StateMachine.isShiftPressed())
+            acc = 1;
+        SoundfontLoader.playSound(Note.B3, theInd, acc);
     }
 }
