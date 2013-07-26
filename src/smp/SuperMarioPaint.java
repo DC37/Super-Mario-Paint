@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
@@ -108,8 +109,10 @@ public class SuperMarioPaint extends Application {
                             new File(mainFxml).toURI().toURL());
             primaryStage.setTitle("Super Mario Paint");
             primaryStage.setResizable(true);
-            primaryStage.setScene(new Scene(root, 800, 600));
+            Scene primaryScene = new Scene(root, 800, 600);
+            primaryStage.setScene(primaryScene);
             SMPFXController.initializeHandlers();
+            makeKeyboardListeners(primaryScene);
             dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
             primaryStage.show();
             dummyPreloader.dispose();
@@ -120,6 +123,15 @@ public class SuperMarioPaint extends Application {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    /**
+     * Creates the keyboard listeners that we will be using for various
+     * other portions of the program.
+     * @param primaryScene The main window.
+     */
+    private void makeKeyboardListeners(Scene primaryScene) {
+
     }
 
     /**
