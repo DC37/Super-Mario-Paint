@@ -33,6 +33,9 @@ public class Constants {
      */
     public static final int MIN_VELOCITY = 0;
 
+    /** The number of notes in a note line. */
+    public static final int NOTES_IN_A_LINE = 18;
+
     /** The MIDI control channel for modulation. */
     public static final int MODULATION = 0x1;
 

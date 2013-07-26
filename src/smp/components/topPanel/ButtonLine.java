@@ -40,9 +40,9 @@ public class ButtonLine {
     private ArrayList<ImageView> buttons = new ArrayList<ImageView>();
 
     /**
-     * The InstrumentIndex of the selected instrument.
+     * The InstrumentIndex of the selected instrument. Default is Mario.
      */
-    private static InstrumentIndex selectedInstrument;
+    private static InstrumentIndex selectedInstrument = InstrumentIndex.MARIO;
 
     /**
      * The picture of the currently-selected instrument.

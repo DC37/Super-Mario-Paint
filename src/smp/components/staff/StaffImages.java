@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.Constants;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.topPanel.ButtonLine;
@@ -185,12 +186,14 @@ public class StaffImages {
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
         for (VBox v : noteLines) {
+            int pos = 0;
             ArrayList<StackPane> a = new ArrayList<StackPane>();
             for (Node s : v.getChildren()) {
-                addListeners((StackPane) s, 0);
+                addListeners((StackPane) s, Constants.NOTES_IN_A_LINE - pos);
                 a.add((StackPane) s);
+                pos++;
             }
-            noteMatrix.add(a);
+            //noteMatrix.add(a);
         }
     }
 
@@ -200,11 +203,17 @@ public class StaffImages {
      * @param s The StackPane that will be holding some instrument.
      * @param pos The position that this StackPane will be associated with.
      */
-    private void addListeners(StackPane s, int pos) {
+    private void addListeners(final StackPane s, int pos) {
         s.setOnMousePressed(
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        ImageView theImage = new ImageView();
+                        theImage.setImage(
+                                ImageLoader.getSpriteFX(
+                                        ButtonLine.getSelectedInstrument()
+                                        .imageIndex()));
+                        s.getChildren().add(theImage);
                         event.consume();
                     }
 
