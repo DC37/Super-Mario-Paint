@@ -1,5 +1,6 @@
 package smp.components.staff;
 
+import java.awt.Event;
 import java.util.ArrayList;
 
 import smp.ImageIndex;
@@ -207,26 +208,25 @@ public class StaffImages {
      * @param pos The position that this StackPane will be associated with.
      */
     private void addListeners(final StackPane s, final int pos) {
-        s.setOnMousePressed(
+        s.addEventHandler(MouseEvent.MOUSE_PRESSED,
                 new EventHandler<MouseEvent>() {
 
-                    /** The position of this note. */
-                    private int position = pos;
+            /** The position of this note. */
+            private int position = pos;
 
-                    @Override
-                    public void handle(MouseEvent event) {
-                        ImageView theImage = new ImageView();
-                        InstrumentIndex theInd =
-                                ButtonLine.getSelectedInstrument();
-                        theImage.setImage(
-                                ImageLoader.getSpriteFX(
-                                        theInd.imageIndex()));
-                        s.getChildren().add(theImage);
-                        playSound(theInd, position);
-                        event.consume();
-                    }
+            @Override
+            public void handle(MouseEvent event) {
+                ImageView theImage = new ImageView();
+                InstrumentIndex theInd =
+                        ButtonLine.getSelectedInstrument();
+                theImage.setImage(
+                        ImageLoader.getSpriteFX(
+                                theInd.imageIndex()));
+                s.getChildren().add(theImage);
+                playSound(theInd, position);
+            }
 
-                });
+        });
 
 
     }
@@ -310,6 +310,7 @@ public class StaffImages {
             acc = -1;
         else if (StateMachine.isShiftPressed())
             acc = 1;
-        SoundfontLoader.playSound(Note.B3, theInd, acc);
+        Note baseNote = Note.A2;
+        SoundfontLoader.playSound(baseNote.getKeyNum() + pos, theInd, acc);
     }
 }

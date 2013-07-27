@@ -39,7 +39,7 @@ public class StaffNote {
      * Plays this note's sound.
      */
     public void playSound() {
-        SoundfontLoader.playSound(theNote, theInstrument, accidental);
+        SoundfontLoader.playSound(theNote, theInstrument);
     }
 
     /**

@@ -168,13 +168,34 @@ public class SoundfontLoader implements Loader {
      * Plays a certain sound given a Note and some instrument.
      * @param n The Note to play
      * @param i The Instrument to play it with.
-     * @param acc The offset from this note, in half-steps, short for
-     * "accidental."
      */
-    public static void playSound(Note n, InstrumentIndex i, int acc) {
-        int ind = i.getChannel() - 1;
-        chan[ind].noteOn(n.getKeyNum() + acc,
-                Constants.MAX_VELOCITY);
+    public static void playSound(Note n, InstrumentIndex i) {
+        playSound(n.getKeyNum(), i, 0);
+    }
+
+    /**
+     * Plays a certain sound given a Note and some instrument, along with the
+     * accidental we are supposed to play it with.
+     * @param i The note index we are supposed to play this note at.
+     * @param theInd The InstrumentIndex.
+     * @param acc The accidental that we are given.
+     */
+    public static void playSound(int i, InstrumentIndex theInd, int acc) {
+        playSound(i, theInd, acc, Constants.MAX_VELOCITY);
+    }
+
+    /**
+     * Plays a certain sound given a Note and some instrument, along with the
+     * accidental we are supposed to play it with and the volume with which we are
+     * trying to play at.
+     * @param i The note index we are supposed to play this note at.
+     * @param theInd The InstrumentIndex.
+     * @param acc The accidental that we are given.
+     */
+    public static void playSound(int i, InstrumentIndex theInd, int acc, int vel) {
+        int ind = theInd.getChannel() - 1;
+        chan[ind].noteOn(i + acc,
+                vel);
     }
 
 }
