@@ -1,6 +1,5 @@
 package smp.components.staff;
 
-import java.awt.Event;
 import java.util.ArrayList;
 
 import smp.ImageIndex;
@@ -35,6 +34,12 @@ import javafx.scene.layout.VBox;
  * @since 2012.09.17
  */
 public class StaffImages {
+
+    /** Array of notes that we can see on the staff. */
+    private Note[] staffNotes = {
+            Note.A2, Note.B2, Note.C3, Note.D3, Note.E3, Note.F3, Note.G3,
+            Note.A3, Note.B3, Note.C4, Note.D4, Note.E4, Note.F4, Note.G4,
+            Note.A4, Note.B4, Note.C5, Note.D5};
 
     /**
      * The line that denotes where the staffImages should begin searching
@@ -190,7 +195,7 @@ public class StaffImages {
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
         for (VBox v : noteLines) {
-            int pos = 0;
+            int pos = 1;
             ArrayList<StackPane> a = new ArrayList<StackPane>();
             for (Node s : v.getChildren()) {
                 addListeners((StackPane) s, Constants.NOTES_IN_A_LINE - pos);
@@ -226,6 +231,25 @@ public class StaffImages {
                 playSound(theInd, position);
             }
 
+        });
+
+        s.addEventHandler(MouseEvent.ANY,
+                new EventHandler<MouseEvent>() {
+
+            /** The silhouette image of the instrument. */
+            ImageView theImage = new ImageView();
+
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.equals(Event.MOUSE_ENTERED))
+                    ImageView theImage = new ImageView();
+                InstrumentIndex theInd =
+                        ButtonLine.getSelectedInstrument();
+                theImage.setImage(
+                        ImageLoader.getSpriteFX(
+                                theInd.imageIndex().silhouette()));
+                s.getChildren().add(theImage);
+            }
         });
 
 
@@ -305,12 +329,13 @@ public class StaffImages {
      * @param pos The position at which this note is located at.
      */
     private void playSound(InstrumentIndex theInd, int pos) {
-        int acc = 0;
+        int acc;
         if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
             acc = -1;
         else if (StateMachine.isShiftPressed())
             acc = 1;
-        Note baseNote = Note.A2;
-        SoundfontLoader.playSound(baseNote.getKeyNum() + pos, theInd, acc);
+        else
+            acc = 0;
+        SoundfontLoader.playSound(staffNotes[pos].getKeyNum(), theInd, acc);
     }
 }

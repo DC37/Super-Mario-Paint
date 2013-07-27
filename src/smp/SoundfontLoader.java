@@ -194,8 +194,7 @@ public class SoundfontLoader implements Loader {
      */
     public static void playSound(int i, InstrumentIndex theInd, int acc, int vel) {
         int ind = theInd.getChannel() - 1;
-        chan[ind].noteOn(i + acc,
-                vel);
+        chan[ind].noteOn(i + acc, vel);
     }
 
 }

@@ -147,7 +147,7 @@ public class SMPFXController implements Initializable {
         // Initialize loop button
         // Controls.setLoopButton();
 
-        // At this point, everything should be initizalized and ready to
+        // At this point, everything should be initialized and ready to
         // respond to user input.
     }
 
