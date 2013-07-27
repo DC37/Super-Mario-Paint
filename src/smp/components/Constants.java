@@ -1,5 +1,7 @@
 package smp.components;
 
+import smp.components.staff.sequences.Note;
+
 /**
  * A constants file for holding things like default
  * window size, default modes, etc.
@@ -54,4 +56,9 @@ public class Constants {
     /** The MIDI control channel for chorus. */
     public static final int CHORUS = 0x5D;
 
+    /** Array of notes that we can see on the staff. */
+    public static final Note[] staffNotes = {
+        Note.A2, Note.B2, Note.C3, Note.D3, Note.E3, Note.F3, Note.G3,
+        Note.A3, Note.B3, Note.C4, Note.D4, Note.E4, Note.F4, Note.G4,
+        Note.A4, Note.B4, Note.C5, Note.D5};
 }

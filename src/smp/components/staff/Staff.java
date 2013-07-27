@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import javafx.scene.layout.HBox;
-
 import javax.sound.midi.InvalidMidiDataException;
 
 import smp.components.general.Utilities;
-import smp.components.staff.sequences.Note;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.mpc.MPCDecoder;

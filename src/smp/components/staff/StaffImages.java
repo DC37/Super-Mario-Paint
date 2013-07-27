@@ -2,23 +2,13 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.SoundfontLoader;
 import smp.components.Constants;
-import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
-import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.StateMachine;
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -34,12 +24,6 @@ import javafx.scene.layout.VBox;
  * @since 2012.09.17
  */
 public class StaffImages {
-
-    /** Array of notes that we can see on the staff. */
-    private Note[] staffNotes = {
-            Note.A2, Note.B2, Note.C3, Note.D3, Note.E3, Note.F3, Note.G3,
-            Note.A3, Note.B3, Note.C4, Note.D4, Note.E4, Note.F4, Note.G4,
-            Note.A4, Note.B4, Note.C5, Note.D5};
 
     /**
      * The line that denotes where the staffImages should begin searching
@@ -214,42 +198,7 @@ public class StaffImages {
      */
     private void addListeners(final StackPane s, final int pos) {
         s.addEventHandler(MouseEvent.ANY,
-                new EventHandler<MouseEvent>() {
-
-            /** The position of this note. */
-            private int position = pos;
-
-            /** The topmost image of the instrument. */
-            ImageView theImage = new ImageView();
-
-            @Override
-            public void handle(MouseEvent event) {
-                InstrumentIndex theInd =
-                        ButtonLine.getSelectedInstrument();
-                if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                    theImage.setImage(
-                            ImageLoader.getSpriteFX(
-                                    theInd.imageIndex()));
-                    if (!s.getChildren().contains(theImage))
-                        s.getChildren().add(theImage);
-                    playSound(theInd, position);
-                } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                    theImage.setImage(
-                            ImageLoader.getSpriteFX(
-                                    theInd.imageIndex().silhouette()));
-                    if (!s.getChildren().contains(theImage))
-                        s.getChildren().add(theImage);
-                } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-                    if (s.getChildren().contains(theImage))
-                        s.getChildren().remove(theImage);
-                    if (!s.getChildren().isEmpty())
-                        theImage = (ImageView) s.getChildren().get(0);
-                    else
-                        theImage = new ImageView();
-                }
-            }
-
-        });
+                new StaffEventHandler(s, pos));
 
     }
 
@@ -321,19 +270,4 @@ public class StaffImages {
         return StateMachine.getMeasureLineNum();
     }
 
-    /**
-     * Plays a sound given an index and a position.
-     * @param theInd The index at which this instrument is located at.
-     * @param pos The position at which this note is located at.
-     */
-    private void playSound(InstrumentIndex theInd, int pos) {
-        int acc;
-        if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
-            acc = -1;
-        else if (StateMachine.isShiftPressed())
-            acc = 1;
-        else
-            acc = 0;
-        SoundfontLoader.playSound(staffNotes[pos].getKeyNum(), theInd, acc);
-    }
 }
