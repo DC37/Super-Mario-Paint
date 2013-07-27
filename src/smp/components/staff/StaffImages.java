@@ -213,45 +213,43 @@ public class StaffImages {
      * @param pos The position that this StackPane will be associated with.
      */
     private void addListeners(final StackPane s, final int pos) {
-        s.addEventHandler(MouseEvent.MOUSE_PRESSED,
+        s.addEventHandler(MouseEvent.ANY,
                 new EventHandler<MouseEvent>() {
 
             /** The position of this note. */
             private int position = pos;
 
-            @Override
-            public void handle(MouseEvent event) {
-                ImageView theImage = new ImageView();
-                InstrumentIndex theInd =
-                        ButtonLine.getSelectedInstrument();
-                theImage.setImage(
-                        ImageLoader.getSpriteFX(
-                                theInd.imageIndex()));
-                s.getChildren().add(theImage);
-                playSound(theInd, position);
-            }
-
-        });
-
-        s.addEventHandler(MouseEvent.ANY,
-                new EventHandler<MouseEvent>() {
-
-            /** The silhouette image of the instrument. */
+            /** The topmost image of the instrument. */
             ImageView theImage = new ImageView();
 
             @Override
             public void handle(MouseEvent event) {
-                if (event.equals(Event.MOUSE_ENTERED))
-                    ImageView theImage = new ImageView();
                 InstrumentIndex theInd =
                         ButtonLine.getSelectedInstrument();
-                theImage.setImage(
-                        ImageLoader.getSpriteFX(
-                                theInd.imageIndex().silhouette()));
-                s.getChildren().add(theImage);
+                if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                    theImage.setImage(
+                            ImageLoader.getSpriteFX(
+                                    theInd.imageIndex()));
+                    if (!s.getChildren().contains(theImage))
+                        s.getChildren().add(theImage);
+                    playSound(theInd, position);
+                } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+                    theImage.setImage(
+                            ImageLoader.getSpriteFX(
+                                    theInd.imageIndex().silhouette()));
+                    if (!s.getChildren().contains(theImage))
+                        s.getChildren().add(theImage);
+                } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
+                    if (s.getChildren().contains(theImage))
+                        s.getChildren().remove(theImage);
+                    if (!s.getChildren().isEmpty())
+                        theImage = (ImageView) s.getChildren().get(0);
+                    else
+                        theImage = new ImageView();
+                }
             }
-        });
 
+        });
 
     }
 
