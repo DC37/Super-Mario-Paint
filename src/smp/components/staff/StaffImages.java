@@ -217,6 +217,17 @@ public class StaffImages {
         accidentalLines = new ArrayList<VBox>();
         for (Node n : accidentals.getChildren())
             accidentalLines.add((VBox) n);
+        /*
+        for (VBox v : noteLines) {
+            int pos = 1;
+            ArrayList<StackPane> a = new ArrayList<StackPane>();
+            for (Node s : v.getChildren()) {
+                linkListeners((StackPane) s, Constants.NOTES_IN_A_LINE - pos);
+                a.add((StackPane) s);
+                pos++;
+            }
+        }
+         */
     }
 
     /**

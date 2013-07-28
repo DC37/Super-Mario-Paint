@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
@@ -25,11 +26,21 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
     /** The position of this note. */
     private int position;
 
-    /** The topmost image of the instrument. */
-    ImageView theImage = new ImageView();
-
-    /** Whether we have clicked on the topmost image. */
+    /** Whether we've placed a note down on the staff or not. */
     private boolean clicked = false;
+
+    /**
+     * This is the list of image notes that we have. These should
+     * all be ImageView-type objects.
+     */
+    private ObservableList<Node> theImages;
+
+    /** The topmost image of the instrument. */
+    private ImageView theImage;
+
+    // Somewhere down the line, we will extend ImageView to
+    // include more things.
+    // private StaffNote theImage = new StaffNote();
 
     /** The StackPane that this handler is attached to. */
     private StackPane s;
@@ -44,6 +55,7 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
     public StaffEventHandler(StackPane stPane, int pos) {
         position = pos;
         s = stPane;
+        theImages = s.getChildren();
     }
 
     @Override
@@ -52,30 +64,95 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
                 ButtonLine.getSelectedInstrument();
         ObservableList<Node> children = s.getChildren();
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            theImage.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex()));
-            if (!children.contains(theImage))
-                children.add(theImage);
+            if (event.getButton() == MouseButton.PRIMARY)
+                leftMousePressed(children, theInd);
+            else if (event.getButton() == MouseButton.SECONDARY)
+                rightMousePressed(children, theInd);
 
-            playSound(theInd, position);
-            theImage = new ImageView();
 
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            theImage.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex().silhouette()));
-            if (!children.contains(theImage))
-                children.add(theImage);
+            mouseEntered(children, theInd);
 
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            if (children.contains(theImage))
-                children.remove(theImage);
-            if (!children.isEmpty())
-                theImage = (ImageView) children.get(0);
-            else
-                theImage = new ImageView();
+            mouseExited(children, theInd);
+
         }
+    }
+
+    /**
+     * The method that is called when the left mouse button is pressed.
+     * This is generally the signal to add an instrument to that line.
+     * @param children List of Nodes that we have here, hopefully full of
+     * ImageView-type objects.
+     * @param theInd The InstrumentIndex corresponding to what
+     * instrument is currently selected.
+     */
+    private void leftMousePressed(ObservableList<Node> children,
+            InstrumentIndex theInd) {
+        theImage.setImage(
+                ImageLoader.getSpriteFX(
+                        theInd.imageIndex()));
+        if (!children.contains(theImage))
+            children.add(theImage);
+
+        playSound(theInd, position);
+        theImage = new ImageView();
+        clicked = true;
+
+    }
+
+    /**
+     * The method that is called when the right mouse button is pressed.
+     * This is generally the signal to remove the instrument from that line.
+     * @param children List of Nodes that we have here, hopefully full of
+     * ImageView-type objects.
+     * @param theInd The InstrumentIndex corresponding to what
+     * instrument is currently selected.
+     */
+    private void rightMousePressed(ObservableList<Node> children,
+            InstrumentIndex theInd) {
+        theImage.setImage(
+                ImageLoader.getSpriteFX(
+                        theInd.imageIndex()));
+        if (!children.contains(theImage))
+            children.remove(theImage);
+
+        theImage = new ImageView();
+    }
+
+
+    /**
+     * The method that is called when the mouse enters the object.
+     * @param children List of Nodes that we have here, hopefully full of
+     * ImageView-type objects.
+     * @param theInd The InstrumentIndex corresponding to what
+     * instrument is currently selected.
+     */
+    private void mouseEntered(ObservableList<Node> children,
+            InstrumentIndex theInd) {
+        theImage = new ImageView();
+        theImage.setImage(
+                ImageLoader.getSpriteFX(
+                        theInd.imageIndex().silhouette()));
+        children.add(theImage);
+    }
+
+    /**
+     * The method that is called when the mouse exits the object.
+     * @param children List of Nodes that we have here, hopefully full of
+     * ImageView-type objects.
+     * @param theInd The InstrumentIndex corresponding to what
+     * instrument is currently selected.
+     */
+    private void mouseExited(ObservableList<Node> children,
+            InstrumentIndex theInd) {
+        if (!clicked) {
+            theImage.setVisible(false);
+            children.remove(children.size() - 1);
+        }
+        if (!children.isEmpty())
+            theImage = (ImageView) children.get(children.size() - 1);
+        clicked = false;
     }
 
     /**
