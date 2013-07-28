@@ -36,7 +36,7 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
     private ObservableList<Node> theImages;
 
     /** The topmost image of the instrument. */
-    private ImageView theImage;
+    private ImageView theImage = new ImageView();
 
     // Somewhere down the line, we will extend ImageView to
     // include more things.
@@ -92,8 +92,6 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
         theImage.setImage(
                 ImageLoader.getSpriteFX(
                         theInd.imageIndex()));
-        if (!children.contains(theImage))
-            children.add(theImage);
 
         playSound(theInd, position);
         theImage = new ImageView();
@@ -111,13 +109,8 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
      */
     private void rightMousePressed(ObservableList<Node> children,
             InstrumentIndex theInd) {
-        theImage.setImage(
-                ImageLoader.getSpriteFX(
-                        theInd.imageIndex()));
-        if (!children.contains(theImage))
-            children.remove(theImage);
-
-        theImage = new ImageView();
+        if (!children.isEmpty())
+            children.remove(children.size() - 1);
     }
 
 
@@ -130,7 +123,7 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
      */
     private void mouseEntered(ObservableList<Node> children,
             InstrumentIndex theInd) {
-        theImage = new ImageView();
+        theImage.setVisible(true);
         theImage.setImage(
                 ImageLoader.getSpriteFX(
                         theInd.imageIndex().silhouette()));
@@ -148,10 +141,9 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
             InstrumentIndex theInd) {
         if (!clicked) {
             theImage.setVisible(false);
-            children.remove(children.size() - 1);
+            if (!children.isEmpty())
+                children.remove(children.size() - 1);
         }
-        if (!children.isEmpty())
-            theImage = (ImageView) children.get(children.size() - 1);
         clicked = false;
     }
 
