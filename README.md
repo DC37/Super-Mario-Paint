@@ -20,6 +20,8 @@ Tasklist:
 * Settings framework (done - October 31, 2012)
 * Staff notes images framework (done - May 31, 2013)
 * Place notes on the staff (done - July 26, 2013)
+* Hear notes played on the staff (done - July 26, 2013)
+* Images properly displayed on the staff
 * Staff MIDI framework
 * Navigate the staff
 * Play back notes on the staff
