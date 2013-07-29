@@ -69,7 +69,6 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
             else if (event.getButton() == MouseButton.SECONDARY)
                 rightMousePressed(children, theInd);
 
-
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             mouseEntered(children, theInd);
 
@@ -109,8 +108,12 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
      */
     private void rightMousePressed(ObservableList<Node> children,
             InstrumentIndex theInd) {
-        if (!children.isEmpty())
+        if (!children.isEmpty()) {
             children.remove(children.size() - 1);
+        }
+        if (!children.isEmpty()) {
+            children.remove(children.size() - 1);
+        }
     }
 
 
