@@ -62,18 +62,17 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         InstrumentIndex theInd =
                 ButtonLine.getSelectedInstrument();
-        ObservableList<Node> children = s.getChildren();
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             if (event.getButton() == MouseButton.PRIMARY)
-                leftMousePressed(children, theInd);
+                leftMousePressed(theInd);
             else if (event.getButton() == MouseButton.SECONDARY)
-                rightMousePressed(children, theInd);
+                rightMousePressed(theInd);
 
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            mouseEntered(children, theInd);
+            mouseEntered(theInd);
 
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            mouseExited(children, theInd);
+            mouseExited(theInd);
 
         }
     }
@@ -81,13 +80,10 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
     /**
      * The method that is called when the left mouse button is pressed.
      * This is generally the signal to add an instrument to that line.
-     * @param children List of Nodes that we have here, hopefully full of
-     * ImageView-type objects.
      * @param theInd The InstrumentIndex corresponding to what
      * instrument is currently selected.
      */
-    private void leftMousePressed(ObservableList<Node> children,
-            InstrumentIndex theInd) {
+    private void leftMousePressed(InstrumentIndex theInd) {
         theImage.setImage(
                 ImageLoader.getSpriteFX(
                         theInd.imageIndex()));
@@ -101,36 +97,30 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
     /**
      * The method that is called when the right mouse button is pressed.
      * This is generally the signal to remove the instrument from that line.
-     * @param children List of Nodes that we have here, hopefully full of
-     * ImageView-type objects.
      * @param theInd The InstrumentIndex corresponding to what
      * instrument is currently selected.
      */
-    private void rightMousePressed(ObservableList<Node> children,
-            InstrumentIndex theInd) {
-        if (!children.isEmpty()) {
-            children.remove(children.size() - 1);
+    private void rightMousePressed(InstrumentIndex theInd) {
+        if (!theImages.isEmpty()) {
+            theImages.remove(theImages.size() - 1);
         }
-        if (!children.isEmpty()) {
-            children.remove(children.size() - 1);
+        if (!theImages.isEmpty()) {
+            theImages.remove(theImages.size() - 1);
         }
     }
 
 
     /**
      * The method that is called when the mouse enters the object.
-     * @param children List of Nodes that we have here, hopefully full of
-     * ImageView-type objects.
      * @param theInd The InstrumentIndex corresponding to what
      * instrument is currently selected.
      */
-    private void mouseEntered(ObservableList<Node> children,
-            InstrumentIndex theInd) {
+    private void mouseEntered(InstrumentIndex theInd) {
         theImage.setVisible(true);
         theImage.setImage(
                 ImageLoader.getSpriteFX(
                         theInd.imageIndex().silhouette()));
-        children.add(theImage);
+        theImages.add(theImage);
     }
 
     /**
@@ -140,12 +130,11 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
      * @param theInd The InstrumentIndex corresponding to what
      * instrument is currently selected.
      */
-    private void mouseExited(ObservableList<Node> children,
-            InstrumentIndex theInd) {
+    private void mouseExited(InstrumentIndex theInd) {
         if (!clicked) {
             theImage.setVisible(false);
-            if (!children.isEmpty())
-                children.remove(children.size() - 1);
+            if (!theImages.isEmpty())
+                theImages.remove(theImages.size() - 1);
         }
         clicked = false;
     }
