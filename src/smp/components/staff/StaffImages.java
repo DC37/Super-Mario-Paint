@@ -198,7 +198,7 @@ public class StaffImages {
      */
     private void addListeners(final StackPane s, final int pos) {
         s.addEventHandler(MouseEvent.ANY,
-                new StaffEventHandler(s, pos));
+                new StaffInstrumentEventHandler(s, pos));
 
     }
 

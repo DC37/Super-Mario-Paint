@@ -1,18 +1,14 @@
 package smp.components.staff.sequences;
 
-import javax.sound.midi.MidiChannel;
-
-import smp.SoundfontLoader;
+import javafx.scene.image.ImageView;
 import smp.components.InstrumentIndex;
-import smp.stateMachine.Settings;
 
 /**
- * A note on the Staff, to be added to the noteMatrix of the Staff
- * since
+ * A note on the Staff, to be added to the noteMatrix of the Staff.
  * @author RehdBlob
  * @since 2012.08.31
  */
-public class StaffNote {
+public class StaffNote extends ImageView {
 
     /**
      * The offset that this note will have.
@@ -36,13 +32,6 @@ public class StaffNote {
     private Note theNote;
 
     /**
-     * Plays this note's sound.
-     */
-    public void playSound() {
-        SoundfontLoader.playSound(theNote, theInstrument);
-    }
-
-    /**
      * @return The location of the note in the staff matrix.
      */
     public StaffNoteIndex getNoteLocation() {
@@ -50,10 +39,10 @@ public class StaffNote {
     }
 
     /**
-     * @param noteLocation the noteLocation to set
+     * @param noteL This is where the note is located on the staff.
      */
-    public void setNoteLocation(StaffNoteIndex noteLocation) {
-        this.noteLocation = noteLocation;
+    public void setNoteLocation(StaffNoteIndex noteL) {
+        noteLocation = noteL;
     }
 
     /**

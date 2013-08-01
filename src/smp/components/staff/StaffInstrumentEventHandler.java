@@ -4,6 +4,7 @@ import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Constants;
 import smp.components.InstrumentIndex;
+import smp.components.staff.sequences.StaffNote;
 import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
@@ -20,7 +21,7 @@ import javafx.scene.layout.StackPane;
  * @author RehdBlob
  * @since 2013.07.27
  */
-public class StaffEventHandler implements EventHandler<MouseEvent> {
+public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
 
 
     /** The position of this note. */
@@ -36,7 +37,7 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
     private ObservableList<Node> theImages;
 
     /** The topmost image of the instrument. */
-    private ImageView theImage = new ImageView();
+    private StaffNote theImage = new StaffNote();
 
     // Somewhere down the line, we will extend ImageView to
     // include more things.
@@ -52,7 +53,7 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
      * @param position The position that this handler is located on the
      * staff.
      */
-    public StaffEventHandler(StackPane stPane, int pos) {
+    public StaffInstrumentEventHandler(StackPane stPane, int pos) {
         position = pos;
         s = stPane;
         theImages = s.getChildren();
@@ -89,7 +90,7 @@ public class StaffEventHandler implements EventHandler<MouseEvent> {
                         theInd.imageIndex()));
 
         playSound(theInd, position);
-        theImage = new ImageView();
+        theImage = new StaffNote();
         clicked = true;
 
     }
