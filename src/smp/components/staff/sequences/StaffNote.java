@@ -34,9 +34,12 @@ public class StaffNote extends ImageView {
     /**
      * @param theInd The instrument that this StaffNote will play.
      * @param position The physical location of this note on the staff.
+     * @param acc The sharp / flat / whatever that we are offsetting this
+     * note by.
      */
-    public StaffNote(InstrumentIndex theInd, int position) {
+    public StaffNote(InstrumentIndex theInd, int position, int acc) {
         theInstrument = theInd;
+        accidental = acc;
     }
 
     /**

@@ -102,22 +102,26 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * instrument is currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
+        int acc;
+        if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
+            acc = -1;
+        else if (StateMachine.isShiftPressed())
+            acc = 1;
+        else
+            acc = 0;
         if (state == 0x1 || state == 0x4) {
-            theStaffNote = new StaffNote(theInd, position);
+            theStaffNote = new StaffNote(theInd, position, acc);
             theStaffNote.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex()));
-            playSound(theInd, position);
+            playSound(theInd, position, acc);
             theImages.remove(silhouette);
-            if (!theImages.contains(theStaffNote))
+            if (!theImages.contains(theStaffNote)) {
                 theImages.add(theStaffNote);
+            }
             state = 0x2;
         } else if (state == 0x2) {
-            theStaffNote = new StaffNote(theInd, position);
-            theStaffNote.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex()));
-            playSound(theInd, position);
+            playSound(theInd, position, acc);
             theImages.remove(silhouette);
         }
 
@@ -188,15 +192,9 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * Plays a sound given an index and a position.
      * @param theInd The index at which this instrument is located at.
      * @param pos The position at which this note is located at.
+     * @param acc The sharp / flat that we want to play this note at.
      */
-    private static void playSound(InstrumentIndex theInd, int pos) {
-        int acc;
-        if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
-            acc = -1;
-        else if (StateMachine.isShiftPressed())
-            acc = 1;
-        else
-            acc = 0;
+    private static void playSound(InstrumentIndex theInd, int pos, int acc) {
         SoundfontLoader.playSound(Constants.staffNotes[pos].getKeyNum(),
                 theInd, acc);
     }
