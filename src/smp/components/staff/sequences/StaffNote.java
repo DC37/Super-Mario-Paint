@@ -32,6 +32,14 @@ public class StaffNote extends ImageView {
     private Note theNote;
 
     /**
+     * @param theInd The instrument that this StaffNote will play.
+     * @param position The physical location of this note on the staff.
+     */
+    public StaffNote(InstrumentIndex theInd, int position) {
+        theInstrument = theInd;
+    }
+
+    /**
      * @return The location of the note in the staff matrix.
      */
     public StaffNoteIndex getNoteLocation() {

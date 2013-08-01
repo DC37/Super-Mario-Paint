@@ -27,8 +27,20 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
     /** The position of this note. */
     private int position;
 
-    /** Whether we've placed a note down on the staff or not. */
-    private boolean clicked = false;
+    /**
+     * State machine. The different representations are as follows: </br>
+     * <b>0x0</b>: Mouse not in frame, nothing has been clicked. </br>
+     * <b>0x1</b>: Mouse in frame, nothing has been clicked. A silhouette
+     * of the current selected instrument is visible.</br>
+     * <b>0x2</b>: Mouse in frame, and we've clicked once. A StaffNote has
+     * been placed on the staff. </br>
+     * <b>0x3</b>: Mouse not in frame, and we are now displaying a
+     * StaffNote on the staff.</br>
+     * <b>0x4</b>: Mouse in frame, and we're displaying an image
+     * silhouette on top of the previous layer instrument.</br>
+     * 
+     */
+    private int state = 0x0;
 
     /**
      * This is the list of image notes that we have. These should
@@ -36,12 +48,15 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      */
     private ObservableList<Node> theImages;
 
-    /** The topmost image of the instrument. */
-    private StaffNote theImage = new StaffNote();
+    /**
+     * This is the <code>ImageView</code> object responsible for
+     * displaying the silhouette of the note that we are about to place
+     * on the staff.
+     */
+    private ImageView silhouette = new ImageView();
 
-    // Somewhere down the line, we will extend ImageView to
-    // include more things.
-    // private StaffNote theImage = new StaffNote();
+    /** The topmost image of the instrument. */
+    private StaffNote theStaffNote;
 
     /** The StackPane that this handler is attached to. */
     private StackPane s;
@@ -85,13 +100,25 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * instrument is currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
-        theImage.setImage(
-                ImageLoader.getSpriteFX(
-                        theInd.imageIndex()));
+        if (state == 0x1 || state == 0x4) {
+            theStaffNote = new StaffNote(theInd, position);
+            theStaffNote.setImage(
+                    ImageLoader.getSpriteFX(
+                            theInd.imageIndex()));
+            playSound(theInd, position);
+            theImages.remove(silhouette);
+            if (!theImages.contains(theStaffNote))
+                theImages.add(theStaffNote);
+            state = 0x2;
+        } else if (state == 0x2) {
+            theStaffNote = new StaffNote(theInd, position);
+            theStaffNote.setImage(
+                    ImageLoader.getSpriteFX(
+                            theInd.imageIndex()));
+            playSound(theInd, position);
+            theImages.remove(silhouette);
+        }
 
-        playSound(theInd, position);
-        theImage = new StaffNote();
-        clicked = true;
 
     }
 
@@ -102,11 +129,13 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * instrument is currently selected.
      */
     private void rightMousePressed(InstrumentIndex theInd) {
-        if (!theImages.isEmpty()) {
+        if (state == 0x1) {
+            if (!theImages.isEmpty())
+                theImages.remove(theImages.size() - 1);
+        } else if (state == 0x2 || state == 0x4) {
+            theImages.remove(silhouette);
             theImages.remove(theImages.size() - 1);
-        }
-        if (!theImages.isEmpty()) {
-            theImages.remove(theImages.size() - 1);
+            state = 0x1;
         }
     }
 
@@ -117,11 +146,19 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * instrument is currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-        theImage.setVisible(true);
-        theImage.setImage(
-                ImageLoader.getSpriteFX(
-                        theInd.imageIndex().silhouette()));
-        theImages.add(theImage);
+        if (state == 0x0) {
+            silhouette.setImage(
+                    ImageLoader.getSpriteFX(
+                            theInd.imageIndex().silhouette()));
+            theImages.add(silhouette);
+            state = 0x1;
+        } else if (state == 0x3) {
+            silhouette.setImage(
+                    ImageLoader.getSpriteFX(
+                            theInd.imageIndex().silhouette()));
+            theImages.add(silhouette);
+            state = 0x4;
+        }
     }
 
     /**
@@ -132,12 +169,17 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * instrument is currently selected.
      */
     private void mouseExited(InstrumentIndex theInd) {
-        if (!clicked) {
-            theImage.setVisible(false);
-            if (!theImages.isEmpty())
-                theImages.remove(theImages.size() - 1);
+        if (state == 0x1) {
+            theImages.remove(silhouette);
+            state = 0x0;
+        } else if (state == 0x2) {
+            theImages.remove(silhouette);
+            state = 0x3;
+        } else if (state == 0x4) {
+            theImages.remove(silhouette);
+            state = 0x1;
         }
-        clicked = false;
+
     }
 
     /**
