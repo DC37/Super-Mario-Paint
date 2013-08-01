@@ -6,6 +6,7 @@ import smp.components.Constants;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.topPanel.ButtonLine;
+import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -102,13 +103,17 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * instrument is currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
-        int acc;
-        if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
-            acc = -1;
+        int acc = 0;
+        if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
+            acc = -2;
+        else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
+            acc = 2;
         else if (StateMachine.isShiftPressed())
             acc = 1;
-        else
-            acc = 0;
+        else if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
+            acc = -1;
+        if (Settings.debug)
+            System.out.println("Accidental = " + acc);
         if (state == 0x1 || state == 0x4) {
             theStaffNote = new StaffNote(theInd, position, acc);
             theStaffNote.setImage(
