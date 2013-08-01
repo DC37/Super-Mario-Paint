@@ -58,20 +58,22 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
     /** The topmost image of the instrument. */
     private StaffNote theStaffNote;
 
-    /** The StackPane that this handler is attached to. */
-    private StackPane s;
+    /** The StackPane that will display sharps, flats, etc. */
+    private StackPane accidental;
 
     /**
      * Constructor for this StaffEventHandler. This creates a handler
      * that takes a StackPane and a position on the staff.
      * @param stPane The StackPane that we are interested in.
+     * @param acc The accidental display pane.
      * @param position The position that this handler is located on the
      * staff.
      */
-    public StaffInstrumentEventHandler(StackPane stPane, int pos) {
+    public StaffInstrumentEventHandler(StackPane stPane, StackPane acc,
+            int pos) {
         position = pos;
-        s = stPane;
-        theImages = s.getChildren();
+        theImages = stPane.getChildren();
+        accidental = acc;
     }
 
     @Override

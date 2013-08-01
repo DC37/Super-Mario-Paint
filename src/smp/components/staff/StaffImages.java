@@ -6,6 +6,7 @@ import smp.components.Constants;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -157,7 +158,6 @@ public class StaffImages {
         initalizeStaffPlayBars();
         initializeStaffMeasureNums();
         initializeStaffInstruments();
-        initializeStaffAccidentals();
 
     }
 
@@ -172,21 +172,29 @@ public class StaffImages {
 
     /**
      * Sets up the various note lines of the staff. These
-     * are the notes that can appear on the staff.
+     * are the notes that can appear on the staff. This method
+     * also sets up sharps, flats, etc.
      */
     private void initializeStaffInstruments() {
+        accidentalLines = new ArrayList<VBox>();
+        for (Node n : accidentals.getChildren())
+            accidentalLines.add((VBox) n);
+
         noteLines = new ArrayList<VBox>();
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
-        for (VBox v : noteLines) {
-            int pos = 1;
-            ArrayList<StackPane> a = new ArrayList<StackPane>();
-            for (Node s : v.getChildren()) {
-                addListeners((StackPane) s, Constants.NOTES_IN_A_LINE - pos);
-                a.add((StackPane) s);
-                pos++;
+
+
+        for (int i = 0; i < noteLines.size(); i++) {
+            VBox v = noteLines.get(i);
+            VBox n = accidentalLines.get(i);
+            ObservableList<Node> ch = v.getChildren();
+            ObservableList<Node> acc = n.getChildren();
+            for (int pos = 1; pos <= Constants.NOTES_IN_A_LINE; pos++) {
+                addListeners((StackPane) ch.get(pos - 1),
+                        (StackPane) acc.get(pos - 1),
+                        Constants.NOTES_IN_A_LINE - pos);
             }
-            //noteMatrix.add(a);
         }
     }
 
@@ -194,12 +202,13 @@ public class StaffImages {
      * Adds the requisite listeners to the StackPanes of the instrument
      * note matrix.
      * @param s The StackPane that will be holding some instrument.
+     * @param acc The StackPane that will be holding some sort of accidental.
      * @param pos The position that this StackPane will be associated with.
      */
-    private void addListeners(final StackPane s, final int pos) {
+    private void addListeners(final StackPane s, final StackPane acc,
+            final int pos) {
         s.addEventHandler(MouseEvent.ANY,
-                new StaffInstrumentEventHandler(s, pos));
-
+                new StaffInstrumentEventHandler(s, acc, pos));
     }
 
     /**
@@ -209,25 +218,6 @@ public class StaffImages {
         measureLines = new ArrayList<ImageView>();
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
-    }
-
-
-    /** These are the sharps, flats, etc */
-    private void initializeStaffAccidentals() {
-        accidentalLines = new ArrayList<VBox>();
-        for (Node n : accidentals.getChildren())
-            accidentalLines.add((VBox) n);
-        /*
-        for (VBox v : noteLines) {
-            int pos = 1;
-            ArrayList<StackPane> a = new ArrayList<StackPane>();
-            for (Node s : v.getChildren()) {
-                linkListeners((StackPane) s, Constants.NOTES_IN_A_LINE - pos);
-                a.add((StackPane) s);
-                pos++;
-            }
-        }
-         */
     }
 
     /**
