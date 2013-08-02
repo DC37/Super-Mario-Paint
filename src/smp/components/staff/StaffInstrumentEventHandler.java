@@ -18,7 +18,8 @@ import javafx.scene.layout.StackPane;
 
 /**
  * A Staff event handler. The StaffImages implementation was getting bulky
- * and there are still many many features to be implemented here...
+ * and there are still many many features to be implemented here. This
+ * handler primarily handles mouse events.
  * @author RehdBlob
  * @since 2013.07.27
  */
@@ -62,6 +63,9 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
     /** The StackPane that will display sharps, flats, etc. */
     private StackPane accidental;
 
+    /** This is the amount that we want to sharp / flat / etc. a note. */
+    private static int acc = 0;
+
     /**
      * Constructor for this StaffEventHandler. This creates a handler
      * that takes a StackPane and a position on the staff.
@@ -94,6 +98,7 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
             mouseExited(theInd);
 
         }
+
     }
 
     /**
@@ -103,7 +108,7 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
      * instrument is currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
-        int acc = 0;
+        acc = 0;
         if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
             acc = -2;
         else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
@@ -202,6 +207,21 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
     private static void playSound(InstrumentIndex theInd, int pos, int acc) {
         SoundfontLoader.playSound(Constants.staffNotes[pos].getKeyNum(),
                 theInd, acc);
+    }
+
+    /**
+     * Sets the amount that we want to sharp / flat a note.
+     * @param accidental Any integer between -2 and 2.
+     */
+    public static void setAcc(int accidental) {
+        acc = accidental;
+    }
+
+    /**
+     * @return The amount that a note is to be offset from its usual position.
+     */
+    public static int getAcc() {
+        return acc;
     }
 
 }
