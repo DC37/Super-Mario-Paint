@@ -9,9 +9,11 @@ import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -23,7 +25,7 @@ import javafx.scene.layout.StackPane;
  * @author RehdBlob
  * @since 2013.07.27
  */
-public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
+public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
 
     /** The position of this note. */
@@ -82,13 +84,13 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
     }
 
     @Override
-    public void handle(MouseEvent event) {
+    public void handle(Event event) {
         InstrumentIndex theInd =
                 ButtonLine.getSelectedInstrument();
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            if (event.getButton() == MouseButton.PRIMARY)
+            if (((MouseEvent) event).getButton() == MouseButton.PRIMARY)
                 leftMousePressed(theInd);
-            else if (event.getButton() == MouseButton.SECONDARY)
+            else if (((MouseEvent) event).getButton() == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
 
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
@@ -96,6 +98,8 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
 
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             mouseExited(theInd);
+
+        } else if (event.getEventType() == KeyEvent.KEY_PRESSED) {
 
         }
 
@@ -124,6 +128,7 @@ public class StaffInstrumentEventHandler implements EventHandler<MouseEvent> {
             theStaffNote.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex()));
+
             playSound(theInd, position, acc);
             theImages.remove(silhouette);
             if (!theImages.contains(theStaffNote)) {
