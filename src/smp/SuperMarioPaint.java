@@ -149,6 +149,7 @@ public class SuperMarioPaint extends Application {
                 } else if (n == KeyCode.SHIFT) {
                     StateMachine.setShiftPressed();
                 }
+                StateMachine.updateFocusPane();
                 ke.consume();
             }
         });
@@ -166,6 +167,7 @@ public class SuperMarioPaint extends Application {
                 } else if (n == KeyCode.SHIFT) {
                     StateMachine.resetShiftPressed();
                 }
+                StateMachine.updateFocusPane();
                 ke.consume();
             }
         });

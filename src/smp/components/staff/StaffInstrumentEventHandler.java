@@ -92,17 +92,14 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 leftMousePressed(theInd);
             else if (((MouseEvent) event).getButton() == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
-
+            event.consume();
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             mouseEntered(theInd);
-
+            event.consume();
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             mouseExited(theInd);
-
-        } else if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-
+            event.consume();
         }
-
     }
 
     /**
@@ -112,17 +109,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * instrument is currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
-        acc = 0;
-        if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
-            acc = -2;
-        else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
-            acc = 2;
-        else if (StateMachine.isShiftPressed())
-            acc = 1;
-        else if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
-            acc = -1;
-        if (Settings.debug)
-            System.out.println("Accidental = " + acc);
         if (state == 0x1 || state == 0x4) {
             theStaffNote = new StaffNote(theInd, position, acc);
             theStaffNote.setImage(
@@ -167,6 +153,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * instrument is currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
+        StateMachine.setFocusPane(this);
         if (state == 0x0) {
             silhouette.setImage(
                     ImageLoader.getSpriteFX(
@@ -201,6 +188,24 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             state = 0x1;
         }
 
+    }
+
+    /**
+     * Updates how much we want to sharp / flat a note.
+     */
+    public void updateAccidental() {
+        if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
+            acc = -2;
+        else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
+            acc = 2;
+        else if (StateMachine.isShiftPressed())
+            acc = 1;
+        else if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
+            acc = -1;
+        else
+            acc = 0;
+        if (Settings.debug)
+            System.out.println("Accidental: " + acc);
     }
 
     /**

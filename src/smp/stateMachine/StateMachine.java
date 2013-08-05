@@ -1,5 +1,7 @@
 package smp.stateMachine;
 
+import smp.components.staff.StaffInstrumentEventHandler;
+
 /**
  * This is the state machine that keeps track of what state the
  * main window is in.
@@ -7,6 +9,7 @@ package smp.stateMachine;
  * @since 2012.08.07
  */
 public class StateMachine {
+
 
     /** Whether we've pressed down the shift key. */
     private static boolean shiftPressed = false;
@@ -27,6 +30,12 @@ public class StateMachine {
      * The default time signature that we start out with is 4/4 time.
      */
     private static TimeSignature currentTimeSignature = TimeSignature.FOUR_FOUR;
+
+    /**
+     * The current focus that we have on the staff which we are going to update
+     * flats and sharps for.
+     */
+    private static StaffInstrumentEventHandler focusPane;
 
     /**
      * The current measure line number that the program is on. Typically
@@ -177,6 +186,22 @@ public class StateMachine {
     /** Sets that we've released the ctrl key. */
     public static void resetCtrlPressed() {
         ctrlPressed = false;
+    }
+
+    /**
+     * @param stHandle This is the pane that we want to update the flats
+     * or sharps in.
+     */
+    public static void setFocusPane(StaffInstrumentEventHandler stHandle) {
+        focusPane = stHandle;
+    }
+
+    /**
+     * Forces an update of the current pane in focus.
+     */
+    public static void updateFocusPane() {
+        if (focusPane != null)
+            focusPane.updateAccidental();
     }
 
 
