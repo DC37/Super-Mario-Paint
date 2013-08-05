@@ -1,5 +1,6 @@
 package smp.components.staff;
 
+import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Constants;
@@ -52,6 +53,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private ObservableList<Node> theImages;
 
+    /** The StackPane that will display sharps, flats, etc. */
+    private ObservableList<Node> accList;
+
     /**
      * This is the <code>ImageView</code> object responsible for
      * displaying the silhouette of the note that we are about to place
@@ -59,11 +63,16 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private ImageView silhouette = new ImageView();
 
+    /**
+     * This is the <code>ImageView</code> object responsible
+     * for displaying the silhouette of the sharp / flat of the note
+     * that we are about to place on the staff.
+     */
+    private ImageView accSilhouette = new ImageView();
+
     /** The topmost image of the instrument. */
     private StaffNote theStaffNote;
 
-    /** The StackPane that will display sharps, flats, etc. */
-    private StackPane accidental;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
@@ -80,7 +89,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             int pos) {
         position = pos;
         theImages = stPane.getChildren();
-        accidental = acc;
+        accList = acc.getChildren();
     }
 
     @Override
@@ -187,7 +196,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             theImages.remove(silhouette);
             state = 0x1;
         }
-
     }
 
     /**
@@ -204,6 +212,28 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             acc = -1;
         else
             acc = 0;
+        switch (acc) {
+        case 2:
+            break;
+        case 1:
+            accSilhouette.setImage(ImageLoader.getSpriteFX(
+                    ImageIndex.SHARP_SIL));
+            break;
+        case 0:
+            accSilhouette.setImage(null);
+            accList.remove(accSilhouette);
+            break;
+        case -1:
+            accSilhouette.setImage(ImageLoader.getSpriteFX(
+                    ImageIndex.FLAT_SIL));
+            break;
+        case -2:
+            break;
+        default:
+            break;
+        }
+        if (acc != 0)
+            accList.add(accSilhouette);
         if (Settings.debug)
             System.out.println("Accidental: " + acc);
     }

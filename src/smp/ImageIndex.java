@@ -19,7 +19,7 @@ public enum ImageIndex {
     PLANE_GRAY, BOAT_GRAY, CAR_GRAY, HEART_GRAY, PIRANHA_GRAY, COIN_GRAY,
     SHYGUY_GRAY, BOO_GRAY, LUIGI_GRAY,
 
-    SHARP, FLAT,
+    SHARP_GRAY, FLAT_GRAY,
 
     /*
      * Silhouettes of images.
@@ -28,6 +28,8 @@ public enum ImageIndex {
     GAMEBOY_SIL, DOG_SIL, CAT_SIL, PIG_SIL, SWAN_SIL, FACE_SIL,
     PLANE_SIL, BOAT_SIL, CAR_SIL, HEART_SIL, PIRANHA_SIL, COIN_SIL,
     SHYGUY_SIL, BOO_SIL, LUIGI_SIL,
+
+    SHARP_SIL, FLAT_SIL,
 
     /*
      * Instruments.
@@ -52,6 +54,8 @@ public enum ImageIndex {
     SHYGUY  (SHYGUY_GRAY, SHYGUY_SIL),
     BOO     (BOO_GRAY, BOO_SIL),
     LUIGI   (LUIGI_GRAY, LUIGI_SIL),
+    SHARP   (SHARP_GRAY, SHARP_SIL),
+    FLAT    (FLAT_GRAY, FLAT_SIL),
 
     /*
      * Clefs.
