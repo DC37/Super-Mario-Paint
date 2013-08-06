@@ -29,7 +29,7 @@ public enum ImageIndex {
     PLANE_SIL, BOAT_SIL, CAR_SIL, HEART_SIL, PIRANHA_SIL, COIN_SIL,
     SHYGUY_SIL, BOO_SIL, LUIGI_SIL,
 
-    SHARP_SIL, FLAT_SIL,
+    SHARP_SIL, FLAT_SIL, DOUBLESHARP_SIL,
 
     /*
      * Instruments.
