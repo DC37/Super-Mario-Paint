@@ -62,7 +62,7 @@ public class ImageLoader implements Loader {
             Image temp2 =
                     new Image(f.toURI().toString());
             spritesFX.put(i, temp2);
-            if (Settings.debug)
+            if (Settings.debug > 0)
                 System.out.println(
                         "Loaded Image: " + i.toString() + extension);
             try {

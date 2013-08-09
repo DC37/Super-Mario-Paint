@@ -25,7 +25,7 @@ public class Controls {
 
     /** Starts the song. */
     public void play() {
-        State s = StateMachine.getState();
+        if (StateMachine.getState() == State.EDITING);
 
     }
 

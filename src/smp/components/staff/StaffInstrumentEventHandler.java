@@ -218,6 +218,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             acc = 0;
         switch (acc) {
         case 2:
+            accSilhouette.setImage(ImageLoader.getSpriteFX(
+                    ImageIndex.DOUBLESHARP_SIL));
             break;
         case 1:
             accSilhouette.setImage(ImageLoader.getSpriteFX(
@@ -232,13 +234,15 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                     ImageIndex.FLAT_SIL));
             break;
         case -2:
+            accSilhouette.setImage(ImageLoader.getSpriteFX(
+                    ImageIndex.DOUBLEFLAT_SIL));
             break;
         default:
             break;
         }
-        if (acc != 0)
+        if (acc != 0 && !accList.contains(accSilhouette))
             accList.add(accSilhouette);
-        if (Settings.debug)
+        if (Settings.debug > 1)
             System.out.println("Accidental: " + acc);
     }
 

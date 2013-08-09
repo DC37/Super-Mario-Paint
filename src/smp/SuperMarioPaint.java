@@ -183,7 +183,7 @@ public class SuperMarioPaint extends Application {
             launch(args);
         } else if (args.length > 0 && (args[0].equals("--debug")
                 || args[0].equals("--d"))) {
-            Settings.debug = true;
+            Settings.debug = 1;
             launch(args);
         }
 

@@ -18,11 +18,8 @@ public class Settings {
     /** The name of the file that we write to. */
     private final static String settingsFile = "settings.data";
 
-    /**
-     * Classic debug on/off.
-     */
-    public static boolean debug;
-
+    /** Classic debug on/off. Level 1. */
+    public static int debug = 0;
 
     /**
      * If Advanced mode is unlocked, this is set to <b>true</b>
@@ -90,9 +87,9 @@ public class Settings {
 
     /**
      * Sets whether we want to see debug mode or not.
-     * @param b True or false.
+     * @param b Debug level.
      */
-    public static void setVerbose(boolean b) {
+    public static void setVerbose(int b) {
         debug = b;
     }
 
@@ -173,20 +170,12 @@ public class Settings {
 
     /**
      * Sets the debug switch on or off.
-     * @param b Whether we want debug mode to be on or not.
+     * @param b Debug level.
      */
-    public static void setDebug(boolean b) {
+    public static void setDebug(int b) {
         debug = b;
     }
 
-    /** Turns debug mode on. */
-    public static void setDebug() {
-        debug = true;
-    }
 
-    /** Turns debug mode off. */
-    public static void resetDebug() {
-        debug = false;
-    }
 }
 
