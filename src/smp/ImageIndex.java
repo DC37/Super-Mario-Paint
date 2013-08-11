@@ -113,11 +113,17 @@ public enum ImageIndex {
     /*
      * Tempo stuff.
      */
-    TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL;
+    TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL,
 
     /* Digits for the ImageViews of the measure lines.
      * ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
      */
+
+    /** No image */
+    NONE,
+
+    /** Blank image. */
+    BLANK (NONE, NONE);
 
     /** The gray version of this sprite. It can be null. */
     private ImageIndex gray = null;

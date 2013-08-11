@@ -73,6 +73,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /** The topmost image of the instrument. */
     private StaffNote theStaffNote;
 
+    /**
+     * This is the image that holds the different types of sharps/flats etc.
+     */
+    private ImageView accidental;
+
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
@@ -123,19 +128,48 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             theStaffNote.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex()));
-
+            accidental = new ImageView();
+            accidental.setImage(
+                    ImageLoader.getSpriteFX(
+                            switchAcc()));
             playSound(theInd, position, acc);
             theImages.remove(silhouette);
+            accList.remove(accSilhouette);
             if (!theImages.contains(theStaffNote)) {
                 theImages.add(theStaffNote);
+            }
+            if (!accList.contains(accidental)) {
+                accList.add(accidental);
             }
             state = 0x2;
         } else if (state == 0x2) {
             playSound(theInd, position, acc);
             theImages.remove(silhouette);
+            accList.remove(accSilhouette);
         }
 
 
+    }
+
+    /**
+     * @return An <code>ImageIndex</code> based on the amount of
+     * sharp or flat we want to implement.
+     */
+    private ImageIndex switchAcc() {
+        switch (acc) {
+        case 2:
+            return ImageIndex.DOUBLESHARP;
+        case 1:
+            return ImageIndex.SHARP;
+        case 0:
+            return ImageIndex.BLANK;
+        case -1:
+            return ImageIndex.FLAT;
+        case -2:
+            return ImageIndex.DOUBLEFLAT;
+        default:
+            return ImageIndex.BLANK;
+        }
     }
 
     /**
@@ -148,9 +182,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (state == 0x1) {
             if (!theImages.isEmpty())
                 theImages.remove(theImages.size() - 1);
+            if (!accList.isEmpty())
+                accList.remove(accList.size() - 1);
         } else if (state == 0x2 || state == 0x4) {
             theImages.remove(silhouette);
             theImages.remove(theImages.size() - 1);
+            accList.remove(accSilhouette);
+            accList.remove(accList.size() - 1);
             state = 0x1;
         }
     }
@@ -169,12 +207,20 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex().silhouette()));
             theImages.add(silhouette);
+            accSilhouette.setImage(
+                    ImageLoader.getSpriteFX(
+                            switchAcc().silhouette()));
+            accList.add(accSilhouette);
             state = 0x1;
         } else if (state == 0x3) {
             silhouette.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex().silhouette()));
             theImages.add(silhouette);
+            accSilhouette.setImage(
+                    ImageLoader.getSpriteFX(
+                            switchAcc().silhouette()));
+            accList.add(accSilhouette);
             state = 0x4;
         }
     }
@@ -206,6 +252,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * Updates how much we want to sharp / flat a note.
      */
     public void updateAccidental() {
+        if (state != 0x1 && state != 0x4)
+            return;
         if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
             acc = -2;
         else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
