@@ -11,14 +11,8 @@ import smp.components.staff.StaffInstrumentEventHandler;
 public class StateMachine {
 
 
-    /** Whether we've pressed down the shift key. */
-    private static boolean shiftPressed = false;
-
-    /** Whether we've pressed down the alt key. */
-    private static boolean altPressed = false;
-
-    /** Whether we've pressed down the ctrl key. */
-    private static boolean ctrlPressed = false;
+    /** Flips different bits to see which keys are pressed. */
+    private static int buttonPresses = 0b0;
 
     /**
      * The default state that the program is in is the
@@ -113,7 +107,7 @@ public class StateMachine {
     /**
      * Sets the tempo to what we give it here.
      * @param num The tempo we want to set the program to run at.
-     * @return
+     * @return The current tempo.
      */
     public static synchronized void setTempo(double num) {
         tempo = num;
@@ -145,47 +139,47 @@ public class StateMachine {
 
     /** Sets that we've pressed down the shift key. */
     public static void setShiftPressed() {
-        shiftPressed = true;
+        buttonPresses = buttonPresses | 0b001;
     }
 
     /** @return Is shift pressed down? */
     public static boolean isShiftPressed() {
-        return shiftPressed;
+        return (buttonPresses & 0b001) == 0b001;
     }
 
     /** Sets that we've pressed down the alt key. */
     public static void setAltPressed() {
-        altPressed = true;
+        buttonPresses = buttonPresses | 0b010;
     }
 
     /** @return Is alt pressed down? */
     public static boolean isAltPressed() {
-        return altPressed;
+        return (buttonPresses & 0b010) == 0b010;
     }
 
     /** Sets that we've pressed down the ctrl key. */
     public static void setCtrlPressed() {
-        ctrlPressed = true;
+        buttonPresses = buttonPresses | 0b100;
     }
 
     /** @return Is ctrl pressed down? */
     public static boolean isCtrlPressed() {
-        return ctrlPressed;
+        return (buttonPresses & 0b100) == 0b100;
     }
 
     /** Sets that we've released the shift key. */
     public static void resetShiftPressed() {
-        shiftPressed = false;
+        buttonPresses = buttonPresses ^ 0b001;
     }
 
     /** Sets that we've released the alt key. */
     public static void resetAltPressed() {
-        altPressed = false;
+        buttonPresses = buttonPresses ^ 0b010;
     }
 
     /** Sets that we've released the ctrl key. */
     public static void resetCtrlPressed() {
-        ctrlPressed = false;
+        buttonPresses = buttonPresses ^ 0b100;
     }
 
     /**
