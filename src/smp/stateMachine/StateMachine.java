@@ -190,7 +190,7 @@ public class StateMachine {
 
     /**
      * @param stHandle This is the pane that we want to update the flats
-     * or sharps in.
+     * or sharps.
      */
     public static void setFocusPane(StaffInstrumentEventHandler stHandle) {
         focusPane = stHandle;
