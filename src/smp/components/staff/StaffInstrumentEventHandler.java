@@ -252,8 +252,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * Updates how much we want to sharp / flat a note.
      */
     public void updateAccidental() {
-        if (state != 0x1 && state != 0x4)
-            return;
         if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
             acc = -2;
         else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
@@ -264,6 +262,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             acc = -1;
         else
             acc = 0;
+        if (state != 0x1 && state != 0x4)
+            return;
         switch (acc) {
         case 2:
             accSilhouette.setImage(ImageLoader.getSpriteFX(

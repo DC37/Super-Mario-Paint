@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
 
 /**
  * Pulled from MPCTxtTools; this should be useful in decoding
@@ -81,21 +80,11 @@ public class TextUtil {
      * @param t The song text file to be "cleaned," that is, the
      * song file that has unnecessarily empty note lines.
      * @return The "cleaned" string.
+     * @since 1.07
+     * @since 2013.0205
      */
     public static String clean(String t) {
         return t.replaceAll("[*:]\\+\\+\\+\\+\\+\\+q:", "::");
-    }
-
-
-    /**
-     * Displays an information dialog given a title and text to
-     * display.
-     * @param title The title of the dialog box.
-     * @param text The text to be displayed in the text box.
-     */
-    public static void infoDialog(String title, String text) {
-        JOptionPane.showMessageDialog(null, text, title,
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -135,6 +124,8 @@ public class TextUtil {
     }
 
     /**
+     * @since 1.05
+     * @since 2011.1108
      * @param read The song text file that is to be "sliced" into
      * just the note data.
      * @return The song text file with the time signature and tempo removed.
@@ -159,6 +150,8 @@ public class TextUtil {
     }
 
     /**
+     * @since 1.05
+     * @since 2011.1108
      * @return The time signature of the song text file.
      */
     public static String getStart(String read) {
@@ -166,6 +159,8 @@ public class TextUtil {
     }
 
     /**
+     * @since 1.05
+     * @since 2011.1108
      * @return The tempo of the song text file.
      */
     public static String getEnd(String read) {
