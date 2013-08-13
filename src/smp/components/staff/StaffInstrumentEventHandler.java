@@ -255,17 +255,23 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void mouseExited(InstrumentIndex theInd) {
         if (state == 0x1) {
+
             theImages.remove(silhouette);
             accList.remove(accSilhouette);
             state = 0x0;
+
         } else if (state == 0x2) {
+
             theImages.remove(silhouette);
             accList.remove(accSilhouette);
             state = 0x3;
+
         } else if (state == 0x4) {
+
             theImages.remove(silhouette);
             accList.remove(accSilhouette);
             state = 0x1;
+
         }
     }
 
