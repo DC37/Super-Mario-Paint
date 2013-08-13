@@ -21,7 +21,9 @@ Tasklist:
 * Staff notes images framework (done - May 31, 2013)
 * Place notes on the staff (done - July 26, 2013)
 * Hear notes played on the staff (done - July 26, 2013)
-* Images properly displayed on the staff
+* Flats and sharps implemented on the staff (done - August 4, 2013)
+* Instruments stack on the staff (done - August 6, 2013)
+* Images display normally on the staff (done - August 13, 2013)
 * Staff MIDI framework
 * Navigate the staff
 * Play back notes on the staff
