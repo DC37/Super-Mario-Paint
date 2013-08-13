@@ -124,31 +124,44 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void leftMousePressed(InstrumentIndex theInd) {
         if (state == 0x1 || state == 0x4) {
-            theStaffNote = new StaffNote(theInd, position, acc);
-            theStaffNote.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex()));
-            accidental = new ImageView();
-            accidental.setImage(
-                    ImageLoader.getSpriteFX(
-                            switchAcc()));
-            playSound(theInd, position, acc);
-            theImages.remove(silhouette);
-            accList.remove(accSilhouette);
-            if (!theImages.contains(theStaffNote)) {
-                theImages.add(theStaffNote);
-            }
-            if (!accList.contains(accidental)) {
-                accList.add(accidental);
-            }
+
+            placeNote(theInd);
             state = 0x2;
+
         } else if (state == 0x2) {
-            playSound(theInd, position, acc);
-            theImages.remove(silhouette);
-            accList.remove(accSilhouette);
+
+            placeNote(theInd);
+
         }
+    }
 
+    /**
+     * Places a note where the mouse currently is.
+     * @param theInd The <code>InstrumentIndex</code> that we are
+     * going to use to place this note.
+     */
+    private void placeNote(InstrumentIndex theInd) {
+        playSound(theInd, position, acc);
 
+        theStaffNote = new StaffNote(theInd, position, acc);
+        theStaffNote.setImage(
+                ImageLoader.getSpriteFX(
+                        theInd.imageIndex()));
+
+        accidental = new ImageView();
+        accidental.setImage(
+                ImageLoader.getSpriteFX(
+                        switchAcc()));
+
+        theImages.remove(silhouette);
+        accList.remove(accSilhouette);
+
+        if (!theImages.contains(theStaffNote)) {
+            theImages.add(theStaffNote);
+        }
+        if (!accList.contains(accidental)) {
+            accList.add(accidental);
+        }
     }
 
     /**
@@ -180,16 +193,20 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void rightMousePressed(InstrumentIndex theInd) {
         if (state == 0x1) {
+
             if (!theImages.isEmpty())
                 theImages.remove(theImages.size() - 1);
             if (!accList.isEmpty())
                 accList.remove(accList.size() - 1);
+
         } else if (state == 0x2 || state == 0x4) {
+
             theImages.remove(silhouette);
             theImages.remove(theImages.size() - 1);
             accList.remove(accSilhouette);
             accList.remove(accList.size() - 1);
             state = 0x1;
+
         }
     }
 
@@ -203,6 +220,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         StateMachine.setFocusPane(this);
         updateAccidental();
         if (state == 0x0) {
+
             silhouette.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex().silhouette()));
@@ -212,7 +230,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                             switchAcc().silhouette()));
             accList.add(accSilhouette);
             state = 0x1;
+
         } else if (state == 0x3) {
+
             silhouette.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex().silhouette()));
@@ -222,6 +242,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                             switchAcc().silhouette()));
             accList.add(accSilhouette);
             state = 0x4;
+
         }
     }
 

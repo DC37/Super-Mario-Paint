@@ -65,4 +65,23 @@ public class StaffNote extends ImageView {
         accidental = a;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof StaffNote)) {
+            return false;
+        } else {
+            StaffNote other = (StaffNote) o;
+            if (other.noteLocation == noteLocation &&
+                    other.theInstrument == theInstrument &&
+                    other.accidental == accidental) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+    }
+
+
+
 }
