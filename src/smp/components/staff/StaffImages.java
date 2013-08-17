@@ -96,28 +96,6 @@ public class StaffImages {
     private HBox[] expLines;
 
     /**
-     * The Image for a key measure line.
-     */
-    private Image keyLine;
-
-    /**
-     * The Image for a regular measure line.
-     */
-    private Image regularLine;
-
-    /**
-     * A matrix of notes, which will be displayed on the screen
-     * at any time.
-     */
-    private ArrayList<ArrayList<StackPane>> noteMatrix;
-
-    /**
-     * The StaffNoteLines that will be associated with the note matrix
-     * of images above.
-     */
-    private ArrayList<StaffNoteLine> staffNoteLines;
-
-    /**
      * The digits, 0-9, to be used for numbering the staff measures.
      */
     private ArrayList<Image> digits;

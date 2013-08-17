@@ -29,6 +29,9 @@ import javafx.scene.layout.StackPane;
 public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
 
+    /** The line number of this note, on the screen. */
+    private int line;
+
     /** The position of this note. */
     private int position;
 
@@ -300,10 +303,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             accSilhouette.setImage(ImageLoader.getSpriteFX(
                     ImageIndex.SHARP_SIL));
             break;
-        case 0:
-            accSilhouette.setImage(null);
-            accList.remove(accSilhouette);
-            break;
         case -1:
             accSilhouette.setImage(ImageLoader.getSpriteFX(
                     ImageIndex.FLAT_SIL));
@@ -313,6 +312,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                     ImageIndex.DOUBLEFLAT_SIL));
             break;
         default:
+            accSilhouette.setImage(null);
+            accList.remove(accSilhouette);
             break;
         }
         if (acc != 0 && !accList.contains(accSilhouette))
