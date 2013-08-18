@@ -3,8 +3,6 @@ package smp.components.staff;
 import java.util.ArrayList;
 
 import smp.components.Constants;
-import smp.components.staff.sequences.Note;
-import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -37,56 +35,6 @@ public class StaffImages {
      */
     private int endLine;
 
-    /**
-     * The HBox that contains the ImageView objects that are meant to
-     * hold measure numbers.
-     */
-    private HBox measureNums;
-
-    /**
-     * The list of HBoxes that the measureNums are supposed to actually
-     * hold.
-     */
-    private ArrayList<HBox> measureNumBoxes;
-
-    /**
-     * The HBox that holds the ImageView objects that are meant to hold the
-     * note highlighters.
-     */
-    private HBox playBars;
-
-    /** These are the bars that highlight notes. */
-    private ArrayList<ImageView> staffPlayBars;
-
-    /**
-     * The HBox that contains the ImageView objects that are meant to
-     * hold measure lines.
-     */
-    private HBox mLines;
-
-    /**
-     * The ArrayList that holds the ImageView objects that the measure lines
-     * object holds.
-     */
-    private ArrayList<ImageView> measureLines;
-
-    /**
-     * The HBox that contains the ImageView objects that are meant to hold
-     * note images on the staff.
-     */
-    private HBox instruments;
-
-    /**
-     * The HBox that contains the ImageView objects that are meant to hold
-     * the accidental (flat / sharp) images on the staff.
-     */
-    private HBox accidentals;
-
-    /**
-     * These are the lines in which instrument accidental flat / sharp sprite
-     * objects appear.
-     */
-    private ArrayList<VBox> accidentalLines;
 
     /**
      * This holds the lines that contain the ImageView objects that are meant
@@ -100,10 +48,6 @@ public class StaffImages {
      */
     private ArrayList<Image> digits;
 
-    /**
-     * These are the lines in which instrument sprite objects appear.
-     */
-    private ArrayList<VBox> noteLines;
 
 
 
@@ -125,26 +69,21 @@ public class StaffImages {
     public StaffImages(HBox staffMLines, HBox staffPlayBars,
             HBox staffInstruments, HBox staffAccidentals, HBox[] staffExpLines,
             HBox staffMeasureNumbers) {
-        mLines      = staffMLines;
-        playBars    = staffPlayBars;
-        instruments = staffInstruments;
-        accidentals = staffAccidentals;
-        expLines    = staffExpLines;
-        measureNums = staffMeasureNumbers;
+        expLines = staffExpLines;
 
-        initializeStaffMeasureLines();
-        initalizeStaffPlayBars();
-        initializeStaffMeasureNums();
-        initializeStaffInstruments();
+        initializeStaffMeasureLines(staffMLines);
+        initalizeStaffPlayBars(staffPlayBars);
+        initializeStaffMeasureNums(staffMeasureNumbers);
+        initializeStaffInstruments(staffInstruments, staffAccidentals);
 
     }
 
     /**
      * These are the numbers above each successive measure.
      */
-    private void initializeStaffMeasureNums() {
-        measureNumBoxes = new ArrayList<HBox>();
-        for(Node num : measureNums.getChildren())
+    private void initializeStaffMeasureNums(HBox mNums) {
+        ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
+        for(Node num : mNums.getChildren())
             measureNumBoxes.add((HBox) num);
     }
 
@@ -152,13 +91,16 @@ public class StaffImages {
      * Sets up the various note lines of the staff. These
      * are the notes that can appear on the staff. This method
      * also sets up sharps, flats, etc.
+     * @param accidentals The HBox that holds the framework for the sharps /
+     * flats.
+     * @param instruments The HBox that holds the framework for the instruments.
      */
-    private void initializeStaffInstruments() {
-        accidentalLines = new ArrayList<VBox>();
+    private void initializeStaffInstruments(HBox instruments, HBox accidentals) {
+        ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
         for (Node n : accidentals.getChildren())
             accidentalLines.add((VBox) n);
 
-        noteLines = new ArrayList<VBox>();
+        ArrayList<VBox> noteLines = new ArrayList<VBox>();
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
 
@@ -191,18 +133,21 @@ public class StaffImages {
 
     /**
      * These are the lines that divide up the staff.
+     * @param staffMLines The measure lines that divide the staff.
      */
-    private void initializeStaffMeasureLines() {
-        measureLines = new ArrayList<ImageView>();
+    private void initializeStaffMeasureLines(HBox mLines) {
+        ArrayList<ImageView> measureLines = new ArrayList<ImageView>();
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
     }
 
     /**
      * Sets up the note highlighting functionality.
+     * @param staffPlayBars The bars that move to highlight different
+     * notes.
      */
-    private void initalizeStaffPlayBars() {
-        staffPlayBars = new ArrayList<ImageView>();
+    private void initalizeStaffPlayBars(HBox playBars) {
+        ArrayList<ImageView> staffPlayBars = new ArrayList<ImageView>();
         for (Node n : playBars.getChildren())
             staffPlayBars.add((ImageView) n);
     }
