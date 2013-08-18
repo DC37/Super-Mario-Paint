@@ -14,8 +14,6 @@ import javafx.scene.layout.VBox;
  */
 public class StaffBackend {
 
-
-
     /**
      * These are the lines in which instrument accidental flat / sharp sprite
      * objects appear.
@@ -57,6 +55,7 @@ public class StaffBackend {
      * note highlighters.
      */
     private HBox playBars;
+
 
     /** These are the bars that highlight notes. */
     private ArrayList<ImageView> staffPlayBars;
