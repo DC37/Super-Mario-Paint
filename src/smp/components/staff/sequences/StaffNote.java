@@ -71,14 +71,9 @@ public class StaffNote extends ImageView {
             return false;
         } else {
             StaffNote other = (StaffNote) o;
-            if (other.noteLocation == noteLocation &&
+            return other.noteLocation == noteLocation &&
                     other.theInstrument == theInstrument &&
-                    other.accidental == accidental) {
-                return true;
-            } else {
-                return false;
-            }
-
+                    other.accidental == accidental;
         }
     }
 

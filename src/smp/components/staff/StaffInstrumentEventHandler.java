@@ -162,12 +162,12 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
 
-        if (!theImages.contains(theStaffNote)) {
+        if (!theImages.contains(theStaffNote))
             theImages.add(theStaffNote);
-        }
-        if (!accList.contains(accidental)) {
+
+        if (!accList.contains(accidental))
             accList.add(accidental);
-        }
+
     }
 
     /**

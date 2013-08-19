@@ -3,6 +3,7 @@ package smp.components.staff;
 import java.util.ArrayList;
 
 import smp.components.Constants;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -57,29 +58,25 @@ public class StaffImages {
 
 
     /**
+     * Constructor that also sets up the staff expansion lines.
+     * @param staffExtLines These
+     */
+    public StaffImages(HBox[] staffExtLines) {
+        initializeStaffExpansionLines(staffExtLines);
+    }
+
+    /**
      * Instantiates this wrapper class with the correct HBox objects
      * such that it can begin keeping track of whatever's happening
      * on the staff, at least on the measure lines side.
-     * @param staffPlayBars The bars that show when a line of notes is played.
-     * @param staffMLines These are the lines where notes are placed.
-     * @param staffInstruments The instrument image boxes that hold the
-     * instruments that should appear on the staff.
-     * @param staffAccidentals These are the sharps and flats that you can
-     * place.
-     * @param staffExpLines These are the lines that appear under notes for the
-     * lower and upper portions of the staff.
-     * @param staffMeasureNumbers These are the numbers above each measure
-     * line.
      */
-    public void initialize(HBox staffMLines, HBox staffPlayBars,
-            HBox staffInstruments, HBox staffAccidentals, HBox[] staffExpLines,
-            HBox staffMeasureNumbers) {
+    public void initialize() {
 
-        initializeStaffMeasureLines(staffMLines);
-        initializeStaffExpansionLines(staffExpLines);
-        initalizeStaffPlayBars(staffPlayBars);
-        initializeStaffMeasureNums(staffMeasureNumbers);
-        initializeStaffInstruments(staffInstruments, staffAccidentals);
+        initializeStaffMeasureLines(SMPFXController.getStaffMeasureLines());
+        initalizeStaffPlayBars(SMPFXController.getStaffPlayBars());
+        initializeStaffMeasureNums(SMPFXController.getStaffMeasureNums());
+        initializeStaffInstruments(SMPFXController.getStaffInstruments(),
+                SMPFXController.getStaffAccidentals());
 
     }
 

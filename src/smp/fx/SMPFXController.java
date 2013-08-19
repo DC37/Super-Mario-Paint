@@ -56,7 +56,7 @@ public class SMPFXController implements Initializable {
 
 
     /**
-     * The controls line object that holds the FXML controls object..
+     * The controls line object that holds the FXML controls object.
      */
     private static Controls controlPanel;
 
@@ -109,10 +109,33 @@ public class SMPFXController implements Initializable {
     @FXML
     private static HBox staffAccidentals;
 
-
     /** The scrollbar that moves the staff. */
     @FXML
     private static Slider scrollbar;
+
+    /**
+     * The left arrow that you can click to make the staff go to the left.
+     */
+    @FXML
+    private static ImageView leftArrow;
+
+    /**
+     * The right arrow that you can click to make the staff go to the right.
+     */
+    @FXML
+    private static ImageView rightArrow;
+
+    /**
+     * The left arrow that you can click to make the staff go to the left quickly.
+     */
+    @FXML
+    private static ImageView leftArrowFast;
+
+    /**
+     * The left arrow that you can click to make the staff go to the right quickly.
+     */
+    @FXML
+    private static ImageView rightArrowFast;
 
     /**
      * Initializes the Controller class for Super Mario Paint
@@ -132,12 +155,16 @@ public class SMPFXController implements Initializable {
     public static void initializeHandlers() {
         /* Initialize the selected instrument handlers in the ButtonLine. */
         instBLine = new ButtonLine(instLine, selectedInst);
+
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
+
         HBox[] staffExtLines = {staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC};
-        staff = new Staff(staffMeasureLines, staffPlayBars, staffInstruments,
-                staffAccidentals, staffExtLines, staffMeasureNumbers);
+
+        staff = new Staff(staffExtLines);
+
         controlPanel = new Controls();
+
         // Initialize play button
         // Controls.setPlayButton();
 
@@ -151,5 +178,46 @@ public class SMPFXController implements Initializable {
         // respond to user input.
     }
 
+    /**
+     * @return The <code>HBox</code> that holds the staff measure lines.
+     */
+    public static HBox getStaffMeasureLines() {
+        return staffMeasureLines;
+    }
+
+    /**
+     * @return The <code>HBox</code> that holds the staff play bars.
+     */
+    public static HBox getStaffPlayBars() {
+        return staffPlayBars;
+    }
+
+    /**
+     * @return The <code>HBox</code> that holds the staff measure numbers.
+     */
+    public static HBox getStaffMeasureNums() {
+        return staffMeasureNumbers;
+    }
+
+    /**
+     * @return The <code>HBox</code> that holds the staff flats / sharps / etc.
+     */
+    public static HBox getStaffAccidentals() {
+        return staffAccidentals;
+    }
+
+    /**
+     * @return The <code>HBox</code> that holds the staff instruments.
+     */
+    public static HBox getStaffInstruments() {
+        return staffInstruments;
+    }
+
+    /**
+     * @return The <code>Slider</code> that we will use to navigate the staff.
+     */
+    public static Slider getScrollbar() {
+        return scrollbar;
+    }
 
 }

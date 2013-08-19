@@ -120,9 +120,11 @@ public class SuperMarioPaint extends Application {
             dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
             primaryStage.show();
             dummyPreloader.dispose();
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
             System.exit(1);
+
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);

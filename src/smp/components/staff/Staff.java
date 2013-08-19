@@ -43,19 +43,10 @@ public class Staff {
 
     /**
      * Creates a new Staff object.
-     * @param staffPlayBars The bars that show when a line of notes is played.
-     * @param staffMLines These are the lines where notes are placed.
-     * @param staffInstruments The instrument image boxes that hold the
-     * instruments that should appear on the staff.
-     * @param staffAccidentals These are the sharps and flats that you can
-     * place.
      * @param staffExtLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
-     * @param staffMeasureNumbers The container for the staff measure numbers.
      */
-    public Staff(HBox staffMLines, HBox staffPlayBars, HBox staffInstruments,
-            HBox staffAccidentals, HBox[] staffExtLines,
-            HBox staffMeasureNumbers) {
+    public Staff(HBox[] staffExtLines) {
         seq = new SMPSequencer();
         theMatrix = new NoteMatrix(Constants.NOTES_IN_THE_STAFF,
                 Constants.NOTES_IN_A_LINE);
@@ -65,11 +56,9 @@ public class Staff {
             // Do nothing
             e.printStackTrace();
         }
-        staffImages = new StaffImages();
+        staffImages = new StaffImages(staffExtLines);
         staffImages.setStaff(this);
-        staffImages.initialize(staffMLines, staffPlayBars,
-                staffInstruments, staffAccidentals, staffExtLines,
-                staffMeasureNumbers);
+        staffImages.initialize();
         staffImages.draw();
     }
 

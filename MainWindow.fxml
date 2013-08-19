@@ -733,12 +733,12 @@
                     </StackPane>
                     <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="91.0" prefHeight="16.0" prefWidth="770.0">
                       <children>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="leftFastArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_LEFT2.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="leftArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_LEFT1.PNG" preserveRatio="false" smooth="false" />
                           </image>
@@ -757,7 +757,7 @@
                             </Slider>
                           </children>
                         </StackPane>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rightArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_RIGHT1.PNG" preserveRatio="false" smooth="false" />
                           </image>

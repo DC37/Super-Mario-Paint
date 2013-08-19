@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A line of notes on the staff. This can include
  * notes, bookmarks, etc.
  * @author RehdBlob
- *
+ * @since 2012.09.19
  */
 public class StaffNoteLine {
 
