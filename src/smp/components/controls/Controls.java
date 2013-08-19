@@ -10,12 +10,12 @@ import smp.stateMachine.StateMachine;
 public class Controls {
 
     /**
-     * The reference to the play button on the staff.
+     * The pointer to the play button on the staff.
      */
     private PlayButton play;
 
     /**
-     * The reference to the stop button on the staff.
+     * The pointer to the stop button on the staff.
      */
     private StopButton stop;
 

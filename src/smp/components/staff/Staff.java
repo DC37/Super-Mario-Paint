@@ -30,6 +30,12 @@ public class Staff {
      */
     private StaffImages staffImages;
 
+    /**
+     * This is the backend portion of the staff, responsible for keeping track
+     * of all of the different positions of notes and sequences.
+     */
+    private StaffBackend staffBackend;
+
     /** This holds the notes on the staff. */
     private NoteMatrix theMatrix;
 
@@ -50,6 +56,7 @@ public class Staff {
         seq = new SMPSequencer();
         theMatrix = new NoteMatrix(Constants.NOTES_IN_THE_STAFF,
                 Constants.NOTES_IN_A_LINE);
+        staffBackend = new StaffBackend();
         try {
             currentSong = new SMPSequence();
         } catch (InvalidMidiDataException e) {
@@ -202,9 +209,16 @@ public class Staff {
     }
 
     /**
-     * Gets the note matrix of the staff that we are working with.
+     * @return The note matrix of the staff that we are working with.
      */
     public NoteMatrix getNoteMatrix() {
         return theMatrix;
+    }
+
+    /**
+     * @return The staff backend controller.
+     */
+    public StaffBackend getStaffBackend() {
+        return staffBackend;
     }
 }

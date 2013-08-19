@@ -20,10 +20,6 @@ public class StaffBackend {
      */
     private static ArrayList<VBox> accidentalLines;
 
-    /** @param lines The list of flats / sharps / etc sprite VBoxes. */
-    public void setAccidentalLines(ArrayList<VBox> lines) {
-        accidentalLines = lines;
-    }
 
     /**
      * The HBox that contains the ImageView objects that are meant to hold
@@ -77,5 +73,34 @@ public class StaffBackend {
      * These are the lines in which instrument sprite objects appear.
      */
     private ArrayList<VBox> noteLines;
+
+    /**
+     * This holds the lines that contain the ImageView objects that are meant
+     * to hold the lines that appear when one places notes on the higher and
+     * lower portions of the staff.
+     */
+    private HBox[] expLines;
+
+
+    /** @param lines The list of flats / sharps / etc sprite VBoxes. */
+    public void setAccidentalLines(ArrayList<VBox> lines) {
+        accidentalLines = lines;
+    }
+
+    /**
+     * @return The list of <code>HBox</code> objects that holds the
+     * measure numbers.
+     * 
+     */
+    public ArrayList<HBox> getMeasureNumBoxes() {
+        return measureNumBoxes;
+    }
+
+    /**
+     * @param mNum This holds the measure numbers.
+     */
+    public void setMeasureNumBoxes(ArrayList<HBox> mNum) {
+        measureNumBoxes = mNum;
+    }
 
 }

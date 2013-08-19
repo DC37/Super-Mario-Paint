@@ -211,8 +211,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             theImages.remove(theImages.size() - 1);
             accList.remove(accSilhouette);
             accList.remove(accList.size() - 1);
-            state = 0x1;
 
+            if (!theImages.isEmpty())
+                state = 0x2;
+            else
+                state = 0x1;
         }
     }
 

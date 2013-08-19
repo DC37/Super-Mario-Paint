@@ -36,26 +36,15 @@ public class StaffImages {
      */
     private int endLine;
 
-
-    /**
-     * This holds the lines that contain the ImageView objects that are meant
-     * to hold the lines that appear when one places notes on the higher and
-     * lower portions of the staff.
-     */
-    private HBox[] expLines;
-
     /**
      * The digits, 0-9, to be used for numbering the staff measures.
      */
     private ArrayList<Image> digits;
 
-
     /**
      * The parent staff object.
      */
     private Staff theStaff;
-
-
 
     /**
      * Constructor that also sets up the staff expansion lines.
@@ -87,6 +76,7 @@ public class StaffImages {
         ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
         for(Node num : mNums.getChildren())
             measureNumBoxes.add((HBox) num);
+        theStaff.getStaffBackend().setMeasureNumBoxes(measureNumBoxes);
     }
 
     /**
