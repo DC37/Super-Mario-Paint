@@ -49,6 +49,10 @@ public class StaffImages {
     private ArrayList<Image> digits;
 
 
+    /**
+     * The parent staff object.
+     */
+    private Staff theStaff;
 
 
     /**
@@ -96,6 +100,8 @@ public class StaffImages {
      * @param instruments The HBox that holds the framework for the instruments.
      */
     private void initializeStaffInstruments(HBox instruments, HBox accidentals) {
+        NoteMatrix staffMatrix = theStaff.getNoteMatrix();
+
         ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
         for (Node n : accidentals.getChildren())
             accidentalLines.add((VBox) n);
@@ -104,17 +110,26 @@ public class StaffImages {
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
 
-
         for (int i = 0; i < noteLines.size(); i++) {
-            VBox v = noteLines.get(i);
-            VBox n = accidentalLines.get(i);
-            ObservableList<Node> ch = v.getChildren();
-            ObservableList<Node> acc = n.getChildren();
+            VBox verticalHolder = noteLines.get(i);
+            VBox accVerticalHolder = accidentalLines.get(i);
+
+            ObservableList<Node> lineOfNotes = verticalHolder.getChildren();
+            ObservableList<Node> lineOfAcc = accVerticalHolder.getChildren();
+
+            ArrayList<StackPane> notes = new ArrayList<StackPane>();
+            ArrayList<StackPane> accs = new ArrayList<StackPane>();
+
             for (int pos = 1; pos <= Constants.NOTES_IN_A_LINE; pos++) {
-                addListeners((StackPane) ch.get(pos - 1),
-                        (StackPane) acc.get(pos - 1),
-                        Constants.NOTES_IN_A_LINE - pos);
+                StackPane note = (StackPane) lineOfNotes.get(pos - 1);
+                StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
+                notes.add(note);
+                accs.add(acc);
+                addListeners(note, acc, Constants.NOTES_IN_A_LINE - pos);
             }
+
+            staffMatrix.addLine(notes);
+            staffMatrix.addAccLine(accs);
         }
     }
 
@@ -192,6 +207,14 @@ public class StaffImages {
      */
     private int getMeasurePosition() {
         return StateMachine.getMeasureLineNum();
+    }
+
+    /**
+     * Sets the parent staff object to the specified object.
+     * @param s The pointer to the parent staff object.
+     */
+    public void setStaff(Staff s) {
+        theStaff = s;
     }
 
 }

@@ -1,5 +1,7 @@
 package smp.components.staff;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.StackPane;
 
 /**
@@ -12,11 +14,23 @@ import javafx.scene.layout.StackPane;
  * 0 is the left-most line. <br>
  * <b>Second number</b>: The note number that we are addressing.
  * 0 is the lowest note. In regular SMP, this is the low A note.
+ * Random fun fact: some of this was coded at 33000 feet.
  * @author RehdBlob
  * @since 2013.08.18
  *
  */
 public class NoteMatrix {
+
+    /**
+     * The list of lists that holds the different <code>StackPane</code>
+     * objects.
+     */
+    private ArrayList<ArrayList<StackPane>> matrix;
+
+    /**
+     * This is the matrix of flats / sharps / etc.
+     */
+    private ArrayList<ArrayList<StackPane>> accMatrix;
 
     /** The number of lines in this note matrix. */
     private int numberOfLines;
@@ -31,6 +45,8 @@ public class NoteMatrix {
     public NoteMatrix(int x, int y) {
         numberOfLines = x;
         numberOfNotes = y;
+        matrix = new ArrayList<ArrayList<StackPane>>();
+        accMatrix = new ArrayList<ArrayList<StackPane>>();
     }
 
     /**
@@ -57,5 +73,30 @@ public class NoteMatrix {
         return numberOfNotes;
     }
 
+    /**
+     * Adds a new line of notes into the note matrix.
+     * @param newLine The line that we want to add into the note matrix.
+     */
+    public void addLine(ArrayList<StackPane> newLine) {
+        matrix.add(newLine);
+    }
+
+    /**
+     * Adds a new line of accidentals into the note matrix.
+     * @param newLine The line that we want to add into the accidental
+     * matrix.
+     */
+    public void addAccLine(ArrayList<StackPane> newLine) {
+        accMatrix.add(newLine);
+    }
+
+    /**
+     * Removes the line of notes at index <code>index</code>.
+     * @param index The index of the line of notes that we want to remove.
+     */
+    public void removeLine(int index) {
+        matrix.remove(index);
+        accMatrix.remove(index);
+    }
 
 }

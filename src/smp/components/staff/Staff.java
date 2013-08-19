@@ -27,15 +27,18 @@ public class Staff {
      * The wrapper that holds a series of ImageView objects that are meant to
      * display the staff measure lines.
      */
-    private static StaffImages staffImages;
+    private StaffImages staffImages;
+
+    /** This holds the notes on the staff. */
+    private NoteMatrix theMatrix;
 
     /**
      * The Sequencer object that will be used to play sounds.
      */
-    private static SMPSequencer seq;
+    private SMPSequencer seq;
 
     /** The song that we are currently editing. */
-    private static SMPSequence currentSong;
+    private SMPSequence currentSong;
 
     /**
      * Creates a new Staff object.
@@ -62,6 +65,7 @@ public class Staff {
         staffImages = new StaffImages(staffMLines, staffPlayBars,
                 staffInstruments, staffAccidentals, staffExtLines,
                 staffMeasureNumbers);
+        staffImages.setStaff(this);
         staffImages.draw();
     }
 
@@ -202,5 +206,12 @@ public class Staff {
      */
     public void redraw() {
 
+    }
+
+    /**
+     * Gets the note matrix of the staff that we are working with.
+     */
+    public NoteMatrix getNoteMatrix() {
+        return theMatrix;
     }
 }

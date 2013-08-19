@@ -104,15 +104,18 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     public void handle(Event event) {
         InstrumentIndex theInd =
                 ButtonLine.getSelectedInstrument();
+
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             if (((MouseEvent) event).getButton() == MouseButton.PRIMARY)
                 leftMousePressed(theInd);
             else if (((MouseEvent) event).getButton() == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
             event.consume();
+
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             mouseEntered(theInd);
             event.consume();
+
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             mouseExited(theInd);
             event.consume();
@@ -292,8 +295,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             acc = -1;
         else
             acc = 0;
+
         if (state != 0x1 && state != 0x4)
             return;
+
         switch (acc) {
         case 2:
             accSilhouette.setImage(ImageLoader.getSpriteFX(
@@ -337,15 +342,16 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * Sets the amount that we want to sharp / flat a note.
      * @param accidental Any integer between -2 and 2.
      */
-    public static void setAcc(int accidental) {
+    public void setAcc(int accidental) {
         acc = accidental;
     }
 
     /**
      * @return The amount that a note is to be offset from its usual position.
      */
-    public static int getAcc() {
+    public int getAcc() {
         return acc;
     }
+
 
 }
