@@ -51,7 +51,10 @@ public class NoteMatrix {
 
     /**
      * Gets you a StackPane object based on the coordinate that
-     * you give this method.
+     * you give this method. This method should help a lot when working
+     * on those portions of code that ask the entire staff to update its
+     * images. Bypassing the individual StackPane object links should be
+     * a lot easier with this here.
      * @param x The note line number.
      * @param y The note number.
      * @return Index 0 is the <code>StackPane</code> of the note that
@@ -59,8 +62,11 @@ public class NoteMatrix {
      * of the flat / sharp / etc box that it is associated with.
      */
     public StackPane[] getNote(int x, int y) {
-        return null;
-        // TODO Fix
+        StackPane note;
+        StackPane acc;
+        note = matrix.get(x).get(y);
+        acc = accMatrix.get(x).get(y);
+        return new StackPane[] {note, acc};
     }
 
     /** @return The number of lines in the note matrix. */

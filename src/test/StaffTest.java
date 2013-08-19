@@ -2,8 +2,6 @@ package test;
 
 import org.junit.Test;
 
-import smp.SuperMarioPaint;
-
 import junit.framework.TestCase;
 
 /**

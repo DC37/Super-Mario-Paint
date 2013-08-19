@@ -55,6 +55,7 @@ public class StaffImages {
     private Staff theStaff;
 
 
+
     /**
      * Instantiates this wrapper class with the correct HBox objects
      * such that it can begin keeping track of whatever's happening
@@ -70,12 +71,12 @@ public class StaffImages {
      * @param staffMeasureNumbers These are the numbers above each measure
      * line.
      */
-    public StaffImages(HBox staffMLines, HBox staffPlayBars,
+    public void initialize(HBox staffMLines, HBox staffPlayBars,
             HBox staffInstruments, HBox staffAccidentals, HBox[] staffExpLines,
             HBox staffMeasureNumbers) {
-        expLines = staffExpLines;
 
         initializeStaffMeasureLines(staffMLines);
+        initializeStaffExpansionLines(staffExpLines);
         initalizeStaffPlayBars(staffPlayBars);
         initializeStaffMeasureNums(staffMeasureNumbers);
         initializeStaffInstruments(staffInstruments, staffAccidentals);
@@ -165,6 +166,19 @@ public class StaffImages {
         ArrayList<ImageView> staffPlayBars = new ArrayList<ImageView>();
         for (Node n : playBars.getChildren())
             staffPlayBars.add((ImageView) n);
+    }
+
+    /**
+     * Sets up the staff expansion lines, which are to hold notes that are
+     * higher than or lower than the regular lines of the staff.
+     * @param staffExpLines An array of expansion lines. This method
+     * expects that there will be two of these, one of which indicates
+     * the lines above the staff and the other of which indicates
+     * the lines below the staff.
+     */
+    private void initializeStaffExpansionLines(HBox[] staffExpLines) {
+        // TODO Auto-generated method stub
+
     }
 
     /**

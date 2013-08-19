@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javafx.scene.layout.HBox;
 import javax.sound.midi.InvalidMidiDataException;
 
+import smp.components.Constants;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.ams.AMSDecoder;
@@ -56,16 +57,19 @@ public class Staff {
             HBox staffAccidentals, HBox[] staffExtLines,
             HBox staffMeasureNumbers) {
         seq = new SMPSequencer();
+        theMatrix = new NoteMatrix(Constants.NOTES_IN_THE_STAFF,
+                Constants.NOTES_IN_A_LINE);
         try {
             currentSong = new SMPSequence();
         } catch (InvalidMidiDataException e) {
             // Do nothing
             e.printStackTrace();
         }
-        staffImages = new StaffImages(staffMLines, staffPlayBars,
+        staffImages = new StaffImages();
+        staffImages.setStaff(this);
+        staffImages.initialize(staffMLines, staffPlayBars,
                 staffInstruments, staffAccidentals, staffExtLines,
                 staffMeasureNumbers);
-        staffImages.setStaff(this);
         staffImages.draw();
     }
 
