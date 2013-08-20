@@ -94,11 +94,17 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * staff.
      */
     public StaffInstrumentEventHandler(StackPane stPane, StackPane acc,
-            int pos) {
+            int pos, int l) {
         position = pos;
+        line = l;
         theImages = stPane.getChildren();
         accList = acc.getChildren();
+        if ((Settings.debug & 0b10) == 0b10) {
+            System.out.println("Line: " + l);
+            System.out.println("Position: " + pos);
+        }
     }
+
 
     @Override
     public void handle(Event event) {
@@ -106,9 +112,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 ButtonLine.getSelectedInstrument();
 
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            if (((MouseEvent) event).getButton() == MouseButton.PRIMARY)
+            MouseButton b = ((MouseEvent) event).getButton();
+            if (b == MouseButton.PRIMARY)
                 leftMousePressed(theInd);
-            else if (((MouseEvent) event).getButton() == MouseButton.SECONDARY)
+            else if (b == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
             event.consume();
 
@@ -212,7 +219,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             accList.remove(accSilhouette);
             accList.remove(accList.size() - 1);
 
-            if (!theImages.isEmpty())
+            if (!theImages.isEmpty() && !accList.isEmpty())
                 state = 0x2;
             else
                 state = 0x1;

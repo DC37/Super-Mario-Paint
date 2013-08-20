@@ -98,9 +98,9 @@ public class StaffImages {
         for (Node n : instruments.getChildren())
             noteLines.add((VBox) n);
 
-        for (int i = 0; i < noteLines.size(); i++) {
-            VBox verticalHolder = noteLines.get(i);
-            VBox accVerticalHolder = accidentalLines.get(i);
+        for (int line = 0; line < noteLines.size(); line++) {
+            VBox verticalHolder = noteLines.get(line);
+            VBox accVerticalHolder = accidentalLines.get(line);
 
             ObservableList<Node> lineOfNotes = verticalHolder.getChildren();
             ObservableList<Node> lineOfAcc = accVerticalHolder.getChildren();
@@ -113,7 +113,7 @@ public class StaffImages {
                 StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
                 notes.add(note);
                 accs.add(acc);
-                addListeners(note, acc, Constants.NOTES_IN_A_LINE - pos);
+                addListeners(note, acc, Constants.NOTES_IN_A_LINE - pos, line);
             }
 
             staffMatrix.addLine(notes);
@@ -127,11 +127,12 @@ public class StaffImages {
      * @param s The StackPane that will be holding some instrument.
      * @param acc The StackPane that will be holding some sort of accidental.
      * @param pos The position that this StackPane will be associated with.
+     * @param line The line that this StackPane is on.
      */
     private void addListeners(final StackPane s, final StackPane acc,
-            final int pos) {
+            final int pos, final int line) {
         s.addEventHandler(MouseEvent.ANY,
-                new StaffInstrumentEventHandler(s, acc, pos));
+                new StaffInstrumentEventHandler(s, acc, pos, line));
     }
 
     /**
