@@ -5,6 +5,7 @@ import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Constants;
 import smp.components.InstrumentIndex;
+import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.Settings;
@@ -35,20 +36,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /** The position of this note. */
     private int position;
 
-    /**
-     * State machine. The different representations are as follows: </br>
-     * <b>0x0</b>: Mouse not in frame, nothing has been clicked. </br>
-     * <b>0x1</b>: Mouse in frame, nothing has been clicked. A silhouette
-     * of the current selected instrument is visible.</br>
-     * <b>0x2</b>: Mouse in frame, and we've clicked once. A StaffNote has
-     * been placed on the staff. </br>
-     * <b>0x3</b>: Mouse not in frame, and we are now displaying a
-     * StaffNote on the staff.</br>
-     * <b>0x4</b>: Mouse in frame, and we're displaying an image
-     * silhouette on top of the previous layer instrument.</br>
-     * 
-     */
-    private int state = 0x0;
+    /** Whether the mouse is in the frame or not. */
+    private boolean mouseInFrame = false;
 
     /**
      * This is the list of image notes that we have. These should
@@ -79,7 +68,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /**
      * This is the image that holds the different types of sharps/flats etc.
      */
-    private ImageView accidental;
+    private StaffAccidental accidental;
 
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
@@ -120,10 +109,12 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             event.consume();
 
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+            mouseInFrame = true;
             mouseEntered(theInd);
             event.consume();
 
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
+            mouseInFrame = false;
             mouseExited(theInd);
             event.consume();
         }
@@ -136,16 +127,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * instrument is currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
-        if (state == 0x1 || state == 0x4) {
 
-            placeNote(theInd);
-            state = 0x2;
+        placeNote(theInd);
 
-        } else if (state == 0x2) {
-
-            placeNote(theInd);
-
-        }
     }
 
     /**
@@ -161,7 +145,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 ImageLoader.getSpriteFX(
                         theInd.imageIndex()));
 
-        accidental = new ImageView();
+        accidental = new StaffAccidental(theStaffNote);
         accidental.setImage(
                 ImageLoader.getSpriteFX(
                         switchAcc()));
@@ -205,27 +189,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * instrument is currently selected.
      */
     private void rightMousePressed(InstrumentIndex theInd) {
-        if (state == 0x1) {
-
-            if (!theImages.isEmpty())
-                theImages.remove(theImages.size() - 1);
-            if (!accList.isEmpty())
-                accList.remove(accList.size() - 1);
-
-        } else if (state == 0x2 || state == 0x4) {
-
-            theImages.remove(silhouette);
+        theImages.remove(silhouette);
+        if (!theImages.isEmpty())
             theImages.remove(theImages.size() - 1);
 
-            accList.remove(accSilhouette);
+        accList.remove(accSilhouette);
+        if (!accList.isEmpty())
             accList.remove(accList.size() - 1);
-
-            if (!theImages.isEmpty() && !accList.isEmpty())
-                state = 0x2;
-
-            else
-                state = 0x1;
-        }
     }
 
 
@@ -237,31 +207,16 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private void mouseEntered(InstrumentIndex theInd) {
         StateMachine.setFocusPane(this);
         updateAccidental();
-        if (state == 0x0) {
-
-            silhouette.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex().silhouette()));
+        silhouette.setImage(
+                ImageLoader.getSpriteFX(
+                        theInd.imageIndex().silhouette()));
+        if (!theImages.contains(silhouette))
             theImages.add(silhouette);
-            accSilhouette.setImage(
-                    ImageLoader.getSpriteFX(
-                            switchAcc().silhouette()));
+        accSilhouette.setImage(
+                ImageLoader.getSpriteFX(
+                        switchAcc().silhouette()));
+        if (!accList.contains(accSilhouette))
             accList.add(accSilhouette);
-            state = 0x1;
-
-        } else if (state == 0x3) {
-
-            silhouette.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex().silhouette()));
-            theImages.add(silhouette);
-            accSilhouette.setImage(
-                    ImageLoader.getSpriteFX(
-                            switchAcc().silhouette()));
-            accList.add(accSilhouette);
-            state = 0x4;
-
-        }
     }
 
     /**
@@ -272,25 +227,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * instrument is currently selected.
      */
     private void mouseExited(InstrumentIndex theInd) {
-        if (state == 0x1) {
 
-            theImages.remove(silhouette);
-            accList.remove(accSilhouette);
-            state = 0x0;
+        theImages.remove(silhouette);
+        accList.remove(accSilhouette);
 
-        } else if (state == 0x2) {
-
-            theImages.remove(silhouette);
-            accList.remove(accSilhouette);
-            state = 0x3;
-
-        } else if (state == 0x4) {
-
-            theImages.remove(silhouette);
-            accList.remove(accSilhouette);
-            state = 0x1;
-
-        }
     }
 
     /**
@@ -308,7 +248,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         else
             acc = 0;
 
-        if (state != 0x1 && state != 0x4)
+        if (!mouseInFrame)
             return;
 
         switch (acc) {
