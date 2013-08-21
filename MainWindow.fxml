@@ -762,7 +762,7 @@
                             <Image url="@sprites/SCROLLBAR_RIGHT1.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="rightArrow" fx:id="rightFastArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_RIGHT2.png" preserveRatio="false" smooth="false" />
                           </image>

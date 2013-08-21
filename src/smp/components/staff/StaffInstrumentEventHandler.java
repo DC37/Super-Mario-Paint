@@ -331,9 +331,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             accList.remove(accSilhouette);
             break;
         }
+
         if (acc != 0 && !accList.contains(accSilhouette))
             accList.add(accSilhouette);
-        if (Settings.debug > 1)
+
+        if ((Settings.debug & 0b01) == 0b01)
             System.out.println("Accidental: " + acc);
     }
 
