@@ -99,13 +99,13 @@
       <center>
         <Pane id="MidPane" prefHeight="200.0" prefWidth="200.0">
           <children>
-            <VBox id="MidHolder" blendMode="MULTIPLY" layoutY="-4.0" prefHeight="490.0" prefWidth="798.0">
+            <VBox id="MidHolder" blendMode="MULTIPLY" layoutY="-14.0" prefHeight="490.0" prefWidth="798.0">
               <children>
-                <Pane id="StaffFrame" prefHeight="300.0" prefWidth="798.0">
+                <Pane id="StaffFrame" prefHeight="316.0" prefWidth="798.0">
                   <children>
                     <StackPane fx:id="staffPane" prefHeight="296.0" prefWidth="798.0">
                       <children>
-                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="300.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
+                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="312.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
                           <fill>
                             <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
                           </fill>
@@ -114,10 +114,13 @@
                           <image>
                             <Image url="@sprites/STAFF_BG_TREBLE.png" preserveRatio="false" smooth="false" />
                           </image>
+                          <StackPane.margin>
+                            <Insets top="14.0" />
+                          </StackPane.margin>
                         </ImageView>
                       </children>
                     </StackPane>
-                    <HBox fx:id="staffMeasureNumbers" alignment="CENTER_LEFT" layoutX="20.0" layoutY="1.0" prefHeight="12.0" prefWidth="758.0" spacing="22.0">
+                    <HBox fx:id="staffMeasureNumbers" alignment="CENTER_LEFT" layoutX="20.0" layoutY="12.0" prefHeight="12.0" prefWidth="758.0" spacing="22.0">
                       <children>
                         <HBox prefHeight="9.0" prefWidth="42.0" />
                         <HBox prefHeight="9.0" prefWidth="42.0" />
@@ -134,7 +137,7 @@
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffMeasureLines" alignment="CENTER_LEFT" layoutX="20.0" layoutY="12.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
+                    <HBox fx:id="staffMeasureLines" alignment="CENTER_LEFT" layoutX="20.0" layoutY="26.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
                       <children>
                         <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
@@ -151,7 +154,7 @@
                         <Insets left="144.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffExtLinesHighC" alignment="CENTER_LEFT" layoutX="20.0" layoutY="12.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                    <HBox fx:id="staffExtLinesHighC" alignment="CENTER_LEFT" layoutX="20.0" layoutY="26.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
                       <children>
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
@@ -168,7 +171,7 @@
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffExtLinesHighA" alignment="CENTER_LEFT" layoutX="21.0" layoutY="44.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                    <HBox fx:id="staffExtLinesHighA" alignment="CENTER_LEFT" layoutX="21.0" layoutY="58.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
                       <children>
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
@@ -185,7 +188,7 @@
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
-                    <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowC" alignment="CENTER_LEFT" layoutX="21.0" layoutY="234.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                    <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowC" alignment="CENTER_LEFT" layoutX="21.0" layoutY="248.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
                       <children>
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
                         <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
@@ -202,7 +205,7 @@
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="10.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
+                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="24.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
                       <children>
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
@@ -219,458 +222,458 @@
                         <Insets left="117.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="6.0" prefHeight="300.0" prefWidth="758.0" spacing="32.0">
+                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" prefHeight="300.0" prefWidth="758.0">
                       <children>
-                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
-                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="64.0" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                       </children>
                       <padding>
-                        <Insets left="105.0" />
+                        <Insets left="73.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" prefHeight="312.0" prefWidth="758.0" spacing="32.0">
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="14.0" prefHeight="312.0" prefWidth="758.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
-                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
                           </children>
                         </VBox>
                       </children>
                       <padding>
-                        <Insets left="129.0" />
+                        <Insets left="97.0" />
                       </padding>
                     </HBox>
                   </children>
@@ -780,8 +783,7 @@
         <Pane fx:id="topPane" prefHeight="64.0" prefWidth="798.0">
           <children>
             <HBox fx:id="topBoxRight" layoutX="591.0" prefHeight="64.0" prefWidth="200.0" />
-            <HBox fx:id="topBoxTop" layoutX="60.0" prefHeight="28.0" prefWidth="531.0" />
-            <HBox fx:id="instLine" alignment="BASELINE_LEFT" layoutX="60.0" layoutY="30.0" prefHeight="28.0" prefWidth="531.0" spacing="2.0">
+            <HBox fx:id="instLine" alignment="BASELINE_LEFT" layoutX="60.0" layoutY="20.0" prefHeight="28.0" prefWidth="531.0" spacing="2.0">
               <children>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -880,7 +882,7 @@
                 </ImageView>
               </children>
             </HBox>
-            <StackPane layoutX="6.0" layoutY="24.0" prefHeight="38.0" prefWidth="52.0">
+            <StackPane layoutX="6.0" layoutY="14.0" prefHeight="38.0" prefWidth="52.0">
               <children>
                 <ImageView fx:id="selectedInstHolder" fitHeight="32.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                   <image>
