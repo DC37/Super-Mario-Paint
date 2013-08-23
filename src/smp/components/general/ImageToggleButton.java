@@ -37,11 +37,9 @@ public abstract class ImageToggleButton extends AbstractImageButton {
         if (isPressed()) {
             setPressed();
             pressImage();
-            press();
         } else {
             resetPressed();
             releaseImage();
-            release();
         }
     }
 }

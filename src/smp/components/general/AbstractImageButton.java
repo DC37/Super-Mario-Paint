@@ -153,20 +153,5 @@ public abstract class AbstractImageButton {
         notPressed = ImageLoader.getSpriteFX(notPr);
     }
 
-    /**
-     * Call this method to press the button and apply all the effects
-     * of pressing this button. Exactly when this method is called is
-     * defined by the abstract classes that ImageButton is implemented
-     * by.
-     */
-    public abstract void press();
-
-    /**
-     * Call this method to release the button and apply all the effects
-     * of releasing the button. Exactly when this method is called is
-     * defined by the abstract classes that ImageButton is implemented
-     * by.
-     */
-    public abstract void release();
 
 }

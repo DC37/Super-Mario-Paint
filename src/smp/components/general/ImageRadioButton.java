@@ -64,11 +64,9 @@ public abstract class ImageRadioButton extends AbstractImageButton {
         if (b) {
             setPressed();
             pressImage();
-            press();
         } else {
             resetPressed();
             releaseImage();
-            release();
         }
         if (isPressed()) {
             for (ImageRadioButton bt : linkedButtons) {

@@ -28,20 +28,6 @@ public class PlayButton extends ImageRadioButton {
     }
 
     @Override
-    public void press() {
-        if (isPressed)
-            return;
-        StateMachine.setState(State.SONG_PLAYING);
-        Staff.startSong();
-    }
-
-    @Override
-    public void release() {
-        if (!isPressed)
-            return;
-    }
-
-    @Override
     protected void reactClick(MouseEvent event) {
         // TODO Auto-generated method stub
 

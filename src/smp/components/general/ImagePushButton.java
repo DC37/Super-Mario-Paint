@@ -21,16 +21,6 @@ public abstract class ImagePushButton extends AbstractImageButton {
     }
 
     @Override
-    public void press() {
-
-    }
-
-    @Override
-    public void release() {
-
-    }
-
-    @Override
     protected void setPressedState(boolean b) {
 
     }
