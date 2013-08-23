@@ -1,6 +1,7 @@
 package smp.components.controls;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.components.general.ImageRadioButton;
 import smp.components.staff.Staff;
@@ -38,6 +39,18 @@ public class PlayButton extends ImageRadioButton {
     public void release() {
         if (!isPressed)
             return;
+    }
+
+    @Override
+    protected void reactClick(MouseEvent event) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    protected void reactReleased(MouseEvent event) {
+        // TODO Auto-generated method stub
+
     }
 
 }

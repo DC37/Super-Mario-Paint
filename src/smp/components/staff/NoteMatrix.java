@@ -50,6 +50,14 @@ public class NoteMatrix {
     }
 
     /**
+     * Makes an empty note matrix.
+     */
+    public NoteMatrix() {
+        matrix = new ArrayList<ArrayList<StackPane>>();
+        accMatrix = new ArrayList<ArrayList<StackPane>>();
+    }
+
+    /**
      * Gets you a StackPane object based on the coordinate that
      * you give this method. This method should help a lot when working
      * on those portions of code that ask the entire staff to update its

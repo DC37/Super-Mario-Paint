@@ -4,8 +4,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Image toggle button that is an on/off
- * switch.
+ * Image toggle button that is an on/off switch. By clicking on it,
+ * the button is either locked down or up.
  * @author RehdBlob
  * @since 2012.08.30
  */
@@ -34,11 +34,12 @@ public abstract class ImageToggleButton extends AbstractImageButton {
      */
     @Override
     protected void setPressedState(boolean b) {
-        setPressed(b);
         if (isPressed()) {
+            setPressed();
             pressImage();
             press();
         } else {
+            resetPressed();
             releaseImage();
             release();
         }

@@ -9,18 +9,26 @@ import smp.stateMachine.StateMachine;
 
 public class Controls {
 
-    /**
-     * The pointer to the play button on the staff.
-     */
+    /** The pointer to the play button on the staff. */
     private PlayButton play;
 
-    /**
-     * The pointer to the stop button on the staff.
-     */
+    /** The pointer to the stop button on the staff. */
     private StopButton stop;
 
     /** This is the slider at the bottom of the screen. */
     private Slider scrollbar;
+
+    /** The arrow that you click to go left. */
+    private ArrowButton leftArrow;
+
+    /** The arrow that you click to go all the way left. */
+    private ArrowButton leftFastArrow;
+
+    /** The arrow that you click to go right. */
+    private ArrowButton rightArrow;
+
+    /** The arrow that you click to go all the way right. */
+    private ArrowButton rightFastArrow;
 
     /** This is the staff that the controls are linked to. */
     private Staff theStaff;

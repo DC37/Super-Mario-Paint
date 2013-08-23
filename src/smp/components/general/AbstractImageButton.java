@@ -94,13 +94,19 @@ public abstract class AbstractImageButton {
     }
 
     /**
-     * Sets the <code>isPressed</code> parameter to <b>true</b> or <b>false</b>
+     * Sets the <code>isPressed</code> parameter to <b>true</b>
      * but does <b>not</b> define what happens afterwards.
-     * @param b Boolean telling whether the button should be pressed
-     * or released.
      */
-    protected void setPressed(boolean b) {
-        isPressed = b;
+    protected void setPressed() {
+        isPressed = true;
+    }
+
+    /**
+     * Sets the <code>isPressed</code> parameter to <b>false</b>
+     * but does <b>not</b> define what happens afterwards.
+     */
+    protected void resetPressed() {
+        isPressed = false;
     }
 
     /**
@@ -122,24 +128,21 @@ public abstract class AbstractImageButton {
      * MouseClicked event occurs.
      * @param event The event that occurred.
      */
-    protected void reactClick(MouseEvent event) {
-    }
+    protected abstract void reactClick(MouseEvent event);
 
     /**
      * Override this method if there should be an action when a
      * MousePressed event occurs.
      * @param event The event that occurred.
      */
-    protected void reactPressed(MouseEvent event) {
-    }
+    protected abstract void reactPressed(MouseEvent event);
 
     /**
      * Override this method if there should be an action when a
      * MouseReleased event occurs.
      * @param event The event that occurred.
      */
-    protected void reactReleased(MouseEvent event) {
-    }
+    protected abstract void reactReleased(MouseEvent event);
 
     /**
      * Gets the images for the <code>pressed</code> and <code>notPressed</code>

@@ -91,6 +91,11 @@ public enum ImageIndex {
     PLAY_BAR1,
 
     /**
+     * This is the MPCv1 play bar that goes across the screen.
+     */
+    PLAY_BAR2,
+
+    /**
      * This is a horizontal line that appears when someone tries to go
      * above or below the middle five lines of the staff.
      */
