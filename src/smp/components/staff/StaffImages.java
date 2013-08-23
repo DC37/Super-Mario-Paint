@@ -2,6 +2,8 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
+import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.Constants;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
@@ -143,6 +145,14 @@ public class StaffImages {
         ArrayList<ImageView> measureLines = new ArrayList<ImageView>();
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
+        for (int i = 0; i < measureLines.size(); i++) {
+            if (i % Constants.DEFAULT_TIMESIG_BEATS == 0)
+                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                        ImageIndex.STAFF_MLINE));
+            else
+                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                        ImageIndex.STAFF_LINE));
+        }
     }
 
     /**

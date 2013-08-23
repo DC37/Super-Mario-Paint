@@ -82,9 +82,7 @@ public enum ImageIndex {
      */
     STAFF_LINE,
 
-    /**
-     * EAch one of these lines indicates a measure.
-     */
+    /** Each one of these lines indicates a measure. */
     STAFF_MLINE,
 
     /**

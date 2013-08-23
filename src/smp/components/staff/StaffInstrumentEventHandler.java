@@ -237,6 +237,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * Updates how much we want to sharp / flat a note.
      */
     public void updateAccidental() {
+        if (!mouseInFrame)
+            return;
         if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
             acc = -2;
         else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
@@ -247,9 +249,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             acc = -1;
         else
             acc = 0;
-
-        if (!mouseInFrame)
-            return;
 
         switch (acc) {
         case 2:
@@ -307,5 +306,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         return acc;
     }
 
+    /**
+     * @return The line that this handler is located on.
+     */
+    public int getLine() {
+        return line;
+    }
 
 }
