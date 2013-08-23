@@ -276,8 +276,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (acc != 0 && !accList.contains(accSilhouette))
             accList.add(accSilhouette);
 
-        if ((Settings.debug & 0b01) == 0b01)
+        if ((Settings.debug & 0b01) == 0b01) {
+            System.out.println("Line: " + line);
+            System.out.println("Position: " + position);
             System.out.println("Accidental: " + acc);
+        }
     }
 
     /**
