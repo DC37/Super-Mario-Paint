@@ -33,19 +33,28 @@ public class Constants {
      * The smallest value that a note velocity can be;
      * a note will basically be silent if played at this.
      */
-    public static final int MIN_VELOCITY = 0;
+    public static int MIN_VELOCITY = 0;
 
-    /** The number of distinct steps of notes in a note line on the staff. */
-    public static final int NOTES_IN_A_LINE = 18;
+    /**
+     * The number of distinct steps of notes in a note line on the staff.
+     * This number is typically 18.
+     */
+    public static int NOTES_IN_A_LINE = 18;
 
-    /** The number of distinct lines of notes that exist on the staff. */
-    public static final int NOTELINES_IN_THE_STAFF = 10;
+    /**
+     * The number of distinct lines of notes that exist on the staff. This
+     * number is typically 10.
+     */
+    public static int NOTELINES_IN_THE_STAFF = 10;
 
     /** The number of beats in each measure, by default. */
-    public static final int DEFAULT_TIMESIG_BEATS = 4;
+    public static int DEFAULT_TIMESIG_BEATS = 4;
 
-    /** The number of lines in the staff, by default. */
-    public static final int LINES_IN_THE_STAFF = 384;
+    /**
+     * The number of lines in the staff, by default. This number
+     * is typically 384.
+     */
+    public static int LINES_IN_THE_STAFF = 384;
 
     /** The MIDI control channel for modulation. */
     public static final int MODULATION = 0x1;

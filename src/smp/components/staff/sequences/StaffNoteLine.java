@@ -121,4 +121,11 @@ public class StaffNoteLine {
         return notes.isEmpty();
     }
 
+    /**
+     * @return The list of notes that this <code>StaffNoteLine</code> contains.
+     */
+    public ArrayList<StaffNote> getNotes() {
+        return notes;
+    }
+
 }

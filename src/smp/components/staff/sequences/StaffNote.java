@@ -58,5 +58,20 @@ public class StaffNote extends ImageView {
     }
 
 
+    /** @return The offset from the actual note that we have here. */
+    public int accidental() {
+        return accidental;
+    }
+
+    /** @return The numerical position that this note is located at. */
+    public int position() {
+        return position;
+    }
+
+    @Override
+    public String toString() {
+        return theInstrument.toString() + " " + position;
+    }
+
 
 }

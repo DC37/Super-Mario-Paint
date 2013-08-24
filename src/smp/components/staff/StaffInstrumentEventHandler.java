@@ -155,7 +155,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         accidental = new StaffAccidental(theStaffNote);
         accidental.setImage(
                 ImageLoader.getSpriteFX(
-                        switchAcc()));
+                        Staff.switchAcc(acc)));
 
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
@@ -172,26 +172,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             temp.add(theStaffNote);
     }
 
-    /**
-     * @return An <code>ImageIndex</code> based on the amount of
-     * sharp or flat we want to implement.
-     */
-    private ImageIndex switchAcc() {
-        switch (acc) {
-        case 2:
-            return ImageIndex.DOUBLESHARP;
-        case 1:
-            return ImageIndex.SHARP;
-        case 0:
-            return ImageIndex.BLANK;
-        case -1:
-            return ImageIndex.FLAT;
-        case -2:
-            return ImageIndex.DOUBLEFLAT;
-        default:
-            return ImageIndex.BLANK;
-        }
-    }
+
 
     /**
      * The method that is called when the right mouse button is pressed.
@@ -240,7 +221,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             theImages.add(silhouette);
         accSilhouette.setImage(
                 ImageLoader.getSpriteFX(
-                        switchAcc().silhouette()));
+                        Staff.switchAcc(acc).silhouette()));
         if (!accList.contains(accSilhouette))
             accList.add(accSilhouette);
     }

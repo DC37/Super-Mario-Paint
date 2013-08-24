@@ -2,10 +2,10 @@ package smp.components.staff;
 
 import java.io.IOException;
 import java.text.ParseException;
-
 import javafx.scene.layout.HBox;
 import javax.sound.midi.InvalidMidiDataException;
 
+import smp.ImageIndex;
 import smp.components.Constants;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffSequence;
@@ -13,6 +13,7 @@ import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.staff.sounds.SMPSequence;
 import smp.components.staff.sounds.SMPSequencer;
+import smp.stateMachine.StateMachine;
 
 
 
@@ -58,7 +59,7 @@ public class Staff {
     public Staff(HBox[] staffExtLines) {
         seq = new SMPSequencer();
         theMatrix = new NoteMatrix(Constants.NOTELINES_IN_THE_STAFF,
-                Constants.NOTES_IN_A_LINE);
+                Constants.NOTES_IN_A_LINE, this);
         staffBackend = new StaffBackend();
         try {
             currentSong = new SMPSequence();
@@ -103,8 +104,15 @@ public class Staff {
      * and 375) that is to be displayed.
      */
     public void setLocation(int num) {
-        for(int i = 0; i < Constants.LINES_IN_THE_STAFF; i++)
-            theMatrix.getLine(i);
+        for(int i = 0; i < Constants.NOTELINES_IN_THE_STAFF; i++)
+            theMatrix.redraw(i);
+    }
+
+    /**
+     * Force re-draws the staff.
+     */
+    public void redraw() {
+        setLocation(StateMachine.getMeasureLineNum());
     }
 
     /**
@@ -193,12 +201,6 @@ public class Staff {
 
     }
 
-    /**
-     * Does a refresh-draw of the staff.
-     */
-    public void redraw() {
-
-    }
 
     /**
      * @return The note matrix of the staff that we are working with.
@@ -219,6 +221,28 @@ public class Staff {
      */
     public StaffSequence getSequence() {
         return theSequence;
+    }
+
+    /**
+     * @param acc The offset that we are deciding upon.
+     * @return An <code>ImageIndex</code> based on the amount of
+     * sharp or flat we want to implement.
+     */
+    public static ImageIndex switchAcc(int acc) {
+        switch (acc) {
+        case 2:
+            return ImageIndex.DOUBLESHARP;
+        case 1:
+            return ImageIndex.SHARP;
+        case 0:
+            return ImageIndex.BLANK;
+        case -1:
+            return ImageIndex.FLAT;
+        case -2:
+            return ImageIndex.DOUBLEFLAT;
+        default:
+            return ImageIndex.BLANK;
+        }
     }
 
 }

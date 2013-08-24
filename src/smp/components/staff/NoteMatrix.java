@@ -2,6 +2,15 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
+import smp.ImageLoader;
+import smp.components.Constants;
+import smp.components.staff.sequences.StaffAccidental;
+import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.StaffNoteLine;
+import smp.stateMachine.StateMachine;
+
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -38,11 +47,15 @@ public class NoteMatrix {
     /** The number of notes that are in each note line. */
     private int numberOfNotes;
 
+    /** Pointer to the staff object with which this is linked. */
+    private Staff theStaff;
+
     /**
      * @param x The number of note lines on the current staff.
      * @param y The number of addressable notes in a line.
      */
-    public NoteMatrix(int x, int y) {
+    public NoteMatrix(int x, int y, Staff s) {
+        theStaff = s;
         numberOfLines = x;
         numberOfNotes = y;
         matrix = new ArrayList<ArrayList<StackPane>>();
@@ -52,7 +65,8 @@ public class NoteMatrix {
     /**
      * Makes an empty note matrix.
      */
-    public NoteMatrix() {
+    public NoteMatrix(Staff s) {
+        theStaff = s;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
     }
@@ -119,6 +133,39 @@ public class NoteMatrix {
      */
     public ArrayList<StackPane> getLine(int index) {
         return matrix.get(index);
+    }
+
+    /**
+     * Re-draws a certain line in this matrix.
+     * @param index The index at which we want to redraw.
+     */
+    public void redraw(int index) {
+        ArrayList<StackPane> nt = matrix.get(index);
+        ArrayList<StackPane> ac = accMatrix.get(index);
+        int currentPosition = StateMachine.getMeasureLineNum();
+        ArrayList<StaffNote> st =
+                theStaff.getSequence().getLine(
+                        currentPosition + index).getNotes();
+        /*for (int i = 0; i < Constants.NOTES_IN_A_LINE; i++) {
+            ObservableList<Node> ntList = nt.get(i).getChildren();
+            ObservableList<Node> acList = ac.get(i).getChildren();
+            ntList.clear();
+            acList.clear();
+        }*/
+
+        for (StaffNote s : st) {
+            StackPane[] noteAndAcc = getNote(index, s.position());
+            noteAndAcc[0].getChildren().add(s);
+            StaffAccidental accidental = new StaffAccidental(s);
+            accidental.setImage(
+                    ImageLoader.getSpriteFX(
+                            Staff.switchAcc(s.accidental())));
+            noteAndAcc[1].getChildren().add(accidental);
+            s.setVisible(true);
+
+
+        }
+
     }
 
 }
