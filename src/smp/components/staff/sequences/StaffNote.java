@@ -10,6 +10,9 @@ import smp.components.InstrumentIndex;
  */
 public class StaffNote extends ImageView {
 
+    /** This is the location on the matrix where the note exists. (y-axis) */
+    private int position;
+
     /**
      * The offset that this note will have.
      */
@@ -20,16 +23,6 @@ public class StaffNote extends ImageView {
      */
     private InstrumentIndex theInstrument;
 
-    /**
-     * The location on the matrix that this note is located.
-     */
-    private StaffNoteIndex noteLocation;
-
-    /**
-     * The actual note that this note holds, which holds an int value
-     * that a MIDI event can handle.
-     */
-    private Note theNote;
 
     /**
      * @param theInd The instrument that this StaffNote will play.
@@ -37,23 +30,10 @@ public class StaffNote extends ImageView {
      * @param acc The sharp / flat / whatever that we are offsetting this
      * note by.
      */
-    public StaffNote(InstrumentIndex theInd, int position, int acc) {
+    public StaffNote(InstrumentIndex theInd, int pos, int acc) {
         theInstrument = theInd;
         accidental = acc;
-    }
-
-    /**
-     * @return The location of the note in the staff matrix.
-     */
-    public StaffNoteIndex getNoteLocation() {
-        return noteLocation;
-    }
-
-    /**
-     * @param noteL This is where the note is located on the staff.
-     */
-    public void setNoteLocation(StaffNoteIndex noteL) {
-        noteLocation = noteL;
+        position = pos;
     }
 
     /**
@@ -71,7 +51,7 @@ public class StaffNote extends ImageView {
             return false;
         } else {
             StaffNote other = (StaffNote) o;
-            return other.noteLocation == noteLocation &&
+            return other.position == position &&
                     other.theInstrument == theInstrument &&
                     other.accidental == accidental;
         }
