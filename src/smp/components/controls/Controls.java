@@ -40,10 +40,21 @@ public class Controls {
      */
     public Controls() {
         setScrollbar(SMPFXController.getScrollbar());
-        leftArrow = new ArrowButton(SMPFXController.getLeftArrow());
-        rightArrow = new ArrowButton(SMPFXController.getRightArrow());
-        leftFastArrow = new ArrowButton(SMPFXController.getLeftFastArrow());
-        rightFastArrow = new ArrowButton(SMPFXController.getRightFastArrow());
+        initializeArrows();
+    }
+
+    /**
+     * Sets up the slider and arrows that the controls will have.
+     */
+    private void initializeArrows() {
+        leftArrow = new ArrowButton(SMPFXController.getLeftArrow(),
+                scrollbar);
+        rightArrow = new ArrowButton(SMPFXController.getRightArrow(),
+                scrollbar);
+        leftFastArrow = new ArrowButton(SMPFXController.getLeftFastArrow(),
+                scrollbar);
+        rightFastArrow = new ArrowButton(SMPFXController.getRightFastArrow(),
+                scrollbar);
 
         leftArrow.getImages(ImageIndex.SCROLLBAR_LEFT1_PRESSED,
                 ImageIndex.SCROLLBAR_LEFT1);
@@ -53,6 +64,11 @@ public class Controls {
                 ImageIndex.SCROLLBAR_LEFT2);
         rightFastArrow.getImages(ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
                 ImageIndex.SCROLLBAR_RIGHT2);
+
+        leftArrow.setSkipAmount(-1);
+        rightArrow.setSkipAmount(1);
+        rightFastArrow.setSkipAmount(Double.MAX_VALUE);
+        leftFastArrow.setSkipAmount(-Double.MAX_VALUE);
     }
 
     /** Starts the song. */

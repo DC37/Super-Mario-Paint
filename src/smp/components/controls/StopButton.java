@@ -26,7 +26,7 @@ public class StopButton extends ImageRadioButton {
     }
 
     @Override
-    protected void reactClick(MouseEvent event) {
+    protected void reactClicked(MouseEvent event) {
         // TODO Auto-generated method stub
 
     }

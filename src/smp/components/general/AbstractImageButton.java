@@ -57,7 +57,7 @@ public abstract class AbstractImageButton {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        reactClick(event);
+                        reactClicked(event);
                         event.consume();
                     }
                 });
@@ -121,7 +121,7 @@ public abstract class AbstractImageButton {
      * MouseClicked event occurs.
      * @param event The event that occurred.
      */
-    protected abstract void reactClick(MouseEvent event);
+    protected abstract void reactClicked(MouseEvent event);
 
     /**
      * This method is always called when a

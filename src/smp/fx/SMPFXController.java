@@ -165,15 +165,6 @@ public class SMPFXController implements Initializable {
 
         controlPanel = new Controls();
 
-        // Initialize play button
-        // Controls.setPlayButton();
-
-        // Initialize stop button
-        // Controls.setStopButton();
-
-        // Initialize loop button
-        // Controls.setLoopButton();
-
         // At this point, everything should be initialized and ready to
         // respond to user input.
     }
