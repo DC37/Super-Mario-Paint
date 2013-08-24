@@ -67,16 +67,26 @@ public class StaffNoteLine {
      * @param n The note to delete.
      * @return True if we successfully removed the note.
      */
-    public boolean delete(StaffNote n) {
+    public boolean remove(StaffNote n) {
         return notes.remove(n);
     }
+
+    /**
+     * Deletes a note from the staff.
+     * @param index The index which we are deleting from.
+     * @return The deleted element.
+     */
+    public StaffNote remove(int index) {
+        return notes.remove(index);
+    }
+
 
     /**
      * Deletes an event from this staff note line.
      * @param e The event that we are trying to remove.
      * @return True if we successfully removed the event.
      */
-    public boolean deleteEvent(StaffEvent e) {
+    public boolean removeEvent(StaffEvent e) {
         return marks.remove(e);
     }
 
@@ -94,6 +104,21 @@ public class StaffNoteLine {
      */
     public void setLineNum(int num) {
         lineNum = num;
+    }
+
+    /** @return Whether this StaffNoteLine contains the staff note already. */
+    public boolean contains(StaffNote theNote) {
+        return notes.contains(theNote);
+    }
+
+    /** @return The number of notes that are in this StaffNoteLine. */
+    public int size() {
+        return notes.size();
+    }
+
+    /** @return Whether the StaffNoteLine has any notes or not. */
+    public boolean isEmpty() {
+        return notes.isEmpty();
     }
 
 }

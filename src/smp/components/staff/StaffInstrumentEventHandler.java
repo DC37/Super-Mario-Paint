@@ -7,6 +7,7 @@ import smp.components.Constants;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
@@ -54,6 +55,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private ImageView silhouette = new ImageView();
 
+    /** The pointer to the staff object that this handler is linked to. */
+    private Staff theStaff;
+
     /**
      * This is the <code>ImageView</code> object responsible
      * for displaying the silhouette of the sharp / flat of the note
@@ -78,15 +82,19 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * that takes a StackPane and a position on the staff.
      * @param stPane The StackPane that we are interested in.
      * @param acc The accidental display pane.
-     * @param position The position that this handler is located on the
+     * @param pos The position that this handler is located on the
      * staff.
+     * @param l The line of this event handler. Typically between 0 and 9.
+     * @param s The pointer to the Staff object that this event handler is
+     * linked to.
      */
     public StaffInstrumentEventHandler(StackPane stPane, StackPane acc,
-            int pos, int l) {
+            int pos, int l, Staff s) {
         position = pos;
         line = l;
         theImages = stPane.getChildren();
         accList = acc.getChildren();
+        theStaff = s;
         if ((Settings.debug & 0b10) == 0b10) {
             System.out.println("Line: " + l);
             System.out.println("Position: " + pos);
@@ -158,6 +166,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (!accList.contains(accidental))
             accList.add(accidental);
 
+        StaffNoteLine temp = theStaff.getSequence().getLine(
+                line + StateMachine.getMeasureLineNum());
+        if (!temp.contains(theStaffNote))
+            temp.add(theStaffNote);
     }
 
     /**
@@ -205,6 +217,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         accList.remove(accSilhouette);
         if (!accList.isEmpty())
             accList.remove(accList.size() - 1);
+
+        StaffNoteLine temp = theStaff.getSequence().getLine(
+                line + StateMachine.getMeasureLineNum());
+        if (!temp.isEmpty())
+            temp.remove(temp.size() - 1);
     }
 
 

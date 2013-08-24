@@ -113,4 +113,12 @@ public class NoteMatrix {
         accMatrix.remove(index);
     }
 
+    /**
+     * @param index The index from which we want to retrieve a line from.
+     * @return A list of <code>StackPane</code>s that exists at that line.
+     */
+    public ArrayList<StackPane> getLine(int index) {
+        return matrix.get(index);
+    }
+
 }

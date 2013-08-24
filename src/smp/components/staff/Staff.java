@@ -71,7 +71,6 @@ public class Staff {
         staffImages.setStaff(this);
         staffImages.initialize();
 
-        staffImages.draw();
     }
 
 
@@ -104,7 +103,8 @@ public class Staff {
      * and 375) that is to be displayed.
      */
     public void setLocation(int num) {
-
+        for(int i = 0; i < Constants.LINES_IN_THE_STAFF; i++)
+            theMatrix.getLine(i);
     }
 
     /**
@@ -213,4 +213,12 @@ public class Staff {
     public StaffBackend getStaffBackend() {
         return staffBackend;
     }
+
+    /**
+     * @return The current song that we are displaying.
+     */
+    public StaffSequence getSequence() {
+        return theSequence;
+    }
+
 }

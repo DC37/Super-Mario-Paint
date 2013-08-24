@@ -21,7 +21,6 @@ public class StaffSequence {
         theLines = new ArrayList<StaffNoteLine>();
         for(int i = 0; i < Constants.LINES_IN_THE_STAFF; i++)
             theLines.add(new StaffNoteLine(i));
-        int i = 0;
     }
 
     /**
