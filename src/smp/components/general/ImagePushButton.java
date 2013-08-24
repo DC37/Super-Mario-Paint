@@ -20,14 +20,9 @@ public abstract class ImagePushButton extends AbstractImageButton {
         super(i);
     }
 
-    @Override
-    protected void setPressedState(boolean b) {
-
-    }
 
     @Override
     protected void reactClick(MouseEvent event) {
-        // TODO Auto-generated method stub
 
     }
 

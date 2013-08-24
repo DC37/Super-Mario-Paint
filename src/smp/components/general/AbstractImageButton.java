@@ -110,13 +110,6 @@ public abstract class AbstractImageButton {
     }
 
     /**
-     * Call <code>setPressed()</code> first and then execute
-     * code from there.
-     * @param b Whether the button is pressed or not.
-     */
-    protected abstract void setPressedState(boolean b);
-
-    /**
      * @return Whether this button is actually pressed or not.
      */
     protected boolean isPressed() {
@@ -124,21 +117,21 @@ public abstract class AbstractImageButton {
     }
 
     /**
-     * Override this method if there should be an action when a
+     * This method is always called when a
      * MouseClicked event occurs.
      * @param event The event that occurred.
      */
     protected abstract void reactClick(MouseEvent event);
 
     /**
-     * Override this method if there should be an action when a
+     * This method is always called when a
      * MousePressed event occurs.
      * @param event The event that occurred.
      */
     protected abstract void reactPressed(MouseEvent event);
 
     /**
-     * Override this method if there should be an action when a
+     * This method is always called when a
      * MouseReleased event occurs.
      * @param event The event that occurred.
      */

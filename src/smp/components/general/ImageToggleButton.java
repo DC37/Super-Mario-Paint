@@ -19,27 +19,5 @@ public abstract class ImageToggleButton extends AbstractImageButton {
         super(i);
     }
 
-    /**
-     * When the mouse is pressed on an <code>ImageToggleButton</code>,
-     * then the button should be pressed down.
-     */
-    @Override
-    protected void reactPressed(MouseEvent e) {
-        setPressedState(!isPressed());
-    }
 
-    /**
-     * Sets the pressed state of this button to either <b>true</b> or
-     * <b>false</b> and reacts accordingly.
-     */
-    @Override
-    protected void setPressedState(boolean b) {
-        if (isPressed()) {
-            setPressed();
-            pressImage();
-        } else {
-            resetPressed();
-            releaseImage();
-        }
-    }
 }

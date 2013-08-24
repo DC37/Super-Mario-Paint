@@ -45,34 +45,8 @@ public abstract class ImageRadioButton extends AbstractImageButton {
      */
     @Override
     protected void reactPressed(MouseEvent e) {
-        setPressedState(true);
+
     }
 
-    /**
-     * Sets <code>isPressed</code> to <b>true</b> and all of the linked
-     * <code>ImageRadioButton</code> objects' <code>isPressed</code> to
-     * <b>false</b>. If one is attempting to set the button's pressed state
-     * to the state that it's already in, then this method is useless.
-     * @param b Boolean telling whether the button should be pressed
-     * or released.
-     */
-    @Override
-    protected void setPressedState(boolean b) {
-        if (b == isPressed()) {
-            return;
-        }
-        if (b) {
-            setPressed();
-            pressImage();
-        } else {
-            resetPressed();
-            releaseImage();
-        }
-        if (isPressed()) {
-            for (ImageRadioButton bt : linkedButtons) {
-                bt.releaseImage();
-                bt.setPressedState(false);
-            }
-        }
-    }
+
 }
