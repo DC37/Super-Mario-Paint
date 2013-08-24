@@ -39,10 +39,13 @@ public class Constants {
     public static final int NOTES_IN_A_LINE = 18;
 
     /** The number of distinct lines of notes that exist on the staff. */
-    public static final int NOTES_IN_THE_STAFF = 9;
+    public static final int NOTELINES_IN_THE_STAFF = 9;
 
     /** The number of beats in each measure, by default. */
     public static final int DEFAULT_TIMESIG_BEATS = 4;
+
+    /** The number of lines in the staff, by default. */
+    public static final int LINES_IN_THE_STAFF = 384;
 
     /** The MIDI control channel for modulation. */
     public static final int MODULATION = 0x1;

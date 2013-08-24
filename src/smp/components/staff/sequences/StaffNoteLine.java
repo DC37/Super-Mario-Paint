@@ -38,6 +38,7 @@ public class StaffNoteLine {
      * Creates a new staff note line with the specified
      * line number.
      * @param num The line number identifier of this staff note line.
+     * We will index starting from zero.
      */
     public StaffNoteLine(int num) {
         lineNum = num;

@@ -195,24 +195,6 @@ public class StaffImages {
     }
 
     /**
-     * Shifts the images on this staff image holder left by 1 step.
-     * Does nothing if the left-hand position is already 0.
-     */
-    public void left() {
-
-    }
-
-    /**
-     * Shifts the images on this staff image holder right by 1 step.
-     * Does nothing if the right-hand position is already at the maximum,
-     * unless the Advanced Mario Sequencer-style unlimited lines feature
-     * has been enabled.
-     */
-    public void right() {
-
-    }
-
-    /**
      * Gets the current position that the staff is set to. This returns a line
      * number generally between 0 and 383 for 96-measure / 128-measure 4/4 and
      * 3/4 time, respectively.

@@ -8,7 +8,7 @@ import javax.sound.midi.InvalidMidiDataException;
 
 import smp.components.Constants;
 import smp.components.general.Utilities;
-import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.staff.sounds.SMPSequence;
@@ -39,6 +39,9 @@ public class Staff {
     /** This holds the notes on the staff. */
     private NoteMatrix theMatrix;
 
+    /** This is the current sequence that we have displaying on the staff. */
+    private StaffSequence theSequence;
+
     /**
      * The Sequencer object that will be used to play sounds.
      */
@@ -54,7 +57,7 @@ public class Staff {
      */
     public Staff(HBox[] staffExtLines) {
         seq = new SMPSequencer();
-        theMatrix = new NoteMatrix(Constants.NOTES_IN_THE_STAFF,
+        theMatrix = new NoteMatrix(Constants.NOTELINES_IN_THE_STAFF,
                 Constants.NOTES_IN_A_LINE);
         staffBackend = new StaffBackend();
         try {
@@ -67,23 +70,9 @@ public class Staff {
         staffImages.setStaff(this);
         staffImages.initialize();
         staffImages.draw();
+        theSequence = new StaffSequence();
     }
 
-    /**
-     * Puts a note on the Staff.
-     * @param n The note to be added to the staff.
-     */
-    public void placeNote(StaffNote n) {
-
-    }
-
-    /**
-     * Removes a note from the staff.
-     * @param n The note to be removed from the staff.
-     */
-    public void eraseNote(StaffNote n) {
-
-    }
 
     /**
      * Moves the staff and notes left by 1.

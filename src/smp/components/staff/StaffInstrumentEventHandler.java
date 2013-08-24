@@ -186,9 +186,19 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * The method that is called when the right mouse button is pressed.
      * This is generally the signal to remove the instrument from that line.
      * @param theInd The InstrumentIndex corresponding to what
-     * instrument is currently selected.
+     * instrument is currently selected. (currently not actually used, but
+     * can be extended later to selectively remove instruments.
      */
     private void rightMousePressed(InstrumentIndex theInd) {
+
+        removeNote();
+
+    }
+
+    /**
+     * This removes a note.
+     */
+    private void removeNote() {
         theImages.remove(silhouette);
         if (!theImages.isEmpty())
             theImages.remove(theImages.size() - 1);
