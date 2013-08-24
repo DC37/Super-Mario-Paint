@@ -29,7 +29,6 @@ import javafx.scene.layout.StackPane;
  */
 public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
-
     /** The line number of this note, on the screen. */
     private int line;
 

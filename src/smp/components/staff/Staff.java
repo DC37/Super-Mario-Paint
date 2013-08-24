@@ -66,11 +66,12 @@ public class Staff {
             // Do nothing
             e.printStackTrace();
         }
+        theSequence = new StaffSequence();
         staffImages = new StaffImages(staffExtLines);
         staffImages.setStaff(this);
         staffImages.initialize();
+
         staffImages.draw();
-        theSequence = new StaffSequence();
     }
 
 
