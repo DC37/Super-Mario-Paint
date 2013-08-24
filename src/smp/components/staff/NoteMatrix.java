@@ -86,8 +86,8 @@ public class NoteMatrix {
     public StackPane[] getNote(int x, int y) {
         StackPane note;
         StackPane acc;
-        note = matrix.get(x).get(y);
-        acc = accMatrix.get(x).get(y);
+        note = matrix.get(x).get(Constants.NOTES_IN_A_LINE - y - 1);
+        acc = accMatrix.get(x).get(Constants.NOTES_IN_A_LINE - y - 1);
         return new StackPane[] {note, acc};
     }
 
@@ -146,12 +146,12 @@ public class NoteMatrix {
         ArrayList<StaffNote> st =
                 theStaff.getSequence().getLine(
                         currentPosition + index).getNotes();
-        /*for (int i = 0; i < Constants.NOTES_IN_A_LINE; i++) {
+        for (int i = 0; i < Constants.NOTES_IN_A_LINE; i++) {
             ObservableList<Node> ntList = nt.get(i).getChildren();
             ObservableList<Node> acList = ac.get(i).getChildren();
             ntList.clear();
             acList.clear();
-        }*/
+        }
 
         for (StaffNote s : st) {
             StackPane[] noteAndAcc = getNote(index, s.position());
