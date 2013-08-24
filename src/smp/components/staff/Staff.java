@@ -89,29 +89,31 @@ public class Staff {
      * Moves the staff and notes left by 1.
      */
     public void moveLeft() {
-        shiftLeft(1);
+        shift(-1);
     }
 
     /**
      * Moves the staff and notes right by 1.
      */
     public void moveRight() {
-        shiftRight(1);
+        shift(1);
     }
 
     /**
-     * Shifts the staff left by <code>num</code> spaces.
-     * @param num The number of spaces to shift left.
+     * Shifts the staff by <code>num</code> spaces.
+     * @param num The number of spaces to shift. Positive
+     * values indicate an increasing measure number.
      */
-    private void shiftLeft(int num) {
+    public void shift(int num) {
 
     }
 
     /**
-     * Shifts the staff right by <code>num</code> spaces.
-     * @param num The number of spaces to shift left.
+     * Jumps to a certain position on the staff.
+     * @param num The first measure line number (usually between 1
+     * and 375) that is to be displayed.
      */
-    private void shiftRight(int num) {
+    public void setLocation(int num) {
 
     }
 

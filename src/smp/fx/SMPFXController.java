@@ -163,7 +163,7 @@ public class SMPFXController implements Initializable {
 
         staff = new Staff(staffExtLines);
 
-        controlPanel = new Controls();
+        controlPanel = new Controls(staff);
 
         // At this point, everything should be initialized and ready to
         // respond to user input.

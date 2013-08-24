@@ -1,5 +1,7 @@
 package smp.components.controls;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import smp.ImageIndex;
@@ -38,9 +40,11 @@ public class Controls {
     /**
      * Initializes the set of controls that will be used in Super Mario Paint.
      */
-    public Controls() {
+    public Controls(Staff st) {
+        theStaff = st;
         setScrollbar(SMPFXController.getScrollbar());
         initializeArrows();
+        initializeScrollbar();
     }
 
     /**
@@ -69,6 +73,20 @@ public class Controls {
         rightArrow.setSkipAmount(1);
         rightFastArrow.setSkipAmount(Double.MAX_VALUE);
         leftFastArrow.setSkipAmount(-Double.MAX_VALUE);
+    }
+
+
+    /** Sets up the scollbar to affect the staff in some way. */
+    private void initializeScrollbar() {
+        scrollbar.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> arg0,
+                    Number oldVal, Number newVal) {
+                theStaff.setLocation(newVal.intValue());
+            }
+
+        });
     }
 
     /** Starts the song. */
