@@ -25,8 +25,9 @@ Tasklist:
 * Instruments stack on the staff (done - August 6, 2013)
 * Images display normally on the staff (done - August 13, 2013)
 * Staff navigation framework (done - August 23, 2013)
-* Navigate the staff
+* Navigate the staff (done - August 23, 2013)
 * Play back notes on the staff
+* Release to a small test group
 * Splash screen is actually a splash screen
 * Splash screen animation and other extras
 * Save songs
