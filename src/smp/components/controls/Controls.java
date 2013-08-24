@@ -83,8 +83,8 @@ public class Controls {
             @Override
             public void changed(ObservableValue<? extends Number> arg0,
                     Number oldVal, Number newVal) {
-                theStaff.setLocation(newVal.intValue());
                 StateMachine.setMeasureLineNum(newVal.intValue());
+                theStaff.setLocation(newVal.intValue());
             }
 
         });

@@ -28,6 +28,13 @@ import javafx.scene.layout.VBox;
 public class StaffImages {
 
     /**
+     * The ArrayList that holds the ImageView objects that the measure lines
+     * object holds.
+     */
+    private ArrayList<ImageView> measureLines;
+
+
+    /**
      * The line that denotes where the staffImages should begin searching
      * for images to draw.
      */
@@ -143,11 +150,24 @@ public class StaffImages {
      * @param staffMLines The measure lines that divide the staff.
      */
     private void initializeStaffMeasureLines(HBox mLines) {
-        ArrayList<ImageView> measureLines = new ArrayList<ImageView>();
+        measureLines = new ArrayList<ImageView>();
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
         for (int i = 0; i < measureLines.size(); i++) {
             if (i % Constants.DEFAULT_TIMESIG_BEATS == 0)
+                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                        ImageIndex.STAFF_MLINE));
+            else
+                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                        ImageIndex.STAFF_LINE));
+        }
+    }
+
+    /** Redraws the staff measure lines. */
+    public void updateStaffMeasureLines() {
+        int currLine = StateMachine.getMeasureLineNum();
+        for (int i = 0; i < measureLines.size(); i++) {
+            if ((currLine + i) % Constants.DEFAULT_TIMESIG_BEATS == 0)
                 measureLines.get(i).setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
             else
@@ -211,5 +231,7 @@ public class StaffImages {
     public void setStaff(Staff s) {
         theStaff = s;
     }
+
+
 
 }
