@@ -103,15 +103,16 @@ public class Staff {
      * @param num The first measure line number (usually between 1
      * and 375) that is to be displayed.
      */
-    public void setLocation(int num) {
+    public synchronized void setLocation(int num) {
         for(int i = 0; i < Constants.NOTELINES_IN_THE_STAFF; i++)
             theMatrix.redraw(i);
+        staffImages.updateStaffMeasureLines();
     }
 
     /**
      * Force re-draws the staff.
      */
-    public void redraw() {
+    public synchronized void redraw() {
         setLocation(StateMachine.getMeasureLineNum());
     }
 

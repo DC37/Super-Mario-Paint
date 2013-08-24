@@ -62,11 +62,6 @@ public class StaffBackend {
      */
     private HBox mLines;
 
-    /**
-     * The ArrayList that holds the ImageView objects that the measure lines
-     * object holds.
-     */
-    private ArrayList<ImageView> measureLines;
 
 
     /**

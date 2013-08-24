@@ -753,7 +753,7 @@
                                 <Point3D />
                               </rotationAxis>
                             </Rectangle>
-                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="375.0" minorTickCount="1" prefWidth="690.0">
+                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="374.0" minorTickCount="1" prefWidth="690.0">
                               <rotationAxis>
                                 <Point3D />
                               </rotationAxis>
