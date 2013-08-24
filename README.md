@@ -24,7 +24,7 @@ Tasklist:
 * Flats and sharps implemented on the staff (done - August 4, 2013)
 * Instruments stack on the staff (done - August 6, 2013)
 * Images display normally on the staff (done - August 13, 2013)
-* Staff MIDI framework
+* Staff navigation framework (done - August 23, 2013)
 * Navigate the staff
 * Play back notes on the staff
 * Splash screen is actually a splash screen
