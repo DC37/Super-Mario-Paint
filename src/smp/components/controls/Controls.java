@@ -2,6 +2,8 @@ package smp.components.controls;
 
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
+import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
 import smp.stateMachine.State;
@@ -38,6 +40,19 @@ public class Controls {
      */
     public Controls() {
         setScrollbar(SMPFXController.getScrollbar());
+        leftArrow = new ArrowButton(SMPFXController.getLeftArrow());
+        rightArrow = new ArrowButton(SMPFXController.getRightArrow());
+        leftFastArrow = new ArrowButton(SMPFXController.getLeftFastArrow());
+        rightFastArrow = new ArrowButton(SMPFXController.getRightFastArrow());
+
+        leftArrow.getImages(ImageIndex.SCROLLBAR_LEFT1_PRESSED,
+                ImageIndex.SCROLLBAR_LEFT1);
+        rightArrow.getImages(ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
+                ImageIndex.SCROLLBAR_RIGHT1);
+        leftFastArrow.getImages(ImageIndex.SCROLLBAR_LEFT2_PRESSED,
+                ImageIndex.SCROLLBAR_LEFT2);
+        rightFastArrow.getImages(ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
+                ImageIndex.SCROLLBAR_RIGHT2);
     }
 
     /** Starts the song. */

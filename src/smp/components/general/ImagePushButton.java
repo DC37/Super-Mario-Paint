@@ -1,5 +1,6 @@
 package smp.components.general;
 
+import smp.ImageIndex;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -23,19 +24,24 @@ public abstract class ImagePushButton extends AbstractImageButton {
 
     @Override
     protected void reactClick(MouseEvent event) {
-
+        return;
     }
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        // TODO Auto-generated method stub
-
+        setPressed();
+        pressImage();
     }
 
     @Override
     protected void reactReleased(MouseEvent event) {
-        // TODO Auto-generated method stub
+        resetPressed();
+        releaseImage();
+    }
 
+    @Override
+    protected void getImages(ImageIndex pr, ImageIndex notPr) {
+        super.getImages(pr, notPr);
     }
 
 }

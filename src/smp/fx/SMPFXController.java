@@ -129,13 +129,13 @@ public class SMPFXController implements Initializable {
      * The left arrow that you can click to make the staff go to the left quickly.
      */
     @FXML
-    private static ImageView leftArrowFast;
+    private static ImageView leftFastArrow;
 
     /**
      * The left arrow that you can click to make the staff go to the right quickly.
      */
     @FXML
-    private static ImageView rightArrowFast;
+    private static ImageView rightFastArrow;
 
     /**
      * Initializes the Controller class for Super Mario Paint
@@ -219,5 +219,40 @@ public class SMPFXController implements Initializable {
     public static Slider getScrollbar() {
         return scrollbar;
     }
+
+    /**
+     * @return The <code>ImageView</code> that holds the fast left
+     * navigation arrow of the staff.
+     */
+    public static ImageView getLeftFastArrow() {
+        return leftFastArrow;
+    }
+
+    /**
+     * @return The <code>ImageView</code> that holds the right navigation arrow
+     * of the staff.
+     */
+    public static ImageView getRightArrow() {
+        return rightArrow;
+    }
+
+
+    /**
+     * @return The <code>ImageView</code> that holds the left navigation arrow
+     * of the staff.
+     */
+    public static ImageView getRightFastArrow() {
+        return rightFastArrow;
+    }
+
+
+    /**
+     * @return The <code>ImageView</code> that holds the fast right
+     * navigation arrow of the staff.
+     */
+    public static ImageView getLeftArrow() {
+        return leftArrow;
+    }
+
 
 }
