@@ -23,17 +23,8 @@ public class StopButton extends ImageRadioButton {
     public StopButton(ImageView i) {
         super(i);
         getImages(ImageIndex.STOP_PRESSED, ImageIndex.STOP_RELEASED);
+        reactPressed(null);
     }
 
-    @Override
-    protected void reactClicked(MouseEvent event) {
-        // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    protected void reactReleased(MouseEvent event) {
-        // TODO Auto-generated method stub
-
-    }
 }

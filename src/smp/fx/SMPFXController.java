@@ -52,7 +52,7 @@ public class SMPFXController implements Initializable {
      * loop button, etc.
      */
     @FXML
-    private static StackPane controls;
+    private static HBox controls;
 
 
     /**

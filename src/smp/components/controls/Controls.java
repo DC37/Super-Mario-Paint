@@ -5,7 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import smp.ImageIndex;
-import smp.ImageLoader;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
 import smp.stateMachine.State;
@@ -45,6 +44,21 @@ public class Controls {
         setScrollbar(SMPFXController.getScrollbar());
         initializeArrows();
         initializeScrollbar();
+        initializeControlButtons();
+        initializeLoopButton();
+    }
+
+    /** Initializes the loop button. */
+    private void initializeLoopButton() {
+        play = new PlayButton(new ImageView());
+        stop = new StopButton (new ImageView());
+        play.link(stop);
+        stop.link(play);
+    }
+
+    /** Initializes the play button and the stop button. */
+    private void initializeControlButtons() {
+
     }
 
     /**
@@ -52,21 +66,16 @@ public class Controls {
      */
     private void initializeArrows() {
         leftArrow = new ArrowButton(SMPFXController.getLeftArrow(),
-                scrollbar);
-        rightArrow = new ArrowButton(SMPFXController.getRightArrow(),
-                scrollbar);
-        leftFastArrow = new ArrowButton(SMPFXController.getLeftFastArrow(),
-                scrollbar);
-        rightFastArrow = new ArrowButton(SMPFXController.getRightFastArrow(),
-                scrollbar);
-
-        leftArrow.getImages(ImageIndex.SCROLLBAR_LEFT1_PRESSED,
+                scrollbar, ImageIndex.SCROLLBAR_LEFT1_PRESSED,
                 ImageIndex.SCROLLBAR_LEFT1);
-        rightArrow.getImages(ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
+        rightArrow = new ArrowButton(SMPFXController.getRightArrow(),
+                scrollbar, ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
                 ImageIndex.SCROLLBAR_RIGHT1);
-        leftFastArrow.getImages(ImageIndex.SCROLLBAR_LEFT2_PRESSED,
+        leftFastArrow = new ArrowButton(SMPFXController.getLeftFastArrow(),
+                scrollbar, ImageIndex.SCROLLBAR_LEFT2_PRESSED,
                 ImageIndex.SCROLLBAR_LEFT2);
-        rightFastArrow.getImages(ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
+        rightFastArrow = new ArrowButton(SMPFXController.getRightFastArrow(),
+                scrollbar, ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
                 ImageIndex.SCROLLBAR_RIGHT2);
 
         leftArrow.setSkipAmount(-1);

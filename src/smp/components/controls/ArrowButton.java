@@ -30,14 +30,11 @@ public class ArrowButton extends ImagePushButton {
      * @param i The <code>ImageView</code> object that we are
      * going to make into a button.
      */
-    public ArrowButton(ImageView i, Slider scr) {
+    public ArrowButton(ImageView i, Slider scr, ImageIndex pr,
+            ImageIndex notPr) {
         super(i);
         scrollbar = scr;
-    }
-
-    @Override
-    protected void getImages(ImageIndex pr, ImageIndex notPr) {
-        super.getImages(pr, notPr);
+        getImages(pr, notPr);
     }
 
     /**

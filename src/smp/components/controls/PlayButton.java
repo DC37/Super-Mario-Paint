@@ -27,16 +27,4 @@ public class PlayButton extends ImageRadioButton {
         getImages(ImageIndex.PLAY_PRESSED, ImageIndex.PLAY_RELEASED);
     }
 
-    @Override
-    protected void reactClicked(MouseEvent event) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    protected void reactReleased(MouseEvent event) {
-        // TODO Auto-generated method stub
-
-    }
-
 }
