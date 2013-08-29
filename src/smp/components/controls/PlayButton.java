@@ -1,12 +1,8 @@
 package smp.components.controls;
 
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.components.general.ImageRadioButton;
-import smp.components.staff.Staff;
-import smp.stateMachine.State;
-import smp.stateMachine.StateMachine;
 
 /**
  * Wrapper class for an ImageView that holds the play button

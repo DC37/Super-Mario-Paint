@@ -1,7 +1,6 @@
 package smp.components.general;
 
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 /**
  * Image toggle button that is an on/off switch. By clicking on it,

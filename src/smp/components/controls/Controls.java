@@ -54,6 +54,7 @@ public class Controls {
         stop = new StopButton (new ImageView());
         play.link(stop);
         stop.link(play);
+        SMPFXController.getControlPanel();
     }
 
     /** Initializes the play button and the stop button. */
@@ -107,7 +108,7 @@ public class Controls {
 
     /** Stops the song. */
     public void stop() {
-        State s = StateMachine.getState();
+
     }
 
     /**

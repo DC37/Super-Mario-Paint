@@ -2,6 +2,8 @@ package smp.components.staff.sequences;
 
 import java.util.ArrayList;
 
+import smp.components.Constants;
+
 /**
  * A line of notes on the staff. This can include
  * notes, bookmarks, etc.
@@ -17,6 +19,15 @@ public class StaffNoteLine {
     private int lineNum;
 
     /**
+     * This is the list of note volumes (we will use this later as an extension
+     * to the usual volume-bar-sets-the-volume-of-the-whole-line thing.
+     */
+    private ArrayList<Integer> volumes;
+
+    /** This is the volume of the entire <code>StaffNoteLine</code> */
+    private int volume;
+
+    /**
      * This ArrayList holds staff notes inside it.
      */
     private ArrayList<StaffNote> notes;
@@ -25,14 +36,6 @@ public class StaffNoteLine {
      * This ArrayList holds staff events in it.
      */
     private ArrayList<StaffEvent> marks;
-
-    /**
-     * Creates a new staff note line.
-     */
-    public StaffNoteLine() {
-        notes = new ArrayList<StaffNote>();
-        marks = new ArrayList<StaffEvent>();
-    }
 
     /**
      * Creates a new staff note line with the specified
@@ -127,5 +130,25 @@ public class StaffNoteLine {
     public ArrayList<StaffNote> getNotes() {
         return notes;
     }
+
+    /** @return The list of volumes of the different notes. */
+    public ArrayList<Integer> getVolumes() {
+        return volumes;
+    }
+
+    /** @return The volume of this <code>StaffNoteLine</code>. */
+    public int getVolume() {
+        return volume;
+    }
+
+    /**
+     * @param vol The volume that we want to set this note line to.
+     */
+    public void setVolume(int vol) {
+        if (volume >= Constants.MIN_VELOCITY &&
+                volume <= Constants.MAX_VELOCITY)
+            volume = vol;
+    }
+
 
 }

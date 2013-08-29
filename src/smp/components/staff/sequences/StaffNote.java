@@ -1,6 +1,7 @@
 package smp.components.staff.sequences;
 
 import javafx.scene.image.ImageView;
+import smp.components.Constants;
 import smp.components.InstrumentIndex;
 
 /**
@@ -13,10 +14,11 @@ public class StaffNote extends ImageView {
     /** This is the location on the matrix where the note exists. (y-axis) */
     private int position;
 
-    /**
-     * The offset that this note will have.
-     */
+    /** The offset that this note will have. */
     private int accidental = 0;
+
+    /** This is the volume of the note. */
+    private int volume;
 
     /**
      * The Instrument that the note on the staff is to use.
@@ -25,15 +27,29 @@ public class StaffNote extends ImageView {
 
 
     /**
+     * Default constructor that makes the note by default at half volume.
      * @param theInd The instrument that this StaffNote will play.
      * @param position The physical location of this note on the staff.
      * @param acc The sharp / flat / whatever that we are offsetting this
      * note by.
      */
     public StaffNote(InstrumentIndex theInd, int pos, int acc) {
+        this(theInd, pos, acc, Constants.HALF_VELOCITY);
+    }
+
+
+    /**
+     * @param theInd The instrument that this StaffNote will play.
+     * @param position The physical location of this note on the staff.
+     * @param acc The sharp / flat / whatever that we are offsetting this
+     * note by.
+     * @param vol The volume that we want this note to play at.
+     */
+    public StaffNote(InstrumentIndex theInd, int pos, int acc, int vol) {
         theInstrument = theInd;
         accidental = acc;
         position = pos;
+        volume = vol;
     }
 
     /**
@@ -57,7 +73,6 @@ public class StaffNote extends ImageView {
         }
     }
 
-
     /** @return The offset from the actual note that we have here. */
     public int accidental() {
         return accidental;
@@ -66,6 +81,20 @@ public class StaffNote extends ImageView {
     /** @return The numerical position that this note is located at. */
     public int position() {
         return position;
+    }
+
+    /** @return The numerical volume of this note. */
+    public int volume() {
+        return volume;
+    }
+
+    /**
+     * Sets the volume to some number that we give to this method.
+     * @param v The volume we want to set.
+     */
+    public void setVolume(int v) {
+        if (v >= Constants.MIN_VELOCITY && v <= Constants.MAX_VELOCITY)
+            volume = v;
     }
 
     @Override

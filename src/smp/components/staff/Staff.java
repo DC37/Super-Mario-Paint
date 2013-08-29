@@ -58,7 +58,7 @@ public class Staff {
      */
     public Staff(HBox[] staffExtLines) {
         seq = new SMPSequencer();
-        theMatrix = new NoteMatrix(Constants.NOTELINES_IN_THE_STAFF,
+        theMatrix = new NoteMatrix(Constants.NOTELINES_IN_THE_WINDOW,
                 Constants.NOTES_IN_A_LINE, this);
         staffBackend = new StaffBackend();
         try {
@@ -104,7 +104,7 @@ public class Staff {
      * and 375) that is to be displayed.
      */
     public synchronized void setLocation(int num) {
-        for(int i = 0; i < Constants.NOTELINES_IN_THE_STAFF; i++)
+        for(int i = 0; i < Constants.NOTELINES_IN_THE_WINDOW; i++)
             theMatrix.redraw(i);
         staffImages.updateStaffMeasureLines();
     }

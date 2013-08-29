@@ -16,7 +16,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -168,6 +167,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         StaffNoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
+
+        if (temp.isEmpty())
+            temp.setVolume(Constants.DEFAULT_VELOCITY);
+
         if (!temp.contains(theStaffNote))
             temp.add(theStaffNote);
     }

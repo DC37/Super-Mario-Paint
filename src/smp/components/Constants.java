@@ -36,6 +36,12 @@ public class Constants {
     public static int MIN_VELOCITY = 0;
 
     /**
+     * The default volume that we will be playing notes at. This
+     * can be changed over the course of the use of this program.
+     */
+    public static int DEFAULT_VELOCITY = 64;
+
+    /**
      * The number of distinct steps of notes in a note line on the staff.
      * This number is typically 18.
      */
@@ -45,7 +51,7 @@ public class Constants {
      * The number of distinct lines of notes that exist on the staff. This
      * number is typically 10.
      */
-    public static int NOTELINES_IN_THE_STAFF = 10;
+    public static int NOTELINES_IN_THE_WINDOW = 10;
 
     /** The number of beats in each measure, by default. */
     public static int DEFAULT_TIMESIG_BEATS = 4;
@@ -54,7 +60,10 @@ public class Constants {
      * The number of lines in the staff, by default. This number
      * is typically 384.
      */
-    public static int LINES_IN_THE_STAFF = 384;
+    public static int DEFAULT_LINES_PER_SONG = 384;
+
+    /** The number of tracks in the Mario Paint Composer song. */
+    public static final int NUM_TRACKS = 19;
 
     /** The MIDI control channel for modulation. */
     public static final int MODULATION = 0x1;

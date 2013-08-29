@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.controls.Controls;
@@ -243,6 +242,14 @@ public class SMPFXController implements Initializable {
      */
     public static ImageView getLeftArrow() {
         return leftArrow;
+    }
+
+    /**
+     * @return The <code>HBox</code> that is supposed to hold the control
+     * panel objects of the interface.
+     */
+    public static HBox getControlPanel() {
+        return controls;
     }
 
 

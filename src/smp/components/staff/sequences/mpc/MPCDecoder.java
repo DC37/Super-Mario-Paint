@@ -22,11 +22,6 @@ import smp.components.staff.sounds.SMPSequence;
 public class MPCDecoder {
 
     /**
-     * The number of tracks in the Mario Paint Composer song.
-     */
-    private static final int NUM_TRACKS = 19;
-
-    /**
      * Opens a file and decodes the Mario Paint Composer song data from
      * it, changing it into a Super Mario Paint sequence.
      * @param f A File, that supposedly contains Mario Paint Composer

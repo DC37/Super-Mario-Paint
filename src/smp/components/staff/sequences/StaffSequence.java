@@ -19,7 +19,7 @@ public class StaffSequence {
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
         theLines = new ArrayList<StaffNoteLine>();
-        for(int i = 0; i < Constants.LINES_IN_THE_STAFF; i++)
+        for(int i = 0; i < Constants.DEFAULT_LINES_PER_SONG; i++)
             theLines.add(new StaffNoteLine(i));
     }
 

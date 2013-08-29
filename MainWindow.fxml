@@ -698,9 +698,9 @@
                 <Pane id="ControlsPane" prefHeight="121.0" prefWidth="798.0">
                   <children>
                     <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="120.0" layoutX="3.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
-                    <StackPane fx:id="controls" layoutX="14.0" layoutY="7.0">
+                    <StackPane id="controls" layoutX="14.0" layoutY="7.0">
                       <children>
-                        <HBox prefHeight="76.0" prefWidth="474.0">
+                        <HBox fx:id="controls" prefHeight="76.0" prefWidth="474.0">
                           <children>
                             <HBox prefHeight="100.0" prefWidth="200.0" />
                             <HBox prefHeight="100.0" prefWidth="200.0" />
