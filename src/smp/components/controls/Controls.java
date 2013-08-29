@@ -10,6 +10,12 @@ import smp.fx.SMPFXController;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
+/**
+ * 
+ * @author RehdBlob
+ * @since 2012.09.04
+ *
+ */
 public class Controls {
 
     /** The pointer to the play button on the staff. */

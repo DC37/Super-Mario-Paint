@@ -5,14 +5,12 @@ package smp.components.staff.sequences;
  * MIDI. The note name is given first, then either <code>s</code>
  * to mean "sharp" or <code>b</code> to mean flat. Then the constructor
  * is called with an integer value.
- * @author Person
- * @since 20120.08.22
+ * @author RehdBlob
+ * @since 2012.08.22
  */
 public enum Note {
 
-    /**
-     * Lowest note on the piano.
-     */
+    /** Lowest note on the piano. */
     A0(21),
     As0(22), Bb0(22),
     B0(23), Cb1(23),

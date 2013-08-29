@@ -6,7 +6,6 @@ import smp.ImageLoader;
 import smp.components.Constants;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
 
 import javafx.collections.ObservableList;
@@ -36,10 +35,11 @@ public class NoteMatrix {
      */
     private ArrayList<ArrayList<StackPane>> matrix;
 
-    /**
-     * This is the matrix of flats / sharps / etc.
-     */
+    /** This is the matrix of flats / sharps / etc. */
     private ArrayList<ArrayList<StackPane>> accMatrix;
+
+    /** This is the list of volume bars on the staff. */
+    private ArrayList<StackPane> volumeBars;
 
     /** The number of lines in this note matrix. */
     private int numberOfLines;
@@ -89,6 +89,14 @@ public class NoteMatrix {
         note = matrix.get(x).get(Constants.NOTES_IN_A_LINE - y - 1);
         acc = accMatrix.get(x).get(Constants.NOTES_IN_A_LINE - y - 1);
         return new StackPane[] {note, acc};
+    }
+
+    /**
+     * @param x The index from which to retrieve a volume bar from.
+     * @return The volume bar located at that index.
+     */
+    public StackPane getVolumeBar(int x) {
+        return volumeBars.get(x);
     }
 
     /** @return The number of lines in the note matrix. */

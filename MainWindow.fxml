@@ -222,7 +222,7 @@
                         <Insets left="117.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" prefHeight="300.0" prefWidth="758.0" spacing="32.0">
+                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="14.0" prefHeight="312.0" prefWidth="758.0" spacing="32.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
                           <children>
