@@ -146,5 +146,9 @@ public abstract class AbstractImageButton {
         notPressed = ImageLoader.getSpriteFX(notPr);
     }
 
+    /** @return The <code>ImageView</code> object that this button holds. */
+    public ImageView getImage() {
+        return theImage;
+    }
 
 }

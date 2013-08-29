@@ -46,8 +46,11 @@ public abstract class ImageRadioButton extends AbstractImageButton {
     @Override
     protected void reactPressed(MouseEvent e) {
         pressImage();
-        for (ImageRadioButton i : linkedButtons)
+        isPressed = true;
+        for (ImageRadioButton i : linkedButtons) {
             i.releaseImage();
+            i.isPressed = false;
+        }
     }
 
     @Override
@@ -60,9 +63,6 @@ public abstract class ImageRadioButton extends AbstractImageButton {
         // Do nothing
     }
 
-    /** @return The <code>ImageView</code> object that this button holds. */
-    public ImageView getImage() {
-        return theImage;
-    }
+
 
 }

@@ -26,6 +26,9 @@ public class Controls {
     /** The pointer to the stop button on the staff. */
     private StopButton stop;
 
+    /** The pointer to the loop button on the staff. */
+    private LoopButton loop;
+
     /** This is the slider at the bottom of the screen. */
     private Slider scrollbar;
 
@@ -53,27 +56,23 @@ public class Controls {
         initializeArrows();
         initializeScrollbar();
         initializeControlButtons();
-        initializeLoopButton();
-    }
-
-    /** Initializes the loop button. */
-    private void initializeLoopButton() {
-
-
     }
 
     /** Initializes the play button and the stop button. */
     private void initializeControlButtons() {
         play = new PlayButton(new ImageView());
         stop = new StopButton (new ImageView());
+        loop = new LoopButton(new ImageView());
         play.link(stop);
         stop.link(play);
         ObservableList<Node> ch =
                 SMPFXController.getControlPanel().getChildren();
         HBox ctrl = (HBox) ch.get(0);
         ObservableList<Node> ch1 = ctrl.getChildren();
-        ch1.add(play.getImage());
+
         ch1.add(stop.getImage());
+        ch1.add(play.getImage());
+        ch1.add(loop.getImage());
     }
 
     /**

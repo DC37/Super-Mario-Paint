@@ -10,6 +10,8 @@ import smp.components.staff.StaffInstrumentEventHandler;
  */
 public class StateMachine {
 
+    /** This keeps track of whether we have pressed the loop button or not. */
+    private static boolean loopPressed = false;
 
     /** Flips different bits to see which keys are pressed. */
     private static int buttonPresses = 0b0;
@@ -196,6 +198,21 @@ public class StateMachine {
     public static void updateFocusPane() {
         if (focusPane != null)
             focusPane.updateAccidental();
+    }
+
+    /** Sets that the song is now loop-enabled. */
+    public static void setLoopPressed() {
+        loopPressed = true;
+    }
+
+    /** Sets that the song is now *not* loop-enabled. */
+    public static void resetLoopPressed() {
+        loopPressed = false;
+    }
+
+    /** @return Whether the loop button is pressed or not. */
+    public static boolean isLoopPressed() {
+        return loopPressed;
     }
 
 

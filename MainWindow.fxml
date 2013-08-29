@@ -723,9 +723,13 @@
                             </ImageView>
                           </children>
                         </HBox>
-                        <HBox fx:id="controls" prefHeight="76.0" prefWidth="474.0">
+                        <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0">
                           <children>
-                            <HBox prefHeight="100.0" prefWidth="200.0" />
+                            <HBox prefHeight="80.0" prefWidth="200.0" spacing="8.0">
+                              <padding>
+                                <Insets left="24.0" top="32.0" />
+                              </padding>
+                            </HBox>
                             <HBox prefHeight="100.0" prefWidth="200.0" />
                             <HBox prefHeight="100.0" prefWidth="200.0" />
                           </children>
@@ -899,7 +903,7 @@
     </BorderPane>
     <Pane layoutX="800.0" layoutY="2.0" prefHeight="598.0" prefWidth="100.0">
       <children>
-        <Button focusTraversable="false" layoutX="4.0" layoutY="289.0" mnemonicParsing="false" text="Secret Button">
+        <Button fx:id="secretButton" focusTraversable="false" layoutX="4.0" layoutY="289.0" mnemonicParsing="false" text="Secret Button">
           <font>
             <Font size="12.0" />
           </font>

@@ -287,7 +287,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             accList.add(accSilhouette);
 
         if ((Settings.debug & 0b01) == 0b01) {
-            System.out.println("Line: " + line);
+            System.out.println("Line: " + (StateMachine.getMeasureLineNum()
+                    + line));
             System.out.println("Position: " + position);
             System.out.println("Accidental: " + acc);
         }
