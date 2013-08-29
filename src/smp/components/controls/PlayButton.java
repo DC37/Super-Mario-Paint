@@ -21,6 +21,7 @@ public class PlayButton extends ImageRadioButton {
     public PlayButton(ImageView i) {
         super(i);
         getImages(ImageIndex.PLAY_PRESSED, ImageIndex.PLAY_RELEASED);
+        releaseImage();
     }
 
 }

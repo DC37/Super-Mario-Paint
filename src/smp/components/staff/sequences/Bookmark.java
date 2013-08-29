@@ -8,9 +8,7 @@ package smp.components.staff.sequences;
  */
 public class Bookmark extends AbstractStaffEvent {
 
-    /**
-     * Currently does nothing.
-     */
+    /** Currently does nothing. */
     public Bookmark(int num) {
         super(num);
     }

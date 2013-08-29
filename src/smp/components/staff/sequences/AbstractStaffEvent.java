@@ -8,9 +8,7 @@ import smp.stateMachine.Settings;
  */
 public abstract class AbstractStaffEvent implements StaffEvent {
 
-    /**
-     * The line number that this staff event occurs at.
-     */
+    /** The line number that this staff event occurs at. */
     protected int lineNum;
 
     /**

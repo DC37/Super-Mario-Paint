@@ -15,8 +15,6 @@ import smp.components.staff.sounds.SMPSequence;
 import smp.components.staff.sounds.SMPSequencer;
 import smp.stateMachine.StateMachine;
 
-
-
 /**
  * The staff on which notes go. The staff keeps track of notes
  * in terms of discrete StaffNoteLines, placed inside an array.

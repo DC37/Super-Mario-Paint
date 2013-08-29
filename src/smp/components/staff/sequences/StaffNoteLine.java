@@ -27,14 +27,10 @@ public class StaffNoteLine {
     /** This is the volume of the entire <code>StaffNoteLine</code> */
     private int volume;
 
-    /**
-     * This ArrayList holds staff notes inside it.
-     */
+    /** This ArrayList holds staff notes inside it. */
     private ArrayList<StaffNote> notes;
 
-    /**
-     * This ArrayList holds staff events in it.
-     */
+    /** This ArrayList holds staff events in it. */
     private ArrayList<StaffEvent> marks;
 
     /**

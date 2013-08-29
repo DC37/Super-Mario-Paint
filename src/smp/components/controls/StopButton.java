@@ -21,6 +21,7 @@ public class StopButton extends ImageRadioButton {
         super(i);
         getImages(ImageIndex.STOP_PRESSED, ImageIndex.STOP_RELEASED);
         reactPressed(null);
+        pressImage();
     }
 
 
