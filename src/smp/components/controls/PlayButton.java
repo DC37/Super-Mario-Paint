@@ -22,6 +22,7 @@ public class PlayButton extends ImageRadioButton {
         super(i);
         getImages(ImageIndex.PLAY_PRESSED, ImageIndex.PLAY_RELEASED);
         releaseImage();
+        isPressed = false;
     }
 
 }

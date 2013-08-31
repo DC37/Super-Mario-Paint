@@ -53,6 +53,18 @@ public class SMPFXController implements Initializable {
     @FXML
     private static HBox controls;
 
+    /** The play button. */
+    @FXML
+    private static ImageView play;
+
+    /** The stop button. */
+    @FXML
+    private static ImageView stop;
+
+    /** The loop button. */
+    @FXML
+    private static ImageView loop;
+
 
     /**
      * The controls line object that holds the FXML controls object.
@@ -251,6 +263,28 @@ public class SMPFXController implements Initializable {
     public static HBox getControlPanel() {
         return controls;
     }
+
+    /**
+     * @return The <code>ImageView</code> object that contains the play button.
+     */
+    public static ImageView getPlayButton() {
+        return play;
+    }
+
+    /**
+     * @return The <code>ImageView</code> object that contains the stop button.
+     */
+    public static ImageView getStopButton() {
+        return stop;
+    }
+
+    /**
+     * @return The <code>ImageView</code> object that contains the loop button.
+     */
+    public static ImageView getLoopButton() {
+        return loop;
+    }
+
 
 
 }

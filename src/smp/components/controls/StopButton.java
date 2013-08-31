@@ -20,8 +20,8 @@ public class StopButton extends ImageRadioButton {
     public StopButton(ImageView i) {
         super(i);
         getImages(ImageIndex.STOP_PRESSED, ImageIndex.STOP_RELEASED);
-        reactPressed(null);
         pressImage();
+        isPressed = true;
     }
 
 

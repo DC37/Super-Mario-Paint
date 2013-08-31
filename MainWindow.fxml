@@ -726,6 +726,23 @@
                         <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0">
                           <children>
                             <HBox prefHeight="80.0" prefWidth="200.0" spacing="8.0">
+                              <children>
+                                <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                    <Image url="@sprites/STOP_PRESSED.png" preserveRatio="false" smooth="false" />
+                                  </image>
+                                </ImageView>
+                                <ImageView fx:id="play" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                    <Image url="@sprites/PLAY_RELEASED.png" preserveRatio="false" smooth="false" />
+                                  </image>
+                                </ImageView>
+                                <ImageView fx:id="loop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                    <Image url="@sprites/LOOP_RELEASED.png" preserveRatio="false" smooth="false" />
+                                  </image>
+                                </ImageView>
+                              </children>
                               <padding>
                                 <Insets left="24.0" top="32.0" />
                               </padding>

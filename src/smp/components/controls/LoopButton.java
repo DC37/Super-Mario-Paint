@@ -12,6 +12,7 @@ public class LoopButton extends ImageToggleButton {
         super(i);
         getImages(ImageIndex.LOOP_PRESSED, ImageIndex.LOOP_RELEASED);
         releaseImage();
+        isPressed = false;
     }
 
     @Override
@@ -37,7 +38,6 @@ public class LoopButton extends ImageToggleButton {
 
     @Override
     protected void reactReleased(MouseEvent event) {
-        // TODO Auto-generated method stub
 
     }
 

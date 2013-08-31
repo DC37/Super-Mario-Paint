@@ -2,11 +2,7 @@ package smp.components.controls;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
@@ -60,19 +56,12 @@ public class Controls {
 
     /** Initializes the play button and the stop button. */
     private void initializeControlButtons() {
-        play = new PlayButton(new ImageView());
-        stop = new StopButton (new ImageView());
-        loop = new LoopButton(new ImageView());
+        play = new PlayButton(SMPFXController.getPlayButton());
+        stop = new StopButton (SMPFXController.getStopButton());
+        loop = new LoopButton(SMPFXController.getLoopButton());
         play.link(stop);
         stop.link(play);
-        ObservableList<Node> ch =
-                SMPFXController.getControlPanel().getChildren();
-        HBox ctrl = (HBox) ch.get(0);
-        ObservableList<Node> ch1 = ctrl.getChildren();
 
-        ch1.add(stop.getImage());
-        ch1.add(play.getImage());
-        ch1.add(loop.getImage());
     }
 
     /**
