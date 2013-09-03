@@ -26,7 +26,11 @@ Tasklist:
 * Images display normally on the staff (done - August 13, 2013)
 * Staff navigation framework (done - August 23, 2013)
 * Navigate the staff (done - August 23, 2013)
-* Play back notes on the staff
+* Play, stop, and loop buttons appear (done - August 29, 2013)
+* Play, stop, and loop buttons are able to be pressed (done - August 29, 2013)
+* Play and stop buttons start and stop the song
+* Loop button loops the song
+* Play back notes on the staff reliably
 * Release to a small test group
 * Splash screen is actually a splash screen
 * Splash screen animation and other extras
