@@ -34,6 +34,10 @@ public class StaffImages {
     private ArrayList<ImageView> measureLines;
 
 
+    /** These are the bars that highlight notes. */
+    private ArrayList<ImageView> staffPlayBars;
+
+
     /**
      * The line that denotes where the staffImages should begin searching
      * for images to draw.
@@ -182,7 +186,7 @@ public class StaffImages {
      * notes.
      */
     private void initalizeStaffPlayBars(HBox playBars) {
-        ArrayList<ImageView> staffPlayBars = new ArrayList<ImageView>();
+        staffPlayBars = new ArrayList<ImageView>();
         for (Node n : playBars.getChildren())
             staffPlayBars.add((ImageView) n);
     }
@@ -216,15 +220,6 @@ public class StaffImages {
     }
 
     /**
-     * Gets the current position that the staff is set to. This returns a line
-     * number generally between 0 and 383 for 96-measure / 128-measure 4/4 and
-     * 3/4 time, respectively.
-     */
-    private int getMeasurePosition() {
-        return StateMachine.getMeasureLineNum();
-    }
-
-    /**
      * Sets the parent staff object to the specified object.
      * @param s The pointer to the parent staff object.
      */
@@ -232,6 +227,14 @@ public class StaffImages {
         theStaff = s;
     }
 
+    /**
+     * @return The list of <code>ImageView</code> objects that
+     * holds the bars that will highlight the notes that we are playing
+     * on the staff.
+     */
+    public ArrayList<ImageView> getPlayBars() {
+        return staffPlayBars;
+    }
 
 
 }

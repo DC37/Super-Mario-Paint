@@ -285,6 +285,9 @@ public class SMPFXController implements Initializable {
         return loop;
     }
 
-
+    /** @return The control panel of the program. */
+    public static Controls getControls() {
+        return controlPanel;
+    }
 
 }

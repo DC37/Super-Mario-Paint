@@ -2,6 +2,9 @@ package smp.components.staff;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javax.sound.midi.InvalidMidiDataException;
 
@@ -22,6 +25,9 @@ import smp.stateMachine.StateMachine;
  * @since 2012.08.13
  */
 public class Staff {
+
+    /** Whether we are playing a song. */
+    private boolean songPlaying = false;
 
     /**
      * The wrapper that holds a series of ImageView objects that are meant to
@@ -116,8 +122,46 @@ public class Staff {
 
     /**
      * Begins animation of the Staff.
+     * Fun fact, this is the first time I've actually had a real use for a
+     * do-while loop.
      */
     public void startAnimation() {
+        ArrayList<ImageView> playBars = staffImages.getPlayBars();
+        int index = 0;
+        ImageView current = playBars.get(0);
+        ImageView previous = null;
+        songPlaying = true;
+        do {
+            playNextLine();
+            bumpHighlights(playBars, current, previous, index);
+        } while(songPlaying);
+
+    }
+
+    /**
+     * Plays the next line of notes in the queue.
+     */
+    private void playNextLine() {
+
+    }
+
+    /**
+     * Bumps the highlight of the notes to the next play bar.
+     * @param playBars The list of the measure highlights.
+     * @param current The current measure line that we're at.
+     * @param previous The previous measure line that we were at.
+     * @param index The current index of the measure that we're on.
+     */
+    private void bumpHighlights(ArrayList<ImageView> playBars,
+            ImageView current, ImageView previous, int index) {
+        if (index + 1 < playBars.size()) {
+            previous = current;
+            current = playBars.get(++index);
+        } else {
+            index = 0;
+            previous = current;
+            current = playBars.get(index);
+        }
 
     }
 
@@ -126,7 +170,7 @@ public class Staff {
      * Stops animation of the Staff.
      */
     public void stopAnimation() {
-
+        songPlaying = false;
     }
 
     /**
@@ -182,14 +226,14 @@ public class Staff {
     /**
      * Starts playing a Super Mario Paint song.
      */
-    public static void startSong() {
+    public void startSong() {
 
     }
 
     /**
      * Stops playing a Super Mario Paint song.
      */
-    public static void stopSong() {
+    public void stopSong() {
 
     }
 

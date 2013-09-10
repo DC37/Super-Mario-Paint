@@ -61,7 +61,8 @@ public class Controls {
         loop = new LoopButton(SMPFXController.getLoopButton());
         play.link(stop);
         stop.link(play);
-
+        play.setStaff(theStaff);
+        stop.setStaff(theStaff);
     }
 
     /**

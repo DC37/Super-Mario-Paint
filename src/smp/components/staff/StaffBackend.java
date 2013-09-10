@@ -53,8 +53,6 @@ public class StaffBackend {
     private HBox playBars;
 
 
-    /** These are the bars that highlight notes. */
-    private ArrayList<ImageView> staffPlayBars;
 
     /**
      * The HBox that contains the ImageView objects that are meant to
