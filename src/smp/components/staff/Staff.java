@@ -27,6 +27,9 @@ import smp.stateMachine.StateMachine;
  */
 public class Staff implements Runnable {
 
+    /** Milliseconds to delay between updating the play bars. */
+    private int delayTime = 50;
+
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
 
@@ -114,6 +117,7 @@ public class Staff implements Runnable {
         staffImages.updateStaffMeasureLines();
     }
 
+
     /**
      * Force re-draws the staff.
      */
@@ -135,15 +139,18 @@ public class Staff implements Runnable {
     public void run() {
         ArrayList<ImageView> playBars = staffImages.getPlayBars();
         int index = 0;
-        ImageView current = playBars.get(0);
-        ImageView previous = null;
         songPlaying = true;
         do {
-            playNextLine();
+            // playNextLine();
             if (index + 1 > playBars.size()) {
                 index = 0;
             }
-            bumpHighlights(playBars, current, previous, index++);
+            bumpHighlights(playBars, index++);
+            try {
+                Thread.sleep(delayTime);
+            } catch (InterruptedException e) {
+
+            }
         } while(songPlaying);
     }
 
@@ -158,6 +165,7 @@ public class Staff implements Runnable {
                 - Constants.NOTELINES_IN_THE_WINDOW) {
             songPlaying = false;
         }
+        shift(Constants.NOTELINES_IN_THE_WINDOW);
     }
 
     /**
@@ -167,13 +175,15 @@ public class Staff implements Runnable {
      * @param previous The previous measure line that we were at.
      * @param index The current index of the measure that we're on.
      */
-    private void bumpHighlights(ArrayList<ImageView> playBars,
-            ImageView current, ImageView previous, int index) {
-        previous = current;
-        previous.setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
-        current = playBars.get(index);
-        current.setImage(ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
-        for(int i = 0; i < Integer.MAX_VALUE; i++);
+    private void bumpHighlights(ArrayList<ImageView> playBars, int index) {
+        playBars.get(index).setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
+        if (index + 1 >= playBars.size()) {
+            playBars.get(0).setImage(
+                    ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+        } else {
+            playBars.get(index + 1).setImage(
+                    ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+        }
 
     }
 
