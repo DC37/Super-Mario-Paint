@@ -86,14 +86,14 @@ public enum ImageIndex {
     STAFF_MLINE,
 
     /**
+     * This is the MPCv1 play bar that goes across the screen.
+     */
+    PLAY_BAR,
+
+    /**
      * This is the bar that goes across the screen when one hits play.
      */
     PLAY_BAR1,
-
-    /**
-     * This is the MPCv1 play bar that goes across the screen.
-     */
-    PLAY_BAR2,
 
     /**
      * This is a horizontal line that appears when someone tries to go

@@ -17,6 +17,7 @@ import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
+
 /**
  * Super Mario Paint <br>
  * Based on the old SNES game from 1992, Mario Paint <br>

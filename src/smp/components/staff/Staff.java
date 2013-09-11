@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javax.sound.midi.InvalidMidiDataException;
 
 import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.Constants;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffSequence;
@@ -24,7 +25,7 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @since 2012.08.13
  */
-public class Staff {
+public class Staff implements Runnable {
 
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
@@ -99,7 +100,7 @@ public class Staff {
      * values indicate an increasing measure number.
      */
     public void shift(int num) {
-
+        setLocation(num + StateMachine.getMeasureLineNum());
     }
 
     /**
@@ -126,6 +127,12 @@ public class Staff {
      * do-while loop.
      */
     public void startAnimation() {
+        Thread runner = new Thread(this);
+        runner.start();
+    }
+
+    @Override
+    public void run() {
         ArrayList<ImageView> playBars = staffImages.getPlayBars();
         int index = 0;
         ImageView current = playBars.get(0);
@@ -133,16 +140,24 @@ public class Staff {
         songPlaying = true;
         do {
             playNextLine();
-            bumpHighlights(playBars, current, previous, index);
+            if (index + 1 > playBars.size()) {
+                index = 0;
+            }
+            bumpHighlights(playBars, current, previous, index++);
         } while(songPlaying);
-
     }
 
     /**
-     * Plays the next line of notes in the queue.
+     * Plays the next line of notes in the queue. For ease-of-programming
+     * purposes, we'll not care about efficiency and just play things as
+     * they are.
      */
     private void playNextLine() {
-
+        if (StateMachine.getMeasureLineNum() >=
+                Constants.DEFAULT_LINES_PER_SONG
+                - Constants.NOTELINES_IN_THE_WINDOW) {
+            songPlaying = false;
+        }
     }
 
     /**
@@ -154,14 +169,11 @@ public class Staff {
      */
     private void bumpHighlights(ArrayList<ImageView> playBars,
             ImageView current, ImageView previous, int index) {
-        if (index + 1 < playBars.size()) {
-            previous = current;
-            current = playBars.get(++index);
-        } else {
-            index = 0;
-            previous = current;
-            current = playBars.get(index);
-        }
+        previous = current;
+        previous.setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
+        current = playBars.get(index);
+        current.setImage(ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+        for(int i = 0; i < Integer.MAX_VALUE; i++);
 
     }
 
@@ -221,27 +233,6 @@ public class Staff {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Starts playing a Super Mario Paint song.
-     */
-    public void startSong() {
-
-    }
-
-    /**
-     * Stops playing a Super Mario Paint song.
-     */
-    public void stopSong() {
-
-    }
-
-    /**
-     * Draws the staff.
-     */
-    public void draw() {
-
     }
 
 
