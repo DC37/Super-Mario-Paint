@@ -140,6 +140,7 @@ public class Staff {
 
      */
     public void startSong() {
+        songPlaying = true;
         theService.start();
     }
 
@@ -147,6 +148,7 @@ public class Staff {
      * Stops the song that is currently playing.
      */
     public void stopSong() {
+        songPlaying = false;
         theService.cancel();
         theService.reset();
     }
@@ -290,6 +292,11 @@ public class Staff {
             protected Staff call() throws Exception {
                 do {
                     playNextLine();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        // Do nothing
+                    }
                 } while (songPlaying);
                 return null;
             }
