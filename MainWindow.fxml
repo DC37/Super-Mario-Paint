@@ -725,7 +725,7 @@
                         </HBox>
                         <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0">
                           <children>
-                            <HBox prefHeight="80.0" prefWidth="200.0" spacing="8.0">
+                            <HBox prefHeight="80.0" prefWidth="300.0" spacing="8.0">
                               <children>
                                 <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                   <image>
@@ -748,7 +748,14 @@
                               </padding>
                             </HBox>
                             <HBox prefHeight="100.0" prefWidth="200.0" />
-                            <HBox prefHeight="100.0" prefWidth="200.0" />
+                            <HBox prefHeight="100.0" prefWidth="300.0">
+                              <padding>
+                                <Insets top="30.0" />
+                              </padding>
+                              <HBox.margin>
+                                <Insets />
+                              </HBox.margin>
+                            </HBox>
                           </children>
                           <padding>
                             <Insets left="8.0" right="8.0" />

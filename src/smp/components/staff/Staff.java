@@ -31,7 +31,10 @@ import smp.stateMachine.StateMachine;
 public class Staff {
 
     /** Milliseconds to delay between updating the play bars. */
-    private int delayTime = 50;
+    private long delayMillis;
+
+    /** Nanoseconds to delay in addition to the milliseconds delay. */
+    private int delayNanos;
 
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
@@ -141,6 +144,7 @@ public class Staff {
      */
     public void startSong() {
         songPlaying = true;
+        setTempo(StateMachine.getTempo());
         theService.start();
     }
 
@@ -252,6 +256,24 @@ public class Staff {
     }
 
     /**
+     * @param tempo The tempo we want to set this staff to run at,
+     * in BPM.
+     * Beats per minute * 60 = beats per second <br>
+     * Beats per second ^ -1 = seconds per beat <br>
+     * Seconds per beat * 1000 = Milliseconds per beat <br>
+     * (int) Milliseconds per beat = Milliseconds <br>
+     * Milliseconds per beat - milliseconds = remainder <br>
+     * (int) (Remainder * 1e6) = Nanoseconds <br>
+     * 
+     */
+    public void setTempo(double tempo) {
+        double mill = (1 / (tempo / 60.0)) * 1000;
+        delayMillis = (int) mill;
+        double nano = (mill - delayMillis) * Math.pow(10, 6);
+        delayNanos = (int) nano;
+    }
+
+    /**
      * This is a worker thread that helps run the animation on the staff.
      */
     class AnimationService extends Service<Staff> {
@@ -267,18 +289,25 @@ public class Staff {
          * @param index The current index of the measure that we're on.
          */
         private void bumpHighlights(ArrayList<ImageView> playBars, int index) {
-            playBars.get(index).setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
-            if (index + 1 >= playBars.size()) {
+            if (index == 0) {
+                playBars.get(Constants.NOTELINES_IN_THE_WINDOW - 1).setImage(
+                        ImageLoader.getSpriteFX(ImageIndex.NONE));
                 playBars.get(0).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
             } else {
-                playBars.get(index + 1).setImage(
+                playBars.get(index - 1).setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
+                playBars.get(index).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+
             }
         }
 
         /**
-         * This class keeps track of animation and sound.
+         * This class keeps track of animation and sound. Note to self: While
+         * running a service or a task, crashes do not print stack traces.
+         * Therefore, debug like crazy!
+         * Fun fact: This is the first time that I've used a do-while loop in
+         * practice!
          */
         class AnimationTask extends Task<Staff> {
 
@@ -297,7 +326,7 @@ public class Staff {
                 do {
                     playNextLine();
                     try {
-                        Thread.sleep(350);
+                        Thread.sleep(delayMillis, delayNanos);
                     } catch (InterruptedException e) {
                         // Do nothing
                     }
@@ -317,10 +346,16 @@ public class Staff {
                     songPlaying = false;
                 }
                 bumpHighlights(playBars, index);
+                playLine(index);
                 if (index < Constants.NOTELINES_IN_THE_WINDOW - 1)
                     index++;
                 else
                     index = 0;
+            }
+
+            /** Plays the current line of notes. */
+            private void playLine(int index) {
+
             }
 
         }
