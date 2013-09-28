@@ -42,7 +42,7 @@ public class StateMachine {
     /**
      * This is the current tempo that the program is running at.
      */
-    private static double tempo = 240;
+    private static double tempo = 400;
 
 
     /**

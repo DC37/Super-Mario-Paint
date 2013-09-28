@@ -6,20 +6,22 @@ import java.util.ArrayList;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javax.sound.midi.InvalidMidiDataException;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.controls.Controls;
 import smp.components.Constants;
 import smp.components.general.Utilities;
-import smp.components.staff.Staff.AnimationService.AnimationTask;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.staff.sounds.SMPSequence;
 import smp.components.staff.sounds.SMPSequencer;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -38,6 +40,15 @@ public class Staff {
 
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
+
+    /** Whether we need to shift the staff by some amount. */
+    private boolean shift = false;
+
+    /** This is the control panel of the program. */
+    private Controls controls;
+
+    /** This is the slider that runs at the bottom of the screen. */
+    private Slider tempoScrollbar;
 
     /**
      * The wrapper that holds a series of ImageView objects that are meant to
@@ -69,7 +80,12 @@ public class Staff {
      * This is a service that will help run the animation and sound of playing a
      * song.
      */
-    private AnimationService theService;
+    private AnimationService animationService;
+
+    /**
+     * This is a service that will help move the staff.
+     */
+    private ShifterService shifterService;
 
     /**
      * Creates a new Staff object.
@@ -91,8 +107,8 @@ public class Staff {
         staffImages = new StaffImages(staffExtLines);
         staffImages.setStaff(this);
         staffImages.initialize();
-        theService = new AnimationService();
-
+        animationService = new AnimationService();
+        shifterService = new ShifterService();
     }
 
 
@@ -125,8 +141,9 @@ public class Staff {
      * and 375) that is to be displayed.
      */
     public synchronized void setLocation(int num) {
-        for(int i = 0; i < Constants.NOTELINES_IN_THE_WINDOW; i++)
-            theMatrix.redraw(i);
+        theMatrix.redraw();
+        Slider s = SMPFXController.getScrollbar();
+        s.adjustValue(num);
     }
 
 
@@ -145,7 +162,8 @@ public class Staff {
     public void startSong() {
         songPlaying = true;
         setTempo(StateMachine.getTempo());
-        theService.start();
+        animationService.start();
+        shifterService.start();
     }
 
     /**
@@ -153,8 +171,13 @@ public class Staff {
      */
     public void stopSong() {
         songPlaying = false;
-        theService.cancel();
-        theService.reset();
+        for (ImageView i : staffImages.getPlayBars()) {
+            i.setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
+        }
+        shifterService.cancel();
+        shifterService.reset();
+        animationService.cancel();
+        animationService.reset();
     }
 
 
@@ -196,10 +219,8 @@ public class Staff {
         try {
             currentSong = AMSDecoder.decode(Utilities.openFileDialog());
         } catch (NullPointerException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -287,20 +308,25 @@ public class Staff {
          * Bumps the highlight of the notes to the next play bar.
          * @param playBars The list of the measure highlights.
          * @param index The current index of the measure that we're on.
+         * @param advance Whether we need to move the staff by some bit.
          */
-        private void bumpHighlights(ArrayList<ImageView> playBars, int index) {
+        private void bumpHighlights(ArrayList<ImageView> playBars, int index,
+                boolean advance) {
             if (index == 0) {
                 playBars.get(Constants.NOTELINES_IN_THE_WINDOW - 1).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.NONE));
                 playBars.get(0).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+                if (advance)
+                    shift = true;
             } else {
-                playBars.get(index - 1).setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
+                playBars.get(index - 1).setImage(ImageLoader.getSpriteFX(
+                        ImageIndex.NONE));
                 playBars.get(index).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
-
             }
         }
+
 
         /**
          * This class keeps track of animation and sound. Note to self: While
@@ -316,6 +342,11 @@ public class Staff {
              * on the staff.
              */
             private int index = 0;
+
+            /**
+             * Whether we need to advance the satff ahead by a few lines or not.
+             */
+            private boolean advance = false;
 
             /** These are the play bars on the staff. */
             private ArrayList<ImageView> playBars;
@@ -345,21 +376,65 @@ public class Staff {
                         - Constants.NOTELINES_IN_THE_WINDOW) {
                     songPlaying = false;
                 }
-                bumpHighlights(playBars, index);
-                playLine(index);
-                if (index < Constants.NOTELINES_IN_THE_WINDOW - 1)
+                bumpHighlights(playBars, index, advance);
+                advance = false;
+                playSoundLine(index);
+                if (index < Constants.NOTELINES_IN_THE_WINDOW - 1) {
                     index++;
-                else
+                } else {
                     index = 0;
+                    advance = true;
+                }
             }
 
-            /** Plays the current line of notes. */
-            private void playLine(int index) {
+            /**
+             * Plays the current line of notes.
+             * Lol, inefficiency - called every time a note line is played.
+             */
+            private void playSoundLine(int index) {
 
             }
 
         }
     }
 
+    /**
+     * This class keeps track of the staff location.
+     */
+    class ShifterService extends Service<Staff> {
+
+        @Override
+        protected Task<Staff> createTask() {
+            return new ShifterTask();
+        }
+
+        /** Moves the staff by some amount. */
+        private void moveStaff() {
+            Slider s = SMPFXController.getScrollbar();
+            try {
+                s.adjustValue(
+
+                        s.getValue() + Constants.NOTELINES_IN_THE_WINDOW);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            shift = false;
+        }
+
+        /** This is the task that actually messes with the slider. */
+        class ShifterTask extends Task<Staff> {
+
+            @Override
+            protected Staff call() throws Exception {
+                do {
+                    if (shift)
+                        moveStaff();
+                } while (songPlaying);
+                return null;
+            }
+
+        }
+
+    }
 
 }

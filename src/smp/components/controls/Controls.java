@@ -124,4 +124,11 @@ public class Controls {
         scrollbar = scroll;
     }
 
+    /**
+     * @return The scrollbar of the program.
+     */
+    public Slider getScrollbar() {
+        return scrollbar;
+    }
+
 }

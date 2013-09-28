@@ -170,10 +170,14 @@ public class NoteMatrix {
                             Staff.switchAcc(s.accidental())));
             noteAndAcc[1].getChildren().add(accidental);
             s.setVisible(true);
-
-
         }
 
+    }
+
+    /** Redraws the entire matrix. */
+    public void redraw() {
+        for(int i = 0; i < Constants.NOTELINES_IN_THE_WINDOW; i++)
+            redraw(i);
     }
 
 }

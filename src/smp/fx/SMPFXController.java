@@ -290,4 +290,9 @@ public class SMPFXController implements Initializable {
         return controlPanel;
     }
 
+    /** @return The slider that controls the tempo in the control panel. */
+    public static Slider getTempoSlider() {
+        return controlPanel.getScrollbar();
+    }
+
 }
