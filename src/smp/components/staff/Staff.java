@@ -288,12 +288,16 @@ public class Staff {
              */
             private int index = 0;
 
+            /** These are the play bars on the staff. */
+            private ArrayList<ImageView> playBars;
+
             @Override
             protected Staff call() throws Exception {
+                playBars = staffImages.getPlayBars();
                 do {
                     playNextLine();
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(350);
                     } catch (InterruptedException e) {
                         // Do nothing
                     }
@@ -312,8 +316,8 @@ public class Staff {
                         - Constants.NOTELINES_IN_THE_WINDOW) {
                     songPlaying = false;
                 }
-                bumpHighlights(staffImages.getPlayBars(), index);
-                if (index < Constants.NOTELINES_IN_THE_WINDOW)
+                bumpHighlights(playBars, index);
+                if (index < Constants.NOTELINES_IN_THE_WINDOW - 1)
                     index++;
                 else
                     index = 0;
