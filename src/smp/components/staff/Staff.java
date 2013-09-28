@@ -69,11 +69,6 @@ public class Staff {
     private AnimationService theService;
 
     /**
-     * This is the task that will actually run the animation of the staff.
-     */
-    private AnimationTask animationTask;
-
-    /**
      * Creates a new Staff object.
      * @param staffExtLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
@@ -129,7 +124,6 @@ public class Staff {
     public synchronized void setLocation(int num) {
         for(int i = 0; i < Constants.NOTELINES_IN_THE_WINDOW; i++)
             theMatrix.redraw(i);
-        staffImages.updateStaffMeasureLines();
     }
 
 
@@ -179,16 +173,12 @@ public class Staff {
         try {
             currentSong = MPCDecoder.decode(Utilities.openFileDialog());
         } catch (NullPointerException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvalidMidiDataException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -228,6 +218,13 @@ public class Staff {
      */
     public StaffSequence getSequence() {
         return theSequence;
+    }
+
+    /**
+     * @return The staff images.
+     */
+    public StaffImages getStaffImages() {
+        return staffImages;
     }
 
     /**

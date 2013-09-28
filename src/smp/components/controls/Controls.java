@@ -98,6 +98,8 @@ public class Controls {
                     Number oldVal, Number newVal) {
                 StateMachine.setMeasureLineNum(newVal.intValue());
                 theStaff.setLocation(newVal.intValue());
+                theStaff.getStaffImages().updateStaffMeasureLines(
+                        newVal.intValue());
             }
 
         });

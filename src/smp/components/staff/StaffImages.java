@@ -167,9 +167,11 @@ public class StaffImages {
         }
     }
 
-    /** Redraws the staff measure lines. */
-    public void updateStaffMeasureLines() {
-        int currLine = StateMachine.getMeasureLineNum();
+    /**
+     * Redraws the staff measure lines.
+     * @param currLine The current line that we are on.
+     */
+    public void updateStaffMeasureLines(int currLine) {
         for (int i = 0; i < measureLines.size(); i++) {
             if ((currLine + i) % Constants.DEFAULT_TIMESIG_BEATS == 0)
                 measureLines.get(i).setImage(ImageLoader.getSpriteFX(
