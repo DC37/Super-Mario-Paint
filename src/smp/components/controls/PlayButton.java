@@ -38,7 +38,7 @@ public class PlayButton extends ImageRadioButton {
             return;
         super.reactPressed(e);
         StateMachine.setState(State.SONG_PLAYING);
-        theStaff.startAnimation();
+        theStaff.startSong();
     }
 
     /**

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javax.sound.midi.InvalidMidiDataException;
@@ -12,6 +14,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.Constants;
 import smp.components.general.Utilities;
+import smp.components.staff.Staff.AnimationService.AnimationTask;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.mpc.MPCDecoder;
@@ -25,7 +28,7 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @since 2012.08.13
  */
-public class Staff implements Runnable {
+public class Staff {
 
     /** Milliseconds to delay between updating the play bars. */
     private int delayTime = 50;
@@ -60,6 +63,17 @@ public class Staff implements Runnable {
     private SMPSequence currentSong;
 
     /**
+     * This is a service that will help run the animation and sound of playing a
+     * song.
+     */
+    private AnimationService theService;
+
+    /**
+     * This is the task that will actually run the animation of the staff.
+     */
+    private AnimationTask animationTask;
+
+    /**
      * Creates a new Staff object.
      * @param staffExtLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
@@ -79,6 +93,7 @@ public class Staff implements Runnable {
         staffImages = new StaffImages(staffExtLines);
         staffImages.setStaff(this);
         staffImages.initialize();
+        theService = new AnimationService();
 
     }
 
@@ -125,75 +140,23 @@ public class Staff implements Runnable {
         setLocation(StateMachine.getMeasureLineNum());
     }
 
+
     /**
      * Begins animation of the Staff.
-     * Fun fact, this is the first time I've actually had a real use for a
-     * do-while loop.
+
      */
-    public void startAnimation() {
-        Thread runner = new Thread(this);
-        runner.start();
-    }
-
-    @Override
-    public void run() {
-        ArrayList<ImageView> playBars = staffImages.getPlayBars();
-        int index = 0;
-        songPlaying = true;
-        do {
-            // playNextLine();
-            if (index + 1 > playBars.size()) {
-                index = 0;
-            }
-            bumpHighlights(playBars, index++);
-            try {
-                Thread.sleep(delayTime);
-            } catch (InterruptedException e) {
-
-            }
-        } while(songPlaying);
+    public void startSong() {
+        theService.start();
     }
 
     /**
-     * Plays the next line of notes in the queue. For ease-of-programming
-     * purposes, we'll not care about efficiency and just play things as
-     * they are.
+     * Stops the song that is currently playing.
      */
-    private void playNextLine() {
-        if (StateMachine.getMeasureLineNum() >=
-                Constants.DEFAULT_LINES_PER_SONG
-                - Constants.NOTELINES_IN_THE_WINDOW) {
-            songPlaying = false;
-        }
-        shift(Constants.NOTELINES_IN_THE_WINDOW);
+    public void stopSong() {
+        theService.cancel();
+        theService.reset();
     }
 
-    /**
-     * Bumps the highlight of the notes to the next play bar.
-     * @param playBars The list of the measure highlights.
-     * @param current The current measure line that we're at.
-     * @param previous The previous measure line that we were at.
-     * @param index The current index of the measure that we're on.
-     */
-    private void bumpHighlights(ArrayList<ImageView> playBars, int index) {
-        playBars.get(index).setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
-        if (index + 1 >= playBars.size()) {
-            playBars.get(0).setImage(
-                    ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
-        } else {
-            playBars.get(index + 1).setImage(
-                    ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
-        }
-
-    }
-
-
-    /**
-     * Stops animation of the Staff.
-     */
-    public void stopAnimation() {
-        songPlaying = false;
-    }
 
     /**
      * Loads a Super Mario Paint song.
@@ -288,5 +251,72 @@ public class Staff implements Runnable {
             return ImageIndex.BLANK;
         }
     }
+
+    /**
+     * This is a worker thread that helps run the animation on the staff.
+     */
+    class AnimationService extends Service<Staff> {
+
+        @Override
+        protected Task<Staff> createTask() {
+            return new AnimationTask();
+        }
+
+        /**
+         * Bumps the highlight of the notes to the next play bar.
+         * @param playBars The list of the measure highlights.
+         * @param index The current index of the measure that we're on.
+         */
+        private void bumpHighlights(ArrayList<ImageView> playBars, int index) {
+            playBars.get(index).setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
+            if (index + 1 >= playBars.size()) {
+                playBars.get(0).setImage(
+                        ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+            } else {
+                playBars.get(index + 1).setImage(
+                        ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+            }
+        }
+
+        /**
+         * This class keeps track of animation and sound.
+         */
+        class AnimationTask extends Task<Staff> {
+
+            /**
+             * This is the current index of the measure line that we are on
+             * on the staff.
+             */
+            private int index = 0;
+
+            @Override
+            protected Staff call() throws Exception {
+                do {
+                    playNextLine();
+                } while (songPlaying);
+                return null;
+            }
+
+            /**
+             * Plays the next line of notes in the queue. For ease-of-programming
+             * purposes, we'll not care about efficiency and just play things as
+             * they are.
+             */
+            private void playNextLine() {
+                if (StateMachine.getMeasureLineNum() >=
+                        Constants.DEFAULT_LINES_PER_SONG
+                        - Constants.NOTELINES_IN_THE_WINDOW) {
+                    songPlaying = false;
+                }
+                bumpHighlights(staffImages.getPlayBars(), index);
+                if (index < Constants.NOTELINES_IN_THE_WINDOW)
+                    index++;
+                else
+                    index = 0;
+            }
+
+        }
+    }
+
 
 }
