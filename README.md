@@ -28,14 +28,14 @@ Tasklist:
 * Navigate the staff (done - August 23, 2013)
 * Play, stop, and loop buttons appear (done - August 29, 2013)
 * Play, stop, and loop buttons are able to be pressed (done - August 29, 2013)
-* Play and stop buttons start and stop the song
+* Play and stop buttons start and stop the song (done - September 28, 2013)
+* Play back notes on the staff reliably (done - September 28, 2013)
+* Save songs (done - September 28, 2013)
+* Load songs
 * Loop button loops the song
-* Play back notes on the staff reliably
 * Release to a small test group
 * Splash screen is actually a splash screen
 * Splash screen animation and other extras
-* Save songs
-* Load songs
 * Primary stage done
 * Options dialog
 * Import MPC songs
