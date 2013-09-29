@@ -286,8 +286,9 @@ public class Staff {
                         ImageLoader.getSpriteFX(ImageIndex.NONE));
                 playBars.get(0).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
-                if (advance)
+                if (advance) {
                     shiftStaff();
+                }
             } else {
                 playBars.get(index - 1).setImage(ImageLoader.getSpriteFX(
                         ImageIndex.NONE));
@@ -313,6 +314,7 @@ public class Staff {
             });
 
         }
+
 
 
         /**
@@ -364,8 +366,8 @@ public class Staff {
                     songPlaying = false;
                 }
                 bumpHighlights(playBars, index, advance);
-                advance = false;
                 playSoundLine(index);
+                advance = false;
                 if (index < Constants.NOTELINES_IN_THE_WINDOW - 1) {
                     index++;
                 } else {
@@ -378,18 +380,24 @@ public class Staff {
              * Plays the current line of notes.
              * Lol, inefficiency - called every time a note line is played.
              */
-            private void playSoundLine(int index) {
-                StaffNoteLine s =
-                        theSequence.getLine(
-                                (int)(currVal.doubleValue() + index));
-                ArrayList<StaffNote> theNotes = s.getNotes();
-                for (StaffNote sn : theNotes) {
-                    SoundfontLoader.playSound(Constants.staffNotes[sn.getPosition()].getKeyNum(),
-                            sn.getInstrument(), sn.getAccidental());
-                }
+            private void playSoundLine(final int index) {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        StaffNoteLine s =
+                                theSequence.getLine(
+                                        (int)(currVal.doubleValue() + index));
+                        ArrayList<StaffNote> theNotes = s.getNotes();
+                        for (StaffNote sn : theNotes) {
+                            SoundfontLoader.playSound(Constants.staffNotes[sn.getPosition()].getKeyNum(),
+                                    sn.getInstrument(), sn.getAccidental());
+                        }
+                    }
+                });
+
             }
 
         }
     }
-
 }
