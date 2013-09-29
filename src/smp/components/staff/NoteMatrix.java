@@ -162,12 +162,12 @@ public class NoteMatrix {
         }
 
         for (StaffNote s : st) {
-            StackPane[] noteAndAcc = getNote(index, s.position());
+            StackPane[] noteAndAcc = getNote(index, s.getPosition());
             noteAndAcc[0].getChildren().add(s);
             StaffAccidental accidental = new StaffAccidental(s);
             accidental.setImage(
                     ImageLoader.getSpriteFX(
-                            Staff.switchAcc(s.accidental())));
+                            Staff.switchAcc(s.getAccidental())));
             noteAndAcc[1].getChildren().add(accidental);
             s.setVisible(true);
         }

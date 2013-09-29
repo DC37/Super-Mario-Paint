@@ -74,12 +74,12 @@ public class StaffNote extends ImageView {
     }
 
     /** @return The offset from the actual note that we have here. */
-    public int accidental() {
+    public int getAccidental() {
         return accidental;
     }
 
     /** @return The numerical position that this note is located at. */
-    public int position() {
+    public int getPosition() {
         return position;
     }
 
@@ -100,6 +100,11 @@ public class StaffNote extends ImageView {
     @Override
     public String toString() {
         return theInstrument.toString() + " " + position;
+    }
+
+    /** @return The instrument that this StaffNote is. */
+    public InstrumentIndex getInstrument() {
+        return theInstrument;
     }
 
 

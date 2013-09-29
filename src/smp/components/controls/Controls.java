@@ -52,6 +52,7 @@ public class Controls {
         initializeArrows();
         initializeScrollbar();
         initializeControlButtons();
+        theStaff.setCurrVal(scrollbar.valueProperty());
     }
 
     /** Initializes the play button and the stop button. */

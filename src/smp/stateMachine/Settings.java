@@ -18,7 +18,10 @@ public class Settings {
     /** The name of the file that we write to. */
     private final static String settingsFile = "settings.data";
 
-    /** Classic debug on/off. Level 1. */
+    /**
+     * Classic debug on/off. Level 1.
+     * 0b10000 - Print staff value every time it changes.
+     */
     public static int debug = 0;
 
     /**

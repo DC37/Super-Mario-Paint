@@ -19,15 +19,19 @@ import javax.sound.midi.InvalidMidiDataException;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.SoundfontLoader;
 import smp.components.controls.Controls;
 import smp.components.Constants;
 import smp.components.general.Utilities;
+import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.ams.AMSDecoder;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.staff.sounds.SMPSequence;
 import smp.components.staff.sounds.SMPSequencer;
 import smp.fx.SMPFXController;
+import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -53,12 +57,6 @@ public class Staff {
     /** This is the current line that we are at. */
     private DoubleProperty currVal;
 
-    /** This is the control panel of the program. */
-    private Controls controls;
-
-    /** This is the slider that runs at the bottom of the screen. */
-    private Slider tempoScrollbar;
-
     /**
      * The wrapper that holds a series of ImageView objects that are meant to
      * display the staff measure lines.
@@ -76,9 +74,6 @@ public class Staff {
      */
     private SMPSequencer seq;
 
-    /** The song that we are currently editing. */
-    private SMPSequence currentSong;
-
     /**
      * This is a service that will help run the animation and sound of playing a
      * song.
@@ -95,18 +90,11 @@ public class Staff {
         seq = new SMPSequencer();
         theMatrix = new NoteMatrix(Constants.NOTELINES_IN_THE_WINDOW,
                 Constants.NOTES_IN_A_LINE, this);
-        try {
-            currentSong = new SMPSequence();
-        } catch (InvalidMidiDataException e) {
-            // Do nothing
-            e.printStackTrace();
-        }
         theSequence = new StaffSequence();
         staffImages = new StaffImages(staffExtLines);
         staffImages.setStaff(this);
         staffImages.initialize();
         animationService = new AnimationService();
-
     }
 
 
@@ -194,30 +182,14 @@ public class Staff {
      * Imports a Mario Paint Composer song.
      */
     public void importMPCSong() {
-        try {
-            currentSong = MPCDecoder.decode(Utilities.openFileDialog());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (InvalidMidiDataException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**
      * Imports an Advanced Mario Sequencer song.
      */
     public void importAMSSong() {
-        try {
-            currentSong = AMSDecoder.decode(Utilities.openFileDialog());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
@@ -283,6 +255,15 @@ public class Staff {
     }
 
     /**
+     * Sets the DoubleProperty value that we change to move the
+     * staff.
+     * @param d The DoubleProperty that we want to set.
+     */
+    public void setCurrVal(DoubleProperty d) {
+        currVal = d;
+    }
+
+    /**
      * This is a worker thread that helps run the animation on the staff.
      */
     class AnimationService extends Service<Staff> {
@@ -325,7 +306,8 @@ public class Staff {
                 public void run() {
                     currVal.setValue(currVal.getValue().doubleValue()
                             + Constants.NOTELINES_IN_THE_WINDOW);
-                    System.out.println(currVal);
+                    if ((Settings.debug & 0b10000) == 0b10000)
+                        System.out.println(currVal);
                 }
 
             });
@@ -397,7 +379,14 @@ public class Staff {
              * Lol, inefficiency - called every time a note line is played.
              */
             private void playSoundLine(int index) {
-
+                StaffNoteLine s =
+                        theSequence.getLine(
+                                (int)(currVal.doubleValue() + index));
+                ArrayList<StaffNote> theNotes = s.getNotes();
+                for (StaffNote sn : theNotes) {
+                    SoundfontLoader.playSound(Constants.staffNotes[sn.getPosition()].getKeyNum(),
+                            sn.getInstrument(), sn.getAccidental());
+                }
             }
 
         }
