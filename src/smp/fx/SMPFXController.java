@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.controls.Controls;
@@ -65,6 +66,17 @@ public class SMPFXController implements Initializable {
     @FXML
     private static ImageView loop;
 
+    /** This is the plus sign that increases the tempo of the song. */
+    @FXML
+    private static ImageView tempoPlus;
+
+    /** This is the minus sign that decreases the tempo of the song. */
+    @FXML
+    private static ImageView tempoMinus;
+
+    /** This is the text that displays the current tempo of the song. */
+    @FXML
+    private static Text tempoIndicator;
 
     /**
      * The controls line object that holds the FXML controls object.

@@ -748,10 +748,52 @@
                               </padding>
                             </HBox>
                             <HBox prefHeight="100.0" prefWidth="200.0" />
-                            <HBox prefHeight="100.0" prefWidth="300.0">
-                              <padding>
-                                <Insets top="30.0" />
-                              </padding>
+                            <HBox id="" prefHeight="100.0" prefWidth="300.0">
+                              <children>
+                                <StackPane prefHeight="100.0" prefWidth="230.0" />
+                                <VBox id="VBox" alignment="CENTER">
+                                  <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo" />
+                                    <StackPane prefHeight="25.0" prefWidth="100.0">
+                                      <children>
+                                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0" />
+                                        <Text id="Tempo" fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0" text="240">
+                                          <font>
+                                            <Font name="Century Gothic" size="15.0" />
+                                          </font>
+                                        </Text>
+                                      </children>
+                                    </StackPane>
+                                  </children>
+                                  <padding>
+                                    <Insets top="-12.0" />
+                                  </padding>
+                                  <HBox.margin>
+                                    <Insets />
+                                  </HBox.margin>
+                                </VBox>
+                                <StackPane prefHeight="100.0" prefWidth="100.0">
+                                  <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                      <children>
+                                        <ImageView id="TempoPlus" fx:id="tempoPlus" fitHeight="32.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                            <Image url="@sprites/TEMPO_PLUS.png" preserveRatio="false" smooth="false" />
+                                          </image>
+                                        </ImageView>
+                                        <ImageView id="TempoMinus" fx:id="tempoMinus" fitHeight="32.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                            <Image url="@sprites/TEMPO_MINUS.png" preserveRatio="false" smooth="false" />
+                                          </image>
+                                        </ImageView>
+                                      </children>
+                                      <padding>
+                                        <Insets top="28.0" />
+                                      </padding>
+                                    </VBox>
+                                  </children>
+                                </StackPane>
+                              </children>
                               <HBox.margin>
                                 <Insets />
                               </HBox.margin>
