@@ -103,6 +103,7 @@ public class Controls {
             }
 
         });
+
     }
 
     /** Starts the song. */

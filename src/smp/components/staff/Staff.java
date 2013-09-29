@@ -4,6 +4,12 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableDoubleValue;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Slider;
@@ -44,6 +50,9 @@ public class Staff {
     /** Whether we need to shift the staff by some amount. */
     private boolean shift = false;
 
+    /** This is the current line that we are at. */
+    private DoubleProperty currVal;
+
     /** This is the control panel of the program. */
     private Controls controls;
 
@@ -82,10 +91,6 @@ public class Staff {
      */
     private AnimationService animationService;
 
-    /**
-     * This is a service that will help move the staff.
-     */
-    private ShifterService shifterService;
 
     /**
      * Creates a new Staff object.
@@ -108,7 +113,32 @@ public class Staff {
         staffImages.setStaff(this);
         staffImages.initialize();
         animationService = new AnimationService();
-        shifterService = new ShifterService();
+        initializeBoundSlider();
+    }
+
+    /**
+     * Sets up the bound value between the slider value and the current
+     * staff value.
+     */
+    private void initializeBoundSlider() {
+        currVal = new SimpleDoubleProperty();
+        currVal.set(0);
+        currVal.addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> arg0,
+                    Number oldVal, Number newVal) {
+
+                try {
+                    SMPFXController.getControls().getScrollbar().valueProperty().setValue(
+                            currVal.getValue());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
     }
 
 
@@ -163,7 +193,6 @@ public class Staff {
         songPlaying = true;
         setTempo(StateMachine.getTempo());
         animationService.start();
-        shifterService.start();
     }
 
     /**
@@ -174,8 +203,6 @@ public class Staff {
         for (ImageView i : staffImages.getPlayBars()) {
             i.setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
         }
-        shifterService.cancel();
-        shifterService.reset();
         animationService.cancel();
         animationService.reset();
     }
@@ -318,13 +345,30 @@ public class Staff {
                 playBars.get(0).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
                 if (advance)
-                    shift = true;
+                    shiftStaff();
             } else {
                 playBars.get(index - 1).setImage(ImageLoader.getSpriteFX(
                         ImageIndex.NONE));
                 playBars.get(index).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
             }
+        }
+
+        /**
+         * Shifts the staff over by the number of note lines in the window.
+         */
+        private void shiftStaff() {
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    currVal.setValue(currVal.getValue().doubleValue()
+                            + Constants.NOTELINES_IN_THE_WINDOW);
+                    System.out.println(currVal);
+                }
+
+            });
+
         }
 
 
@@ -396,45 +440,6 @@ public class Staff {
             }
 
         }
-    }
-
-    /**
-     * This class keeps track of the staff location.
-     */
-    class ShifterService extends Service<Staff> {
-
-        @Override
-        protected Task<Staff> createTask() {
-            return new ShifterTask();
-        }
-
-        /** Moves the staff by some amount. */
-        private void moveStaff() {
-            Slider s = SMPFXController.getScrollbar();
-            try {
-                s.adjustValue(
-
-                        s.getValue() + Constants.NOTELINES_IN_THE_WINDOW);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            shift = false;
-        }
-
-        /** This is the task that actually messes with the slider. */
-        class ShifterTask extends Task<Staff> {
-
-            @Override
-            protected Staff call() throws Exception {
-                do {
-                    if (shift)
-                        moveStaff();
-                } while (songPlaying);
-                return null;
-            }
-
-        }
-
     }
 
 }
