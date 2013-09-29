@@ -1,5 +1,6 @@
 package smp.components.controls;
 
+import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -63,6 +64,18 @@ public class TempoAdjustButton extends ImagePushButton {
         double tempo = StateMachine.getTempo() + change;
         StateMachine.setTempo(tempo);
         currTempo.setValue(String.valueOf(tempo));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                int ch = 0;
+                if (isPositive)
+                    ch = 1;
+                else
+                    ch = -1;
+                double tmp = StateMachine.getTempo() + ch;
+                StateMachine.setTempo(tmp);
+            }
+        });
     }
 
 

@@ -1,5 +1,6 @@
 package smp.components.staff.sequences;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import smp.components.Constants;
@@ -10,7 +11,12 @@ import smp.components.Constants;
  * @author RehdBlob
  * @since 2012.09.19
  */
-public class StaffNoteLine {
+public class StaffNoteLine implements Serializable {
+
+    /**
+     * Generated serial ID
+     */
+    private static final long serialVersionUID = 3876410979457142750L;
 
     /**
      * The line number of this StaffNoteLine. For a standard 96-measure 4/4

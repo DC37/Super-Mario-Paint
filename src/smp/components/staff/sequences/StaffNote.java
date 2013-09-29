@@ -1,5 +1,7 @@
 package smp.components.staff.sequences;
 
+import java.io.Serializable;
+
 import javafx.scene.image.ImageView;
 import smp.components.Constants;
 import smp.components.InstrumentIndex;
@@ -9,7 +11,12 @@ import smp.components.InstrumentIndex;
  * @author RehdBlob
  * @since 2012.08.31
  */
-public class StaffNote extends ImageView {
+public class StaffNote extends ImageView implements Serializable {
+
+    /**
+     * Generated serial ID.
+     */
+    private static final long serialVersionUID = 6827248837281952104L;
 
     /** This is the location on the matrix where the note exists. (y-axis) */
     private int position;

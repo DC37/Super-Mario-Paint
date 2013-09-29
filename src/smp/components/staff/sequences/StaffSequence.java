@@ -1,5 +1,6 @@
 package smp.components.staff.sequences;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import smp.components.Constants;
@@ -11,7 +12,12 @@ import smp.components.Constants;
  * @author RehdBlob
  * @since 2013.08.23
  */
-public class StaffSequence {
+public class StaffSequence implements Serializable {
+
+    /**
+     * Generated serial ID.
+     */
+    private static final long serialVersionUID = 5752285850525402081L;
 
     /** These are all of the lines on the staff. */
     private ArrayList<StaffNoteLine> theLines;

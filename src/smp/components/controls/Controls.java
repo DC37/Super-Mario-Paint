@@ -64,6 +64,15 @@ public class Controls {
         theStaff.setCurrVal(scrollbar.valueProperty());
         initializeTempoButtons();
         currTempo.setValue(String.valueOf(StateMachine.getTempo()));
+        initializeLoadSaveButtons();
+    }
+
+    /** Initializes the load and save buttons which allow one to keep songs. */
+    private void initializeLoadSaveButtons() {
+        SaveButton s = new SaveButton(SMPFXController.getSaveButton());
+        s.setStaff(theStaff);
+        LoadButton l = new LoadButton(SMPFXController.getLoadButton());
+        l.setStaff(theStaff);
     }
 
     /** Initializes the plus and minus buttons that can change the tempo. */

@@ -1,5 +1,6 @@
 package smp.components.staff;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import smp.ImageLoader;
@@ -29,6 +30,7 @@ import javafx.scene.layout.StackPane;
  */
 public class NoteMatrix {
 
+
     /**
      * The list of lists that holds the different <code>StackPane</code>
      * objects.
@@ -48,7 +50,7 @@ public class NoteMatrix {
     private int numberOfNotes;
 
     /** Pointer to the staff object with which this is linked. */
-    private Staff theStaff;
+    private transient Staff theStaff;
 
     /**
      * @param x The number of note lines on the current staff.

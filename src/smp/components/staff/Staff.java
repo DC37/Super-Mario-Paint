@@ -201,10 +201,25 @@ public class Staff {
     }
 
     /**
+     * @param other The new note matrix we want to load.
+     */
+    public void setNoteMatrix(NoteMatrix other) {
+        theMatrix = other;
+    }
+
+    /**
      * @return The current song that we are displaying.
      */
     public StaffSequence getSequence() {
         return theSequence;
+    }
+
+    /**
+     * This loads a staff sequence.
+     * @param other This is the other sequence.
+     */
+    public void setSequence(StaffSequence other) {
+        theSequence = other;
     }
 
     /**

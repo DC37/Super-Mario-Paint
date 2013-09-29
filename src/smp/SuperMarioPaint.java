@@ -39,11 +39,6 @@ public class SuperMarioPaint extends Application {
     private String mainFxml = "./MainWindow.fxml";
 
     /**
-     * Location of the Arrangement Window fxml file.
-     */
-    private String arrFxml = "./ArrWindow.fxml";
-
-    /**
      * Location of the Advanced Mode (super secret!!)
      * fxml file.
      */
