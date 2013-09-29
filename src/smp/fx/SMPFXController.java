@@ -307,4 +307,19 @@ public class SMPFXController implements Initializable {
         return controlPanel.getScrollbar();
     }
 
+    /** @return The tempo plus button. */
+    public static ImageView getTempoPlus() {
+        return tempoPlus;
+    }
+
+    /** @return The tempo minus button. */
+    public static ImageView getTempoMinus() {
+        return tempoMinus;
+    }
+
+    /** @return The tempo indicator text. */
+    public static Text getTempoIndicator() {
+        return tempoIndicator;
+    }
+
 }
