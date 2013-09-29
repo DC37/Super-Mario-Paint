@@ -65,12 +65,6 @@ public class Staff {
      */
     private StaffImages staffImages;
 
-    /**
-     * This is the backend portion of the staff, responsible for keeping track
-     * of all of the different positions of notes and sequences.
-     */
-    private StaffBackend staffBackend;
-
     /** This holds the notes on the staff. */
     private NoteMatrix theMatrix;
 
@@ -101,7 +95,6 @@ public class Staff {
         seq = new SMPSequencer();
         theMatrix = new NoteMatrix(Constants.NOTELINES_IN_THE_WINDOW,
                 Constants.NOTES_IN_A_LINE, this);
-        staffBackend = new StaffBackend();
         try {
             currentSong = new SMPSequence();
         } catch (InvalidMidiDataException e) {
@@ -113,32 +106,7 @@ public class Staff {
         staffImages.setStaff(this);
         staffImages.initialize();
         animationService = new AnimationService();
-        initializeBoundSlider();
-    }
 
-    /**
-     * Sets up the bound value between the slider value and the current
-     * staff value.
-     */
-    private void initializeBoundSlider() {
-        currVal = new SimpleDoubleProperty();
-        currVal.set(0);
-        currVal.addListener(new ChangeListener<Number>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Number> arg0,
-                    Number oldVal, Number newVal) {
-
-                try {
-                    SMPFXController.getControls().getScrollbar().valueProperty().setValue(
-                            currVal.getValue());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
     }
 
 
@@ -258,13 +226,6 @@ public class Staff {
      */
     public NoteMatrix getNoteMatrix() {
         return theMatrix;
-    }
-
-    /**
-     * @return The staff backend controller.
-     */
-    public StaffBackend getStaffBackend() {
-        return staffBackend;
     }
 
     /**

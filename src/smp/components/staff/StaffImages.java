@@ -89,7 +89,6 @@ public class StaffImages {
         ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
         for(Node num : mNums.getChildren())
             measureNumBoxes.add((HBox) num);
-        theStaff.getStaffBackend().setMeasureNumBoxes(measureNumBoxes);
     }
 
     /**
