@@ -163,21 +163,6 @@ public class Staff {
         animationService.reset();
     }
 
-
-    /**
-     * Loads a Super Mario Paint song.
-     */
-    public void loadSong() {
-
-    }
-
-    /**
-     * Saves a Super Mario Paint song.
-     */
-    public void saveSong() {
-
-    }
-
     /**
      * Imports a Mario Paint Composer song.
      */

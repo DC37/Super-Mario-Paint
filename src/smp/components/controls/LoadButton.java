@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
-import smp.components.staff.NoteMatrix;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
@@ -56,7 +55,7 @@ public class LoadButton extends ImagePushButton {
                     ObjectInputStream(f_in);
             StaffSequence loaded = (StaffSequence) o_in.readObject();
             theStaff.setSequence(loaded);
-            theStaff.redraw();
+            theStaff.getNoteMatrix().redraw();
             o_in.close();
             f_in.close();
         } catch (FileNotFoundException e) {
