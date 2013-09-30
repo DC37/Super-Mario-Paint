@@ -306,7 +306,7 @@ public class Staff {
                 @Override
                 public void run() {
                     currVal.setValue(currVal.getValue().doubleValue()
-                            + Constants.NOTELINES_IN_THE_WINDOW);
+                            + Constants.NOTELINES_IN_THE_WINDOW + 1);
                     if ((Settings.debug & 0b10000) == 0b10000)
                         System.out.println(currVal);
                 }
@@ -333,6 +333,11 @@ public class Staff {
             private int index = 0;
 
             /**
+             * This is the current measure line.
+             */
+            private int currMeasureLine = 0;
+
+            /**
              * Whether we need to advance the satff ahead by a few lines or not.
              */
             private boolean advance = false;
@@ -343,14 +348,21 @@ public class Staff {
             @Override
             protected Staff call() throws Exception {
                 playBars = staffImages.getPlayBars();
+                currMeasureLine = StateMachine.getMeasureLineNum();
+                int counter = 0;
                 do {
                     playNextLine();
+                    counter++;
+                    if (counter % Constants.NOTELINES_IN_THE_WINDOW == 0) {
+                        currMeasureLine += Constants.NOTELINES_IN_THE_WINDOW;
+                    }
                     try {
                         Thread.sleep(delayMillis, delayNanos);
                     } catch (InterruptedException e) {
                         // Do nothing
                     }
-                } while (songPlaying);
+                } while (songPlaying && currMeasureLine
+                        <= Constants.DEFAULT_LINES_PER_SONG);
                 return null;
             }
 
@@ -390,7 +402,8 @@ public class Staff {
                                         (int)(currVal.doubleValue() + index));
                         ArrayList<StaffNote> theNotes = s.getNotes();
                         for (StaffNote sn : theNotes) {
-                            SoundfontLoader.playSound(Constants.staffNotes[sn.getPosition()].getKeyNum(),
+                            SoundfontLoader.playSound(
+                                    Constants.staffNotes[sn.getPosition()].getKeyNum(),
                                     sn.getInstrument(), sn.getAccidental());
                         }
                     }

@@ -1,11 +1,13 @@
 package smp.components.staff.sequences;
 
+import java.io.Serializable;
+
 /**
  * Some sort of event on the Super Mario Paint staff.
  * @author RehdBlob
  * @since 2012.09.24
  */
-public interface StaffEvent {
+public interface StaffEvent extends Serializable {
 
     /**
      * Tells which line this event occurs at.

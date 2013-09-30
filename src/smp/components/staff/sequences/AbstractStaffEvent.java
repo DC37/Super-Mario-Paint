@@ -8,6 +8,11 @@ import smp.stateMachine.Settings;
  */
 public abstract class AbstractStaffEvent implements StaffEvent {
 
+    /**
+     * Generated serial ID.
+     */
+    private static final long serialVersionUID = -6303076919558802033L;
+
     /** The line number that this staff event occurs at. */
     protected int lineNum;
 

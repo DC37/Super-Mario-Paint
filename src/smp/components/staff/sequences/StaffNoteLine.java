@@ -152,5 +152,10 @@ public class StaffNoteLine implements Serializable {
             volume = vol;
     }
 
+    @Override
+    public String toString() {
+        return "Line: " + lineNum + "\nNotes: " + notes.toString();
+    }
+
 
 }

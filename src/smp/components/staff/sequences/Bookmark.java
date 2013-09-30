@@ -8,6 +8,11 @@ package smp.components.staff.sequences;
  */
 public class Bookmark extends AbstractStaffEvent {
 
+    /**
+     * Generated serial ID.
+     */
+    private static final long serialVersionUID = -5083645250328720866L;
+
     /** Currently does nothing. */
     public Bookmark(int num) {
         super(num);

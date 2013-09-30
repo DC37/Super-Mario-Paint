@@ -10,6 +10,10 @@ package smp.components.staff.sequences;
 public class Speedmark extends AbstractStaffEvent {
 
     /**
+     * Generated serial ID.
+     */
+    private static final long serialVersionUID = 2353273332875239641L;
+    /**
      * The tempo that this speedmark designates.
      */
     private int tempo;

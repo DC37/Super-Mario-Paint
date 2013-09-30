@@ -18,14 +18,18 @@ public class StaffNote extends ImageView implements Serializable {
      */
     private static final long serialVersionUID = 6827248837281952104L;
 
-    /** This is the location on the matrix where the note exists. (y-axis) */
+    /**
+     * This is the location on the matrix where the note exists. (y-axis).
+     * One can recover the note that you are supposed to actually play by
+     * adding a constant offset to this position value.
+     */
     private int position;
 
     /** The offset that this note will have. */
     private int accidental = 0;
 
     /** This is the volume of the note. */
-    private int volume;
+    private int volume = Constants.DEFAULT_VELOCITY;
 
     /**
      * The Instrument that the note on the staff is to use.
@@ -106,7 +110,26 @@ public class StaffNote extends ImageView implements Serializable {
 
     @Override
     public String toString() {
-        return theInstrument.toString() + " " + position;
+        String noteName = Constants.staffNotes[position].name();
+        String noteAcc = "";
+        switch(accidental) {
+        case 2:
+            noteAcc = "X";
+            break;
+        case 1:
+            noteAcc = "#";
+            break;
+        case -1:
+            noteAcc = "b";
+            break;
+        case -2:
+            noteAcc = "bb";
+            break;
+        default:
+            break;
+
+        }
+        return theInstrument.toString() + " " + noteName + noteAcc;
     }
 
     /** @return The instrument that this StaffNote is. */
