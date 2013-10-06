@@ -32,12 +32,14 @@ Tasklist:
 * Play back notes on the staff reliably (done - September 28, 2013)
 * Save songs (done - September 28, 2013)
 * Load songs
+* Volume bars implemented
 * Loop button loops the song
 * Release to a small test group
 * Splash screen is actually a splash screen
 * Splash screen animation and other extras
 * Primary stage done
 * Options dialog
+* Arranger mode
 * Import MPC songs
 * Bookmarks
 * Speedmarks
