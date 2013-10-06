@@ -306,7 +306,7 @@ public class Staff {
                 @Override
                 public void run() {
                     currVal.setValue(currVal.getValue().doubleValue()
-                            + Constants.NOTELINES_IN_THE_WINDOW + 1);
+                            + Constants.NOTELINES_IN_THE_WINDOW);
                     if ((Settings.debug & 0b10000) == 0b10000)
                         System.out.println(currVal);
                 }
