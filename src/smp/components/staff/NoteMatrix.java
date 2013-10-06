@@ -1,6 +1,5 @@
 package smp.components.staff;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import smp.ImageLoader;

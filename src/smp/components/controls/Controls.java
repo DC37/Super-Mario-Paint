@@ -1,14 +1,10 @@
 package smp.components.controls;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
-import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;

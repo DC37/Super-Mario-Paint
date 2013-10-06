@@ -1,34 +1,21 @@
 package smp.components.staff;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableDoubleValue;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javax.sound.midi.InvalidMidiDataException;
-
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
-import smp.components.controls.Controls;
 import smp.components.Constants;
-import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
-import smp.components.staff.sequences.ams.AMSDecoder;
-import smp.components.staff.sequences.mpc.MPCDecoder;
-import smp.components.staff.sounds.SMPSequence;
 import smp.components.staff.sounds.SMPSequencer;
 import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;

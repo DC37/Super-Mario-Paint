@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import javax.swing.JOptionPane;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;

@@ -27,8 +27,7 @@ import com.sun.media.sound.SoftSynthesizer;
  * @author RehdBlob
  * @since 2012.08.24
  */
-@SuppressWarnings("restriction")
-public class MultiSynthesizer extends SoftSynthesizer implements Synthesizer {
+public class MultiSynthesizer implements Synthesizer {
 
     /**
      * Indicates whether this Synthesizer is actually initialized
