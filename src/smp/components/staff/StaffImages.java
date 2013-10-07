@@ -79,6 +79,31 @@ public class StaffImages {
         initializeStaffMeasureNums(SMPFXController.getStaffMeasureNums());
         initializeStaffInstruments(SMPFXController.getStaffInstruments(),
                 SMPFXController.getStaffAccidentals());
+        initializeVolumeBars(SMPFXController.getVolumeBars());
+
+    }
+
+    /**
+     * Initializes the volume bars in the program.
+     * @param volumeBars This is the HBox that holds all of the volume
+     * bar <code>StackPane</code> objects.
+     */
+    private void initializeVolumeBars(HBox volumeBars) {
+        ArrayList<StackPane> vol = new ArrayList<StackPane>();
+        for (Node v : volumeBars.getChildren())
+            vol.add((StackPane) v);
+        for (StackPane s : vol)
+            setupVolumeBehavior(s);
+
+    }
+
+    /**
+     * Makes the <code>StackPane</code> actually behave like a volume bar.
+     * @param s A <code>StackPane</code> object that holds an
+     * <code>ImageView</code> object that will display a volume bar.
+     */
+    private void setupVolumeBehavior(StackPane s) {
+        // TODO Auto-generated method stub
 
     }
 

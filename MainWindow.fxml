@@ -691,7 +691,7 @@
                             <Image url="@sprites/VOL_LABEL.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <HBox prefHeight="64.0" prefWidth="792.0" spacing="68.0">
+                        <HBox fx:id="volumeBars" prefHeight="64.0" prefWidth="792.0" spacing="68.0">
                           <children>
                             <StackPane id="StackPane" alignment="BOTTOM_CENTER">
                               <children>

@@ -145,6 +145,12 @@ public class SMPFXController implements Initializable {
     @FXML
     private static HBox staffAccidentals;
 
+    /**
+     * This holds the volume bars in the program.
+     */
+    @FXML
+    private static HBox volumeBars;
+
     /** The scrollbar that moves the staff. */
     @FXML
     private static Slider scrollbar;
@@ -348,6 +354,11 @@ public class SMPFXController implements Initializable {
     /** @return The text area that contains the song name. */
     public static TextArea getSongName() {
         return songName;
+    }
+
+    /** @return The HBox that holds te volume bars. */
+    public static HBox getVolumeBars() {
+        return volumeBars;
     }
 
 }
