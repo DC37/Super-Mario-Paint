@@ -31,12 +31,12 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="228.0" spacing="14.0">
                           <children>
-                            <ImageView fitHeight="28.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fx:id="saveButton" fitHeight="28.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                 <Image url="@sprites/SAVE.png" preserveRatio="false" smooth="false" />
                               </image>
                             </ImageView>
-                            <ImageView fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fx:id="loadButton" fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                 <Image url="@sprites/LOAD.png" preserveRatio="false" smooth="false" />
                               </image>
@@ -685,13 +685,64 @@
                   <children>
                     <AnchorPane id="AnchorPane" layoutX="3.0" layoutY="-4.0">
                       <children>
-                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="64.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-3.0" />
+                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="64.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-2.0" />
                         <ImageView fitHeight="24.0" fitWidth="72.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/VOL_LABEL.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <HBox prefHeight="64.0" prefWidth="792.0" />
+                        <HBox prefHeight="64.0" prefWidth="792.0" spacing="68.0">
+                          <children>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                              <children>
+                                <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
+                              </children>
+                            </StackPane>
+                          </children>
+                          <padding>
+                            <Insets left="160.0" />
+                          </padding>
+                        </HBox>
                       </children>
                     </AnchorPane>
                   </children>

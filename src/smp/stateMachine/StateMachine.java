@@ -68,6 +68,8 @@ public class StateMachine {
      */
     public static synchronized void setState(State s) {
         currentState = s;
+        if ((Settings.debug & 0b100000) == 0b100000)
+            System.out.println(s);
     }
 
     /**
