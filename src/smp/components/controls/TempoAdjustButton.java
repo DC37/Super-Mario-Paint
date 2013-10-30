@@ -56,14 +56,6 @@ public class TempoAdjustButton extends ImagePushButton {
     @Override
     protected void reactPressed(MouseEvent event) {
         setPressed();
-        int change = 0;
-        if (isPositive)
-            change = 1;
-        else
-            change = -1;
-        double tempo = StateMachine.getTempo() + change;
-        StateMachine.setTempo(tempo);
-        currTempo.setValue(String.valueOf(tempo));
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -72,8 +64,9 @@ public class TempoAdjustButton extends ImagePushButton {
                     ch = 1;
                 else
                     ch = -1;
-                double tmp = StateMachine.getTempo() + ch;
-                StateMachine.setTempo(tmp);
+                double tempo = StateMachine.getTempo() + ch;
+                StateMachine.setTempo(tempo);
+                currTempo.setValue(String.valueOf(tempo));
             }
         });
     }
@@ -82,7 +75,6 @@ public class TempoAdjustButton extends ImagePushButton {
     @Override
     protected void reactReleased(MouseEvent event) {
         resetPressed();
-        Thread.currentThread().interrupt();
     }
 
 

@@ -92,6 +92,7 @@ public class StaffImages {
         ArrayList<StackPane> vol = new ArrayList<StackPane>();
         for (Node v : volumeBars.getChildren())
             vol.add((StackPane) v);
+        theStaff.getNoteMatrix().setVolumeBars(vol);
         for (StackPane s : vol)
             setupVolumeBehavior(s);
 
@@ -103,7 +104,6 @@ public class StaffImages {
      * <code>ImageView</code> object that will display a volume bar.
      */
     private void setupVolumeBehavior(StackPane s) {
-        // TODO Auto-generated method stub
 
     }
 

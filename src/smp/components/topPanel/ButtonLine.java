@@ -104,6 +104,7 @@ public class ButtonLine {
         try {
             chan = SoundfontLoader.getChannels();
         } catch (NullPointerException e) {
+            System.err.println("Unable to load soundfont channels.");
             System.exit(1);
         }
     }

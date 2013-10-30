@@ -181,4 +181,13 @@ public class NoteMatrix {
             redraw(i);
     }
 
+    /**
+     * This sets up the volume bars on the main window.
+     * @param vol This is the <code>ArrayList</code> of <code>StackPane</code>s
+     * that should hold volume bars.
+     */
+    public void setVolumeBars(ArrayList<StackPane> vol) {
+        volumeBars = vol;
+    }
+
 }
