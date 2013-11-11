@@ -53,6 +53,9 @@ public class Staff {
     /** This holds the notes on the staff. */
     private NoteMatrix theMatrix;
 
+    /** This keeps track of which notes are actually playing. */
+    private NoteTracker tracker;
+
     /** This is the current sequence that we have displaying on the staff. */
     private StaffSequence theSequence;
 
@@ -82,6 +85,7 @@ public class Staff {
         staffImages.setStaff(this);
         staffImages.initialize();
         animationService = new AnimationService();
+        tracker = new NoteTracker();
     }
 
 
@@ -391,6 +395,9 @@ public class Staff {
                         for (StaffNote sn : theNotes) {
                             if (!sn.isMuteNote()) {
                                 SoundfontLoader.playSound(
+                                        Values.staffNotes[sn.getPosition()].getKeyNum(),
+                                        sn.getInstrument(), sn.getAccidental());
+                                tracker.addNotePlaying(
                                         Values.staffNotes[sn.getPosition()].getKeyNum(),
                                         sn.getInstrument(), sn.getAccidental());
                             } else {
