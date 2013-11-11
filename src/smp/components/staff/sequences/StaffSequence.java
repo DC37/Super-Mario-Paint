@@ -3,7 +3,7 @@ package smp.components.staff.sequences;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import smp.components.Constants;
+import smp.components.Values;
 
 /**
  * We might not even need MIDI to do this sequencing stuff.
@@ -25,7 +25,7 @@ public class StaffSequence implements Serializable {
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
         theLines = new ArrayList<StaffNoteLine>();
-        for(int i = 0; i < Constants.DEFAULT_LINES_PER_SONG; i++)
+        for(int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
             theLines.add(new StaffNoteLine(i));
     }
 

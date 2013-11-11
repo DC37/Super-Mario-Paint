@@ -11,7 +11,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
-import smp.components.Constants;
+import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sounds.SMPSynthesizer;
@@ -93,7 +93,7 @@ public class SoundfontLoader implements Loader {
                 setLoadStatus(0.3 + 0.7
                         * ordinal / InstrumentIndex.values().length);
                 chan[ordinal].programChange(ordinal);
-                chan[ordinal].controlChange(Constants.REVERB, 0);
+                chan[ordinal].controlChange(Values.REVERB, 0);
                 ordinal++;
                 System.out.println("Initialized Instrument: "
                         + i.toString());
@@ -181,7 +181,7 @@ public class SoundfontLoader implements Loader {
      * @param acc The accidental that we are given.
      */
     public static void playSound(int i, InstrumentIndex theInd, int acc) {
-        playSound(i, theInd, acc, Constants.MAX_VELOCITY);
+        playSound(i, theInd, acc, Values.MAX_VELOCITY);
     }
 
     /**

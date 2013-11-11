@@ -3,7 +3,7 @@ package smp.components.staff;
 import java.util.ArrayList;
 
 import smp.ImageLoader;
-import smp.components.Constants;
+import smp.components.Values;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.stateMachine.StateMachine;
@@ -87,8 +87,8 @@ public class NoteMatrix {
     public StackPane[] getNote(int x, int y) {
         StackPane note;
         StackPane acc;
-        note = matrix.get(x).get(Constants.NOTES_IN_A_LINE - y - 1);
-        acc = accMatrix.get(x).get(Constants.NOTES_IN_A_LINE - y - 1);
+        note = matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
+        acc = accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
         return new StackPane[] {note, acc};
     }
 
@@ -155,7 +155,7 @@ public class NoteMatrix {
         ArrayList<StaffNote> st =
                 theStaff.getSequence().getLine(
                         currentPosition + index).getNotes();
-        for (int i = 0; i < Constants.NOTES_IN_A_LINE; i++) {
+        for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
             ObservableList<Node> ntList = nt.get(i).getChildren();
             ObservableList<Node> acList = ac.get(i).getChildren();
             ntList.clear();
@@ -177,7 +177,7 @@ public class NoteMatrix {
 
     /** Redraws the entire matrix. */
     public void redraw() {
-        for(int i = 0; i < Constants.NOTELINES_IN_THE_WINDOW; i++)
+        for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++)
             redraw(i);
     }
 

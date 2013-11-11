@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
-import smp.components.Constants;
+import smp.components.Values;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
@@ -75,8 +75,8 @@ public class Staff {
      */
     public Staff(HBox[] staffExtLines) {
         seq = new SMPSequencer();
-        theMatrix = new NoteMatrix(Constants.NOTELINES_IN_THE_WINDOW,
-                Constants.NOTES_IN_A_LINE, this);
+        theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
+                Values.NOTES_IN_A_LINE, this);
         theSequence = new StaffSequence();
         staffImages = new StaffImages(staffExtLines);
         staffImages.setStaff(this);
@@ -269,7 +269,7 @@ public class Staff {
         private void bumpHighlights(ArrayList<ImageView> playBars, int index,
                 boolean advance) {
             if (index == 0) {
-                playBars.get(Constants.NOTELINES_IN_THE_WINDOW - 1).setImage(
+                playBars.get(Values.NOTELINES_IN_THE_WINDOW - 1).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.NONE));
                 playBars.get(0).setImage(
                         ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
@@ -293,7 +293,7 @@ public class Staff {
                 @Override
                 public void run() {
                     currVal.setValue(currVal.getValue().doubleValue()
-                            + Constants.NOTELINES_IN_THE_WINDOW);
+                            + Values.NOTELINES_IN_THE_WINDOW);
                     if ((Settings.debug & 0b10000) == 0b10000)
                         System.out.println(currVal);
                 }
@@ -340,8 +340,8 @@ public class Staff {
                 do {
                     playNextLine();
                     counter++;
-                    if (counter % Constants.NOTELINES_IN_THE_WINDOW == 0) {
-                        currMeasureLine += Constants.NOTELINES_IN_THE_WINDOW;
+                    if (counter % Values.NOTELINES_IN_THE_WINDOW == 0) {
+                        currMeasureLine += Values.NOTELINES_IN_THE_WINDOW;
                     }
                     try {
                         Thread.sleep(delayMillis, delayNanos);
@@ -349,7 +349,7 @@ public class Staff {
                         // Do nothing
                     }
                 } while (songPlaying && currMeasureLine
-                        <= Constants.DEFAULT_LINES_PER_SONG);
+                        <= Values.DEFAULT_LINES_PER_SONG);
                 return null;
             }
 
@@ -360,14 +360,14 @@ public class Staff {
              */
             private void playNextLine() {
                 if (StateMachine.getMeasureLineNum() >=
-                        Constants.DEFAULT_LINES_PER_SONG
-                        - Constants.NOTELINES_IN_THE_WINDOW) {
+                        Values.DEFAULT_LINES_PER_SONG
+                        - Values.NOTELINES_IN_THE_WINDOW) {
                     songPlaying = false;
                 }
                 bumpHighlights(playBars, index, advance);
                 playSoundLine(index);
                 advance = false;
-                if (index < Constants.NOTELINES_IN_THE_WINDOW - 1) {
+                if (index < Values.NOTELINES_IN_THE_WINDOW - 1) {
                     index++;
                 } else {
                     index = 0;
@@ -390,7 +390,7 @@ public class Staff {
                         ArrayList<StaffNote> theNotes = s.getNotes();
                         for (StaffNote sn : theNotes) {
                             SoundfontLoader.playSound(
-                                    Constants.staffNotes[sn.getPosition()].getKeyNum(),
+                                    Values.staffNotes[sn.getPosition()].getKeyNum(),
                                     sn.getInstrument(), sn.getAccidental());
                         }
                     }

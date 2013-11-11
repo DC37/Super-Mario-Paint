@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.stateMachine.StateMachine;
 
@@ -51,7 +52,8 @@ public class TempoAdjustButton extends ImagePushButton {
                     public void handle(MouseEvent event) {
                         TimerTask tt = new clickHold();
                         reactPressed(event);
-                        t.scheduleAtFixedRate(tt, 100, 10);
+                        t.scheduleAtFixedRate(tt, Values.HOLDTIME,
+                                Values.REPEATTIME);
                         event.consume();
                     }
                 });

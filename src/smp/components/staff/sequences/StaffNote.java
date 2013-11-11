@@ -3,7 +3,7 @@ package smp.components.staff.sequences;
 import java.io.Serializable;
 
 import javafx.scene.image.ImageView;
-import smp.components.Constants;
+import smp.components.Values;
 import smp.components.InstrumentIndex;
 
 /**
@@ -29,7 +29,7 @@ public class StaffNote extends ImageView implements Serializable {
     private int accidental = 0;
 
     /** This is the volume of the note. */
-    private int volume = Constants.DEFAULT_VELOCITY;
+    private int volume = Values.DEFAULT_VELOCITY;
 
     /**
      * The Instrument that the note on the staff is to use.
@@ -45,7 +45,7 @@ public class StaffNote extends ImageView implements Serializable {
      * note by.
      */
     public StaffNote(InstrumentIndex theInd, int pos, int acc) {
-        this(theInd, pos, acc, Constants.HALF_VELOCITY);
+        this(theInd, pos, acc, Values.HALF_VELOCITY);
     }
 
 
@@ -104,13 +104,13 @@ public class StaffNote extends ImageView implements Serializable {
      * @param v The volume we want to set.
      */
     public void setVolume(int v) {
-        if (v >= Constants.MIN_VELOCITY && v <= Constants.MAX_VELOCITY)
+        if (v >= Values.MIN_VELOCITY && v <= Values.MAX_VELOCITY)
             volume = v;
     }
 
     @Override
     public String toString() {
-        String noteName = Constants.staffNotes[position].name();
+        String noteName = Values.staffNotes[position].name();
         String noteAcc = "";
         switch(accidental) {
         case 2:

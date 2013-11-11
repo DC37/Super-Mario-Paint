@@ -3,7 +3,7 @@ package smp.components.staff;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
-import smp.components.Constants;
+import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
@@ -169,7 +169,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 line + StateMachine.getMeasureLineNum());
 
         if (temp.isEmpty())
-            temp.setVolume(Constants.DEFAULT_VELOCITY);
+            temp.setVolume(Values.DEFAULT_VELOCITY);
 
         if (!temp.contains(theStaffNote))
             temp.add(theStaffNote);
@@ -301,7 +301,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @param acc The sharp / flat that we want to play this note at.
      */
     private static void playSound(InstrumentIndex theInd, int pos, int acc) {
-        SoundfontLoader.playSound(Constants.staffNotes[pos].getKeyNum(),
+        SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(),
                 theInd, acc);
     }
 

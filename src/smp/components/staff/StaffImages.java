@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
-import smp.components.Constants;
+import smp.components.Values;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
@@ -145,12 +145,12 @@ public class StaffImages {
             ArrayList<StackPane> notes = new ArrayList<StackPane>();
             ArrayList<StackPane> accs = new ArrayList<StackPane>();
 
-            for (int pos = 1; pos <= Constants.NOTES_IN_A_LINE; pos++) {
+            for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
                 StackPane note = (StackPane) lineOfNotes.get(pos - 1);
                 StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
                 notes.add(note);
                 accs.add(acc);
-                addListeners(note, acc, Constants.NOTES_IN_A_LINE - pos, line);
+                addListeners(note, acc, Values.NOTES_IN_A_LINE - pos, line);
             }
 
             staffMatrix.addLine(notes);
@@ -182,7 +182,7 @@ public class StaffImages {
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
         for (int i = 0; i < measureLines.size(); i++) {
-            if (i % Constants.DEFAULT_TIMESIG_BEATS == 0)
+            if (i % Values.DEFAULT_TIMESIG_BEATS == 0)
                 measureLines.get(i).setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
             else
@@ -197,7 +197,7 @@ public class StaffImages {
      */
     public void updateStaffMeasureLines(int currLine) {
         for (int i = 0; i < measureLines.size(); i++) {
-            if ((currLine + i) % Constants.DEFAULT_TIMESIG_BEATS == 0)
+            if ((currLine + i) % Values.DEFAULT_TIMESIG_BEATS == 0)
                 measureLines.get(i).setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
             else

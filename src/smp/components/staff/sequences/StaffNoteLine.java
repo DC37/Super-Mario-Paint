@@ -3,7 +3,7 @@ package smp.components.staff.sequences;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import smp.components.Constants;
+import smp.components.Values;
 
 /**
  * A line of notes on the staff. This can include
@@ -147,8 +147,8 @@ public class StaffNoteLine implements Serializable {
      * @param vol The volume that we want to set this note line to.
      */
     public void setVolume(int vol) {
-        if (volume >= Constants.MIN_VELOCITY &&
-                volume <= Constants.MAX_VELOCITY)
+        if (volume >= Values.MIN_VELOCITY &&
+                volume <= Values.MAX_VELOCITY)
             volume = vol;
     }
 

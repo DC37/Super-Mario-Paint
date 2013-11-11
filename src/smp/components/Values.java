@@ -3,12 +3,13 @@ package smp.components;
 import smp.components.staff.sequences.Note;
 
 /**
- * A constants file for holding things like default
- * window size, default modes, etc.
+ * A "constants" file for holding things like default
+ * window size, default modes, etc. These values may change
+ * over the operation of the program.
  * @author RehdBlob
  * @since 2012.08.14
  */
-public class Constants {
+public class Values {
 
     /** Default width */
     public static final int DEFAULT_WIDTH = 805;
@@ -82,6 +83,15 @@ public class Constants {
 
     /** The MIDI control channel for chorus. */
     public static final int CHORUS = 0x5D;
+
+    /**
+     * The amount of time the mouse must be held before we start repeating
+     * clicks.
+     */
+    public static final int HOLDTIME = 100;
+
+    /** The amount of time between the repetition of two mouse click events. */
+    public static final int REPEATTIME = 10;
 
     /** Array of notes that we can see on the staff. */
     public static final Note[] staffNotes = {
