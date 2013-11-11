@@ -67,6 +67,10 @@ public class SMPFXController implements Initializable {
     @FXML
     private static ImageView loop;
 
+    /** The mute button. */
+    @FXML
+    private static ImageView mute;
+
     /** This is the plus sign that increases the tempo of the song. */
     @FXML
     private static ImageView tempoPlus;
@@ -311,6 +315,13 @@ public class SMPFXController implements Initializable {
      */
     public static ImageView getLoopButton() {
         return loop;
+    }
+
+    /**
+     * @return The <code>ImageView</code> object that contains the mute button.
+     */
+    public static ImageView getMuteButton() {
+        return mute;
     }
 
     /** @return The control panel of the program. */

@@ -10,10 +10,6 @@ import smp.ImageIndex;
  */
 public enum InstrumentIndex {
 
-    /*
-     * The instruments of Super Mario Paint
-     */
-
     MARIO    (1,  ImageIndex.MARIO),
     MUSHROOM (2,  ImageIndex.MUSHROOM),
     YOSHI    (3,  ImageIndex.YOSHI),

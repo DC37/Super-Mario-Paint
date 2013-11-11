@@ -29,7 +29,6 @@ import javafx.scene.layout.StackPane;
  */
 public class NoteMatrix {
 
-
     /**
      * The list of lists that holds the different <code>StackPane</code>
      * objects.
@@ -61,15 +60,19 @@ public class NoteMatrix {
         numberOfNotes = y;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
+        volumeBars = new ArrayList<StackPane>();
     }
 
     /**
-     * Makes an empty note matrix.
+     * Makes an empty note matrix. Don't use this, as it creates
+     * a note matrix with an undefined number of rows and columns.
+     * @deprecated
      */
     public NoteMatrix(Staff s) {
         theStaff = s;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
+        volumeBars = new ArrayList<StackPane>();
     }
 
     /**

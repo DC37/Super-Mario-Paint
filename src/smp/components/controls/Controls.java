@@ -27,6 +27,9 @@ public class Controls {
     /** The pointer to the loop button on the staff. */
     private LoopButton loop;
 
+    /** The pointer to the mute button on the staff. */
+    private MuteButton mute;
+
     /** This is the slider at the bottom of the screen. */
     private Slider scrollbar;
 
@@ -91,6 +94,7 @@ public class Controls {
         play = new PlayButton(SMPFXController.getPlayButton());
         stop = new StopButton (SMPFXController.getStopButton());
         loop = new LoopButton(SMPFXController.getLoopButton());
+        mute = new MuteButton (SMPFXController.getMuteButton());
         play.link(stop);
         stop.link(play);
         play.setStaff(theStaff);

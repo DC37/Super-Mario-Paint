@@ -776,7 +776,7 @@
                         </HBox>
                         <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0">
                           <children>
-                            <HBox prefHeight="80.0" prefWidth="300.0" spacing="8.0">
+                            <HBox prefHeight="80.0" prefWidth="250.0" spacing="8.0">
                               <children>
                                 <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                   <image>
@@ -798,7 +798,18 @@
                                 <Insets left="24.0" top="32.0" />
                               </padding>
                             </HBox>
-                            <HBox prefHeight="100.0" prefWidth="200.0" />
+                            <HBox prefHeight="100.0" prefWidth="250.0">
+                              <children>
+                                <ImageView id="loop" fx:id="mute" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                    <Image url="@sprites/MUTE_RELEASED.png" preserveRatio="false" smooth="false" />
+                                  </image>
+                                </ImageView>
+                              </children>
+                              <padding>
+                                <Insets top="32.0" />
+                              </padding>
+                            </HBox>
                             <HBox id="" prefHeight="100.0" prefWidth="300.0">
                               <children>
                                 <StackPane prefHeight="100.0" prefWidth="230.0" />
