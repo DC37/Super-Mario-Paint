@@ -5,6 +5,7 @@ import smp.ImageLoader;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -77,6 +78,22 @@ public abstract class AbstractImageButton {
                         event.consume();
                     }
                 });
+        theImage.setOnDragDetected(
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        reactDragDetected(event);
+                        event.consume();
+                    }
+                });
+        theImage.setOnDragDone(
+                new EventHandler<DragEvent>() {
+                    @Override
+                    public void handle(DragEvent event) {
+                        reactDragDone(event);
+                        event.consume();
+                    }
+                });
     }
 
     /**
@@ -136,6 +153,24 @@ public abstract class AbstractImageButton {
      * @param event The event that occurred.
      */
     protected abstract void reactReleased(MouseEvent event);
+
+
+    /**
+     * This method is always called when a Drag event is detected.
+     * @param event The event that occurred.
+     */
+    protected void reactDragDetected(MouseEvent event) {
+
+    }
+
+    /**
+     * This method is always called when a Drag event is completed.
+     * @param event The event that occurred.
+     */
+    protected void reactDragDone(DragEvent event) {
+
+    }
+
 
     /**
      * Gets the images for the <code>pressed</code> and <code>notPressed</code>

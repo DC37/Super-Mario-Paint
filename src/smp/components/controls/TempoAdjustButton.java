@@ -56,25 +56,36 @@ public class TempoAdjustButton extends ImagePushButton {
     @Override
     protected void reactPressed(MouseEvent event) {
         setPressed();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                int ch = 0;
-                if (isPositive)
-                    ch = 1;
-                else
-                    ch = -1;
-                double tempo = StateMachine.getTempo() + ch;
-                StateMachine.setTempo(tempo);
-                currTempo.setValue(String.valueOf(tempo));
-            }
-        });
+        addTempo(1);
     }
 
 
     @Override
     protected void reactReleased(MouseEvent event) {
         resetPressed();
+    }
+
+
+    /**
+     * Makes it such that the application thread changes the tempo
+     * of the song.
+     * @param add The amount of tempo that you want to add. Usually
+     * an integer.
+     */
+    private void addTempo(final double add) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                double ch = 0;
+                if (isPositive)
+                    ch = add;
+                else
+                    ch = -add;
+                double tempo = StateMachine.getTempo() + ch;
+                StateMachine.setTempo(tempo);
+                currTempo.setValue(String.valueOf(tempo));
+            }
+        });
     }
 
 
