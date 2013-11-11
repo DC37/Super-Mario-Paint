@@ -31,6 +31,9 @@ public class StaffNote extends ImageView implements Serializable {
     /** This is the volume of the note. */
     private int volume = Values.DEFAULT_VELOCITY;
 
+    /** Whether this is a mute note or not. */
+    private boolean isMuteNote;
+
     /**
      * The Instrument that the note on the staff is to use.
      */
@@ -135,6 +138,18 @@ public class StaffNote extends ImageView implements Serializable {
     /** @return The instrument that this StaffNote is. */
     public InstrumentIndex getInstrument() {
         return theInstrument;
+    }
+
+    /**
+     * @return <code>True</code> if this is a normal note and not a mute note.
+     */
+    public boolean isMuteNote() {
+        return isMuteNote;
+    }
+
+    /** @param m Whether this note is a mute note or not. */
+    public void setMuteNote(boolean m) {
+        isMuteNote = m;
     }
 
 

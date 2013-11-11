@@ -37,37 +37,7 @@ public class TempoAdjustButton extends ImagePushButton {
     public TempoAdjustButton(ImageView i) {
         super(i);
         t = new Timer();
-        overrideHoldAndRelease();
 
-    }
-
-    /**
-     * Gives us some click-and-hold functionality of these tempo adjust
-     * buttons.
-     */
-    private void overrideHoldAndRelease() {
-        theImage.setOnMousePressed(
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        TimerTask tt = new clickHold();
-                        reactPressed(event);
-                        t.scheduleAtFixedRate(tt, Values.HOLDTIME,
-                                Values.REPEATTIME);
-                        event.consume();
-                    }
-                });
-
-        theImage.setOnMouseReleased(
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        reactReleased(event);
-                        t.cancel();
-                        t = new Timer();
-                        event.consume();
-                    }
-                });
     }
 
     /**
@@ -96,11 +66,16 @@ public class TempoAdjustButton extends ImagePushButton {
     protected void reactPressed(MouseEvent event) {
         setPressed();
         addTempo(1);
+        TimerTask tt = new clickHold();
+        t.schedule(tt, Values.HOLDTIME,
+                Values.REPEATTIME);
     }
 
 
     @Override
     protected void reactReleased(MouseEvent event) {
+        t.cancel();
+        t = new Timer();
         resetPressed();
     }
 

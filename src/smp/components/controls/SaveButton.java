@@ -11,6 +11,12 @@ import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
 
+/**
+ * This is the button that saves a song.
+ * @author RehdBlob
+ * @since 2013.09.28
+ *
+ */
 public class SaveButton extends ImagePushButton {
 
     /** This is the staff that we want to save a song from. */

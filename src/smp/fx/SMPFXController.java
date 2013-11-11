@@ -195,7 +195,6 @@ public class SMPFXController implements Initializable {
      * Paint GUI.
      */
     public static void initializeHandlers() {
-        /* Initialize the selected instrument handlers in the ButtonLine. */
         instBLine = new ButtonLine(instLine, selectedInst);
 
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
@@ -207,8 +206,6 @@ public class SMPFXController implements Initializable {
 
         controlPanel = new Controls(staff);
 
-        // At this point, everything should be initialized and ready to
-        // respond to user input.
     }
 
     /**
@@ -359,6 +356,13 @@ public class SMPFXController implements Initializable {
     /** @return The HBox that holds te volume bars. */
     public static HBox getVolumeBars() {
         return volumeBars;
+    }
+
+    /**
+     * @return the instBLine
+     */
+    public static ButtonLine getInstBLine() {
+        return instBLine;
     }
 
 }

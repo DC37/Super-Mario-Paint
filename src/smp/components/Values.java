@@ -88,7 +88,7 @@ public class Values {
      * The amount of time the mouse must be held before we start repeating
      * clicks.
      */
-    public static final int HOLDTIME = 100;
+    public static final int HOLDTIME = 250;
 
     /** The amount of time between the repetition of two mouse click events. */
     public static final int REPEATTIME = 10;

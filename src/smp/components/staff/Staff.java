@@ -389,9 +389,15 @@ public class Staff {
                                         (int)(currVal.doubleValue() + index));
                         ArrayList<StaffNote> theNotes = s.getNotes();
                         for (StaffNote sn : theNotes) {
-                            SoundfontLoader.playSound(
-                                    Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                    sn.getInstrument(), sn.getAccidental());
+                            if (!sn.isMuteNote()) {
+                                SoundfontLoader.playSound(
+                                        Values.staffNotes[sn.getPosition()].getKeyNum(),
+                                        sn.getInstrument(), sn.getAccidental());
+                            } else {
+                                SoundfontLoader.stopSound(
+                                        Values.staffNotes[sn.getPosition()].getKeyNum(),
+                                        sn.getInstrument(), sn.getAccidental());
+                            }
                         }
                     }
                 });

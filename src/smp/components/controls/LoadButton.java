@@ -12,6 +12,11 @@ import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
 
+/**
+ * This is the button that loads a song.
+ * @author RehdBlob
+ * @since 2013.09.28
+ */
 public class LoadButton extends ImagePushButton {
 
     /** This is the staff. */

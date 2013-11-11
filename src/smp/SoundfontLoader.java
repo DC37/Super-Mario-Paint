@@ -191,10 +191,38 @@ public class SoundfontLoader implements Loader {
      * @param i The note index we are supposed to play this note at.
      * @param theInd The InstrumentIndex.
      * @param acc The accidental that we are given.
+     * @param vel The velocity of the note that we are given.
      */
     public static void playSound(int i, InstrumentIndex theInd, int acc, int vel) {
         int ind = theInd.getChannel() - 1;
         chan[ind].noteOn(i + acc, vel);
+    }
+
+    /**
+     * Stops a certain sound given a Note and some instrument, along with the
+     * accidental we are supposed to play it with and the volume with which we are
+     * trying to play at.
+     * @param i The note index we are supposed to play this note at.
+     * @param theInd The InstrumentIndex.
+     * @param acc The accidental that we are given.
+     */
+    public static void stopSound(int i, InstrumentIndex theInd, int acc) {
+        int ind = theInd.getChannel() - 1;
+        chan[ind].noteOff(i + acc);
+    }
+
+    /**
+     * Stops a certain sound given a Note and some instrument, along with the
+     * accidental we are supposed to play it with and the volume with which we are
+     * trying to play at.
+     * @param i The note index we are supposed to play this note at.
+     * @param theInd The InstrumentIndex.
+     * @param acc The accidental that we are given.
+     * @param vel The note-off velocity.
+     */
+    public static void stopSound(int i, InstrumentIndex theInd, int acc, int vel) {
+        int ind = theInd.getChannel() - 1;
+        chan[ind].noteOff(i + acc, vel);
     }
 
 }
