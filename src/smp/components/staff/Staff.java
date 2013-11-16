@@ -400,6 +400,7 @@ public class Staff {
                                 tracker.addNotePlaying(
                                         Values.staffNotes[sn.getPosition()].getKeyNum(),
                                         sn.getInstrument(), sn.getAccidental());
+                                tracker.setNoteOn(sn.getInstrument().getChannel());
                             } else {
                                 SoundfontLoader.stopSound(
                                         Values.staffNotes[sn.getPosition()].getKeyNum(),

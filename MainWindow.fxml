@@ -776,28 +776,54 @@
                         </HBox>
                         <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0">
                           <children>
-                            <HBox prefHeight="80.0" prefWidth="250.0" spacing="8.0">
+                            <StackPane id="StackPane">
                               <children>
-                                <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                    <Image url="@sprites/STOP_PRESSED.png" preserveRatio="false" smooth="false" />
-                                  </image>
-                                </ImageView>
-                                <ImageView fx:id="play" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                    <Image url="@sprites/PLAY_RELEASED.png" preserveRatio="false" smooth="false" />
-                                  </image>
-                                </ImageView>
-                                <ImageView fx:id="loop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                    <Image url="@sprites/LOOP_RELEASED.png" preserveRatio="false" smooth="false" />
-                                  </image>
-                                </ImageView>
+                                <HBox prefHeight="80.0" prefWidth="250.0" spacing="8.0">
+                                  <children>
+                                    <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/STOP_PRESSED.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fx:id="play" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/PLAY_RELEASED.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fx:id="loop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/LOOP_RELEASED.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                  </children>
+                                  <padding>
+                                    <Insets left="24.0" top="32.0" />
+                                  </padding>
+                                </HBox>
+                                <HBox prefHeight="80.0" prefWidth="250.0" spacing="2.0">
+                                  <children>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/STOP_LABEL.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/PLAY_LABEL.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/LOOP_LABEL.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                  </children>
+                                  <padding>
+                                    <Insets left="14.0" top="20.0" />
+                                  </padding>
+                                </HBox>
                               </children>
-                              <padding>
-                                <Insets left="24.0" top="32.0" />
-                              </padding>
-                            </HBox>
+                            </StackPane>
                             <HBox prefHeight="100.0" prefWidth="250.0">
                               <children>
                                 <ImageView id="loop" fx:id="mute" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">

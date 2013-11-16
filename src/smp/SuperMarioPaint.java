@@ -124,6 +124,9 @@ public class SuperMarioPaint extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -178,7 +181,11 @@ public class SuperMarioPaint extends Application {
      */
     public static void main(String[] args) {
         if (args.length == 0) {
-            launch(args);
+            try {
+                launch(args);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (args.length > 0 && (args[0].equals("--debug")
                 || args[0].equals("--d"))) {
             if (args[1] != null) {
@@ -190,7 +197,11 @@ public class SuperMarioPaint extends Application {
             } else {
                 Settings.setDebug(1);
             }
-            launch(args);
+            try {
+                launch(args);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
