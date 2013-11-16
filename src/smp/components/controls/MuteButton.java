@@ -38,12 +38,12 @@ public class MuteButton extends ImageToggleButton {
         if (isPressed) {
             isPressed = false;
             pressImage();
-            StateMachine.setLoopPressed();
+            StateMachine.setMutePressed();
 
         } else {
             isPressed = true;
             releaseImage();
-            StateMachine.resetLoopPressed();
+            StateMachine.resetMutePressed();
         }
 
     }

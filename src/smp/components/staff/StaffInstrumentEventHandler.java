@@ -144,12 +144,22 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * going to use to place this note.
      */
     private void placeNote(InstrumentIndex theInd) {
-        playSound(theInd, position, acc);
+        boolean mute = StateMachine.isMutePressed();
+        if (!mute)
+            playSound(theInd, position, acc);
 
         theStaffNote = new StaffNote(theInd, position, acc);
-        theStaffNote.setImage(
-                ImageLoader.getSpriteFX(
-                        theInd.imageIndex()));
+
+        theStaffNote.setMuteNote(mute);
+        if (!mute) {
+            theStaffNote.setImage(
+                    ImageLoader.getSpriteFX(
+                            theInd.imageIndex()));
+        } else {
+            theStaffNote.setImage(
+                    ImageLoader.getSpriteFX(
+                            theInd.imageIndex().gray()));
+        }
 
         accidental = new StaffAccidental(theStaffNote);
         accidental.setImage(

@@ -31,6 +31,11 @@ public class Values {
     public static final int HALF_VELOCITY = 64;
 
     /**
+     * This is the smallest value a note velocity can be.
+     */
+    public static final int ZERO_VELOCITY = 0;
+
+    /**
      * The smallest value that a note velocity can be;
      * a note will basically be silent if played at this.
      */
@@ -63,6 +68,15 @@ public class Values {
      */
     public static int DEFAULT_LINES_PER_SONG = 384;
 
+    /**
+     * The amount of time the mouse must be held before we start repeating
+     * clicks.
+     */
+    public static int HOLDTIME = 250;
+
+    /** The amount of time between the repetition of two mouse click events. */
+    public static int REPEATTIME = 10;
+
     /** The number of tracks in the Mario Paint Composer song. */
     public static final int NUM_TRACKS = 19;
 
@@ -83,15 +97,6 @@ public class Values {
 
     /** The MIDI control channel for chorus. */
     public static final int CHORUS = 0x5D;
-
-    /**
-     * The amount of time the mouse must be held before we start repeating
-     * clicks.
-     */
-    public static final int HOLDTIME = 250;
-
-    /** The amount of time between the repetition of two mouse click events. */
-    public static final int REPEATTIME = 10;
 
     /** Array of notes that we can see on the staff. */
     public static final Note[] staffNotes = {

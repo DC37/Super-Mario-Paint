@@ -800,7 +800,7 @@
                                     <Insets left="24.0" top="32.0" />
                                   </padding>
                                 </HBox>
-                                <HBox prefHeight="80.0" prefWidth="250.0" spacing="2.0">
+                                <HBox mouseTransparent="true" prefHeight="80.0" prefWidth="250.0" spacing="2.0">
                                   <children>
                                     <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                       <image>

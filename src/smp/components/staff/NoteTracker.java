@@ -66,6 +66,8 @@ public class NoteTracker {
                 new PlayingNote(keyNum, instrument, accidental));
     }
 
+
+
     /**
      * This is a note that is currently playing.
      * @author RehdBlob

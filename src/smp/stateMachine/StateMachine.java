@@ -13,6 +13,9 @@ public class StateMachine {
     /** This keeps track of whether we have pressed the loop button or not. */
     private static boolean loopPressed = false;
 
+    /** This keeps track of whether we have pressed the mute button or not. */
+    private static boolean mutePressed = false;
+
     /** Flips different bits to see which keys are pressed. */
     private static int buttonPresses = 0b0;
 
@@ -217,5 +220,19 @@ public class StateMachine {
         return loopPressed;
     }
 
+    /** Sets the fact that mute notes are now enabled. */
+    public static void setMutePressed() {
+        mutePressed = true;
+    }
+
+    /** Turns off the fact that we have pressed the mute button. */
+    public static void resetMutePressed() {
+        mutePressed = false;
+    }
+
+    /** @return Whether the mute button is pressed or not. */
+    public static boolean isMutePressed() {
+        return mutePressed;
+    }
 
 }

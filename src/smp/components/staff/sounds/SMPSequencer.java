@@ -14,9 +14,7 @@ import smp.SoundfontLoader;
  * that is to be played back to the user.
  * @author RehdBlob
  * @since 2012.08.24
- *
  */
-@SuppressWarnings("unused")
 public class SMPSequencer {
 
     /**

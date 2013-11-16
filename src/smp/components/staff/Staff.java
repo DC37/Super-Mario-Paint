@@ -344,9 +344,8 @@ public class Staff {
                 do {
                     playNextLine();
                     counter++;
-                    if (counter % Values.NOTELINES_IN_THE_WINDOW == 0) {
+                    if (counter % Values.NOTELINES_IN_THE_WINDOW == 0)
                         currMeasureLine += Values.NOTELINES_IN_THE_WINDOW;
-                    }
                     try {
                         Thread.sleep(delayMillis, delayNanos);
                     } catch (InterruptedException e) {
