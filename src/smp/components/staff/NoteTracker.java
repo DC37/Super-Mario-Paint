@@ -66,6 +66,18 @@ public class NoteTracker {
                 new PlayingNote(keyNum, instrument, accidental));
     }
 
+    /**
+     * Makes new lists of notes that are playing. Use this to prevent
+     * memory leaks while using the program.
+     */
+    public void reset() {
+        channelOn.clear();
+        for (ArrayList<PlayingNote> a : notesOn)
+            a.clear();
+        for (int i = 0; i < InstrumentIndex.values().length; i++)
+            channelOn.add(false);
+    }
+
 
 
     /**

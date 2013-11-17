@@ -82,19 +82,25 @@ public class ButtonLine {
 
                         @Override
                         public void handle(MouseEvent event) {
-                            playSound(i);
-                            try {
-                                selectedInst.setImage(
-                                        ImageLoader.getSpriteFX(
-                                                ImageIndex.valueOf(
-                                                        i.toString())));
-                                setSelectedInstrument(i);
-                            } catch (IllegalArgumentException e) {
-                                e.printStackTrace();
-                            } catch (NullPointerException e) {
-                                e.printStackTrace();
-                            } finally {
+                            if (event.isShiftDown()) {
+                                toggleNoteExtension(i);
                                 event.consume();
+                            }
+                            else {
+                                playSound(i);
+                                try {
+                                    selectedInst.setImage(
+                                            ImageLoader.getSpriteFX(
+                                                    ImageIndex.valueOf(
+                                                            i.toString())));
+                                    setSelectedInstrument(i);
+                                } catch (IllegalArgumentException e) {
+                                    e.printStackTrace();
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                } finally {
+                                    event.consume();
+                                }
                             }
                         }
 
@@ -123,6 +129,15 @@ public class ButtonLine {
                         "Channel " + (ind + 1)
                         + " Instrument: " + i.name());
         }
+    }
+
+    /**
+     * Sets the selected instrument to extend mode.
+     * @param i The instrument that we are trying to set
+     * to extend.
+     */
+    private void toggleNoteExtension(InstrumentIndex i) {
+
     }
 
     /**
