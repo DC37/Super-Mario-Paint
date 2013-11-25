@@ -16,6 +16,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -123,6 +124,24 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             mouseInFrame = false;
             mouseExited(theInd);
             event.consume();
+        } else if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+            keyPressed(theInd, (KeyEvent) event);
+            event.consume();
+        }
+
+    }
+
+
+    /**
+     * Called whenever any key press happens. If it's relevant, this method
+     * manages the
+     * @param theInd The InstrumentIndex corresponding to what instrument
+     * is currently selected.
+     * @param event The key press event that was detected.
+     */
+    private void keyPressed(InstrumentIndex theInd, KeyEvent event) {
+        if (event.getCode().isArrowKey()) {
+
         }
     }
 
