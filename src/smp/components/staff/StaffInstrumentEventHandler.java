@@ -230,6 +230,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void mouseEntered(InstrumentIndex theInd) {
         StateMachine.setFocusPane(this);
+        theStaff.getNoteMatrix().setFocusPane(this);
         updateAccidental();
         silhouette.setImage(
                 ImageLoader.getSpriteFX(
@@ -361,8 +362,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /**
      * Called whenever we request a redraw of the staff.
      */
-    public void redrawReaction() {
-        System.out.println("Redraw");
+    public void redraw() {
+        mouseEntered(ButtonLine.getSelectedInstrument());
     }
 
 }

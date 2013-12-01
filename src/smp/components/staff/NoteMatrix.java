@@ -51,7 +51,7 @@ public class NoteMatrix {
     private transient Staff theStaff;
 
     /** Pointer to the current StaffInstrumentEventHandler in focus. */
-    private transient StaffInstrumentEventHandler focusHandler;
+    private transient StaffInstrumentEventHandler focusPane;
 
     /**
      * @param x The number of note lines on the current staff.
@@ -175,7 +175,7 @@ public class NoteMatrix {
     public void redraw() {
         for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++)
             redraw(i);
-        System.out.println("Test");
+        focusPane.redraw();
     }
 
     /**
@@ -185,6 +185,14 @@ public class NoteMatrix {
      */
     public void setVolumeBars(ArrayList<StackPane> vol) {
         volumeBars = vol;
+    }
+
+    /**
+     * Sets the current focused StaffInstrumentEventHandler.
+     * @param st The pane that is currently in focus.
+     */
+    public void setFocusPane(StaffInstrumentEventHandler st) {
+        focusPane = st;
     }
 
 
