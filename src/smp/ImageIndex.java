@@ -30,6 +30,7 @@ public enum ImageIndex {
     SHYGUY_SIL, BOO_SIL, LUIGI_SIL,
 
     SHARP_SIL, FLAT_SIL, DOUBLESHARP_SIL, DOUBLEFLAT_SIL,
+    VOL_BAR, VOL_BAR2,
 
     /*
      * Instruments.

@@ -1,5 +1,7 @@
 package smp.components.staff;
 
+import smp.ImageIndex;
+import smp.ImageLoader;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -28,6 +30,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     public StaffVolumeEventHandler(StackPane st) {
         stp = st;
         theVolBar = (ImageView) st.getChildren().get(0);
+        theVolBar.setImage(ImageLoader.getSpriteFX(ImageIndex.VOL_BAR));
+        theVolBar.setVisible(false);
     }
 
     @Override
@@ -43,7 +47,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     /** Called whenever the mouse is pressed. */
     private void mousePressed(MouseEvent event) {
-        setVolume(event.getSceneY());
+        setVolume(stp.getHeight() - event.getY());
     }
 
     /** Called whenever the mouse is dragged. */
@@ -61,7 +65,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * @param y The y-location of the click.
      */
     private void setVolume(double y) {
-
+        theVolBar.setVisible(true);
+        //theVolBar.setScaleY(y / stp.getHeight());
     }
 
     @Override
