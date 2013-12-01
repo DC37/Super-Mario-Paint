@@ -685,13 +685,13 @@
                   <children>
                     <AnchorPane id="AnchorPane" layoutX="3.0" layoutY="-4.0">
                       <children>
-                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="64.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-2.0" />
+                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="68.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-2.0" />
                         <ImageView fitHeight="24.0" fitWidth="72.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/VOL_LABEL.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <HBox fx:id="volumeBars" prefHeight="64.0" prefWidth="792.0" spacing="68.0">
+                        <HBox fx:id="volumeBars" alignment="TOP_CENTER" prefHeight="64.0" prefWidth="792.0" spacing="68.0">
                           <children>
                             <StackPane id="StackPane" alignment="BOTTOM_CENTER">
                               <children>
@@ -749,7 +749,7 @@
                 </Pane>
                 <Pane id="ControlsPane" prefHeight="121.0" prefWidth="798.0">
                   <children>
-                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="120.0" layoutX="3.0" layoutY="-9.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
+                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="120.0" layoutX="3.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
                     <StackPane id="controls" layoutX="14.0" layoutY="7.0">
                       <children>
                         <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">

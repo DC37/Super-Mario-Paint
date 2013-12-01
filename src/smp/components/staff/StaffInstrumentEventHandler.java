@@ -37,7 +37,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private int position;
 
     /** Whether the mouse is in the frame or not. */
-    private boolean mouseInFrame = false;
+    private boolean focus = false;
 
     /**
      * This is the list of image notes that we have. These should
@@ -116,12 +116,12 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             event.consume();
 
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            mouseInFrame = true;
+            focus = true;
             mouseEntered(theInd);
             event.consume();
 
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            mouseInFrame = false;
+            focus = false;
             mouseExited(theInd);
             event.consume();
 
@@ -264,7 +264,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * Updates how much we want to sharp / flat a note.
      */
     public void updateAccidental() {
-        if (!mouseInFrame)
+        if (!focus)
             return;
         if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
             acc = -2;
@@ -303,20 +303,25 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         if (acc != 0 && !accList.contains(accSilhouette))
             accList.add(accSilhouette);
-
+        if (acc != 0 && !theImages.contains(silhouette)) {
+            theImages.add(silhouette);
+            silhouette.setImage(ImageLoader.getSpriteFX(
+                    ButtonLine.getSelectedInstrument().
+                    imageIndex().silhouette()));
+            silhouette.setVisible(true);
+        }
         if ((Settings.debug & 0b01) == 0b01) {
-            printID();
+            System.out.println(this);
         }
     }
 
     /**
-     * Prints the line, position, and accidental of this StackPane.
+     * Called whenever we request a redraw of the staff.
      */
-    private void printID() {
-        System.out.println("Line: " + (StateMachine.getMeasureLineNum()
-                + line));
-        System.out.println("Position: " + position);
-        System.out.println("Accidental: " + acc);
+    public void redraw() {
+        InstrumentIndex ind = ButtonLine.getSelectedInstrument();
+        mouseExited(ind);
+        mouseEntered(ind);
     }
 
     /**
@@ -356,14 +361,15 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @return Whether the mouse is currently in the frame.
      */
     public boolean hasMouse() {
-        return mouseInFrame;
+        return focus;
     }
 
-    /**
-     * Called whenever we request a redraw of the staff.
-     */
-    public void redraw() {
-        mouseEntered(ButtonLine.getSelectedInstrument());
+    @Override
+    public String toString() {
+        String out = "Line: " + (StateMachine.getMeasureLineNum()
+                + line) + "\nPosition: " + position +
+                "\nAccidental: " + acc;
+        return out;
     }
 
 }

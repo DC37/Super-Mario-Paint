@@ -6,8 +6,8 @@ import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
@@ -147,9 +147,10 @@ public class NoteMatrix {
         ArrayList<StackPane> nt = matrix.get(index);
         ArrayList<StackPane> ac = accMatrix.get(index);
         int currentPosition = StateMachine.getMeasureLineNum();
-        ArrayList<StaffNote> st =
+        StaffNoteLine stl =
                 theStaff.getSequence().getLine(
-                        currentPosition + index).getNotes();
+                        currentPosition + index);
+        ArrayList<StaffNote> st = stl.getNotes();
         for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
             ObservableList<Node> ntList = nt.get(i).getChildren();
             ObservableList<Node> acList = ac.get(i).getChildren();
@@ -168,6 +169,15 @@ public class NoteMatrix {
 
             s.setVisible(true);
         }
+        setVolume(volumeBars.get(index), stl.getVolume());
+    }
+
+    /**
+     * Sets the volume of a volume bar display piece.
+     * @param st The StackPane that contains the volume bars.
+     * @param vol The volume that we want to set.
+     */
+    private void setVolume(StackPane st, int vol) {
 
     }
 
