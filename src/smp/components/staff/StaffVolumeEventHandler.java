@@ -2,6 +2,7 @@ package smp.components.staff;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.staff.sequences.StaffNoteLine;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -25,6 +26,9 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     /** The ImageView object that is this volume bar. */
     private ImageView theVolBar;
+
+    /** The StaffNoteLine that this event handler is associated with. */
+    private StaffNoteLine theLine;
 
     /** Makes a new StaffVolumeEventHandler. */
     public StaffVolumeEventHandler(StackPane st) {
@@ -66,7 +70,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      */
     private void setVolume(double y) {
         theVolBar.setVisible(true);
-        //theVolBar.setScaleY(y / stp.getHeight());
+        theVolBar.setFitHeight(y);
     }
 
     @Override
