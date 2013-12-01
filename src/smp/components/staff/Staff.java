@@ -199,7 +199,8 @@ public class Staff {
     }
 
     /**
-     * @return The staff images.
+     * @return The wrapper that holds a series of ImageView
+     * objects that are meant to display the staff measure lines.
      */
     public StaffImages getStaffImages() {
         return staffImages;

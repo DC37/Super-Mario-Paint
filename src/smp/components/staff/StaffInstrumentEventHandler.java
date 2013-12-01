@@ -63,7 +63,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * for displaying the silhouette of the sharp / flat of the note
      * that we are about to place on the staff.
      */
-    private ImageView accSilhouette = new ImageView();
+    private ImageView accSilhouette;
 
     /** The topmost image of the instrument. */
     private StaffNote theStaffNote;
@@ -106,7 +106,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     public void handle(Event event) {
         InstrumentIndex theInd =
                 ButtonLine.getSelectedInstrument();
-
+        accSilhouette = new ImageView();
+        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+            System.out.println("Keypress");
+        }
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             MouseButton b = ((MouseEvent) event).getButton();
             if (b == MouseButton.PRIMARY)
@@ -124,26 +127,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             mouseInFrame = false;
             mouseExited(theInd);
             event.consume();
-        } else if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-            keyPressed(theInd, (KeyEvent) event);
-            event.consume();
+
         }
 
     }
 
-
-    /**
-     * Called whenever any key press happens. If it's relevant, this method
-     * manages the
-     * @param theInd The InstrumentIndex corresponding to what instrument
-     * is currently selected.
-     * @param event The key press event that was detected.
-     */
-    private void keyPressed(InstrumentIndex theInd, KeyEvent event) {
-        if (event.getCode().isArrowKey()) {
-
-        }
-    }
 
     /**
      * The method that is called when the left mouse button is pressed.
@@ -316,11 +304,18 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             accList.add(accSilhouette);
 
         if ((Settings.debug & 0b01) == 0b01) {
-            System.out.println("Line: " + (StateMachine.getMeasureLineNum()
-                    + line));
-            System.out.println("Position: " + position);
-            System.out.println("Accidental: " + acc);
+            printID();
         }
+    }
+
+    /**
+     * Prints the line, position, and accidental of this StackPane.
+     */
+    private void printID() {
+        System.out.println("Line: " + (StateMachine.getMeasureLineNum()
+                + line));
+        System.out.println("Position: " + position);
+        System.out.println("Accidental: " + acc);
     }
 
     /**
@@ -354,6 +349,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     public int getLine() {
         return line;
+    }
+
+    /**
+     * @return Whether the mouse is currently in the frame.
+     */
+    public boolean hasMouse() {
+        return mouseInFrame;
     }
 
 }

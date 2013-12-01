@@ -144,6 +144,7 @@ public class StaffImages {
 
             ArrayList<StackPane> notes = new ArrayList<StackPane>();
             ArrayList<StackPane> accs = new ArrayList<StackPane>();
+            ArrayList<NotePane> notePane = new ArrayList<NotePane>();
 
             for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
                 StackPane note = (StackPane) lineOfNotes.get(pos - 1);
@@ -161,15 +162,15 @@ public class StaffImages {
     /**
      * Adds the requisite listeners to the StackPanes of the instrument
      * note matrix.
-     * @param s The StackPane that will be holding some instrument.
+     * @param stPane The StackPane that will be holding some instrument.
      * @param acc The StackPane that will be holding some sort of accidental.
      * @param pos The position that this StackPane will be associated with.
      * @param line The line that this StackPane is on.
      */
-    private void addListeners(final StackPane s, final StackPane acc,
+    private void addListeners(final StackPane stPane, final StackPane acc,
             final int pos, final int line) {
-        s.addEventHandler(MouseEvent.ANY,
-                new StaffInstrumentEventHandler(s, acc, pos, line,
+        stPane.addEventHandler(MouseEvent.ANY,
+                new StaffInstrumentEventHandler(stPane, acc, pos, line,
                         theStaff));
     }
 
@@ -197,11 +198,12 @@ public class StaffImages {
      */
     public void updateStaffMeasureLines(int currLine) {
         for (int i = 0; i < measureLines.size(); i++) {
+            ImageView currImage = measureLines.get(i);
             if ((currLine + i) % Values.DEFAULT_TIMESIG_BEATS == 0)
-                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                currImage.setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
             else
-                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                currImage.setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_LINE));
         }
     }
