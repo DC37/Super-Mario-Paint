@@ -95,6 +95,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         theImages = stPane.getChildren();
         accList = acc.getChildren();
         theStaff = s;
+        accSilhouette = new ImageView();
         if ((Settings.debug & 0b10) == 0b10) {
             System.out.println("Line: " + l);
             System.out.println("Position: " + pos);
@@ -106,10 +107,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     public void handle(Event event) {
         InstrumentIndex theInd =
                 ButtonLine.getSelectedInstrument();
-        accSilhouette = new ImageView();
-        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-            System.out.println("Keypress");
-        }
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             MouseButton b = ((MouseEvent) event).getButton();
             if (b == MouseButton.PRIMARY)
@@ -212,10 +209,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void removeNote() {
         theImages.remove(silhouette);
+        accList.remove(accSilhouette);
+
         if (!theImages.isEmpty())
             theImages.remove(theImages.size() - 1);
-
-        accList.remove(accSilhouette);
         if (!accList.isEmpty())
             accList.remove(accList.size() - 1);
 
@@ -244,6 +241,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                         Staff.switchAcc(acc).silhouette()));
         if (!accList.contains(accSilhouette))
             accList.add(accSilhouette);
+        silhouette.setVisible(true);
+        accSilhouette.setVisible(true);
     }
 
     /**
@@ -295,10 +294,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                     ImageIndex.DOUBLEFLAT_SIL));
             break;
         default:
-            accSilhouette.setImage(null);
-            accList.remove(accSilhouette);
+            accSilhouette.setVisible(false);
             break;
         }
+        if (acc != 0)
+            accSilhouette.setVisible(true);
 
         if (acc != 0 && !accList.contains(accSilhouette))
             accList.add(accSilhouette);

@@ -144,7 +144,6 @@ public class StaffImages {
 
             ArrayList<StackPane> notes = new ArrayList<StackPane>();
             ArrayList<StackPane> accs = new ArrayList<StackPane>();
-            ArrayList<NotePane> notePanes = new ArrayList<NotePane>();
 
             for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
                 StackPane note = (StackPane) lineOfNotes.get(pos - 1);
@@ -155,10 +154,8 @@ public class StaffImages {
                         new StaffInstrumentEventHandler(note, acc,
                                 Values.NOTES_IN_A_LINE - pos, line, theStaff);
                 note.addEventHandler(MouseEvent.ANY, hd);
-                notePanes.add(new NotePane(note, hd));
             }
 
-            staffMatrix.addNotePane(notePanes);
             staffMatrix.addLine(notes);
             staffMatrix.addAccLine(accs);
         }
