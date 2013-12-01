@@ -38,6 +38,9 @@ public class NoteMatrix {
     /** This is the matrix of flats / sharps / etc. */
     private ArrayList<ArrayList<StackPane>> accMatrix;
 
+    /** This is the matrix of note links. */
+    private ArrayList<ArrayList<NotePane>> npMatrix;
+
     /** This is the list of volume bars on the staff. */
     private ArrayList<StackPane> volumeBars;
 
@@ -64,18 +67,6 @@ public class NoteMatrix {
     }
 
     /**
-     * Makes an empty note matrix. Don't use this, as it creates
-     * a note matrix with an undefined number of rows and columns.
-     * @deprecated
-     */
-    public NoteMatrix(Staff s) {
-        theStaff = s;
-        matrix = new ArrayList<ArrayList<StackPane>>();
-        accMatrix = new ArrayList<ArrayList<StackPane>>();
-        volumeBars = new ArrayList<StackPane>();
-    }
-
-    /**
      * Gets you a StackPane object based on the coordinate that
      * you give this method. This method should help a lot when working
      * on those portions of code that ask the entire staff to update its
@@ -85,14 +76,17 @@ public class NoteMatrix {
      * @param y The note number.
      * @return Index 0 is the <code>StackPane</code> of the note that
      * is located at the location. Index 1 is the <code>StackPane</code>
-     * of the flat / sharp / etc box that it is associated with.
+     * of the flat / sharp / etc box that it is associated with. Index 2
+     * is the <code>NotePane</code> that this is associated with.
      */
-    public StackPane[] getNote(int x, int y) {
+    public Object[] getNote(int x, int y) {
         StackPane note;
         StackPane acc;
+        NotePane np;
         note = matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
         acc = accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
-        return new StackPane[] {note, acc};
+        np = npMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
+        return new Object[] {note, acc, np};
     }
 
     /**
@@ -122,6 +116,15 @@ public class NoteMatrix {
     }
 
     /**
+     * This adds a new line of note links to the note matrix.
+     * @param notePanes The new notePanes that we want to add into the note
+     * matrix.
+     */
+    public void addNotePane(ArrayList<NotePane> notePanes) {
+        npMatrix.add(notePanes);
+    }
+
+    /**
      * Adds a new line of accidentals into the note matrix.
      * @param newLine The line that we want to add into the accidental
      * matrix.
@@ -137,6 +140,7 @@ public class NoteMatrix {
     public void removeLine(int index) {
         matrix.remove(index);
         accMatrix.remove(index);
+        npMatrix.remove(index);
     }
 
     /**
@@ -166,13 +170,15 @@ public class NoteMatrix {
         }
 
         for (StaffNote s : st) {
-            StackPane[] noteAndAcc = getNote(index, s.getPosition());
-            noteAndAcc[0].getChildren().add(s);
+            Object[] noteAndAcc = getNote(index, s.getPosition());
+            ((StackPane)noteAndAcc[0]).getChildren().add(s);
             StaffAccidental accidental = new StaffAccidental(s);
             accidental.setImage(
                     ImageLoader.getSpriteFX(
                             Staff.switchAcc(s.getAccidental())));
-            noteAndAcc[1].getChildren().add(accidental);
+            ((StackPane)noteAndAcc[1]).getChildren().add(accidental);
+            StaffInstrumentEventHandler sth =
+                    ((NotePane)noteAndAcc[2]).getStaffInstrumentEventHandler();
             s.setVisible(true);
         }
 
@@ -192,5 +198,7 @@ public class NoteMatrix {
     public void setVolumeBars(ArrayList<StackPane> vol) {
         volumeBars = vol;
     }
+
+
 
 }

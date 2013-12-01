@@ -358,4 +358,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         return mouseInFrame;
     }
 
+    /**
+     * Called whenever we request a redraw of the staff.
+     */
+    public void redrawReaction() {
+        System.out.println("Redraw");
+    }
+
 }

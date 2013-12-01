@@ -18,6 +18,17 @@ public class NotePane {
     private StackPane thePane;
 
     /**
+     * Makes a new NotePane, linking it to the StackPane and
+     * StaffInstrumentEventHandler provided.
+     * @param st The StackPane that we're interested in.
+     * @param h The StaffInstrumentEventHandler we're interested in.
+     */
+    public NotePane(StackPane st, StaffInstrumentEventHandler h) {
+        thePane = st;
+        hd = h;
+    }
+
+    /**
      * @param s The StaffInstrumentEventHandler that we want to link with this
      * object.
      */

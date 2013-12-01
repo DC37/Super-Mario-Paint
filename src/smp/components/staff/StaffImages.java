@@ -144,34 +144,24 @@ public class StaffImages {
 
             ArrayList<StackPane> notes = new ArrayList<StackPane>();
             ArrayList<StackPane> accs = new ArrayList<StackPane>();
-            ArrayList<NotePane> notePane = new ArrayList<NotePane>();
+            ArrayList<NotePane> notePanes = new ArrayList<NotePane>();
 
             for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
                 StackPane note = (StackPane) lineOfNotes.get(pos - 1);
                 StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
                 notes.add(note);
                 accs.add(acc);
-                addListeners(note, acc, Values.NOTES_IN_A_LINE - pos, line);
+                StaffInstrumentEventHandler hd =
+                        new StaffInstrumentEventHandler(note, acc,
+                                Values.NOTES_IN_A_LINE - pos, line, theStaff);
+                note.addEventHandler(MouseEvent.ANY, hd);
+                notePanes.add(new NotePane(note, hd));
             }
 
+            staffMatrix.addNotePane(notePanes);
             staffMatrix.addLine(notes);
             staffMatrix.addAccLine(accs);
         }
-    }
-
-    /**
-     * Adds the requisite listeners to the StackPanes of the instrument
-     * note matrix.
-     * @param stPane The StackPane that will be holding some instrument.
-     * @param acc The StackPane that will be holding some sort of accidental.
-     * @param pos The position that this StackPane will be associated with.
-     * @param line The line that this StackPane is on.
-     */
-    private void addListeners(final StackPane stPane, final StackPane acc,
-            final int pos, final int line) {
-        stPane.addEventHandler(MouseEvent.ANY,
-                new StaffInstrumentEventHandler(stPane, acc, pos, line,
-                        theStaff));
     }
 
     /**
