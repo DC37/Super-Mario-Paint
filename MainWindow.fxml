@@ -691,56 +691,56 @@
                             <Image url="@sprites/VOL_LABEL.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <HBox fx:id="volumeBars" alignment="TOP_CENTER" prefHeight="64.0" prefWidth="792.0" spacing="68.0">
+                        <HBox fx:id="volumeBars" prefHeight="64.0" prefWidth="792.0">
                           <children>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
-                            <StackPane id="StackPane" alignment="BOTTOM_CENTER">
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="72.0">
                               <children>
                                 <ImageView fitWidth="4.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                             </StackPane>
                           </children>
                           <padding>
-                            <Insets left="160.0" />
+                            <Insets left="126.0" />
                           </padding>
                         </HBox>
                       </children>

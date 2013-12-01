@@ -8,6 +8,7 @@ import smp.components.Values;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -90,8 +91,12 @@ public class StaffImages {
      */
     private void initializeVolumeBars(HBox volumeBars) {
         ArrayList<StackPane> vol = new ArrayList<StackPane>();
-        for (Node v : volumeBars.getChildren())
-            vol.add((StackPane) v);
+        for (Node v : volumeBars.getChildren()) {
+            StackPane volBar = (StackPane) v;
+            vol.add(volBar);
+            volBar.addEventHandler(Event.ANY,
+                    new StaffVolumeEventHandler(volBar));
+        }
         theStaff.getNoteMatrix().setVolumeBars(vol);
         for (StackPane s : vol)
             setupVolumeBehavior(s);

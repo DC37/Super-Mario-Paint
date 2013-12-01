@@ -10,6 +10,7 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -178,7 +179,8 @@ public class NoteMatrix {
      * @param vol The volume that we want to set.
      */
     private void setVolume(StackPane st, int vol) {
-
+        ImageView i = (ImageView)st.getChildren().get(0);
+        i.scaleYProperty().set(((double)vol) / Values.MAX_VELOCITY);
     }
 
     /** Redraws the entire matrix. */
