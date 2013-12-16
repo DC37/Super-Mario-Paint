@@ -71,6 +71,23 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     private void setVolume(double y) {
         theVolBar.setVisible(true);
         theVolBar.setFitHeight(y);
+        theLine.setVolume(y);
+    }
+
+    /**
+     * Sets the StaffNoteLine that this event handler is controlling.
+     * @param s The StaffNoteLine that this handler is controlling
+     * at the moment.
+     */
+    public void setStaffNoteLine(StaffNoteLine s) {
+        theLine = s;
+    }
+
+    /**
+     * @return The StaffNoteLine that this handler is currently controlling.
+     */
+    public StaffNoteLine getStaffNoteLine() {
+        return theLine;
     }
 
     @Override

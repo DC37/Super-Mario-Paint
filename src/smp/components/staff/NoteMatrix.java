@@ -42,6 +42,9 @@ public class NoteMatrix {
     /** This is the list of volume bars on the staff. */
     private ArrayList<StackPane> volumeBars;
 
+    /** This is the list of volume bar handlers on the staff. */
+    private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
+
     /** The number of lines in this note matrix. */
     private int numberOfLines;
 
@@ -53,6 +56,8 @@ public class NoteMatrix {
 
     /** Pointer to the current StaffInstrumentEventHandler in focus. */
     private transient StaffInstrumentEventHandler focusPane;
+
+
 
     /**
      * @param x The number of note lines on the current staff.
@@ -180,7 +185,7 @@ public class NoteMatrix {
      */
     private void setVolume(StackPane st, int vol) {
         ImageView i = (ImageView)st.getChildren().get(0);
-        i.scaleYProperty().set(((double)vol) / Values.MAX_VELOCITY);
+        i.setFitHeight((double)vol / Values.MAX_VELOCITY * Values.MAX_VELOCITY);
     }
 
     /** Redraws the entire matrix. */

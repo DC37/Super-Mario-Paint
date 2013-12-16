@@ -144,12 +144,22 @@ public class StaffNoteLine implements Serializable {
     }
 
     /**
-     * @param vol The volume that we want to set this note line to.
+     * @param y The volume that we want to set this note line to.
      */
-    public void setVolume(int vol) {
+    public void setVolume(double y) {
         if (volume >= Values.MIN_VELOCITY &&
                 volume <= Values.MAX_VELOCITY)
-            volume = vol;
+            volume = (int) y;
+    }
+
+    /**
+     * @param vol A percentage (between 0 and 1) that we want
+     * to scale this volume by.
+     */
+    public void setVolumePercent(double vol) {
+        if (vol >= 0 && vol <= 1)
+            volume = (int) (vol * Values.MAX_VELOCITY);
+
     }
 
     @Override

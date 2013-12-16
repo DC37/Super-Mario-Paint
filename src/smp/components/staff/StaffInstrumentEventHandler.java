@@ -266,6 +266,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     public void updateAccidental() {
         if (!focus)
             return;
+
+
         if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
             acc = -2;
         else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
@@ -319,6 +321,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * Called whenever we request a redraw of the staff.
      */
     public void redraw() {
+        if (!focus)
+            return;
         InstrumentIndex ind = ButtonLine.getSelectedInstrument();
         mouseExited(ind);
         mouseEntered(ind);
