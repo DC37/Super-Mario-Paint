@@ -182,11 +182,15 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         StaffNoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
 
+
         if (temp.isEmpty())
             temp.setVolume(Values.DEFAULT_VELOCITY);
 
         if (!temp.contains(theStaffNote))
             temp.add(theStaffNote);
+        StaffVolumeEventHandler sveh =
+                theStaff.getNoteMatrix().getVolHandler(line);
+        sveh.updateVolume();
     }
 
 
@@ -220,6 +224,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 line + StateMachine.getMeasureLineNum());
         if (!temp.isEmpty())
             temp.remove(temp.size() - 1);
+        if (temp.isEmpty()) {
+            StaffVolumeEventHandler sveh =
+                    theStaff.getNoteMatrix().getVolHandler(line);
+            sveh.setVolumeVisible(false);
+        }
     }
 
 

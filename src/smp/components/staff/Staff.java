@@ -396,7 +396,8 @@ public class Staff {
                             if (!sn.isMuteNote()) {
                                 SoundfontLoader.playSound(
                                         Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                        sn.getInstrument(), sn.getAccidental());
+                                        sn.getInstrument(), sn.getAccidental(),
+                                        s.getVolume());
                                 tracker.addNotePlaying(
                                         Values.staffNotes[sn.getPosition()].getKeyNum(),
                                         sn.getInstrument(), sn.getAccidental());

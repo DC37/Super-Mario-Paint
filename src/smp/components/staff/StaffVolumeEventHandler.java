@@ -51,7 +51,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     /** Called whenever the mouse is pressed. */
     private void mousePressed(MouseEvent event) {
-        setVolume(stp.getHeight() - event.getY());
+        if (!theLine.getNotes().isEmpty())
+            setVolume(stp.getHeight() - event.getY());
     }
 
     /** Called whenever the mouse is dragged. */
@@ -96,8 +97,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * @param s The StaffNoteLine that this handler is controlling
      * at the moment.
      */
-    public
-    void setStaffNoteLine(StaffNoteLine s) {
+    public void setStaffNoteLine(StaffNoteLine s) {
         theLine = s;
     }
 
@@ -113,7 +113,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      */
     public void updateVolume() {
         setVolumeDisplay(theLine.getVolume());
-        if (theLine.getVolume() == 0) {
+        if (theLine.getVolume() == 0 || theLine.isEmpty()) {
             setVolumeVisible(false);
         }
     }
