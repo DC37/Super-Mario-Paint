@@ -47,5 +47,38 @@ public class StaffSequence implements Serializable {
         theLines.set(i, s);
     }
 
+    /**
+     * Adds a line into this sequence.
+     * @param s The StaffNoteLine that we want to add.
+     */
+    public void addLine(StaffNoteLine s) {
+        theLines.add(s);
+    }
+
+    /**
+     * Adds a line into this sequence.
+     * @param i The index at which we want to add this line.
+     * @param s The StaffNoteLine that we want to add.
+     */
+    public void addLine(int i, StaffNoteLine s) {
+        theLines.add(i, s);
+    }
+
+    /**
+     * Removes a line from this sequence.
+     * @param s The StaffNoteLine that we want to delete.
+     */
+    public void deleteLine(StaffNoteLine s) {
+        theLines.remove(s);
+    }
+
+    /**
+     * Removes a line from this sequence.
+     * @param i The line index we want to delete from.
+     */
+    public void deleteLine(int i) {
+        theLines.remove(i);
+    }
+
 
 }

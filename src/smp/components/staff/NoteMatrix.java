@@ -57,8 +57,6 @@ public class NoteMatrix {
     /** Pointer to the current StaffInstrumentEventHandler in focus. */
     private transient StaffInstrumentEventHandler focusPane;
 
-
-
     /**
      * @param x The number of note lines on the current staff.
      * @param y The number of addressable notes in a line.
@@ -70,6 +68,7 @@ public class NoteMatrix {
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
         volumeBars = new ArrayList<StackPane>();
+        volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
     }
 
     /**
@@ -145,18 +144,30 @@ public class NoteMatrix {
         return matrix.get(index);
     }
 
+    /** Redraws the entire matrix. */
+    public void redraw() {
+        for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++)
+            redraw(i);
+        focusPane.redraw();
+    }
+
     /**
      * Re-draws a certain line in this matrix.
      * @param index The index at which we want to redraw.
      */
-    public void redraw(int index) {
+    private void redraw(int index) {
         ArrayList<StackPane> nt = matrix.get(index);
         ArrayList<StackPane> ac = accMatrix.get(index);
+        StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
         int currentPosition = StateMachine.getMeasureLineNum();
+
         StaffNoteLine stl =
                 theStaff.getSequence().getLine(
                         currentPosition + index);
+        sveh.setStaffNoteLine(stl);
+        sveh.updateVolume();
         ArrayList<StaffNote> st = stl.getNotes();
+
         for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
             ObservableList<Node> ntList = nt.get(i).getChildren();
             ObservableList<Node> acList = ac.get(i).getChildren();
@@ -175,25 +186,9 @@ public class NoteMatrix {
 
             s.setVisible(true);
         }
-        setVolume(volumeBars.get(index), stl.getVolume());
     }
 
-    /**
-     * Sets the volume of a volume bar display piece.
-     * @param st The StackPane that contains the volume bars.
-     * @param vol The volume that we want to set.
-     */
-    private void setVolume(StackPane st, int vol) {
-        ImageView i = (ImageView)st.getChildren().get(0);
-        i.setFitHeight((double)vol / Values.MAX_VELOCITY * Values.MAX_VELOCITY);
-    }
 
-    /** Redraws the entire matrix. */
-    public void redraw() {
-        for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++)
-            redraw(i);
-        focusPane.redraw();
-    }
 
     /**
      * This sets up the volume bars on the main window.
@@ -205,12 +200,30 @@ public class NoteMatrix {
     }
 
     /**
+     * Adds a StaffVolumeEventHandler to the list of tracked things.
+     * @param sveh The StaffVolumeEventHandler that we want to add.
+     */
+    public void addVolHandler(StaffVolumeEventHandler sveh) {
+        volumeBarHandlers.add(sveh);
+    }
+
+    /**
+     * @param index The index that we want to query.
+     * @return Some StaffVolumeEventHandler hopefully.
+     */
+    public StaffVolumeEventHandler getVolHandler(int index) {
+        return volumeBarHandlers.get(index);
+    }
+
+    /**
      * Sets the current focused StaffInstrumentEventHandler.
      * @param st The pane that is currently in focus.
      */
     public void setFocusPane(StaffInstrumentEventHandler st) {
         focusPane = st;
     }
+
+
 
 
 

@@ -75,11 +75,29 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     }
 
     /**
+     * Displays the volume of this note line.
+     * @param y The volume that we want to show.
+     */
+    public void setVolumeDisplay(double y) {
+        theVolBar.setVisible(true);
+        theVolBar.setFitHeight(y);
+    }
+
+    /**
+     * Do we actually want this volume bar to be visible?
+     * @param b Whether this volume bar is visible or not.
+     */
+    public void setVolumeVisible(boolean b) {
+        theVolBar.setVisible(b);
+    }
+
+    /**
      * Sets the StaffNoteLine that this event handler is controlling.
      * @param s The StaffNoteLine that this handler is controlling
      * at the moment.
      */
-    public void setStaffNoteLine(StaffNoteLine s) {
+    public
+    void setStaffNoteLine(StaffNoteLine s) {
         theLine = s;
     }
 
@@ -90,9 +108,21 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         return theLine;
     }
 
+    /**
+     * Updates the volume display on this volume displayer.
+     */
+    public void updateVolume() {
+        setVolumeDisplay(theLine.getVolume());
+        if (theLine.getVolume() == 0) {
+            setVolumeVisible(false);
+        }
+    }
+
     @Override
     public String toString() {
         return "Line: " + line;
     }
+
+
 
 }

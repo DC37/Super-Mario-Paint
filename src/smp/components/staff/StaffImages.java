@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.Values;
+import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
@@ -76,12 +77,24 @@ public class StaffImages {
     public void initialize() {
 
         initializeStaffMeasureLines(SMPFXController.getStaffMeasureLines());
-        initalizeStaffPlayBars(SMPFXController.getStaffPlayBars());
+        initializeStaffPlayBars(SMPFXController.getStaffPlayBars());
         initializeStaffMeasureNums(SMPFXController.getStaffMeasureNums());
         initializeStaffInstruments(SMPFXController.getStaffInstruments(),
                 SMPFXController.getStaffAccidentals());
         initializeVolumeBars(SMPFXController.getVolumeBars());
+        initializeVolumeBarLinks();
+    }
 
+    /**
+     * Sets up the links between the volume bars display and StaffNoteLines.
+     */
+    private void initializeVolumeBarLinks() {
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            StaffVolumeEventHandler sveh =
+                    theStaff.getNoteMatrix().getVolHandler(i);
+            StaffNoteLine stl = theStaff.getSequence().getLine(i);
+            sveh.setStaffNoteLine(stl);
+        }
     }
 
     /**
@@ -94,21 +107,11 @@ public class StaffImages {
         for (Node v : volumeBars.getChildren()) {
             StackPane volBar = (StackPane) v;
             vol.add(volBar);
-            volBar.addEventHandler(Event.ANY,
-                    new StaffVolumeEventHandler(volBar));
+            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar);
+            volBar.addEventHandler(Event.ANY, sveh);
+            theStaff.getNoteMatrix().addVolHandler(sveh);
         }
         theStaff.getNoteMatrix().setVolumeBars(vol);
-        for (StackPane s : vol)
-            setupVolumeBehavior(s);
-
-    }
-
-    /**
-     * Makes the <code>StackPane</code> actually behave like a volume bar.
-     * @param s A <code>StackPane</code> object that holds an
-     * <code>ImageView</code> object that will display a volume bar.
-     */
-    private void setupVolumeBehavior(StackPane s) {
 
     }
 
@@ -205,7 +208,7 @@ public class StaffImages {
      * @param staffPlayBars The bars that move to highlight different
      * notes.
      */
-    private void initalizeStaffPlayBars(HBox playBars) {
+    private void initializeStaffPlayBars(HBox playBars) {
         staffPlayBars = new ArrayList<ImageView>();
         for (Node n : playBars.getChildren())
             staffPlayBars.add((ImageView) n);
