@@ -7,9 +7,9 @@ Project started: August 7, 2012
 Author: RehdBlob  
 Version: 1.00  
 
-Now accepting cryptocurrency donations!
-Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL
-Litecoin: (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia
+Now accepting cryptocurrency donations!  
+Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
+Litecoin: (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia  
 
 
 Tasklist:
