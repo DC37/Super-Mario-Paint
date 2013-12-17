@@ -83,7 +83,8 @@ public class StaffNote extends ImageView implements Serializable {
             StaffNote other = (StaffNote) o;
             return other.position == position &&
                     other.theInstrument == theInstrument &&
-                    other.accidental == accidental;
+                    other.accidental == accidental &&
+                    other.isMuteNote == isMuteNote;
         }
     }
 

@@ -183,8 +183,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 line + StateMachine.getMeasureLineNum());
 
 
-        if (temp.isEmpty())
-            temp.setVolume(Values.DEFAULT_VELOCITY);
+        if (temp.isEmpty()) {
+            temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY) /
+                    Values.MAX_VELOCITY);
+
+        }
 
         if (!temp.contains(theStaffNote))
             temp.add(theStaffNote);

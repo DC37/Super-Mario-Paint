@@ -159,7 +159,13 @@ public class StaffNoteLine implements Serializable {
     public void setVolumePercent(double vol) {
         if (vol >= 0 && vol <= 1)
             volume = (int) (vol * Values.MAX_VELOCITY);
+    }
 
+    /**
+     * @return The percent volume of this StaffNoteLine.
+     */
+    public double getVolumePercent() {
+        return ((double) volume) / Values.MAX_VELOCITY;
     }
 
     @Override

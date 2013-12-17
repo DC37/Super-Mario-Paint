@@ -96,6 +96,10 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * @param y The volume that we want to show.
      */
     public void setVolumeDisplay(double y) {
+        if (y <= 0) {
+            theVolBar.setVisible(false);
+            return;
+        }
         theVolBar.setVisible(true);
         theVolBar.setFitHeight(y);
     }
@@ -128,7 +132,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * Updates the volume display on this volume displayer.
      */
     public void updateVolume() {
-        setVolumeDisplay(theLine.getVolume());
+        setVolumeDisplay(theLine.getVolumePercent() * stp.getHeight());
         if (theLine.getVolume() == 0 || theLine.isEmpty()) {
             setVolumeVisible(false);
         }
