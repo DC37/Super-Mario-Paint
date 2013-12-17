@@ -30,11 +30,11 @@ Tasklist:
 * Play, stop, and loop buttons are able to be pressed (done - August 29, 2013)
 * Play and stop buttons start and stop the song (done - September 28, 2013)
 * Play back notes on the staff reliably (done - September 28, 2013)
-* Save songs (done - September 28, 2013)
-* Load songs
-* Volume bars implemented
+* Release to a small test group (v0.70-0.73 - Mario Paint Hangout - ongoing)
+* Volume bars implemented (done - December 17, 2013)
+* Save & Load songs
+* Release to a smallish test group (v0.9 - **Alpha Release** - Scheduled December 25, 2013)
 * Loop button loops the song
-* Release to a small test group
 * Splash screen is actually a splash screen
 * Splash screen animation and other extras
 * Primary stage done
