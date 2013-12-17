@@ -2,6 +2,7 @@ package smp.components.staff;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -51,8 +52,16 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     /** Called whenever the mouse is pressed. */
     private void mousePressed(MouseEvent event) {
-        if (!theLine.getNotes().isEmpty())
-            setVolume(stp.getHeight() - event.getY());
+        if (!theLine.getNotes().isEmpty()) {
+            double h = stp.getHeight() - event.getY();
+            setVolumeDisplay(h);
+            try {
+                setVolumePercent(h / stp.getHeight());
+            } catch (IllegalArgumentException e) {
+                setVolume(Values.MAX_VELOCITY);
+                setVolumeDisplay(stp.getHeight());
+            }
+        }
     }
 
     /** Called whenever the mouse is dragged. */
@@ -70,9 +79,16 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * @param y The y-location of the click.
      */
     private void setVolume(double y) {
-        theVolBar.setVisible(true);
-        theVolBar.setFitHeight(y);
         theLine.setVolume(y);
+    }
+
+    /**
+     * Sets the volume of this note based on the y location of the click.
+     * @param y The percent we want to set this note line at. Should be
+     * between 0 and 1.
+     */
+    private void setVolumePercent(double y) throws IllegalArgumentException {
+        theLine.setVolumePercent(y);
     }
 
     /**

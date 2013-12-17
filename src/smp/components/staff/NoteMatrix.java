@@ -156,25 +156,54 @@ public class NoteMatrix {
      * @param index The index at which we want to redraw.
      */
     private void redraw(int index) {
-        ArrayList<StackPane> nt = matrix.get(index);
-        ArrayList<StackPane> ac = accMatrix.get(index);
+
         StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
         int currentPosition = StateMachine.getMeasureLineNum();
 
         StaffNoteLine stl =
                 theStaff.getSequence().getLine(
                         currentPosition + index);
+
+        updateVolumeDisplay(sveh, stl);
+        clearNoteDisplay(index);
+        populateNoteDisplay(stl, index);
+
+
+
+    }
+
+    /**
+     * Updates the volume display.
+     * @param sveh The StaffVolumeEventHandler that we're dealing with.
+     * @param stl The StaffNoteLine that we're dealing with.
+     */
+    private void updateVolumeDisplay(StaffVolumeEventHandler sveh, StaffNoteLine stl) {
         sveh.setStaffNoteLine(stl);
         sveh.updateVolume();
-        ArrayList<StaffNote> st = stl.getNotes();
+    }
 
+    /**
+     * Clears the note display on the staff.
+     * @param index The index that we are clearing.
+     */
+    private void clearNoteDisplay(int index) {
+        ArrayList<StackPane> nt = matrix.get(index);
+        ArrayList<StackPane> ac = accMatrix.get(index);
         for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
             ObservableList<Node> ntList = nt.get(i).getChildren();
             ObservableList<Node> acList = ac.get(i).getChildren();
             ntList.clear();
             acList.clear();
         }
+    }
 
+    /**
+     * Repopulates the note display on the staff.
+     * @param stl The StaffNoteLine that we are interested in.
+     * @param index The index to repopulate.
+     */
+    private void populateNoteDisplay(StaffNoteLine stl, int index) {
+        ArrayList<StaffNote> st = stl.getNotes();
         for (StaffNote s : st) {
             StackPane[] noteAndAcc = getNote(index, s.getPosition());
             noteAndAcc[0].getChildren().add(s);
@@ -187,8 +216,6 @@ public class NoteMatrix {
             s.setVisible(true);
         }
     }
-
-
 
     /**
      * This sets up the volume bars on the main window.
