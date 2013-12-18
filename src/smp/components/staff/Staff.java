@@ -13,6 +13,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Values;
+import smp.components.controls.Controls;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
@@ -38,11 +39,17 @@ public class Staff {
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
 
+    /** This is the last line of notes in the song. */
+    private int lastLine;
+
     /** Whether we need to shift the staff by some amount. */
     private boolean shift = false;
 
     /** This is the current line that we are at. */
     private DoubleProperty currVal;
+
+    /** These are the play button, stop button, etc. */
+    private Controls theControls;
 
     /**
      * The wrapper that holds a series of ImageView objects that are meant to
@@ -134,12 +141,29 @@ public class Staff {
 
     /**
      * Begins animation of the Staff.
-
      */
     public void startSong() {
+        lastLine = findLastLine();
+        if (lastLine == 0 && theSequence.getLine(0).isEmpty()) {
+            theControls.getStopButton().reactPressed(null);
+            return;
+        }
         songPlaying = true;
         setTempo(StateMachine.getTempo());
-        animationService.start();
+        animationService.restart();
+    }
+
+    /**
+     * Finds the last line in the sequence that we are playing.
+     */
+    private int findLastLine() {
+        ArrayList<StaffNoteLine> lines = theSequence.getTheLines();
+        for (int i = lines.size() - 1; i >= 0; i--) {
+            if (!lines.get(i).isEmpty()) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -204,6 +228,14 @@ public class Staff {
      */
     public StaffImages getStaffImages() {
         return staffImages;
+    }
+
+    /**
+     * Sets the control panel for this staff.
+     * @param s The control panel we want to set.
+     */
+    public void setControlPanel(Controls s) {
+        theControls = s;
     }
 
     /**
@@ -273,21 +305,18 @@ public class Staff {
          */
         private void bumpHighlights(ArrayList<ImageView> playBars, int index,
                 boolean advance) {
-            if (index == 0) {
-                playBars.get(Values.NOTELINES_IN_THE_WINDOW - 1).setImage(
+            for (ImageView i : playBars) {
+                i.setImage(
                         ImageLoader.getSpriteFX(ImageIndex.NONE));
-                playBars.get(0).setImage(
-                        ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
-                if (advance) {
-                    shiftStaff();
-                }
-            } else {
-                playBars.get(index - 1).setImage(ImageLoader.getSpriteFX(
-                        ImageIndex.NONE));
-                playBars.get(index).setImage(
-                        ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
             }
+            playBars.get(index).setImage(
+                    ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+            if (advance) {
+                shiftStaff();
+            }
+
         }
+
 
         /**
          * Shifts the staff over by the number of note lines in the window.
@@ -299,6 +328,23 @@ public class Staff {
                 public void run() {
                     currVal.setValue(currVal.getValue().doubleValue()
                             + Values.NOTELINES_IN_THE_WINDOW);
+                    if ((Settings.debug & 0b10000) == 0b10000)
+                        System.out.println(currVal);
+                }
+
+            });
+
+        }
+
+        /**
+         * Sets the staff position to zero.
+         */
+        private void zeroStaff() {
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    currVal.setValue(0);
                     if ((Settings.debug & 0b10000) == 0b10000)
                         System.out.println(currVal);
                 }
@@ -347,6 +393,16 @@ public class Staff {
                     counter++;
                     if (counter % Values.NOTELINES_IN_THE_WINDOW == 0)
                         currMeasureLine += Values.NOTELINES_IN_THE_WINDOW;
+                    if (counter % 4 == 0 && counter >= lastLine) {
+                        if (StateMachine.isLoopPressed()) {
+                            currMeasureLine = 0;
+                            counter = 0;
+                            index = 0;
+                            zeroStaff();
+                        } else {
+                            songPlaying = false;
+                        }
+                    }
                     try {
                         Thread.sleep(delayMillis, delayNanos);
                     } catch (InterruptedException e) {
@@ -354,8 +410,24 @@ public class Staff {
                     }
                 } while (songPlaying && currMeasureLine
                         <= Values.DEFAULT_LINES_PER_SONG);
-                return null;
+                highlightsOff();
+                hitStop();
+                return theMatrix.getStaff();
             }
+
+            /** Turns off all highlights in the play bars in the staff. */
+            private void highlightsOff() {
+                for(ImageView i : playBars) {
+                    i.setImage(ImageLoader.getSpriteFX(
+                            ImageIndex.NONE));
+                }
+            }
+
+            /** Hits the stop button for the song. */
+            private void hitStop() {
+                theControls.getStopButton().reactPressed(null);
+            }
+
 
             /**
              * Plays the next line of notes in the queue. For ease-of-programming

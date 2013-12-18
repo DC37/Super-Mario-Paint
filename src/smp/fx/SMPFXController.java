@@ -214,6 +214,8 @@ public class SMPFXController implements Initializable {
 
         controlPanel = new Controls(staff);
 
+        staff.setControlPanel(controlPanel);
+
     }
 
     /**

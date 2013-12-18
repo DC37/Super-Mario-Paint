@@ -151,15 +151,14 @@ public class Controls {
 
     }
 
-    /** Starts the song. */
-    public void play() {
-        if (StateMachine.getState() == State.EDITING);
-
+    /** @return The play button of the controls set. */
+    public PlayButton getPlayButton() {
+        return play;
     }
 
-    /** Stops the song. */
-    public void stop() {
-
+    /** @return The stop button of the controls set. */
+    public StopButton getStopButton() {
+        return stop;
     }
 
     /**

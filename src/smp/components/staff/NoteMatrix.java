@@ -259,6 +259,10 @@ public class NoteMatrix {
         focusPane = st;
     }
 
+    /** @return The staff that this NoteMatrix is linked to. */
+    public Staff getStaff() {
+        return theStaff;
+    }
 
 
 

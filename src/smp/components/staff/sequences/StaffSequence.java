@@ -39,6 +39,13 @@ public class StaffSequence implements Serializable {
     }
 
     /**
+     * @return The entire list of the StaffNoteLines of this song.
+     */
+    public ArrayList<StaffNoteLine> getTheLines() {
+        return theLines;
+    }
+
+    /**
      * @param i The index that we want to modify.
      * @param s The StaffNoteLine that we want to place at this
      * index.
