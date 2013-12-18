@@ -36,7 +36,7 @@ Tasklist:
 * Play back notes on the staff reliably (done - September 28, 2013)
 * Release to a small test group (v0.70-0.73 - Mario Paint Hangout - ongoing)
 * Volume bars implemented (done - December 17, 2013)
-* Save & Load songs
+* Save & Load songs (done - December 18, 2013)
 * Loop button loops the song
 * End-of-File Behaviour fix
 * Release to a smallish test group (v0.9 - **Alpha Release** - Scheduled December 25, 2013)
