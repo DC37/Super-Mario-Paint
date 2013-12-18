@@ -41,7 +41,7 @@
                                 <Image url="@sprites/LOAD.png" preserveRatio="false" smooth="false" />
                               </image>
                             </ImageView>
-                            <ImageView fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fx:id="newButton" fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                 <Image url="@sprites/NEW_SONG.png" preserveRatio="false" smooth="false" />
                               </image>

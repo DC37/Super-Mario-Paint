@@ -148,7 +148,8 @@ public class NoteMatrix {
     public void redraw() {
         for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++)
             redraw(i);
-        focusPane.redraw();
+        if (focusPane != null)
+            focusPane.redraw();
     }
 
     /**
@@ -212,6 +213,14 @@ public class NoteMatrix {
                     ImageLoader.getSpriteFX(
                             Staff.switchAcc(s.getAccidental())));
             noteAndAcc[1].getChildren().add(accidental);
+
+            if (!s.isMuteNote()) {
+                s.setImage(ImageLoader.getSpriteFX(
+                        s.getInstrument().imageIndex()));
+            } else {
+                s.setImage(ImageLoader.getSpriteFX(
+                        s.getInstrument().imageIndex().gray()));
+            }
 
             s.setVisible(true);
         }

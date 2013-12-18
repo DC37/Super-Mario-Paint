@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
+import smp.components.Values;
+
 /**
  * The Mario Paint Synthesizer class. Holds multiple SoftSynthesizers
  * like the MultiSynthesizer class, but happens to skip channel 10 because
@@ -35,13 +37,13 @@ public class SMPSynthesizer extends MultiSynthesizer {
         ArrayList<MidiChannel> rem = new ArrayList<MidiChannel>();
         int ordinal = 1;
         for (MidiChannel m : oldC) {
-            if (ordinal == 10) {
+            if (ordinal == Values.DRUMCHANNEL) {
                 ordinal++;
                 continue;
             } else {
                 rem.add(m);
                 ordinal++;
-                if (ordinal > 16)
+                if (ordinal > Values.MIDICHANNELS)
                     ordinal = 1;
             }
         }

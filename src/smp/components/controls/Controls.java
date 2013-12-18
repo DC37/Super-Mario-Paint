@@ -64,6 +64,15 @@ public class Controls {
         initializeTempoButtons();
         currTempo.setValue(String.valueOf(StateMachine.getTempo()));
         initializeLoadSaveButtons();
+        initializeNewButton();
+    }
+
+    /**
+     * Initializes the new song button.
+     */
+    private void initializeNewButton() {
+        NewButton n = new NewButton(SMPFXController.getNewButton());
+        n.setStaff(theStaff);
     }
 
     /** Initializes the load and save buttons which allow one to keep songs. */

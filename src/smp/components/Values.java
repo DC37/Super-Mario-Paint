@@ -98,6 +98,12 @@ public class Values {
     /** The MIDI control channel for chorus. */
     public static final int CHORUS = 0x5D;
 
+    /** The number of MIDI channels that exist. */
+    public static final int MIDICHANNELS = 16;
+
+    /** The channel that is reserved for drums in MIDI. */
+    public static final int DRUMCHANNEL = 10;
+
     /** Array of notes that we can see on the staff. */
     public static final Note[] staffNotes = {
         Note.A2, Note.B2, Note.C3, Note.D3, Note.E3, Note.F3, Note.G3,

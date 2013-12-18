@@ -91,6 +91,10 @@ public class SMPFXController implements Initializable {
     @FXML
     private static ImageView saveButton;
 
+    /** The button that makes a new song. */
+    @FXML
+    private static ImageView newButton;
+
     /** This is the text area that houses the song name. */
     @FXML
     private static TextArea songName;
@@ -357,6 +361,11 @@ public class SMPFXController implements Initializable {
     /** @return The save button. */
     public static ImageView getSaveButton() {
         return saveButton;
+    }
+
+    /** @return The new song button. */
+    public static ImageView getNewButton() {
+        return newButton;
     }
 
     /** @return The text area that contains the song name. */
