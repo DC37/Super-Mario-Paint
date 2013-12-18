@@ -131,6 +131,16 @@ public class SuperMarioPaint extends Application {
     }
 
     /**
+     * Protip for JavaFX users: Make sure you define your application
+     * close behavior.
+     */
+    @Override
+    public void stop() {
+        System.exit(0);
+    }
+
+
+    /**
      * Creates the keyboard listeners that we will be using for various
      * other portions of the program. Ctrl, alt, and shift are of interest
      * here, but the arrow keys will also be considered.

@@ -1,5 +1,7 @@
 package smp.components.staff;
 
+import java.util.ArrayList;
+
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
@@ -225,8 +227,18 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         StaffNoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
-        if (!temp.isEmpty())
-            temp.remove(temp.size() - 1);
+
+        if (!temp.isEmpty()) {
+            ArrayList<StaffNote> nt = temp.getNotes();
+            for(int i = 0; i < nt.size(); i++) {
+                StaffNote s = nt.get(i);
+                if (s.getPosition() == position) {
+                    nt.remove(i);
+                    break;
+                }
+            }
+        }
+
         if (temp.isEmpty()) {
             StaffVolumeEventHandler sveh =
                     theStaff.getNoteMatrix().getVolHandler(line);

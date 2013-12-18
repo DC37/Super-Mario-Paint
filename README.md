@@ -9,7 +9,7 @@ Version: 1.00
 
 Now accepting cryptocurrency donations!  
 Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
-Litecoin: (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia  
+Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia  
 
 
 Tasklist:
@@ -37,14 +37,19 @@ Tasklist:
 * Release to a small test group (v0.70-0.73 - Mario Paint Hangout - ongoing)
 * Volume bars implemented (done - December 17, 2013)
 * Save & Load songs
-* Release to a smallish test group (v0.9 - **Alpha Release** - Scheduled December 25, 2013)
 * Loop button loops the song
+* End-of-File Behaviour fix
+* Release to a smallish test group (v0.9 - **Alpha Release** - Scheduled December 25, 2013)
+* Measure line numbers
+* Staff extension lines
 * Splash screen is actually a splash screen
 * Splash screen animation and other extras
 * Primary stage done
 * Options dialog
 * Arranger mode
+* Release to a medium test group (v0.95 - **Beta Release** - Release date unknown)
 * Import MPC songs
 * Bookmarks
 * Speedmarks
 * Import AMS songs
+* Release SMP v1.00
