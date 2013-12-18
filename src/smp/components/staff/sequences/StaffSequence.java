@@ -19,6 +19,11 @@ public class StaffSequence implements Serializable {
      */
     private static final long serialVersionUID = 5752285850525402081L;
 
+    /**
+     * The tempo of this sequence.
+     */
+    private double tempo = Values.DEFAULT_TEMPO;
+
     /** These are all of the lines on the staff. */
     private ArrayList<StaffNoteLine> theLines;
 
@@ -87,5 +92,17 @@ public class StaffSequence implements Serializable {
         theLines.remove(i);
     }
 
+    /** @return The tempo of this sequence. */
+    public double getTempo() {
+        return tempo;
+    }
+
+    /**
+     * Sets the tempo of this sequence.
+     * @param t The tempo of this sequence.
+     */
+    public void setTempo(double t) {
+        tempo = t;
+    }
 
 }

@@ -239,6 +239,13 @@ public class Staff {
     }
 
     /**
+     * @return The control panel.
+     */
+    public Controls getControlPanel() {
+        return theControls;
+    }
+
+    /**
      * @param acc The offset that we are deciding upon.
      * @return An <code>ImageIndex</code> based on the amount of
      * sharp or flat we want to implement.

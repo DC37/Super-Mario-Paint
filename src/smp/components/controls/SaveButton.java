@@ -9,7 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
+import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
+import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that saves a song.
@@ -58,7 +60,9 @@ public class SaveButton extends ImagePushButton {
                     FileOutputStream("./" + outputFile);
             ObjectOutputStream o_out = new
                     ObjectOutputStream(f_out);
-            o_out.writeObject(theStaff.getSequence());
+            StaffSequence out = theStaff.getSequence();
+            out.setTempo(StateMachine.getTempo());
+            o_out.writeObject(out);
             o_out.close();
             f_out.close();
 

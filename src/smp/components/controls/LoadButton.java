@@ -11,6 +11,7 @@ import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
+import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that loads a song.
@@ -57,9 +58,11 @@ public class LoadButton extends ImagePushButton {
             FileInputStream f_in = new
                     FileInputStream (outputFile);
             ObjectInputStream o_in = new
-                    ObjectInputStream(f_in);
+            ObjectInputStream(f_in);
             StaffSequence loaded = (StaffSequence) o_in.readObject();
             theStaff.setSequence(loaded);
+            StateMachine.setTempo(loaded.getTempo());
+            theStaff.getControlPanel().updateCurrTempo();
             theStaff.getNoteMatrix().redraw();
             o_in.close();
             f_in.close();

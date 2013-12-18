@@ -176,4 +176,9 @@ public class Controls {
         return scrollbar;
     }
 
+    /** Updates the current tempo. */
+    public void updateCurrTempo() {
+        currTempo.setValue(String.valueOf(StateMachine.getTempo()));
+    }
+
 }

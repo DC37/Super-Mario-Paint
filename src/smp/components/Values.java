@@ -68,6 +68,9 @@ public class Values {
      */
     public static int DEFAULT_LINES_PER_SONG = 384;
 
+    /** The default speed. */
+    public static int DEFAULT_TEMPO = 400;
+
     /**
      * The amount of time the mouse must be held before we start repeating
      * clicks.

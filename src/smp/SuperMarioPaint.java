@@ -29,7 +29,7 @@ import smp.stateMachine.StateMachine;
  * The GUI is primarily written with JavaFX2.2. <br>
  * @author RehdBlob
  * @since 2012.08.16
- * @version 1.00
+ * @version 0.85
  */
 public class SuperMarioPaint extends Application {
 
