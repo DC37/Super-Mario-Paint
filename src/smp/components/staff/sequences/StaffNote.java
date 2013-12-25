@@ -112,6 +112,23 @@ public class StaffNote extends ImageView implements Serializable {
             volume = v;
     }
 
+    /** @return The instrument that this StaffNote is. */
+    public InstrumentIndex getInstrument() {
+        return theInstrument;
+    }
+
+    /**
+     * @return <code>True</code> if this is a normal note and not a mute note.
+     */
+    public boolean isMuteNote() {
+        return isMuteNote;
+    }
+
+    /** @param m Whether this note is a mute note or not. */
+    public void setMuteNote(boolean m) {
+        isMuteNote = m;
+    }
+
     @Override
     public String toString() {
         String noteName = Values.staffNotes[position].name();
@@ -133,25 +150,9 @@ public class StaffNote extends ImageView implements Serializable {
             break;
 
         }
-        return theInstrument.toString() + " " + noteName + noteAcc;
+        return isMuteNote ?
+                theInstrument.toString() + " " + noteName + noteAcc + "m" :
+                    theInstrument.toString() + " " + noteName + noteAcc;
     }
-
-    /** @return The instrument that this StaffNote is. */
-    public InstrumentIndex getInstrument() {
-        return theInstrument;
-    }
-
-    /**
-     * @return <code>True</code> if this is a normal note and not a mute note.
-     */
-    public boolean isMuteNote() {
-        return isMuteNote;
-    }
-
-    /** @param m Whether this note is a mute note or not. */
-    public void setMuteNote(boolean m) {
-        isMuteNote = m;
-    }
-
 
 }

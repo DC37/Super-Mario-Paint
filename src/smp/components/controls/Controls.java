@@ -8,7 +8,6 @@ import javafx.scene.control.Slider;
 import smp.ImageIndex;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
-import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -159,6 +158,16 @@ public class Controls {
     /** @return The stop button of the controls set. */
     public StopButton getStopButton() {
         return stop;
+    }
+
+    /** @return The loop button of the controls set. */
+    public LoopButton getLoopButton() {
+        return loop;
+    }
+
+    /** @return The mute button of the controls set. */
+    public MuteButton getMuteButton() {
+        return mute;
     }
 
     /**

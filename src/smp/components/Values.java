@@ -11,6 +11,9 @@ import smp.components.staff.sequences.Note;
  */
 public class Values {
 
+    /** The current version number of the program. */
+    public static double VERSION = 0.85;
+
     /** Default width */
     public static final int DEFAULT_WIDTH = 805;
 

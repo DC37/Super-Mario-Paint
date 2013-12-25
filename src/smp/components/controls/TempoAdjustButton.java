@@ -5,7 +5,6 @@ import java.util.TimerTask;
 
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.Values;

@@ -10,7 +10,6 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 /**

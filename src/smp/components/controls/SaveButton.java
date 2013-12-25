@@ -4,12 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
+import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
@@ -20,6 +24,14 @@ import smp.stateMachine.StateMachine;
  *
  */
 public class SaveButton extends ImagePushButton {
+
+
+
+    /**
+     * Sort of hacky move here, but we're going to save a few songs
+     * in a different format, so this exists.
+     */
+    private boolean saveTxt = true;
 
     /** This is the staff that we want to save a song from. */
     private Staff theStaff;
@@ -53,6 +65,21 @@ public class SaveButton extends ImagePushButton {
 
     /** This saves the song. */
     private void save() {
+        if (!saveTxt) {
+            saveObject();
+        } else {
+            saveTxt();
+        }
+        Dialog.showDialog("Song saved!");
+    }
+
+
+    /**
+     * Saves in object file format. Makes decent use of serialization.
+     * There are some issues with this because if one changes the
+     * staff sequence class, there are going to be issues loading the file.
+     */
+    private void saveObject() {
         try {
             String outputFile = SMPFXController.getSongName().getText();
             outputFile = outputFile + ".txt";
@@ -71,7 +98,26 @@ public class SaveButton extends ImagePushButton {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    /** Saves in text file format. */
+    private void saveTxt() {
+        try {
+            String outputFile = SMPFXController.getSongName().getText();
+            outputFile = outputFile + "TXT.txt";
+            PrintStream p = new PrintStream(outputFile);
+            StaffSequence out = theStaff.getSequence();
+            out.setTempo(StateMachine.getTempo());
+            p.println(Values.VERSION);
+            for (StaffNoteLine s : out.getTheLines()) {
+                p.println(s);
+            }
+            p.println(out.getTempo());
+            p.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

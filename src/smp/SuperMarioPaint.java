@@ -82,7 +82,7 @@ public class SuperMarioPaint extends Application {
         Thread sfLd = new Thread(sfLoader);
         sfLd.start();
         imgLd.start();
-        while (imgLd.isAlive() || sfLd.isAlive()) {
+        do {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -91,7 +91,7 @@ public class SuperMarioPaint extends Application {
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();
             dummyPreloader.updateStatus((imgStatus + sfStatus) * 100, NUM_THREADS);
-        }
+        } while (imgLd.isAlive() || sfLd.isAlive());
 
     }
 

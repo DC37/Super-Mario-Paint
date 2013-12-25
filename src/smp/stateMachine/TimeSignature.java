@@ -15,12 +15,20 @@ public enum TimeSignature {
     TWO_FOUR("2/4"), THREE_FOUR("3/4"), FOUR_FOUR("4/4"), SIX_FOUR("6/4"),
     THREE_EIGHT("3/8"), SIX_EIGHT("6/8"), TWELVE_EIGHT("12/8");
 
+    /** The number on the top. */
+    private int top;
+
+    /** The number on the bottom. */
+    private int bottom;
+
     /** What happens when you try to display the time signature. */
     private String displayName;
 
     /** Sets up the display name of the time signature type. */
     private TimeSignature(String disp) {
         displayName = disp;
+        top = Integer.parseInt(disp.substring(0, disp.indexOf("/")));
+        bottom = Integer.parseInt(disp.substring(disp.indexOf("/") + 1));
     }
 
     @Override

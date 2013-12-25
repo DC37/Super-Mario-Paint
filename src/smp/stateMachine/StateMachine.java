@@ -4,11 +4,15 @@ import smp.components.staff.StaffInstrumentEventHandler;
 
 /**
  * This is the state machine that keeps track of what state the
- * main window is in.
+ * main window is in. This class keeps track of a bunch of variables
+ * that the program generally uses.
  * @author RehdBlob
  * @since 2012.08.07
  */
 public class StateMachine {
+
+    /** This tells us whether we have modified the song or not. */
+    private static boolean modified = false;
 
     /** This keeps track of whether we have pressed the loop button or not. */
     private static boolean loopPressed = false;
@@ -233,6 +237,21 @@ public class StateMachine {
     /** @return Whether the mute button is pressed or not. */
     public static boolean isMutePressed() {
         return mutePressed;
+    }
+
+    /**
+     * Sets the modified flag to true or false.
+     * @param b Whether we have modified a song or not.
+     */
+    public static void setModified(boolean b) {
+        modified = b;
+    }
+
+    /**
+     * @return Whether we have modified the current song or not.
+     */
+    public static boolean isModified() {
+        return modified;
     }
 
 }

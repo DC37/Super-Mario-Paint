@@ -7,7 +7,6 @@ import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;

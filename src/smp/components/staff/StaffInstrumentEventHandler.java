@@ -18,7 +18,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -116,6 +115,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             else if (b == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
             event.consume();
+            StateMachine.setModified(true);
 
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             focus = true;
@@ -188,7 +188,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (temp.isEmpty()) {
             temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY) /
                     Values.MAX_VELOCITY);
-
         }
 
         if (!temp.contains(theStaffNote))
@@ -223,14 +222,14 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (!theImages.isEmpty())
             theImages.remove(theImages.size() - 1);
         if (!accList.isEmpty())
-            accList.remove(accList.size() - 1);
+            accList.remove(0);
 
         StaffNoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
 
         if (!temp.isEmpty()) {
             ArrayList<StaffNote> nt = temp.getNotes();
-            for(int i = 0; i < nt.size(); i++) {
+            for(int i = nt.size() - 1; i >= 0; i--) {
                 StaffNote s = nt.get(i);
                 if (s.getPosition() == position) {
                     nt.remove(i);
@@ -324,6 +323,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             accSilhouette.setVisible(false);
             break;
         }
+
         if (acc != 0)
             accSilhouette.setVisible(true);
 
@@ -339,6 +339,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if ((Settings.debug & 0b01) == 0b01) {
             System.out.println(this);
         }
+
     }
 
     /**

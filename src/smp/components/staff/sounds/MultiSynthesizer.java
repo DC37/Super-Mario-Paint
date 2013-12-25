@@ -27,7 +27,6 @@ import com.sun.media.sound.SoftSynthesizer;
  * @author RehdBlob
  * @since 2012.08.24
  */
-@SuppressWarnings("restriction")
 public class MultiSynthesizer implements Synthesizer {
 
     /**

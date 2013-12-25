@@ -170,7 +170,7 @@ public class StaffNoteLine implements Serializable {
 
     @Override
     public String toString() {
-        return "Line: " + lineNum + "\nNotes: " + notes.toString();
+        return "" + lineNum + ": " + notes.toString();
     }
 
 

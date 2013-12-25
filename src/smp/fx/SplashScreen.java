@@ -35,6 +35,7 @@ public class SplashScreen extends JFrame implements Runnable {
      * The nice looking splash screen that we may be implementing
      * in the near future.
      */
+    @SuppressWarnings("unused")
     private Image splashScreen;
 
     /**

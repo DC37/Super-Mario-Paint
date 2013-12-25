@@ -1,10 +1,15 @@
 package smp.components.controls;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
+import smp.fx.Dialog;
+import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that creates a new song.
@@ -50,8 +55,15 @@ public class NewButton extends ImagePushButton {
      * Make sure you save your song first!
      */
     private void newSong() {
-        theStaff.setSequence(new StaffSequence());
-        theStaff.getNoteMatrix().redraw();
+        boolean cont = true;
+        if (StateMachine.isModified())
+            cont = Dialog.showYesNoDialog("The current song has been modified!\n"
+                    + "Create a new song anyway?");
+
+        if (cont) {
+            theStaff.setSequence(new StaffSequence());
+            theStaff.getNoteMatrix().redraw();
+        }
     }
 
 }
