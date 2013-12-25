@@ -46,12 +46,17 @@ public class NoteTracker {
         boolean[] turnOff = new boolean[Values.NUMINSTRUMENTS];
         ArrayList<StaffNote> theNotes = s.getNotes();
         for(StaffNote sn : theNotes)
-            turnOff[sn.getInstrument().getChannel()] = true;
+            turnOff[sn.getInstrument().getChannel() - 1] = true;
 
-        for (int i = 0; i < turnOff.length; i++)
-            if (turnOff[i] && isChannelOn(i))
-                for (PlayingNote pn : getNotesPlaying(i))
+        for (int i = 0; i < turnOff.length; i++) {
+            if (turnOff[i] && isChannelOn(i)) {
+                ArrayList<PlayingNote> pna = getNotesPlaying(i);
+                for (PlayingNote pn : pna)
                     stopSound(pn, s);
+                pna.clear();
+                setChannelOff(i);
+            }
+        }
     }
 
     /** Tells us whether this note channel has a note playing. */
@@ -83,8 +88,9 @@ public class NoteTracker {
      */
     public void addNotePlaying(int keyNum, InstrumentIndex instrument,
             int accidental) {
-        notesOn.get(instrument.getChannel()).add(
+        notesOn.get(instrument.getChannel() - 1).add(
                 new PlayingNote(keyNum, instrument, accidental));
+        setChannelOn(instrument.getChannel() - 1);
     }
 
     /**
