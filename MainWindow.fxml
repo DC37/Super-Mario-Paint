@@ -800,6 +800,17 @@
                                         <Image url="@sprites/LOOP_RELEASED.png" preserveRatio="false" smooth="false" />
                                       </image>
                                     </ImageView>
+                                    <Region prefHeight="32.0" prefWidth="32.0" />
+                                    <ImageView fx:id="mute" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/MUTE_RELEASED.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView id="LowAMute" fx:id="muteA" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/MUTE_A_RELEASED.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
                                   </children>
                                   <padding>
                                     <Insets left="24.0" top="32.0" />
@@ -829,14 +840,7 @@
                                 </HBox>
                               </children>
                             </StackPane>
-                            <HBox prefHeight="100.0" prefWidth="250.0">
-                              <children>
-                                <ImageView id="loop" fx:id="mute" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                    <Image url="@sprites/MUTE_RELEASED.png" preserveRatio="false" smooth="false" />
-                                  </image>
-                                </ImageView>
-                              </children>
+                            <HBox prefHeight="100.0" prefWidth="200.0">
                               <padding>
                                 <Insets top="32.0" />
                               </padding>
@@ -898,38 +902,38 @@
                         </HBox>
                       </children>
                     </StackPane>
-                    <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="91.0" prefHeight="16.0" prefWidth="770.0">
+                    <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="24.0" prefWidth="770.0">
                       <children>
-                        <ImageView fx:id="leftFastArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="leftFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_LEFT2.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <ImageView fx:id="leftArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="leftArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_LEFT1.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
                         <StackPane id="StackPane">
                           <children>
-                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="700.0">
+                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="660.0">
                               <rotationAxis>
                                 <Point3D />
                               </rotationAxis>
                             </Rectangle>
-                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="374.0" minorTickCount="1" prefWidth="690.0">
+                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="374.0" minorTickCount="1" prefWidth="660.0">
                               <rotationAxis>
                                 <Point3D />
                               </rotationAxis>
                             </Slider>
                           </children>
                         </StackPane>
-                        <ImageView fx:id="rightArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="rightArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_RIGHT1.PNG" preserveRatio="false" smooth="false" />
                           </image>
                         </ImageView>
-                        <ImageView id="rightArrow" fx:id="rightFastArrow" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="rightArrow" fx:id="rightFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image url="@sprites/SCROLLBAR_RIGHT2.png" preserveRatio="false" smooth="false" />
                           </image>

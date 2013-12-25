@@ -29,6 +29,9 @@ public class Controls {
     /** The pointer to the mute button on the staff. */
     private MuteButton mute;
 
+    /** The pointer to the mute-all button ont he staff. */
+    private MuteInstButton muteA;
+
     /** This is the slider at the bottom of the screen. */
     private Slider scrollbar;
 
@@ -100,9 +103,10 @@ public class Controls {
     /** Initializes the play button and the stop button. */
     private void initializeControlButtons() {
         play = new PlayButton(SMPFXController.getPlayButton());
-        stop = new StopButton (SMPFXController.getStopButton());
+        stop = new StopButton(SMPFXController.getStopButton());
         loop = new LoopButton(SMPFXController.getLoopButton());
-        mute = new MuteButton (SMPFXController.getMuteButton());
+        mute = new MuteButton(SMPFXController.getMuteButton());
+        muteA = new MuteInstButton(SMPFXController.getMuteAButton());
         play.link(stop);
         stop.link(play);
         play.setStaff(theStaff);
@@ -168,6 +172,11 @@ public class Controls {
     /** @return The mute button of the controls set. */
     public MuteButton getMuteButton() {
         return mute;
+    }
+
+    /** @return The 'mute-all' button of the controls set. */
+    public MuteInstButton getMuteAButton() {
+        return muteA;
     }
 
     /**

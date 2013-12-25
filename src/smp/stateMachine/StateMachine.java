@@ -20,6 +20,12 @@ public class StateMachine {
     /** This keeps track of whether we have pressed the mute button or not. */
     private static boolean mutePressed = false;
 
+    /**
+     * This keeps track of whether we have pressed the low A mute button
+     * or not.
+     */
+    private static boolean muteAPressed = false;
+
     /** Flips different bits to see which keys are pressed. */
     private static int buttonPresses = 0b0;
 
@@ -252,6 +258,20 @@ public class StateMachine {
      */
     public static boolean isModified() {
         return modified;
+    }
+
+    /**
+     * @param b Whether we have pressed the low A mute button.
+     */
+    public static void setMuteAPressed(boolean b) {
+        muteAPressed = b;
+    }
+
+    /**
+     * @return Whether our mute-all button is pressed or not.
+     */
+    public static boolean isMuteAPressed() {
+        return muteAPressed;
     }
 
 }
