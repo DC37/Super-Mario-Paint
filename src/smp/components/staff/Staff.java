@@ -465,6 +465,7 @@ public class Staff {
                                 theSequence.getLine(
                                         (int)(currVal.doubleValue() + index));
                         ArrayList<StaffNote> theNotes = s.getNotes();
+                        tracker.stopNotes(s);
                         for (StaffNote sn : theNotes) {
                             if (sn.muteNoteVal() == 0) {
                                 playSound(sn, s);
@@ -487,7 +488,6 @@ public class Staff {
                         tracker.addNotePlaying(
                                 Values.staffNotes[sn.getPosition()].getKeyNum(),
                                 sn.getInstrument(), sn.getAccidental());
-                        tracker.setNoteOn(sn.getInstrument().getChannel());
                     }
 
                     /**

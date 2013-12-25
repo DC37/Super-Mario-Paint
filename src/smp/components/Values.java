@@ -14,6 +14,9 @@ public class Values {
     /** The current version number of the program. */
     public static double VERSION = 0.85;
 
+    /** The number of instruments. */
+    public static int NUMINSTRUMENTS = 19;
+
     /** Default width */
     public static final int DEFAULT_WIDTH = 805;
 

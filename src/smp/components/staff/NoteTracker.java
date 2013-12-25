@@ -1,6 +1,11 @@
 package smp.components.staff;
 import java.util.ArrayList;
+
+import smp.SoundfontLoader;
 import smp.components.InstrumentIndex;
+import smp.components.Values;
+import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.StaffNoteLine;
 
 /**
  * This is a class that keeps track of the different channels in Super
@@ -33,8 +38,24 @@ public class NoteTracker {
         }
     }
 
+    /**
+     * Stops the instruments contained in theNotes.
+     * @param s The StaffNoteLine.
+     */
+    public void stopNotes(StaffNoteLine s) {
+        boolean[] turnOff = new boolean[Values.NUMINSTRUMENTS];
+        ArrayList<StaffNote> theNotes = s.getNotes();
+        for(StaffNote sn : theNotes)
+            turnOff[sn.getInstrument().getChannel()] = true;
+
+        for (int i = 0; i < turnOff.length; i++)
+            if (turnOff[i] && isChannelOn(i))
+                for (PlayingNote pn : getNotesPlaying(i))
+                    stopSound(pn, s);
+    }
+
     /** Tells us whether this note channel has a note playing. */
-    public boolean isNoteOn(int channel) {
+    public boolean isChannelOn(int channel) {
         return channelOn.get(channel);
     }
 
@@ -42,7 +63,7 @@ public class NoteTracker {
      * Sets a channel to "on"
      * @param channel The channel we want to set to on.
      */
-    public void setNoteOn(int channel) {
+    public void setChannelOn(int channel) {
         channelOn.set(channel, true);
     }
 
@@ -50,7 +71,7 @@ public class NoteTracker {
      * Sets a channel to "off"
      * @param channel The channel we want to set to off.
      */
-    public void setNoteOff(int channel) {
+    public void setChannelOff(int channel) {
         channelOn.set(channel, false);
     }
 
@@ -67,6 +88,14 @@ public class NoteTracker {
     }
 
     /**
+     * @param channel The channel we want to get playing notes from.
+     * @return A list of notes that are currently playing from that channel.
+     */
+    public ArrayList<PlayingNote> getNotesPlaying(int channel) {
+        return notesOn.get(channel);
+    }
+
+    /**
      * Makes new lists of notes that are playing. Use this to prevent
      * memory leaks while using the program.
      */
@@ -78,7 +107,15 @@ public class NoteTracker {
             channelOn.add(false);
     }
 
-
+    /**
+     * Stops a sound.
+     * @param pn The playing note.
+     * @param s The StaffNoteLine.
+     */
+    private void stopSound(PlayingNote pn, StaffNoteLine s) {
+        SoundfontLoader.stopSound(pn.keyNum(), pn.instrument(),
+                pn.accidental());
+    }
 
     /**
      * This is a note that is currently playing.
@@ -96,6 +133,13 @@ public class NoteTracker {
         /** The accidental of the note that is playing. */
         private int accidental;
 
+        /**
+         * Makes a PlayingNote object, which keeps track of which notes
+         * are playing when.
+         * @param k The key number.
+         * @param ins The InstrumentIndex.
+         * @param acc The accidental.
+         */
         public PlayingNote(int k, InstrumentIndex ins, int acc) {
             keyNum = k;
             instrument = ins;
