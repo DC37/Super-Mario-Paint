@@ -151,13 +151,16 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void placeNote(InstrumentIndex theInd) {
         boolean mute = StateMachine.isMutePressed();
-        if (!mute)
+        boolean muteA = StateMachine.isMuteAPressed();
+
+        if (!mute && !muteA)
             playSound(theInd, position, acc);
 
         theStaffNote = new StaffNote(theInd, position, acc);
 
-        theStaffNote.setMuteNote(mute);
-        if (!mute) {
+        theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
+
+        if (!mute && !muteA) {
             theStaffNote.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex()));

@@ -213,7 +213,7 @@ public class NoteMatrix {
                             Staff.switchAcc(s.getAccidental())));
             noteAndAcc[1].getChildren().add(accidental);
 
-            if (!s.isMuteNote()) {
+            if (s.muteNoteVal() == 0) {
                 s.setImage(ImageLoader.getSpriteFX(
                         s.getInstrument().imageIndex()));
             } else {

@@ -18,5 +18,4 @@ public abstract class ImageToggleButton extends AbstractImageButton {
         super(i);
     }
 
-
 }

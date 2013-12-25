@@ -67,11 +67,6 @@ public class Staff {
     private StaffSequence theSequence;
 
     /**
-     * The Sequencer object that will be used to play sounds.
-     */
-    private SMPSequencer seq;
-
-    /**
      * This is a service that will help run the animation and sound of playing a
      * song.
      */
@@ -84,7 +79,6 @@ public class Staff {
      * lower and upper portions of the staff.
      */
     public Staff(HBox[] staffExtLines) {
-        seq = new SMPSequencer();
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
                 Values.NOTES_IN_A_LINE, this);
         theSequence = new StaffSequence();
@@ -472,21 +466,39 @@ public class Staff {
                                         (int)(currVal.doubleValue() + index));
                         ArrayList<StaffNote> theNotes = s.getNotes();
                         for (StaffNote sn : theNotes) {
-                            if (!sn.isMuteNote()) {
-                                SoundfontLoader.playSound(
-                                        Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                        sn.getInstrument(), sn.getAccidental(),
-                                        s.getVolume());
-                                tracker.addNotePlaying(
-                                        Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                        sn.getInstrument(), sn.getAccidental());
-                                tracker.setNoteOn(sn.getInstrument().getChannel());
+                            if (sn.muteNoteVal() == 0) {
+                                playSound(sn, s);
                             } else {
-                                SoundfontLoader.stopSound(
-                                        Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                        sn.getInstrument(), sn.getAccidental());
+                                stopSound(sn, s);
                             }
                         }
+                    }
+
+                    /**
+                     * Plays a sound.
+                     * @param sn The StaffNote.
+                     * @param s The StaffNoteLine.
+                     */
+                    private void playSound(StaffNote sn, StaffNoteLine s) {
+                        SoundfontLoader.playSound(
+                                Values.staffNotes[sn.getPosition()].getKeyNum(),
+                                sn.getInstrument(), sn.getAccidental(),
+                                s.getVolume());
+                        tracker.addNotePlaying(
+                                Values.staffNotes[sn.getPosition()].getKeyNum(),
+                                sn.getInstrument(), sn.getAccidental());
+                        tracker.setNoteOn(sn.getInstrument().getChannel());
+                    }
+
+                    /**
+                     * Stops a sound.
+                     * @param sn The StaffNote.
+                     * @param s The StaffNoteLine.
+                     */
+                    private void stopSound(StaffNote sn, StaffNoteLine s) {
+                        SoundfontLoader.stopSound(
+                                Values.staffNotes[sn.getPosition()].getKeyNum(),
+                                sn.getInstrument(), sn.getAccidental());
                     }
                 });
 

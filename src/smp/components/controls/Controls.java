@@ -107,6 +107,8 @@ public class Controls {
         loop = new LoopButton(SMPFXController.getLoopButton());
         mute = new MuteButton(SMPFXController.getMuteButton());
         muteA = new MuteInstButton(SMPFXController.getMuteAButton());
+        mute.setMuteButton(muteA);
+        muteA.setMuteButton(mute);
         play.link(stop);
         stop.link(play);
         play.setStaff(theStaff);

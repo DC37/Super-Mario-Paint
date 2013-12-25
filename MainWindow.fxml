@@ -800,7 +800,7 @@
                                         <Image url="@sprites/LOOP_RELEASED.png" preserveRatio="false" smooth="false" />
                                       </image>
                                     </ImageView>
-                                    <Region prefHeight="32.0" prefWidth="32.0" />
+                                    <Region prefHeight="16.0" prefWidth="10.0" />
                                     <ImageView fx:id="mute" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                       <image>
                                         <Image url="@sprites/MUTE_RELEASED.png" preserveRatio="false" smooth="false" />
@@ -831,6 +831,16 @@
                                     <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                       <image>
                                         <Image url="@sprites/LOOP_LABEL.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/MUTE_LABEL.png" preserveRatio="false" smooth="false" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/MUTE_A_LABEL.png" preserveRatio="false" smooth="false" />
                                       </image>
                                     </ImageView>
                                   </children>

@@ -129,8 +129,8 @@ public abstract class AbstractImageButton {
     /**
      * @return Whether this button is actually pressed or not.
      */
-    protected boolean isPressed() {
-        return isPressed();
+    public boolean isPressed() {
+        return isPressed;
     }
 
     /**

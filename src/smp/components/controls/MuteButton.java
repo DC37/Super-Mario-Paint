@@ -15,6 +15,9 @@ import smp.stateMachine.StateMachine;
  */
 public class MuteButton extends ImageToggleButton {
 
+    /** The muteA button that this mute button is linked to. */
+    private MuteInstButton mt;
+
     /**
      * This creates a new MuteButton object.
      * @param i This <code>ImageView</code> object that you are
@@ -34,16 +37,18 @@ public class MuteButton extends ImageToggleButton {
     }
 
     @Override
-    protected void reactPressed(MouseEvent event) {
+    public void reactPressed(MouseEvent event) {
         if (isPressed) {
             isPressed = false;
+            releaseImage();
+            StateMachine.resetMutePressed();
+        } else {
+            if (mt.isPressed())
+                mt.reactPressed(null);
+            isPressed = true;
             pressImage();
             StateMachine.setMutePressed();
 
-        } else {
-            isPressed = true;
-            releaseImage();
-            StateMachine.resetMutePressed();
         }
 
     }
@@ -51,6 +56,16 @@ public class MuteButton extends ImageToggleButton {
     @Override
     protected void reactReleased(MouseEvent event) {
 
+    }
+
+    /** @param im The mute button that we want to set. */
+    public void setMuteButton(MuteInstButton im) {
+        mt = im;
+    }
+
+    /** @return The mute button that this muteA button is linked to. */
+    public ImageToggleButton getMuteButton() {
+        return mt;
     }
 
 }

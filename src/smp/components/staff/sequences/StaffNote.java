@@ -31,8 +31,11 @@ public class StaffNote extends ImageView implements Serializable {
     /** This is the volume of the note. */
     private int volume = Values.DEFAULT_VELOCITY;
 
-    /** Whether this is a mute note or not. */
-    private boolean isMuteNote;
+    /**
+     * Whether this is a mute note or not. 0 indicates no. 1 indicates
+     * a note mute type. 2 indicates an instrument mute type.
+     */
+    private int muteNote;
 
     /**
      * The Instrument that the note on the staff is to use.
@@ -84,7 +87,7 @@ public class StaffNote extends ImageView implements Serializable {
             return other.position == position &&
                     other.theInstrument == theInstrument &&
                     other.accidental == accidental &&
-                    other.isMuteNote == isMuteNote;
+                    other.muteNote == muteNote;
         }
     }
 
@@ -118,15 +121,15 @@ public class StaffNote extends ImageView implements Serializable {
     }
 
     /**
-     * @return <code>True</code> if this is a normal note and not a mute note.
+     * @return The mute note type that this note is.
      */
-    public boolean isMuteNote() {
-        return isMuteNote;
+    public int muteNoteVal() {
+        return muteNote;
     }
 
-    /** @param m Whether this note is a mute note or not. */
-    public void setMuteNote(boolean m) {
-        isMuteNote = m;
+    /** @param m What type of mute note this is. */
+    public void setMuteNote(int m) {
+        muteNote = m;
     }
 
     @Override
@@ -150,7 +153,7 @@ public class StaffNote extends ImageView implements Serializable {
             break;
 
         }
-        return isMuteNote ?
+        return muteNote != 0 ?
                 theInstrument.toString() + " " + noteName + noteAcc + "m" :
                     theInstrument.toString() + " " + noteName + noteAcc;
     }

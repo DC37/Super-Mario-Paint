@@ -4,6 +4,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.components.general.ImageRadioButton;
+import smp.components.general.ImageToggleButton;
 import smp.stateMachine.StateMachine;
 
 
@@ -13,7 +14,10 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @since 2013.12.24
  */
-public class MuteInstButton extends ImageRadioButton {
+public class MuteInstButton extends ImageToggleButton {
+
+    /** The mute button that is linked to this button. */
+    private MuteButton mt;
 
     /**
      * This creates a new MuteButton object.
@@ -34,16 +38,17 @@ public class MuteInstButton extends ImageRadioButton {
     }
 
     @Override
-    protected void reactPressed(MouseEvent event) {
+    public void reactPressed(MouseEvent event) {
         if (isPressed) {
             isPressed = false;
-            pressImage();
-            StateMachine.setMuteAPressed(true);
-
-        } else {
-            isPressed = true;
             releaseImage();
             StateMachine.setMuteAPressed(false);
+        } else {
+            if (mt.isPressed())
+                mt.reactPressed(null);
+            isPressed = true;
+            pressImage();
+            StateMachine.setMuteAPressed(true);
         }
 
     }
@@ -52,4 +57,15 @@ public class MuteInstButton extends ImageRadioButton {
     protected void reactReleased(MouseEvent event) {
 
     }
+
+    /** @param im The mute button that we want to set. */
+    public void setMuteButton(MuteButton im) {
+        mt = im;
+    }
+
+    /** @return The mute button that this muteA button is linked to. */
+    public ImageToggleButton getMuteButton() {
+        return mt;
+    }
+
 }
