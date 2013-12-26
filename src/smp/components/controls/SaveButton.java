@@ -1,5 +1,6 @@
 package smp.components.controls;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,12 +9,13 @@ import java.io.PrintStream;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
-import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
@@ -31,7 +33,7 @@ public class SaveButton extends ImagePushButton {
      * Sort of hacky move here, but we're going to save a few songs
      * in a different format, so this exists.
      */
-    private boolean saveTxt = true;
+    private boolean saveTxt = false;
 
     /** This is the staff that we want to save a song from. */
     private Staff theStaff;
@@ -70,7 +72,6 @@ public class SaveButton extends ImagePushButton {
         } else {
             saveTxt();
         }
-        Dialog.showDialog("Song saved!");
     }
 
 
@@ -81,10 +82,16 @@ public class SaveButton extends ImagePushButton {
      */
     private void saveObject() {
         try {
-            String outputFile = SMPFXController.getSongName().getText();
-            outputFile = outputFile + ".txt";
+            FileChooser f = new FileChooser();
+            f.setInitialDirectory(new File(System.getProperty("user.dir")));
+            f.setInitialFileName(SMPFXController.getSongName().getText());
+            f.getExtensionFilters().add(new ExtensionFilter(
+                    "Text file", "*.txt"));
+            File outputFile = f.showSaveDialog(null);
+            if (outputFile == null)
+                return;
             FileOutputStream f_out = new
-                    FileOutputStream("./" + outputFile);
+                    FileOutputStream(outputFile);
             ObjectOutputStream o_out = new
                     ObjectOutputStream(f_out);
             StaffSequence out = theStaff.getSequence();
@@ -92,7 +99,7 @@ public class SaveButton extends ImagePushButton {
             o_out.writeObject(out);
             o_out.close();
             f_out.close();
-
+            StateMachine.setModified(false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

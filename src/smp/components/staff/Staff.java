@@ -17,7 +17,6 @@ import smp.components.controls.Controls;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
-import smp.components.staff.sounds.SMPSequencer;
 import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
@@ -388,13 +387,13 @@ public class Staff {
             protected Staff call() throws Exception {
                 playBars = staffImages.getPlayBars();
                 currMeasureLine = StateMachine.getMeasureLineNum();
-                int counter = 0;
+                int counter = currMeasureLine;
                 do {
                     playNextLine();
                     counter++;
                     if (counter % Values.NOTELINES_IN_THE_WINDOW == 0)
                         currMeasureLine += Values.NOTELINES_IN_THE_WINDOW;
-                    if (counter % 4 == 0 && counter >= lastLine) {
+                    if (counter % 4 == 0 && counter > lastLine) {
                         if (StateMachine.isLoopPressed()) {
                             currMeasureLine = 0;
                             counter = 0;

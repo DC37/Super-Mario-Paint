@@ -12,7 +12,7 @@ import smp.components.staff.sequences.Note;
 public class Values {
 
     /** The current version number of the program. */
-    public static double VERSION = 0.85;
+    public static double VERSION = 0.90;
 
     /** The number of instruments. */
     public static int NUMINSTRUMENTS = 19;
@@ -72,7 +72,7 @@ public class Values {
      * The number of lines in the staff, by default. This number
      * is typically 384.
      */
-    public static int DEFAULT_LINES_PER_SONG = 384;
+    public static int DEFAULT_LINES_PER_SONG = 400;
 
     /** The default speed. */
     public static int DEFAULT_TEMPO = 400;

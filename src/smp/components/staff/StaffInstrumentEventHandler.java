@@ -164,10 +164,15 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             theStaffNote.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex()));
-        } else {
+        } else if (mute) {
             theStaffNote.setImage(
                     ImageLoader.getSpriteFX(
                             theInd.imageIndex().alt()));
+        } else if (muteA) {
+            theStaffNote.setImage(
+                    ImageLoader.getSpriteFX(
+                            theInd.imageIndex().silhouette()));
+        } else if (muteA) {
         }
 
         accidental = new StaffAccidental(theStaffNote);

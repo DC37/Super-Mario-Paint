@@ -3,16 +3,13 @@ package smp.fx;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 /**
  * Generates a dialog box, depending on what we do.
@@ -27,17 +24,36 @@ public class Dialog {
 
     /**
      * Shows a dialog box with the text given to this method.
-     * @param s The text to show.
+     * @param txt The text to show.
      */
-    public static void showDialog(String s) {
-        Stage dialog = new Stage();
+    public static void showDialog(String txt) {
+        final Stage dialog = new Stage();
+        dialog.setHeight(150);
+        dialog.setWidth(250);
         dialog.setResizable(false);
-        dialog.setHeight(100);
-        dialog.setWidth(100);
         dialog.initStyle(StageStyle.UTILITY);
-        Scene scene = new Scene(new Group(new Text(10, 30, s)));
-        dialog.setScene(scene);
-        dialog.show();
+        Label label = new Label(txt);
+        Button okButton = new Button("OK");
+
+        okButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+
+        });
+
+        FlowPane pane = new FlowPane(10, 10);
+        pane.setAlignment(Pos.CENTER);
+        pane.getChildren().addAll(okButton);
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(label, pane);
+        Scene scene1 = new Scene(vBox);
+        dialog.setScene(scene1);
+        dialog.showAndWait();
+
     }
 
     /**
@@ -83,7 +99,6 @@ public class Dialog {
         Scene scene1 = new Scene(vBox);
         dialog.setScene(scene1);
         dialog.showAndWait();
-        System.out.println(choice);
         return choice;
     }
 

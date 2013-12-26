@@ -5,21 +5,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -37,7 +29,7 @@ import smp.stateMachine.StateMachine;
  * The GUI is primarily written with JavaFX2.2. <br>
  * @author RehdBlob
  * @since 2012.08.16
- * @version 0.85
+ * @version 0.90
  */
 public class SuperMarioPaint extends Application {
 

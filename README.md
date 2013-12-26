@@ -38,8 +38,8 @@ Tasklist:
 * Volume bars implemented (done - December 17, 2013)
 * Save & Load songs (done - December 18, 2013)
 * Loop button loops the song (done - December 18, 2013)
-* End-of-File Behaviour fix
-* Release to a smallish test group (v0.9 - **Alpha Release** - Scheduled December 25, 2013)
+* End-of-File Behaviour fix (done - December 25, 2013)
+* Release to a smallish test group (v0.9 - **Alpha Release** - December 25, 2013)
 * Measure line numbers
 * Staff extension lines
 * Splash screen is actually a splash screen

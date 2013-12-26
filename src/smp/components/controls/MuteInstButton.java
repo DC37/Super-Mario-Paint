@@ -3,7 +3,6 @@ package smp.components.controls;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
-import smp.components.general.ImageRadioButton;
 import smp.components.general.ImageToggleButton;
 import smp.stateMachine.StateMachine;
 

@@ -1,8 +1,5 @@
 package smp.components.controls;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
@@ -63,6 +60,7 @@ public class NewButton extends ImagePushButton {
         if (cont) {
             theStaff.setSequence(new StaffSequence());
             theStaff.getNoteMatrix().redraw();
+            StateMachine.setModified(false);
         }
     }
 

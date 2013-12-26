@@ -80,7 +80,7 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="55.9998779296875" prefWidth="100.0">
                           <children>
-                            <ImageView fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fx:id="optionsButton" fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                 <Image url="@sprites/OPTIONS.png" preserveRatio="false" smooth="false" />
                               </image>

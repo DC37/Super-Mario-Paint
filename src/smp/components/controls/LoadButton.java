@@ -1,5 +1,6 @@
 package smp.components.controls;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,9 +8,11 @@ import java.io.ObjectInputStream;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
+import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
@@ -52,26 +55,43 @@ public class LoadButton extends ImagePushButton {
 
     /** This loads the song. */
     private void load() {
-        try {
-            String outputFile = SMPFXController.getSongName().getText();
-            outputFile = outputFile + ".txt";
-            FileInputStream f_in = new
-                    FileInputStream (outputFile);
-            ObjectInputStream o_in = new
-            ObjectInputStream(f_in);
-            StaffSequence loaded = (StaffSequence) o_in.readObject();
-            theStaff.setSequence(loaded);
-            StateMachine.setTempo(loaded.getTempo());
-            theStaff.getControlPanel().updateCurrTempo();
-            theStaff.getNoteMatrix().redraw();
-            o_in.close();
-            f_in.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        boolean cont = true;
+        if (StateMachine.isModified())
+            cont = Dialog.showYesNoDialog("The current song has been modified!\n"
+                    + "Load the song anyway?");
+        if (cont) {
+            try {
+                FileChooser f = new FileChooser();
+                f.setInitialDirectory(new File(System.getProperty("user.dir")));
+                File inputFile = f.showOpenDialog(null);
+                if (inputFile == null)
+                    return;
+                FileInputStream f_in = new
+                        FileInputStream (inputFile);
+                ObjectInputStream o_in = new
+                        ObjectInputStream(f_in);
+                StaffSequence loaded = (StaffSequence) o_in.readObject();
+                theStaff.setSequence(loaded);
+                StateMachine.setTempo(loaded.getTempo());
+                theStaff.getControlPanel().updateCurrTempo();
+                theStaff.getNoteMatrix().redraw();
+                o_in.close();
+                f_in.close();
+                String fname = inputFile.getName();
+                try {
+                    fname = fname.substring(0, fname.indexOf("."));
+                } catch (IndexOutOfBoundsException e) {
+
+                }
+                SMPFXController.getSongName().setText(fname);
+                StateMachine.setModified(false);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
