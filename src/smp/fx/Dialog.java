@@ -1,10 +1,18 @@
 package smp.fx;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  * Generates a dialog box, depending on what we do.
@@ -14,27 +22,69 @@ import javafx.stage.StageStyle;
  */
 public class Dialog {
 
+    /** A choice that we have made in some dialog box. */
+    private static boolean choice = false;
+
     /**
      * Shows a dialog box with the text given to this method.
      * @param s The text to show.
      */
     public static void showDialog(String s) {
         Stage dialog = new Stage();
+        dialog.setResizable(false);
+        dialog.setHeight(100);
+        dialog.setWidth(100);
         dialog.initStyle(StageStyle.UTILITY);
-        Scene scene = new Scene(new Group(new Text(50, 50, s)));
+        Scene scene = new Scene(new Group(new Text(10, 30, s)));
         dialog.setScene(scene);
         dialog.show();
     }
 
     /**
-     * Shows an option dialog that asks you a yes/no question.
-     * @param s The String to show.
-     * @return A boolean based on your choice. Yes is true and
-     * no is false.
+     * Got this off of https://community.oracle.com/thread/2247058?tstart=0
+     * Modified it to show an ok / cancel dialog.
+     * @param primaryStage
      */
-    public static boolean showYesNoDialog(String s) {
-        // TODO Auto-generated method stub
-        return false;
+    public static boolean showYesNoDialog(String txt) {
+        final Stage dialog = new Stage();
+        dialog.setHeight(150);
+        dialog.setWidth(250);
+        dialog.setResizable(false);
+        dialog.initStyle(StageStyle.UTILITY);
+        Label label = new Label(txt);
+        Button okButton = new Button("OK");
+
+        okButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+                choice = true;
+            }
+
+        });
+
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+                choice = false;
+            }
+        });
+
+        FlowPane pane = new FlowPane(10, 10);
+        pane.setAlignment(Pos.CENTER);
+        pane.getChildren().addAll(okButton, cancelButton);
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(label, pane);
+        Scene scene1 = new Scene(vBox);
+        dialog.setScene(scene1);
+        dialog.showAndWait();
+        System.out.println(choice);
+        return choice;
     }
 
 }

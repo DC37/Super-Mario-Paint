@@ -5,13 +5,21 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -109,6 +117,7 @@ public class SuperMarioPaint extends Application {
                             new File(mainFxml).toURI().toURL());
             primaryStage.setTitle("Super Mario Paint");
             primaryStage.setResizable(true);
+            setupCloseBehaviour(primaryStage);
             Scene primaryScene = new Scene(root, 800, 600);
             primaryStage.setScene(primaryScene);
             SMPFXController.initializeHandlers();
@@ -137,6 +146,57 @@ public class SuperMarioPaint extends Application {
     @Override
     public void stop() {
         System.exit(0);
+    }
+
+    /**
+     * Got this off of https://community.oracle.com/thread/2247058?tstart=0
+     * This appears quite useful as a 'really exit?' type thing.
+     * This dialog currently needs some work, so we're not going to include
+     * it in the alpha release.
+     * @param primaryStage The main stage of interest.
+     */
+    private void setupCloseBehaviour(final Stage primaryStage) {
+        /* primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+
+            @Override
+            public void handle(WindowEvent event) {
+                final Stage dialog = new Stage();
+                dialog.setHeight(100);
+                dialog.setWidth(200);
+                dialog.setResizable(false);
+                dialog.initStyle(StageStyle.UTILITY);
+                Label label = new Label("Really exit?");
+                Button okButton = new Button("OK");
+                okButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        dialog.close();
+                        stop();
+
+                    }
+                });
+                Button cancelButton = new Button("Cancel");
+                cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        primaryStage.show();
+                        dialog.close();
+                    }
+                });
+                FlowPane pane = new FlowPane(10, 10);
+                pane.setAlignment(Pos.CENTER);
+                pane.getChildren().addAll(okButton, cancelButton);
+                VBox vBox = new VBox(10);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.getChildren().addAll(label, pane);
+                Scene scene1 = new Scene(vBox);
+                dialog.setScene(scene1);
+                dialog.show();
+                event.consume();
+            }
+        }); */
     }
 
 
@@ -215,6 +275,8 @@ public class SuperMarioPaint extends Application {
         }
 
     }
+
+
 
 }
 

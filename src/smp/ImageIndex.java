@@ -27,14 +27,13 @@ public enum ImageIndex {
 
     SHARP_GRAY, FLAT_GRAY, DOUBLESHARP_GRAY, DOUBLEFLAT_GRAY,
 
-    /*
-     * Silhouettes of images.
-     */
+    /* Silhouettes of images. */
     MARIO_SIL, MUSHROOM_SIL, YOSHI_SIL, STAR_SIL, FLOWER_SIL,
     GAMEBOY_SIL, DOG_SIL, CAT_SIL, PIG_SIL, SWAN_SIL, FACE_SIL,
     PLANE_SIL, BOAT_SIL, CAR_SIL, HEART_SIL, PIRANHA_SIL, COIN_SIL,
     SHYGUY_SIL, BOO_SIL, LUIGI_SIL,
 
+    /* The highlighted button line image of the instruments. */
     MARIO_SMA, MUSHROOM_SMA, YOSHI_SMA, STAR_SMA, FLOWER_SMA,
     GAMEBOY_SMA, DOG_SMA, CAT_SMA, PIG_SMA, SWAN_SMA, FACE_SMA,
     PLANE_SMA, BOAT_SMA, CAR_SMA, HEART_SMA, PIRANHA_SMA, COIN_SMA,
