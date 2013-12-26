@@ -467,10 +467,15 @@ public class Staff {
                         ArrayList<StaffNote> theNotes = s.getNotes();
                         tracker.stopNotes(s);
                         for (StaffNote sn : theNotes) {
+                            if (sn.muteNoteVal() == 1){
+                                stopSound(sn);
+                            } else if (sn.muteNoteVal() == 2) {
+                                stopInstrument(sn);
+                            }
+                        }
+                        for (StaffNote sn : theNotes) {
                             if (sn.muteNoteVal() == 0) {
                                 playSound(sn, s);
-                            } else {
-                                stopSound(sn, s);
                             }
                         }
                     }
@@ -493,12 +498,19 @@ public class Staff {
                     /**
                      * Stops a sound.
                      * @param sn The StaffNote.
-                     * @param s The StaffNoteLine.
                      */
-                    private void stopSound(StaffNote sn, StaffNoteLine s) {
+                    private void stopSound(StaffNote sn) {
                         SoundfontLoader.stopSound(
                                 Values.staffNotes[sn.getPosition()].getKeyNum(),
                                 sn.getInstrument(), sn.getAccidental());
+                    }
+
+                    /**
+                     * Stops a full set of instruments from playing sounds.
+                     * @param sn The StaffNote.
+                     */
+                    private void stopInstrument(StaffNote sn) {
+                        tracker.stopInstrument(sn);
                     }
                 });
 

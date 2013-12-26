@@ -218,7 +218,7 @@ public class NoteMatrix {
                         s.getInstrument().imageIndex()));
             } else {
                 s.setImage(ImageLoader.getSpriteFX(
-                        s.getInstrument().imageIndex().gray()));
+                        s.getInstrument().imageIndex().alt()));
             }
 
             s.setVisible(true);

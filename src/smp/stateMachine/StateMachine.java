@@ -1,5 +1,6 @@
 package smp.stateMachine;
 
+import smp.components.Values;
 import smp.components.staff.StaffInstrumentEventHandler;
 
 /**
@@ -25,6 +26,8 @@ public class StateMachine {
      * or not.
      */
     private static boolean muteAPressed = false;
+
+    private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
     /** Flips different bits to see which keys are pressed. */
     private static int buttonPresses = 0b0;
@@ -272,6 +275,13 @@ public class StateMachine {
      */
     public static boolean isMuteAPressed() {
         return muteAPressed;
+    }
+
+    /**
+     * @return A list of notes that we want to act like the coin.
+     */
+    public static boolean[] getNoteExtensions() {
+        return noteExtensions;
     }
 
 }

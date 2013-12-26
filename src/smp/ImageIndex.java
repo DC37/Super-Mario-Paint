@@ -11,6 +11,12 @@ public enum ImageIndex {
 
     // SPLASHSCREEN,
 
+    /** No image */
+    NONE,
+
+    /** Blank image. */
+    BLANK (NONE, NONE),
+
     /*
      * Instruments grayed out.
      */
@@ -28,6 +34,11 @@ public enum ImageIndex {
     GAMEBOY_SIL, DOG_SIL, CAT_SIL, PIG_SIL, SWAN_SIL, FACE_SIL,
     PLANE_SIL, BOAT_SIL, CAR_SIL, HEART_SIL, PIRANHA_SIL, COIN_SIL,
     SHYGUY_SIL, BOO_SIL, LUIGI_SIL,
+
+    MARIO_SMA, MUSHROOM_SMA, YOSHI_SMA, STAR_SMA, FLOWER_SMA,
+    GAMEBOY_SMA, DOG_SMA, CAT_SMA, PIG_SMA, SWAN_SMA, FACE_SMA,
+    PLANE_SMA, BOAT_SMA, CAR_SMA, HEART_SMA, PIRANHA_SMA, COIN_SMA,
+    SHYGUY_SMA, BOO_SMA, LUIGI_SMA,
 
     SHARP_SIL, FLAT_SIL, DOUBLESHARP_SIL, DOUBLEFLAT_SIL,
     VOL_BAR, VOL_BAR2,
@@ -59,6 +70,27 @@ public enum ImageIndex {
     FLAT    (FLAT_GRAY, FLAT_SIL),
     DOUBLESHARP (DOUBLESHARP_GRAY, DOUBLESHARP_SIL),
     DOUBLEFLAT  (DOUBLEFLAT_GRAY, DOUBLEFLAT_SIL),
+
+    MARIO_SM   (MARIO_SMA, NONE),
+    MUSHROOM_SM(MUSHROOM_SMA, NONE),
+    YOSHI_SM   (YOSHI_SMA, NONE),
+    STAR_SM    (STAR_SMA, NONE),
+    FLOWER_SM  (FLOWER_SMA, NONE),
+    GAMEBOY_SM (GAMEBOY_SMA, NONE),
+    DOG_SM     (DOG_SMA, NONE),
+    CAT_SM     (CAT_SMA, NONE),
+    PIG_SM     (PIG_SMA, NONE),
+    SWAN_SM    (SWAN_SMA, NONE),
+    FACE_SM    (FACE_SMA, NONE),
+    PLANE_SM   (PLANE_SMA, NONE),
+    BOAT_SM    (BOAT_SMA, NONE),
+    CAR_SM     (CAR_SMA, NONE),
+    HEART_SM   (HEART_SMA, NONE),
+    PIRANHA_SM (PIRANHA_SMA, NONE),
+    COIN_SM    (COIN_SMA, NONE),
+    SHYGUY_SM  (SHYGUY_SMA, NONE),
+    BOO_SM     (BOO_SMA, NONE),
+    LUIGI_SM   (LUIGI_SMA, NONE),
 
     /*
      * Clefs.
@@ -127,7 +159,7 @@ public enum ImageIndex {
     TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL,
 
     /** Digits for the ImageViews of the measure lines. */
-    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE,
+    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
 
     /* We'll be using Verdana as a font for now.
     A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V,
@@ -136,24 +168,20 @@ public enum ImageIndex {
     w, x, y, z,
      */
 
-    /** No image */
-    NONE,
 
-    /** Blank image. */
-    BLANK (NONE, NONE);
 
-    /** The gray version of this sprite. It can be null. */
-    private ImageIndex gray = null;
+    /** The alt version of this sprite. It can be null. */
+    private ImageIndex alternate = null;
 
     /** The silhouette version of this sprite. It can be null. */
     private ImageIndex silhouette = null;
 
     /**
-     * @param gray The gray version of this sprite.
+     * @param alt The alternate version of this sprite.
      * @param sil The silhouette version of this sprite.
      */
-    private ImageIndex(ImageIndex gr, ImageIndex sil) {
-        gray = gr;
+    private ImageIndex(ImageIndex alt, ImageIndex sil) {
+        alternate = alt;
         silhouette = sil;
     }
 
@@ -164,9 +192,9 @@ public enum ImageIndex {
 
     }
 
-    /** @return The <code>ImageIndex</code> of the gray figure. */
-    public ImageIndex gray() {
-        return gray;
+    /** @return The <code>ImageIndex</code> of the alternate figure. */
+    public ImageIndex alt() {
+        return alternate;
     }
 
     /** @return The <code>ImageIndex</code> of the silhouette figure. */

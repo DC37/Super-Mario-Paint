@@ -6,6 +6,7 @@ import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.stateMachine.StateMachine;
 
 /**
  * This is a class that keeps track of the different channels in Super
@@ -48,11 +49,13 @@ public class NoteTracker {
         for(StaffNote sn : theNotes)
             turnOff[sn.getInstrument().getChannel() - 1] = true;
 
+        boolean[] ext = StateMachine.getNoteExtensions();
+
         for (int i = 0; i < turnOff.length; i++) {
-            if (turnOff[i] && isChannelOn(i)) {
+            if (turnOff[i] && isChannelOn(i) && !ext[i]) {
                 ArrayList<PlayingNote> pna = getNotesPlaying(i);
                 for (PlayingNote pn : pna)
-                    stopSound(pn, s);
+                    stopSound(pn);
                 pna.clear();
                 setChannelOff(i);
             }
@@ -118,10 +121,25 @@ public class NoteTracker {
      * @param pn The playing note.
      * @param s The StaffNoteLine.
      */
-    private void stopSound(PlayingNote pn, StaffNoteLine s) {
+    private void stopSound(PlayingNote pn) {
         SoundfontLoader.stopSound(pn.keyNum(), pn.instrument(),
                 pn.accidental());
     }
+
+    /**
+     * Stops the sound of a set of instruments.
+     * @param sn The StaffNoteLine.
+     * @param s The StaffNote.
+     */
+    public void stopInstrument(StaffNote sn) {
+        int i = sn.getInstrument().getChannel() - 1;
+        ArrayList<PlayingNote> pna = getNotesPlaying(i);
+        for (PlayingNote pn : pna)
+            stopSound(pn);
+        pna.clear();
+        setChannelOff(i);
+    }
+
 
     /**
      * This is a note that is currently playing.

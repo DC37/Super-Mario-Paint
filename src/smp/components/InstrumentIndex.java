@@ -52,7 +52,7 @@ public enum InstrumentIndex {
     /**
      * Gives the channel that this Instrument should be located at.
      * @return An integer that represents what channel the instrument
-     * is located at.
+     * is located at. The channel numbering starts at 1.
      */
     public int getChannel() {
         return channel;
