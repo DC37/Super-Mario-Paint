@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import smp.components.Values;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -108,8 +109,10 @@ public class SuperMarioPaint extends Application {
                     (Parent) FXMLLoader.load(
                             new File(mainFxml).toURI().toURL());
             primaryStage.setTitle("Super Mario Paint");
-            primaryStage.setResizable(true);
             setupCloseBehaviour(primaryStage);
+            primaryStage.setResizable(false);
+            primaryStage.setHeight(Values.DEFAULT_HEIGHT);
+            primaryStage.setWidth(Values.DEFAULT_WIDTH);
             Scene primaryScene = new Scene(root, 800, 600);
             primaryStage.setScene(primaryScene);
             SMPFXController.initializeHandlers();
@@ -117,6 +120,7 @@ public class SuperMarioPaint extends Application {
             dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
             primaryStage.show();
             dummyPreloader.dispose();
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

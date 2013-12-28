@@ -27,16 +27,12 @@ import smp.stateMachine.StateMachine;
  */
 public class SaveButton extends ImagePushButton {
 
-
-
     /**
      * Sort of hacky move here, but we're going to save a few songs
      * in a different format, so this exists.
      */
     private boolean saveTxt = false;
 
-    /** This is the staff that we want to save a song from. */
-    private Staff theStaff;
 
     /**
      * Default constructor.
@@ -45,14 +41,6 @@ public class SaveButton extends ImagePushButton {
      */
     public SaveButton(ImageView i) {
         super(i);
-    }
-
-    /**
-     * Sets the staff that this button is connected to.
-     * @param s The staff we want to set.
-     */
-    public void setStaff(Staff s) {
-        theStaff = s;
     }
 
     @Override

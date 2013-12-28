@@ -23,9 +23,6 @@ import smp.stateMachine.StateMachine;
  */
 public class LoadButton extends ImagePushButton {
 
-    /** This is the staff. */
-    private Staff theStaff;
-
     /**
      * Default constructor.
      * @param i This is the <code>ImageView</code> object
@@ -43,14 +40,6 @@ public class LoadButton extends ImagePushButton {
     @Override
     protected void reactReleased(MouseEvent event) {
 
-    }
-
-    /**
-     * Sets the staff that this button is connected to.
-     * @param s The staff we want to set.
-     */
-    public void setStaff(Staff s) {
-        theStaff = s;
     }
 
     /** This loads the song. */

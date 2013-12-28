@@ -17,8 +17,6 @@ import smp.stateMachine.StateMachine;
  */
 public class StopButton extends ImageRadioButton {
 
-    /** Pointer to the staff object this button will affect. */
-    private Staff theStaff;
 
     /**
      * Instantiates the stop button.
@@ -40,10 +38,4 @@ public class StopButton extends ImageRadioButton {
         theStaff.stopSong();
     }
 
-    /**
-     * @param s Pointer to the staff object that this button is to affect.
-     */
-    public void setStaff(Staff s) {
-        theStaff = s;
-    }
 }

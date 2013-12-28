@@ -2,6 +2,7 @@ package smp.components.general;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.staff.Staff;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,9 @@ import javafx.scene.input.MouseEvent;
  * @since 2012.08.14
  */
 public abstract class AbstractImageButton {
+
+    /** This is the staff. */
+    protected Staff theStaff;
 
     /**
      * Indicates whether the button is currently pressed.
@@ -184,6 +188,19 @@ public abstract class AbstractImageButton {
     /** @return The <code>ImageView</code> object that this button holds. */
     public ImageView getImage() {
         return theImage;
+    }
+
+    /**
+     * Sets the staff that this button is connected to.
+     * @param s The staff we want to set.
+     */
+    public void setStaff(Staff s) {
+        theStaff = s;
+    }
+
+    /** @return The staff that this button is connected to. */
+    public Staff getStaff() {
+        return theStaff;
     }
 
 }

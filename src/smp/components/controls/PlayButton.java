@@ -17,9 +17,6 @@ import smp.stateMachine.StateMachine;
  */
 public class PlayButton extends ImageRadioButton {
 
-    /** Pointer to the staff object this button will affect. */
-    private Staff theStaff;
-
     /**
      * Instantiates the Play button on the staff
      * @param i The ImageView object that will be manipulated by this class.
@@ -39,13 +36,6 @@ public class PlayButton extends ImageRadioButton {
         super.reactPressed(e);
         StateMachine.setState(State.SONG_PLAYING);
         theStaff.startSong();
-    }
-
-    /**
-     * @param s Pointer to the staff object that this button is to affect.
-     */
-    public void setStaff(Staff s) {
-        theStaff = s;
     }
 
 }
