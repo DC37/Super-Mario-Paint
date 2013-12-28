@@ -41,14 +41,14 @@ Tasklist:
 * End-of-File Behaviour fix (done - December 25, 2013)
 * Release to a test group (v0.9 - **Alpha Release** - December 25, 2013)
 * Measure line numbers (done - December 27, 2013)
-* Tempo selector interface
+* Tempo selector interface (done - December 27, 2013)
 * Options dialog
+* Import MPC songs
 * Arranger mode
 * [optional] Staff extension lines
 * Release to a test group (v0.95 - **Beta Release** - Release date unknown)
 * Bookmarks
 * Speedmarks
-* Import MPC songs
 * Import AMS songs
 * Splash screen is actually a splash screen
 * Splash screen animation and other extras

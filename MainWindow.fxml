@@ -59,11 +59,7 @@
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8c090" height="32.0" layoutX="4.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="390.0" />
                         <StackPane id="StackPane" layoutY="2.0">
                           <children>
-                            <TextArea fx:id="songName" focusTraversable="false" prefHeight="30.0" prefWidth="390.0" promptText="Song Name">
-                              <StackPane.margin>
-                                <Insets />
-                              </StackPane.margin>
-                            </TextArea>
+                            <TextField fx:id="songName" prefHeight="30.0" prefWidth="390.0" promptText="Song Name" />
                             <Rectangle fill="#1e90ff00" height="30.0" mouseTransparent="true" stroke="#d09048" strokeType="INSIDE" strokeWidth="2.0" width="390.0" />
                           </children>
                         </StackPane>
@@ -861,10 +857,10 @@
                                 <VBox id="VBox" alignment="CENTER">
                                   <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo" />
-                                    <StackPane prefHeight="25.0" prefWidth="100.0">
+                                    <StackPane fx:id="tempoBox" prefHeight="25.0" prefWidth="100.0">
                                       <children>
                                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0" />
-                                        <Text id="Tempo" fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0" text="240">
+                                        <Text id="Tempo" fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0">
                                           <font>
                                             <Font name="Century Gothic" size="15.0" />
                                           </font>

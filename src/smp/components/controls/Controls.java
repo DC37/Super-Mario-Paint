@@ -4,9 +4,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import smp.ImageIndex;
 import smp.components.staff.Staff;
+import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
@@ -98,6 +102,23 @@ public class Controls {
         currTempo.bindBidirectional(tempoDisplay);
         plus.setStringProperty(currTempo);
         minus.setStringProperty(currTempo);
+        StackPane tBox = SMPFXController.getTempoBox();
+
+        tBox.setOnMousePressed(
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            String tempo = Dialog.showTextDialog("Tempo");
+                            StateMachine.setTempo(Double.parseDouble(tempo));
+                            tempo = tempo.trim();
+                            currTempo.setValue(tempo);
+                        } catch (NumberFormatException e) {
+                            // Do nothing.
+                        }
+                        event.consume();
+                    }
+                });
     }
 
     /** Initializes the play button and the stop button. */

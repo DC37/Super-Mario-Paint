@@ -6,8 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
@@ -87,6 +89,10 @@ public class SMPFXController implements Initializable {
     @FXML
     private static Text tempoIndicator;
 
+    /** This holds the tempo indicator. */
+    @FXML
+    private static StackPane tempoBox;
+
     /** The button that loads the song. */
     @FXML
     private static ImageView loadButton;
@@ -101,7 +107,7 @@ public class SMPFXController implements Initializable {
 
     /** This is the text area that houses the song name. */
     @FXML
-    private static TextArea songName;
+    private static TextField songName;
 
     /**
      * The controls line object that holds the FXML controls object.
@@ -367,6 +373,11 @@ public class SMPFXController implements Initializable {
         return tempoIndicator;
     }
 
+    /** @return The tempo indicator box. */
+    public static StackPane getTempoBox() {
+        return tempoBox;
+    }
+
     /** @return The load button. */
     public static ImageView getLoadButton() {
         return loadButton;
@@ -383,7 +394,7 @@ public class SMPFXController implements Initializable {
     }
 
     /** @return The text area that contains the song name. */
-    public static TextArea getSongName() {
+    public static TextField getSongName() {
         return songName;
     }
 

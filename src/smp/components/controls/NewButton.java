@@ -6,6 +6,7 @@ import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -49,6 +50,7 @@ public class NewButton extends ImagePushButton {
         if (cont) {
             theStaff.setSequence(new StaffSequence());
             theStaff.getNoteMatrix().redraw();
+            SMPFXController.getSongName().clear();
             StateMachine.setModified(false);
         }
     }

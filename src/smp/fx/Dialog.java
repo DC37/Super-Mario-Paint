@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,6 +22,9 @@ public class Dialog {
 
     /** A choice that we have made in some dialog box. */
     private static boolean choice = false;
+
+    /** Some text that we type into a field in a text dialog. */
+    private static String info = "";
 
     /**
      * Shows a dialog box with the text given to this method.
@@ -59,7 +63,7 @@ public class Dialog {
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show an ok / cancel dialog.
-     * @param primaryStage
+     * @param txt The text to show.
      */
     public static boolean showYesNoDialog(String txt) {
         final Stage dialog = new Stage();
@@ -100,6 +104,53 @@ public class Dialog {
         dialog.setScene(scene1);
         dialog.showAndWait();
         return choice;
+    }
+
+    /**
+     * Got this off of https://community.oracle.com/thread/2247058?tstart=0
+     * Modified it to show a text dialog.
+     * @param txt The text to show.
+     */
+    public static String showTextDialog(String txt) {
+        final Stage dialog = new Stage();
+        dialog.setHeight(150);
+        dialog.setWidth(250);
+        dialog.setResizable(false);
+        dialog.initStyle(StageStyle.UTILITY);
+        Label label = new Label(txt);
+        final TextField t = new TextField();
+        Button okButton = new Button("OK");
+
+        okButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                info = t.getText();
+                dialog.close();
+            }
+
+        });
+
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                info = "";
+                dialog.close();
+            }
+        });
+
+        FlowPane pane = new FlowPane(10, 10);
+        pane.setAlignment(Pos.CENTER);
+        pane.getChildren().addAll(okButton, cancelButton);
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(label, t, pane);
+        Scene scene1 = new Scene(vBox);
+        dialog.setScene(scene1);
+        dialog.showAndWait();
+        return info;
     }
 
 }
