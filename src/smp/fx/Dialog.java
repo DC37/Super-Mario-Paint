@@ -16,7 +16,6 @@ import javafx.stage.StageStyle;
  * Generates a dialog box, depending on what we do.
  * @author RehdBlob
  * @since 2013.12.23
- *
  */
 public class Dialog {
 

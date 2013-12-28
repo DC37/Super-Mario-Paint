@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import smp.components.general.ImagePushButton;
-import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
@@ -35,11 +34,6 @@ public class LoadButton extends ImagePushButton {
     @Override
     protected void reactPressed(MouseEvent event) {
         load();
-    }
-
-    @Override
-    protected void reactReleased(MouseEvent event) {
-
     }
 
     /** This loads the song. */

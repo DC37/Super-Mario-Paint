@@ -64,7 +64,6 @@ public class ArrowButton extends ImagePushButton {
     @Override
     protected void reactReleased(MouseEvent event) {
         super.reactReleased(event);
-
     }
 
 }

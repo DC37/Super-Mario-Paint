@@ -53,11 +53,6 @@ public class MuteButton extends ImageToggleButton {
 
     }
 
-    @Override
-    protected void reactReleased(MouseEvent event) {
-
-    }
-
     /** @param im The mute button that we want to set. */
     public void setMuteButton(MuteInstButton im) {
         mt = im;

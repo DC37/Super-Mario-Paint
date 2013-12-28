@@ -139,28 +139,35 @@ public abstract class AbstractImageButton {
 
     /**
      * This method is always called when a
-     * MouseClicked event occurs.
+     * MouseClicked event occurs. Defaults to no action.
      * @param event The event that occurred.
      */
-    protected abstract void reactClicked(MouseEvent event);
+    protected void reactClicked(MouseEvent event) {
+
+    }
 
     /**
      * This method is always called when a
-     * MousePressed event occurs.
+     * MousePressed event occurs. Defaults to no action.
      * @param event The event that occurred.
      */
-    protected abstract void reactPressed(MouseEvent event);
+    protected void reactPressed(MouseEvent event){
+
+    }
 
     /**
      * This method is always called when a
-     * MouseReleased event occurs.
+     * MouseReleased event occurs. Defaults to no action.
      * @param event The event that occurred.
      */
-    protected abstract void reactReleased(MouseEvent event);
+    protected void reactReleased(MouseEvent event) {
+
+    }
 
 
     /**
      * This method is always called when a Drag event is detected.
+     * Usually defaults to no action.
      * @param event The event that occurred.
      */
     protected void reactDragDetected(MouseEvent event) {

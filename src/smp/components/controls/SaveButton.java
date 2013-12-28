@@ -48,11 +48,6 @@ public class SaveButton extends ImagePushButton {
         save();
     }
 
-    @Override
-    protected void reactReleased(MouseEvent event) {
-
-    }
-
     /** This saves the song. */
     private void save() {
         if (!saveTxt) {

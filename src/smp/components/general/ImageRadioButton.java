@@ -53,16 +53,5 @@ public abstract class ImageRadioButton extends AbstractImageButton {
         }
     }
 
-    @Override
-    protected void reactClicked(MouseEvent event) {
-        // Do nothing
-    }
-
-    @Override
-    protected void reactReleased(MouseEvent event) {
-        // Do nothing
-    }
-
-
 
 }

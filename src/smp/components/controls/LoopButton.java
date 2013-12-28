@@ -27,12 +27,6 @@ public class LoopButton extends ImageToggleButton {
     }
 
     @Override
-    protected void reactClicked(MouseEvent event) {
-        // Do nothing
-
-    }
-
-    @Override
     protected void reactPressed(MouseEvent event) {
         if (isPressed) {
             isPressed = false;
@@ -44,11 +38,6 @@ public class LoopButton extends ImageToggleButton {
             releaseImage();
             StateMachine.resetLoopPressed();
         }
-
-    }
-
-    @Override
-    protected void reactReleased(MouseEvent event) {
 
     }
 

@@ -22,10 +22,6 @@ public abstract class ImagePushButton extends AbstractImageButton {
     }
 
 
-    @Override
-    protected void reactClicked(MouseEvent event) {
-        return;
-    }
 
     @Override
     protected void reactPressed(MouseEvent event) {

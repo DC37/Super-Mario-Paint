@@ -1,8 +1,8 @@
 package smp.components.controls;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
-import smp.components.staff.Staff;
 
 /**
  * This is the options button. It currently doesn't do anything.
@@ -17,6 +17,26 @@ public class OptionsButton extends ImagePushButton {
      */
     public OptionsButton(ImageView i) {
         super(i);
+    }
+
+    @Override
+    protected void reactPressed(MouseEvent event) {
+        options();
+    }
+
+    @Override
+    protected void reactReleased(MouseEvent event) {
+
+    }
+
+    /** Opens up an options dialog. */
+    private void options() {
+        updateValues();
+    }
+
+    /** Updates the different values of this program. */
+    private void updateValues() {
+
     }
 
 }
