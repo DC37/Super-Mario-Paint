@@ -7,6 +7,7 @@ import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
+import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;
@@ -16,6 +17,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  * Wrapper class for all of the images that appear on the Staff of
@@ -34,6 +37,11 @@ public class StaffImages {
      */
     private ArrayList<ImageView> measureLines;
 
+    /**
+     * The ArrayList that holds the Text objects that will hold the measure
+     * line numbers.
+     */
+    private ArrayList<Text> measureNums;
 
     /** These are the bars that highlight notes. */
     private ArrayList<ImageView> staffPlayBars;
@@ -119,8 +127,22 @@ public class StaffImages {
      */
     private void initializeStaffMeasureNums(HBox mNums) {
         ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
+        measureNums = new ArrayList<Text>();
         for(Node num : mNums.getChildren())
             measureNumBoxes.add((HBox) num);
+        int counter = 1;
+        for (int i = 0; i < measureNumBoxes.size(); i++) {
+            HBox theBox = measureNumBoxes.get(i);
+            Text t = new Text();
+            theBox.getChildren().add(t);
+            measureNums.add(t);
+            if (i % Values.TIMESIG_BEATS == 0) {
+                t.setText(String.valueOf(counter));
+                counter++;
+            }
+            else
+                continue;
+        }
     }
 
     /**
@@ -177,7 +199,7 @@ public class StaffImages {
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
         for (int i = 0; i < measureLines.size(); i++) {
-            if (i % Values.DEFAULT_TIMESIG_BEATS == 0)
+            if (i % Values.TIMESIG_BEATS == 0)
                 measureLines.get(i).setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
             else
@@ -187,18 +209,27 @@ public class StaffImages {
     }
 
     /**
-     * Redraws the staff measure lines.
+     * Redraws the staff measure lines and numbers.
      * @param currLine The current line that we are on.
      */
     public void updateStaffMeasureLines(int currLine) {
+        int counter = 0;
         for (int i = 0; i < measureLines.size(); i++) {
             ImageView currImage = measureLines.get(i);
-            if ((currLine + i) % Values.DEFAULT_TIMESIG_BEATS == 0)
+            Text currText = measureNums.get(i);
+            if ((currLine + i) % Values.TIMESIG_BEATS == 0) {
                 currImage.setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
-            else
+                currText.setText(String.valueOf((int) (
+                        Math.ceil(currLine / (double) Values.TIMESIG_BEATS) + 1
+                        + counter)));
+                counter++;
+            }
+            else {
                 currImage.setImage(ImageLoader.getSpriteFX(
                         ImageIndex.STAFF_LINE));
+                currText.setText("");
+            }
         }
     }
 

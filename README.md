@@ -34,22 +34,22 @@ Tasklist:
 * Play, stop, and loop buttons are able to be pressed (done - August 29, 2013)
 * Play and stop buttons start and stop the song (done - September 28, 2013)
 * Play back notes on the staff reliably (done - September 28, 2013)
-* Release to a small test group (v0.70-0.73 - Mario Paint Hangout - ongoing)
+* Release to a small test group (v0.70-0.73 - obsolete)
 * Volume bars implemented (done - December 17, 2013)
 * Save & Load songs (done - December 18, 2013)
 * Loop button loops the song (done - December 18, 2013)
 * End-of-File Behaviour fix (done - December 25, 2013)
-* Release to a smallish test group (v0.9 - **Alpha Release** - December 25, 2013)
-* Measure line numbers
-* Staff extension lines
-* Splash screen is actually a splash screen
-* Splash screen animation and other extras
-* Primary stage done
+* Release to a test group (v0.9 - **Alpha Release** - December 25, 2013)
+* Measure line numbers (done - December 27, 2013)
+* Tempo selector interface
 * Options dialog
 * Arranger mode
-* Release to a medium test group (v0.95 - **Beta Release** - Release date unknown)
-* Import MPC songs
+* [optional] Staff extension lines
+* Release to a test group (v0.95 - **Beta Release** - Release date unknown)
 * Bookmarks
 * Speedmarks
+* Import MPC songs
 * Import AMS songs
+* Splash screen is actually a splash screen
+* Splash screen animation and other extras
 * Release SMP v1.00
