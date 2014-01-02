@@ -1,7 +1,10 @@
 package smp.components.controls;
 
 import smp.ImageIndex;
+import smp.components.Values;
 import smp.components.general.ImagePushButton;
+import smp.components.staff.sequences.StaffNoteLine;
+import smp.components.staff.sequences.StaffSequence;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -59,6 +62,15 @@ public class ArrowButton extends ImagePushButton {
     protected void reactPressed(MouseEvent event) {
         super.reactPressed(event);
         scrollbar.adjustValue(scrollbar.getValue() + skipAmount);
+        if (scrollbar.getMax() <= scrollbar.getValue()) {
+            scrollbar.setMax(scrollbar.getMax()
+                    + Values.NOTELINES_IN_THE_WINDOW * 2);
+            StaffSequence s = theStaff.getSequence();
+            int start = (int) scrollbar.getMax();
+            for(int i = start; i < start
+                    + Values.NOTELINES_IN_THE_WINDOW * 2; i++)
+                s.addLine(new StaffNoteLine(i));
+        }
     }
 
     @Override

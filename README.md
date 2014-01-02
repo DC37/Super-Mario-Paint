@@ -42,11 +42,15 @@ Tasklist:
 * Release to a test group (v0.9 - **Alpha Release** - December 25, 2013)
 * Measure line numbers (done - December 27, 2013)
 * Tempo selector interface (done - December 27, 2013)
+* Remove limit on song length (done - January 1, 2014)
 * Options dialog
 * Import MPC songs
 * Arranger mode
-* [optional] Staff extension lines
+* [optional] Staff ledger lines
+* Copy-paste sections / MPCTxtTools functionality
+* Test run on more operating systems
 * Release to a test group (v0.95 - **Beta Release** - Release date unknown)
+* Undo/redo
 * Bookmarks
 * Speedmarks
 * Import AMS songs

@@ -30,6 +30,9 @@ public class Controls {
     /** The pointer to the loop button on the staff. */
     private LoopButton loop;
 
+    /** The pointer to the options button on the staff. */
+    private OptionsButton options;
+
     /** The pointer to the mute button on the staff. */
     private MuteButton mute;
 
@@ -128,10 +131,16 @@ public class Controls {
         loop = new LoopButton(SMPFXController.getLoopButton());
         mute = new MuteButton(SMPFXController.getMuteButton());
         muteA = new MuteInstButton(SMPFXController.getMuteAButton());
+        options = new OptionsButton(SMPFXController.getOptionsButton());
+
         mute.setMuteButton(muteA);
         muteA.setMuteButton(mute);
+        mute.setStaff(theStaff);
+        muteA.setStaff(theStaff);
+
         play.link(stop);
         stop.link(play);
+
         play.setStaff(theStaff);
         stop.setStaff(theStaff);
     }
@@ -157,6 +166,11 @@ public class Controls {
         rightArrow.setSkipAmount(1);
         rightFastArrow.setSkipAmount(Double.MAX_VALUE);
         leftFastArrow.setSkipAmount(-Double.MAX_VALUE);
+
+        leftArrow.setStaff(theStaff);
+        rightArrow.setStaff(theStaff);
+        rightFastArrow.setStaff(theStaff);
+        leftFastArrow.setStaff(theStaff);
     }
 
 

@@ -48,6 +48,11 @@ public class SaveButton extends ImagePushButton {
         save();
     }
 
+    @Override
+    protected void reactReleased(MouseEvent event) {
+        // do nothing.
+    }
+
     /** This saves the song. */
     private void save() {
         if (!saveTxt) {
@@ -68,8 +73,9 @@ public class SaveButton extends ImagePushButton {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(new File(System.getProperty("user.dir")));
             f.setInitialFileName(SMPFXController.getSongName().getText());
-            f.getExtensionFilters().add(new ExtensionFilter(
-                    "Text file", "*.txt"));
+            f.getExtensionFilters().addAll(
+                    new ExtensionFilter("Text file", "*.txt"),
+                    new ExtensionFilter("All files", "*"));
             File outputFile = f.showSaveDialog(null);
             if (outputFile == null)
                 return;

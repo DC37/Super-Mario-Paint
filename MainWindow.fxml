@@ -59,7 +59,7 @@
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8c090" height="32.0" layoutX="4.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="390.0" />
                         <StackPane id="StackPane" layoutY="2.0">
                           <children>
-                            <TextField fx:id="songName" prefHeight="30.0" prefWidth="390.0" promptText="Song Name" />
+                            <TextField fx:id="songName" focusTraversable="false" prefHeight="30.0" prefWidth="390.0" promptText="Song Name" />
                             <Rectangle fill="#1e90ff00" height="30.0" mouseTransparent="true" stroke="#d09048" strokeType="INSIDE" strokeWidth="2.0" width="390.0" />
                           </children>
                         </StackPane>
@@ -927,7 +927,7 @@
                                 <Point3D />
                               </rotationAxis>
                             </Rectangle>
-                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="374.0" minorTickCount="1" prefWidth="660.0">
+                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="390.0" minorTickCount="1" prefWidth="660.0">
                               <rotationAxis>
                                 <Point3D />
                               </rotationAxis>

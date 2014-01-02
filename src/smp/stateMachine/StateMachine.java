@@ -58,7 +58,7 @@ public class StateMachine {
     /**
      * This is the current tempo that the program is running at.
      */
-    private static double tempo = 400;
+    private static double tempo = Values.DEFAULT_TEMPO;
 
 
     /**

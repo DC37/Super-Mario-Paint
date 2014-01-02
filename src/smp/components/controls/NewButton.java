@@ -32,6 +32,11 @@ public class NewButton extends ImagePushButton {
         newSong();
     }
 
+    @Override
+    protected void reactReleased(MouseEvent event) {
+        // do nothing.
+    }
+
     /**
      * Creates a new song and clears the staff of all notes.
      * Make sure you save your song first!

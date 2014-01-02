@@ -40,7 +40,16 @@ public class StaffSequence implements Serializable {
      * index i.
      */
     public StaffNoteLine getLine(int i) {
-        return theLines.get(i);
+        try {
+            return theLines.get(i);
+        } catch (IndexOutOfBoundsException e) {
+            theLines.add(new StaffNoteLine(theLines.size()));
+            try {
+                return theLines.get(i);
+            } catch (IndexOutOfBoundsException e2) {
+                return getLine(i);
+            }
+        }
     }
 
     /**

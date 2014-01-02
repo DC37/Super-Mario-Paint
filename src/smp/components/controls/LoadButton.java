@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
@@ -36,6 +37,11 @@ public class LoadButton extends ImagePushButton {
         load();
     }
 
+    @Override
+    protected void reactReleased(MouseEvent event) {
+        // do nothing.
+    }
+
     /** This loads the song. */
     private void load() {
         boolean cont = true;
@@ -57,6 +63,8 @@ public class LoadButton extends ImagePushButton {
                 theStaff.setSequence(loaded);
                 StateMachine.setTempo(loaded.getTempo());
                 theStaff.getControlPanel().updateCurrTempo();
+                theStaff.getControlPanel().getScrollbar().setMax(
+                        loaded.getTheLines().size());
                 theStaff.getNoteMatrix().redraw();
                 o_in.close();
                 f_in.close();

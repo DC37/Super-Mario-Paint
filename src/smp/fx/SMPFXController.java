@@ -105,6 +105,10 @@ public class SMPFXController implements Initializable {
     @FXML
     private static ImageView newButton;
 
+    /** The button that opens the options dialog. */
+    @FXML
+    private static ImageView optionsButton;
+
     /** This is the text area that houses the song name. */
     @FXML
     private static TextField songName;
@@ -391,6 +395,11 @@ public class SMPFXController implements Initializable {
     /** @return The new song button. */
     public static ImageView getNewButton() {
         return newButton;
+    }
+
+    /** @return The options button. */
+    public static ImageView getOptionsButton() {
+        return optionsButton;
     }
 
     /** @return The text area that contains the song name. */
