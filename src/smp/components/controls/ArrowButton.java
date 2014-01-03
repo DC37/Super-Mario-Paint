@@ -25,6 +25,9 @@ public class ArrowButton extends ImagePushButton {
      */
     private double skipAmount;
 
+    /** Tells us whether we're at the end of the file. */
+    private boolean endOfFile = false;
+
     /** This is the slider that the scrollbar will affect. */
     private Slider scrollbar;
 
@@ -62,7 +65,7 @@ public class ArrowButton extends ImagePushButton {
     protected void reactPressed(MouseEvent event) {
         super.reactPressed(event);
         scrollbar.adjustValue(scrollbar.getValue() + skipAmount);
-        if (scrollbar.getMax() <= scrollbar.getValue()) {
+        if (scrollbar.getMax() <= scrollbar.getValue() && endOfFile) {
             scrollbar.setMax(scrollbar.getMax()
                     + Values.NOTELINES_IN_THE_WINDOW * 2);
             StaffSequence s = theStaff.getSequence();
@@ -71,6 +74,10 @@ public class ArrowButton extends ImagePushButton {
                     + Values.NOTELINES_IN_THE_WINDOW * 2; i++)
                 s.addLine(new StaffNoteLine(i));
         }
+        if (scrollbar.getMax() <= scrollbar.getValue())
+            endOfFile = true;
+        else
+            endOfFile = false;
     }
 
     @Override

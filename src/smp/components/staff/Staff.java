@@ -131,11 +131,21 @@ public class Staff {
         setLocation(StateMachine.getMeasureLineNum());
     }
 
+    /** Turns off all highlights in the play bars in the staff. */
+    private void highlightsOff() {
+        ArrayList<ImageView> playBars = staffImages.getPlayBars();
+        for(ImageView i : playBars) {
+            i.setImage(ImageLoader.getSpriteFX(
+                    ImageIndex.NONE));
+        }
+    }
+
 
     /**
      * Begins animation of the Staff.
      */
     public void startSong() {
+        highlightsOff();
         lastLine = findLastLine();
         if (lastLine == 0 && theSequence.getLine(0).isEmpty()) {
             theControls.getStopButton().reactPressed(null);
@@ -151,11 +161,10 @@ public class Staff {
      */
     private int findLastLine() {
         ArrayList<StaffNoteLine> lines = theSequence.getTheLines();
-        for (int i = lines.size() - 1; i >= 0; i--) {
+        for (int i = lines.size() - 1; i >= 0; i--)
             if (!lines.get(i).isEmpty()) {
                 return i;
             }
-        }
         return 0;
     }
 
@@ -164,11 +173,18 @@ public class Staff {
      */
     public void stopSong() {
         songPlaying = false;
-        for (ImageView i : staffImages.getPlayBars()) {
-            i.setImage(ImageLoader.getSpriteFX(ImageIndex.NONE));
-        }
         animationService.cancel();
         animationService.reset();
+        try {
+            Thread.sleep(1);
+            while (true) {
+                if (!animationService.isRunning())
+                    break;
+            }
+        } catch (InterruptedException e) {
+
+        }
+        highlightsOff();
     }
 
     /**
@@ -272,7 +288,7 @@ public class Staff {
      * 
      */
     public void setTempo(double tempo) {
-        double mill = (1 / (tempo / 60.0)) * 1000;
+        double mill = (60.0 / tempo) * 1000;
         delayMillis = (int) mill;
         double nano = (mill - delayMillis) * Math.pow(10, 6);
         delayNanos = (int) nano;
@@ -292,6 +308,9 @@ public class Staff {
      */
     class AnimationService extends Service<Staff> {
 
+        /** Whether we have zeroed the staff or not. */
+        private boolean zero = false;
+
         @Override
         protected Task<Staff> createTask() {
             return new AnimationTask();
@@ -305,15 +324,13 @@ public class Staff {
          */
         private void bumpHighlights(ArrayList<ImageView> playBars, int index,
                 boolean advance) {
-            for (ImageView i : playBars) {
-                i.setImage(
-                        ImageLoader.getSpriteFX(ImageIndex.NONE));
-            }
+            highlightsOff();
             playBars.get(index).setImage(
                     ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
-            if (advance) {
+            if (advance && !zero)
                 shiftStaff();
-            }
+            if (zero)
+                zero = false;
 
         }
 
@@ -371,11 +388,6 @@ public class Staff {
             private int index = 0;
 
             /**
-             * This is the current measure line.
-             */
-            private int currMeasureLine = 0;
-
-            /**
              * Whether we need to advance the satff ahead by a few lines or not.
              */
             private boolean advance = false;
@@ -386,19 +398,16 @@ public class Staff {
             @Override
             protected Staff call() throws Exception {
                 playBars = staffImages.getPlayBars();
-                currMeasureLine = StateMachine.getMeasureLineNum();
-                int counter = currMeasureLine;
+                int counter = StateMachine.getMeasureLineNum();
                 do {
                     playNextLine();
                     counter++;
-                    if (counter % Values.NOTELINES_IN_THE_WINDOW == 0)
-                        currMeasureLine += Values.NOTELINES_IN_THE_WINDOW;
-                    if (counter % 4 == 0 && counter > lastLine) {
+                    if (counter > lastLine && counter % 4 == 0) {
                         if (StateMachine.isLoopPressed()) {
-                            currMeasureLine = 0;
                             counter = 0;
                             index = 0;
                             zeroStaff();
+                            zero = true;
                         } else {
                             songPlaying = false;
                         }
@@ -408,20 +417,12 @@ public class Staff {
                     } catch (InterruptedException e) {
                         // Do nothing
                     }
-                } while (songPlaying && currMeasureLine
-                        <= Values.DEFAULT_LINES_PER_SONG);
-                highlightsOff();
+                } while (songPlaying);
                 hitStop();
+                highlightsOff();
                 return theMatrix.getStaff();
             }
 
-            /** Turns off all highlights in the play bars in the staff. */
-            private void highlightsOff() {
-                for(ImageView i : playBars) {
-                    i.setImage(ImageLoader.getSpriteFX(
-                            ImageIndex.NONE));
-                }
-            }
 
             /** Hits the stop button for the song. */
             private void hitStop() {
@@ -435,11 +436,6 @@ public class Staff {
              * they are.
              */
             private void playNextLine() {
-                if (StateMachine.getMeasureLineNum() >=
-                        Values.DEFAULT_LINES_PER_SONG
-                        - Values.NOTELINES_IN_THE_WINDOW) {
-                    songPlaying = false;
-                }
                 bumpHighlights(playBars, index, advance);
                 playSoundLine(index);
                 advance = false;

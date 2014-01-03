@@ -70,7 +70,7 @@ public class Values {
 
     /**
      * The number of lines in the staff, by default. This number
-     * is typically 384.
+     * is typically 400.
      */
     public static int DEFAULT_LINES_PER_SONG = 400;
 
