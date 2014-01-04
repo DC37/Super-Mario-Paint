@@ -216,9 +216,12 @@ public class NoteMatrix {
             if (s.muteNoteVal() == 0) {
                 s.setImage(ImageLoader.getSpriteFX(
                         s.getInstrument().imageIndex()));
-            } else {
+            } else if (s.muteNoteVal() == 1) {
                 s.setImage(ImageLoader.getSpriteFX(
                         s.getInstrument().imageIndex().alt()));
+            } else {
+                s.setImage(ImageLoader.getSpriteFX(
+                        s.getInstrument().imageIndex().silhouette()));
             }
 
             s.setVisible(true);
