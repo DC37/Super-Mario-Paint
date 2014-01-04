@@ -112,8 +112,8 @@ public class Dialog {
      */
     public static String showTextDialog(String txt) {
         final Stage dialog = new Stage();
-        dialog.setHeight(150);
-        dialog.setWidth(250);
+        dialog.setHeight(125);
+        dialog.setWidth(150);
         dialog.setResizable(false);
         dialog.initStyle(StageStyle.UTILITY);
         Label label = new Label(txt);

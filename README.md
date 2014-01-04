@@ -38,11 +38,11 @@ Tasklist:
 * Volume bars implemented (done - December 17, 2013)
 * Save & Load songs (done - December 18, 2013)
 * Loop button loops the song (done - December 18, 2013)
-* End-of-File Behaviour fix (done - December 25, 2013)
 * Release to a test group (v0.9 - **Alpha Release** - December 25, 2013)
 * Measure line numbers (done - December 27, 2013)
 * Tempo selector interface (done - December 27, 2013)
 * Remove limit on song length (done - January 1, 2014)
+* End-of-File Behaviour fix (done - January 3, 2014)
 * Options dialog
 * Import MPC songs
 * Arranger mode

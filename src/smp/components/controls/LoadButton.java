@@ -5,12 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
+import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
@@ -47,7 +49,7 @@ public class LoadButton extends ImagePushButton {
         boolean cont = true;
         if (StateMachine.isModified())
             cont = Dialog.showYesNoDialog("The current song has been modified!\n"
-                    + "Load the song anyway?");
+                    + "Load anyway?");
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
@@ -60,11 +62,13 @@ public class LoadButton extends ImagePushButton {
                 ObjectInputStream o_in = new
                         ObjectInputStream(f_in);
                 StaffSequence loaded = (StaffSequence) o_in.readObject();
+                normalize(loaded);
                 theStaff.setSequence(loaded);
                 StateMachine.setTempo(loaded.getTempo());
                 theStaff.getControlPanel().updateCurrTempo();
                 theStaff.getControlPanel().getScrollbar().setMax(
-                        loaded.getTheLines().size());
+                        loaded.getTheLines().size()
+                        - Values.NOTELINES_IN_THE_WINDOW);
                 theStaff.getNoteMatrix().redraw();
                 o_in.close();
                 f_in.close();
@@ -72,7 +76,7 @@ public class LoadButton extends ImagePushButton {
                 try {
                     fname = fname.substring(0, fname.indexOf("."));
                 } catch (IndexOutOfBoundsException e) {
-
+                    // Do nothing
                 }
                 SMPFXController.getSongName().setText(fname);
                 StateMachine.setModified(false);
@@ -84,6 +88,19 @@ public class LoadButton extends ImagePushButton {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Makes a sequence fit on the screen.
+     * @param theSeq The sequence to normalize.
+     */
+    private void normalize(StaffSequence theSeq) {
+        ArrayList<StaffNoteLine> theLines = theSeq.getTheLines();
+        while (theLines.size() % 4 != 0 ||
+                theLines.size() % Values.NOTELINES_IN_THE_WINDOW != 0) {
+            theLines.add(new StaffNoteLine(theLines.size()));
+        }
+
     }
 
 

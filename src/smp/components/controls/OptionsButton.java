@@ -22,7 +22,9 @@ import smp.components.general.ImagePushButton;
 public class OptionsButton extends ImagePushButton {
 
     /** This is the text that will be shown in the options dialog. */
-    private String txt = "";
+    private String txt = "Not implemented yet";
+
+
 
     /**
      * Default constructor.
@@ -48,6 +50,7 @@ public class OptionsButton extends ImagePushButton {
         dialog.setHeight(150);
         dialog.setWidth(250);
         dialog.setResizable(false);
+        dialog.setTitle("Options");
         dialog.initStyle(StageStyle.UTILITY);
         Label label = new Label(txt);
         Button okButton = new Button("OK");

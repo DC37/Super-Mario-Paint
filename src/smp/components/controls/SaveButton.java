@@ -72,7 +72,8 @@ public class SaveButton extends ImagePushButton {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(new File(System.getProperty("user.dir")));
-            f.setInitialFileName(SMPFXController.getSongName().getText());
+            f.setInitialFileName(SMPFXController.getSongName().getText()
+                    + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));

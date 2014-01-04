@@ -1,10 +1,15 @@
 package smp.components.controls;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import smp.ImageIndex;
 import smp.components.Values;
+import smp.components.controls.TempoAdjustButton.clickHold;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import javafx.application.Platform;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +36,9 @@ public class ArrowButton extends ImagePushButton {
     /** This is the slider that the scrollbar will affect. */
     private Slider scrollbar;
 
+    /** This is a timer object for click-and-hold. */
+    private Timer t;
+
     /**
      * Default constructor.
      * @param i The <code>ImageView</code> object that we are
@@ -39,6 +47,7 @@ public class ArrowButton extends ImagePushButton {
     public ArrowButton(ImageView i, Slider scr, ImageIndex pr,
             ImageIndex notPr) {
         super(i);
+        t = new Timer();
         scrollbar = scr;
         getImages(pr, notPr);
     }
@@ -64,25 +73,55 @@ public class ArrowButton extends ImagePushButton {
     @Override
     protected void reactPressed(MouseEvent event) {
         super.reactPressed(event);
-        scrollbar.adjustValue(scrollbar.getValue() + skipAmount);
-        if (scrollbar.getMax() <= scrollbar.getValue() && endOfFile) {
-            scrollbar.setMax(scrollbar.getMax()
-                    + Values.NOTELINES_IN_THE_WINDOW * 2);
-            StaffSequence s = theStaff.getSequence();
-            int start = (int) scrollbar.getMax();
-            for(int i = start; i < start
-                    + Values.NOTELINES_IN_THE_WINDOW * 2; i++)
-                s.addLine(new StaffNoteLine(i));
-        }
-        if (scrollbar.getMax() <= scrollbar.getValue())
-            endOfFile = true;
-        else
-            endOfFile = false;
+        bumpStaff();
+        TimerTask tt = new clickHold();
+        t.schedule(tt, Values.HOLDTIME,
+                Values.REPEATTIME);
+    }
+
+    /** Bumps the staff by some amount. */
+    private void bumpStaff() {
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                scrollbar.adjustValue(scrollbar.getValue() + skipAmount);
+                if (scrollbar.getMax() <= scrollbar.getValue() && endOfFile) {
+                    scrollbar.setMax(scrollbar.getMax()
+                            + Values.NOTELINES_IN_THE_WINDOW * 2);
+                    StaffSequence s = theStaff.getSequence();
+                    int start = (int) scrollbar.getMax();
+                    for(int i = start; i < start
+                            + Values.NOTELINES_IN_THE_WINDOW * 2; i++)
+                        s.addLine(new StaffNoteLine(i));
+                }
+                if (scrollbar.getMax() <= scrollbar.getValue())
+                    endOfFile = true;
+                else
+                    endOfFile = false;
+            }
+        });
     }
 
     @Override
     protected void reactReleased(MouseEvent event) {
         super.reactReleased(event);
+        t.cancel();
+        t = new Timer();
+    }
+
+    /**
+     * This is a timer task that increments the current line of the song.
+     * @author RehdBlob
+     * @since 2014.01.02
+     */
+    class clickHold extends TimerTask {
+
+        @Override
+        public void run() {
+            bumpStaff();
+        }
+
     }
 
 }

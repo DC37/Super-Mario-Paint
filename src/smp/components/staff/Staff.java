@@ -133,11 +133,16 @@ public class Staff {
 
     /** Turns off all highlights in the play bars in the staff. */
     private void highlightsOff() {
-        ArrayList<ImageView> playBars = staffImages.getPlayBars();
-        for(ImageView i : playBars) {
-            i.setImage(ImageLoader.getSpriteFX(
-                    ImageIndex.NONE));
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<ImageView> playBars = staffImages.getPlayBars();
+                for(ImageView i : playBars) {
+                    i.setImage(ImageLoader.getSpriteFX(
+                            ImageIndex.NONE));
+                }
+            }
+        });
     }
 
 
@@ -147,7 +152,8 @@ public class Staff {
     public void startSong() {
         highlightsOff();
         lastLine = findLastLine();
-        if (lastLine == 0 && theSequence.getLine(0).isEmpty()) {
+        if ((lastLine == 0 && theSequence.getLine(0).isEmpty())
+                || (lastLine < StateMachine.getMeasureLineNum())) {
             theControls.getStopButton().reactPressed(null);
             return;
         }
@@ -175,15 +181,6 @@ public class Staff {
         songPlaying = false;
         animationService.cancel();
         animationService.reset();
-        try {
-            Thread.sleep(1);
-            while (true) {
-                if (!animationService.isRunning())
-                    break;
-            }
-        } catch (InterruptedException e) {
-
-        }
         highlightsOff();
     }
 
@@ -324,7 +321,12 @@ public class Staff {
          */
         private void bumpHighlights(ArrayList<ImageView> playBars, int index,
                 boolean advance) {
-            highlightsOff();
+            for (int i = 0; i < playBars.size(); i++)
+                if (i != index)
+                    playBars.get(i).setImage(
+                            ImageLoader.getSpriteFX(ImageIndex.NONE));
+
+
             playBars.get(index).setImage(
                     ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
             if (advance && !zero)
@@ -418,8 +420,8 @@ public class Staff {
                         // Do nothing
                     }
                 } while (songPlaying);
-                hitStop();
                 highlightsOff();
+                hitStop();
                 return theMatrix.getStaff();
             }
 
