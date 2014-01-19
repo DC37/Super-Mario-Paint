@@ -1,9 +1,13 @@
 Super Mario Paint
 ==========
 
-Based off of the original Mario Paint on the SNES from 1992, MarioSequencer, TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany), and FordPrefect86's Advanced Mario Sequencer. This will be a free program when completed, open to those who want to download it.  
+Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (2002), TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany, 2007-2008), and FordPrefect86's Advanced Mario Sequencer (2009). This will be a free program when completed, open to those who want to download it.  
 
-Project started: August 7, 2012  
+Milestones
+August 7, 2012 - Project started)  
+December 25, 2013 - v0.90 - Alpha Release  
+January 4, 2014 - v0.91 - Alpha Release Update   
+January 31, 2014 (Scheduled) - v0.95 - Beta Release  
 Author: RehdBlob  
 Version: 1.00  
 
@@ -43,13 +47,14 @@ Tasklist:
 * Tempo selector interface (done - December 27, 2013)
 * Remove limit on song length (done - January 1, 2014)
 * End-of-File Behaviour fix (done - January 3, 2014)
-* Options dialog
-* Import MPC songs
+* Rudimentary Options dialog (done - January 19, 2014)
 * Arranger mode
+* Import MPC songs
 * [optional] Staff ledger lines
 * Copy-paste sections / MPCTxtTools functionality
 * Test run on more operating systems
 * Release to a test group (v0.95 - **Beta Release** - Release date unknown)
+* More advanced Options dialog
 * Undo/redo
 * Bookmarks
 * Speedmarks
