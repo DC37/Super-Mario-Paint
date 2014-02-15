@@ -98,7 +98,7 @@ public class LoadButton extends ImagePushButton {
         ArrayList<StaffNoteLine> theLines = theSeq.getTheLines();
         while (theLines.size() % 4 != 0 ||
                 theLines.size() % Values.NOTELINES_IN_THE_WINDOW != 0) {
-            theLines.add(new StaffNoteLine(theLines.size()));
+            theLines.add(new StaffNoteLine());
         }
 
     }

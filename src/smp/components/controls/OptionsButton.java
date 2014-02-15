@@ -1,5 +1,7 @@
 package smp.components.controls;
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -7,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +19,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
+import smp.components.staff.sequences.StaffNoteLine;
+import smp.components.staff.sequences.StaffSequence;
+import smp.stateMachine.StateMachine;
 
 /**
  * This is the options button. It currently doesn't do anything.
@@ -26,6 +32,9 @@ public class OptionsButton extends ImagePushButton {
 
     /** This is the text that labels the slider. */
     private String txt = "Default Note Volume";
+
+    /** This is the place where we type in the amount to adjust tempo by. */
+    private TextField tempoField;
 
     /** A slider that changes the default volume of placed notes. */
     private Slider defaultVolume;
@@ -51,11 +60,7 @@ public class OptionsButton extends ImagePushButton {
     /** Opens up an options dialog. */
     private void options() {
         final Stage dialog = new Stage();
-        dialog.setHeight(150);
-        dialog.setWidth(250);
-        dialog.setResizable(false);
-        dialog.setTitle("Options");
-        dialog.initStyle(StageStyle.UTILITY);
+        initializeDialog(dialog);
         Label label = new Label(txt);
         defaultVolume = makeVolumeSlider();
         Button okButton = new Button("OK");
@@ -74,7 +79,10 @@ public class OptionsButton extends ImagePushButton {
         pane.getChildren().addAll(okButton);
         VBox vBox = new VBox(10);
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(label, defaultVolume, pane);
+        Label tempoAdjustHack = new Label("Increase tempo by how many times?");
+        tempoField = new TextField();
+        vBox.getChildren().addAll(label, defaultVolume,
+                tempoAdjustHack, tempoField, pane);
         defaultVolume.autosize();
         Scene scene1 = new Scene(vBox);
         dialog.setScene(scene1);
@@ -87,6 +95,20 @@ public class OptionsButton extends ImagePushButton {
             }
         }
         updateValues();
+        theStaff.redraw();
+    }
+
+    /**
+     * Sets the height, width, and other basic properties of this
+     * dialog box.
+     * @param dialog The dialog box that we are setting up.
+     */
+    private void initializeDialog(Stage dialog) {
+        dialog.setHeight(250);
+        dialog.setWidth(250);
+        dialog.setResizable(false);
+        dialog.setTitle("Options");
+        dialog.initStyle(StageStyle.UTILITY);
     }
 
     /**
@@ -109,6 +131,31 @@ public class OptionsButton extends ImagePushButton {
     private void updateValues() {
         int vol = (int) defaultVolume.getValue();
         Values.DEFAULT_VELOCITY = vol >= 128 ? 127 : vol;
+        String txt = tempoField.getText();
+        if (txt != null) {
+            int num = 1;
+            try {
+                num = Integer.parseInt(txt);
+            } catch (NumberFormatException e) {
+                return;
+            }
+            if (num <= 1)
+                return;
+            ArrayList<StaffNoteLine> s = theStaff.getSequence().getTheLines();
+            ArrayList<StaffNoteLine> n = new ArrayList<StaffNoteLine>();
+            for (int i = 0; i < s.size(); i++) {
+                n.add(s.get(i));
+                for (int j = 0; j < num - 1; j++)
+                    n.add(new StaffNoteLine());
+            }
+            s.clear();
+            s.addAll(n);
+            StateMachine.setTempo(theStaff.getSequence().getTempo() * num);
+            theStaff.getControlPanel().updateCurrTempo();
+            theStaff.getControlPanel().getScrollbar().setMax(
+                    s.size() - Values.NOTELINES_IN_THE_WINDOW);
+        }
+
     }
 
 }

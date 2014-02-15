@@ -12,6 +12,7 @@ import smp.ImageIndex;
 import smp.components.staff.Staff;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
+import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -29,6 +30,18 @@ public class Controls {
 
     /** The pointer to the loop button on the staff. */
     private LoopButton loop;
+
+    /*    *//** The pointer to the button that adds a new song on the arranger. *//*
+    private AddButton add;
+
+     *//** The pointer to the button that moves a song up. *//*
+    private MoveButton moveUp;
+
+      *//** The pointer to the button that moves a song down. *//*
+    private MoveButton moveDown;
+
+       *//** The pointer to the button that deletes a song from a list. *//*
+    private DeleteButton delete;*/
 
     /** The pointer to the options button on the staff. */
     private OptionsButton options;
@@ -143,6 +156,7 @@ public class Controls {
 
         play.setStaff(theStaff);
         stop.setStaff(theStaff);
+        options.setStaff(theStaff);
     }
 
     /**
@@ -191,6 +205,75 @@ public class Controls {
 
     }
 
+    /** @param b Whether we want to turn on arranger mode or not. */
+    public static void setArrangerMode(boolean b) {
+        if (b)
+            setArrangerMode();
+        else
+            setEditingMode();
+    }
+
+    /** Changes the current interface to the arranger mode. */
+    private static void setArrangerMode() {
+        changeControlsButtons();
+        changeCenterList();
+        changeTempoButtons();
+        StateMachine.setState(State.ARR_EDITING);
+
+    }
+
+    /**
+     * Changes the play, stop, and loop buttons properly so that we
+     * can act as an arranger.
+     */
+    private static void changeControlsButtons() {
+
+    }
+
+    /**
+     * Adds the list of songs characteristic of the arranger mode.
+     */
+    private static void changeCenterList() {
+
+    }
+
+    /**
+     * Removes the tempo buttons and adds the add song / delete song /
+     * insert song buttons.
+     */
+    private static void changeTempoButtons() {
+
+    }
+
+    /** Changes the current interface to the normal song editing mode. */
+    private static void setEditingMode() {
+        revertControlButtons();
+        revertCenterList();
+        revertTempoButtons();
+        StateMachine.setState(State.EDITING);
+    }
+
+    /**
+     * Reverts the control buttons to a loop / play / stop.
+     */
+    private static void revertControlButtons() {
+
+    }
+
+    /**
+     * Reverts the center list into just the middle panel.
+     */
+    private static void revertCenterList() {
+
+    }
+
+    /**
+     * Reverts the tempo buttons back to their original state.
+     */
+    private static void revertTempoButtons() {
+
+    }
+
     /** @return The play button of the controls set. */
     public PlayButton getPlayButton() {
         return play;
@@ -214,6 +297,11 @@ public class Controls {
     /** @return The 'mute-all' button of the controls set. */
     public MuteInstButton getMuteAButton() {
         return muteA;
+    }
+
+    /** @return The options button. */
+    public OptionsButton getOptionsButton() {
+        return options;
     }
 
     /**

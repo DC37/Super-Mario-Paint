@@ -7,7 +7,7 @@ Milestones
 August 7, 2012 - Project started)  
 December 25, 2013 - v0.90 - Alpha Release  
 January 4, 2014 - v0.91 - Alpha Release Update   
-January 31, 2014 (Scheduled) - v0.95 - Beta Release  
+??? (Scheduled) - v0.95 - Beta Release  
 Author: RehdBlob  
 Version: 1.00  
 
@@ -48,10 +48,11 @@ Tasklist:
 * Remove limit on song length (done - January 1, 2014)
 * End-of-File Behaviour fix (done - January 3, 2014)
 * Rudimentary Options dialog (done - January 19, 2014)
+* Tempo changing option (done - February 14, 2014)
+* Instrument replacing option
 * Arranger mode
 * Import MPC songs
 * [optional] Staff ledger lines
-* Copy-paste sections / MPCTxtTools functionality
 * Test run on more operating systems
 * Release to a test group (v0.95 - **Beta Release** - Release date unknown)
 * More advanced Options dialog

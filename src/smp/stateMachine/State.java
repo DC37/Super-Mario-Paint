@@ -17,14 +17,18 @@ public enum State {
     EDITING,
 
     /**
-     * This state disables everything except for the instrument button line
-     * and the stop and loop buttons.
+     * This state denotes that we are currently editing an arrangement file.
+     */
+    ARR_EDITING,
+
+    /**
+     * This state denotes that we are currently playing a song.
      */
     SONG_PLAYING,
 
     /**
-     * Just like the SONG_PLAYING state, this state disables many things, but
-     * ARR_PLAYING also disables all of the arrangement functions.
+     * Just like the SONG_PLAYING state, except that we are now playiing an
+     * arrangement.
      */
     ARR_PLAYING,
 

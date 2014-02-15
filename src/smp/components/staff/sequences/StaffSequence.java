@@ -31,7 +31,7 @@ public class StaffSequence implements Serializable {
     public StaffSequence() {
         theLines = new ArrayList<StaffNoteLine>();
         for(int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
-            theLines.add(new StaffNoteLine(i));
+            theLines.add(new StaffNoteLine());
     }
 
     /**
@@ -43,7 +43,7 @@ public class StaffSequence implements Serializable {
         try {
             return theLines.get(i);
         } catch (IndexOutOfBoundsException e) {
-            theLines.add(new StaffNoteLine(theLines.size()));
+            theLines.add(new StaffNoteLine());
             try {
                 return theLines.get(i);
             } catch (IndexOutOfBoundsException e2) {

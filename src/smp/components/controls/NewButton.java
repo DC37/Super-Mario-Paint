@@ -1,7 +1,9 @@
 package smp.components.controls;
 
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
@@ -49,6 +51,10 @@ public class NewButton extends ImagePushButton {
 
         if (cont) {
             theStaff.setSequence(new StaffSequence());
+            Slider sc = theStaff.getControlPanel().getScrollbar();
+            sc.setValue(0);
+            sc.setMax(Values.DEFAULT_LINES_PER_SONG - 10);
+            ArrowButton.setEndOfFile(false);
             theStaff.getNoteMatrix().redraw();
             SMPFXController.getSongName().clear();
             StateMachine.setModified(false);

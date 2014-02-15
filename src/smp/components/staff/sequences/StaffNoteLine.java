@@ -19,12 +19,6 @@ public class StaffNoteLine implements Serializable {
     private static final long serialVersionUID = 3876410979457142750L;
 
     /**
-     * The line number of this StaffNoteLine. For a standard 96-measure 4/4
-     * song, this number is between 0 and 383.
-     */
-    private int lineNum;
-
-    /**
      * This is the list of note volumes (we will use this later as an extension
      * to the usual volume-bar-sets-the-volume-of-the-whole-line thing.
      */
@@ -42,11 +36,8 @@ public class StaffNoteLine implements Serializable {
     /**
      * Creates a new staff note line with the specified
      * line number.
-     * @param num The line number identifier of this staff note line.
-     * We will index starting from zero.
      */
-    public StaffNoteLine(int num) {
-        lineNum = num;
+    public StaffNoteLine() {
         notes = new ArrayList<StaffNote>();
         marks = new ArrayList<StaffEvent>();
     }
@@ -93,22 +84,6 @@ public class StaffNoteLine implements Serializable {
      */
     public boolean removeEvent(StaffEvent e) {
         return marks.remove(e);
-    }
-
-    /**
-     * @return The line number that this staff event is located at
-     */
-    public int getLineNum() {
-        return lineNum;
-    }
-
-    /**
-     * Sets the line number to whatever we feed this method.
-     * @param num The line number that we want this staff note line to
-     * occur at.
-     */
-    public void setLineNum(int num) {
-        lineNum = num;
     }
 
     /** @return Whether this StaffNoteLine contains the staff note already. */
@@ -170,7 +145,7 @@ public class StaffNoteLine implements Serializable {
 
     @Override
     public String toString() {
-        return "" + lineNum + ": " + notes.toString();
+        return notes.toString();
     }
 
 
