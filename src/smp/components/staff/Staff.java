@@ -189,6 +189,18 @@ public class Staff {
     }
 
     /**
+     * Toggles arranger mode.
+     * @param b True or false.
+     */
+    public void setArrangerMode(boolean b) {
+        if (b) {
+            theControls.setArrangerMode(true);
+        } else {
+            theControls.setArrangerMode(false);
+        }
+    }
+
+    /**
      * Imports a Mario Paint Composer song.
      */
     public void importMPCSong() {

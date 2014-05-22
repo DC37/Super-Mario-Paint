@@ -23,7 +23,7 @@ public class PanelButtons {
         theStaff = s;
         mButton = new ModeButton(SMPFXController.getModeButton(),
                 SMPFXController.getModeText());
-
+        mButton.setStaff(theStaff);
     }
 
 

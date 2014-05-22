@@ -217,7 +217,7 @@ public class Controls {
     }
 
     /** @param b Whether we want to turn on arranger mode or not. */
-    public static void setArrangerMode(boolean b) {
+    public void setArrangerMode(boolean b) {
         if (b)
             setArrangerMode();
         else
@@ -225,7 +225,7 @@ public class Controls {
     }
 
     /** Changes the current interface to the arranger mode. */
-    private static void setArrangerMode() {
+    private void setArrangerMode() {
         changeControlsButtons();
         changeCenterList();
         changeTempoButtons();
@@ -237,14 +237,14 @@ public class Controls {
      * Changes the play, stop, and loop buttons properly so that we
      * can act as an arranger.
      */
-    private static void changeControlsButtons() {
+    private void changeControlsButtons() {
 
     }
 
     /**
      * Adds the list of songs characteristic of the arranger mode.
      */
-    private static void changeCenterList() {
+    private void changeCenterList() {
 
     }
 
@@ -252,12 +252,12 @@ public class Controls {
      * Removes the tempo buttons and adds the add song / delete song /
      * insert song buttons.
      */
-    private static void changeTempoButtons() {
+    private void changeTempoButtons() {
 
     }
 
     /** Changes the current interface to the normal song editing mode. */
-    private static void setEditingMode() {
+    private void setEditingMode() {
         revertControlButtons();
         revertCenterList();
         revertTempoButtons();
@@ -267,21 +267,21 @@ public class Controls {
     /**
      * Reverts the control buttons to a loop / play / stop.
      */
-    private static void revertControlButtons() {
+    private void revertControlButtons() {
 
     }
 
     /**
      * Reverts the center list into just the middle panel.
      */
-    private static void revertCenterList() {
+    private void revertCenterList() {
 
     }
 
     /**
      * Reverts the tempo buttons back to their original state.
      */
-    private static void revertTempoButtons() {
+    private void revertTempoButtons() {
 
     }
 

@@ -1,8 +1,12 @@
 package smp.components.buttons;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.components.general.ImageToggleButton;
+import smp.stateMachine.State;
+import smp.stateMachine.StateMachine;
 
 /**
  * The button that changes the mode of Super Mario Paint between
@@ -24,6 +28,19 @@ public class ModeButton extends ImageToggleButton {
      */
     public ModeButton(ImageView i, Text t) {
         super(i);
+        modeDisp = t;
+        modeDisp.setText("Song");
+    }
+
+    @Override
+    public void reactPressed(MouseEvent event) {
+        if (StateMachine.getState() == State.EDITING){
+            modeDisp.setText("Arranger");
+            theStaff.setArrangerMode(true);
+        } else {
+            modeDisp.setText("Song");
+            theStaff.setArrangerMode(false);
+        }
     }
 
 }
