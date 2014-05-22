@@ -17,6 +17,7 @@ import smp.components.controls.Controls;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
@@ -49,6 +50,9 @@ public class Staff {
 
     /** These are the play button, stop button, etc. */
     private Controls theControls;
+
+    /** This is the top panel of buttons. */
+    private PanelButtons topPanel;
 
     /**
      * The wrapper that holds a series of ImageView objects that are meant to
@@ -250,6 +254,21 @@ public class Staff {
     public Controls getControlPanel() {
         return theControls;
     }
+
+    /**
+     * @param topPanel The top panel we want to set.
+     */
+    public void setTopPanel(PanelButtons t) {
+        topPanel = t;
+    }
+
+    /**
+     * @return The top panel.
+     */
+    public PanelButtons getTopPanel() {
+        return topPanel;
+    }
+
 
     /**
      * @param acc The offset that we are deciding upon.
@@ -515,4 +534,6 @@ public class Staff {
 
         }
     }
+
+
 }

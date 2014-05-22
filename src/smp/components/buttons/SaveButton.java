@@ -1,4 +1,4 @@
-package smp.components.controls;
+package smp.components.buttons;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -247,7 +247,9 @@ public class SMPFXController implements Initializable {
 
         staff.setControlPanel(controlPanel);
 
-        topPanel = new PanelButtons();
+        topPanel = new PanelButtons(staff);
+
+        staff.setTopPanel(topPanel);
 
     }
 

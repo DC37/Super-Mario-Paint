@@ -1,4 +1,4 @@
-package smp.components.controls;
+package smp.components.buttons;
 
 import java.util.Timer;
 import java.util.TimerTask;

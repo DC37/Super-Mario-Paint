@@ -1,11 +1,11 @@
-package smp.components.controls;
+package smp.components.buttons;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import smp.ImageIndex;
 import smp.components.Values;
-import smp.components.controls.TempoAdjustButton.clickHold;
+import smp.components.buttons.TempoAdjustButton.clickHold;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;

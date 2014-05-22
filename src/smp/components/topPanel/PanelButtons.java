@@ -1,7 +1,8 @@
 package smp.components.topPanel;
 
 import javafx.scene.text.Text;
-import smp.components.controls.ModeButton;
+import smp.components.buttons.ModeButton;
+import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
 
 /**
@@ -11,16 +12,18 @@ import smp.fx.SMPFXController;
  */
 public class PanelButtons {
 
-    /** Mode text. */
-    private Text mText;
+    /** The Staff that this is linked to. */
+    private Staff theStaff;
 
     /** Mode button. */
     private ModeButton mButton;
 
     /** Default constructor. */
-    public PanelButtons() {
-        mButton = new ModeButton(SMPFXController.getModeButton());
-        mText = SMPFXController.getModeText();
+    public PanelButtons(Staff s) {
+        theStaff = s;
+        mButton = new ModeButton(SMPFXController.getModeButton(),
+                SMPFXController.getModeText());
+
     }
 
 

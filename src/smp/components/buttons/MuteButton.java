@@ -1,4 +1,4 @@
-package smp.components.controls;
+package smp.components.buttons;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;

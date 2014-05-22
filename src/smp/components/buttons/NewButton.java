@@ -1,4 +1,4 @@
-package smp.components.controls;
+package smp.components.buttons;
 
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
