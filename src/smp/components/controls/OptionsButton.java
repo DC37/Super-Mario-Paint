@@ -129,8 +129,18 @@ public class OptionsButton extends ImagePushButton {
 
     /** Updates the different values of this program. */
     private void updateValues() {
+        changeDefaultVol();
+        multiplyTempo();
+    }
+
+    /** Updates the default volume of the program notes. */
+    private void changeDefaultVol() {
         int vol = (int) defaultVolume.getValue();
         Values.DEFAULT_VELOCITY = vol >= 128 ? 127 : vol;
+    }
+
+    /** Updates the tempo from the options dialog. */
+    private void multiplyTempo() {
         String txt = tempoField.getText();
         if (txt != null) {
             int num = 1;
@@ -155,7 +165,5 @@ public class OptionsButton extends ImagePushButton {
             theStaff.getControlPanel().getScrollbar().setMax(
                     s.size() - Values.NOTELINES_IN_THE_WINDOW);
         }
-
     }
-
 }

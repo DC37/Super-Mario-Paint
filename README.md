@@ -49,10 +49,10 @@ Tasklist:
 * End-of-File Behaviour fix (done - January 3, 2014)
 * Rudimentary Options dialog (done - January 19, 2014)
 * Tempo changing option (done - February 14, 2014)
-* Instrument replacing option
 * Arranger mode
-* Import MPC songs
 * [optional] Staff ledger lines
+* [optional] Import MPC songs
+* [optional] Instrument replacing option
 * Test run on more operating systems
 * Release to a test group (v0.95 - **Beta Release** - Release date unknown)
 * More advanced Options dialog
