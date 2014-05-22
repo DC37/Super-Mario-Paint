@@ -16,6 +16,7 @@ import smp.ImageLoader;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.topPanel.ButtonLine;
+import smp.components.topPanel.PanelButtons;
 
 
 /**
@@ -49,6 +50,22 @@ public class SMPFXController implements Initializable {
      * on.
      */
     private static Staff staff;
+
+    /** The top panel buttons that are not the instrument button line. */
+    private static PanelButtons topPanel;
+
+    /**
+     * The button that changes the mode of the staff between song and
+     * arranger mode.
+     */
+    @FXML
+    private static ImageView modeButton;
+
+    /**
+     * The text that displays the mode of the staff.
+     */
+    @FXML
+    private static Text modeText;
 
     /**
      * The controls line that includes the play button, stop button,
@@ -230,6 +247,8 @@ public class SMPFXController implements Initializable {
 
         staff.setControlPanel(controlPanel);
 
+        topPanel = new PanelButtons();
+
     }
 
     /**
@@ -407,7 +426,7 @@ public class SMPFXController implements Initializable {
         return songName;
     }
 
-    /** @return The HBox that holds te volume bars. */
+    /** @return The HBox that holds the volume bars. */
     public static HBox getVolumeBars() {
         return volumeBars;
     }
@@ -419,6 +438,19 @@ public class SMPFXController implements Initializable {
         return instBLine;
     }
 
+    /**
+     * @return The mode text.
+     */
+    public static Text getModeText() {
+        return modeText;
+    }
+
+    /**
+     * @return The mode button image.
+     */
+    public static ImageView getModeButton() {
+        return modeButton;
+    }
 
 
 }

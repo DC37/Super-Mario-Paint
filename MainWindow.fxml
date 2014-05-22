@@ -862,7 +862,7 @@
                                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0" />
                                         <Text id="Tempo" fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0">
                                           <font>
-                                            <Font name="Century Gothic" size="15.0" />
+                                            <Font name="Century Gothic" size="15.0" fx:id="x2" />
                                           </font>
                                         </Text>
                                       </children>
@@ -956,7 +956,21 @@
       <top>
         <Pane fx:id="topPane" prefHeight="64.0" prefWidth="798.0">
           <children>
-            <HBox fx:id="topBoxRight" layoutX="591.0" prefHeight="64.0" prefWidth="200.0" />
+            <HBox fx:id="topBoxRight" alignment="CENTER_RIGHT" layoutX="591.0" prefHeight="64.0" prefWidth="200.0" spacing="2.0">
+              <children>
+                <ImageView id="" fx:id="modeButton" fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@sprites/MODE.png" preserveRatio="false" smooth="false" />
+                  </image>
+                </ImageView>
+                <StackPane id="StackPane">
+                  <children>
+                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#efefef" height="32.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="96.0" />
+                    <Text id="Tempo" fx:id="modeText" font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  </children>
+                </StackPane>
+              </children>
+            </HBox>
             <HBox fx:id="instLine" alignment="BASELINE_LEFT" layoutX="60.0" layoutY="20.0" prefHeight="28.0" prefWidth="531.0" spacing="2.0">
               <children>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
