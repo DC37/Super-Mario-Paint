@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import smp.components.staff.sequences.Bookmark;
 import smp.components.staff.sequences.Speedmark;
-import smp.components.staff.sounds.SMPSequence;
+import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sounds.SMPSoundfont;
 
 /**
@@ -16,7 +16,7 @@ import smp.components.staff.sounds.SMPSoundfont;
  */
 public class AMSDecoder {
 
-    public static SMPSequence decode(File file) {
+    public static StaffSequence decode(File file) {
         // TODO: Fix this.
         return null;
     }
@@ -28,7 +28,7 @@ public class AMSDecoder {
      * @throws ParseException If someone tries to feed this method an invalid
      * text file.
      */
-    public static SMPSequence decode(String in) throws ParseException {
+    public static StaffSequence decode(String in) throws ParseException {
         if (!isValid(in)) {
             throw new ParseException("Invalid File", 0);
         }
@@ -67,7 +67,7 @@ public class AMSDecoder {
      * @return A new Super Mario Paint sequence that is to be loaded
      * immediately upon creation.
      */
-    private static SMPSequence populateSequence(String timeSig,
+    private static StaffSequence populateSequence(String timeSig,
             SMPSoundfont soundfont, ArrayList<Speedmark> speedmarks,
             ArrayList<Bookmark> bookmarks, ArrayList<String> data,
             String tempo) {

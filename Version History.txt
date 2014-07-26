@@ -1,0 +1,16 @@
+v0.1-0.22
+Window appears
+
+v0.23
+Full window and interface
+
+v0.7-0.73
+Ability to place notes
+Ability to play back notes
+Mute notes
+
+
+Planned features:
+Layers
+Sections
+Infinite files

@@ -11,7 +11,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 
 import smp.components.InstrumentIndex;
-import smp.components.staff.sounds.SMPSequence;
+import smp.components.staff.sequences.StaffSequence;
 
 /**
  * Decodes Mario Paint Composer songs into Super Mario Paint-
@@ -26,7 +26,7 @@ public class MPCDecoder {
      * it, changing it into a Super Mario Paint sequence.
      * @param f A File, that supposedly contains Mario Paint Composer
      * song data.
-     * @return An <code>SMPSequence</code> that has been converted from the
+     * @return An <code>StaffSequence</code> that has been converted from the
      * Mario Paint Composer song.
      * @throws InvalidMidiDataException If the file does not have valid
      * Mario Paint Composer data.
@@ -34,7 +34,7 @@ public class MPCDecoder {
      * point in the conversion process.
      * @throws IOException IF some error occurs during the decoding process.
      */
-    public static SMPSequence decode(File f)
+    public static StaffSequence decode(File f)
             throws ParseException, InvalidMidiDataException, IOException {
         BufferedReader bf = new BufferedReader(new FileReader(f));
         String line = "";
@@ -57,7 +57,7 @@ public class MPCDecoder {
      * @throws InvalidMidiDataException If the sequence population fails to
      * work correctly.
      */
-    public static SMPSequence decode(String in)
+    public static StaffSequence decode(String in)
             throws ParseException, InvalidMidiDataException {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
             throw new ParseException("Invalid MPC Text File.", 0);
@@ -76,18 +76,15 @@ public class MPCDecoder {
      * @param songData The text data of the Mario Paint Composer song. This
      * defines the notes and instruments on each note line.
      * @param tempo The tempo at which this should be played at.
-     * @return A new <code>SMPSequence</code> that is to be loaded by the
+     * @return A new <code>StaffSequence</code> that is to be loaded by the
      * main program.
      * @throws InvalidMidiDataException If something goes wrong in the decoding
      * process.
      */
-    private static SMPSequence populateSequence(String timeSig,
+    private static StaffSequence populateSequence(String timeSig,
             ArrayList<String> songData, String tempo)
                     throws InvalidMidiDataException {
-        SMPSequence song = new SMPSequence();
-        song.setTime(timeSig);
-        song.setData(decodeSong(songData));
-        song.setTempo(tempo);
+        StaffSequence song = new StaffSequence();
         return song;
     }
 

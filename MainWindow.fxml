@@ -958,7 +958,7 @@
           <children>
             <HBox fx:id="topBoxRight" alignment="CENTER_RIGHT" layoutX="591.0" prefHeight="64.0" prefWidth="200.0" spacing="2.0">
               <children>
-                <ImageView id="" fx:id="modeButton" fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView id="" fx:id="modeButton" fitHeight="24.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                     <Image url="@sprites/MODE.png" preserveRatio="false" smooth="false" />
                   </image>
