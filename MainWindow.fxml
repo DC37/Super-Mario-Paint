@@ -913,19 +913,19 @@
                                   <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                       <children>
-                                        <ImageView id="TempoPlus" fx:id="tempoPlus" fitHeight="32.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView id="TempoPlus" fx:id="tempoPlus" fitHeight="32.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
                                             <Image preserveRatio="false" smooth="false" url="@sprites/TEMPO_PLUS.png" />
                                           </image>
                                         </ImageView>
-                                        <ImageView id="TempoMinus" fx:id="tempoMinus" fitHeight="32.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView id="TempoMinus" fx:id="tempoMinus" fitHeight="32.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
                                             <Image preserveRatio="false" smooth="false" url="@sprites/TEMPO_MINUS.png" />
                                           </image>
                                         </ImageView>
                                       </children>
                                       <padding>
-                                        <Insets top="28.0" />
+                                        <Insets top="30.0" />
                                       </padding>
                                     </VBox>
                                   </children>

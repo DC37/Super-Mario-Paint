@@ -255,22 +255,25 @@ public class SMPFXController implements Initializable {
      * Paint GUI.
      */
     public static void initializeHandlers() {
+        // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst);
-
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
 
+        // Set up staff.
         HBox[] staffExtLines = {staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC};
-
         staff = new Staff(staffExtLines);
-
         controlPanel = new Controls(staff);
-
         staff.setControlPanel(controlPanel);
-
         topPanel = new PanelButtons(staff);
-
         staff.setTopPanel(topPanel);
+
+        // Hide all arranger features for now.
+        arrangementList.setVisible(false);
+        addButton.setVisible(false);
+        deleteButton.setVisible(false);
+        upButton.setVisible(false);
+        downButton.setVisible(false);
 
     }
 
@@ -454,26 +457,43 @@ public class SMPFXController implements Initializable {
         return volumeBars;
     }
 
-    /**
-     * @return The instrument button line.
-     */
+    /** @return The instrument button line. */
     public static ButtonLine getInstBLine() {
         return instBLine;
     }
 
-    /**
-     * @return The mode text.
-     */
+    /** @return The mode text. */
     public static Text getModeText() {
         return modeText;
     }
 
-    /**
-     * @return The mode button image.
-     */
+    /** @return The mode button image.  */
     public static ImageView getModeButton() {
         return modeButton;
     }
 
+    /** @return The list of songs in the arrangement. */
+    public static ListView<String> getArrangementList() {
+        return arrangementList;
+    }
 
+    /** @return The delete button image. */
+    public static ImageView getDeleteButton() {
+        return deleteButton;
+    }
+
+    /** @return The add button image. */
+    public static ImageView getAddButton() {
+        return addButton;
+    }
+
+    /** @return The move up button image. */
+    public static ImageView getUpButton() {
+        return upButton;
+    }
+
+    /** @return The move down button image. */
+    public static ImageView getDownButton() {
+        return downButton;
+    }
 }

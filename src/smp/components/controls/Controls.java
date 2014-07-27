@@ -9,9 +9,12 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import smp.ImageIndex;
+import smp.components.buttons.AddButton;
 import smp.components.buttons.ArrowButton;
+import smp.components.buttons.DeleteButton;
 import smp.components.buttons.LoadButton;
 import smp.components.buttons.LoopButton;
+import smp.components.buttons.MoveButton;
 import smp.components.buttons.MuteButton;
 import smp.components.buttons.MuteInstButton;
 import smp.components.buttons.NewButton;
@@ -43,16 +46,16 @@ public class Controls {
     private LoopButton loop;
 
     /** The pointer to the button that adds a new song on the arranger. */
-    //private AddButton add;
-
-    /** The pointer to the button that moves a song up. */
-    //private MoveButton moveUp;
-
-    /** The pointer to the button that moves a song down. */
-    //private MoveButton moveDown;
+    private AddButton add;
 
     /** The pointer to the button that deletes a song from a list. */
-    //private DeleteButton delete;
+    private DeleteButton delete;
+
+    /** The pointer to the button that moves a song up. */
+    private MoveButton moveUp;
+
+    /** The pointer to the button that moves a song down. */
+    private MoveButton moveDown;
 
     /** The pointer to the options button on the staff. */
     private OptionsButton options;
@@ -156,6 +159,10 @@ public class Controls {
         mute = new MuteButton(SMPFXController.getMuteButton());
         muteA = new MuteInstButton(SMPFXController.getMuteAButton());
         options = new OptionsButton(SMPFXController.getOptionsButton());
+        add = new AddButton(SMPFXController.getAddButton());
+        delete = new DeleteButton(SMPFXController.getDeleteButton());
+        moveUp = new MoveButton(SMPFXController.getUpButton());
+        moveDown = new MoveButton(SMPFXController.getDownButton());
 
         mute.setMuteButton(muteA);
         muteA.setMuteButton(mute);
@@ -237,6 +244,11 @@ public class Controls {
      */
     private void changeCenterList() {
         SMPFXController.getSongName().setPromptText("Arrangement Name");
+        SMPFXController.getArrangementList().setVisible(true);
+        SMPFXController.getDeleteButton().setVisible(true);
+        SMPFXController.getAddButton().setVisible(true);
+        SMPFXController.getUpButton().setVisible(true);
+        SMPFXController.getDownButton().setVisible(true);
     }
 
     /**
@@ -259,6 +271,11 @@ public class Controls {
      */
     private void revertCenterList() {
         SMPFXController.getSongName().setPromptText("Song Name");
+        SMPFXController.getArrangementList().setVisible(false);
+        SMPFXController.getDeleteButton().setVisible(false);
+        SMPFXController.getAddButton().setVisible(false);
+        SMPFXController.getUpButton().setVisible(false);
+        SMPFXController.getDownButton().setVisible(false);
     }
 
     /**
