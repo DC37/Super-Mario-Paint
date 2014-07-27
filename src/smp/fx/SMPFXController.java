@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -93,6 +94,26 @@ public class SMPFXController implements Initializable {
     /** The 'mute-all' button. */
     @FXML
     private static ImageView muteA;
+
+    /** The arranger view piece that holds the list of songs. */
+    @FXML
+    private static ListView<String> arrangementList;
+
+    /** The button that adds a song to the arranger list. */
+    @FXML
+    private static ImageView addButton;
+
+    /** The button that deletes a song from the arranger list. */
+    @FXML
+    private static ImageView deleteButton;
+
+    /** The button that moves a song up on the arranger list. */
+    @FXML
+    private static ImageView upButton;
+
+    /** The button that moves a song down on the arranger list. */
+    @FXML
+    private static ImageView downButton;
 
     /** This is the plus sign that increases the tempo of the song. */
     @FXML

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.geometry.*?>
@@ -78,7 +79,7 @@
                           <children>
                             <ImageView fx:id="optionsButton" fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                <Image preserveRatio="false" smooth="false" url="@sprites/OPTIONS.png" />
+                                <Image url="@sprites/OPTIONS.png" />
                               </image>
                             </ImageView>
                           </children>
@@ -846,13 +847,50 @@
                                 </HBox>
                               </children>
                             </StackPane>
-                            <HBox prefHeight="100.0" prefWidth="200.0" />
+                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="230.0">
+                                             <children>
+                                                <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="54.0" prefHeight="54.0" prefWidth="250.0" />
+                                             </children>
+                                             <padding>
+                                                <Insets left="4.0" />
+                                             </padding>
+                            </HBox>
                             <HBox id="" prefHeight="100.0" prefWidth="300.0">
                               <children>
-                                <StackPane prefHeight="100.0" prefWidth="230.0" />
+                                                <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ImageView id="" fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/ADD.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView id="" fx:id="deleteButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/DELETE.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView id="" fx:id="upButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/UP.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView id="" fx:id="downButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/DOWN.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="4.0" />
+                                                   </padding>
+                                                </VBox>
                                 <VBox id="VBox" alignment="CENTER">
                                   <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo" />
+                                                      <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/TEMPO_LABEL.png" />
+                                                         </image>
+                                                      </ImageView>
                                     <StackPane fx:id="tempoBox" prefHeight="25.0" prefWidth="100.0">
                                       <children>
                                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0" />
@@ -865,7 +903,7 @@
                                     </StackPane>
                                   </children>
                                   <padding>
-                                    <Insets top="-12.0" />
+                                    <Insets top="-8.0" />
                                   </padding>
                                   <HBox.margin>
                                     <Insets />
