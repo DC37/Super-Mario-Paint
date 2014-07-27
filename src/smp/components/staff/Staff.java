@@ -193,11 +193,7 @@ public class Staff {
      * @param b True or false.
      */
     public void setArrangerMode(boolean b) {
-        if (b) {
-            theControls.setArrangerMode(true);
-        } else {
-            theControls.setArrangerMode(false);
-        }
+        theControls.setArrangerMode(b);
     }
 
     /**
@@ -395,7 +391,7 @@ public class Staff {
                 @Override
                 public void run() {
                     currVal.setValue(0);
-                    if ((Settings.debug & 0b10000) == 0b10000)
+                    if ((Settings.debug & 0b10000) != 0)
                         System.out.println(currVal);
                 }
 
@@ -495,16 +491,14 @@ public class Staff {
                         ArrayList<StaffNote> theNotes = s.getNotes();
                         tracker.stopNotes(s);
                         for (StaffNote sn : theNotes) {
-                            if (sn.muteNoteVal() == 1){
+                            if (sn.muteNoteVal() == 1)
                                 stopSound(sn);
-                            } else if (sn.muteNoteVal() == 2) {
+                            else if (sn.muteNoteVal() == 2)
                                 stopInstrument(sn);
-                            }
                         }
                         for (StaffNote sn : theNotes) {
-                            if (sn.muteNoteVal() == 0) {
+                            if (sn.muteNoteVal() == 0)
                                 playSound(sn, s);
-                            }
                         }
                     }
 

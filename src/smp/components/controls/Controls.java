@@ -42,17 +42,17 @@ public class Controls {
     /** The pointer to the loop button on the staff. */
     private LoopButton loop;
 
-    /*    *//** The pointer to the button that adds a new song on the arranger. *//*
-    private AddButton add;
+    /** The pointer to the button that adds a new song on the arranger. */
+    //private AddButton add;
 
-     *//** The pointer to the button that moves a song up. *//*
-    private MoveButton moveUp;
+    /** The pointer to the button that moves a song up. */
+    //private MoveButton moveUp;
 
-      *//** The pointer to the button that moves a song down. *//*
-    private MoveButton moveDown;
+    /** The pointer to the button that moves a song down. */
+    //private MoveButton moveDown;
 
-       *//** The pointer to the button that deletes a song from a list. *//*
-    private DeleteButton delete;*/
+    /** The pointer to the button that deletes a song from a list. */
+    //private DeleteButton delete;
 
     /** The pointer to the options button on the staff. */
     private OptionsButton options;
@@ -226,7 +226,6 @@ public class Controls {
 
     /** Changes the current interface to the arranger mode. */
     private void setArrangerMode() {
-        changeControlsButtons();
         changeCenterList();
         changeTempoButtons();
         StateMachine.setState(State.ARR_EDITING);
@@ -234,18 +233,10 @@ public class Controls {
     }
 
     /**
-     * Changes the play, stop, and loop buttons properly so that we
-     * can act as an arranger.
-     */
-    private void changeControlsButtons() {
-
-    }
-
-    /**
      * Adds the list of songs characteristic of the arranger mode.
      */
     private void changeCenterList() {
-
+        SMPFXController.getSongName().setPromptText("Arrangement Name");
     }
 
     /**
@@ -258,24 +249,16 @@ public class Controls {
 
     /** Changes the current interface to the normal song editing mode. */
     private void setEditingMode() {
-        revertControlButtons();
         revertCenterList();
         revertTempoButtons();
         StateMachine.setState(State.EDITING);
     }
 
     /**
-     * Reverts the control buttons to a loop / play / stop.
-     */
-    private void revertControlButtons() {
-
-    }
-
-    /**
      * Reverts the center list into just the middle panel.
      */
     private void revertCenterList() {
-
+        SMPFXController.getSongName().setPromptText("Song Name");
     }
 
     /**
