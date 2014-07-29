@@ -1,5 +1,6 @@
 package smp.components.buttons;
 
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import smp.components.general.ImagePushButton;
 
@@ -10,6 +11,9 @@ import smp.components.general.ImagePushButton;
  */
 public class AddButton extends ImagePushButton {
 
+    /** The ListView that we modify. */
+    private ListView<String> theList;
+
     /**
      * Default constructor.
      * @param i The <code>ImageView</code> object that we are
@@ -17,6 +21,13 @@ public class AddButton extends ImagePushButton {
      */
     public AddButton(ImageView i) {
         super(i);
+    }
+
+    /**
+     * @param l The ListView we want to set.
+     */
+    public void setList(ListView<String> l) {
+        theList = l;
     }
 
 }
