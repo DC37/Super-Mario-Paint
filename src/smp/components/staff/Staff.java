@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Slider;
@@ -68,6 +69,9 @@ public class Staff {
 
     /** This is the current sequence that we have displaying on the staff. */
     private StaffSequence theSequence;
+
+    /** This is the current arrangement. */
+    private ObservableList<String> theArrangement;
 
     /**
      * This is a service that will help run the animation and sound of playing a
@@ -225,9 +229,7 @@ public class Staff {
         theMatrix = other;
     }
 
-    /**
-     * @return The current song that we are displaying.
-     */
+    /** @return The current song that we are displaying. */
     public StaffSequence getSequence() {
         return theSequence;
     }
@@ -238,6 +240,19 @@ public class Staff {
      */
     public void setSequence(StaffSequence other) {
         theSequence = other;
+    }
+
+    /** @return The current arrangement that we are displaying. */
+    public ObservableList<String> getArrangement() {
+        return theArrangement;
+    }
+
+    /**
+     * This loads an arrangement.
+     * @param other This is the other arrangement.
+     */
+    public void setArrangement(ObservableList<String> other) {
+        theArrangement = other;
     }
 
     /**

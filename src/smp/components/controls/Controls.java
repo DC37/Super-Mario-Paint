@@ -4,7 +4,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -87,12 +90,16 @@ public class Controls {
     /** This is the current tempo. */
     private StringProperty currTempo = new SimpleStringProperty();
 
+    /** The ListView of songs for the arranger. */
+    private ListView<String> theList;
+
     /**
      * Initializes the set of controls that will be used in Super Mario Paint.
      */
     public Controls(Staff st) {
         theStaff = st;
         setScrollbar(SMPFXController.getScrollbar());
+        theList = SMPFXController.getArrangementList();
         initializeArrows();
         initializeScrollbar();
         initializeControlButtons();
@@ -101,6 +108,7 @@ public class Controls {
         currTempo.setValue(String.valueOf(StateMachine.getTempo()));
         initializeLoadSaveButtons();
         initializeNewButton();
+
     }
 
     /**
@@ -161,8 +169,8 @@ public class Controls {
         options = new OptionsButton(SMPFXController.getOptionsButton());
         add = new AddButton(SMPFXController.getAddButton());
         delete = new DeleteButton(SMPFXController.getDeleteButton());
-        moveUp = new MoveButton(SMPFXController.getUpButton());
-        moveDown = new MoveButton(SMPFXController.getDownButton());
+        moveUp = new MoveButton(SMPFXController.getUpButton(), 1);
+        moveDown = new MoveButton(SMPFXController.getDownButton(), -1);
 
         mute.setMuteButton(muteA);
         muteA.setMuteButton(mute);
