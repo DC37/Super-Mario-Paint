@@ -2,6 +2,7 @@ package smp.components.buttons;
 
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
 
 /**
@@ -28,6 +29,16 @@ public class AddButton extends ImagePushButton {
      */
     public void setList(ListView<String> l) {
         theList = l;
+    }
+
+    @Override
+    protected void reactPressed(MouseEvent event) {
+
+    }
+
+    @Override
+    protected void reactReleased(MouseEvent event) {
+
     }
 
 }
