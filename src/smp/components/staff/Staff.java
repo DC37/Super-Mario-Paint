@@ -43,9 +43,6 @@ public class Staff {
     /** This is the last line of notes in the song. */
     private int lastLine;
 
-    /** Whether we need to shift the staff by some amount. */
-    private boolean shift = false;
-
     /** This is the current line that we are at. */
     private DoubleProperty currVal;
 

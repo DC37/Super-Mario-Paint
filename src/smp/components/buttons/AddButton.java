@@ -4,6 +4,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
+import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
 
 /**
@@ -36,7 +37,8 @@ public class AddButton extends ImagePushButton {
     protected void reactPressed(MouseEvent event) {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
-
+        theStaff.getArrangement().add(
+                SMPFXController.getSongName().getText());
     }
 
     @Override
