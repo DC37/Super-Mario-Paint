@@ -7,7 +7,8 @@ Milestones
 * August 7, 2012 - Project started
 * December 25, 2013 - v0.90 - Alpha Release
 * January 4, 2014 - v0.91 - Alpha Release Update
-* ??? (Scheduled) - v0.95 - Beta Release  
+* 
+* January 10, 2015 (Scheduled) - v0.95 - Beta Release  
 * Author: RehdBlob
 * Version: 1.00
 
@@ -49,13 +50,13 @@ Tasklist:
 * End-of-File Behaviour fix (done - January 3, 2014)
 * Rudimentary Options dialog (done - January 19, 2014)
 * Tempo changing option (done - February 14, 2014)
-* Arranger mode
-* Fix measure addition and subtraction
+* Arranger mode (working on it - December 28, 2014)
+* Fix measure addition and subtraction (working on it - December 28, 2014)
 * [optional] Staff ledger lines
 * [optional] Import MPC songs
 * [optional] Instrument replacing option
-* Test run on more operating systems
-* Release to a test group (v0.95 - **Beta Release** - Release date unknown)
+* Test run on more operating systems (working on it - December 28, 2014)
+* Release to a test group (v0.95 - **Beta Release** - Tentatively scheduled January 10, 2015)
 * More advanced Options dialog
 * Undo/redo
 * Bookmarks
