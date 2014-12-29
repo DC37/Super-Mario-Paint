@@ -259,13 +259,10 @@ public class SMPFXController {
         // Set up staff.
         HBox[] staffExtLines = {staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC};
-        staff = new Staff(staffExtLines);
-        staff.setController(this);
-        controlPanel = new Controls(staff);
-        controlPanel.setController(this);
+        staff = new Staff(staffExtLines, this);
+        controlPanel = new Controls(staff, this);
         staff.setControlPanel(controlPanel);
-        topPanel = new PanelButtons(staff);
-        topPanel.setController(this);
+        topPanel = new PanelButtons(staff, this);
         staff.setTopPanel(topPanel);
 
         // Hide all arranger features for now.

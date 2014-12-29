@@ -112,9 +112,8 @@ public class SuperMarioPaint extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(controller);
-            Parent root =
-                    (Parent) FXMLLoader.load(
-                            new File(mainFxml).toURI().toURL());
+            loader.setLocation(new File(mainFxml).toURI().toURL());
+            Parent root = (Parent) loader.load();
             primaryStage.setTitle("Super Mario Paint");
             setupCloseBehaviour(primaryStage);
             primaryStage.setResizable(false);

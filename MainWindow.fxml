@@ -12,7 +12,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
-<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="smp.fx.SMPFXController">
+<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
   <children>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
     <BorderPane id="MainLayout" fx:id="mainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
@@ -24,7 +24,7 @@
                 <Image preserveRatio="false" smooth="false" url="@sprites/BOTTOM_BAR.png" />
               </image>
             </ImageView>
-            <HBox id="HBox" alignment="CENTER" prefHeight="55.9998779296875" spacing="5.0">
+            <HBox id="HBox" alignment="CENTER" prefHeight="56.0" spacing="5.0">
               <children>
                 <HBox id="BottomLeftBox" alignment="TOP_RIGHT" prefHeight="56.0" prefWidth="267.0">
                   <children>
@@ -75,7 +75,7 @@
                   <children>
                     <Pane prefHeight="56.0" prefWidth="116.0">
                       <children>
-                        <HBox alignment="CENTER" prefHeight="55.9998779296875" prefWidth="100.0">
+                        <HBox alignment="CENTER" prefHeight="56.0" prefWidth="100.0">
                           <children>
                             <ImageView fx:id="optionsButton" fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                               <image>

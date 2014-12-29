@@ -85,12 +85,14 @@ public class Staff {
      * @param staffExtLines These are the lines that appear under notes for the
      * lower and upper portions of the staff.
      */
-    public Staff(HBox[] staffExtLines) {
+    public Staff(HBox[] staffExtLines, SMPFXController ct) {
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
                 Values.NOTES_IN_A_LINE, this);
         theSequence = new StaffSequence();
+        setController(ct);
         staffImages = new StaffImages(staffExtLines);
         staffImages.setStaff(this);
+        staffImages.setController(ct);
         staffImages.initialize();
         animationService = new AnimationService();
         tracker = new NoteTracker();

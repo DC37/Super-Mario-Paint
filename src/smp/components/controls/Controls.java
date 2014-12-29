@@ -99,8 +99,9 @@ public class Controls {
     /**
      * Initializes the set of controls that will be used in Super Mario Paint.
      */
-    public Controls(Staff st) {
+    public Controls(Staff st, SMPFXController ct) {
         theStaff = st;
+        setController(ct);
         setScrollbar(controller.getScrollbar());
         theList = controller.getArrangementList();
         initializeArrows();

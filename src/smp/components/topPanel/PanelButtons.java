@@ -22,8 +22,9 @@ public class PanelButtons {
     private SMPFXController controller;
     
     /** Default constructor. */
-    public PanelButtons(Staff s) {
+    public PanelButtons(Staff s, SMPFXController ct) {
         theStaff = s;
+        setController(ct);
         mButton = new ModeButton(controller.getModeButton(),
                 controller.getModeText(), controller);
         mButton.setStaff(theStaff);
