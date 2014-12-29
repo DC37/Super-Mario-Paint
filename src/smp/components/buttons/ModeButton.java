@@ -4,14 +4,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import smp.ImageLoader;
 import smp.components.general.ImageToggleButton;
 import smp.fx.SMPFXController;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
 /**
- * The button that changes the mode of Super Mario Paint between
- * arranger and song modes.
+ * The button that changes the mode of Super Mario Paint between arranger and
+ * song modes.
+ * 
  * @author RehdBlob
  * @since 2014.05.21
  */
@@ -24,18 +26,24 @@ public class ModeButton extends ImageToggleButton {
 
     /**
      * This creates a new ModeButton object.
-     * @param i This <code>ImageView</code> object that you are
-     * trying to link this button with.
+     * 
+     * @param i
+     *            This <code>ImageView</code> object that you are trying to link
+     *            this button with.
+     * @param ct
+     *            The FXML controller object.
+     * @param im
+     *            The Image loader object.
      */
-    public ModeButton(ImageView i, Text t, SMPFXController ct) {
-        super(i, ct);
+    public ModeButton(ImageView i, Text t, SMPFXController ct, ImageLoader im) {
+        super(i, ct, im);
         modeDisp = t;
         modeDisp.setText("Song");
     }
 
     @Override
     public void reactPressed(MouseEvent event) {
-        if (StateMachine.getState() == State.EDITING){
+        if (StateMachine.getState() == State.EDITING) {
             modeDisp.setText("Arranger");
             theStaff.setArrangerMode(true);
         } else {

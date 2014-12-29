@@ -30,12 +30,16 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     /** The StaffNoteLine that this event handler is associated with. */
     private StaffNoteLine theLine;
+    
+    /** The ImageLoader class. */
+    private ImageLoader il;
 
     /** Makes a new StaffVolumeEventHandler. */
-    public StaffVolumeEventHandler(StackPane st) {
+    public StaffVolumeEventHandler(StackPane st, ImageLoader i) {
         stp = st;
+        il = i;
         theVolBar = (ImageView) st.getChildren().get(0);
-        theVolBar.setImage(ImageLoader.getSpriteFX(ImageIndex.VOL_BAR));
+        theVolBar.setImage(il.getSpriteFX(ImageIndex.VOL_BAR));
         theVolBar.setVisible(false);
     }
 

@@ -1,6 +1,7 @@
 package smp.components.topPanel;
 
 import javafx.scene.text.Text;
+import smp.ImageLoader;
 import smp.components.buttons.ModeButton;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
@@ -21,12 +22,16 @@ public class PanelButtons {
     /** The FXML controller class. */
     private SMPFXController controller;
     
+    /** The Image Loader class. */
+    private ImageLoader il;
+    
     /** Default constructor. */
-    public PanelButtons(Staff s, SMPFXController ct) {
+    public PanelButtons(Staff s, SMPFXController ct, ImageLoader im) {
+        il = im;
         theStaff = s;
         setController(ct);
         mButton = new ModeButton(controller.getModeButton(),
-                controller.getModeText(), controller);
+                controller.getModeText(), controller, il);
         mButton.setStaff(theStaff);
     }
 

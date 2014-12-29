@@ -56,12 +56,16 @@ public class NoteMatrix {
     /** Pointer to the current StaffInstrumentEventHandler in focus. */
     private transient StaffInstrumentEventHandler focusPane;
 
+    /** Pointer to the image loader object. */
+    private transient ImageLoader il;
+    
     /**
      * @param x The number of note lines on the current staff.
      * @param y The number of addressable notes in a line.
      */
-    public NoteMatrix(int x, int y, Staff s) {
+    public NoteMatrix(int x, int y, Staff s, ImageLoader i) {
         theStaff = s;
+        il = i;
         numberOfLines = x;
         numberOfNotes = y;
         matrix = new ArrayList<ArrayList<StackPane>>();
@@ -209,18 +213,18 @@ public class NoteMatrix {
             noteAndAcc[0].getChildren().add(s);
             StaffAccidental accidental = new StaffAccidental(s);
             accidental.setImage(
-                    ImageLoader.getSpriteFX(
+                    il.getSpriteFX(
                             Staff.switchAcc(s.getAccidental())));
             noteAndAcc[1].getChildren().add(accidental);
 
             if (s.muteNoteVal() == 0) {
-                s.setImage(ImageLoader.getSpriteFX(
+                s.setImage(il.getSpriteFX(
                         s.getInstrument().imageIndex()));
             } else if (s.muteNoteVal() == 1) {
-                s.setImage(ImageLoader.getSpriteFX(
+                s.setImage(il.getSpriteFX(
                         s.getInstrument().imageIndex().alt()));
             } else {
-                s.setImage(ImageLoader.getSpriteFX(
+                s.setImage(il.getSpriteFX(
                         s.getInstrument().imageIndex().silhouette()));
             }
 

@@ -107,7 +107,7 @@ public class SuperMarioPaint extends Application {
             dummyPreloader.updateStatus((imgStatus + sfStatus) * 100,
                     NUM_THREADS);
         } while (imgLd.isAlive() || sfLd.isAlive());
-
+        controller.setImageLoader((ImageLoader) imgLoader);
     }
 
     /**
@@ -132,7 +132,6 @@ public class SuperMarioPaint extends Application {
             primaryStage.setWidth(Values.DEFAULT_WIDTH);
             Scene primaryScene = new Scene(root, 800, 600);
             primaryStage.setScene(primaryScene);
-            controller.initializeHandlers();
             makeKeyboardListeners(primaryScene);
             dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
             primaryStage.show();

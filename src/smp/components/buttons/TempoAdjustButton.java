@@ -7,14 +7,16 @@ import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
- * This is a class that takes care of the adjustment of tempo in
- * Super Mario Paint.
+ * This is a class that takes care of the adjustment of tempo in Super Mario
+ * Paint.
+ * 
  * @author RehdBlob
  * @since 2013.09.28
  */
@@ -31,17 +33,24 @@ public class TempoAdjustButton extends ImagePushButton {
 
     /**
      * Default constructor
-     * @param i The <code>ImageView</code> object that we want this
-     * adjustment button to be linked to.
+     * 
+     * @param i
+     *            The <code>ImageView</code> object that we want this adjustment
+     *            button to be linked to.
+     * @param ct
+     *            The FXML controller object.
+     * @param im
+     *            The Image loader object.
      */
-    public TempoAdjustButton(ImageView i, SMPFXController ct) {
-        super(i, ct);
+    public TempoAdjustButton(ImageView i, SMPFXController ct, ImageLoader im) {
+        super(i, ct, im);
         t = new Timer();
 
     }
 
     /**
-     * @param b Is this a positive button?
+     * @param b
+     *            Is this a positive button?
      */
     public void setPositive(boolean b) {
         isPositive = b;
@@ -56,7 +65,9 @@ public class TempoAdjustButton extends ImagePushButton {
 
     /**
      * Sets the String property to display the tempo.
-     * @param s This is the StringProperty that displays the tempo.
+     * 
+     * @param s
+     *            This is the StringProperty that displays the tempo.
      */
     public void setStringProperty(StringProperty s) {
         currTempo = s;
@@ -67,10 +78,8 @@ public class TempoAdjustButton extends ImagePushButton {
         setPressed();
         addTempo(1);
         TimerTask tt = new clickHold();
-        t.schedule(tt, Values.HOLDTIME,
-                Values.REPEATTIME);
+        t.schedule(tt, Values.HOLDTIME, Values.REPEATTIME);
     }
-
 
     @Override
     protected void reactReleased(MouseEvent event) {
@@ -79,12 +88,11 @@ public class TempoAdjustButton extends ImagePushButton {
         resetPressed();
     }
 
-
     /**
-     * Makes it such that the application thread changes the tempo
-     * of the song.
-     * @param add The amount of tempo that you want to add. Usually
-     * an integer.
+     * Makes it such that the application thread changes the tempo of the song.
+     * 
+     * @param add
+     *            The amount of tempo that you want to add. Usually an integer.
      */
     private void addTempo(final double add) {
         Platform.runLater(new Runnable() {
@@ -104,6 +112,7 @@ public class TempoAdjustButton extends ImagePushButton {
 
     /**
      * This is a timer task that increments the tempo of the song.
+     * 
      * @author RehdBlob
      * @since 2013.11.10
      */

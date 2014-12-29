@@ -48,6 +48,9 @@ public class StaffImages {
     /** This is the FXML controller class. */
     private SMPFXController controller;
 
+    /** This is the ImageLoader class. */
+    private ImageLoader il;
+    
     /**
      * The line that denotes where the staffImages should begin searching
      * for images to draw.
@@ -73,7 +76,8 @@ public class StaffImages {
      * Constructor that also sets up the staff expansion lines.
      * @param staffExtLines These
      */
-    public StaffImages(HBox[] staffExtLines) {
+    public StaffImages(HBox[] staffExtLines, ImageLoader i) {
+        il = i;
         initializeStaffExpansionLines(staffExtLines);
     }
 
@@ -115,7 +119,7 @@ public class StaffImages {
         for (Node v : volumeBars.getChildren()) {
             StackPane volBar = (StackPane) v;
             vol.add(volBar);
-            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar);
+            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il);
             volBar.addEventHandler(Event.ANY, sveh);
             theStaff.getNoteMatrix().addVolHandler(sveh);
         }
@@ -182,7 +186,7 @@ public class StaffImages {
                 accs.add(acc);
                 StaffInstrumentEventHandler hd =
                         new StaffInstrumentEventHandler(note, acc,
-                                Values.NOTES_IN_A_LINE - pos, line, theStaff);
+                                Values.NOTES_IN_A_LINE - pos, line, theStaff, il);
                 note.addEventHandler(MouseEvent.ANY, hd);
             }
 
@@ -201,10 +205,10 @@ public class StaffImages {
             measureLines.add((ImageView) n);
         for (int i = 0; i < measureLines.size(); i++) {
             if (i % Values.TIMESIG_BEATS == 0)
-                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                measureLines.get(i).setImage(il.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
             else
-                measureLines.get(i).setImage(ImageLoader.getSpriteFX(
+                measureLines.get(i).setImage(il.getSpriteFX(
                         ImageIndex.STAFF_LINE));
         }
     }
@@ -219,7 +223,7 @@ public class StaffImages {
             ImageView currImage = measureLines.get(i);
             Text currText = measureNums.get(i);
             if ((currLine + i) % Values.TIMESIG_BEATS == 0) {
-                currImage.setImage(ImageLoader.getSpriteFX(
+                currImage.setImage(il.getSpriteFX(
                         ImageIndex.STAFF_MLINE));
                 currText.setText(String.valueOf((int) (
                         Math.ceil(currLine / (double) Values.TIMESIG_BEATS) + 1
@@ -227,7 +231,7 @@ public class StaffImages {
                 counter++;
             }
             else {
-                currImage.setImage(ImageLoader.getSpriteFX(
+                currImage.setImage(il.getSpriteFX(
                         ImageIndex.STAFF_LINE));
                 currText.setText("");
             }

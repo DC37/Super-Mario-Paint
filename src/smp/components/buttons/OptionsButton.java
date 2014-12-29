@@ -17,6 +17,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -26,6 +27,7 @@ import smp.stateMachine.StateMachine;
 
 /**
  * This is the options button. It currently doesn't do anything.
+ * 
  * @author RehdBlob
  * @since 2013.12.25
  */
@@ -42,10 +44,16 @@ public class OptionsButton extends ImagePushButton {
 
     /**
      * Default constructor.
-     * @param i The image that we want to link this to.
+     * 
+     * @param i
+     *            The image that we want to link this to.
+     * @param ct
+     *            The FXML controller object.
+     * @param im
+     *            The Image loader object.
      */
-    public OptionsButton(ImageView i, SMPFXController ct) {
-        super(i, ct);
+    public OptionsButton(ImageView i, SMPFXController ct, ImageLoader im) {
+        super(i, ct, im);
     }
 
     @Override
@@ -82,8 +90,8 @@ public class OptionsButton extends ImagePushButton {
         vBox.setAlignment(Pos.CENTER);
         Label tempoAdjustHack = new Label("Increase tempo by how many times?");
         tempoField = new TextField();
-        vBox.getChildren().addAll(label, defaultVolume,
-                tempoAdjustHack, tempoField, pane);
+        vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
+                tempoField, pane);
         defaultVolume.autosize();
         Scene scene1 = new Scene(vBox);
         dialog.setScene(scene1);
@@ -100,9 +108,10 @@ public class OptionsButton extends ImagePushButton {
     }
 
     /**
-     * Sets the height, width, and other basic properties of this
-     * dialog box.
-     * @param dialog The dialog box that we are setting up.
+     * Sets the height, width, and other basic properties of this dialog box.
+     * 
+     * @param dialog
+     *            The dialog box that we are setting up.
      */
     private void initializeDialog(Stage dialog) {
         dialog.setHeight(250);
@@ -113,8 +122,8 @@ public class OptionsButton extends ImagePushButton {
     }
 
     /**
-     * @return A slider that edits the default volume of the notes that
-     * one places.
+     * @return A slider that edits the default volume of the notes that one
+     *         places.
      */
     private Slider makeVolumeSlider() {
         Slider dV = new Slider();
@@ -163,8 +172,8 @@ public class OptionsButton extends ImagePushButton {
             s.addAll(n);
             StateMachine.setTempo(theStaff.getSequence().getTempo() * num);
             theStaff.getControlPanel().updateCurrTempo();
-            theStaff.getControlPanel().getScrollbar().setMax(
-                    s.size() - Values.NOTELINES_IN_THE_WINDOW);
+            theStaff.getControlPanel().getScrollbar()
+                    .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
         }
     }
 }

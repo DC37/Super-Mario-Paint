@@ -18,7 +18,7 @@ public class ImageLoader implements Loader {
     /**
      * Contains references to all the loaded sprites in JavaFX Image form.
      */
-    private static Hashtable<ImageIndex, javafx.scene.image.Image> spritesFX;
+    private Hashtable<ImageIndex, javafx.scene.image.Image> spritesFX;
 
     /**
      * The amount of loading that the imageLoader has done,
@@ -84,7 +84,7 @@ public class ImageLoader implements Loader {
      * beginning, linked by the ImageIndex in a Hashtable.
      * @throws NullPointerException
      */
-    public static Image getSpriteFX(ImageIndex index)
+    public Image getSpriteFX(ImageIndex index)
             throws NullPointerException {
         return spritesFX.get(index);
     }

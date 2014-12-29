@@ -12,6 +12,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.buttons.AddButton;
 import smp.components.buttons.ArrowButton;
 import smp.components.buttons.DeleteButton;
@@ -34,6 +35,7 @@ import smp.stateMachine.StateMachine;
 
 /**
  * These are the control buttons for the program.
+ * 
  * @author RehdBlob
  * @since 2012.09.04
  */
@@ -92,14 +94,18 @@ public class Controls {
 
     /** The ListView of songs for the arranger. */
     private ListView<String> theList;
-    
+
     /** The controller object. */
     private SMPFXController controller;
-    
+
+    /** The image loader object. */
+    private ImageLoader il;
+
     /**
      * Initializes the set of controls that will be used in Super Mario Paint.
      */
-    public Controls(Staff st, SMPFXController ct) {
+    public Controls(Staff st, SMPFXController ct, ImageLoader im) {
+        il = im;
         theStaff = st;
         setController(ct);
         setScrollbar(controller.getScrollbar());
@@ -119,62 +125,65 @@ public class Controls {
      * Initializes the new song button.
      */
     private void initializeNewButton() {
-        NewButton n = new NewButton(controller.getNewButton(), controller);
+        NewButton n = new NewButton(controller.getNewButton(), controller, il);
         n.setStaff(theStaff);
     }
 
     /** Initializes the load and save buttons which allow one to keep songs. */
     private void initializeLoadSaveButtons() {
-        SaveButton s = new SaveButton(controller.getSaveButton(), controller);
+        SaveButton s = new SaveButton(controller.getSaveButton(), controller,
+                il);
         s.setStaff(theStaff);
-        LoadButton l = new LoadButton(controller.getLoadButton(), controller);
+        LoadButton l = new LoadButton(controller.getLoadButton(), controller,
+                il);
         l.setStaff(theStaff);
     }
 
     /** Initializes the plus and minus buttons that can change the tempo. */
     private void initializeTempoButtons() {
         TempoAdjustButton plus = new TempoAdjustButton(
-                controller.getTempoPlus(), controller);
+                controller.getTempoPlus(), controller, il);
         TempoAdjustButton minus = new TempoAdjustButton(
-                controller.getTempoMinus(), controller);
+                controller.getTempoMinus(), controller, il);
         plus.setPositive(true);
         minus.setPositive(false);
-        StringProperty tempoDisplay =
-                controller.getTempoIndicator().textProperty();
+        StringProperty tempoDisplay = controller.getTempoIndicator()
+                .textProperty();
         currTempo.bindBidirectional(tempoDisplay);
         plus.setStringProperty(currTempo);
         minus.setStringProperty(currTempo);
         StackPane tBox = controller.getTempoBox();
 
-        tBox.setOnMousePressed(
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        try {
-                            String tempo = Dialog.showTextDialog("Tempo");
-                            StateMachine.setTempo(Double.parseDouble(tempo));
-                            tempo = tempo.trim();
-                            currTempo.setValue(tempo);
-                        } catch (NumberFormatException e) {
-                            // Do nothing.
-                        }
-                        event.consume();
-                    }
-                });
+        tBox.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    String tempo = Dialog.showTextDialog("Tempo");
+                    StateMachine.setTempo(Double.parseDouble(tempo));
+                    tempo = tempo.trim();
+                    currTempo.setValue(tempo);
+                } catch (NumberFormatException e) {
+                    // Do nothing.
+                }
+                event.consume();
+            }
+        });
     }
 
     /** Initializes the play button and the stop button. */
     private void initializeControlButtons() {
-        play = new PlayButton(controller.getPlayButton(), controller);
-        stop = new StopButton(controller.getStopButton(), controller);
-        loop = new LoopButton(controller.getLoopButton(), controller);
-        mute = new MuteButton(controller.getMuteButton(), controller);
-        muteA = new MuteInstButton(controller.getMuteAButton(), controller);
-        options = new OptionsButton(controller.getOptionsButton(), controller);
-        add = new AddButton(controller.getAddButton(), controller);
-        delete = new DeleteButton(controller.getDeleteButton(), controller);
-        moveUp = new MoveButton(controller.getUpButton(), 1, controller);
-        moveDown = new MoveButton(controller.getDownButton(), -1, controller);
+        play = new PlayButton(controller.getPlayButton(), controller, il);
+        stop = new StopButton(controller.getStopButton(), controller, il);
+        loop = new LoopButton(controller.getLoopButton(), controller, il);
+        mute = new MuteButton(controller.getMuteButton(), controller, il);
+        muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
+        options = new OptionsButton(controller.getOptionsButton(), controller,
+                il);
+        add = new AddButton(controller.getAddButton(), controller, il);
+        delete = new DeleteButton(controller.getDeleteButton(), controller, il);
+        moveUp = new MoveButton(controller.getUpButton(), 1, controller, il);
+        moveDown = new MoveButton(controller.getDownButton(), -1, controller,
+                il);
 
         mute.setMuteButton(muteA);
         muteA.setMuteButton(mute);
@@ -193,18 +202,18 @@ public class Controls {
      * Sets up the slider and arrows that the controls will have.
      */
     private void initializeArrows() {
-        leftArrow = new ArrowButton(controller.getLeftArrow(),
-                scrollbar, ImageIndex.SCROLLBAR_LEFT1_PRESSED,
-                ImageIndex.SCROLLBAR_LEFT1, controller);
-        rightArrow = new ArrowButton(controller.getRightArrow(),
-                scrollbar, ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
-                ImageIndex.SCROLLBAR_RIGHT1, controller);
+        leftArrow = new ArrowButton(controller.getLeftArrow(), scrollbar,
+                ImageIndex.SCROLLBAR_LEFT1_PRESSED, ImageIndex.SCROLLBAR_LEFT1,
+                controller, il);
+        rightArrow = new ArrowButton(controller.getRightArrow(), scrollbar,
+                ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
+                ImageIndex.SCROLLBAR_RIGHT1, controller, il);
         leftFastArrow = new ArrowButton(controller.getLeftFastArrow(),
                 scrollbar, ImageIndex.SCROLLBAR_LEFT2_PRESSED,
-                ImageIndex.SCROLLBAR_LEFT2, controller);
+                ImageIndex.SCROLLBAR_LEFT2, controller, il);
         rightFastArrow = new ArrowButton(controller.getRightFastArrow(),
                 scrollbar, ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
-                ImageIndex.SCROLLBAR_RIGHT2, controller);
+                ImageIndex.SCROLLBAR_RIGHT2, controller, il);
 
         leftArrow.setSkipAmount(-1);
         rightArrow.setSkipAmount(1);
@@ -216,7 +225,6 @@ public class Controls {
         rightFastArrow.setStaff(theStaff);
         leftFastArrow.setStaff(theStaff);
     }
-
 
     /** Sets up the scollbar to affect the staff in some way. */
     private void initializeScrollbar() {
@@ -235,7 +243,10 @@ public class Controls {
 
     }
 
-    /** @param b Whether we want to turn on arranger mode or not. */
+    /**
+     * @param b
+     *            Whether we want to turn on arranger mode or not.
+     */
     public void setArrangerMode(boolean b) {
         if (b)
             setArrangerMode();
@@ -264,8 +275,8 @@ public class Controls {
     }
 
     /**
-     * Removes the tempo buttons and adds the add song / delete song /
-     * insert song buttons.
+     * Removes the tempo buttons and adds the add song / delete song / insert
+     * song buttons.
      */
     private void changeTempoButtons() {
 
@@ -329,7 +340,9 @@ public class Controls {
 
     /**
      * Sets the scollbar that we will be using.
-     * @param scroll The slider that we'll be using.
+     * 
+     * @param scroll
+     *            The slider that we'll be using.
      */
     public void setScrollbar(Slider scroll) {
         scrollbar = scroll;
@@ -346,10 +359,12 @@ public class Controls {
     public void updateCurrTempo() {
         currTempo.setValue(String.valueOf(StateMachine.getTempo()));
     }
-    
+
     /**
      * Sets the controller class.
-     * @param ct The FXML controller class.
+     * 
+     * @param ct
+     *            The FXML controller class.
      */
     public void setController(SMPFXController ct) {
         controller = ct;

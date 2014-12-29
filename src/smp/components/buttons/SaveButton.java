@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
@@ -21,6 +22,7 @@ import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that saves a song.
+ * 
  * @author RehdBlob
  * @since 2013.09.28
  *
@@ -28,19 +30,24 @@ import smp.stateMachine.StateMachine;
 public class SaveButton extends ImagePushButton {
 
     /**
-     * Sort of hacky move here, but we're going to save a few songs
-     * in a different format, so this exists.
+     * Sort of hacky move here, but we're going to save a few songs in a
+     * different format, so this exists.
      */
     private boolean saveTxt = false;
 
-
     /**
      * Default constructor.
-     * @param i This is the <code>ImageView</code> object that holds
-     * the save button.
+     * 
+     * @param i
+     *            This is the <code>ImageView</code> object that holds the save
+     *            button.
+     * @param ct
+     *            The FXML controller object.
+     * @param im
+     *            The Image loader object.
      */
-    public SaveButton(ImageView i, SMPFXController ct) {
-        super(i, ct);
+    public SaveButton(ImageView i, SMPFXController ct, ImageLoader im) {
+        super(i, ct, im);
     }
 
     @Override
@@ -62,28 +69,24 @@ public class SaveButton extends ImagePushButton {
         }
     }
 
-
     /**
-     * Saves in object file format. Makes decent use of serialization.
-     * There are some issues with this because if one changes the
-     * staff sequence class, there are going to be issues loading the file.
+     * Saves in object file format. Makes decent use of serialization. There are
+     * some issues with this because if one changes the staff sequence class,
+     * there are going to be issues loading the file.
      */
     private void saveObject() {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(new File(System.getProperty("user.dir")));
-            f.setInitialFileName(controller.getSongName().getText()
-                    + ".txt");
+            f.setInitialFileName(controller.getSongName().getText() + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
             File outputFile = f.showSaveDialog(null);
             if (outputFile == null)
                 return;
-            FileOutputStream f_out = new
-                    FileOutputStream(outputFile);
-            ObjectOutputStream o_out = new
-                    ObjectOutputStream(f_out);
+            FileOutputStream f_out = new FileOutputStream(outputFile);
+            ObjectOutputStream o_out = new ObjectOutputStream(f_out);
             StaffSequence out = theStaff.getSequence();
             out.setTempo(StateMachine.getTempo());
             o_out.writeObject(out);

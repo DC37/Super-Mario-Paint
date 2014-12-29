@@ -1,4 +1,5 @@
 package smp.fx;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -14,15 +15,16 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.Loader;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
 
-
 /**
- * The Controller class for most of the program. This will
- * handle the events that happen on the screen.
+ * The Controller class for most of the program. This will handle the events
+ * that happen on the screen.
+ * 
  * @author RehdBlob
  * @since 2012.08.16
  */
@@ -41,14 +43,13 @@ public class SMPFXController {
     private HBox instLine;
 
     /**
-     * The line of buttons that corresponds with the line of images
-     * at the top of the frame.
+     * The line of buttons that corresponds with the line of images at the top
+     * of the frame.
      */
     private ButtonLine instBLine;
 
     /**
-     * The staff that notes, measure lines, and sprites will be placed
-     * on.
+     * The staff that notes, measure lines, and sprites will be placed on.
      */
     private Staff staff;
 
@@ -56,8 +57,8 @@ public class SMPFXController {
     private PanelButtons topPanel;
 
     /**
-     * The button that changes the mode of the staff between song and
-     * arranger mode.
+     * The button that changes the mode of the staff between song and arranger
+     * mode.
      */
     @FXML
     private ImageView modeButton;
@@ -69,8 +70,8 @@ public class SMPFXController {
     private Text modeText;
 
     /**
-     * The controls line that includes the play button, stop button,
-     * loop button, etc.
+     * The controls line that includes the play button, stop button, loop
+     * button, etc.
      */
     @FXML
     private HBox controls;
@@ -157,22 +158,22 @@ public class SMPFXController {
     private Controls controlPanel;
 
     /**
-     * Lines that appear when a note is placed above the standard
-     * staff lines. High C lines.
+     * Lines that appear when a note is placed above the standard staff lines.
+     * High C lines.
      */
     @FXML
     private HBox staffExtLinesHighC;
 
     /**
-     * Lines that appear when a note is placed above the standard
-     * staff lines. High A lines.
+     * Lines that appear when a note is placed above the standard staff lines.
+     * High A lines.
      */
     @FXML
     private HBox staffExtLinesHighA;
 
     /**
-     * Lines that appear when a note is placed above the standard
-     * staff lines. Low C lines.
+     * Lines that appear when a note is placed above the standard staff lines.
+     * Low C lines.
      */
     @FXML
     private HBox staffExtLinesLowC;
@@ -192,15 +193,15 @@ public class SMPFXController {
     private HBox staffPlayBars;
 
     /**
-     * The staff layer that displays the instruments that have been placed
-     * on the staff. Note: Images should be spaced 16 px.
+     * The staff layer that displays the instruments that have been placed on
+     * the staff. Note: Images should be spaced 16 px.
      */
     @FXML
     private HBox staffInstruments;
 
     /**
-     * The staff layer that displays the instrument accidentals that have
-     * been placed on the staff.
+     * The staff layer that displays the instrument accidentals that have been
+     * placed on the staff.
      */
     @FXML
     private HBox staffAccidentals;
@@ -228,41 +229,45 @@ public class SMPFXController {
     private ImageView rightArrow;
 
     /**
-     * The left arrow that you can click to make the staff go to the left quickly.
+     * The left arrow that you can click to make the staff go to the left
+     * quickly.
      */
     @FXML
     private ImageView leftFastArrow;
 
     /**
-     * The left arrow that you can click to make the staff go to the right quickly.
+     * The left arrow that you can click to make the staff go to the right
+     * quickly.
      */
     @FXML
     private ImageView rightFastArrow;
 
+    /** This is the image loader. */
+    private ImageLoader il;
+
     /**
      * Initializes the Controller class for Super Mario Paint
      */
-    @FXML
     public void initialize() {
-        // Currently does nothing.
-    }
+        while (il == null)
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                continue;
+            }
+            
 
-    /**
-     * Sets up event handlers for the different parts of the Super Mario
-     * Paint GUI.
-     */
-    public void initializeHandlers() {
         // Set up top line.
-        instBLine = new ButtonLine(instLine, selectedInst);
-        selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
+        instBLine = new ButtonLine(instLine, selectedInst, il);
+        selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
 
         // Set up staff.
-        HBox[] staffExtLines = {staffExtLinesHighC, staffExtLinesHighA,
-                staffExtLinesLowC};
-        staff = new Staff(staffExtLines, this);
-        controlPanel = new Controls(staff, this);
+        HBox[] staffExtLines = { staffExtLinesHighC, staffExtLinesHighA,
+                staffExtLinesLowC };
+        staff = new Staff(staffExtLines, this, il);
+        controlPanel = new Controls(staff, this, il);
         staff.setControlPanel(controlPanel);
-        topPanel = new PanelButtons(staff, this);
+        topPanel = new PanelButtons(staff, this, il);
         staff.setTopPanel(topPanel);
 
         // Hide all arranger features for now.
@@ -271,7 +276,6 @@ public class SMPFXController {
         deleteButton.setVisible(false);
         upButton.setVisible(false);
         downButton.setVisible(false);
-
     }
 
     /**
@@ -317,8 +321,8 @@ public class SMPFXController {
     }
 
     /**
-     * @return The <code>ImageView</code> that holds the fast left
-     * navigation arrow of the staff.
+     * @return The <code>ImageView</code> that holds the fast left navigation
+     *         arrow of the staff.
      */
     public ImageView getLeftFastArrow() {
         return leftFastArrow;
@@ -326,33 +330,31 @@ public class SMPFXController {
 
     /**
      * @return The <code>ImageView</code> that holds the right navigation arrow
-     * of the staff.
+     *         of the staff.
      */
     public ImageView getRightArrow() {
         return rightArrow;
     }
 
-
     /**
      * @return The <code>ImageView</code> that holds the left navigation arrow
-     * of the staff.
+     *         of the staff.
      */
     public ImageView getRightFastArrow() {
         return rightFastArrow;
     }
 
-
     /**
-     * @return The <code>ImageView</code> that holds the fast right
-     * navigation arrow of the staff.
+     * @return The <code>ImageView</code> that holds the fast right navigation
+     *         arrow of the staff.
      */
     public ImageView getLeftArrow() {
         return leftArrow;
     }
 
     /**
-     * @return The <code>HBox</code> that is supposed to hold the control
-     * panel objects of the interface.
+     * @return The <code>HBox</code> that is supposed to hold the control panel
+     *         objects of the interface.
      */
     public HBox getControlPanel() {
         return controls;
@@ -387,8 +389,8 @@ public class SMPFXController {
     }
 
     /**
-     * @return The <code>ImageView</code> object that contains the
-     * 'mute-all' button.
+     * @return The <code>ImageView</code> object that contains the 'mute-all'
+     *         button.
      */
     public ImageView getMuteAButton() {
         return muteA;
@@ -464,7 +466,7 @@ public class SMPFXController {
         return modeText;
     }
 
-    /** @return The mode button image.  */
+    /** @return The mode button image. */
     public ImageView getModeButton() {
         return modeButton;
     }
@@ -492,5 +494,9 @@ public class SMPFXController {
     /** @return The move down button image. */
     public ImageView getDownButton() {
         return downButton;
+    }
+
+    public void setImageLoader(ImageLoader imgLoader) {
+        il = imgLoader;
     }
 }

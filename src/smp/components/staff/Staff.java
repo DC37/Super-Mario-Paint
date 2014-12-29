@@ -24,8 +24,9 @@ import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
- * The staff on which notes go. The staff keeps track of notes
- * in terms of discrete StaffNoteLines, placed inside an array.
+ * The staff on which notes go. The staff keeps track of notes in terms of
+ * discrete StaffNoteLines, placed inside an array.
+ * 
  * @author RehdBlob
  * @since 2012.08.13
  */
@@ -69,7 +70,10 @@ public class Staff {
 
     /** The FXML controller class. */
     private SMPFXController controller;
-    
+
+    /** The image loader class. */
+    private ImageLoader il;
+
     /** This is the current arrangement. */
     private ObservableList<String> theArrangement;
 
@@ -79,28 +83,32 @@ public class Staff {
      */
     private AnimationService animationService;
 
-
     /**
      * Creates a new Staff object.
-     * @param staffExtLines These are the lines that appear under notes for the
-     * lower and upper portions of the staff.
+     * 
+     * @param staffExtLines
+     *            These are the lines that appear under notes for the lower and
+     *            upper portions of the staff.
      */
-    public Staff(HBox[] staffExtLines, SMPFXController ct) {
+    public Staff(HBox[] staffExtLines, SMPFXController ct, ImageLoader i) {
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
-                Values.NOTES_IN_A_LINE, this);
+                Values.NOTES_IN_A_LINE, this, i);
         theSequence = new StaffSequence();
+        il = i;
         setController(ct);
-        staffImages = new StaffImages(staffExtLines);
+        staffImages = new StaffImages(staffExtLines, i);
         staffImages.setStaff(this);
         staffImages.setController(ct);
         staffImages.initialize();
         animationService = new AnimationService();
         tracker = new NoteTracker();
     }
-    
+
     /**
      * Sets the controller class.
-     * @param ct The FXML controller class.
+     * 
+     * @param ct
+     *            The FXML controller class.
      */
     public void setController(SMPFXController ct) {
         controller = ct;
@@ -122,8 +130,10 @@ public class Staff {
 
     /**
      * Shifts the staff by <code>num</code> spaces.
-     * @param num The number of spaces to shift. Positive
-     * values indicate an increasing measure number.
+     * 
+     * @param num
+     *            The number of spaces to shift. Positive values indicate an
+     *            increasing measure number.
      */
     public void shift(int num) {
         setLocation(num + StateMachine.getMeasureLineNum());
@@ -131,15 +141,16 @@ public class Staff {
 
     /**
      * Jumps to a certain position on the staff.
-     * @param num The first measure line number (usually between 1
-     * and 375) that is to be displayed.
+     * 
+     * @param num
+     *            The first measure line number (usually between 1 and 375) that
+     *            is to be displayed.
      */
     public synchronized void setLocation(int num) {
         theMatrix.redraw();
         Slider s = controller.getScrollbar();
         s.adjustValue(num);
     }
-
 
     /**
      * Force re-draws the staff.
@@ -154,14 +165,12 @@ public class Staff {
             @Override
             public void run() {
                 ArrayList<ImageView> playBars = staffImages.getPlayBars();
-                for(ImageView i : playBars) {
-                    i.setImage(ImageLoader.getSpriteFX(
-                            ImageIndex.NONE));
+                for (ImageView i : playBars) {
+                    i.setImage(il.getSpriteFX(ImageIndex.NONE));
                 }
             }
         });
     }
-
 
     /**
      * Begins animation of the Staff.
@@ -203,7 +212,9 @@ public class Staff {
 
     /**
      * Toggles arranger mode.
-     * @param b True or false.
+     * 
+     * @param b
+     *            True or false.
      */
     public void setArrangerMode(boolean b) {
         theControls.setArrangerMode(b);
@@ -223,7 +234,6 @@ public class Staff {
 
     }
 
-
     /**
      * @return The note matrix of the staff that we are working with.
      */
@@ -232,7 +242,8 @@ public class Staff {
     }
 
     /**
-     * @param other The new note matrix we want to load.
+     * @param other
+     *            The new note matrix we want to load.
      */
     public void setNoteMatrix(NoteMatrix other) {
         theMatrix = other;
@@ -245,7 +256,9 @@ public class Staff {
 
     /**
      * This loads a staff sequence.
-     * @param other This is the other sequence.
+     * 
+     * @param other
+     *            This is the other sequence.
      */
     public void setSequence(StaffSequence other) {
         theSequence = other;
@@ -258,15 +271,17 @@ public class Staff {
 
     /**
      * This loads an arrangement.
-     * @param other This is the other arrangement.
+     * 
+     * @param other
+     *            This is the other arrangement.
      */
     public void setArrangement(ObservableList<String> other) {
         theArrangement = other;
     }
 
     /**
-     * @return The wrapper that holds a series of ImageView
-     * objects that are meant to display the staff measure lines.
+     * @return The wrapper that holds a series of ImageView objects that are
+     *         meant to display the staff measure lines.
      */
     public StaffImages getStaffImages() {
         return staffImages;
@@ -274,7 +289,9 @@ public class Staff {
 
     /**
      * Sets the control panel for this staff.
-     * @param s The control panel we want to set.
+     * 
+     * @param s
+     *            The control panel we want to set.
      */
     public void setControlPanel(Controls s) {
         theControls = s;
@@ -288,7 +305,8 @@ public class Staff {
     }
 
     /**
-     * @param topPanel The top panel we want to set.
+     * @param topPanel
+     *            The top panel we want to set.
      */
     public void setTopPanel(PanelButtons t) {
         topPanel = t;
@@ -301,11 +319,11 @@ public class Staff {
         return topPanel;
     }
 
-
     /**
-     * @param acc The offset that we are deciding upon.
-     * @return An <code>ImageIndex</code> based on the amount of
-     * sharp or flat we want to implement.
+     * @param acc
+     *            The offset that we are deciding upon.
+     * @return An <code>ImageIndex</code> based on the amount of sharp or flat
+     *         we want to implement.
      */
     public static ImageIndex switchAcc(int acc) {
         switch (acc) {
@@ -325,14 +343,14 @@ public class Staff {
     }
 
     /**
-     * @param tempo The tempo we want to set this staff to run at,
-     * in BPM.
-     * Beats per minute * 60 = beats per second <br>
-     * Beats per second ^ -1 = seconds per beat <br>
-     * Seconds per beat * 1000 = Milliseconds per beat <br>
-     * (int) Milliseconds per beat = Milliseconds <br>
-     * Milliseconds per beat - milliseconds = remainder <br>
-     * (int) (Remainder * 1e6) = Nanoseconds <br>
+     * @param tempo
+     *            The tempo we want to set this staff to run at, in BPM. Beats
+     *            per minute * 60 = beats per second <br>
+     *            Beats per second ^ -1 = seconds per beat <br>
+     *            Seconds per beat * 1000 = Milliseconds per beat <br>
+     *            (int) Milliseconds per beat = Milliseconds <br>
+     *            Milliseconds per beat - milliseconds = remainder <br>
+     *            (int) (Remainder * 1e6) = Nanoseconds <br>
      * 
      */
     public void setTempo(double tempo) {
@@ -343,9 +361,10 @@ public class Staff {
     }
 
     /**
-     * Sets the DoubleProperty value that we change to move the
-     * staff.
-     * @param d The DoubleProperty that we want to set.
+     * Sets the DoubleProperty value that we change to move the staff.
+     * 
+     * @param d
+     *            The DoubleProperty that we want to set.
      */
     public void setCurrVal(DoubleProperty d) {
         currVal = d;
@@ -366,27 +385,27 @@ public class Staff {
 
         /**
          * Bumps the highlight of the notes to the next play bar.
-         * @param playBars The list of the measure highlights.
-         * @param index The current index of the measure that we're on.
-         * @param advance Whether we need to move the staff by some bit.
+         * 
+         * @param playBars
+         *            The list of the measure highlights.
+         * @param index
+         *            The current index of the measure that we're on.
+         * @param advance
+         *            Whether we need to move the staff by some bit.
          */
         private void bumpHighlights(ArrayList<ImageView> playBars, int index,
                 boolean advance) {
             for (int i = 0; i < playBars.size(); i++)
                 if (i != index)
-                    playBars.get(i).setImage(
-                            ImageLoader.getSpriteFX(ImageIndex.NONE));
+                    playBars.get(i).setImage(il.getSpriteFX(ImageIndex.NONE));
 
-
-            playBars.get(index).setImage(
-                    ImageLoader.getSpriteFX(ImageIndex.PLAY_BAR1));
+            playBars.get(index).setImage(il.getSpriteFX(ImageIndex.PLAY_BAR1));
             if (advance && !zero)
                 shiftStaff();
             if (zero)
                 zero = false;
 
         }
-
 
         /**
          * Shifts the staff over by the number of note lines in the window.
@@ -423,20 +442,17 @@ public class Staff {
 
         }
 
-
-
         /**
          * This class keeps track of animation and sound. Note to self: While
          * running a service or a task, crashes do not print stack traces.
-         * Therefore, debug like crazy!
-         * Fun fact: This is the first time that I've used a do-while loop in
-         * practice!
+         * Therefore, debug like crazy! Fun fact: This is the first time that
+         * I've used a do-while loop in practice!
          */
         class AnimationTask extends Task<Staff> {
 
             /**
-             * This is the current index of the measure line that we are on
-             * on the staff.
+             * This is the current index of the measure line that we are on on
+             * the staff.
              */
             private int index = 0;
 
@@ -476,17 +492,15 @@ public class Staff {
                 return theMatrix.getStaff();
             }
 
-
             /** Hits the stop button for the song. */
             private void hitStop() {
                 theControls.getStopButton().reactPressed(null);
             }
 
-
             /**
-             * Plays the next line of notes in the queue. For ease-of-programming
-             * purposes, we'll not care about efficiency and just play things as
-             * they are.
+             * Plays the next line of notes in the queue. For
+             * ease-of-programming purposes, we'll not care about efficiency and
+             * just play things as they are.
              */
             private void playNextLine() {
                 bumpHighlights(playBars, index, advance);
@@ -501,17 +515,16 @@ public class Staff {
             }
 
             /**
-             * Plays the current line of notes.
-             * Lol, inefficiency - called every time a note line is played.
+             * Plays the current line of notes. Lol, inefficiency - called every
+             * time a note line is played.
              */
             private void playSoundLine(final int index) {
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
-                        StaffNoteLine s =
-                                theSequence.getLine(
-                                        (int)(currVal.doubleValue() + index));
+                        StaffNoteLine s = theSequence.getLine((int) (currVal
+                                .doubleValue() + index));
                         ArrayList<StaffNote> theNotes = s.getNotes();
                         tracker.stopNotes(s);
                         for (StaffNote sn : theNotes) {
@@ -528,8 +541,11 @@ public class Staff {
 
                     /**
                      * Plays a sound.
-                     * @param sn The StaffNote.
-                     * @param s The StaffNoteLine.
+                     * 
+                     * @param sn
+                     *            The StaffNote.
+                     * @param s
+                     *            The StaffNoteLine.
                      */
                     private void playSound(StaffNote sn, StaffNoteLine s) {
                         SoundfontLoader.playSound(
@@ -543,7 +559,9 @@ public class Staff {
 
                     /**
                      * Stops a sound.
-                     * @param sn The StaffNote.
+                     * 
+                     * @param sn
+                     *            The StaffNote.
                      */
                     private void stopSound(StaffNote sn) {
                         SoundfontLoader.stopSound(
@@ -553,7 +571,9 @@ public class Staff {
 
                     /**
                      * Stops a full set of instruments from playing sounds.
-                     * @param sn The StaffNote.
+                     * 
+                     * @param sn
+                     *            The StaffNote.
                      */
                     private void stopInstrument(StaffNote sn) {
                         tracker.stopInstrument(sn);
@@ -564,6 +584,5 @@ public class Staff {
 
         }
     }
-
 
 }

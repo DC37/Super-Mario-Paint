@@ -23,9 +23,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 /**
- * A Staff event handler. The StaffImages implementation was getting bulky
- * and there are still many many features to be implemented here. This
- * handler primarily handles mouse events.
+ * A Staff event handler. The StaffImages implementation was getting bulky and
+ * there are still many many features to be implemented here. This handler
+ * primarily handles mouse events.
+ * 
  * @author RehdBlob
  * @since 2013.07.27
  */
@@ -41,8 +42,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private boolean focus = false;
 
     /**
-     * This is the list of image notes that we have. These should
-     * all be ImageView-type objects.
+     * This is the list of image notes that we have. These should all be
+     * ImageView-type objects.
      */
     private ObservableList<Node> theImages;
 
@@ -50,9 +51,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private ObservableList<Node> accList;
 
     /**
-     * This is the <code>ImageView</code> object responsible for
-     * displaying the silhouette of the note that we are about to place
-     * on the staff.
+     * This is the <code>ImageView</code> object responsible for displaying the
+     * silhouette of the note that we are about to place on the staff.
      */
     private ImageView silhouette = new ImageView();
 
@@ -60,9 +60,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private Staff theStaff;
 
     /**
-     * This is the <code>ImageView</code> object responsible
-     * for displaying the silhouette of the sharp / flat of the note
-     * that we are about to place on the staff.
+     * This is the <code>ImageView</code> object responsible for displaying the
+     * silhouette of the sharp / flat of the note that we are about to place on
+     * the staff.
      */
     private ImageView accSilhouette;
 
@@ -74,23 +74,31 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private StaffAccidental accidental;
 
+    /** This is the ImageLoader class. */
+    private ImageLoader il;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
 
     /**
-     * Constructor for this StaffEventHandler. This creates a handler
-     * that takes a StackPane and a position on the staff.
-     * @param stPane The StackPane that we are interested in.
-     * @param acc The accidental display pane.
-     * @param pos The position that this handler is located on the
-     * staff.
-     * @param l The line of this event handler. Typically between 0 and 9.
-     * @param s The pointer to the Staff object that this event handler is
-     * linked to.
+     * Constructor for this StaffEventHandler. This creates a handler that takes
+     * a StackPane and a position on the staff.
+     * 
+     * @param stPane
+     *            The StackPane that we are interested in.
+     * @param acc
+     *            The accidental display pane.
+     * @param pos
+     *            The position that this handler is located on the staff.
+     * @param l
+     *            The line of this event handler. Typically between 0 and 9.
+     * @param s
+     *            The pointer to the Staff object that this event handler is
+     *            linked to.
      */
     public StaffInstrumentEventHandler(StackPane stPane, StackPane acc,
-            int pos, int l, Staff s) {
+            int pos, int l, Staff s, ImageLoader i) {
+        il = i;
         position = pos;
         line = l;
         theImages = stPane.getChildren();
@@ -103,11 +111,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         }
     }
 
-
     @Override
     public void handle(Event event) {
-        InstrumentIndex theInd =
-                ButtonLine.getSelectedInstrument();
+        InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             MouseButton b = ((MouseEvent) event).getButton();
             if (b == MouseButton.PRIMARY)
@@ -131,12 +137,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     }
 
-
     /**
-     * The method that is called when the left mouse button is pressed.
-     * This is generally the signal to add an instrument to that line.
-     * @param theInd The InstrumentIndex corresponding to what
-     * instrument is currently selected.
+     * The method that is called when the left mouse button is pressed. This is
+     * generally the signal to add an instrument to that line.
+     * 
+     * @param theInd
+     *            The InstrumentIndex corresponding to what instrument is
+     *            currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
 
@@ -146,8 +153,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /**
      * Places a note where the mouse currently is.
-     * @param theInd The <code>InstrumentIndex</code> that we are
-     * going to use to place this note.
+     * 
+     * @param theInd
+     *            The <code>InstrumentIndex</code> that we are going to use to
+     *            place this note.
      */
     private void placeNote(InstrumentIndex theInd) {
         boolean mute = StateMachine.isMutePressed();
@@ -161,24 +170,17 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
 
         if (!mute && !muteA) {
-            theStaffNote.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex()));
+            theStaffNote.setImage(il.getSpriteFX(theInd.imageIndex()));
         } else if (mute) {
-            theStaffNote.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex().alt()));
+            theStaffNote.setImage(il.getSpriteFX(theInd.imageIndex().alt()));
         } else if (muteA) {
-            theStaffNote.setImage(
-                    ImageLoader.getSpriteFX(
-                            theInd.imageIndex().silhouette()));
+            theStaffNote.setImage(il.getSpriteFX(theInd.imageIndex()
+                    .silhouette()));
         } else if (muteA) {
         }
 
         accidental = new StaffAccidental(theStaffNote);
-        accidental.setImage(
-                ImageLoader.getSpriteFX(
-                        Staff.switchAcc(acc)));
+        accidental.setImage(il.getSpriteFX(Staff.switchAcc(acc)));
 
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
@@ -192,27 +194,26 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         StaffNoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
 
-
         if (temp.isEmpty()) {
-            temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY) /
-                    Values.MAX_VELOCITY);
+            temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY)
+                    / Values.MAX_VELOCITY);
         }
 
         if (!temp.contains(theStaffNote))
             temp.add(theStaffNote);
-        StaffVolumeEventHandler sveh =
-                theStaff.getNoteMatrix().getVolHandler(line);
+        StaffVolumeEventHandler sveh = theStaff.getNoteMatrix().getVolHandler(
+                line);
         sveh.updateVolume();
     }
 
-
-
     /**
-     * The method that is called when the right mouse button is pressed.
-     * This is generally the signal to remove the instrument from that line.
-     * @param theInd The InstrumentIndex corresponding to what
-     * instrument is currently selected. (currently not actually used, but
-     * can be extended later to selectively remove instruments.
+     * The method that is called when the right mouse button is pressed. This is
+     * generally the signal to remove the instrument from that line.
+     * 
+     * @param theInd
+     *            The InstrumentIndex corresponding to what instrument is
+     *            currently selected. (currently not actually used, but can be
+     *            extended later to selectively remove instruments.
      */
     private void rightMousePressed(InstrumentIndex theInd) {
 
@@ -237,7 +238,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         if (!temp.isEmpty()) {
             ArrayList<StaffNote> nt = temp.getNotes();
-            for(int i = nt.size() - 1; i >= 0; i--) {
+            for (int i = nt.size() - 1; i >= 0; i--) {
                 StaffNote s = nt.get(i);
                 if (s.getPosition() == position) {
                     nt.remove(i);
@@ -247,30 +248,28 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         }
 
         if (temp.isEmpty()) {
-            StaffVolumeEventHandler sveh =
-                    theStaff.getNoteMatrix().getVolHandler(line);
+            StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+                    .getVolHandler(line);
             sveh.setVolumeVisible(false);
         }
     }
 
-
     /**
      * The method that is called when the mouse enters the object.
-     * @param theInd The InstrumentIndex corresponding to what
-     * instrument is currently selected.
+     * 
+     * @param theInd
+     *            The InstrumentIndex corresponding to what instrument is
+     *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
         StateMachine.setFocusPane(this);
         theStaff.getNoteMatrix().setFocusPane(this);
         updateAccidental();
-        silhouette.setImage(
-                ImageLoader.getSpriteFX(
-                        theInd.imageIndex().silhouette()));
+        silhouette.setImage(il.getSpriteFX(theInd.imageIndex().silhouette()));
         if (!theImages.contains(silhouette))
             theImages.add(silhouette);
-        accSilhouette.setImage(
-                ImageLoader.getSpriteFX(
-                        Staff.switchAcc(acc).silhouette()));
+        accSilhouette.setImage(il
+                .getSpriteFX(Staff.switchAcc(acc).silhouette()));
         if (!accList.contains(accSilhouette))
             accList.add(accSilhouette);
         silhouette.setVisible(true);
@@ -279,10 +278,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /**
      * The method that is called when the mouse exits the object.
-     * @param children List of Nodes that we have here, hopefully full of
-     * ImageView-type objects.
-     * @param theInd The InstrumentIndex corresponding to what
-     * instrument is currently selected.
+     * 
+     * @param children
+     *            List of Nodes that we have here, hopefully full of
+     *            ImageView-type objects.
+     * @param theInd
+     *            The InstrumentIndex corresponding to what instrument is
+     *            currently selected.
      */
     private void mouseExited(InstrumentIndex theInd) {
 
@@ -298,7 +300,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (!focus)
             return;
 
-
         if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
             acc = -2;
         else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
@@ -312,20 +313,16 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         switch (acc) {
         case 2:
-            accSilhouette.setImage(ImageLoader.getSpriteFX(
-                    ImageIndex.DOUBLESHARP_SIL));
+            accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLESHARP_SIL));
             break;
         case 1:
-            accSilhouette.setImage(ImageLoader.getSpriteFX(
-                    ImageIndex.SHARP_SIL));
+            accSilhouette.setImage(il.getSpriteFX(ImageIndex.SHARP_SIL));
             break;
         case -1:
-            accSilhouette.setImage(ImageLoader.getSpriteFX(
-                    ImageIndex.FLAT_SIL));
+            accSilhouette.setImage(il.getSpriteFX(ImageIndex.FLAT_SIL));
             break;
         case -2:
-            accSilhouette.setImage(ImageLoader.getSpriteFX(
-                    ImageIndex.DOUBLEFLAT_SIL));
+            accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLEFLAT_SIL));
             break;
         default:
             accSilhouette.setVisible(false);
@@ -339,9 +336,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             accList.add(accSilhouette);
         if (acc != 0 && !theImages.contains(silhouette)) {
             theImages.add(silhouette);
-            silhouette.setImage(ImageLoader.getSpriteFX(
-                    ButtonLine.getSelectedInstrument().
-                    imageIndex().silhouette()));
+            silhouette.setImage(il.getSpriteFX(ButtonLine
+                    .getSelectedInstrument().imageIndex().silhouette()));
             silhouette.setVisible(true);
         }
         if ((Settings.debug & 0b01) == 0b01) {
@@ -363,18 +359,24 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /**
      * Plays a sound given an index and a position.
-     * @param theInd The index at which this instrument is located at.
-     * @param pos The position at which this note is located at.
-     * @param acc The sharp / flat that we want to play this note at.
+     * 
+     * @param theInd
+     *            The index at which this instrument is located at.
+     * @param pos
+     *            The position at which this note is located at.
+     * @param acc
+     *            The sharp / flat that we want to play this note at.
      */
     private static void playSound(InstrumentIndex theInd, int pos, int acc) {
-        SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(),
-                theInd, acc);
+        SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
+                acc);
     }
 
     /**
      * Sets the amount that we want to sharp / flat a note.
-     * @param accidental Any integer between -2 and 2.
+     * 
+     * @param accidental
+     *            Any integer between -2 and 2.
      */
     public void setAcc(int accidental) {
         acc = accidental;
@@ -403,9 +405,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     @Override
     public String toString() {
-        String out = "Line: " + (StateMachine.getMeasureLineNum()
-                + line) + "\nPosition: " + position +
-                "\nAccidental: " + acc;
+        String out = "Line: " + (StateMachine.getMeasureLineNum() + line)
+                + "\nPosition: " + position + "\nAccidental: " + acc;
         return out;
     }
 

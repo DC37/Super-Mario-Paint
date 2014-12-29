@@ -44,17 +44,19 @@ public abstract class AbstractImageButton {
      */
     protected ImageView theImage;
 
-    /** 
-     * This is the FXML controller class.
-     */
+    /** This is the FXML controller class. */
     protected SMPFXController controller;
+    
+    /** This is the image loader class. */
+    protected ImageLoader il;
     
     /**
      * @param i The ImageView passed to the Button
      * wrapper.
      * @param ct 
      */
-    public AbstractImageButton(ImageView i, SMPFXController ct) {
+    public AbstractImageButton(ImageView i, SMPFXController ct, ImageLoader im) {
+        il = im;
         setController(ct);
         theImage = i;
         initializeHandler();
@@ -196,8 +198,8 @@ public abstract class AbstractImageButton {
      * versions of the button.
      */
     protected void getImages(ImageIndex pr, ImageIndex notPr) {
-        pressed = ImageLoader.getSpriteFX(pr);
-        notPressed = ImageLoader.getSpriteFX(notPr);
+        pressed = il.getSpriteFX(pr);
+        notPressed = il.getSpriteFX(notPr);
     }
 
     /** @return The <code>ImageView</code> object that this button holds. */

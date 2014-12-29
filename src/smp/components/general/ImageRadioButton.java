@@ -2,6 +2,7 @@ package smp.components.general;
 
 import java.util.ArrayList;
 
+import smp.ImageLoader;
 import smp.fx.SMPFXController;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,8 +26,8 @@ public abstract class ImageRadioButton extends AbstractImageButton {
      * wrapper.
      * @param controller The FXML controller object.
      */
-    public ImageRadioButton(ImageView i, SMPFXController controller) {
-        super(i, controller);
+    public ImageRadioButton(ImageView i, SMPFXController controller, ImageLoader im) {
+        super(i, controller, im);
         linkedButtons = new ArrayList<ImageRadioButton>();
     }
 

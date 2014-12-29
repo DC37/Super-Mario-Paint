@@ -3,6 +3,7 @@ package smp.components.buttons;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.Staff;
@@ -13,6 +14,7 @@ import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that creates a new song.
+ * 
  * @author RehdBlob
  * @since 2013.12.18
  *
@@ -21,13 +23,18 @@ public class NewButton extends ImagePushButton {
 
     /**
      * Default constructor.
-     * @param i This is the <code>ImageView</code> object
-     * that will house the Load button.
+     * 
+     * @param i
+     *            This is the <code>ImageView</code> object that will house the
+     *            Load button.
+     * @param ct
+     *            The FXML controller object.
+     * @param im
+     *            The Image loader object.
      */
-    public NewButton(ImageView i, SMPFXController ct) {
-        super(i, ct);
+    public NewButton(ImageView i, SMPFXController ct, ImageLoader im) {
+        super(i, ct, im);
     }
-
 
     @Override
     protected void reactPressed(MouseEvent event) {
@@ -40,14 +47,15 @@ public class NewButton extends ImagePushButton {
     }
 
     /**
-     * Creates a new song and clears the staff of all notes.
-     * Make sure you save your song first!
+     * Creates a new song and clears the staff of all notes. Make sure you save
+     * your song first!
      */
     private void newSong() {
         boolean cont = true;
         if (StateMachine.isModified())
-            cont = Dialog.showYesNoDialog("The current song has been modified!\n"
-                    + "Create a new song anyway?");
+            cont = Dialog
+                    .showYesNoDialog("The current song has been modified!\n"
+                            + "Create a new song anyway?");
 
         if (cont) {
             theStaff.setSequence(new StaffSequence());

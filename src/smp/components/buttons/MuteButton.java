@@ -3,13 +3,15 @@ package smp.components.buttons;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.general.ImageToggleButton;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
- * This is the button that, when pressed, toggles whether you are
- * placing a mute note or not.
+ * This is the button that, when pressed, toggles whether you are placing a mute
+ * note or not.
+ * 
  * @author RehdBlob
  * @since 2013.11.10
  *
@@ -21,11 +23,17 @@ public class MuteButton extends ImageToggleButton {
 
     /**
      * This creates a new MuteButton object.
-     * @param i This <code>ImageView</code> object that you are
-     * trying to link this button with.
+     * 
+     * @param i
+     *            This <code>ImageView</code> object that you are trying to link
+     *            this button with.
+     * @param ct
+     *            The FXML controller object.
+     * @param im
+     *            The Image loader object.
      */
-    public MuteButton(ImageView i, SMPFXController ct) {
-        super(i, ct);
+    public MuteButton(ImageView i, SMPFXController ct, ImageLoader im) {
+        super(i, ct, im);
         getImages(ImageIndex.MUTE_PRESSED, ImageIndex.MUTE_RELEASED);
         releaseImage();
         isPressed = false;
@@ -54,7 +62,10 @@ public class MuteButton extends ImageToggleButton {
 
     }
 
-    /** @param im The mute button that we want to set. */
+    /**
+     * @param im
+     *            The mute button that we want to set.
+     */
     public void setMuteButton(MuteInstButton im) {
         mt = im;
     }
