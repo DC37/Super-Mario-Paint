@@ -5,19 +5,26 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import smp.components.Values;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
-
 
 /**
  * Super Mario Paint <br>
@@ -28,6 +35,7 @@ import smp.stateMachine.StateMachine;
  * Robby Mulvany's Mario Paint Composer 1.0 / 2.0 (2007-2008) <br>
  * FordPrefect's Advanced Mario Sequencer (2009) <br>
  * The GUI is primarily written with JavaFX2.2. <br>
+ * 
  * @author RehdBlob
  * @since 2012.08.16
  * @version 0.95
@@ -40,8 +48,7 @@ public class SuperMarioPaint extends Application {
     private String mainFxml = "./MainWindow.fxml";
 
     /**
-     * Location of the Advanced Mode (super secret!!)
-     * fxml file.
+     * Location of the Advanced Mode (super secret!!) fxml file.
      */
     private String advFxml = "./AdvWindow.fxml";
 
@@ -52,8 +59,8 @@ public class SuperMarioPaint extends Application {
     private static final int NUM_THREADS = 2;
 
     /**
-     * Until I figure out the mysteries of the Preloader class in
-     * JavaFX, I will stick to what I know, which is swing, unfortunately.
+     * Until I figure out the mysteries of the Preloader class in JavaFX, I will
+     * stick to what I know, which is swing, unfortunately.
      */
     private SplashScreen dummyPreloader = new SplashScreen();
 
@@ -70,12 +77,13 @@ public class SuperMarioPaint extends Application {
     /**
      * The controller class for the FXML.
      */
-    private SMPFXController controller = new SMPFXController(); 
-    
+    private SMPFXController controller = new SMPFXController();
+
     /**
-     * Starts three <code>Thread</code>s. One of them is currently
-     * a dummy splash screen, the second an <code>ImageLoader</code>,
-     * and the third one a <code>SoundfontLoader</code>.
+     * Starts three <code>Thread</code>s. One of them is currently a dummy
+     * splash screen, the second an <code>ImageLoader</code>, and the third one
+     * a <code>SoundfontLoader</code>.
+     * 
      * @see ImageLoader
      * @see SoundfontLoader
      * @see SplashScreen
@@ -96,16 +104,19 @@ public class SuperMarioPaint extends Application {
             }
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();
-            dummyPreloader.updateStatus((imgStatus + sfStatus) * 100, NUM_THREADS);
+            dummyPreloader.updateStatus((imgStatus + sfStatus) * 100,
+                    NUM_THREADS);
         } while (imgLd.isAlive() || sfLd.isAlive());
 
     }
 
     /**
-     * Starts the application and loads the FXML file that contains
-     * a lot of the class hierarchy.
-     * @param primaryStage The primary stage that will be showing the
-     * main window of Super Mario Paint.
+     * Starts the application and loads the FXML file that contains a lot of the
+     * class hierarchy.
+     * 
+     * @param primaryStage
+     *            The primary stage that will be showing the main window of
+     *            Super Mario Paint.
      */
     @Override
     public void start(Stage primaryStage) {
@@ -127,7 +138,6 @@ public class SuperMarioPaint extends Application {
             primaryStage.show();
             dummyPreloader.dispose();
 
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
             System.exit(1);
@@ -142,8 +152,8 @@ public class SuperMarioPaint extends Application {
     }
 
     /**
-     * Protip for JavaFX users: Make sure you define your application
-     * close behavior.
+     * Protip for JavaFX users: Make sure you define your application close
+     * behavior.
      */
     @Override
     public void stop() {
@@ -151,105 +161,113 @@ public class SuperMarioPaint extends Application {
     }
 
     /**
-     * Got this off of https://community.oracle.com/thread/2247058?tstart=0
-     * This appears quite useful as a 'really exit?' type thing.
-     * This dialog currently needs some work, so we're not going to include
-     * it in the alpha release.
-     * @param primaryStage The main stage of interest.
+     * Got this off of https://community.oracle.com/thread/2247058?tstart=0 This
+     * appears quite useful as a 'really exit?' type thing. This dialog
+     * currently needs some work, so we're not going to include it in the alpha
+     * release.
+     * 
+     * @param primaryStage
+     *            The main stage of interest.
      */
     private void setupCloseBehaviour(final Stage primaryStage) {
-        /* primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
             public void handle(WindowEvent event) {
-                final Stage dialog = new Stage();
-                dialog.setHeight(100);
-                dialog.setWidth(200);
-                dialog.setResizable(false);
-                dialog.initStyle(StageStyle.UTILITY);
-                Label label = new Label("Really exit?");
-                Button okButton = new Button("OK");
-                okButton.setOnAction(new EventHandler<ActionEvent>() {
+                if (StateMachine.isModified()) {
+                    final Stage dialog = new Stage();
+                    dialog.setHeight(100);
+                    dialog.setWidth(200);
+                    dialog.setResizable(false);
+                    dialog.initStyle(StageStyle.UTILITY);
+                    Label label = new Label("Really exit?");
+                    Button okButton = new Button("OK");
+                    okButton.setOnAction(new EventHandler<ActionEvent>() {
 
-                    @Override
-                    public void handle(ActionEvent event) {
-                        dialog.close();
-                        stop();
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            stop();
 
-                    }
-                });
-                Button cancelButton = new Button("Cancel");
-                cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                        }
+                    });
+                    Button cancelButton = new Button("Cancel");
+                    cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
-                    @Override
-                    public void handle(ActionEvent event) {
-                        primaryStage.show();
-                        dialog.close();
-                    }
-                });
-                FlowPane pane = new FlowPane(10, 10);
-                pane.setAlignment(Pos.CENTER);
-                pane.getChildren().addAll(okButton, cancelButton);
-                VBox vBox = new VBox(10);
-                vBox.setAlignment(Pos.CENTER);
-                vBox.getChildren().addAll(label, pane);
-                Scene scene1 = new Scene(vBox);
-                dialog.setScene(scene1);
-                dialog.show();
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                        }
+                    });
+                    FlowPane pane = new FlowPane(10, 10);
+                    pane.setAlignment(Pos.CENTER);
+                    pane.getChildren().addAll(okButton, cancelButton);
+                    VBox vBox = new VBox(10);
+                    vBox.setAlignment(Pos.CENTER);
+                    vBox.getChildren().addAll(label, pane);
+                    Scene scene1 = new Scene(vBox);
+                    dialog.setScene(scene1);
+                    dialog.show();
+                } else {
+                    stop();
+                }
                 event.consume();
             }
-        }); */
+        });
     }
 
-
     /**
-     * Creates the keyboard listeners that we will be using for various
-     * other portions of the program. Ctrl, alt, and shift are of interest
-     * here, but the arrow keys will also be considered.
-     * @param primaryScene The main window.
+     * Creates the keyboard listeners that we will be using for various other
+     * portions of the program. Ctrl, alt, and shift are of interest here, but
+     * the arrow keys will also be considered.
+     * 
+     * @param primaryScene
+     *            The main window.
      */
     private void makeKeyboardListeners(Scene primaryScene) {
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
-            @Override
-            public void handle(KeyEvent ke) {
-                KeyCode n = ke.getCode();
-                if (n == KeyCode.CONTROL) {
-                    StateMachine.setCtrlPressed();
-                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                    StateMachine.setAltPressed();
-                } else if (n == KeyCode.SHIFT) {
-                    StateMachine.setShiftPressed();
-                }
-                StateMachine.updateFocusPane();
-                ke.consume();
-            }
-        });
+                    @Override
+                    public void handle(KeyEvent ke) {
+                        KeyCode n = ke.getCode();
+                        if (n == KeyCode.CONTROL) {
+                            StateMachine.setCtrlPressed();
+                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                            StateMachine.setAltPressed();
+                        } else if (n == KeyCode.SHIFT) {
+                            StateMachine.setShiftPressed();
+                        }
+                        StateMachine.updateFocusPane();
+                        ke.consume();
+                    }
+                });
 
         primaryScene.addEventHandler(KeyEvent.KEY_RELEASED,
                 new EventHandler<KeyEvent>() {
 
-            @Override
-            public void handle(KeyEvent ke) {
-                KeyCode n = ke.getCode();
-                if (n == KeyCode.CONTROL) {
-                    StateMachine.resetCtrlPressed();
-                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                    StateMachine.resetAltPressed();
-                } else if (n == KeyCode.SHIFT) {
-                    StateMachine.resetShiftPressed();
-                }
-                StateMachine.updateFocusPane();
-                ke.consume();
-            }
-        });
+                    @Override
+                    public void handle(KeyEvent ke) {
+                        KeyCode n = ke.getCode();
+                        if (n == KeyCode.CONTROL) {
+                            StateMachine.resetCtrlPressed();
+                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                            StateMachine.resetAltPressed();
+                        } else if (n == KeyCode.SHIFT) {
+                            StateMachine.resetShiftPressed();
+                        }
+                        StateMachine.updateFocusPane();
+                        ke.consume();
+                    }
+                });
 
     }
 
     /**
      * Launches the application.
-     * @param args Sets debug options on or off.
+     * 
+     * @param args
+     *            Sets debug options on or off.
      */
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -258,8 +276,8 @@ public class SuperMarioPaint extends Application {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (args.length > 0 && (args[0].equals("--debug")
-                || args[0].equals("--d"))) {
+        } else if (args.length > 0
+                && (args[0].equals("--debug") || args[0].equals("--d"))) {
             if (args[1] != null) {
                 try {
                     Settings.setDebug(Integer.parseInt(args[1]));
@@ -278,8 +296,4 @@ public class SuperMarioPaint extends Application {
 
     }
 
-
-
 }
-
-
