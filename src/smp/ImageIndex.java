@@ -126,6 +126,9 @@ public enum ImageIndex {
      * This is the bar that goes across the screen when one hits play.
      */
     PLAY_BAR1,
+    
+    /** This is an empty play bar. */
+    PLAY_BAR_EMPTY,
 
     /**
      * This is a horizontal line that appears when someone tries to go

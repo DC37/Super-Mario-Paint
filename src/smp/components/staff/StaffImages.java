@@ -245,8 +245,12 @@ public class StaffImages {
      */
     private void initializeStaffPlayBars(HBox playBars) {
         staffPlayBars = new ArrayList<ImageView>();
-        for (Node n : playBars.getChildren())
-            staffPlayBars.add((ImageView) n);
+        for (Node n : playBars.getChildren()) {
+            ImageView i = (ImageView) n;
+            i.setImage(il.getSpriteFX(ImageIndex.PLAY_BAR1));
+            i.setVisible(false);
+            staffPlayBars.add(i);
+        }
     }
 
     /**

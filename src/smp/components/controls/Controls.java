@@ -196,6 +196,7 @@ public class Controls {
         play.setStaff(theStaff);
         stop.setStaff(theStaff);
         options.setStaff(theStaff);
+        
     }
 
     /**

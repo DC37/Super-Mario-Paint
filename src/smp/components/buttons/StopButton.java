@@ -41,8 +41,6 @@ public class StopButton extends ImageRadioButton {
         if (isPressed)
             return;
         super.reactPressed(e);
-        StateMachine.setState(State.EDITING);
-        theStaff.stopSong();
     }
 
 }

@@ -7,7 +7,9 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.Worker.State;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
@@ -166,7 +168,7 @@ public class Staff {
             public void run() {
                 ArrayList<ImageView> playBars = staffImages.getPlayBars();
                 for (ImageView i : playBars) {
-                    i.setImage(il.getSpriteFX(ImageIndex.NONE));
+                    i.setVisible(false);
                 }
             }
         });
@@ -395,16 +397,20 @@ public class Staff {
          */
         private void bumpHighlights(ArrayList<ImageView> playBars, int index,
                 boolean advance) {
-            for (int i = 0; i < playBars.size(); i++)
-                if (i != index)
-                    playBars.get(i).setImage(il.getSpriteFX(ImageIndex.NONE));
+            Platform.runLater(new Runnable() {
 
-            playBars.get(index).setImage(il.getSpriteFX(ImageIndex.PLAY_BAR1));
-            if (advance && !zero)
-                shiftStaff();
-            if (zero)
-                zero = false;
-
+                @Override
+                public void run() {
+                    playBars.get(index).setVisible(true);
+                    for (int i = 0; i < playBars.size(); i++)
+                        if (i != index)
+                            playBars.get(i).setVisible(false);
+                    if (advance && !zero)
+                        shiftStaff();
+                    if (zero)
+                        zero = false;
+                }
+            });
         }
 
         /**
@@ -489,12 +495,19 @@ public class Staff {
                 } while (songPlaying);
                 highlightsOff();
                 hitStop();
+                stopSong();
+                StateMachine.setState(smp.stateMachine.State.EDITING);
                 return theMatrix.getStaff();
             }
 
             /** Hits the stop button for the song. */
             private void hitStop() {
-                theControls.getStopButton().reactPressed(null);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        theControls.getStopButton().reactPressed(null);
+                    }
+                });
             }
 
             /**
