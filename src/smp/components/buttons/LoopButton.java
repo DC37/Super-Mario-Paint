@@ -4,6 +4,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.components.general.ImageToggleButton;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -19,8 +20,8 @@ public class LoopButton extends ImageToggleButton {
      * @param i This <code>ImageView</code> object that you are
      * trying to link this button with.
      */
-    public LoopButton(ImageView i) {
-        super(i);
+    public LoopButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
         getImages(ImageIndex.LOOP_PRESSED, ImageIndex.LOOP_RELEASED);
         releaseImage();
         isPressed = false;

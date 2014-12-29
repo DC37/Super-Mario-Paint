@@ -30,8 +30,8 @@ public class LoadButton extends ImagePushButton {
      * @param i This is the <code>ImageView</code> object
      * that will house the Load button.
      */
-    public LoadButton(ImageView i) {
-        super(i);
+    public LoadButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class LoadButton extends ImagePushButton {
                 } catch (IndexOutOfBoundsException e) {
                     // Do nothing
                 }
-                SMPFXController.getSongName().setText(fname);
+                controller.getSongName().setText(fname);
                 StateMachine.setModified(false);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

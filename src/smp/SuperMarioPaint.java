@@ -68,6 +68,11 @@ public class SuperMarioPaint extends Application {
     private Loader sfLoader = new SoundfontLoader();
 
     /**
+     * The controller class for the FXML.
+     */
+    private SMPFXController controller = new SMPFXController(); 
+    
+    /**
      * Starts three <code>Thread</code>s. One of them is currently
      * a dummy splash screen, the second an <code>ImageLoader</code>,
      * and the third one a <code>SoundfontLoader</code>.
@@ -105,6 +110,8 @@ public class SuperMarioPaint extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setController(controller);
             Parent root =
                     (Parent) FXMLLoader.load(
                             new File(mainFxml).toURI().toURL());
@@ -115,7 +122,7 @@ public class SuperMarioPaint extends Application {
             primaryStage.setWidth(Values.DEFAULT_WIDTH);
             Scene primaryScene = new Scene(root, 800, 600);
             primaryStage.setScene(primaryScene);
-            SMPFXController.initializeHandlers();
+            controller.initializeHandlers();
             makeKeyboardListeners(primaryScene);
             dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
             primaryStage.show();

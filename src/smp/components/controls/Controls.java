@@ -92,14 +92,17 @@ public class Controls {
 
     /** The ListView of songs for the arranger. */
     private ListView<String> theList;
-
+    
+    /** The controller object. */
+    private SMPFXController controller;
+    
     /**
      * Initializes the set of controls that will be used in Super Mario Paint.
      */
     public Controls(Staff st) {
         theStaff = st;
-        setScrollbar(SMPFXController.getScrollbar());
-        theList = SMPFXController.getArrangementList();
+        setScrollbar(controller.getScrollbar());
+        theList = controller.getArrangementList();
         initializeArrows();
         initializeScrollbar();
         initializeControlButtons();
@@ -115,32 +118,32 @@ public class Controls {
      * Initializes the new song button.
      */
     private void initializeNewButton() {
-        NewButton n = new NewButton(SMPFXController.getNewButton());
+        NewButton n = new NewButton(controller.getNewButton(), controller);
         n.setStaff(theStaff);
     }
 
     /** Initializes the load and save buttons which allow one to keep songs. */
     private void initializeLoadSaveButtons() {
-        SaveButton s = new SaveButton(SMPFXController.getSaveButton());
+        SaveButton s = new SaveButton(controller.getSaveButton(), controller);
         s.setStaff(theStaff);
-        LoadButton l = new LoadButton(SMPFXController.getLoadButton());
+        LoadButton l = new LoadButton(controller.getLoadButton(), controller);
         l.setStaff(theStaff);
     }
 
     /** Initializes the plus and minus buttons that can change the tempo. */
     private void initializeTempoButtons() {
         TempoAdjustButton plus = new TempoAdjustButton(
-                SMPFXController.getTempoPlus());
+                controller.getTempoPlus(), controller);
         TempoAdjustButton minus = new TempoAdjustButton(
-                SMPFXController.getTempoMinus());
+                controller.getTempoMinus(), controller);
         plus.setPositive(true);
         minus.setPositive(false);
         StringProperty tempoDisplay =
-                SMPFXController.getTempoIndicator().textProperty();
+                controller.getTempoIndicator().textProperty();
         currTempo.bindBidirectional(tempoDisplay);
         plus.setStringProperty(currTempo);
         minus.setStringProperty(currTempo);
-        StackPane tBox = SMPFXController.getTempoBox();
+        StackPane tBox = controller.getTempoBox();
 
         tBox.setOnMousePressed(
                 new EventHandler<MouseEvent>() {
@@ -161,16 +164,16 @@ public class Controls {
 
     /** Initializes the play button and the stop button. */
     private void initializeControlButtons() {
-        play = new PlayButton(SMPFXController.getPlayButton());
-        stop = new StopButton(SMPFXController.getStopButton());
-        loop = new LoopButton(SMPFXController.getLoopButton());
-        mute = new MuteButton(SMPFXController.getMuteButton());
-        muteA = new MuteInstButton(SMPFXController.getMuteAButton());
-        options = new OptionsButton(SMPFXController.getOptionsButton());
-        add = new AddButton(SMPFXController.getAddButton());
-        delete = new DeleteButton(SMPFXController.getDeleteButton());
-        moveUp = new MoveButton(SMPFXController.getUpButton(), 1);
-        moveDown = new MoveButton(SMPFXController.getDownButton(), -1);
+        play = new PlayButton(controller.getPlayButton(), controller);
+        stop = new StopButton(controller.getStopButton(), controller);
+        loop = new LoopButton(controller.getLoopButton(), controller);
+        mute = new MuteButton(controller.getMuteButton(), controller);
+        muteA = new MuteInstButton(controller.getMuteAButton(), controller);
+        options = new OptionsButton(controller.getOptionsButton(), controller);
+        add = new AddButton(controller.getAddButton(), controller);
+        delete = new DeleteButton(controller.getDeleteButton(), controller);
+        moveUp = new MoveButton(controller.getUpButton(), 1, controller);
+        moveDown = new MoveButton(controller.getDownButton(), -1, controller);
 
         mute.setMuteButton(muteA);
         muteA.setMuteButton(mute);
@@ -189,18 +192,18 @@ public class Controls {
      * Sets up the slider and arrows that the controls will have.
      */
     private void initializeArrows() {
-        leftArrow = new ArrowButton(SMPFXController.getLeftArrow(),
+        leftArrow = new ArrowButton(controller.getLeftArrow(),
                 scrollbar, ImageIndex.SCROLLBAR_LEFT1_PRESSED,
-                ImageIndex.SCROLLBAR_LEFT1);
-        rightArrow = new ArrowButton(SMPFXController.getRightArrow(),
+                ImageIndex.SCROLLBAR_LEFT1, controller);
+        rightArrow = new ArrowButton(controller.getRightArrow(),
                 scrollbar, ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
-                ImageIndex.SCROLLBAR_RIGHT1);
-        leftFastArrow = new ArrowButton(SMPFXController.getLeftFastArrow(),
+                ImageIndex.SCROLLBAR_RIGHT1, controller);
+        leftFastArrow = new ArrowButton(controller.getLeftFastArrow(),
                 scrollbar, ImageIndex.SCROLLBAR_LEFT2_PRESSED,
-                ImageIndex.SCROLLBAR_LEFT2);
-        rightFastArrow = new ArrowButton(SMPFXController.getRightFastArrow(),
+                ImageIndex.SCROLLBAR_LEFT2, controller);
+        rightFastArrow = new ArrowButton(controller.getRightFastArrow(),
                 scrollbar, ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
-                ImageIndex.SCROLLBAR_RIGHT2);
+                ImageIndex.SCROLLBAR_RIGHT2, controller);
 
         leftArrow.setSkipAmount(-1);
         rightArrow.setSkipAmount(1);
@@ -251,12 +254,12 @@ public class Controls {
      * Adds the list of songs characteristic of the arranger mode.
      */
     private void changeCenterList() {
-        SMPFXController.getSongName().setPromptText("Arrangement Name");
-        SMPFXController.getArrangementList().setVisible(true);
-        SMPFXController.getDeleteButton().setVisible(true);
-        SMPFXController.getAddButton().setVisible(true);
-        SMPFXController.getUpButton().setVisible(true);
-        SMPFXController.getDownButton().setVisible(true);
+        controller.getSongName().setPromptText("Arrangement Name");
+        controller.getArrangementList().setVisible(true);
+        controller.getDeleteButton().setVisible(true);
+        controller.getAddButton().setVisible(true);
+        controller.getUpButton().setVisible(true);
+        controller.getDownButton().setVisible(true);
     }
 
     /**
@@ -278,12 +281,12 @@ public class Controls {
      * Reverts the center list into just the middle panel.
      */
     private void revertCenterList() {
-        SMPFXController.getSongName().setPromptText("Song Name");
-        SMPFXController.getArrangementList().setVisible(false);
-        SMPFXController.getDeleteButton().setVisible(false);
-        SMPFXController.getAddButton().setVisible(false);
-        SMPFXController.getUpButton().setVisible(false);
-        SMPFXController.getDownButton().setVisible(false);
+        controller.getSongName().setPromptText("Song Name");
+        controller.getArrangementList().setVisible(false);
+        controller.getDeleteButton().setVisible(false);
+        controller.getAddButton().setVisible(false);
+        controller.getUpButton().setVisible(false);
+        controller.getDownButton().setVisible(false);
     }
 
     /**
@@ -341,6 +344,14 @@ public class Controls {
     /** Updates the current tempo. */
     public void updateCurrTempo() {
         currTempo.setValue(String.valueOf(StateMachine.getTempo()));
+    }
+    
+    /**
+     * Sets the controller class.
+     * @param ct The FXML controller class.
+     */
+    public void setController(SMPFXController ct) {
+        controller = ct;
     }
 
 }

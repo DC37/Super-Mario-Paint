@@ -3,6 +3,7 @@ package smp.components.general;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.staff.Staff;
+import smp.fx.SMPFXController;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,11 +44,18 @@ public abstract class AbstractImageButton {
      */
     protected ImageView theImage;
 
+    /** 
+     * This is the FXML controller class.
+     */
+    protected SMPFXController controller;
+    
     /**
      * @param i The ImageView passed to the Button
      * wrapper.
+     * @param ct 
      */
-    public AbstractImageButton(ImageView i) {
+    public AbstractImageButton(ImageView i, SMPFXController ct) {
+        setController(ct);
         theImage = i;
         initializeHandler();
     }
@@ -210,4 +218,12 @@ public abstract class AbstractImageButton {
         return theStaff;
     }
 
+    /**
+     * Sets the controller class.
+     * @param ct The FXML controller class.
+     */
+    public void setController(SMPFXController ct) {
+        controller = ct;
+    }
+    
 }

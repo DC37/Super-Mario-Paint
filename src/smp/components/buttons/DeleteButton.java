@@ -4,6 +4,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
+import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
 
 /**
@@ -22,8 +23,8 @@ public class DeleteButton extends ImagePushButton {
      * @param i The <code>ImageView</code> object that we are
      * going to make into a button.
      */
-    public DeleteButton(ImageView i) {
-        super(i);
+    public DeleteButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
     }
 
     /**

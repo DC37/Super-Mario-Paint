@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.components.general.ImageRadioButton;
 import smp.components.staff.Staff;
+import smp.fx.SMPFXController;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
@@ -22,8 +23,8 @@ public class StopButton extends ImageRadioButton {
      * Instantiates the stop button.
      * @param i The ImageView that will be manipulated by this class.
      */
-    public StopButton(ImageView i) {
-        super(i);
+    public StopButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
         getImages(ImageIndex.STOP_PRESSED, ImageIndex.STOP_RELEASED);
         pressImage();
         isPressed = true;

@@ -45,6 +45,8 @@ public class StaffImages {
     /** These are the bars that highlight notes. */
     private ArrayList<ImageView> staffPlayBars;
 
+    /** This is the FXML controller class. */
+    private SMPFXController controller;
 
     /**
      * The line that denotes where the staffImages should begin searching
@@ -82,12 +84,12 @@ public class StaffImages {
      */
     public void initialize() {
 
-        initializeStaffMeasureLines(SMPFXController.getStaffMeasureLines());
-        initializeStaffPlayBars(SMPFXController.getStaffPlayBars());
-        initializeStaffMeasureNums(SMPFXController.getStaffMeasureNums());
-        initializeStaffInstruments(SMPFXController.getStaffInstruments(),
-                SMPFXController.getStaffAccidentals());
-        initializeVolumeBars(SMPFXController.getVolumeBars());
+        initializeStaffMeasureLines(controller.getStaffMeasureLines());
+        initializeStaffPlayBars(controller.getStaffPlayBars());
+        initializeStaffMeasureNums(controller.getStaffMeasureNums());
+        initializeStaffInstruments(controller.getStaffInstruments(),
+                controller.getStaffAccidentals());
+        initializeVolumeBars(controller.getVolumeBars());
         initializeVolumeBarLinks();
     }
 
@@ -287,6 +289,13 @@ public class StaffImages {
     public ArrayList<ImageView> getPlayBars() {
         return staffPlayBars;
     }
-
+    
+    /**
+     * Sets the controller class.
+     * @param ct The FXML controller class.
+     */
+    public void setController(SMPFXController ct) {
+        controller = ct;
+    }
 
 }

@@ -8,6 +8,7 @@ import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.fx.SMPFXController;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
@@ -44,8 +45,8 @@ public class ArrowButton extends ImagePushButton {
      * going to make into a button.
      */
     public ArrowButton(ImageView i, Slider scr, ImageIndex pr,
-            ImageIndex notPr) {
-        super(i);
+            ImageIndex notPr , SMPFXController ct) {
+        super(i, ct);
         t = new Timer();
         scrollbar = scr;
         getImages(pr, notPr);

@@ -39,8 +39,8 @@ public class SaveButton extends ImagePushButton {
      * @param i This is the <code>ImageView</code> object that holds
      * the save button.
      */
-    public SaveButton(ImageView i) {
-        super(i);
+    public SaveButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class SaveButton extends ImagePushButton {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(new File(System.getProperty("user.dir")));
-            f.setInitialFileName(SMPFXController.getSongName().getText()
+            f.setInitialFileName(controller.getSongName().getText()
                     + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
@@ -100,7 +100,7 @@ public class SaveButton extends ImagePushButton {
     /** Saves in text file format. */
     private void saveTxt() {
         try {
-            String outputFile = SMPFXController.getSongName().getText();
+            String outputFile = controller.getSongName().getText();
             outputFile = outputFile + "TXT.txt";
             PrintStream p = new PrintStream(outputFile);
             StaffSequence out = theStaff.getSequence();

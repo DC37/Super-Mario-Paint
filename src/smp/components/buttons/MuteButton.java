@@ -4,6 +4,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.components.general.ImageToggleButton;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -23,8 +24,8 @@ public class MuteButton extends ImageToggleButton {
      * @param i This <code>ImageView</code> object that you are
      * trying to link this button with.
      */
-    public MuteButton(ImageView i) {
-        super(i);
+    public MuteButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
         getImages(ImageIndex.MUTE_PRESSED, ImageIndex.MUTE_RELEASED);
         releaseImage();
         isPressed = false;

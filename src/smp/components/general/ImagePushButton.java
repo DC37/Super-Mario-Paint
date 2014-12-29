@@ -1,6 +1,7 @@
 package smp.components.general;
 
 import smp.ImageIndex;
+import smp.fx.SMPFXController;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -16,12 +17,11 @@ public abstract class ImagePushButton extends AbstractImageButton {
      * Default constructor.
      * @param i The <code>ImageView</code> object that we want to make
      * into a pushbutton.
+     * @param controller The FXML controller class.
      */
-    public ImagePushButton(ImageView i) {
-        super(i);
+    public ImagePushButton(ImageView i, SMPFXController controller) {
+        super(i, controller);
     }
-
-
 
     @Override
     protected void reactPressed(MouseEvent event) {

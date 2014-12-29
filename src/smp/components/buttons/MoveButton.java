@@ -4,6 +4,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.general.ImagePushButton;
+import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
 
 /**
@@ -24,8 +25,8 @@ public class MoveButton extends ImagePushButton {
      * @param i The <code>ImageView</code> object that we are
      * going to make into a button.
      */
-    public MoveButton(ImageView i, int mv) {
-        super(i);
+    public MoveButton(ImageView i, int mv, SMPFXController ct) {
+        super(i, ct);
         moveAmt = mv;
     }
 

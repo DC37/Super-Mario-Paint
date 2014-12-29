@@ -67,6 +67,9 @@ public class Staff {
     /** This is the current sequence that we have displaying on the staff. */
     private StaffSequence theSequence;
 
+    /** The FXML controller class. */
+    private SMPFXController controller;
+    
     /** This is the current arrangement. */
     private ObservableList<String> theArrangement;
 
@@ -92,7 +95,14 @@ public class Staff {
         animationService = new AnimationService();
         tracker = new NoteTracker();
     }
-
+    
+    /**
+     * Sets the controller class.
+     * @param ct The FXML controller class.
+     */
+    public void setController(SMPFXController ct) {
+        controller = ct;
+    }
 
     /**
      * Moves the staff and notes left by 1.
@@ -124,7 +134,7 @@ public class Staff {
      */
     public synchronized void setLocation(int num) {
         theMatrix.redraw();
-        Slider s = SMPFXController.getScrollbar();
+        Slider s = controller.getScrollbar();
         s.adjustValue(num);
     }
 

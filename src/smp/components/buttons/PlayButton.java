@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.components.general.ImageRadioButton;
 import smp.components.staff.Staff;
+import smp.fx.SMPFXController;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
@@ -20,9 +21,10 @@ public class PlayButton extends ImageRadioButton {
     /**
      * Instantiates the Play button on the staff
      * @param i The ImageView object that will be manipulated by this class.
+     * @param controller The FXML controller object.
      */
-    public PlayButton(ImageView i) {
-        super(i);
+    public PlayButton(ImageView i, SMPFXController controller) {
+        super(i, controller);
         getImages(ImageIndex.PLAY_PRESSED, ImageIndex.PLAY_RELEASED);
         releaseImage();
         isPressed = false;

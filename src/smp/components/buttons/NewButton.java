@@ -24,8 +24,8 @@ public class NewButton extends ImagePushButton {
      * @param i This is the <code>ImageView</code> object
      * that will house the Load button.
      */
-    public NewButton(ImageView i) {
-        super(i);
+    public NewButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
     }
 
 
@@ -56,7 +56,7 @@ public class NewButton extends ImagePushButton {
             sc.setMax(Values.DEFAULT_LINES_PER_SONG - 10);
             ArrowButton.setEndOfFile(false);
             theStaff.getNoteMatrix().redraw();
-            SMPFXController.getSongName().clear();
+            controller.getSongName().clear();
             StateMachine.setModified(false);
         }
     }

@@ -26,227 +26,224 @@ import smp.components.topPanel.PanelButtons;
  * @author RehdBlob
  * @since 2012.08.16
  */
-public class SMPFXController implements Initializable {
+public class SMPFXController {
 
     /**
      * The image that shows the selected instrument.
      */
     @FXML
-    private static ImageView selectedInst;
+    private ImageView selectedInst;
 
     /**
      * Instrument line.
      */
     @FXML
-    private static HBox instLine;
+    private HBox instLine;
 
     /**
      * The line of buttons that corresponds with the line of images
      * at the top of the frame.
      */
-    private static ButtonLine instBLine;
+    private ButtonLine instBLine;
 
     /**
      * The staff that notes, measure lines, and sprites will be placed
      * on.
      */
-    private static Staff staff;
+    private Staff staff;
 
     /** The top panel buttons that are not the instrument button line. */
-    private static PanelButtons topPanel;
+    private PanelButtons topPanel;
 
     /**
      * The button that changes the mode of the staff between song and
      * arranger mode.
      */
     @FXML
-    private static ImageView modeButton;
+    private ImageView modeButton;
 
     /**
      * The text that displays the mode of the staff.
      */
     @FXML
-    private static Text modeText;
+    private Text modeText;
 
     /**
      * The controls line that includes the play button, stop button,
      * loop button, etc.
      */
     @FXML
-    private static HBox controls;
+    private HBox controls;
 
     /** The play button. */
     @FXML
-    private static ImageView play;
+    private ImageView play;
 
     /** The stop button. */
     @FXML
-    private static ImageView stop;
+    private ImageView stop;
 
     /** The loop button. */
     @FXML
-    private static ImageView loop;
+    private ImageView loop;
 
     /** The mute button. */
     @FXML
-    private static ImageView mute;
+    private ImageView mute;
 
     /** The 'mute-all' button. */
     @FXML
-    private static ImageView muteA;
+    private ImageView muteA;
 
     /** The arranger view piece that holds the list of songs. */
     @FXML
-    private static ListView<String> arrangementList;
+    private ListView<String> arrangementList;
 
     /** The button that adds a song to the arranger list. */
     @FXML
-    private static ImageView addButton;
+    private ImageView addButton;
 
     /** The button that deletes a song from the arranger list. */
     @FXML
-    private static ImageView deleteButton;
+    private ImageView deleteButton;
 
     /** The button that moves a song up on the arranger list. */
     @FXML
-    private static ImageView upButton;
+    private ImageView upButton;
 
     /** The button that moves a song down on the arranger list. */
     @FXML
-    private static ImageView downButton;
+    private ImageView downButton;
 
     /** This is the plus sign that increases the tempo of the song. */
     @FXML
-    private static ImageView tempoPlus;
+    private ImageView tempoPlus;
 
     /** This is the minus sign that decreases the tempo of the song. */
     @FXML
-    private static ImageView tempoMinus;
+    private ImageView tempoMinus;
 
     /** This is the text that displays the current tempo of the song. */
     @FXML
-    private static Text tempoIndicator;
+    private Text tempoIndicator;
 
     /** This holds the tempo indicator. */
     @FXML
-    private static StackPane tempoBox;
+    private StackPane tempoBox;
 
     /** The button that loads the song. */
     @FXML
-    private static ImageView loadButton;
+    private ImageView loadButton;
 
     /** The button that saves the song. */
     @FXML
-    private static ImageView saveButton;
+    private ImageView saveButton;
 
     /** The button that makes a new song. */
     @FXML
-    private static ImageView newButton;
+    private ImageView newButton;
 
     /** The button that opens the options dialog. */
     @FXML
-    private static ImageView optionsButton;
+    private ImageView optionsButton;
 
     /** This is the text area that houses the song name. */
     @FXML
-    private static TextField songName;
+    private TextField songName;
 
     /**
      * The controls line object that holds the FXML controls object.
      */
-    private static Controls controlPanel;
+    private Controls controlPanel;
 
     /**
      * Lines that appear when a note is placed above the standard
      * staff lines. High C lines.
      */
     @FXML
-    private static HBox staffExtLinesHighC;
+    private HBox staffExtLinesHighC;
 
     /**
      * Lines that appear when a note is placed above the standard
      * staff lines. High A lines.
      */
     @FXML
-    private static HBox staffExtLinesHighA;
+    private HBox staffExtLinesHighA;
 
     /**
      * Lines that appear when a note is placed above the standard
      * staff lines. Low C lines.
      */
     @FXML
-    private static HBox staffExtLinesLowC;
+    private HBox staffExtLinesLowC;
 
     /** The staff measure lines. */
     @FXML
-    private static HBox staffMeasureLines;
+    private HBox staffMeasureLines;
 
     /** The staff measure numbers. */
     @FXML
-    private static HBox staffMeasureNumbers;
+    private HBox staffMeasureNumbers;
 
     /**
      * The staff layer that displays the bar that plays notes.
      */
     @FXML
-    private static HBox staffPlayBars;
+    private HBox staffPlayBars;
 
     /**
      * The staff layer that displays the instruments that have been placed
      * on the staff. Note: Images should be spaced 16 px.
      */
     @FXML
-    private static HBox staffInstruments;
+    private HBox staffInstruments;
 
     /**
      * The staff layer that displays the instrument accidentals that have
      * been placed on the staff.
      */
     @FXML
-    private static HBox staffAccidentals;
+    private HBox staffAccidentals;
 
     /**
      * This holds the volume bars in the program.
      */
     @FXML
-    private static HBox volumeBars;
+    private HBox volumeBars;
 
     /** The scrollbar that moves the staff. */
     @FXML
-    private static Slider scrollbar;
+    private Slider scrollbar;
 
     /**
      * The left arrow that you can click to make the staff go to the left.
      */
     @FXML
-    private static ImageView leftArrow;
+    private ImageView leftArrow;
 
     /**
      * The right arrow that you can click to make the staff go to the right.
      */
     @FXML
-    private static ImageView rightArrow;
+    private ImageView rightArrow;
 
     /**
      * The left arrow that you can click to make the staff go to the left quickly.
      */
     @FXML
-    private static ImageView leftFastArrow;
+    private ImageView leftFastArrow;
 
     /**
      * The left arrow that you can click to make the staff go to the right quickly.
      */
     @FXML
-    private static ImageView rightFastArrow;
+    private ImageView rightFastArrow;
 
     /**
      * Initializes the Controller class for Super Mario Paint
-     * @param fileLocation The location that the files are located, passed
-     * by the FXMLLoader class.
-     * @param resources A ResourceBundle.
      */
-    @Override
-    public void initialize(URL fileLocation, ResourceBundle resources) {
+    @FXML
+    public void initialize() {
         // Currently does nothing.
     }
 
@@ -254,7 +251,7 @@ public class SMPFXController implements Initializable {
      * Sets up event handlers for the different parts of the Super Mario
      * Paint GUI.
      */
-    public static void initializeHandlers() {
+    public void initializeHandlers() {
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst);
         selectedInst.setImage(ImageLoader.getSpriteFX(ImageIndex.MARIO));
@@ -263,9 +260,12 @@ public class SMPFXController implements Initializable {
         HBox[] staffExtLines = {staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC};
         staff = new Staff(staffExtLines);
+        staff.setController(this);
         controlPanel = new Controls(staff);
+        controlPanel.setController(this);
         staff.setControlPanel(controlPanel);
         topPanel = new PanelButtons(staff);
+        topPanel.setController(this);
         staff.setTopPanel(topPanel);
 
         // Hide all arranger features for now.
@@ -280,42 +280,42 @@ public class SMPFXController implements Initializable {
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
      */
-    public static HBox getStaffMeasureLines() {
+    public HBox getStaffMeasureLines() {
         return staffMeasureLines;
     }
 
     /**
      * @return The <code>HBox</code> that holds the staff play bars.
      */
-    public static HBox getStaffPlayBars() {
+    public HBox getStaffPlayBars() {
         return staffPlayBars;
     }
 
     /**
      * @return The <code>HBox</code> that holds the staff measure numbers.
      */
-    public static HBox getStaffMeasureNums() {
+    public HBox getStaffMeasureNums() {
         return staffMeasureNumbers;
     }
 
     /**
      * @return The <code>HBox</code> that holds the staff flats / sharps / etc.
      */
-    public static HBox getStaffAccidentals() {
+    public HBox getStaffAccidentals() {
         return staffAccidentals;
     }
 
     /**
      * @return The <code>HBox</code> that holds the staff instruments.
      */
-    public static HBox getStaffInstruments() {
+    public HBox getStaffInstruments() {
         return staffInstruments;
     }
 
     /**
      * @return The <code>Slider</code> that we will use to navigate the staff.
      */
-    public static Slider getScrollbar() {
+    public Slider getScrollbar() {
         return scrollbar;
     }
 
@@ -323,7 +323,7 @@ public class SMPFXController implements Initializable {
      * @return The <code>ImageView</code> that holds the fast left
      * navigation arrow of the staff.
      */
-    public static ImageView getLeftFastArrow() {
+    public ImageView getLeftFastArrow() {
         return leftFastArrow;
     }
 
@@ -331,7 +331,7 @@ public class SMPFXController implements Initializable {
      * @return The <code>ImageView</code> that holds the right navigation arrow
      * of the staff.
      */
-    public static ImageView getRightArrow() {
+    public ImageView getRightArrow() {
         return rightArrow;
     }
 
@@ -340,7 +340,7 @@ public class SMPFXController implements Initializable {
      * @return The <code>ImageView</code> that holds the left navigation arrow
      * of the staff.
      */
-    public static ImageView getRightFastArrow() {
+    public ImageView getRightFastArrow() {
         return rightFastArrow;
     }
 
@@ -349,7 +349,7 @@ public class SMPFXController implements Initializable {
      * @return The <code>ImageView</code> that holds the fast right
      * navigation arrow of the staff.
      */
-    public static ImageView getLeftArrow() {
+    public ImageView getLeftArrow() {
         return leftArrow;
     }
 
@@ -357,35 +357,35 @@ public class SMPFXController implements Initializable {
      * @return The <code>HBox</code> that is supposed to hold the control
      * panel objects of the interface.
      */
-    public static HBox getControlPanel() {
+    public HBox getControlPanel() {
         return controls;
     }
 
     /**
      * @return The <code>ImageView</code> object that contains the play button.
      */
-    public static ImageView getPlayButton() {
+    public ImageView getPlayButton() {
         return play;
     }
 
     /**
      * @return The <code>ImageView</code> object that contains the stop button.
      */
-    public static ImageView getStopButton() {
+    public ImageView getStopButton() {
         return stop;
     }
 
     /**
      * @return The <code>ImageView</code> object that contains the loop button.
      */
-    public static ImageView getLoopButton() {
+    public ImageView getLoopButton() {
         return loop;
     }
 
     /**
      * @return The <code>ImageView</code> object that contains the mute button.
      */
-    public static ImageView getMuteButton() {
+    public ImageView getMuteButton() {
         return mute;
     }
 
@@ -393,107 +393,107 @@ public class SMPFXController implements Initializable {
      * @return The <code>ImageView</code> object that contains the
      * 'mute-all' button.
      */
-    public static ImageView getMuteAButton() {
+    public ImageView getMuteAButton() {
         return muteA;
     }
 
     /** @return The control panel of the program. */
-    public static Controls getControls() {
+    public Controls getControls() {
         return controlPanel;
     }
 
     /** @return The slider that controls the tempo in the control panel. */
-    public static Slider getTempoSlider() {
+    public Slider getTempoSlider() {
         return controlPanel.getScrollbar();
     }
 
     /** @return The tempo plus button. */
-    public static ImageView getTempoPlus() {
+    public ImageView getTempoPlus() {
         return tempoPlus;
     }
 
     /** @return The tempo minus button. */
-    public static ImageView getTempoMinus() {
+    public ImageView getTempoMinus() {
         return tempoMinus;
     }
 
     /** @return The tempo indicator text. */
-    public static Text getTempoIndicator() {
+    public Text getTempoIndicator() {
         return tempoIndicator;
     }
 
     /** @return The tempo indicator box. */
-    public static StackPane getTempoBox() {
+    public StackPane getTempoBox() {
         return tempoBox;
     }
 
     /** @return The load button. */
-    public static ImageView getLoadButton() {
+    public ImageView getLoadButton() {
         return loadButton;
     }
 
     /** @return The save button. */
-    public static ImageView getSaveButton() {
+    public ImageView getSaveButton() {
         return saveButton;
     }
 
     /** @return The new song button. */
-    public static ImageView getNewButton() {
+    public ImageView getNewButton() {
         return newButton;
     }
 
     /** @return The options button. */
-    public static ImageView getOptionsButton() {
+    public ImageView getOptionsButton() {
         return optionsButton;
     }
 
     /** @return The text area that contains the song name. */
-    public static TextField getSongName() {
+    public TextField getSongName() {
         return songName;
     }
 
     /** @return The HBox that holds the volume bars. */
-    public static HBox getVolumeBars() {
+    public HBox getVolumeBars() {
         return volumeBars;
     }
 
     /** @return The instrument button line. */
-    public static ButtonLine getInstBLine() {
+    public ButtonLine getInstBLine() {
         return instBLine;
     }
 
     /** @return The mode text. */
-    public static Text getModeText() {
+    public Text getModeText() {
         return modeText;
     }
 
     /** @return The mode button image.  */
-    public static ImageView getModeButton() {
+    public ImageView getModeButton() {
         return modeButton;
     }
 
     /** @return The list of songs in the arrangement. */
-    public static ListView<String> getArrangementList() {
+    public ListView<String> getArrangementList() {
         return arrangementList;
     }
 
     /** @return The delete button image. */
-    public static ImageView getDeleteButton() {
+    public ImageView getDeleteButton() {
         return deleteButton;
     }
 
     /** @return The add button image. */
-    public static ImageView getAddButton() {
+    public ImageView getAddButton() {
         return addButton;
     }
 
     /** @return The move up button image. */
-    public static ImageView getUpButton() {
+    public ImageView getUpButton() {
         return upButton;
     }
 
     /** @return The move down button image. */
-    public static ImageView getDownButton() {
+    public ImageView getDownButton() {
         return downButton;
     }
 }

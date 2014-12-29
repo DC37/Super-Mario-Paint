@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.components.general.ImageToggleButton;
+import smp.fx.SMPFXController;
 import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
@@ -26,8 +27,8 @@ public class ModeButton extends ImageToggleButton {
      * @param i This <code>ImageView</code> object that you are
      * trying to link this button with.
      */
-    public ModeButton(ImageView i, Text t) {
-        super(i);
+    public ModeButton(ImageView i, Text t, SMPFXController ct) {
+        super(i, ct);
         modeDisp = t;
         modeDisp.setText("Song");
     }

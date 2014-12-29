@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -33,8 +34,8 @@ public class TempoAdjustButton extends ImagePushButton {
      * @param i The <code>ImageView</code> object that we want this
      * adjustment button to be linked to.
      */
-    public TempoAdjustButton(ImageView i) {
-        super(i);
+    public TempoAdjustButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
         t = new Timer();
 
     }

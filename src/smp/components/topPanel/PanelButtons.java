@@ -18,14 +18,23 @@ public class PanelButtons {
     /** Mode button. */
     private ModeButton mButton;
 
+    /** The FXML controller class. */
+    private SMPFXController controller;
+    
     /** Default constructor. */
     public PanelButtons(Staff s) {
         theStaff = s;
-        mButton = new ModeButton(SMPFXController.getModeButton(),
-                SMPFXController.getModeText());
+        mButton = new ModeButton(controller.getModeButton(),
+                controller.getModeText(), controller);
         mButton.setStaff(theStaff);
     }
 
-
+    /**
+     * Sets the controller class.
+     * @param ct The FXML controller class.
+     */
+    public void setController(SMPFXController ct) {
+        controller = ct;
+    }
 
 }

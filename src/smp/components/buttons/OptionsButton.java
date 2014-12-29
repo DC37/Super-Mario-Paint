@@ -21,6 +21,7 @@ import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -43,8 +44,8 @@ public class OptionsButton extends ImagePushButton {
      * Default constructor.
      * @param i The image that we want to link this to.
      */
-    public OptionsButton(ImageView i) {
-        super(i);
+    public OptionsButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
     }
 
     @Override

@@ -22,8 +22,8 @@ public class AddButton extends ImagePushButton {
      * @param i The <code>ImageView</code> object that we are
      * going to make into a button.
      */
-    public AddButton(ImageView i) {
-        super(i);
+    public AddButton(ImageView i, SMPFXController ct) {
+        super(i, ct);
     }
 
     /**
@@ -38,7 +38,7 @@ public class AddButton extends ImagePushButton {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
         theStaff.getArrangement().add(
-                SMPFXController.getSongName().getText());
+                controller.getSongName().getText());
     }
 
     @Override
