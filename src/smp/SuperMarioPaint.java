@@ -176,11 +176,14 @@ public class SuperMarioPaint extends Application {
                 if (StateMachine.isModified()) {
                     final Stage dialog = new Stage();
                     dialog.setHeight(100);
-                    dialog.setWidth(200);
+                    dialog.setWidth(300);
                     dialog.setResizable(false);
                     dialog.initStyle(StageStyle.UTILITY);
-                    Label label = new Label("Really exit?");
-                    Button okButton = new Button("OK");
+                    Label label = new Label();
+                    label.setMaxWidth(300);
+                    label.setWrapText(true);
+                    label.setText("The song has not been saved! Really exit?");
+                    Button okButton = new Button("Yes");
                     okButton.setOnAction(new EventHandler<ActionEvent>() {
 
                         @Override
@@ -190,7 +193,7 @@ public class SuperMarioPaint extends Application {
 
                         }
                     });
-                    Button cancelButton = new Button("Cancel");
+                    Button cancelButton = new Button("No");
                     cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
                         @Override
