@@ -5,9 +5,7 @@ import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.general.ImageRadioButton;
-import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
-import smp.stateMachine.State;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -41,6 +39,8 @@ public class StopButton extends ImageRadioButton {
         if (isPressed)
             return;
         super.reactPressed(e);
+        StateMachine.setState(smp.stateMachine.State.EDITING);
+        theStaff.stopSong();
     }
 
 }

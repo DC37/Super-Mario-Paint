@@ -2,7 +2,6 @@ package smp.components.buttons;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.ImageLoader;
 import smp.components.general.ImageToggleButton;

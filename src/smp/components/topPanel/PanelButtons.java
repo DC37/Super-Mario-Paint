@@ -1,6 +1,5 @@
 package smp.components.topPanel;
 
-import javafx.scene.text.Text;
 import smp.ImageLoader;
 import smp.components.buttons.ModeButton;
 import smp.components.staff.Staff;

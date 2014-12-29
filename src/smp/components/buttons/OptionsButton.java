@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -21,7 +20,6 @@ import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 

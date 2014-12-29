@@ -98,9 +98,9 @@ public class MPCDecoder {
         for (String s : songData) {
             String[] sp = s.split("+");
             for (String s1 : sp) {
-                char[] c = s1.toCharArray();
-                InstrumentIndex i = MPCInstrumentIndex.valueOf(c[0]);
-                // TODO: Fix everything!
+                // char[] c = s1.toCharArray();
+                // InstrumentIndex i = MPCInstrumentIndex.valueOf(c[0]);
+                // TODO: Actually decode a song
             }
         }
         return null;

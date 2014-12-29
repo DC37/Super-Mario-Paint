@@ -7,9 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker.State;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
@@ -202,6 +200,19 @@ public class Staff {
         return 0;
     }
 
+    /**
+     * Hits the stop button.
+     */
+    public void hitStop() {
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                theControls.getStopButton().reactPressed(null);
+            }
+        });
+    }
+    
     /**
      * Stops the song that is currently playing.
      */
@@ -510,20 +521,9 @@ public class Staff {
                 } while (songPlaying);
                 highlightsOff();
                 hitStop();
-                stopSong();
-                StateMachine.setState(smp.stateMachine.State.EDITING);
                 return theMatrix.getStaff();
             }
 
-            /** Hits the stop button for the song. */
-            private void hitStop() {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        theControls.getStopButton().reactPressed(null);
-                    }
-                });
-            }
 
             /**
              * Plays the next line of notes in the queue. For

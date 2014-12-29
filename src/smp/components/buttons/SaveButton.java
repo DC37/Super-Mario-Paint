@@ -14,7 +14,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
-import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
