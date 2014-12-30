@@ -21,6 +21,7 @@ public class Settings {
     /**
      * Classic debug on/off. Level 1.
      * 0b10000 - Print staff value every time it changes.
+     * Set to -1 for max debug.
      */
     public static int debug = 0;
 
