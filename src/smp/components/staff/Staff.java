@@ -212,7 +212,7 @@ public class Staff {
             }
         });
     }
-    
+
     /**
      * Stops the song that is currently playing.
      */
@@ -421,8 +421,8 @@ public class Staff {
          * @param advance
          *            Whether we need to move the staff by some bit.
          */
-        private void bumpHighlights(ArrayList<ImageView> playBars, int index,
-                boolean advance) {
+        private void bumpHighlights(final ArrayList<ImageView> playBars, final int index,
+                final boolean advance) {
             Platform.runLater(new Runnable() {
 
                 @Override
@@ -432,30 +432,16 @@ public class Staff {
                         if (i != index)
                             playBars.get(i).setVisible(false);
                     if (advance && !zero)
-                        shiftStaff();
+                        currVal.setValue(currVal.getValue().doubleValue()
+                                + Values.NOTELINES_IN_THE_WINDOW);
+                    if ((Settings.debug & 0b10000) == 0b10000)
+                        System.out.println(currVal);
                     if (zero)
                         zero = false;
                 }
             });
         }
 
-        /**
-         * Shifts the staff over by the number of note lines in the window.
-         */
-        private void shiftStaff() {
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    currVal.setValue(currVal.getValue().doubleValue()
-                            + Values.NOTELINES_IN_THE_WINDOW);
-                    if ((Settings.debug & 0b10000) == 0b10000)
-                        System.out.println(currVal);
-                }
-
-            });
-
-        }
 
         /**
          * Sets the staff position to zero.
