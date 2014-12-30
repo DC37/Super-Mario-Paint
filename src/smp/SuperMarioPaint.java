@@ -35,10 +35,10 @@ import smp.stateMachine.StateMachine;
  * Robby Mulvany's Mario Paint Composer 1.0 / 2.0 (2007-2008) <br>
  * FordPrefect's Advanced Mario Sequencer (2009) <br>
  * The GUI is primarily written with JavaFX2.2. <br>
- * 
+ *
  * @author RehdBlob
  * @since 2012.08.16
- * @version 0.95
+ * @version 0.92
  */
 public class SuperMarioPaint extends Application {
 
@@ -83,7 +83,7 @@ public class SuperMarioPaint extends Application {
      * Starts three <code>Thread</code>s. One of them is currently a dummy
      * splash screen, the second an <code>ImageLoader</code>, and the third one
      * a <code>SoundfontLoader</code>.
-     * 
+     *
      * @see ImageLoader
      * @see SoundfontLoader
      * @see SplashScreen
@@ -113,7 +113,7 @@ public class SuperMarioPaint extends Application {
     /**
      * Starts the application and loads the FXML file that contains a lot of the
      * class hierarchy.
-     * 
+     *
      * @param primaryStage
      *            The primary stage that will be showing the main window of
      *            Super Mario Paint.
@@ -164,7 +164,7 @@ public class SuperMarioPaint extends Application {
      * appears quite useful as a 'really exit?' type thing. This dialog
      * currently needs some work, so we're not going to include it in the alpha
      * release.
-     * 
+     *
      * @param primaryStage
      *            The main stage of interest.
      */
@@ -222,7 +222,7 @@ public class SuperMarioPaint extends Application {
      * Creates the keyboard listeners that we will be using for various other
      * portions of the program. Ctrl, alt, and shift are of interest here, but
      * the arrow keys will also be considered.
-     * 
+     *
      * @param primaryScene
      *            The main window.
      */
@@ -230,44 +230,44 @@ public class SuperMarioPaint extends Application {
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
-                    @Override
-                    public void handle(KeyEvent ke) {
-                        KeyCode n = ke.getCode();
-                        if (n == KeyCode.CONTROL) {
-                            StateMachine.setCtrlPressed();
-                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                            StateMachine.setAltPressed();
-                        } else if (n == KeyCode.SHIFT) {
-                            StateMachine.setShiftPressed();
-                        }
-                        StateMachine.updateFocusPane();
-                        ke.consume();
-                    }
-                });
+            @Override
+            public void handle(KeyEvent ke) {
+                KeyCode n = ke.getCode();
+                if (n == KeyCode.CONTROL) {
+                    StateMachine.setCtrlPressed();
+                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                    StateMachine.setAltPressed();
+                } else if (n == KeyCode.SHIFT) {
+                    StateMachine.setShiftPressed();
+                }
+                StateMachine.updateFocusPane();
+                ke.consume();
+            }
+        });
 
         primaryScene.addEventHandler(KeyEvent.KEY_RELEASED,
                 new EventHandler<KeyEvent>() {
 
-                    @Override
-                    public void handle(KeyEvent ke) {
-                        KeyCode n = ke.getCode();
-                        if (n == KeyCode.CONTROL) {
-                            StateMachine.resetCtrlPressed();
-                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                            StateMachine.resetAltPressed();
-                        } else if (n == KeyCode.SHIFT) {
-                            StateMachine.resetShiftPressed();
-                        }
-                        StateMachine.updateFocusPane();
-                        ke.consume();
-                    }
-                });
+            @Override
+            public void handle(KeyEvent ke) {
+                KeyCode n = ke.getCode();
+                if (n == KeyCode.CONTROL) {
+                    StateMachine.resetCtrlPressed();
+                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                    StateMachine.resetAltPressed();
+                } else if (n == KeyCode.SHIFT) {
+                    StateMachine.resetShiftPressed();
+                }
+                StateMachine.updateFocusPane();
+                ke.consume();
+            }
+        });
 
     }
 
     /**
      * Launches the application.
-     * 
+     *
      * @param args
      *            Sets debug options on or off.
      */
