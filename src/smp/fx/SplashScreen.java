@@ -1,78 +1,79 @@
 package smp.fx;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Image;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
+import javafx.application.Preloader;
+import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 /**
- * Until I can figure out how to do JavaFX preload/splash screens,
- * this will be a placeholder class.
+ * Splash screen for Super Mario Paint. For some reason, Mac OSX doesn't like it
+ * when programs use both Swing and JavaFX, so we'll use a full JavaFX
+ * implementation of this. This re-write replaces the terrible swing
+ * implementation that persisted from 2012.08.17 to 2014.12.30. The basic
+ * portion of this is taken directly from
+ * http://docs.oracle.com/javafx/2/deployment/preloaders.htm
+ * 
  * @author RehdBlob
- * @since 2012.08.17
+ * @since 2014.12.30
  */
-public class SplashScreen extends JFrame implements Runnable {
+public class SplashScreen extends Preloader {
+
+    /** Basic progress bar. */
+    ProgressBar bar;
+
+    /** The stage to display on. */
+    Stage stage;
+
+    /** */
+    boolean noLoadingProgress = true;
 
     /**
-     * Generated serial ID
+     * @return The created scene.
      */
-    private static final long serialVersionUID = 6705972583468020200L;
+    private Scene createPreloaderScene() {
+        bar = new ProgressBar(0);
+        BorderPane p = new BorderPane();
+        p.setCenter(bar);
+        return new Scene(p, 300, 150);
+    }
 
-    /**
-     * A button that displays the load status.
-     */
-    private JButton loading;
+    /** Creates and starts the preloader window. */
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+        stage.setScene(createPreloaderScene());
+        stage.setTitle("Loading...");
+        stage.show();
+    }
 
-    /**
-     * Tells whether it is legal to update the status.
-     */
-    private boolean isUpdateable;
-
-    /**
-     * The nice looking splash screen that we may be implementing
-     * in the near future.
-     */
-    @SuppressWarnings("unused")
-    private Image splashScreen;
-
-    /**
-     * Displays a dummy window that says "Loading!"
-     */
     @Override
-    public void run() {
-        loading = new JButton("Loading: 0.00");
-        loading.setBorder(BorderFactory.createEmptyBorder());
-        loading.setContentAreaFilled(false);
-        // loading.add(splashScreen);
-        add(loading, BorderLayout.CENTER);
-        setSize(new Dimension(400, 400));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        this.setTitle("Super Mario Paint");
-        setVisible(true);
-        setUpdateable(true);
+    public void handleProgressNotification(ProgressNotification pn) {
+        // application loading progress is rescaled to be first 50%
+        // Even if there is nothing to load 0% and 100% events can be
+        // delivered
+        if (pn.getProgress() != 1.0 || !noLoadingProgress) {
+            bar.setProgress(pn.getProgress() / 2);
+            if (pn.getProgress() > 0) {
+                noLoadingProgress = false;
+            }
+        }
     }
 
-    /**
-     * @param tf Whether the splash screen may begin updating statuses.
-     */
-    public void setUpdateable(boolean tf) {
-        isUpdateable = tf;
+    @Override
+    public void handleStateChangeNotification(StateChangeNotification evt) {
+        // ignore, hide after application signals it is ready
     }
 
-    /**
-     * Sets the loading progress to some value between 0 and 100%.
-     * @param d The sum of all of the loader thread statuses.
-     * @param numOfThreads The number of threads.
-     */
-    public void updateStatus(double d, int numOfThreads) {
-        if (isUpdateable)
-            loading.setText(String.format("Loading: %3.2f",
-                    (d / numOfThreads)));
+    @Override
+    public void handleApplicationNotification(PreloaderNotification pn) {
+        if (pn instanceof ProgressNotification) {
+            // expect application to send us progress notifications
+            // with progress ranging from 0 to 1.0
+            double v = ((ProgressNotification) pn).getProgress();
+            bar.setProgress(v);
+        } else if (pn instanceof StateChangeNotification) {
+            // hide after get any state update from application
+            stage.hide();
+        }
     }
-
-
 }

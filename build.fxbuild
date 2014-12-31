@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://org.eclipse.fx.ide.jdt/1.0" buildDirectory="${workspace}/Super Mario PaintFX/build">
   <deploy packagingFormat="exe">
-    <application name="Super Mario Paint" mainclass="smp.SuperMarioPaint" preloaderclass="" version="1.00" toolkit="fx"/>
+    <application name="Super Mario Paint" mainclass="smp.SuperMarioPaint" preloaderclass="smp.fx.SplashScreen" version="1.00" toolkit="fx"/>
     <info title="Super Mario Paint" vendor="RehdBlob"/>
   </deploy>
   <signjar/>
