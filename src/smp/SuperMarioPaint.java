@@ -22,7 +22,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
 import smp.fx.SMPFXController;
-import smp.fx.SplashScreen;
+//import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
@@ -62,7 +62,7 @@ public class SuperMarioPaint extends Application {
      * Until I figure out the mysteries of the Preloader class in JavaFX, I will
      * stick to what I know, which is swing, unfortunately.
      */
-    private SplashScreen dummyPreloader = new SplashScreen();
+    //private SplashScreen dummyPreloader = new SplashScreen();
 
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
@@ -79,6 +79,11 @@ public class SuperMarioPaint extends Application {
      */
     private SMPFXController controller = new SMPFXController();
 
+    /** Explicitly create constructor without arguments. */
+    public SuperMarioPaint() {
+        
+    }
+    
     /**
      * Starts three <code>Thread</code>s. One of them is currently a dummy
      * splash screen, the second an <code>ImageLoader</code>, and the third one
@@ -90,8 +95,8 @@ public class SuperMarioPaint extends Application {
      */
     @Override
     public void init() {
-        Thread splash = new Thread(dummyPreloader);
-        splash.start();
+        //Thread splash = new Thread(dummyPreloader);
+        //splash.start();
         Thread imgLd = new Thread(imgLoader);
         Thread sfLd = new Thread(sfLoader);
         sfLd.start();
@@ -104,8 +109,8 @@ public class SuperMarioPaint extends Application {
             }
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();
-            dummyPreloader.updateStatus((imgStatus + sfStatus) * 100,
-                    NUM_THREADS);
+            //dummyPreloader.updateStatus((imgStatus + sfStatus) * 100,
+            //        NUM_THREADS);
         } while (imgLd.isAlive() || sfLd.isAlive());
         controller.setImageLoader((ImageLoader) imgLoader);
     }
@@ -133,9 +138,9 @@ public class SuperMarioPaint extends Application {
             Scene primaryScene = new Scene(root, 800, 600);
             primaryStage.setScene(primaryScene);
             makeKeyboardListeners(primaryScene);
-            dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
+            //dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
             primaryStage.show();
-            dummyPreloader.dispose();
+            //dummyPreloader.dispose();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
