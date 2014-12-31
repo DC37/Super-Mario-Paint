@@ -1,8 +1,11 @@
 package smp.fx;
 
-
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -240,6 +243,9 @@ public class SMPFXController {
     /** This is the image loader. */
     private ImageLoader il;
 
+    /** The ListView item cell size. */
+    private SimpleDoubleProperty listViewCellSize = new SimpleDoubleProperty(5);
+
     /**
      * Zero-argument constructor (explicitly declared).
      */
@@ -258,7 +264,6 @@ public class SMPFXController {
                 continue;
             }
 
-
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il);
         selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
@@ -271,7 +276,9 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         topPanel = new PanelButtons(staff, this, il);
         staff.setTopPanel(topPanel);
-
+        arrangementList.setEditable(true);
+        arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
+        staff.setArrangementList(arrangementList);
         // Hide all arranger features for now.
         arrangementList.setVisible(false);
         addButton.setVisible(false);

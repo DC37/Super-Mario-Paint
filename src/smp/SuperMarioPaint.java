@@ -1,14 +1,10 @@
 package smp;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
 import com.sun.javafx.application.LauncherImpl;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
 import javafx.beans.property.BooleanProperty;
@@ -68,12 +64,6 @@ public class SuperMarioPaint extends Application {
      * Paint.
      */
     private static final int NUM_THREADS = 2;
-
-    /**
-     * This is the preloader screen. We'll go with a barebones implementation
-     * for now, and then work on making it look better later.
-     */
-    private Preloader preloader = new SplashScreen();
 
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
@@ -181,10 +171,12 @@ public class SuperMarioPaint extends Application {
         longStart();
 
         ready.addListener(new ChangeListener<Boolean>() {
+            @Override
             public void changed(ObservableValue<? extends Boolean> ov,
                     Boolean t, Boolean t1) {
                 if (Boolean.TRUE.equals(t1)) {
                     Platform.runLater(new Runnable() {
+                        @Override
                         public void run() {
                             try {
                                 primaryStage.setTitle("Super Mario Paint");
@@ -288,38 +280,38 @@ public class SuperMarioPaint extends Application {
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
-                    @Override
-                    public void handle(KeyEvent ke) {
-                        KeyCode n = ke.getCode();
-                        if (n == KeyCode.CONTROL) {
-                            StateMachine.setCtrlPressed();
-                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                            StateMachine.setAltPressed();
-                        } else if (n == KeyCode.SHIFT) {
-                            StateMachine.setShiftPressed();
-                        }
-                        StateMachine.updateFocusPane();
-                        ke.consume();
-                    }
-                });
+            @Override
+            public void handle(KeyEvent ke) {
+                KeyCode n = ke.getCode();
+                if (n == KeyCode.CONTROL) {
+                    StateMachine.setCtrlPressed();
+                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                    StateMachine.setAltPressed();
+                } else if (n == KeyCode.SHIFT) {
+                    StateMachine.setShiftPressed();
+                }
+                StateMachine.updateFocusPane();
+                ke.consume();
+            }
+        });
 
         primaryScene.addEventHandler(KeyEvent.KEY_RELEASED,
                 new EventHandler<KeyEvent>() {
 
-                    @Override
-                    public void handle(KeyEvent ke) {
-                        KeyCode n = ke.getCode();
-                        if (n == KeyCode.CONTROL) {
-                            StateMachine.resetCtrlPressed();
-                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                            StateMachine.resetAltPressed();
-                        } else if (n == KeyCode.SHIFT) {
-                            StateMachine.resetShiftPressed();
-                        }
-                        StateMachine.updateFocusPane();
-                        ke.consume();
-                    }
-                });
+            @Override
+            public void handle(KeyEvent ke) {
+                KeyCode n = ke.getCode();
+                if (n == KeyCode.CONTROL) {
+                    StateMachine.resetCtrlPressed();
+                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                    StateMachine.resetAltPressed();
+                } else if (n == KeyCode.SHIFT) {
+                    StateMachine.resetShiftPressed();
+                }
+                StateMachine.updateFocusPane();
+                ke.consume();
+            }
+        });
 
     }
 

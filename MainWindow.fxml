@@ -12,7 +12,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
-<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
     <BorderPane id="MainLayout" fx:id="mainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
@@ -756,12 +756,12 @@
                       <children>
                         <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">
                           <children>
-                            <ImageView id="ConrolsLeft" fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView id="ConrolsLeft" fitHeight="88.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                 <Image preserveRatio="false" smooth="false" url="@sprites/CONTROLS_LEFT.png" />
                               </image>
                             </ImageView>
-                            <ImageView id="ControlsMid" fitHeight="80.0" fitWidth="738.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                            <ImageView id="ControlsMid" fitHeight="88.0" fitWidth="738.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
                               <image>
                                 <Image preserveRatio="false" smooth="false" url="@sprites/CONTROLS_MID.png" />
                               </image>
@@ -769,7 +769,7 @@
                                 <Insets />
                               </HBox.margin>
                             </ImageView>
-                            <ImageView id="ControlsRight" fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView id="ControlsRight" fitHeight="88.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                 <Image preserveRatio="false" smooth="false" url="@sprites/CONTROLS_RIGHT.png" />
                               </image>
@@ -849,7 +849,7 @@
                             </StackPane>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="230.0">
                                              <children>
-                                                <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="54.0" prefHeight="54.0" prefWidth="250.0" />
+                                                <ListView fx:id="arrangementList" editable="true" fixedCellSize="20.0" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="250.0" />
                                              </children>
                                              <padding>
                                                 <Insets left="4.0" />
@@ -941,6 +941,9 @@
                           </padding>
                         </HBox>
                       </children>
+                                 <padding>
+                                    <Insets top="-10.0" />
+                                 </padding>
                     </StackPane>
                     <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="24.0" prefWidth="770.0">
                       <children>

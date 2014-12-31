@@ -3,15 +3,22 @@ Super Mario Paint
 
 Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (2002), TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany, 2007-2008), and FordPrefect86's Advanced Mario Sequencer (2009). This will be a free program when completed, open to those who want to download it.  
 
+
+Accepting cryptocurrency donations!  
+Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
+Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia  
+
+
 Milestones:
 -----
 * August 7, 2012 - Project started
-* December 25, 2013 - v0.90 - Alpha Release
-* January 4, 2014 - v0.91 - Alpha Release Update
-* December 30, 2014 - v0.92 - Alpha+ Release
+* December 25, 2013 - v0.90 - Initial Alpha Release
+* January 4, 2014 - v0.91 - Alpha
+* December 30, 2014 - v0.92 - Alpha
+* December 31, 2014 - v0.921 - Alpha (Mac + Windows)
 * January 10, 2015 (Scheduled) - v0.95 - Beta Release  
 * Author: RehdBlob
-* Version: 1.00
+* Version: 0.921
 
 Confirmed Operating System Configurations:
 -----
@@ -21,9 +28,6 @@ Confirmed Operating System Configurations:
 * Mac OSX 10.9.5 + Java 7u71
 * Mac OSX 10.9.5 + Java 8u25
 
-Now accepting cryptocurrency donations!  
-Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
-Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia  
 
 
 Tasklist:
@@ -59,13 +63,13 @@ Tasklist:
 * End-of-File Behaviour fix (done - January 3, 2014)
 * Rudimentary Options dialog (done - January 19, 2014)
 * Tempo changing option (done - February 14, 2014)
+* Test run on more operating systems (done - December 31, 2014)
 * Arranger mode (working on it - December 28, 2014)
-* Fix measure addition and subtraction (working on it - December 28, 2014)
+* Release to a test group (v0.95 - **Beta Release** - Tentatively scheduled January 10, 2015)
 * [optional] Staff ledger lines
 * [optional] Import MPC songs
 * [optional] Instrument replacing option
-* Test run on more operating systems (working on it - December 28, 2014)
-* Release to a test group (v0.95 - **Beta Release** - Tentatively scheduled January 10, 2015)
+* Fix measure addition and subtraction (working on it - December 28, 2014)
 * More advanced Options dialog
 * Undo/redo
 * Bookmarks

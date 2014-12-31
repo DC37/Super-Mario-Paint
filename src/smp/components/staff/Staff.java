@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -26,7 +27,7 @@ import smp.stateMachine.StateMachine;
 /**
  * The staff on which notes go. The staff keeps track of notes in terms of
  * discrete StaffNoteLines, placed inside an array.
- * 
+ *
  * @author RehdBlob
  * @since 2012.08.13
  */
@@ -74,8 +75,8 @@ public class Staff {
     /** The image loader class. */
     private ImageLoader il;
 
-    /** This is the current arrangement. */
-    private ObservableList<String> theArrangement;
+    /** This is the ListView that holds the current arrangement. */
+    private ListView<String> theArrangementList;
 
     /**
      * This is a service that will help run the animation and sound of playing a
@@ -83,9 +84,10 @@ public class Staff {
      */
     private AnimationService animationService;
 
+
     /**
      * Creates a new Staff object.
-     * 
+     *
      * @param staffExtLines
      *            These are the lines that appear under notes for the lower and
      *            upper portions of the staff.
@@ -94,7 +96,7 @@ public class Staff {
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
                 Values.NOTES_IN_A_LINE, this, i);
         theSequence = new StaffSequence();
-        il = i;
+        setImageLoader(i);
         setController(ct);
         staffImages = new StaffImages(staffExtLines, i);
         staffImages.setStaff(this);
@@ -106,7 +108,7 @@ public class Staff {
 
     /**
      * Sets the controller class.
-     * 
+     *
      * @param ct
      *            The FXML controller class.
      */
@@ -130,7 +132,7 @@ public class Staff {
 
     /**
      * Shifts the staff by <code>num</code> spaces.
-     * 
+     *
      * @param num
      *            The number of spaces to shift. Positive values indicate an
      *            increasing measure number.
@@ -141,7 +143,7 @@ public class Staff {
 
     /**
      * Jumps to a certain position on the staff.
-     * 
+     *
      * @param num
      *            The first measure line number (usually between 1 and 375) that
      *            is to be displayed.
@@ -223,7 +225,7 @@ public class Staff {
             public void run() {
                 songPlaying = false;
                 animationService.cancel();
-                switch(animationService.getState()) {
+                switch (animationService.getState()) {
                 case CANCELLED:
                 case FAILED:
                 case READY:
@@ -240,7 +242,7 @@ public class Staff {
 
     /**
      * Toggles arranger mode.
-     * 
+     *
      * @param b
      *            True or false.
      */
@@ -284,7 +286,7 @@ public class Staff {
 
     /**
      * This loads a staff sequence.
-     * 
+     *
      * @param other
      *            This is the other sequence.
      */
@@ -293,18 +295,18 @@ public class Staff {
     }
 
     /** @return The current arrangement that we are displaying. */
-    public ObservableList<String> getArrangement() {
-        return theArrangement;
+    public ListView<String> getArrangement() {
+        return theArrangementList;
     }
 
     /**
-     * This loads an arrangement.
-     * 
-     * @param other
-     *            This is the other arrangement.
+     * Sets the ListView object for the arrangement list.
+     *
+     * @param arrangementList
+     *            <code>ListView</code> object that we want to set.
      */
-    public void setArrangement(ObservableList<String> other) {
-        theArrangement = other;
+    public void setArrangementList(ListView<String> arrangementList) {
+        theArrangementList = arrangementList;
     }
 
     /**
@@ -317,7 +319,7 @@ public class Staff {
 
     /**
      * Sets the control panel for this staff.
-     * 
+     *
      * @param s
      *            The control panel we want to set.
      */
@@ -379,7 +381,7 @@ public class Staff {
      *            (int) Milliseconds per beat = Milliseconds <br>
      *            Milliseconds per beat - milliseconds = remainder <br>
      *            (int) (Remainder * 1e6) = Nanoseconds <br>
-     * 
+     *
      */
     public void setTempo(double tempo) {
         double mill = (60.0 / tempo) * 1000;
@@ -390,12 +392,27 @@ public class Staff {
 
     /**
      * Sets the DoubleProperty value that we change to move the staff.
-     * 
+     *
      * @param d
      *            The DoubleProperty that we want to set.
      */
     public void setCurrVal(DoubleProperty d) {
         currVal = d;
+    }
+
+    /**
+     * @return The Staff's Image Loader
+     */
+    public ImageLoader getImageLoader() {
+        return il;
+    }
+
+    /**
+     * @param i
+     *            The Image Loader to set.
+     */
+    public void setImageLoader(ImageLoader i) {
+        il = i;
     }
 
     /**
@@ -413,7 +430,7 @@ public class Staff {
 
         /**
          * Bumps the highlight of the notes to the next play bar.
-         * 
+         *
          * @param playBars
          *            The list of the measure highlights.
          * @param index
@@ -421,8 +438,8 @@ public class Staff {
          * @param advance
          *            Whether we need to move the staff by some bit.
          */
-        private void bumpHighlights(final ArrayList<ImageView> playBars, final int index,
-                final boolean advance) {
+        private void bumpHighlights(final ArrayList<ImageView> playBars,
+                final int index, final boolean advance) {
             Platform.runLater(new Runnable() {
 
                 @Override
@@ -441,7 +458,6 @@ public class Staff {
                 }
             });
         }
-
 
         /**
          * Sets the staff position to zero.
@@ -510,7 +526,6 @@ public class Staff {
                 return theMatrix.getStaff();
             }
 
-
             /**
              * Plays the next line of notes in the queue. For
              * ease-of-programming purposes, we'll not care about efficiency and
@@ -555,7 +570,7 @@ public class Staff {
 
                     /**
                      * Plays a sound.
-                     * 
+                     *
                      * @param sn
                      *            The StaffNote.
                      * @param s
@@ -573,7 +588,7 @@ public class Staff {
 
                     /**
                      * Stops a sound.
-                     * 
+                     *
                      * @param sn
                      *            The StaffNote.
                      */
@@ -585,7 +600,7 @@ public class Staff {
 
                     /**
                      * Stops a full set of instruments from playing sounds.
-                     * 
+                     *
                      * @param sn
                      *            The StaffNote.
                      */

@@ -9,6 +9,14 @@ Ability to place notes
 Ability to play back notes
 Mute notes
 
+v0.9
+Alpha release
+
+v0.91
+Alpha release update
+
+v0.92
+Alpha+ release (Works on Mac + has new loading screen)
 
 Planned features:
 Layers

@@ -10,7 +10,7 @@ import smp.stateMachine.Settings;
 
 /**
  * This is a button that adds a song to an arrangement.
- * 
+ *
  * @author RehdBlob
  * @since 2014.07.27
  */
@@ -21,7 +21,7 @@ public class AddButton extends ImagePushButton {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param i
      *            The <code>ImageView</code> object that we are going to make
      *            into a button.
@@ -46,7 +46,10 @@ public class AddButton extends ImagePushButton {
     protected void reactPressed(MouseEvent event) {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
-        theStaff.getArrangement().add(controller.getSongName().getText());
+
+        theStaff.getArrangement().getItems().add(controller.getSongName().getText());
+        double i = 0;
+
     }
 
     @Override

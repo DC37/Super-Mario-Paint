@@ -33,7 +33,7 @@ import smp.stateMachine.StateMachine;
 
 /**
  * These are the control buttons for the program.
- * 
+ *
  * @author RehdBlob
  * @since 2012.09.04
  */
@@ -194,7 +194,12 @@ public class Controls {
         play.setStaff(theStaff);
         stop.setStaff(theStaff);
         options.setStaff(theStaff);
-        
+
+        add.setStaff(theStaff);
+        delete.setStaff(theStaff);
+        moveUp.setStaff(theStaff);
+        moveDown.setStaff(theStaff);
+
     }
 
     /**
@@ -339,7 +344,7 @@ public class Controls {
 
     /**
      * Sets the scollbar that we will be using.
-     * 
+     *
      * @param scroll
      *            The slider that we'll be using.
      */
@@ -361,7 +366,7 @@ public class Controls {
 
     /**
      * Sets the controller class.
-     * 
+     *
      * @param ct
      *            The FXML controller class.
      */
