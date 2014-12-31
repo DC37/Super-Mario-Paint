@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import com.sun.javafx.application.LauncherImpl;
+
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.application.Preloader;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
 import javafx.beans.property.BooleanProperty;
@@ -70,7 +73,7 @@ public class SuperMarioPaint extends Application {
      * This is the preloader screen. We'll go with a barebones implementation
      * for now, and then work on making it look better later.
      */
-    private SplashScreen preloader = new SplashScreen();
+    private Preloader preloader = new SplashScreen();
 
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
@@ -125,13 +128,14 @@ public class SuperMarioPaint extends Application {
                     }
                     double imgStatus = imgLoader.getLoadStatus();
                     double sfStatus = sfLoader.getLoadStatus();
-                    notifyPreloader(new ProgressNotification(
-                            (imgStatus + sfStatus) * 100 / NUM_THREADS));
+                    double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS * 0.5;
+                    notifyPreloader(new ProgressNotification(ld));
                 } while (imgLd.isAlive() || sfLd.isAlive());
                 FXMLLoader loader = new FXMLLoader();
                 loader.setController(controller);
                 loader.setLocation(new File(mainFxml).toURI().toURL());
                 root = (Parent) loader.load();
+                notifyPreloader(new ProgressNotification(1));
                 ready.setValue(Boolean.TRUE);
                 notifyPreloader(new StateChangeNotification(
                         StateChangeNotification.Type.BEFORE_START));
@@ -157,7 +161,6 @@ public class SuperMarioPaint extends Application {
      */
     @Override
     public void init() {
-
         imgLd = new Thread(imgLoader);
         sfLd = new Thread(sfLoader);
         controller.setImageLoader((ImageLoader) imgLoader);
@@ -174,11 +177,7 @@ public class SuperMarioPaint extends Application {
     @Override
     public void start(Stage ps) {
         primaryStage = ps;
-        try {
-            preloader.start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         longStart();
 
         ready.addListener(new ChangeListener<Boolean>() {
@@ -333,7 +332,8 @@ public class SuperMarioPaint extends Application {
     public static void main(String[] args) {
         if (args.length == 0) {
             try {
-                launch(args);
+                LauncherImpl.launchApplication(SuperMarioPaint.class,
+                        SplashScreen.class, args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -349,7 +349,8 @@ public class SuperMarioPaint extends Application {
                 Settings.setDebug(1);
             }
             try {
-                launch(args);
+                LauncherImpl.launchApplication(SuperMarioPaint.class,
+                        SplashScreen.class, args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
