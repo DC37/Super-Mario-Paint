@@ -19,7 +19,7 @@ import smp.components.topPanel.PanelButtons;
 /**
  * The Controller class for most of the program. This will handle the events
  * that happen on the screen.
- * 
+ *
  * @author RehdBlob
  * @since 2012.08.16
  */
@@ -241,6 +241,13 @@ public class SMPFXController {
     private ImageLoader il;
 
     /**
+     * Zero-argument constructor (explicitly declared).
+     */
+    public SMPFXController() {
+
+    }
+
+    /**
      * Initializes the Controller class for Super Mario Paint
      */
     public void initialize() {
@@ -250,7 +257,7 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
-            
+
 
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il);

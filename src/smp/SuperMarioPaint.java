@@ -34,11 +34,11 @@ import smp.stateMachine.StateMachine;
  * TrioSequencer <br>
  * Robby Mulvany's Mario Paint Composer 1.0 / 2.0 (2007-2008) <br>
  * FordPrefect's Advanced Mario Sequencer (2009) <br>
- * The GUI is primarily written with JavaFX2.2. <br>
+ * The GUI is primarily written with JavaFX <br>
  *
  * @author RehdBlob
  * @since 2012.08.16
- * @version 0.92
+ * @version 0.95
  */
 public class SuperMarioPaint extends Application {
 

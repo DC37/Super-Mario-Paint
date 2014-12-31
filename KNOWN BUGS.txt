@@ -1,6 +1,7 @@
 As you all know, this is an alpha release, so bugs and issues are to be expected.
 Here is a list of currently-known bugs:
 
+-Release note: The arranger mode does not work yet!!
 -(MrGudtavosky) The play bar / highlighter bar will apparently sometimes get 'stuck' in a place. Restarting the program will fix this (it's not permanent)
 -End-of-file behaviour seems to be solved, but keep a lookout.
 -(Christeriousninja / VolcanBrimstone) The soundfont is missing a number of notes in the boat instrument. Some boat notes will not sound because of that.

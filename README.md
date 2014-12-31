@@ -3,14 +3,21 @@ Super Mario Paint
 
 Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (2002), TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany, 2007-2008), and FordPrefect86's Advanced Mario Sequencer (2009). This will be a free program when completed, open to those who want to download it.  
 
-Milestones
+Milestones:
+-----
 * August 7, 2012 - Project started
 * December 25, 2013 - v0.90 - Alpha Release
 * January 4, 2014 - v0.91 - Alpha Release Update
-* 
+* December 30, 2014 - v0.92 - Alpha+ Release
 * January 10, 2015 (Scheduled) - v0.95 - Beta Release  
 * Author: RehdBlob
 * Version: 1.00
+
+Confirmed Operating System Configurations:
+-----
+*Windows 7 + Java 7
+*Windows 7 + Java 8
+*Windows 8.1 + Java 8
 
 Now accepting cryptocurrency donations!  
 Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
