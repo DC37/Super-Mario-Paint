@@ -5,6 +5,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.application.Preloader.ProgressNotification;
+import javafx.application.Preloader.StateChangeNotification;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +30,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
 import smp.fx.SMPFXController;
-//import smp.fx.SplashScreen;
+import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
@@ -59,10 +67,10 @@ public class SuperMarioPaint extends Application {
     private static final int NUM_THREADS = 2;
 
     /**
-     * Until I figure out the mysteries of the Preloader class in JavaFX, I will
-     * stick to what I know, which is swing, unfortunately.
+     * This is the preloader screen. We'll go with a barebones implementation
+     * for now, and then work on making it look better later.
      */
-    //private SplashScreen dummyPreloader = new SplashScreen();
+    private SplashScreen preloader = new SplashScreen();
 
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
@@ -74,16 +82,70 @@ public class SuperMarioPaint extends Application {
      */
     private Loader sfLoader = new SoundfontLoader();
 
+    /** Image Loader thread. */
+    private Thread imgLd;
+
+    /** Soundfont loader thread. */
+    private Thread sfLd;
+
+    /** This is the main application stage. */
+    private Stage primaryStage;
+
+    /** This is the primary Scene on the main application stage. */
+    private Scene primaryScene;
+
+    /** This is the loaded FXML file. */
+    private Parent root;
+
     /**
      * The controller class for the FXML.
      */
     private SMPFXController controller = new SMPFXController();
 
+    /** Whether we are done loading the application or not. */
+    private BooleanProperty ready = new SimpleBooleanProperty(false);
+
+    /**
+     * This should hopefully get something up on the screen quickly. This is
+     * taken from http://docs.oracle.com/javafx/2/deployment/preloaders.htm
+     */
+    private void longStart() {
+
+        // long init in background
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                sfLd.start();
+                imgLd.start();
+                do {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    double imgStatus = imgLoader.getLoadStatus();
+                    double sfStatus = sfLoader.getLoadStatus();
+                    notifyPreloader(new ProgressNotification(
+                            (imgStatus + sfStatus) * 100 / NUM_THREADS));
+                } while (imgLd.isAlive() || sfLd.isAlive());
+                FXMLLoader loader = new FXMLLoader();
+                loader.setController(controller);
+                loader.setLocation(new File(mainFxml).toURI().toURL());
+                root = (Parent) loader.load();
+                ready.setValue(Boolean.TRUE);
+                notifyPreloader(new StateChangeNotification(
+                        StateChangeNotification.Type.BEFORE_START));
+                return null;
+            }
+        };
+        new Thread(task).start();
+    }
+
     /** Explicitly create constructor without arguments. */
     public SuperMarioPaint() {
-        
+
     }
-    
+
     /**
      * Starts three <code>Thread</code>s. One of them is currently a dummy
      * splash screen, the second an <code>ImageLoader</code>, and the third one
@@ -95,23 +157,9 @@ public class SuperMarioPaint extends Application {
      */
     @Override
     public void init() {
-        //Thread splash = new Thread(dummyPreloader);
-        //splash.start();
-        Thread imgLd = new Thread(imgLoader);
-        Thread sfLd = new Thread(sfLoader);
-        sfLd.start();
-        imgLd.start();
-        do {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            double imgStatus = imgLoader.getLoadStatus();
-            double sfStatus = sfLoader.getLoadStatus();
-            //dummyPreloader.updateStatus((imgStatus + sfStatus) * 100,
-            //        NUM_THREADS);
-        } while (imgLd.isAlive() || sfLd.isAlive());
+
+        imgLd = new Thread(imgLoader);
+        sfLd = new Thread(sfLoader);
         controller.setImageLoader((ImageLoader) imgLoader);
     }
 
@@ -124,35 +172,41 @@ public class SuperMarioPaint extends Application {
      *            Super Mario Paint.
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage ps) {
+        primaryStage = ps;
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setController(controller);
-            loader.setLocation(new File(mainFxml).toURI().toURL());
-            Parent root = (Parent) loader.load();
-            primaryStage.setTitle("Super Mario Paint");
-            setupCloseBehaviour(primaryStage);
-            primaryStage.setResizable(false);
-            primaryStage.setHeight(Values.DEFAULT_HEIGHT);
-            primaryStage.setWidth(Values.DEFAULT_WIDTH);
-            Scene primaryScene = new Scene(root, 800, 600);
-            primaryStage.setScene(primaryScene);
-            makeKeyboardListeners(primaryScene);
-            //dummyPreloader.updateStatus(NUM_THREADS * 100, NUM_THREADS);
-            primaryStage.show();
-            //dummyPreloader.dispose();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            System.exit(1);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+            preloader.start(new Stage());
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(1);
         }
+        longStart();
+
+        ready.addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                    Boolean t, Boolean t1) {
+                if (Boolean.TRUE.equals(t1)) {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            try {
+                                primaryStage.setTitle("Super Mario Paint");
+                                setupCloseBehaviour(primaryStage);
+                                primaryStage.setResizable(false);
+                                primaryStage.setHeight(Values.DEFAULT_HEIGHT);
+                                primaryStage.setWidth(Values.DEFAULT_WIDTH);
+                                primaryScene = new Scene(root, 800, 600);
+                                primaryStage.setScene(primaryScene);
+                                makeKeyboardListeners(primaryScene);
+                                primaryStage.show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                System.exit(1);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        ;
     }
 
     /**
@@ -235,38 +289,38 @@ public class SuperMarioPaint extends Application {
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
-            @Override
-            public void handle(KeyEvent ke) {
-                KeyCode n = ke.getCode();
-                if (n == KeyCode.CONTROL) {
-                    StateMachine.setCtrlPressed();
-                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                    StateMachine.setAltPressed();
-                } else if (n == KeyCode.SHIFT) {
-                    StateMachine.setShiftPressed();
-                }
-                StateMachine.updateFocusPane();
-                ke.consume();
-            }
-        });
+                    @Override
+                    public void handle(KeyEvent ke) {
+                        KeyCode n = ke.getCode();
+                        if (n == KeyCode.CONTROL) {
+                            StateMachine.setCtrlPressed();
+                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                            StateMachine.setAltPressed();
+                        } else if (n == KeyCode.SHIFT) {
+                            StateMachine.setShiftPressed();
+                        }
+                        StateMachine.updateFocusPane();
+                        ke.consume();
+                    }
+                });
 
         primaryScene.addEventHandler(KeyEvent.KEY_RELEASED,
                 new EventHandler<KeyEvent>() {
 
-            @Override
-            public void handle(KeyEvent ke) {
-                KeyCode n = ke.getCode();
-                if (n == KeyCode.CONTROL) {
-                    StateMachine.resetCtrlPressed();
-                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                    StateMachine.resetAltPressed();
-                } else if (n == KeyCode.SHIFT) {
-                    StateMachine.resetShiftPressed();
-                }
-                StateMachine.updateFocusPane();
-                ke.consume();
-            }
-        });
+                    @Override
+                    public void handle(KeyEvent ke) {
+                        KeyCode n = ke.getCode();
+                        if (n == KeyCode.CONTROL) {
+                            StateMachine.resetCtrlPressed();
+                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                            StateMachine.resetAltPressed();
+                        } else if (n == KeyCode.SHIFT) {
+                            StateMachine.resetShiftPressed();
+                        }
+                        StateMachine.updateFocusPane();
+                        ke.consume();
+                    }
+                });
 
     }
 
