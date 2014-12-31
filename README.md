@@ -15,9 +15,9 @@ Milestones:
 
 Confirmed Operating System Configurations:
 -----
-*Windows 7 + Java 7
-*Windows 7 + Java 8
-*Windows 8.1 + Java 8
+* Windows 7 + Java 7
+* Windows 7 + Java 8
+* Windows 8.1 + Java 8
 
 Now accepting cryptocurrency donations!  
 Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
