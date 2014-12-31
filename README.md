@@ -15,9 +15,11 @@ Milestones:
 
 Confirmed Operating System Configurations:
 -----
-* Windows 7 + Java 7
-* Windows 7 + Java 8
-* Windows 8.1 + Java 8
+* Windows 7 + Java 7u71
+* Windows 7 + Java 8u25
+* Windows 8.1 + Java 8u25
+* Mac OSX 10.9.5 + Java 7u71
+* Mac OSX 10.9.5 + Java 8u25
 
 Now accepting cryptocurrency donations!  
 Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
