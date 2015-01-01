@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 
-import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.StaffSequence;
 
 /**

@@ -47,7 +47,7 @@ public class AddButton extends ImagePushButton {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
 
-        theStaff.getArrangement().getItems().add(controller.getSongName().getText());
+        theStaff.getArrangementList().getItems().add(controller.getSongName().getText());
         double i = 0;
 
     }

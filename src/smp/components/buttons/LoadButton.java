@@ -21,7 +21,7 @@ import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that loads a song.
- * 
+ *
  * @author RehdBlob
  * @since 2013.09.28
  */
@@ -29,7 +29,7 @@ public class LoadButton extends ImagePushButton {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param i
      *            This is the <code>ImageView</code> object that will house the
      *            Load button.
@@ -71,6 +71,7 @@ public class LoadButton extends ImagePushButton {
                 StaffSequence loaded = (StaffSequence) o_in.readObject();
                 normalize(loaded);
                 theStaff.setSequence(loaded);
+                theStaff.setSequenceFile(inputFile);
                 StateMachine.setTempo(loaded.getTempo());
                 theStaff.getControlPanel().updateCurrTempo();
                 theStaff.getControlPanel()
@@ -100,7 +101,7 @@ public class LoadButton extends ImagePushButton {
 
     /**
      * Makes a sequence fit on the screen.
-     * 
+     *
      * @param theSeq
      *            The sequence to normalize.
      */

@@ -1,10 +1,10 @@
 package smp.components.staff;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
@@ -16,6 +16,7 @@ import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.controls.Controls;
+import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
@@ -67,7 +68,19 @@ public class Staff {
     private NoteTracker tracker;
 
     /** This is the current sequence that we have displaying on the staff. */
-    private StaffSequence theSequence;
+    private StaffSequence theSequence = new StaffSequence();
+
+    /** This is the location of the sequence that is currently displaying. */
+    private File theSequenceFile = null;
+
+    /** This is the current arrangement that we currently have active. */
+    private StaffArrangement theArrangement = new StaffArrangement();
+
+    /**
+     * This is the location of the arrangement file that is currently
+     * displaying.
+     */
+    private File theArrangementFile = null;
 
     /** The FXML controller class. */
     private SMPFXController controller;
@@ -84,7 +97,6 @@ public class Staff {
      */
     private AnimationService animationService;
 
-
     /**
      * Creates a new Staff object.
      *
@@ -95,7 +107,6 @@ public class Staff {
     public Staff(HBox[] staffExtLines, SMPFXController ct, ImageLoader i) {
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
                 Values.NOTES_IN_A_LINE, this, i);
-        theSequence = new StaffSequence();
         setImageLoader(i);
         setController(ct);
         staffImages = new StaffImages(staffExtLines, i);
@@ -174,9 +185,7 @@ public class Staff {
         });
     }
 
-    /**
-     * Begins animation of the Staff.
-     */
+    /** Begins animation of the Staff. */
     public void startSong() {
         highlightsOff();
         lastLine = findLastLine();
@@ -188,6 +197,11 @@ public class Staff {
         songPlaying = true;
         setTempo(StateMachine.getTempo());
         animationService.restart();
+    }
+
+    /** Starts an arrangement. */
+    public void startArrangement() {
+
     }
 
     /**
@@ -294,8 +308,28 @@ public class Staff {
         theSequence = other;
     }
 
+    /**
+     *
+     * @param other
+     *            This is the location of the file that the sequence that we are
+     *            currently editing is located at. Usually, this is set by a
+     *            <code>save</code> operation, but could be set using other
+     *            methods or operations.
+     */
+    public void setSequenceFile(File other) {
+        theSequenceFile = other;
+    }
+
+    /**
+     * @return This is the location of the sequence that we are currently
+     *         editing. It is <b>null</b> if it hasn't been saved yet.
+     */
+    public File getSequenceFile() {
+        return theSequenceFile;
+    }
+
     /** @return The current arrangement that we are displaying. */
-    public ListView<String> getArrangement() {
+    public ListView<String> getArrangementList() {
         return theArrangementList;
     }
 
@@ -307,6 +341,36 @@ public class Staff {
      */
     public void setArrangementList(ListView<String> arrangementList) {
         theArrangementList = arrangementList;
+    }
+
+    /**
+     * @return The list of songs in the currently-active arrangement.
+     */
+    public StaffArrangement getTheArrangement() {
+        return theArrangement;
+    }
+
+    /**
+     * @param tA
+     *            The arrangement file to set.
+     */
+    public void setTheArrangement(StaffArrangement tA) {
+        theArrangement = tA;
+    }
+
+    /**
+     * @return The list of arrangement files.
+     */
+    public File getTheArrangementFile() {
+        return theArrangementFile;
+    }
+
+    /**
+     * @param tAF
+     *            The list of arrangement files to set.
+     */
+    public void setTheArrangementFile(File tAF) {
+        theArrangementFile = tAF;
     }
 
     /**

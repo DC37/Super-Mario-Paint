@@ -2,21 +2,20 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.components.Values;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.fx.SMPFXController;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import smp.ImageIndex;
+import smp.ImageLoader;
+import smp.components.Values;
+import smp.components.staff.sequences.StaffNoteLine;
+import smp.fx.SMPFXController;
 
 /**
  * Wrapper class for all of the images that appear on the Staff of
@@ -49,22 +48,6 @@ public class StaffImages {
 
     /** This is the ImageLoader class. */
     private ImageLoader il;
-    
-    /**
-     * The line that denotes where the staffImages should begin searching
-     * for images to draw.
-     */
-    private int beginLine;
-
-    /**
-     * The line after which StaffImages should stop looking for images to draw.
-     */
-    private int endLine;
-
-    /**
-     * The digits, 0-9, to be used for numbering the staff measures.
-     */
-    private ArrayList<Image> digits;
 
     /**
      * The parent staff object.
@@ -296,7 +279,7 @@ public class StaffImages {
     public ArrayList<ImageView> getPlayBars() {
         return staffPlayBars;
     }
-    
+
     /**
      * Sets the controller class.
      * @param ct The FXML controller class.

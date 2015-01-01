@@ -12,7 +12,7 @@ import smp.stateMachine.StateMachine;
 /**
  * Wrapper class for an ImageView that holds the play button image. Pressing the
  * button changes the image and also changes the state of the program.
- * 
+ *
  * @author RehdBlob
  * @since 2012.08.28
  */
@@ -20,7 +20,7 @@ public class PlayButton extends ImageRadioButton {
 
     /**
      * Instantiates the Play button on the staff
-     * 
+     *
      * @param i
      *            The ImageView object that will be manipulated by this class.
      * @param ct
@@ -40,8 +40,13 @@ public class PlayButton extends ImageRadioButton {
         if (isPressed)
             return;
         super.reactPressed(e);
-        StateMachine.setState(State.SONG_PLAYING);
-        theStaff.startSong();
+        if (StateMachine.getState() == State.EDITING) {
+            StateMachine.setState(State.SONG_PLAYING);
+            theStaff.startSong();
+        } else if (StateMachine.getState() == State.ARR_EDITING) {
+            StateMachine.setState(State.ARR_PLAYING);
+            theStaff.startArrangement();
+        }
     }
 
 }

@@ -12,7 +12,7 @@ import smp.stateMachine.StateMachine;
 /**
  * The button that changes the mode of Super Mario Paint between arranger and
  * song modes.
- * 
+ *
  * @author RehdBlob
  * @since 2014.05.21
  */
@@ -25,7 +25,7 @@ public class ModeButton extends ImageToggleButton {
 
     /**
      * This creates a new ModeButton object.
-     * 
+     *
      * @param i
      *            This <code>ImageView</code> object that you are trying to link
      *            this button with.
@@ -45,7 +45,7 @@ public class ModeButton extends ImageToggleButton {
         if (StateMachine.getState() == State.EDITING) {
             modeDisp.setText("Arranger");
             theStaff.setArrangerMode(true);
-        } else {
+        } else if (StateMachine.getState() == State.ARR_EDITING) {
             modeDisp.setText("Song");
             theStaff.setArrangerMode(false);
         }
