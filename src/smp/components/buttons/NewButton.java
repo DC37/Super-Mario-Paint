@@ -9,11 +9,12 @@ import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that creates a new song.
- * 
+ *
  * @author RehdBlob
  * @since 2013.12.18
  *
@@ -22,7 +23,7 @@ public class NewButton extends ImagePushButton {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param i
      *            This is the <code>ImageView</code> object that will house the
      *            Load button.
@@ -37,7 +38,11 @@ public class NewButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        newSong();
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING)
+            newSong();
+        else if (curr == ProgramState.ARR_EDITING)
+            newArrangement();
     }
 
     @Override
@@ -47,7 +52,7 @@ public class NewButton extends ImagePushButton {
 
     /**
      * Creates a new song and clears the staff of all notes. Make sure you save
-     * your song first!
+     * your song first! The action is ignored if the song is playing.
      */
     private void newSong() {
         boolean cont = true;
@@ -66,6 +71,15 @@ public class NewButton extends ImagePushButton {
             controller.getSongName().clear();
             StateMachine.setModified(false);
         }
+    }
+
+    /**
+     * Creates a new arrangement and clears the staff of all notes. Make sure
+     * you save your arrangement first! The action is ignored if an arrangement
+     * is playing.
+     */
+    private void newArrangement() {
+
     }
 
 }

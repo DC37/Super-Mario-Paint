@@ -17,6 +17,7 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -52,8 +53,17 @@ public class LoadButton extends ImagePushButton {
         // do nothing.
     }
 
-    /** This loads the song. */
+    /** This loads the song or arrangement. */
     private void load() {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING)
+            loadSong();
+        else if (curr == ProgramState.ARR_EDITING)
+            loadArrangement();
+    }
+
+    /** This loads a song. */
+    private void loadSong() {
         boolean cont = true;
         if (StateMachine.isModified())
             cont = Dialog
@@ -97,6 +107,11 @@ public class LoadButton extends ImagePushButton {
                 e.printStackTrace();
             }
         }
+    }
+
+    /** This loads an arrangement. */
+    private void loadArrangement() {
+
     }
 
     /**

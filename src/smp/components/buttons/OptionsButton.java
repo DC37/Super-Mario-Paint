@@ -21,11 +21,12 @@ import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
  * This is the options button. It currently doesn't do anything.
- * 
+ *
  * @author RehdBlob
  * @since 2013.12.25
  */
@@ -42,7 +43,7 @@ public class OptionsButton extends ImagePushButton {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param i
      *            The image that we want to link this to.
      * @param ct
@@ -56,7 +57,9 @@ public class OptionsButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        options();
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING)
+            options();
     }
 
     @Override
@@ -107,7 +110,7 @@ public class OptionsButton extends ImagePushButton {
 
     /**
      * Sets the height, width, and other basic properties of this dialog box.
-     * 
+     *
      * @param dialog
      *            The dialog box that we are setting up.
      */

@@ -11,12 +11,13 @@ import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.fx.SMPFXController;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
  * This is a class that takes care of the adjustment of tempo in Super Mario
  * Paint.
- * 
+ *
  * @author RehdBlob
  * @since 2013.09.28
  */
@@ -33,7 +34,7 @@ public class TempoAdjustButton extends ImagePushButton {
 
     /**
      * Default constructor
-     * 
+     *
      * @param i
      *            The <code>ImageView</code> object that we want this adjustment
      *            button to be linked to.
@@ -65,7 +66,7 @@ public class TempoAdjustButton extends ImagePushButton {
 
     /**
      * Sets the String property to display the tempo.
-     * 
+     *
      * @param s
      *            This is the StringProperty that displays the tempo.
      */
@@ -75,10 +76,13 @@ public class TempoAdjustButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        setPressed();
-        addTempo(1);
-        TimerTask tt = new clickHold();
-        t.schedule(tt, Values.HOLDTIME, Values.REPEATTIME);
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING) {
+            setPressed();
+            addTempo(1);
+            TimerTask tt = new clickHold();
+            t.schedule(tt, Values.HOLDTIME, Values.REPEATTIME);
+        }
     }
 
     @Override
@@ -90,7 +94,7 @@ public class TempoAdjustButton extends ImagePushButton {
 
     /**
      * Makes it such that the application thread changes the tempo of the song.
-     * 
+     *
      * @param add
      *            The amount of tempo that you want to add. Usually an integer.
      */
@@ -112,7 +116,7 @@ public class TempoAdjustButton extends ImagePushButton {
 
     /**
      * This is a timer task that increments the tempo of the song.
-     * 
+     *
      * @author RehdBlob
      * @since 2013.11.10
      */

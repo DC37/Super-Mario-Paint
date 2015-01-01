@@ -48,7 +48,6 @@ public class AddButton extends ImagePushButton {
             System.out.println("Add song");
 
         theStaff.getArrangementList().getItems().add(controller.getSongName().getText());
-        double i = 0;
 
     }
 

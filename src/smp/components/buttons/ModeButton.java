@@ -6,7 +6,7 @@ import javafx.scene.text.Text;
 import smp.ImageLoader;
 import smp.components.general.ImageToggleButton;
 import smp.fx.SMPFXController;
-import smp.stateMachine.State;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -42,12 +42,15 @@ public class ModeButton extends ImageToggleButton {
 
     @Override
     public void reactPressed(MouseEvent event) {
-        if (StateMachine.getState() == State.EDITING) {
-            modeDisp.setText("Arranger");
-            theStaff.setArrangerMode(true);
-        } else if (StateMachine.getState() == State.ARR_EDITING) {
-            modeDisp.setText("Song");
-            theStaff.setArrangerMode(false);
+        ProgramState curr = StateMachine.getState();
+        if (curr != ProgramState.ARR_PLAYING && curr != ProgramState.SONG_PLAYING) {
+            if (curr == ProgramState.EDITING) {
+                modeDisp.setText("Arranger");
+                theStaff.setArrangerMode(true);
+            } else if (curr == ProgramState.ARR_EDITING) {
+                modeDisp.setText("Song");
+                theStaff.setArrangerMode(false);
+            }
         }
     }
 

@@ -229,9 +229,7 @@ public class Staff {
         });
     }
 
-    /**
-     * Stops the song that is currently playing.
-     */
+    /** Stops the song that is currently playing. */
     public void stopSong() {
         Platform.runLater(new Runnable() {
 
@@ -252,6 +250,11 @@ public class Staff {
                 highlightsOff();
             }
         });
+    }
+
+    /** Stops the arrangement that is currently playing. */
+    public void stopArrangement() {
+
     }
 
     /**

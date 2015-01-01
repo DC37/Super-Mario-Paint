@@ -36,7 +36,7 @@ public class StateMachine {
      * The default state that the program is in is the
      * EDITING state, in which notes are being placed on the staff.
      */
-    private static State currentState = State.EDITING;
+    private static ProgramState currentState = ProgramState.EDITING;
 
     /**
      * The default time signature that we start out with is 4/4 time.
@@ -75,14 +75,14 @@ public class StateMachine {
      * Get the current <code>State</code> of the <code>StateMachine</code>
      * @return The current <code>State</code>.
      */
-    public static synchronized State getState() {
+    public static synchronized ProgramState getState() {
         return currentState;
     }
 
     /**
      * @param s Set the <code>StateMachine</code> to a certain State.
      */
-    public static synchronized void setState(State s) {
+    public static synchronized void setState(ProgramState s) {
         currentState = s;
         if ((Settings.debug & 0b100000) == 0b100000)
             System.out.println(s);
@@ -92,7 +92,7 @@ public class StateMachine {
      * Sets the state back to "Editing" by default.
      */
     public static synchronized void resetState() {
-        currentState = State.EDITING;
+        currentState = ProgramState.EDITING;
     }
 
     /**

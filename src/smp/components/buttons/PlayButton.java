@@ -6,7 +6,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.general.ImageRadioButton;
 import smp.fx.SMPFXController;
-import smp.stateMachine.State;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -40,11 +40,11 @@ public class PlayButton extends ImageRadioButton {
         if (isPressed)
             return;
         super.reactPressed(e);
-        if (StateMachine.getState() == State.EDITING) {
-            StateMachine.setState(State.SONG_PLAYING);
+        if (StateMachine.getState() == ProgramState.EDITING) {
+            StateMachine.setState(ProgramState.SONG_PLAYING);
             theStaff.startSong();
-        } else if (StateMachine.getState() == State.ARR_EDITING) {
-            StateMachine.setState(State.ARR_PLAYING);
+        } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
+            StateMachine.setState(ProgramState.ARR_PLAYING);
             theStaff.startArrangement();
         }
     }

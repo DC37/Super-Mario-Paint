@@ -17,11 +17,12 @@ import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that saves a song.
- * 
+ *
  * @author RehdBlob
  * @since 2013.09.28
  *
@@ -36,7 +37,7 @@ public class SaveButton extends ImagePushButton {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param i
      *            This is the <code>ImageView</code> object that holds the save
      *            button.
@@ -51,7 +52,12 @@ public class SaveButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        save();
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING || curr == ProgramState.SONG_PLAYING)
+            saveSong();
+        else if (curr == ProgramState.ARR_EDITING
+                || curr == ProgramState.ARR_PLAYING)
+            saveArrangement();
     }
 
     @Override
@@ -60,12 +66,12 @@ public class SaveButton extends ImagePushButton {
     }
 
     /** This saves the song. */
-    private void save() {
-        if (!saveTxt) {
-            saveObject();
-        } else {
-            saveTxt();
-        }
+    private void saveSong() {
+        saveObject();
+    }
+
+    private void saveArrangement() {
+
     }
 
     /**
@@ -99,7 +105,7 @@ public class SaveButton extends ImagePushButton {
         }
     }
 
-    /** Saves in text file format. */
+    /** Saves in text file format. CURRENTLY BROKEN. */
     private void saveTxt() {
         try {
             String outputFile = controller.getSongName().getText();

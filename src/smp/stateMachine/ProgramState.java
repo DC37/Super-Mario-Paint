@@ -8,7 +8,7 @@ package smp.stateMachine;
  * @author RehdBlob
  * @since 2012.08.12
  */
-public enum State {
+public enum ProgramState {
 
     /**
      * This is the default state of the program, which allows

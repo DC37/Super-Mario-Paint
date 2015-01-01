@@ -28,7 +28,7 @@ import smp.components.buttons.TempoAdjustButton;
 import smp.components.staff.Staff;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
-import smp.stateMachine.State;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -156,10 +156,13 @@ public class Controls {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    String tempo = Dialog.showTextDialog("Tempo");
-                    StateMachine.setTempo(Double.parseDouble(tempo));
-                    tempo = tempo.trim();
-                    currTempo.setValue(tempo);
+                    ProgramState curr = StateMachine.getState();
+                    if (curr == ProgramState.EDITING) {
+                        String tempo = Dialog.showTextDialog("Tempo");
+                        StateMachine.setTempo(Double.parseDouble(tempo));
+                        tempo = tempo.trim();
+                        currTempo.setValue(tempo);
+                    }
                 } catch (NumberFormatException e) {
                     // Do nothing.
                 }
@@ -261,8 +264,8 @@ public class Controls {
     /** Changes the current interface to the arranger mode. */
     private void setArrangerMode() {
         changeCenterList();
-        changeTempoButtons();
-        StateMachine.setState(State.ARR_EDITING);
+        loop.release();
+        StateMachine.setState(ProgramState.ARR_EDITING);
 
     }
 
@@ -278,19 +281,12 @@ public class Controls {
         controller.getDownButton().setVisible(true);
     }
 
-    /**
-     * Removes the tempo buttons and adds the add song / delete song / insert
-     * song buttons.
-     */
-    private void changeTempoButtons() {
-
-    }
 
     /** Changes the current interface to the normal song editing mode. */
     private void setEditingMode() {
         revertCenterList();
         revertTempoButtons();
-        StateMachine.setState(State.EDITING);
+        StateMachine.setState(ProgramState.EDITING);
     }
 
     /**
