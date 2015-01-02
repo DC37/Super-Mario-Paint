@@ -64,7 +64,7 @@ Tasklist:
 * Rudimentary Options dialog (done - January 19, 2014)
 * Tempo changing option (done - February 14, 2014)
 * Test run on more operating systems (done - December 31, 2014)
-* Arranger mode (working on it - December 28, 2014)
+* Arranger mode (done - January 1, 2015)
 * Release to a test group (v0.95 - **Beta Release** - Tentatively scheduled January 10, 2015)
 * [optional] Staff ledger lines
 * [optional] Import MPC songs
