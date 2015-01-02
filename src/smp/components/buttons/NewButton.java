@@ -63,12 +63,13 @@ public class NewButton extends ImagePushButton {
 
         if (cont) {
             theStaff.setSequence(new StaffSequence());
+            theStaff.setSequenceFile(null);
             Slider sc = theStaff.getControlPanel().getScrollbar();
             sc.setValue(0);
             sc.setMax(Values.DEFAULT_LINES_PER_SONG - 10);
             ArrowButton.setEndOfFile(false);
             theStaff.getNoteMatrix().redraw();
-            controller.getSongName().clear();
+            controller.getNameTextField().clear();
             StateMachine.setModified(false);
         }
     }

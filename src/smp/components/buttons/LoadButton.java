@@ -97,7 +97,7 @@ public class LoadButton extends ImagePushButton {
                 } catch (IndexOutOfBoundsException e) {
                     // Do nothing
                 }
-                controller.getSongName().setText(fname);
+                controller.getNameTextField().setText(fname);
                 StateMachine.setModified(false);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

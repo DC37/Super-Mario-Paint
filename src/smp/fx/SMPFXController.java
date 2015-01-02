@@ -453,7 +453,7 @@ public class SMPFXController {
     }
 
     /** @return The text area that contains the song name. */
-    public TextField getSongName() {
+    public TextField getNameTextField() {
         return songName;
     }
 

@@ -83,7 +83,7 @@ public class SaveButton extends ImagePushButton {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(new File(System.getProperty("user.dir")));
-            f.setInitialFileName(controller.getSongName().getText() + ".txt");
+            f.setInitialFileName(controller.getNameTextField().getText() + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
@@ -108,7 +108,7 @@ public class SaveButton extends ImagePushButton {
     /** Saves in text file format. CURRENTLY BROKEN. */
     private void saveTxt() {
         try {
-            String outputFile = controller.getSongName().getText();
+            String outputFile = controller.getNameTextField().getText();
             outputFile = outputFile + "TXT.txt";
             PrintStream p = new PrintStream(outputFile);
             StaffSequence out = theStaff.getSequence();

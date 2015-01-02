@@ -30,8 +30,10 @@ public class AddButton extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public AddButton(ImageView i, SMPFXController ct, ImageLoader im) {
+    public AddButton(ImageView i, SMPFXController ct, ImageLoader im,
+            ListView<String> l) {
         super(i, ct, im);
+        setList(l);
     }
 
     /**
@@ -47,7 +49,12 @@ public class AddButton extends ImagePushButton {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
 
-        theStaff.getArrangementList().getItems().add(controller.getSongName().getText());
+        if (theStaff.getSequenceFile() != null) {
+            theStaff.getArrangementList().getItems()
+                    .add(theStaff.getSequenceName());
+            theStaff.getArrangement().add(theStaff.getSequence(),
+                    theStaff.getSequenceFile());
+        }
 
     }
 

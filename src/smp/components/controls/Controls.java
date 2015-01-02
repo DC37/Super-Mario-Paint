@@ -180,7 +180,8 @@ public class Controls {
         muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
         options = new OptionsButton(controller.getOptionsButton(), controller,
                 il);
-        add = new AddButton(controller.getAddButton(), controller, il);
+        add = new AddButton(controller.getAddButton(), controller, il,
+                controller.getArrangementList());
         delete = new DeleteButton(controller.getDeleteButton(), controller, il);
         moveUp = new MoveButton(controller.getUpButton(), 1, controller, il);
         moveDown = new MoveButton(controller.getDownButton(), -1, controller,
@@ -273,7 +274,9 @@ public class Controls {
      * Adds the list of songs characteristic of the arranger mode.
      */
     private void changeCenterList() {
-        controller.getSongName().setPromptText("Arrangement Name");
+        theStaff.setSequenceName(controller.getNameTextField().getText());
+        controller.getNameTextField().setPromptText("Arrangement Name");
+        controller.getNameTextField().setText(theStaff.getArrangementName());
         controller.getArrangementList().setVisible(true);
         controller.getDeleteButton().setVisible(true);
         controller.getAddButton().setVisible(true);
@@ -281,11 +284,9 @@ public class Controls {
         controller.getDownButton().setVisible(true);
     }
 
-
     /** Changes the current interface to the normal song editing mode. */
     private void setEditingMode() {
         revertCenterList();
-        revertTempoButtons();
         StateMachine.setState(ProgramState.EDITING);
     }
 
@@ -293,19 +294,14 @@ public class Controls {
      * Reverts the center list into just the middle panel.
      */
     private void revertCenterList() {
-        controller.getSongName().setPromptText("Song Name");
+        theStaff.setArrangementName(controller.getNameTextField().getText());
+        controller.getNameTextField().setPromptText("Song Name");
+        controller.getNameTextField().setText(theStaff.getSequenceName());
         controller.getArrangementList().setVisible(false);
         controller.getDeleteButton().setVisible(false);
         controller.getAddButton().setVisible(false);
         controller.getUpButton().setVisible(false);
         controller.getDownButton().setVisible(false);
-    }
-
-    /**
-     * Reverts the tempo buttons back to their original state.
-     */
-    private void revertTempoButtons() {
-
     }
 
     /** @return The play button of the controls set. */

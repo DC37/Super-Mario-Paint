@@ -5,16 +5,16 @@ Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (200
 
 
 Accepting cryptocurrency donations!  
-Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL  
-Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia  
+Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL
+Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia
 
 
 Milestones:
 -----
 * August 7, 2012 - Project started
-* December 25, 2013 - v0.90 - Initial Alpha Release
-* January 4, 2014 - v0.91 - Alpha
-* December 30, 2014 - v0.92 - Alpha
+* December 25, 2013 - v0.90 - Alpha
+* January 4, 2014 - v0.91 - Alpha (Update Release)
+* December 30, 2014 - v0.92 - Alpha (Stability Release + Java 7u71 / Java 8u25)
 * December 31, 2014 - v0.921 - Alpha (Mac + Windows)
 * January 10, 2015 (Scheduled) - v0.95 - Beta Release  
 * Author: RehdBlob
@@ -69,7 +69,7 @@ Tasklist:
 * [optional] Staff ledger lines
 * [optional] Import MPC songs
 * [optional] Instrument replacing option
-* Fix measure addition and subtraction (working on it - December 28, 2014)
+* Fix measure addition and subtraction
 * More advanced Options dialog
 * Undo/redo
 * Bookmarks
