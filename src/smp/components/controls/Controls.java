@@ -1,10 +1,8 @@
 package smp.components.controls;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
@@ -17,7 +15,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.Values;

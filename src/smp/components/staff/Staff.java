@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker.State;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
@@ -88,6 +87,9 @@ public class Staff {
     /** This is the current arrangement that we currently have active. */
     private StaffArrangement theArrangement = new StaffArrangement();
 
+    /** This is the ListView that holds the current arrangement. */
+    private ListView<String> theArrangementList;
+
     /**
      * This is the location of the arrangement file that is currently
      * displaying.
@@ -99,9 +101,6 @@ public class Staff {
 
     /** The image loader class. */
     private ImageLoader il;
-
-    /** This is the ListView that holds the current arrangement. */
-    private ListView<String> theArrangementList;
 
     /**
      * This is a service that will help run the animation and sound of playing a
@@ -189,7 +188,9 @@ public class Staff {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                setLocation(StateMachine.getMeasureLineNum());
+                theMatrix.redraw();
+                Slider s = controller.getScrollbar();
+                s.adjustValue(StateMachine.getMeasureLineNum());
             }
         });
     }
@@ -225,6 +226,11 @@ public class Staff {
     public void startArrangement() {
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
+        try {
+            setLocation(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < seq.size(); i++) {
             try {
                 seq.set(i, Utilities.loadSong(files.get(i)));
@@ -755,19 +761,17 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
-                zeroStaff();
                 highlightsOff();
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 for (int i = 0; i < seq.size(); i++) {
                     zeroStaff();
+                    highlightSong(i);
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
                     StateMachine.setTempo(theSequence.getTempo());
                     theControls.updateCurrTempo();
-                    theControls.getScrollbar().setMax(
-                            theSequence.getTheLines().size()
-                                    - Values.NOTELINES_IN_THE_WINDOW);
+                    setScrollbar();
                     redraw();
                     lastLine = findLastLine();
                     songPlaying = true;
@@ -793,7 +797,35 @@ public class Staff {
                 highlightsOff();
                 hitStop();
                 return theMatrix.getStaff();
+            }
 
+            /**
+             * Highlights the currently-playing song in the arranger list.
+             *
+             * @param i
+             *            The index to highlight.
+             */
+            private void highlightSong(final int i) {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        theArrangementList.getSelectionModel().select(i);
+                    }
+
+                });
+            }
+
+            /** Sets the scrollbar max/min to the proper values. */
+            private void setScrollbar() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        theControls.getScrollbar().setMax(
+                                theSequence.getTheLines().size()
+                                        - Values.NOTELINES_IN_THE_WINDOW);
+                    }
+                });
             }
         }
     }
