@@ -1,6 +1,5 @@
 package smp.fx;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;

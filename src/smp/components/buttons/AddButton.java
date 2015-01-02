@@ -40,6 +40,7 @@ public class AddButton extends ImagePushButton {
                 System.out.println("Add song");
 
             if (theStaff.getSequenceFile() != null) {
+                StateMachine.setArrModified(true);
                 theStaff.getArrangementList().getItems()
                         .add(theStaff.getSequenceName());
                 theStaff.getArrangement().add(theStaff.getSequence(),

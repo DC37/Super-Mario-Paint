@@ -29,7 +29,8 @@ import smp.stateMachine.StateMachine;
 
 /**
  * The staff on which notes go. The staff keeps track of notes in terms of
- * discrete StaffNoteLines, placed inside an array.
+ * discrete StaffNoteLines, placed inside an array. This class also keeps
+ * track of the animation of the staff when one hits the play button.
  *
  * @author RehdBlob
  * @since 2012.08.13
@@ -424,7 +425,7 @@ public class Staff {
      * @param tAF
      *            The list of arrangement files to set.
      */
-    public void setTheArrangementFile(File tAF) {
+    public void setArrangementFile(File tAF) {
         theArrangementFile = tAF;
     }
 

@@ -121,7 +121,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             else if (b == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
             event.consume();
-            StateMachine.setModified(true);
+            StateMachine.setSongModified(true);
 
         } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             focus = true;

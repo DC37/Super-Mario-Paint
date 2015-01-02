@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 
+import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -14,6 +15,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
+import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
@@ -28,12 +30,6 @@ import smp.stateMachine.StateMachine;
  *
  */
 public class SaveButton extends ImagePushButton {
-
-    /**
-     * Sort of hacky move here, but we're going to save a few songs in a
-     * different format, so this exists.
-     */
-    private boolean saveTxt = false;
 
     /**
      * Default constructor.
@@ -70,8 +66,33 @@ public class SaveButton extends ImagePushButton {
         saveObject();
     }
 
+    /** Saves the arrangement. */
     private void saveArrangement() {
-
+        try {
+            FileChooser f = new FileChooser();
+            f.setInitialDirectory(new File(System.getProperty("user.dir")));
+            f.setInitialFileName(controller.getNameTextField().getText()
+                    + ".txt");
+            f.getExtensionFilters().addAll(
+                    new ExtensionFilter("Text file", "*.txt"),
+                    new ExtensionFilter("All files", "*"));
+            File outputFile = f.showSaveDialog(null);
+            if (outputFile == null)
+                return;
+            FileOutputStream f_out = new FileOutputStream(outputFile);
+            ObjectOutputStream o_out = new ObjectOutputStream(f_out);
+            StaffArrangement out = theStaff.getArrangement();
+            out.setTheSequenceNames(theStaff.getArrangementList().getItems());
+            o_out.writeObject(out);
+            o_out.close();
+            f_out.close();
+            theStaff.setArrangementFile(outputFile);
+            StateMachine.setArrModified(false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -83,7 +104,8 @@ public class SaveButton extends ImagePushButton {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(new File(System.getProperty("user.dir")));
-            f.setInitialFileName(controller.getNameTextField().getText() + ".txt");
+            f.setInitialFileName(controller.getNameTextField().getText()
+                    + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
@@ -97,7 +119,8 @@ public class SaveButton extends ImagePushButton {
             o_out.writeObject(out);
             o_out.close();
             f_out.close();
-            StateMachine.setModified(false);
+            theStaff.setSequenceFile(outputFile);
+            StateMachine.setSongModified(false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -106,6 +129,7 @@ public class SaveButton extends ImagePushButton {
     }
 
     /** Saves in text file format. CURRENTLY BROKEN. */
+    @SuppressWarnings("unused")
     private void saveTxt() {
         try {
             String outputFile = controller.getNameTextField().getText();

@@ -148,7 +148,7 @@ public class Controls {
                                     .getArrangement().getTheSequences();
                             ArrayList<File> f = theStaff.getArrangement()
                                     .getTheSequenceFiles();
-                            loadArrangementFile(f.get(x));
+                            Utilities.loadSequenceFromArrangement(f.get(x), theStaff);
                             s.set(x, theStaff.getSequence());
                         }
                     }
@@ -339,41 +339,7 @@ public class Controls {
         controller.getDownButton().setVisible(false);
     }
 
-    /**
-     * Loads an arrangement sequence from an input file.
-     *
-     * @param inputFile
-     *            This is the input filename.
-     */
-    private void loadArrangementFile(File inputFile) {
-        try {
-            StaffSequence loaded = Utilities.loadSong(inputFile);
-            Utilities.normalize(loaded);
-            theStaff.setSequence(loaded);
-            theStaff.setSequenceFile(inputFile);
-            StateMachine.setTempo(loaded.getTempo());
-            theStaff.getControlPanel().updateCurrTempo();
-            theStaff.getControlPanel()
-                    .getScrollbar()
-                    .setMax(loaded.getTheLines().size()
-                            - Values.NOTELINES_IN_THE_WINDOW);
-            theStaff.setLocation(0);
-            theStaff.getNoteMatrix().redraw();
-            String fname = inputFile.getName();
-            try {
-                fname = fname.substring(0, fname.indexOf("."));
-            } catch (IndexOutOfBoundsException e) {
-                // Do nothing
-            }
-            theStaff.setSequenceName(fname);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /** @return The play button of the controls set. */
     public PlayButton getPlayButton() {

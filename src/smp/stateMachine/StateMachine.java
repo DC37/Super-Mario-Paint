@@ -14,7 +14,10 @@ import smp.components.staff.StaffInstrumentEventHandler;
 public class StateMachine {
 
     /** This tells us whether we have modified the song or not. */
-    private static boolean modified = false;
+    private static boolean modifiedSong = false;
+
+    /** This tells us whether we have modified the arrangement or not. */
+    private static boolean modifiedArr = false;
 
     /** This keeps track of whether we have pressed the loop button or not. */
     private static boolean loopPressed = false;
@@ -275,15 +278,30 @@ public class StateMachine {
      * @param b
      *            Whether we have modified a song or not.
      */
-    public static void setModified(boolean b) {
-        modified = b;
+    public static void setSongModified(boolean b) {
+        modifiedSong = b;
     }
 
     /**
      * @return Whether we have modified the current song or not.
      */
-    public static boolean isModified() {
-        return modified;
+    public static boolean isSongModified() {
+        return modifiedSong;
+    }
+
+    /**
+     * @param b
+     *            Whether we have modified an arrangement or not.
+     */
+    public static void setArrModified(boolean b) {
+        modifiedArr = b;
+    }
+
+    /**
+     * @return Whether we have modified the current arrangement or not.
+     */
+    public static boolean isArrModified() {
+        return modifiedArr;
     }
 
     /**

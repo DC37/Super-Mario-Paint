@@ -118,7 +118,8 @@ public class SuperMarioPaint extends Application {
                     }
                     double imgStatus = imgLoader.getLoadStatus();
                     double sfStatus = sfLoader.getLoadStatus();
-                    double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS * 0.5;
+                    double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS
+                            * 0.5;
                     notifyPreloader(new ProgressNotification(ld));
                 } while (imgLd.isAlive() || sfLd.isAlive());
                 FXMLLoader loader = new FXMLLoader();
@@ -223,7 +224,8 @@ public class SuperMarioPaint extends Application {
 
             @Override
             public void handle(WindowEvent event) {
-                if (StateMachine.isModified()) {
+                if (StateMachine.isSongModified()
+                        || StateMachine.isArrModified()) {
                     final Stage dialog = new Stage();
                     dialog.setHeight(100);
                     dialog.setWidth(300);
@@ -232,7 +234,17 @@ public class SuperMarioPaint extends Application {
                     Label label = new Label();
                     label.setMaxWidth(300);
                     label.setWrapText(true);
-                    label.setText("The song has not been saved! Really exit?");
+                    if (StateMachine.isSongModified()
+                            && StateMachine.isArrModified()) {
+                        label.setText("The song and arrangement have\n"
+                                + "both not been saved! Really exit?");
+                    } else if (StateMachine.isSongModified()) {
+                        label.setText("The song has not been saved! "
+                                + "Really exit?");
+                    } else if (StateMachine.isArrModified()) {
+                        label.setText("The arrangement has not been saved! "
+                                + "Really exit?");
+                    }
                     Button okButton = new Button("Yes");
                     okButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -280,42 +292,42 @@ public class SuperMarioPaint extends Application {
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
-            @Override
-            public void handle(KeyEvent ke) {
-                KeyCode n = ke.getCode();
-                if (n == KeyCode.CONTROL) {
-                    StateMachine.setCtrlPressed();
-                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                    StateMachine.setAltPressed();
-                } else if (n == KeyCode.SHIFT) {
-                    StateMachine.setShiftPressed();
-                } else if (n == KeyCode.E){
-                    StateMachine.setEPressed();
-                }
-                StateMachine.updateFocusPane();
-                ke.consume();
-            }
-        });
+                    @Override
+                    public void handle(KeyEvent ke) {
+                        KeyCode n = ke.getCode();
+                        if (n == KeyCode.CONTROL) {
+                            StateMachine.setCtrlPressed();
+                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                            StateMachine.setAltPressed();
+                        } else if (n == KeyCode.SHIFT) {
+                            StateMachine.setShiftPressed();
+                        } else if (n == KeyCode.E) {
+                            StateMachine.setEPressed();
+                        }
+                        StateMachine.updateFocusPane();
+                        ke.consume();
+                    }
+                });
 
         primaryScene.addEventHandler(KeyEvent.KEY_RELEASED,
                 new EventHandler<KeyEvent>() {
 
-            @Override
-            public void handle(KeyEvent ke) {
-                KeyCode n = ke.getCode();
-                if (n == KeyCode.CONTROL) {
-                    StateMachine.resetCtrlPressed();
-                } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                    StateMachine.resetAltPressed();
-                } else if (n == KeyCode.SHIFT) {
-                    StateMachine.resetShiftPressed();
-                } else if (n == KeyCode.E){
-                    StateMachine.resetEPressed();
-                }
-                StateMachine.updateFocusPane();
-                ke.consume();
-            }
-        });
+                    @Override
+                    public void handle(KeyEvent ke) {
+                        KeyCode n = ke.getCode();
+                        if (n == KeyCode.CONTROL) {
+                            StateMachine.resetCtrlPressed();
+                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
+                            StateMachine.resetAltPressed();
+                        } else if (n == KeyCode.SHIFT) {
+                            StateMachine.resetShiftPressed();
+                        } else if (n == KeyCode.E) {
+                            StateMachine.resetEPressed();
+                        }
+                        StateMachine.updateFocusPane();
+                        ke.consume();
+                    }
+                });
 
     }
 

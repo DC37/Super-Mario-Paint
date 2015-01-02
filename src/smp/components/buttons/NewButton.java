@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
+import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
@@ -56,7 +57,7 @@ public class NewButton extends ImagePushButton {
      */
     private void newSong() {
         boolean cont = true;
-        if (StateMachine.isModified())
+        if (StateMachine.isSongModified())
             cont = Dialog
                     .showYesNoDialog("The current song has been modified!\n"
                             + "Create a new song anyway?");
@@ -70,7 +71,7 @@ public class NewButton extends ImagePushButton {
             ArrowButton.setEndOfFile(false);
             theStaff.getNoteMatrix().redraw();
             controller.getNameTextField().clear();
-            StateMachine.setModified(false);
+            StateMachine.setSongModified(false);
         }
     }
 
@@ -80,7 +81,19 @@ public class NewButton extends ImagePushButton {
      * is playing.
      */
     private void newArrangement() {
-
+        boolean cont = true;
+        if (StateMachine.isArrModified()) {
+            cont = Dialog
+                    .showYesNoDialog("The current arrangement has been\n"
+                            + "modified! Create a new arrangement\nanyway?");
+        }
+        if (cont) {
+            theStaff.setArrangement(new StaffArrangement());
+            theStaff.setArrangementFile(null);
+            controller.getNameTextField().clear();
+            theStaff.getArrangementList().getItems().clear();
+            StateMachine.setArrModified(false);
+        }
     }
 
 }

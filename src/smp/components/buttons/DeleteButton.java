@@ -1,7 +1,6 @@
 package smp.components.buttons;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageLoader;
@@ -45,6 +44,7 @@ public class DeleteButton extends ImagePushButton {
             int x = theStaff.getArrangementList().getSelectionModel()
                     .getSelectedIndex();
             if (x != -1) {
+                StateMachine.setArrModified(true);
                 theStaff.getArrangement().remove(x);
                 l.remove(x);
             }

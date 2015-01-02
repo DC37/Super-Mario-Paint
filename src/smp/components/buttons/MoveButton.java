@@ -3,7 +3,6 @@ package smp.components.buttons;
 import java.io.File;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageLoader;
@@ -51,6 +50,7 @@ public class MoveButton extends ImagePushButton {
             int x = theStaff.getArrangementList().getSelectionModel()
                     .getSelectedIndex();
             if (x != -1) {
+                StateMachine.setArrModified(true);
                 Object[] o = theStaff.getArrangement().remove(x);
                 String s = l.remove(x);
                 StaffSequence ss = (StaffSequence) o[0];

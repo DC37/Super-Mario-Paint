@@ -21,8 +21,10 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import smp.components.Values;
+import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.stateMachine.StateMachine;
 
 /**
  * A somewhat useful utilities class for images and such. Not so much use right
@@ -157,6 +159,42 @@ public class Utilities {
         o_in.close();
         f_in.close();
         return loaded;
+    }
+
+    /**
+     * Loads a sequence from an input file. Intended usage is in arranger mode.
+     *
+     * @param inputFile
+     *            This is the input filename.
+     */
+    public static void loadSequenceFromArrangement(File inputFile, Staff theStaff) {
+        try {
+            StaffSequence loaded = loadSong(inputFile);
+            normalize(loaded);
+            theStaff.setSequence(loaded);
+            theStaff.setSequenceFile(inputFile);
+            StateMachine.setTempo(loaded.getTempo());
+            theStaff.getControlPanel().updateCurrTempo();
+            theStaff.getControlPanel()
+                    .getScrollbar()
+                    .setMax(loaded.getTheLines().size()
+                            - Values.NOTELINES_IN_THE_WINDOW);
+            theStaff.setLocation(0);
+            theStaff.getNoteMatrix().redraw();
+            String fname = inputFile.getName();
+            try {
+                fname = fname.substring(0, fname.indexOf("."));
+            } catch (IndexOutOfBoundsException e) {
+                // Do nothing
+            }
+            theStaff.setSequenceName(fname);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

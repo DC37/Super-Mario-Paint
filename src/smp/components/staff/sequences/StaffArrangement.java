@@ -3,6 +3,9 @@ package smp.components.staff.sequences;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.collections.ObservableList;
 
 /**
  * This is an arrangement on the staff, a collection of
@@ -20,15 +23,19 @@ public class StaffArrangement implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** This is the list of <code>StaffSequence</code> objects. */
-    private ArrayList<StaffSequence> theSequences;
+    private transient ArrayList<StaffSequence> theSequences;
 
     /** This is the list of <code>StaffSequence</code> file locations. */
     private ArrayList<File> theSequenceFiles;
+
+    /** This is the list of sequence / song names. */
+    private ArrayList<String> theSequenceNames;
 
     /** Default constructor. Creates two empty lists. */
     public StaffArrangement() {
         theSequences = new ArrayList<StaffSequence>();
         theSequenceFiles = new ArrayList<File>();
+        theSequenceNames = new ArrayList<String>();
     }
 
     /**
@@ -126,6 +133,21 @@ public class StaffArrangement implements Serializable {
      */
     public void setTheSequenceFiles(ArrayList<File> tsf) {
         theSequenceFiles = tsf;
+    }
+
+    /**
+     * @return the The names of the files in this arrangement.
+     */
+    public ArrayList<String> getTheSequenceNames() {
+        return theSequenceNames;
+    }
+
+    /**
+     * @param list
+     *            The filenames we want to set.
+     */
+    public void setTheSequenceNames(List<String> list) {
+        theSequenceNames.addAll(list);
     }
 
 }
