@@ -19,9 +19,6 @@ import smp.stateMachine.StateMachine;
  */
 public class DeleteButton extends ImagePushButton {
 
-    /** The ListView that we modify. */
-    private ListView<String> theList;
-
     /**
      * Default constructor.
      *
@@ -37,13 +34,6 @@ public class DeleteButton extends ImagePushButton {
         super(i, ct, im);
     }
 
-    /**
-     * @param l
-     *            The ListView we want to set.
-     */
-    public void setList(ListView<String> l) {
-        theList = l;
-    }
 
     @Override
     protected void reactPressed(MouseEvent event) {

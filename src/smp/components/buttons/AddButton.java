@@ -1,6 +1,5 @@
 package smp.components.buttons;
 
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageLoader;
@@ -18,9 +17,6 @@ import smp.stateMachine.StateMachine;
  */
 public class AddButton extends ImagePushButton {
 
-    /** The ListView that we modify. */
-    private ListView<String> theList;
-
     /**
      * Default constructor.
      *
@@ -32,18 +28,8 @@ public class AddButton extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public AddButton(ImageView i, SMPFXController ct, ImageLoader im,
-            ListView<String> l) {
+    public AddButton(ImageView i, SMPFXController ct, ImageLoader im) {
         super(i, ct, im);
-        setList(l);
-    }
-
-    /**
-     * @param l
-     *            The ListView we want to set.
-     */
-    public void setList(ListView<String> l) {
-        theList = l;
     }
 
     @Override

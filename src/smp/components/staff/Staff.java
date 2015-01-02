@@ -226,11 +226,7 @@ public class Staff {
     public void startArrangement() {
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
-        try {
-            setLocation(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setLocation(0);
         for (int i = 0; i < seq.size(); i++) {
             try {
                 seq.set(i, Utilities.loadSong(files.get(i)));
@@ -765,7 +761,6 @@ public class Staff {
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 for (int i = 0; i < seq.size(); i++) {
-                    zeroStaff();
                     highlightSong(i);
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
@@ -784,6 +779,7 @@ public class Staff {
                         if (counter > lastLine && counter % 4 == 0) {
                             counter = 0;
                             index = 0;
+                            zeroStaff();
                             zero = true;
                             songPlaying = false;
                         }
@@ -811,6 +807,7 @@ public class Staff {
                     @Override
                     public void run() {
                         theArrangementList.getSelectionModel().select(i);
+                        theArrangementList.scrollTo(i);
                     }
 
                 });

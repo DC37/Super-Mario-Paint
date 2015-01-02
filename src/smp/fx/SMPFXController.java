@@ -240,9 +240,6 @@ public class SMPFXController {
     /** This is the image loader. */
     private ImageLoader il;
 
-    /** The ListView item cell size. */
-    private SimpleDoubleProperty listViewCellSize = new SimpleDoubleProperty(5);
-
     /**
      * Zero-argument constructor (explicitly declared).
      */

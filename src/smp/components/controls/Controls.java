@@ -216,8 +216,7 @@ public class Controls {
         muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
         options = new OptionsButton(controller.getOptionsButton(), controller,
                 il);
-        add = new AddButton(controller.getAddButton(), controller, il,
-                controller.getArrangementList());
+        add = new AddButton(controller.getAddButton(), controller, il);
         delete = new DeleteButton(controller.getDeleteButton(), controller, il);
         moveUp = new MoveButton(controller.getUpButton(), 1, controller, il);
         moveDown = new MoveButton(controller.getDownButton(), -1, controller,
