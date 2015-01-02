@@ -212,7 +212,9 @@ public class Staff {
 
     /** Starts an arrangement. */
     public void startArrangement() {
+        for (int i = 0; i < theArrangement.getTheSequences().size(); i++) {
 
+        }
     }
 
     /**

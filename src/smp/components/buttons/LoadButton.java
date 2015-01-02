@@ -77,9 +77,7 @@ public class LoadButton extends ImagePushButton {
                 File inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
                     return;
-                FileInputStream f_in = new FileInputStream(inputFile);
-                ObjectInputStream o_in = new ObjectInputStream(f_in);
-                StaffSequence loaded = (StaffSequence) o_in.readObject();
+                StaffSequence loaded = Utilities.loadSong(inputFile);
                 Utilities.normalize(loaded);
                 theStaff.setSequence(loaded);
                 theStaff.setSequenceFile(inputFile);
@@ -90,8 +88,6 @@ public class LoadButton extends ImagePushButton {
                         .setMax(loaded.getTheLines().size()
                                 - Values.NOTELINES_IN_THE_WINDOW);
                 theStaff.getNoteMatrix().redraw();
-                o_in.close();
-                f_in.close();
                 String fname = inputFile.getName();
                 try {
                     fname = fname.substring(0, fname.indexOf("."));

@@ -349,9 +349,7 @@ public class Controls {
      */
     private void loadArrangementFile(File inputFile) {
         try {
-            FileInputStream f_in = new FileInputStream(inputFile);
-            ObjectInputStream o_in = new ObjectInputStream(f_in);
-            StaffSequence loaded = (StaffSequence) o_in.readObject();
+            StaffSequence loaded = Utilities.loadSong(inputFile);
             Utilities.normalize(loaded);
             theStaff.setSequence(loaded);
             theStaff.setSequenceFile(inputFile);
@@ -363,8 +361,6 @@ public class Controls {
                             - Values.NOTELINES_IN_THE_WINDOW);
             theStaff.setLocation(0);
             theStaff.getNoteMatrix().redraw();
-            o_in.close();
-            f_in.close();
             String fname = inputFile.getName();
             try {
                 fname = fname.substring(0, fname.indexOf("."));

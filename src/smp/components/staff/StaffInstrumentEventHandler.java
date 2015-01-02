@@ -26,7 +26,7 @@ import javafx.scene.layout.StackPane;
  * A Staff event handler. The StaffImages implementation was getting bulky and
  * there are still many many features to be implemented here. This handler
  * primarily handles mouse events.
- * 
+ *
  * @author RehdBlob
  * @since 2013.07.27
  */
@@ -83,7 +83,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
      * a StackPane and a position on the staff.
-     * 
+     *
      * @param stPane
      *            The StackPane that we are interested in.
      * @param acc
@@ -140,20 +140,22 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /**
      * The method that is called when the left mouse button is pressed. This is
      * generally the signal to add an instrument to that line.
-     * 
+     *
      * @param theInd
      *            The InstrumentIndex corresponding to what instrument is
      *            currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
-
-        placeNote(theInd);
-
+        if (StateMachine.isEPressed()) {
+            removeNote();
+        } else {
+            placeNote(theInd);
+        }
     }
 
     /**
      * Places a note where the mouse currently is.
-     * 
+     *
      * @param theInd
      *            The <code>InstrumentIndex</code> that we are going to use to
      *            place this note.
@@ -209,7 +211,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /**
      * The method that is called when the right mouse button is pressed. This is
      * generally the signal to remove the instrument from that line.
-     * 
+     *
      * @param theInd
      *            The InstrumentIndex corresponding to what instrument is
      *            currently selected. (currently not actually used, but can be
@@ -256,7 +258,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /**
      * The method that is called when the mouse enters the object.
-     * 
+     *
      * @param theInd
      *            The InstrumentIndex corresponding to what instrument is
      *            currently selected.
@@ -278,7 +280,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /**
      * The method that is called when the mouse exits the object.
-     * 
+     *
      * @param children
      *            List of Nodes that we have here, hopefully full of
      *            ImageView-type objects.
@@ -359,7 +361,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /**
      * Plays a sound given an index and a position.
-     * 
+     *
      * @param theInd
      *            The index at which this instrument is located at.
      * @param pos
@@ -374,7 +376,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /**
      * Sets the amount that we want to sharp / flat a note.
-     * 
+     *
      * @param accidental
      *            Any integer between -2 and 2.
      */

@@ -4,9 +4,10 @@ import smp.components.Values;
 import smp.components.staff.StaffInstrumentEventHandler;
 
 /**
- * This is the state machine that keeps track of what state the
- * main window is in. This class keeps track of a bunch of variables
- * that the program generally uses.
+ * This is the state machine that keeps track of what state the main window is
+ * in. This class keeps track of a bunch of variables that the program generally
+ * uses.
+ *
  * @author RehdBlob
  * @since 2012.08.07
  */
@@ -22,19 +23,19 @@ public class StateMachine {
     private static boolean mutePressed = false;
 
     /**
-     * This keeps track of whether we have pressed the low A mute button
-     * or not.
+     * This keeps track of whether we have pressed the low A mute button or not.
      */
     private static boolean muteAPressed = false;
 
+    /** The list of values denoting which notes should be extended. */
     private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
     /** Flips different bits to see which keys are pressed. */
     private static int buttonPresses = 0b0;
 
     /**
-     * The default state that the program is in is the
-     * EDITING state, in which notes are being placed on the staff.
+     * The default state that the program is in is the EDITING state, in which
+     * notes are being placed on the staff.
      */
     private static ProgramState currentState = ProgramState.EDITING;
 
@@ -50,8 +51,8 @@ public class StateMachine {
     private static StaffInstrumentEventHandler focusPane;
 
     /**
-     * The current measure line number that the program is on. Typically
-     * a number between 0 and 383. This is zero by default.
+     * The current measure line number that the program is on. Typically a
+     * number between 0 and 383. This is zero by default.
      */
     private static int currentLine = 0;
 
@@ -60,19 +61,20 @@ public class StateMachine {
      */
     private static double tempo = Values.DEFAULT_TEMPO;
 
-
     /**
-     * Do not make an instance of this class! The implementation is such
-     * that several classes may check the overall state of the program,
-     * so there should only ever be just the class and its static variables
-     * and methods around.
+     * Do not make an instance of this class! The implementation is such that
+     * several classes may check the overall state of the program, so there
+     * should only ever be just the class and its static variables and methods
+     * around.
+     *
      * @deprecated
      */
-    private StateMachine(){
+    private StateMachine() {
     }
 
     /**
      * Get the current <code>State</code> of the <code>StateMachine</code>
+     *
      * @return The current <code>State</code>.
      */
     public static synchronized ProgramState getState() {
@@ -80,7 +82,8 @@ public class StateMachine {
     }
 
     /**
-     * @param s Set the <code>StateMachine</code> to a certain State.
+     * @param s
+     *            Set the <code>StateMachine</code> to a certain State.
      */
     public static synchronized void setState(ProgramState s) {
         currentState = s;
@@ -104,7 +107,9 @@ public class StateMachine {
 
     /**
      * Sets the time signature to whatever that we give this method.
-     * @param t The new time signature.
+     *
+     * @param t
+     *            The new time signature.
      */
     public static synchronized void setTimeSignature(TimeSignature t) {
         currentTimeSignature = t;
@@ -115,8 +120,6 @@ public class StateMachine {
         currentTimeSignature = TimeSignature.FOUR_FOUR;
     }
 
-
-
     /**
      * @return The tempo that this program is running at.
      */
@@ -126,7 +129,9 @@ public class StateMachine {
 
     /**
      * Sets the tempo to what we give it here.
-     * @param num The tempo we want to set the program to run at.
+     *
+     * @param num
+     *            The tempo we want to set the program to run at.
      * @return The current tempo.
      */
     public static synchronized void setTempo(double num) {
@@ -134,9 +139,10 @@ public class StateMachine {
     }
 
     /**
-     * Gets the current line number that we're on. Typically a value
-     * between 0 and 383 for most files unless you've done fun stuff
-     * and removed the 96-measure limit.
+     * Gets the current line number that we're on. Typically a value between 0
+     * and 383 for most files unless you've done fun stuff and removed the
+     * 96-measure limit.
+     *
      * @return The current line number (left justify)
      */
     public static synchronized int getMeasureLineNum() {
@@ -145,8 +151,10 @@ public class StateMachine {
 
     /**
      * Sets the current line number to whatever is given to this method.
-     * @param num The number that we're trying to set our current
-     * line number to.
+     *
+     * @param num
+     *            The number that we're trying to set our current line number
+     *            to.
      */
     public static synchronized void setMeasureLineNum(int num) {
         currentLine = num;
@@ -159,7 +167,7 @@ public class StateMachine {
 
     /** Sets that we've pressed down the shift key. */
     public static void setShiftPressed() {
-        buttonPresses = buttonPresses | 0b001;
+        buttonPresses |= 0b001;
     }
 
     /** @return Is shift pressed down? */
@@ -169,7 +177,7 @@ public class StateMachine {
 
     /** Sets that we've pressed down the alt key. */
     public static void setAltPressed() {
-        buttonPresses = buttonPresses | 0b010;
+        buttonPresses |= 0b010;
     }
 
     /** @return Is alt pressed down? */
@@ -179,7 +187,7 @@ public class StateMachine {
 
     /** Sets that we've pressed down the ctrl key. */
     public static void setCtrlPressed() {
-        buttonPresses = buttonPresses | 0b100;
+        buttonPresses |= 0b100;
     }
 
     /** @return Is ctrl pressed down? */
@@ -187,24 +195,39 @@ public class StateMachine {
         return (buttonPresses & 0b100) == 0b100;
     }
 
-    /** Sets that we've released the shift key. */
+    /** Sets that we've pressed down "E". */
+    public static void setEPressed() {
+        buttonPresses |= 0b1000;
+    }
+
+    /** @return Is E pressed down? */
+    public static boolean isEPressed() {
+        return (buttonPresses & 0b1000) != 0;
+    }
+
+    /** Shows that we've released the shift key. */
     public static void resetShiftPressed() {
-        buttonPresses = buttonPresses ^ 0b001;
+        buttonPresses &= ~(0b001);
     }
 
-    /** Sets that we've released the alt key. */
+    /** Shows that we've released the alt key. */
     public static void resetAltPressed() {
-        buttonPresses = buttonPresses ^ 0b010;
+        buttonPresses &= ~(0b010);
     }
 
-    /** Sets that we've released the ctrl key. */
+    /** Shows that we've released the ctrl key. */
     public static void resetCtrlPressed() {
-        buttonPresses = buttonPresses ^ 0b100;
+        buttonPresses &= ~(0b100);
+    }
+
+    /** Shows that we've released "E". */
+    public static void resetEPressed() {
+        buttonPresses &= ~(0b1000);
     }
 
     /**
-     * @param stHandle This is the pane that we want to update the flats
-     * or sharps.
+     * @param stHandle
+     *            This is the pane that we want to update the flats or sharps.
      */
     public static void setFocusPane(StaffInstrumentEventHandler stHandle) {
         focusPane = stHandle;
@@ -250,7 +273,9 @@ public class StateMachine {
 
     /**
      * Sets the modified flag to true or false.
-     * @param b Whether we have modified a song or not.
+     *
+     * @param b
+     *            Whether we have modified a song or not.
      */
     public static void setModified(boolean b) {
         modified = b;
@@ -264,7 +289,8 @@ public class StateMachine {
     }
 
     /**
-     * @param b Whether we have pressed the low A mute button.
+     * @param b
+     *            Whether we have pressed the low A mute button.
      */
     public static void setMuteAPressed(boolean b) {
         muteAPressed = b;

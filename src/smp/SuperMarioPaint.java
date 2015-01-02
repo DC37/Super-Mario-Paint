@@ -289,6 +289,8 @@ public class SuperMarioPaint extends Application {
                     StateMachine.setAltPressed();
                 } else if (n == KeyCode.SHIFT) {
                     StateMachine.setShiftPressed();
+                } else if (n == KeyCode.E){
+                    StateMachine.setEPressed();
                 }
                 StateMachine.updateFocusPane();
                 ke.consume();
@@ -307,6 +309,8 @@ public class SuperMarioPaint extends Application {
                     StateMachine.resetAltPressed();
                 } else if (n == KeyCode.SHIFT) {
                     StateMachine.resetShiftPressed();
+                } else if (n == KeyCode.E){
+                    StateMachine.resetEPressed();
                 }
                 StateMachine.updateFocusPane();
                 ke.consume();
