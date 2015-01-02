@@ -77,7 +77,7 @@ public class StateMachine {
      *
      * @return The current <code>State</code>.
      */
-    public static synchronized ProgramState getState() {
+    public static ProgramState getState() {
         return currentState;
     }
 
@@ -85,7 +85,7 @@ public class StateMachine {
      * @param s
      *            Set the <code>StateMachine</code> to a certain State.
      */
-    public static synchronized void setState(ProgramState s) {
+    public static void setState(ProgramState s) {
         currentState = s;
         if ((Settings.debug & 0b100000) == 0b100000)
             System.out.println(s);
@@ -94,14 +94,14 @@ public class StateMachine {
     /**
      * Sets the state back to "Editing" by default.
      */
-    public static synchronized void resetState() {
+    public static void resetState() {
         currentState = ProgramState.EDITING;
     }
 
     /**
      * @return The current time signature that we are running at.
      */
-    public static synchronized TimeSignature getTimeSignature() {
+    public static TimeSignature getTimeSignature() {
         return currentTimeSignature;
     }
 
@@ -111,19 +111,19 @@ public class StateMachine {
      * @param t
      *            The new time signature.
      */
-    public static synchronized void setTimeSignature(TimeSignature t) {
+    public static void setTimeSignature(TimeSignature t) {
         currentTimeSignature = t;
     }
 
     /** Sets the time signature back to "4/4" by default. */
-    public static synchronized void resetTimeSignature() {
+    public static void resetTimeSignature() {
         currentTimeSignature = TimeSignature.FOUR_FOUR;
     }
 
     /**
      * @return The tempo that this program is running at.
      */
-    public static synchronized double getTempo() {
+    public static double getTempo() {
         return tempo;
     }
 
@@ -134,7 +134,7 @@ public class StateMachine {
      *            The tempo we want to set the program to run at.
      * @return The current tempo.
      */
-    public static synchronized void setTempo(double num) {
+    public static void setTempo(double num) {
         tempo = num;
     }
 
@@ -145,7 +145,7 @@ public class StateMachine {
      *
      * @return The current line number (left justify)
      */
-    public static synchronized int getMeasureLineNum() {
+    public static int getMeasureLineNum() {
         return currentLine;
     }
 
@@ -156,12 +156,12 @@ public class StateMachine {
      *            The number that we're trying to set our current line number
      *            to.
      */
-    public static synchronized void setMeasureLineNum(int num) {
+    public static void setMeasureLineNum(int num) {
         currentLine = num;
     }
 
     /** @return Whatever key is pressed at the moment on the keyboard. */
-    public static synchronized int getKeyPressed() {
+    public static int getKeyPressed() {
         return 0;
     }
 

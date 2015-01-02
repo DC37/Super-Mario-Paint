@@ -270,6 +270,7 @@ public class Staff {
             @Override
             public void run() {
                 songPlaying = false;
+                arrPlaying = false;
                 animationService.cancel();
                 switch (animationService.getState()) {
                 case CANCELLED:
@@ -288,7 +289,6 @@ public class Staff {
 
     /** Stops the arrangement that is currently playing. */
     public void stopArrangement() {
-        arrPlaying = false;
         stopSong();
     }
 
@@ -656,12 +656,8 @@ public class Staff {
                         // Do nothing
                     }
                 } while (songPlaying);
-                if (arrPlaying) {
-                    zeroStaff();
-                } else {
-                    highlightsOff();
-                    hitStop();
-                }
+                highlightsOff();
+                hitStop();
                 return theMatrix.getStaff();
             }
 
@@ -759,17 +755,19 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
+                zeroStaff();
                 highlightsOff();
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 for (int i = 0; i < seq.size(); i++) {
-                    highlightsOff();
+                    zeroStaff();
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
                     StateMachine.setTempo(theSequence.getTempo());
                     theControls.updateCurrTempo();
-                    theControls.getScrollbar().setMax(theSequence.getTheLines().size()
-                            - Values.NOTELINES_IN_THE_WINDOW);
+                    theControls.getScrollbar().setMax(
+                            theSequence.getTheLines().size()
+                                    - Values.NOTELINES_IN_THE_WINDOW);
                     redraw();
                     lastLine = findLastLine();
                     songPlaying = true;
@@ -782,7 +780,6 @@ public class Staff {
                         if (counter > lastLine && counter % 4 == 0) {
                             counter = 0;
                             index = 0;
-                            zeroStaff();
                             zero = true;
                             songPlaying = false;
                         }
@@ -791,7 +788,7 @@ public class Staff {
                         } catch (InterruptedException e) {
                             // Do nothing
                         }
-                    } while (songPlaying);
+                    } while (songPlaying && arrPlaying);
                 }
                 highlightsOff();
                 hitStop();
