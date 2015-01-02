@@ -109,12 +109,17 @@ public class Staff {
      * @param staffExtLines
      *            These are the lines that appear under notes for the lower and
      *            upper portions of the staff.
+     * @param arrList
+     *            This is the arrangement list object that displays song names,
+     *            which is actually a <code>ListView</code> object.
      */
-    public Staff(HBox[] staffExtLines, SMPFXController ct, ImageLoader i) {
+    public Staff(HBox[] staffExtLines, SMPFXController ct, ImageLoader i,
+            ListView<String> arrList) {
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
                 Values.NOTES_IN_A_LINE, this, i);
         setImageLoader(i);
         setController(ct);
+        setArrangementList(arrList);
         staffImages = new StaffImages(staffExtLines, i);
         staffImages.setStaff(this);
         staffImages.setController(ct);

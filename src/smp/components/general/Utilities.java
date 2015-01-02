@@ -10,11 +10,16 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import smp.components.Values;
+import smp.components.staff.sequences.StaffNoteLine;
+import smp.components.staff.sequences.StaffSequence;
 
 /**
  * A somewhat useful utilities class for images and such. Not
@@ -108,6 +113,21 @@ public class Utilities {
     public static void openDialog(String in) {
         JOptionPane.showMessageDialog(null, in, "Information",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Makes a sequence fit on the screen.
+     *
+     * @param theSeq
+     *            The sequence to normalize.
+     */
+    public static void normalize(StaffSequence theSeq) {
+        ArrayList<StaffNoteLine> theLines = theSeq.getTheLines();
+        while (theLines.size() % 4 != 0
+                || theLines.size() % Values.NOTELINES_IN_THE_WINDOW != 0) {
+            theLines.add(new StaffNoteLine());
+        }
+
     }
 
 }

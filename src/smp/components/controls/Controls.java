@@ -1,5 +1,12 @@
 package smp.components.controls;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -9,8 +16,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.Values;
 import smp.components.buttons.AddButton;
 import smp.components.buttons.ArrowButton;
 import smp.components.buttons.DeleteButton;
@@ -25,7 +34,9 @@ import smp.components.buttons.PlayButton;
 import smp.components.buttons.SaveButton;
 import smp.components.buttons.StopButton;
 import smp.components.buttons.TempoAdjustButton;
+import smp.components.general.Utilities;
 import smp.components.staff.Staff;
+import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.stateMachine.ProgramState;
@@ -102,7 +113,9 @@ public class Controls {
     /**
      * Initializes the set of controls that will be used in Super Mario Paint.
      */
-    public Controls(Staff st, SMPFXController ct, ImageLoader im) {
+    public Controls(Staff st, SMPFXController ct, ImageLoader im,
+            ListView<String> l) {
+        theList = l;
         il = im;
         theStaff = st;
         setController(ct);
@@ -116,7 +129,31 @@ public class Controls {
         currTempo.setValue(String.valueOf(StateMachine.getTempo()));
         initializeLoadSaveButtons();
         initializeNewButton();
+        initializeArrangementList();
 
+    }
+
+    /**
+     * Adds in the listener behaviour for the arrangement list.
+     */
+    private void initializeArrangementList() {
+        theList.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(
+                            ObservableValue<? extends String> observable,
+                            String oldValue, String newValue) {
+                        int x = theList.getSelectionModel().getSelectedIndex();
+                        if (x != -1) {
+                            ArrayList<StaffSequence> s = theStaff
+                                    .getArrangement().getTheSequences();
+                            ArrayList<File> f = theStaff.getArrangement()
+                                    .getTheSequenceFiles();
+                            loadArrangementFile(f.get(x));
+                            s.set(x, theStaff.getSequence());
+                        }
+                    }
+                });
     }
 
     /**
@@ -302,6 +339,46 @@ public class Controls {
         controller.getAddButton().setVisible(false);
         controller.getUpButton().setVisible(false);
         controller.getDownButton().setVisible(false);
+    }
+
+    /**
+     * Loads an arrangement sequence from an input file.
+     *
+     * @param inputFile
+     *            This is the input filename.
+     */
+    private void loadArrangementFile(File inputFile) {
+        try {
+            FileInputStream f_in = new FileInputStream(inputFile);
+            ObjectInputStream o_in = new ObjectInputStream(f_in);
+            StaffSequence loaded = (StaffSequence) o_in.readObject();
+            Utilities.normalize(loaded);
+            theStaff.setSequence(loaded);
+            theStaff.setSequenceFile(inputFile);
+            StateMachine.setTempo(loaded.getTempo());
+            theStaff.getControlPanel().updateCurrTempo();
+            theStaff.getControlPanel()
+                    .getScrollbar()
+                    .setMax(loaded.getTheLines().size()
+                            - Values.NOTELINES_IN_THE_WINDOW);
+            theStaff.setLocation(0);
+            theStaff.getNoteMatrix().redraw();
+            o_in.close();
+            f_in.close();
+            String fname = inputFile.getName();
+            try {
+                fname = fname.substring(0, fname.indexOf("."));
+            } catch (IndexOutOfBoundsException e) {
+                // Do nothing
+            }
+            theStaff.setSequenceName(fname);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /** @return The play button of the controls set. */

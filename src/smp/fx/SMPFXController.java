@@ -268,14 +268,13 @@ public class SMPFXController {
         // Set up staff.
         HBox[] staffExtLines = { staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC };
-        staff = new Staff(staffExtLines, this, il);
-        controlPanel = new Controls(staff, this, il);
+        staff = new Staff(staffExtLines, this, il, arrangementList);
+        controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
         topPanel = new PanelButtons(staff, this, il);
         staff.setTopPanel(topPanel);
         arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
-        staff.setArrangementList(arrangementList);
         // Hide all arranger features for now.
         arrangementList.setVisible(false);
         addButton.setVisible(false);

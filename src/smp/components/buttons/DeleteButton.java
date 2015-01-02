@@ -49,7 +49,8 @@ public class DeleteButton extends ImagePushButton {
             System.out.println("Delete song");
 
         ObservableList<String> l = theStaff.getArrangementList().getItems();
-        int x = theStaff.getArrangementList().getSelectionModel().getSelectedIndex();
+        int x = theStaff.getArrangementList().getSelectionModel()
+                .getSelectedIndex();
         if (x != -1) {
             theStaff.getArrangement().remove(x);
             l.remove(x);

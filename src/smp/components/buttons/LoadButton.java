@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
+import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.Dialog;
@@ -79,7 +80,7 @@ public class LoadButton extends ImagePushButton {
                 FileInputStream f_in = new FileInputStream(inputFile);
                 ObjectInputStream o_in = new ObjectInputStream(f_in);
                 StaffSequence loaded = (StaffSequence) o_in.readObject();
-                normalize(loaded);
+                Utilities.normalize(loaded);
                 theStaff.setSequence(loaded);
                 theStaff.setSequenceFile(inputFile);
                 StateMachine.setTempo(loaded.getTempo());
@@ -97,6 +98,7 @@ public class LoadButton extends ImagePushButton {
                 } catch (IndexOutOfBoundsException e) {
                     // Do nothing
                 }
+                theStaff.setSequenceName(fname);
                 controller.getNameTextField().setText(fname);
                 StateMachine.setModified(false);
             } catch (FileNotFoundException e) {
@@ -114,19 +116,5 @@ public class LoadButton extends ImagePushButton {
 
     }
 
-    /**
-     * Makes a sequence fit on the screen.
-     *
-     * @param theSeq
-     *            The sequence to normalize.
-     */
-    private void normalize(StaffSequence theSeq) {
-        ArrayList<StaffNoteLine> theLines = theSeq.getTheLines();
-        while (theLines.size() % 4 != 0
-                || theLines.size() % Values.NOTELINES_IN_THE_WINDOW != 0) {
-            theLines.add(new StaffNoteLine());
-        }
-
-    }
 
 }
