@@ -55,8 +55,11 @@ public class MoveButton extends ImagePushButton {
                 String s = l.remove(x);
                 StaffSequence ss = (StaffSequence) o[0];
                 File f = (File) o[1];
-                int moveTo = (x - moveAmt) >= 0 ? ((x - moveAmt) > l.size() ? x
-                        : (x - moveAmt)) : 0;
+                int moveTo = x - moveAmt;
+                if (moveTo > l.size())
+                    moveTo = l.size();
+                if (moveTo < 0)
+                    moveTo = 0;
                 l.add(moveTo, s);
                 theStaff.getArrangement().add(moveTo, ss, f);
                 theStaff.getArrangementList().getSelectionModel()
