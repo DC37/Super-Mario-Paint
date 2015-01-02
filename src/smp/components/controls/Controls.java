@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -426,7 +427,12 @@ public class Controls {
 
     /** Updates the current tempo. */
     public void updateCurrTempo() {
-        currTempo.setValue(String.valueOf(StateMachine.getTempo()));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                currTempo.setValue(String.valueOf(StateMachine.getTempo()));
+            }
+        });
     }
 
     /**

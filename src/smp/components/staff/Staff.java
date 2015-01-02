@@ -186,7 +186,12 @@ public class Staff {
      * Force re-draws the staff.
      */
     public synchronized void redraw() {
-        setLocation(StateMachine.getMeasureLineNum());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                setLocation(StateMachine.getMeasureLineNum());
+            }
+        });
     }
 
     /** Turns off all highlights in the play bars in the staff. */
@@ -761,9 +766,14 @@ public class Staff {
                     highlightsOff();
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
+                    StateMachine.setTempo(theSequence.getTempo());
+                    theControls.updateCurrTempo();
+                    theControls.getScrollbar().setMax(theSequence.getTheLines().size()
+                            - Values.NOTELINES_IN_THE_WINDOW);
+                    redraw();
                     lastLine = findLastLine();
                     songPlaying = true;
-                    setTempo(StateMachine.getTempo());
+                    setTempo(theSequence.getTempo());
                     playBars = staffImages.getPlayBars();
                     int counter = StateMachine.getMeasureLineNum();
                     do {
