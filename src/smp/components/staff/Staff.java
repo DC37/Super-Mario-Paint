@@ -1,12 +1,14 @@
 package smp.components.staff;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.Worker.State;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
@@ -16,6 +18,7 @@ import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.controls.Controls;
+import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -42,6 +45,9 @@ public class Staff {
 
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
+
+    /** Whether we are playing an arrangement. */
+    private boolean arrPlaying = false;
 
     /** This is the last line of notes in the song. */
     private int lastLine;
@@ -197,7 +203,7 @@ public class Staff {
     }
 
     /** Begins animation of the Staff. */
-    public void startSong() {
+    public synchronized void startSong() {
         highlightsOff();
         lastLine = findLastLine();
         if ((lastLine == 0 && theSequence.getLine(0).isEmpty())
@@ -212,9 +218,19 @@ public class Staff {
 
     /** Starts an arrangement. */
     public void startArrangement() {
-        for (int i = 0; i < theArrangement.getTheSequences().size(); i++) {
-
+        ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
+        ArrayList<File> files = theArrangement.getTheSequenceFiles();
+        for (int i = 0; i < seq.size(); i++) {
+            try {
+                seq.set(i, Utilities.loadSong(files.get(i)));
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+                stopArrangement();
+                return;
+            }
         }
+        arrPlaying = true;
+        animationService.restart();
     }
 
     /**
@@ -267,7 +283,8 @@ public class Staff {
 
     /** Stops the arrangement that is currently playing. */
     public void stopArrangement() {
-
+        arrPlaying = false;
+        stopSong();
     }
 
     /**
@@ -535,7 +552,10 @@ public class Staff {
 
         @Override
         protected Task<Staff> createTask() {
-            return new AnimationTask();
+            if (!arrPlaying)
+                return new AnimationTask();
+            else
+                return new ArrangementTask();
         }
 
         /**
@@ -598,15 +618,15 @@ public class Staff {
              * This is the current index of the measure line that we are on on
              * the staff.
              */
-            private int index = 0;
+            protected int index = 0;
 
             /**
              * Whether we need to advance the satff ahead by a few lines or not.
              */
-            private boolean advance = false;
+            protected boolean advance = false;
 
             /** These are the play bars on the staff. */
-            private ArrayList<ImageView> playBars;
+            protected ArrayList<ImageView> playBars;
 
             @Override
             protected Staff call() throws Exception {
@@ -631,8 +651,12 @@ public class Staff {
                         // Do nothing
                     }
                 } while (songPlaying);
-                highlightsOff();
-                hitStop();
+                if (arrPlaying) {
+                    zeroStaff();
+                } else {
+                    highlightsOff();
+                    hitStop();
+                }
                 return theMatrix.getStaff();
             }
 
@@ -641,7 +665,7 @@ public class Staff {
              * ease-of-programming purposes, we'll not care about efficiency and
              * just play things as they are.
              */
-            private void playNextLine() {
+            protected void playNextLine() {
                 bumpHighlights(playBars, index, advance);
                 playSoundLine(index);
                 advance = false;
@@ -721,6 +745,49 @@ public class Staff {
 
             }
 
+        }
+
+        /**
+         * This class runs an arrangement instead of just a song.
+         */
+        class ArrangementTask extends AnimationTask {
+
+            @Override
+            protected Staff call() throws Exception {
+                highlightsOff();
+                ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
+                ArrayList<File> files = theArrangement.getTheSequenceFiles();
+                for (int i = 0; i < seq.size(); i++) {
+                    highlightsOff();
+                    theSequence = seq.get(i);
+                    theSequenceFile = files.get(i);
+                    lastLine = findLastLine();
+                    songPlaying = true;
+                    setTempo(StateMachine.getTempo());
+                    playBars = staffImages.getPlayBars();
+                    int counter = StateMachine.getMeasureLineNum();
+                    do {
+                        playNextLine();
+                        counter++;
+                        if (counter > lastLine && counter % 4 == 0) {
+                            counter = 0;
+                            index = 0;
+                            zeroStaff();
+                            zero = true;
+                            songPlaying = false;
+                        }
+                        try {
+                            Thread.sleep(delayMillis, delayNanos);
+                        } catch (InterruptedException e) {
+                            // Do nothing
+                        }
+                    } while (songPlaying);
+                }
+                highlightsOff();
+                hitStop();
+                return theMatrix.getStaff();
+
+            }
         }
     }
 
