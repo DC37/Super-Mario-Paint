@@ -1,5 +1,6 @@
 package smp.components.buttons;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -97,15 +98,15 @@ public class LoadButton extends ImagePushButton {
                 theStaff.setSequenceName(fname);
                 controller.getNameTextField().setText(fname);
                 StateMachine.setSongModified(false);
+            } catch (ClassCastException | EOFException e) {
+                e.printStackTrace();
+                Dialog.showDialog("Not a valid song file.");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            } catch (ClassCastException e) {
-                e.printStackTrace();
-                Dialog.showDialog("Not a valid song file.");
             }
         }
     }
@@ -168,15 +169,15 @@ public class LoadButton extends ImagePushButton {
                 controller.getNameTextField().setText(fname);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
+            } catch (ClassCastException | EOFException e) {
+                e.printStackTrace();
+                Dialog.showDialog("Not a valid arrangement file.");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            } catch (ClassCastException e) {
-                e.printStackTrace();
-                Dialog.showDialog("Not a valid arrangement file.");
             }
         }
     }

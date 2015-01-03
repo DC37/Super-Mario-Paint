@@ -82,6 +82,7 @@ public class SaveButton extends ImagePushButton {
             FileOutputStream f_out = new FileOutputStream(outputFile);
             ObjectOutputStream o_out = new ObjectOutputStream(f_out);
             StaffArrangement out = theStaff.getArrangement();
+            out.getTheSequenceNames().clear();
             out.setTheSequenceNames(theStaff.getArrangementList().getItems());
             o_out.writeObject(out);
             o_out.close();
