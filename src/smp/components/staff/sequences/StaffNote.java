@@ -8,6 +8,7 @@ import smp.components.InstrumentIndex;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.
+ *
  * @author RehdBlob
  * @since 2012.08.31
  */
@@ -19,9 +20,9 @@ public class StaffNote extends ImageView implements Serializable {
     private static final long serialVersionUID = 6827248837281952104L;
 
     /**
-     * This is the location on the matrix where the note exists. (y-axis).
-     * One can recover the note that you are supposed to actually play by
-     * adding a constant offset to this position value.
+     * This is the location on the matrix where the note exists. (y-axis). One
+     * can recover the note that you are supposed to actually play by adding a
+     * constant offset to this position value.
      */
     private int position;
 
@@ -32,8 +33,8 @@ public class StaffNote extends ImageView implements Serializable {
     private int volume = Values.DEFAULT_VELOCITY;
 
     /**
-     * Whether this is a mute note or not. 0 indicates no. 1 indicates
-     * a note mute type. 2 indicates an instrument mute type.
+     * Whether this is a mute note or not. 0 indicates no. 1 indicates a note
+     * mute type. 2 indicates an instrument mute type.
      */
     private int muteNote;
 
@@ -42,25 +43,31 @@ public class StaffNote extends ImageView implements Serializable {
      */
     private InstrumentIndex theInstrument;
 
-
     /**
      * Default constructor that makes the note by default at half volume.
-     * @param theInd The instrument that this StaffNote will play.
-     * @param position The physical location of this note on the staff.
-     * @param acc The sharp / flat / whatever that we are offsetting this
-     * note by.
+     *
+     * @param theInd
+     *            The instrument that this StaffNote will play.
+     * @param position
+     *            The physical location of this note on the staff.
+     * @param acc
+     *            The sharp / flat / whatever that we are offsetting this note
+     *            by.
      */
     public StaffNote(InstrumentIndex theInd, int pos, int acc) {
         this(theInd, pos, acc, Values.HALF_VELOCITY);
     }
 
-
     /**
-     * @param theInd The instrument that this StaffNote will play.
-     * @param position The physical location of this note on the staff.
-     * @param acc The sharp / flat / whatever that we are offsetting this
-     * note by.
-     * @param vol The volume that we want this note to play at.
+     * @param theInd
+     *            The instrument that this StaffNote will play.
+     * @param position
+     *            The physical location of this note on the staff.
+     * @param acc
+     *            The sharp / flat / whatever that we are offsetting this note
+     *            by.
+     * @param vol
+     *            The volume that we want this note to play at.
      */
     public StaffNote(InstrumentIndex theInd, int pos, int acc, int vol) {
         theInstrument = theInd;
@@ -70,9 +77,10 @@ public class StaffNote extends ImageView implements Serializable {
     }
 
     /**
-     * Sets the accidental of this note to whatever <code>a</code>
-     * is.
-     * @param a The accidental that we're trying to set this note to.
+     * Sets the accidental of this note to whatever <code>a</code> is.
+     *
+     * @param a
+     *            The accidental that we're trying to set this note to.
      */
     public void setAccidental(int a) {
         accidental = a;
@@ -84,10 +92,10 @@ public class StaffNote extends ImageView implements Serializable {
             return false;
         } else {
             StaffNote other = (StaffNote) o;
-            return other.position == position &&
-                    other.theInstrument == theInstrument &&
-                    other.accidental == accidental &&
-                    other.muteNote == muteNote;
+            return other.position == position
+                    && other.theInstrument == theInstrument
+                    && other.accidental == accidental
+                    && other.muteNote == muteNote;
         }
     }
 
@@ -108,7 +116,9 @@ public class StaffNote extends ImageView implements Serializable {
 
     /**
      * Sets the volume to some number that we give to this method.
-     * @param v The volume we want to set.
+     *
+     * @param v
+     *            The volume we want to set.
      */
     public void setVolume(int v) {
         if (v >= Values.MIN_VELOCITY && v <= Values.MAX_VELOCITY)
@@ -127,7 +137,14 @@ public class StaffNote extends ImageView implements Serializable {
         return muteNote;
     }
 
-    /** @param m What type of mute note this is. */
+    /**
+     * Sets the StaffNote to a specific type of mute note. 1 indicates a mute
+     * note that mutes a single note. 2 indicates a mute note that mutes an
+     * entire instrument.
+     *
+     * @param m
+     *            What type of mute note this is.
+     */
     public void setMuteNote(int m) {
         muteNote = m;
     }
@@ -136,7 +153,7 @@ public class StaffNote extends ImageView implements Serializable {
     public String toString() {
         String noteName = Values.staffNotes[position].name();
         String noteAcc = "";
-        switch(accidental) {
+        switch (accidental) {
         case 2:
             noteAcc = "X";
             break;
@@ -153,9 +170,9 @@ public class StaffNote extends ImageView implements Serializable {
             break;
 
         }
-        return muteNote != 0 ?
-                theInstrument.toString() + " " + noteName + noteAcc + "m" :
-                    theInstrument.toString() + " " + noteName + noteAcc;
+        return muteNote != 0 ? theInstrument.toString() + " " + noteName
+                + noteAcc + "m" : theInstrument.toString() + " " + noteName
+                + noteAcc;
     }
 
 }

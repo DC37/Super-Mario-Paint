@@ -45,8 +45,8 @@ Tasklist:
 * Release to a test group (v0.95 - **Beta Release** - Scheduled January 10, 2015)
 * [optional] Staff ledger lines
 * Push new version of StaffSequence and StaffArrangement - Maintain backwards compatibility
-* Import MPC songs (working on it - January 2, 2015)
 * Arrangement files use relative paths (but then we will have to have a "songs" folder) (working on it - January 2, 2015)
+* Import MPC songs (done - January 3, 2015)
 * Arranger mode (done - January 1, 2015)
 * Test run on more operating systems (done - December 31, 2014)
 * Tempo changing option (done - February 14, 2014)

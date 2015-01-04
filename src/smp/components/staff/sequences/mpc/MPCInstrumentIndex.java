@@ -24,9 +24,9 @@ public enum MPCInstrumentIndex {
     m (InstrumentIndex.BOAT),
     n (InstrumentIndex.CAR),
     o (InstrumentIndex.HEART),
-    p (InstrumentIndex.PIRANHA),
-    q (InstrumentIndex.SHYGUY),
-    r (InstrumentIndex.COIN),
+    p (InstrumentIndex.COIN),
+    q (InstrumentIndex.PIRANHA),
+    r (InstrumentIndex.SHYGUY),
     s (InstrumentIndex.BOO);
 
     /**
@@ -53,7 +53,7 @@ public enum MPCInstrumentIndex {
 
     /**
      * @param c Some <b>char</b> in a Mario Paint Composer song.
-     * @return The <code>InstrumentIndex</code> of the
+     * @return The <code>InstrumentIndex</code> of the letter.
      */
     public static InstrumentIndex valueOf(char c) {
         String str = "" + c;

@@ -7,34 +7,38 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import javax.sound.midi.InvalidMidiDataException;
-
+import smp.components.InstrumentIndex;
+import smp.components.Values;
+import smp.components.staff.sequences.StaffNote;
+import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
-import static smp.components.general.Utilities.*;
+import static smp.components.staff.sequences.mpc.TextUtil.*;
 
 /**
- * Decodes Mario Paint Composer songs into Super Mario Paint-
- * readable songs.
+ * Decodes Mario Paint Composer songs into Super Mario Paint- readable songs.
+ *
  * @author RehdBlob
  * @since 2012.09.01
  */
 public class MPCDecoder {
 
     /**
-     * Opens a file and decodes the Mario Paint Composer song data from
-     * it, changing it into a Super Mario Paint sequence.
-     * @param f A File, that supposedly contains Mario Paint Composer
-     * song data.
+     * Opens a file and decodes the Mario Paint Composer song data from it,
+     * changing it into a Super Mario Paint sequence.
+     *
+     * @param f
+     *            A File, that supposedly contains Mario Paint Composer song
+     *            data.
      * @return An <code>StaffSequence</code> that has been converted from the
-     * Mario Paint Composer song.
-     * @throws InvalidMidiDataException If the file does not have valid
-     * Mario Paint Composer data.
-     * @throws ParseException If for some reason the parsing fails at some
-     * point in the conversion process.
-     * @throws IOException IF some error occurs during the decoding process.
+     *         Mario Paint Composer song.
+     * @throws ParseException
+     *             If for some reason the parsing fails at some point in the
+     *             conversion process.
+     * @throws IOException
+     *             IF some error occurs during the decoding process.
      */
-    public static StaffSequence decode(File f)
-            throws ParseException, InvalidMidiDataException, IOException {
+    public static StaffSequence decode(File f) throws ParseException,
+            IOException {
         BufferedReader bf = new BufferedReader(new FileReader(f));
         String line = "";
         String str = "";
@@ -47,40 +51,85 @@ public class MPCDecoder {
     }
 
     /**
-     * Decodes a Mario Paint Composer song into an SMP-readable format.
-     * Uses <code>TextUtil</code> from <code>MPCTxtTools</code>.
-     * @param in The input String that contains (supposedly) Mario Paint
-     * Composer song file data.
-     * @throws ParseException If someone tries to feed this method an invalid
-     * text file.
-     * @throws InvalidMidiDataException If the sequence population fails to
-     * work correctly.
+     * Decodes a Mario Paint Composer song into an SMP-readable format. Uses
+     * <code>TextUtil</code> from <code>MPCTxtTools</code>.
+     *
+     * @param in
+     *            The input String that contains (supposedly) Mario Paint
+     *            Composer song file data.
+     * @throws ParseException
+     *             If someone tries to feed this method an invalid text file.
      */
-    public static StaffSequence decode(String in)
-            throws ParseException, InvalidMidiDataException {
+    public static StaffSequence decode(String in) throws ParseException {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
             throw new ParseException("Invalid MPC Text File.", 0);
         }
         ArrayList<String> everything = chop(clean(in));
         String timeSig = in.substring(0, in.indexOf('*'));
-        String tempo = in.substring(in.indexOf('%') + 1, in.length() - 1);
+        String tempo = in.substring(in.indexOf('%') + 1);
         return populateSequence(timeSig, everything, tempo);
     }
 
     /**
-     * Creates a new Super Mario Paint sequence from the input Mario
-     * Paint Composer text data.
-     * @param timeSig The time signature of the Mario Paint Composer song.
-     * @param songData The text data of the Mario Paint Composer song. This
-     * defines the notes and instruments on each note line.
-     * @param tempo The tempo at which this should be played at.
-     * @return A new <code>StaffSequence</code> that is to be loaded by the
-     * main program.
+     * Creates a new Super Mario Paint sequence from the input Mario Paint
+     * Composer text data.
+     *
+     * @param timeSig
+     *            The time signature of the Mario Paint Composer song.
+     * @param songData
+     *            The text data of the Mario Paint Composer song. This defines
+     *            the notes and instruments on each note line.
+     * @param tempo
+     *            The tempo at which this should be played at.
+     * @return A new <code>StaffSequence</code> that is to be loaded by the main
+     *         program.
      */
     private static StaffSequence populateSequence(String timeSig,
-            ArrayList<String> songData, String tempo)
-                    throws InvalidMidiDataException {
+            ArrayList<String> songData, String tempo) {
         StaffSequence song = new StaffSequence();
+        song.getTheLines().clear();
+        song.setTempo(Double.parseDouble(tempo));
+        int accum = 0;
+        for (String s : songData) {
+            if (accum >= Values.LINES_PER_MPC_SONG)
+                break;
+            accum++;
+            StaffNoteLine sl = new StaffNoteLine();
+            if (s.length() <= 1) {
+                song.addLine(sl);
+                continue;
+            }
+            ArrayList<String> inst = dice(s);
+            int vol = parseVolume(s.charAt(s.length() - 2));
+            for (String note : inst) {
+                if (note.isEmpty())
+                    continue;
+                InstrumentIndex in = MPCInstrumentIndex.valueOf(note.charAt(0));
+                int pos = 0;
+                int acc = 0;
+                if (note.length() == 3) {
+                    if (note.substring(1).equals("17")) {
+                        StaffNote mn = new StaffNote(in, pos, acc);
+                        mn.setMuteNote(2);
+                        sl.add(mn);
+                        continue;
+                    } else {
+                        pos = parsePosition(note.charAt(1));
+                        acc = parseAccidental(note.charAt(2));
+                    }
+                } else if (note.length() == 2) {
+                    pos = parsePosition(note.charAt(1));
+                    acc = 0;
+                }
+                StaffNote sn = new StaffNote(in, pos, acc);
+                sl.add(sn);
+            }
+            sl.setVolume(vol);
+            song.addLine(sl);
+        }
+        while (song.getTheLines().size() < Values.LINES_PER_MPC_SONG) {
+            song.getTheLines().add(new StaffNoteLine());
+        }
         return song;
     }
 

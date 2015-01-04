@@ -33,6 +33,12 @@ import smp.stateMachine.StateMachine;
 public class LoadButton extends ImagePushButton {
 
     /**
+     * The file directory that we are currently located in. We'll start in the
+     * user directory.
+     */
+    private File init = new File(System.getProperty("user.dir"));
+
+    /**
      * Default constructor.
      *
      * @param i
@@ -77,14 +83,15 @@ public class LoadButton extends ImagePushButton {
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
-                f.setInitialDirectory(new File(System.getProperty("user.dir")));
+                f.setInitialDirectory(init);
                 inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
                     return;
+                init = new File(inputFile.getParent());
                 StaffSequence loaded = Utilities.loadSong(inputFile);
                 populateStaff(loaded, inputFile, false);
-            } catch (ClassCastException | EOFException | StreamCorruptedException e) {
-                e.printStackTrace();
+            } catch (ClassCastException | EOFException
+                    | StreamCorruptedException e) {
                 try {
                     StaffSequence loaded = MPCDecoder.decode(inputFile);
                     populateStaff(loaded, inputFile, true);

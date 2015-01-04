@@ -86,6 +86,9 @@ public class Values {
     /** The amount of time between the repetition of two mouse click events. */
     public static int REPEATTIME = 10;
 
+    /** This is the number of lines in a Mario Paint Composer song. */
+    public static final int LINES_PER_MPC_SONG = 384;
+
     /** The number of tracks in the Mario Paint Composer song. */
     public static final int NUM_TRACKS = 19;
 
