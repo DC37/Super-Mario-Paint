@@ -5,5 +5,6 @@
 	<classpathentry exported="true" kind="con" path="at.bestsolution.efxclipse.tooling.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_71/jre/lib/jfxrt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -57,6 +57,7 @@ public class SuperMarioPaint extends Application {
     /**
      * Location of the Advanced Mode (super secret!!) fxml file.
      */
+    @SuppressWarnings("unused")
     private String advFxml = "./AdvWindow.fxml";
 
     /**

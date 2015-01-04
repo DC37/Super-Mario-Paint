@@ -84,6 +84,11 @@ public class LoadButton extends ImagePushButton {
                 theStaff.setSequenceFile(inputFile);
                 StateMachine.setTempo(loaded.getTempo());
                 theStaff.getControlPanel().updateCurrTempo();
+                if (theStaff.getControlPanel().getScrollbar().valueProperty()
+                        .get() > loaded.getTheLines().size()
+                        - Values.NOTELINES_IN_THE_WINDOW) {
+                    theStaff.setLocation(0);
+                }
                 theStaff.getControlPanel()
                         .getScrollbar()
                         .setMax(loaded.getTheLines().size()
