@@ -132,7 +132,7 @@ public class Controls {
      * Adds in the listener behaviour for the arrangement list.
      */
     private void initializeArrangementList() {
-        //theList.setFixedCellSize(20);
+        // theList.setFixedCellSize(20);
         theList.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     @Override
@@ -146,7 +146,8 @@ public class Controls {
                                     .getArrangement().getTheSequences();
                             ArrayList<File> f = theStaff.getArrangement()
                                     .getTheSequenceFiles();
-                            Utilities.loadSequenceFromArrangement(f.get(x), theStaff);
+                            Utilities.loadSequenceFromArrangement(f.get(x),
+                                    theStaff, controller);
                             s.set(x, theStaff.getSequence());
                         }
                     }
@@ -336,8 +337,6 @@ public class Controls {
         controller.getUpButton().setVisible(false);
         controller.getDownButton().setVisible(false);
     }
-
-
 
     /** @return The play button of the controls set. */
     public PlayButton getPlayButton() {

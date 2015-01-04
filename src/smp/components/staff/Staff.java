@@ -230,7 +230,9 @@ public class Staff {
         setLocation(0);
         for (int i = 0; i < seq.size(); i++) {
             try {
-                seq.set(i, Utilities.loadSong(files.get(i)));
+                seq.set(i,
+                        Utilities.loadSong(new File("./Songs/"
+                                + files.get(i).getName())));
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
                 stopArrangement();
@@ -654,8 +656,8 @@ public class Staff {
                 });
             }
 
-            private void bumpHighlights(ArrayList<ImageView> playBars, int index,
-                    boolean advance) {
+            private void bumpHighlights(ArrayList<ImageView> playBars,
+                    int index, boolean advance) {
                 playBars.get(index).setVisible(true);
                 for (int i = 0; i < playBars.size(); i++)
                     if (i != index)

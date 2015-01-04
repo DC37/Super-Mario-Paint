@@ -8,11 +8,13 @@ import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +28,9 @@ import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.components.staff.sequences.mpc.MPCDecoder;
+import smp.fx.Dialog;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -178,32 +183,28 @@ public class Utilities {
 
     /**
      * Loads a sequence from an input file. Intended usage is in arranger mode.
+     * We assume that the input files are located in a folder named "Songs" for
+     * now.
      *
      * @param inputFile
      *            This is the input filename.
      */
     public static void loadSequenceFromArrangement(File inputFile,
-            Staff theStaff) {
+            Staff theStaff, SMPFXController controller) {
         try {
+            inputFile = new File("./Songs/" + inputFile.getName());
             StaffSequence loaded = loadSong(inputFile);
-            normalize(loaded);
-            theStaff.setSequence(loaded);
-            theStaff.setSequenceFile(inputFile);
-            StateMachine.setTempo(loaded.getTempo());
-            theStaff.getControlPanel().updateCurrTempo();
-            theStaff.getControlPanel()
-                    .getScrollbar()
-                    .setMax(loaded.getTheLines().size()
-                            - Values.NOTELINES_IN_THE_WINDOW);
-            theStaff.setLocation(0);
-            theStaff.getNoteMatrix().redraw();
-            String fname = inputFile.getName();
+            populateStaff(loaded, inputFile, false, theStaff, controller);
+        } catch (ClassCastException | EOFException
+                | StreamCorruptedException e) {
             try {
-                fname = fname.substring(0, fname.indexOf("."));
-            } catch (IndexOutOfBoundsException e) {
-                // Do nothing
+                StaffSequence loaded = MPCDecoder.decode(inputFile);
+                Utilities.populateStaff(loaded, inputFile, true, theStaff,
+                        controller);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                Dialog.showDialog("Not a valid song file.");
             }
-            theStaff.setSequenceName(fname);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -212,4 +213,45 @@ public class Utilities {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Populates the staff with the sequence given.
+     *
+     * @param loaded
+     *            The loaded sequence.
+     * @param inputFile
+     *            The input file.
+     * @param mpc
+     *            Whether this is an MPC file.
+     */
+    public static void populateStaff(StaffSequence loaded, File inputFile,
+            boolean mpc, Staff theStaff, SMPFXController controller) {
+        Utilities.normalize(loaded);
+        theStaff.setSequence(loaded);
+        theStaff.setSequenceFile(inputFile);
+        StateMachine.setTempo(loaded.getTempo());
+        theStaff.getControlPanel().updateCurrTempo();
+        if (theStaff.getControlPanel().getScrollbar().valueProperty().get() > loaded
+                .getTheLines().size() - Values.NOTELINES_IN_THE_WINDOW) {
+            theStaff.setLocation(0);
+        }
+        theStaff.getControlPanel()
+                .getScrollbar()
+                .setMax(loaded.getTheLines().size()
+                        - Values.NOTELINES_IN_THE_WINDOW);
+        theStaff.getNoteMatrix().redraw();
+        String fname = inputFile.getName();
+        try {
+            if (mpc)
+                fname = fname.substring(0, fname.indexOf(']'));
+            else
+                fname = fname.substring(0, fname.indexOf("."));
+        } catch (IndexOutOfBoundsException e) {
+            // Do nothing
+        }
+        theStaff.setSequenceName(fname);
+        controller.getNameTextField().setText(fname);
+        StateMachine.setSongModified(false);
+    }
+
 }
