@@ -5,8 +5,8 @@ Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (200
 
 
 Accepting cryptocurrency donations!  
-Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL
-Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia
+* Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL
+* Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia
 
 
 Milestones:

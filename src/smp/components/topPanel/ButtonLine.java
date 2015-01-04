@@ -2,6 +2,7 @@ package smp.components.topPanel;
 
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -24,7 +25,7 @@ import smp.stateMachine.StateMachine;
  * user interface for Super Mario Paint. The user selects the instrument that
  * they're using here. Clicking on a portrait causes a sound to play while the
  * active instrument is changed.
- * 
+ *
  * @author RehdBlob
  * @since 2012.08.21
  */
@@ -62,7 +63,7 @@ public class ButtonLine {
 
     /**
      * Initializes the ImageView ArrayList.
-     * 
+     *
      * @param i
      *            An ArrayList of ImageView references intended to be displayed
      *            as an instrument line.
@@ -74,6 +75,13 @@ public class ButtonLine {
         selectedInst = selected;
         setupButtons();
         DEFAULT_NOTE = Note.A3.getKeyNum();
+        /*
+         * For some reason, the piranha and coin are flipped in all soundfonts.
+         * The solution here is unfortunately to just flip the images.
+         */
+        ObservableList<Node> n = instLine.getChildren();
+        Node nd = n.remove(15);
+        n.add(16, nd);
     }
 
     /**
@@ -124,7 +132,7 @@ public class ButtonLine {
 
     /**
      * Plays the default "A" sound when selecting an instrument.
-     * 
+     *
      * @param i
      *            The InstrumentIndex for the instrument
      */
@@ -140,7 +148,7 @@ public class ButtonLine {
 
     /**
      * Sets the selected instrument to extend mode.
-     * 
+     *
      * @param i
      *            The instrument that we are trying to set to extend.
      */
@@ -152,7 +160,7 @@ public class ButtonLine {
 
     /**
      * Toggles the portrait display of the instrument index.
-     * 
+     *
      * @param i
      *            The index at which we want to modify.
      * @param b
@@ -173,7 +181,7 @@ public class ButtonLine {
 
     /**
      * Sets the currently selected instrument.
-     * 
+     *
      * @param i
      *            The <code>InstrumentIndex</code> that one wants to set the
      *            currently selected instrument by.

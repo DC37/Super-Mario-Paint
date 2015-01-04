@@ -25,8 +25,8 @@ public enum InstrumentIndex {
     BOAT     (13, ImageIndex.BOAT),
     CAR      (14, ImageIndex.CAR),
     HEART    (15, ImageIndex.HEART),
-    PIRANHA  (16, ImageIndex.PIRANHA),
-    COIN     (17, ImageIndex.COIN),
+    COIN     (16, ImageIndex.COIN),
+    PIRANHA  (17, ImageIndex.PIRANHA),
     SHYGUY   (18, ImageIndex.SHYGUY),
     BOO      (19, ImageIndex.BOO),
     LUIGI    (20, ImageIndex.LUIGI);

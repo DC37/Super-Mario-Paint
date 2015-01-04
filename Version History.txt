@@ -1,5 +1,11 @@
-v0.942 (Semantic version 0.11.2)
-Pre-Beta - Bugfix from v0.941 - arranger / song loop point fix.
+v0.95 (Semantic version 0.12.0) [unreleased]
+Beta release - major functionality should be equivalent to and/or exceed that of MPC2.0.
+
+v0.943 (Semantic version 0.11.3) [unreleased]
+Added more support for external soundfonts (two instruments that used to be swapped are not swapped anymore)
+
+v0.942 (Semantic version 0.11.2) [current]
+Pre-Beta - Bugfix from v0.941 - arranger / song loop point fix. Automatic song length cleanup feature.
 Also, works on Java 7 again.
 
 v0.941 (Semantic version 0.11.1)

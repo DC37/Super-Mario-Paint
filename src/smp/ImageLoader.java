@@ -18,7 +18,7 @@ public class ImageLoader implements Loader {
     /**
      * Contains references to all the loaded sprites in JavaFX Image form.
      */
-    private Hashtable<ImageIndex, javafx.scene.image.Image> spritesFX;
+    private Hashtable<ImageIndex, Image> spritesFX;
 
     /**
      * The amount of loading that the imageLoader has done,
