@@ -15,10 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -26,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import smp.components.Values;
 import smp.components.staff.Staff;
+import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
@@ -167,6 +166,7 @@ public class Utilities {
      *
      * @param inputFile
      *            The file to load from.
+     * @return A loaded song file. The format is a StaffSequence.
      * @throws FileNotFoundException
      * @throws IOException
      * @throws ClassNotFoundException
@@ -176,6 +176,26 @@ public class Utilities {
         FileInputStream f_in = new FileInputStream(inputFile);
         ObjectInputStream o_in = new ObjectInputStream(f_in);
         StaffSequence loaded = (StaffSequence) o_in.readObject();
+        o_in.close();
+        f_in.close();
+        return loaded;
+    }
+
+    /**
+     * Loads an arrangement from the file specified.
+     *
+     * @param inputFile
+     *            The file to load from.
+     * @return A loaded arrangement file. The format is StaffArrangement.
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static StaffArrangement loadArrangement(File inputFile)
+            throws FileNotFoundException, IOException, ClassNotFoundException {
+        FileInputStream f_in = new FileInputStream(inputFile);
+        ObjectInputStream o_in = new ObjectInputStream(f_in);
+        StaffArrangement loaded = (StaffArrangement) o_in.readObject();
         o_in.close();
         f_in.close();
         return loaded;
@@ -192,11 +212,10 @@ public class Utilities {
     public static void loadSequenceFromArrangement(File inputFile,
             Staff theStaff, SMPFXController controller) {
         try {
-            inputFile = new File("./Songs/" + inputFile.getName());
+            inputFile = new File(Values.SONGFOLDER + inputFile.getName());
             StaffSequence loaded = loadSong(inputFile);
             populateStaff(loaded, inputFile, false, theStaff, controller);
-        } catch (ClassCastException | EOFException
-                | StreamCorruptedException e) {
+        } catch (ClassCastException | EOFException | StreamCorruptedException e) {
             try {
                 StaffSequence loaded = MPCDecoder.decode(inputFile);
                 Utilities.populateStaff(loaded, inputFile, true, theStaff,
@@ -251,7 +270,42 @@ public class Utilities {
         }
         theStaff.setSequenceName(fname);
         controller.getNameTextField().setText(fname);
-        StateMachine.setSongModified(false);
+    }
+
+    public static void populateStaffArrangement(StaffArrangement loaded, File inputFile,
+            boolean mpc, Staff theStaff, SMPFXController controller) {
+        File firstFile = loaded.getTheSequenceFiles().get(0);
+        loadSequenceFromArrangement(firstFile, theStaff,
+                controller);
+        String fname = inputFile.getName();
+        try {
+            if (mpc)
+                fname = fname.substring(0, fname.indexOf(']'));
+            else
+                fname = fname.substring(0, fname.indexOf("."));
+        } catch (IndexOutOfBoundsException e) {
+            // Do nothing
+        }
+        theStaff.setArrangement(loaded);
+        theStaff.setArrangementName(fname);
+        theStaff.getArrangementList().getItems().clear();
+        theStaff.getArrangementList().getItems()
+                .addAll(loaded.getTheSequenceNames());
+
+        ArrayList<File> files = loaded.getTheSequenceFiles();
+        ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
+        for (int i = 0; i < files.size(); i++) {
+            try {
+                seq.add(MPCDecoder.decode(files.get(i)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        theStaff.getArrangement().setTheSequences(seq);
+
+        controller.getNameTextField().setText(fname);
     }
 
 }

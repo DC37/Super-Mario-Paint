@@ -91,12 +91,14 @@ public class LoadButton extends ImagePushButton {
                 StaffSequence loaded = Utilities.loadSong(inputFile);
                 Utilities.populateStaff(loaded, inputFile, false, theStaff,
                         controller);
-            } catch (ClassCastException | EOFException
+                StateMachine.setSongModified(false);
+            } catch (ClassCastException | EOFException | ClassNotFoundException
                     | StreamCorruptedException e) {
                 try {
                     StaffSequence loaded = MPCDecoder.decode(inputFile);
                     Utilities.populateStaff(loaded, inputFile, true, theStaff,
                             controller);
+                    StateMachine.setSongModified(false);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     Dialog.showDialog("Not a valid song file.");
@@ -104,8 +106,6 @@ public class LoadButton extends ImagePushButton {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -129,58 +129,36 @@ public class LoadButton extends ImagePushButton {
                                 + "modified! Load anyway?");
             }
         }
+        File inputFile = null;
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
-                f.setInitialDirectory(new File(System.getProperty("user.dir")));
-                File inputFile = f.showOpenDialog(null);
+                f.setInitialDirectory(init);
+                inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
                     return;
-                FileInputStream f_in = new FileInputStream(inputFile);
-                ObjectInputStream o_in = new ObjectInputStream(f_in);
-                StaffArrangement loaded = (StaffArrangement) o_in.readObject();
-                o_in.close();
-                f_in.close();
-                File firstFile = loaded.getTheSequenceFiles().get(0);
-                Utilities.loadSequenceFromArrangement(firstFile, theStaff,
-                        controller);
-                String fname = inputFile.getName();
-                try {
-                    fname = fname.substring(0, fname.indexOf("."));
-                } catch (IndexOutOfBoundsException e) {
-                    // Do nothing
-                }
-                theStaff.setArrangement(loaded);
-                theStaff.setArrangementName(fname);
-                theStaff.getArrangementList().getItems().clear();
-                theStaff.getArrangementList().getItems()
-                        .addAll(loaded.getTheSequenceNames());
-
-                ArrayList<File> files = loaded.getTheSequenceFiles();
-                ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
-                for (int i = 0; i < files.size(); i++) {
-                    try {
-                        seq.add(Utilities.loadSong(files.get(i)));
-                    } catch (ClassNotFoundException | IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                theStaff.getArrangement().setTheSequences(seq);
-
-                controller.getNameTextField().setText(fname);
+                StaffArrangement loaded = Utilities.loadArrangement(inputFile);
+                Utilities.populateStaffArrangement(loaded, inputFile, false,
+                        theStaff, controller);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
-            } catch (ClassCastException | EOFException e) {
-                e.printStackTrace();
-                Dialog.showDialog("Not a valid arrangement file.");
+            } catch (ClassCastException | ClassNotFoundException | EOFException
+                    | StreamCorruptedException e) {
+                try {
+                    StaffArrangement loaded = MPCDecoder
+                            .decodeArrangement(inputFile);
+                    Utilities.populateStaffArrangement(loaded, inputFile, true,
+                            theStaff, controller);
+                    StateMachine.setSongModified(false);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    Dialog.showDialog("Not a valid arrangement file.");
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }
     }
-
 }

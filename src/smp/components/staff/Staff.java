@@ -1,7 +1,11 @@
 package smp.components.staff;
 
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StreamCorruptedException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
@@ -22,6 +26,7 @@ import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
@@ -229,11 +234,19 @@ public class Staff {
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
         setLocation(0);
         for (int i = 0; i < seq.size(); i++) {
+            File f = new File(Values.SONGFOLDER + files.get(i).getName());
             try {
-                seq.set(i,
-                        Utilities.loadSong(new File("./Songs/"
-                                + files.get(i).getName())));
-            } catch (ClassNotFoundException | IOException e) {
+                seq.set(i, Utilities.loadSong(f));
+            } catch (ClassCastException | EOFException | ClassNotFoundException
+                    | StreamCorruptedException e) {
+                try {
+                    seq.set(i, MPCDecoder.decode(f));
+                } catch (ParseException | IOException e1) {
+                    e1.printStackTrace();
+                    stopArrangement();
+                    return;
+                }
+            } catch (IOException e) {
                 e.printStackTrace();
                 stopArrangement();
                 return;

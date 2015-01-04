@@ -4,6 +4,8 @@ Beta release - major functionality should be equivalent to and/or exceed that of
 v0.943 (Semantic version 0.11.3) [unreleased]
 Added more support for external soundfonts (two instruments that used to be swapped are not swapped anymore)
 Import MPC files just by loading them.
+Import MPC arrangements just by loading them.
+Note: Arrangements only work if they are in the "Prefs" folder along with all of the songs.
 
 v0.942 (Semantic version 0.11.2) [current]
 Pre-Beta - Bugfix from v0.941 - arranger / song loop point fix. Automatic song length cleanup feature.
