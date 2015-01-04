@@ -29,8 +29,8 @@ import smp.stateMachine.StateMachine;
 
 /**
  * The staff on which notes go. The staff keeps track of notes in terms of
- * discrete StaffNoteLines, placed inside an array. This class also keeps
- * track of the animation of the staff when one hits the play button.
+ * discrete StaffNoteLines, placed inside an array. This class also keeps track
+ * of the animation of the staff when one hits the play button.
  *
  * @author RehdBlob
  * @since 2012.08.13
@@ -567,54 +567,6 @@ public class Staff {
         }
 
         /**
-         * Bumps the highlight of the notes to the next play bar.
-         *
-         * @param playBars
-         *            The list of the measure highlights.
-         * @param index
-         *            The current index of the measure that we're on.
-         * @param advance
-         *            Whether we need to move the staff by some bit.
-         */
-        private void bumpHighlights(final ArrayList<ImageView> playBars,
-                final int index, final boolean advance) {
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    playBars.get(index).setVisible(true);
-                    for (int i = 0; i < playBars.size(); i++)
-                        if (i != index)
-                            playBars.get(i).setVisible(false);
-                    if (advance && !zero)
-                        currVal.setValue(currVal.getValue().doubleValue()
-                                + Values.NOTELINES_IN_THE_WINDOW);
-                    if ((Settings.debug & 0b10000) == 0b10000)
-                        System.out.println(currVal);
-                    if (zero)
-                        zero = false;
-                }
-            });
-        }
-
-        /**
-         * Sets the staff position to zero.
-         */
-        private void zeroStaff() {
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    currVal.setValue(0);
-                    if ((Settings.debug & 0b10000) != 0)
-                        System.out.println(currVal);
-                }
-
-            });
-
-        }
-
-        /**
          * This class keeps track of animation and sound. Note to self: While
          * running a service or a task, crashes do not print stack traces.
          * Therefore, debug like crazy! Fun fact: This is the first time that
@@ -640,14 +592,14 @@ public class Staff {
             protected Staff call() throws Exception {
                 playBars = staffImages.getPlayBars();
                 int counter = StateMachine.getMeasureLineNum();
-                do {
+                while (songPlaying) {
                     playNextLine();
                     counter++;
                     if (counter > lastLine && counter % 4 == 0) {
                         if (StateMachine.isLoopPressed()) {
                             counter = 0;
                             index = 0;
-                            zeroStaff();
+                            advance = false;
                             zero = true;
                         } else {
                             songPlaying = false;
@@ -658,7 +610,7 @@ public class Staff {
                     } catch (InterruptedException e) {
                         // Do nothing
                     }
-                } while (songPlaying);
+                }
                 highlightsOff();
                 hitStop();
                 return theMatrix.getStaff();
@@ -670,83 +622,111 @@ public class Staff {
              * just play things as they are.
              */
             protected void playNextLine() {
-                bumpHighlights(playBars, index, advance);
-                playSoundLine(index);
-                advance = false;
-                if (index < Values.NOTELINES_IN_THE_WINDOW - 1) {
-                    index++;
-                } else {
-                    index = 0;
-                    advance = true;
-                }
+                runUI(playBars, index, advance);
+                advance = !(index < Values.NOTELINES_IN_THE_WINDOW - 1);
+                index = advance ? 0 : (index + 1);
             }
 
             /**
-             * Plays the current line of notes. Lol, inefficiency - called every
-             * time a note line is played.
+             * Bumps the highlight of the notes to the next play bar.
+             *
+             * @param playBars
+             *            The list of the measure highlights.
+             * @param index
+             *            The current index of the measure that we're on.
+             * @param advance
+             *            Whether we need to move the staff by some bit.
              */
-            private void playSoundLine(final int index) {
+            private void runUI(final ArrayList<ImageView> playBars,
+                    final int index, final boolean advance) {
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
-                        StaffNoteLine s = theSequence.getLine((int) (currVal
-                                .doubleValue() + index));
-                        ArrayList<StaffNote> theNotes = s.getNotes();
-                        tracker.stopNotes(s);
-                        for (StaffNote sn : theNotes) {
-                            if (sn.muteNoteVal() == 1)
-                                stopSound(sn);
-                            else if (sn.muteNoteVal() == 2)
-                                stopInstrument(sn);
+                        bumpHighlights(playBars, index, advance);
+                        playSoundLine(index);
+                        if (zero) {
+                            setLocation(0);
+                            currVal.setValue(0);
+                            zero = false;
                         }
-                        for (StaffNote sn : theNotes) {
-                            if (sn.muteNoteVal() == 0)
-                                playSound(sn, s);
-                        }
-                    }
-
-                    /**
-                     * Plays a sound.
-                     *
-                     * @param sn
-                     *            The StaffNote.
-                     * @param s
-                     *            The StaffNoteLine.
-                     */
-                    private void playSound(StaffNote sn, StaffNoteLine s) {
-                        SoundfontLoader.playSound(
-                                Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                sn.getInstrument(), sn.getAccidental(),
-                                s.getVolume());
-                        tracker.addNotePlaying(
-                                Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                sn.getInstrument(), sn.getAccidental());
-                    }
-
-                    /**
-                     * Stops a sound.
-                     *
-                     * @param sn
-                     *            The StaffNote.
-                     */
-                    private void stopSound(StaffNote sn) {
-                        SoundfontLoader.stopSound(
-                                Values.staffNotes[sn.getPosition()].getKeyNum(),
-                                sn.getInstrument(), sn.getAccidental());
-                    }
-
-                    /**
-                     * Stops a full set of instruments from playing sounds.
-                     *
-                     * @param sn
-                     *            The StaffNote.
-                     */
-                    private void stopInstrument(StaffNote sn) {
-                        tracker.stopInstrument(sn);
                     }
                 });
+            }
 
+            private void bumpHighlights(ArrayList<ImageView> playBars, int index,
+                    boolean advance) {
+                playBars.get(index).setVisible(true);
+                for (int i = 0; i < playBars.size(); i++)
+                    if (i != index)
+                        playBars.get(i).setVisible(false);
+                if (advance) {
+                    int loc = (int) currVal.getValue().doubleValue()
+                            + Values.NOTELINES_IN_THE_WINDOW;
+                    setLocation(loc);
+                    currVal.setValue(loc);
+                }
+                if ((Settings.debug & 0b10000) == 0b10000)
+                    System.out.println(currVal);
+            }
+
+            /**
+             * Plays the current line of notes.
+             */
+            private void playSoundLine(int index) {
+                StaffNoteLine s = theSequence.getLine((int) (currVal
+                        .doubleValue() + index));
+                ArrayList<StaffNote> theNotes = s.getNotes();
+                tracker.stopNotes(s);
+                for (StaffNote sn : theNotes) {
+                    if (sn.muteNoteVal() == 1)
+                        stopSound(sn);
+                    else if (sn.muteNoteVal() == 2)
+                        stopInstrument(sn);
+                }
+                for (StaffNote sn : theNotes) {
+                    if (sn.muteNoteVal() == 0)
+                        playSound(sn, s);
+                }
+            }
+
+            /**
+             * Plays a sound.
+             *
+             * @param sn
+             *            The StaffNote.
+             * @param s
+             *            The StaffNoteLine.
+             */
+            private void playSound(StaffNote sn, StaffNoteLine s) {
+                SoundfontLoader.playSound(
+                        Values.staffNotes[sn.getPosition()].getKeyNum(),
+                        sn.getInstrument(), sn.getAccidental(), s.getVolume());
+                tracker.addNotePlaying(
+                        Values.staffNotes[sn.getPosition()].getKeyNum(),
+                        sn.getInstrument(), sn.getAccidental());
+            }
+
+            /**
+             * Stops a sound.
+             *
+             * @param sn
+             *            The StaffNote.
+             */
+            private void stopSound(StaffNote sn) {
+                SoundfontLoader.stopSound(
+                        Values.staffNotes[sn.getPosition()].getKeyNum(),
+                        sn.getInstrument(), sn.getAccidental());
+            }
+
+            /**
+             * Stops a full set of instruments from playing sounds.
+             *
+             * @param sn
+             *            The StaffNote.
+             */
+            private void stopInstrument(StaffNote sn) {
+                tracker.stopInstrument(sn);
             }
 
         }
@@ -780,9 +760,9 @@ public class Staff {
                         if (counter > lastLine && counter % 4 == 0) {
                             counter = 0;
                             index = 0;
-                            zeroStaff();
-                            zero = true;
                             songPlaying = false;
+                            advance = false;
+                            zero = true;
                         }
                         try {
                             Thread.sleep(delayMillis, delayNanos);

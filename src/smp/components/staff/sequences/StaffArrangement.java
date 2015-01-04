@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.ObservableList;
-
 /**
  * This is an arrangement on the staff, a collection of
  * <code>StaffSequence</code>s and their filepaths.

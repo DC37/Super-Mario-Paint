@@ -849,7 +849,7 @@
                             </StackPane>
                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="230.0">
                                              <children>
-                                                <ListView fx:id="arrangementList" editable="true" fixedCellSize="20.0" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="250.0" />
+                                                <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="250.0" />
                                              </children>
                                              <padding>
                                                 <Insets left="4.0" />

@@ -1,3 +1,7 @@
+v0.942 (Semantic version 0.11.2)
+Pre-Beta - Bugfix from v0.941 - arranger / song loop point fix.
+Also, works on Java 7 again.
+
 v0.941 (Semantic version 0.11.1)
 Pre-Beta - Bugfix from v0.94 - arranger "ghost file" fix.
 

@@ -1,8 +1,6 @@
 package smp.components.controls;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
@@ -17,7 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import smp.ImageIndex;
 import smp.ImageLoader;
-import smp.components.Values;
 import smp.components.buttons.AddButton;
 import smp.components.buttons.ArrowButton;
 import smp.components.buttons.DeleteButton;
@@ -135,6 +132,7 @@ public class Controls {
      * Adds in the listener behaviour for the arrangement list.
      */
     private void initializeArrangementList() {
+        //theList.setFixedCellSize(20);
         theList.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     @Override

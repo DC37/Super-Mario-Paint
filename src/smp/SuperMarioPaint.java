@@ -126,10 +126,8 @@ public class SuperMarioPaint extends Application {
                 loader.setController(controller);
                 loader.setLocation(new File(mainFxml).toURI().toURL());
                 root = (Parent) loader.load();
-                notifyPreloader(new ProgressNotification(1));
+                notifyPreloader(new ProgressNotification(0.75));
                 ready.setValue(Boolean.TRUE);
-                notifyPreloader(new StateChangeNotification(
-                        StateChangeNotification.Type.BEFORE_START));
                 return null;
             }
         };
@@ -188,6 +186,9 @@ public class SuperMarioPaint extends Application {
                                 primaryScene = new Scene(root, 800, 600);
                                 primaryStage.setScene(primaryScene);
                                 makeKeyboardListeners(primaryScene);
+                                notifyPreloader(new ProgressNotification(1));
+                                notifyPreloader(new StateChangeNotification(
+                                        StateChangeNotification.Type.BEFORE_START));
                                 primaryStage.show();
                             } catch (Exception e) {
                                 e.printStackTrace();
