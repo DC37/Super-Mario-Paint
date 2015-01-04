@@ -19,7 +19,7 @@ Milestones:
 * January 1-2, 2015 - v0.94 & v0.941 - Pre-Beta (Arranger)
 * January 10, 2015 (Scheduled) - v0.95 - Beta Release  
 * Author: RehdBlob
-* Version: 0.941
+* Version: 0.942
 
 Confirmed Operating System Configurations:
 -----
