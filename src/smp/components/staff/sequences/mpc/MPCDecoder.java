@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.sound.midi.InvalidMidiDataException;
 
 import smp.components.staff.sequences.StaffSequence;
+import static smp.components.general.Utilities.*;
 
 /**
  * Decodes Mario Paint Composer songs into Super Mario Paint-
@@ -60,10 +61,9 @@ public class MPCDecoder {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
             throw new ParseException("Invalid MPC Text File.", 0);
         }
-        // TODO: Fix
-        ArrayList<String> everything = null;
-        String timeSig = null;
-        String tempo = null;
+        ArrayList<String> everything = chop(clean(in));
+        String timeSig = in.substring(0, in.indexOf('*'));
+        String tempo = in.substring(in.indexOf('%') + 1, in.length() - 1);
         return populateSequence(timeSig, everything, tempo);
     }
 
@@ -76,8 +76,6 @@ public class MPCDecoder {
      * @param tempo The tempo at which this should be played at.
      * @return A new <code>StaffSequence</code> that is to be loaded by the
      * main program.
-     * @throws InvalidMidiDataException If something goes wrong in the decoding
-     * process.
      */
     private static StaffSequence populateSequence(String timeSig,
             ArrayList<String> songData, String tempo)

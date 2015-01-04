@@ -1,6 +1,7 @@
 package smp.components.buttons;
 
 import java.io.EOFException;
+import java.io.StreamCorruptedException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,6 +18,7 @@ import smp.components.general.ImagePushButton;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffSequence;
+import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.stateMachine.ProgramState;
@@ -71,41 +73,25 @@ public class LoadButton extends ImagePushButton {
             cont = Dialog
                     .showYesNoDialog("The current song has been modified!\n"
                             + "Load anyway?");
+        File inputFile = null;
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
                 f.setInitialDirectory(new File(System.getProperty("user.dir")));
-                File inputFile = f.showOpenDialog(null);
+                inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
                     return;
                 StaffSequence loaded = Utilities.loadSong(inputFile);
-                Utilities.normalize(loaded);
-                theStaff.setSequence(loaded);
-                theStaff.setSequenceFile(inputFile);
-                StateMachine.setTempo(loaded.getTempo());
-                theStaff.getControlPanel().updateCurrTempo();
-                if (theStaff.getControlPanel().getScrollbar().valueProperty()
-                        .get() > loaded.getTheLines().size()
-                        - Values.NOTELINES_IN_THE_WINDOW) {
-                    theStaff.setLocation(0);
-                }
-                theStaff.getControlPanel()
-                        .getScrollbar()
-                        .setMax(loaded.getTheLines().size()
-                                - Values.NOTELINES_IN_THE_WINDOW);
-                theStaff.getNoteMatrix().redraw();
-                String fname = inputFile.getName();
-                try {
-                    fname = fname.substring(0, fname.indexOf("."));
-                } catch (IndexOutOfBoundsException e) {
-                    // Do nothing
-                }
-                theStaff.setSequenceName(fname);
-                controller.getNameTextField().setText(fname);
-                StateMachine.setSongModified(false);
-            } catch (ClassCastException | EOFException e) {
+                populateStaff(loaded, inputFile, false);
+            } catch (ClassCastException | EOFException | StreamCorruptedException e) {
                 e.printStackTrace();
-                Dialog.showDialog("Not a valid song file.");
+                try {
+                    StaffSequence loaded = MPCDecoder.decode(inputFile);
+                    populateStaff(loaded, inputFile, true);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    Dialog.showDialog("Not a valid song file.");
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -114,6 +100,45 @@ public class LoadButton extends ImagePushButton {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Populates the staff with the sequence given.
+     *
+     * @param loaded
+     *            The loaded sequence.
+     * @param inputFile
+     *            The input file.
+     * @param mpc
+     *            Whether this is an MPC file.
+     */
+    private void populateStaff(StaffSequence loaded, File inputFile, boolean mpc) {
+        Utilities.normalize(loaded);
+        theStaff.setSequence(loaded);
+        theStaff.setSequenceFile(inputFile);
+        StateMachine.setTempo(loaded.getTempo());
+        theStaff.getControlPanel().updateCurrTempo();
+        if (theStaff.getControlPanel().getScrollbar().valueProperty().get() > loaded
+                .getTheLines().size() - Values.NOTELINES_IN_THE_WINDOW) {
+            theStaff.setLocation(0);
+        }
+        theStaff.getControlPanel()
+                .getScrollbar()
+                .setMax(loaded.getTheLines().size()
+                        - Values.NOTELINES_IN_THE_WINDOW);
+        theStaff.getNoteMatrix().redraw();
+        String fname = inputFile.getName();
+        try {
+            if (mpc)
+                fname = fname.substring(0, fname.indexOf(']'));
+            else
+                fname = fname.substring(0, fname.indexOf("."));
+        } catch (IndexOutOfBoundsException e) {
+            // Do nothing
+        }
+        theStaff.setSequenceName(fname);
+        controller.getNameTextField().setText(fname);
+        StateMachine.setSongModified(false);
     }
 
     /** This loads an arrangement. */
