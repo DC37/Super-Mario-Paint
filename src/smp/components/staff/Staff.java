@@ -118,8 +118,8 @@ public class Staff {
      * Creates a new Staff object.
      *
      * @param staffExtLines
-     *            These are the lines that appear under notes for the lower and
-     *            upper portions of the staff.
+     *            These are the ledger lines that appear under notes for the
+     *            lower and upper portions of the staff.
      * @param arrList
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.

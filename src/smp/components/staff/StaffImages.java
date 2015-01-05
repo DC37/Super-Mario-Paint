@@ -18,11 +18,12 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
 
 /**
- * Wrapper class for all of the images that appear on the Staff of
- * Super Mario Paint. Contains the sprite holders for the images that
- * represent notes, the ImageView holders for each of the measure lines,
- * the lines that allow one to display notes higher than a G or lower than
- * a D on the staff, and the measure numbers.
+ * Wrapper class for all of the images that appear on the Staff of Super Mario
+ * Paint. Contains the sprite holders for the images that represent notes, the
+ * ImageView holders for each of the measure lines, the lines that allow one to
+ * display notes higher than a G or lower than a D on the staff, and the measure
+ * numbers.
+ *
  * @author RehdBlob
  * @since 2012.09.17
  */
@@ -35,8 +36,8 @@ public class StaffImages {
     private ArrayList<ImageView> measureLines;
 
     /**
-     * The ArrayList that holds the Text objects that will hold the measure
-     * line numbers.
+     * The ArrayList that holds the Text objects that will hold the measure line
+     * numbers.
      */
     private ArrayList<Text> measureNums;
 
@@ -56,17 +57,19 @@ public class StaffImages {
 
     /**
      * Constructor that also sets up the staff expansion lines.
-     * @param staffExtLines These
+     *
+     * @param staffExtLines
+     *            These
      */
     public StaffImages(HBox[] staffExtLines, ImageLoader i) {
         il = i;
-        initializeStaffExpansionLines(staffExtLines);
+        initializeStaffLedgerLines(staffExtLines);
     }
 
     /**
-     * Instantiates this wrapper class with the correct HBox objects
-     * such that it can begin keeping track of whatever's happening
-     * on the staff, at least on the measure lines side.
+     * Instantiates this wrapper class with the correct HBox objects such that
+     * it can begin keeping track of whatever's happening on the staff, at least
+     * on the measure lines side.
      */
     public void initialize() {
 
@@ -84,8 +87,8 @@ public class StaffImages {
      */
     private void initializeVolumeBarLinks() {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            StaffVolumeEventHandler sveh =
-                    theStaff.getNoteMatrix().getVolHandler(i);
+            StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+                    .getVolHandler(i);
             StaffNoteLine stl = theStaff.getSequence().getLine(i);
             sveh.setStaffNoteLine(stl);
         }
@@ -93,15 +96,18 @@ public class StaffImages {
 
     /**
      * Initializes the volume bars in the program.
-     * @param volumeBars This is the HBox that holds all of the volume
-     * bar <code>StackPane</code> objects.
+     *
+     * @param volumeBars
+     *            This is the HBox that holds all of the volume bar
+     *            <code>StackPane</code> objects.
      */
     private void initializeVolumeBars(HBox volumeBars) {
         ArrayList<StackPane> vol = new ArrayList<StackPane>();
         for (Node v : volumeBars.getChildren()) {
             StackPane volBar = (StackPane) v;
             vol.add(volBar);
-            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il);
+            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar,
+                    il);
             volBar.addEventHandler(Event.ANY, sveh);
             theStaff.getNoteMatrix().addVolHandler(sveh);
         }
@@ -115,7 +121,7 @@ public class StaffImages {
     private void initializeStaffMeasureNums(HBox mNums) {
         ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
         measureNums = new ArrayList<Text>();
-        for(Node num : mNums.getChildren())
+        for (Node num : mNums.getChildren())
             measureNumBoxes.add((HBox) num);
         int counter = 1;
         for (int i = 0; i < measureNumBoxes.size(); i++) {
@@ -126,19 +132,19 @@ public class StaffImages {
             if (i % Values.TIMESIG_BEATS == 0) {
                 t.setText(String.valueOf(counter));
                 counter++;
-            }
-            else
+            } else
                 continue;
         }
     }
 
     /**
-     * Sets up the various note lines of the staff. These
-     * are the notes that can appear on the staff. This method
-     * also sets up sharps, flats, etc.
-     * @param accidentals The HBox that holds the framework for the sharps /
-     * flats.
-     * @param instruments The HBox that holds the framework for the instruments.
+     * Sets up the various note lines of the staff. These are the notes that can
+     * appear on the staff. This method also sets up sharps, flats, etc.
+     *
+     * @param accidentals
+     *            The HBox that holds the framework for the sharps / flats.
+     * @param instruments
+     *            The HBox that holds the framework for the instruments.
      */
     private void initializeStaffInstruments(HBox instruments, HBox accidentals) {
         NoteMatrix staffMatrix = theStaff.getNoteMatrix();
@@ -166,9 +172,9 @@ public class StaffImages {
                 StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
                 notes.add(note);
                 accs.add(acc);
-                StaffInstrumentEventHandler hd =
-                        new StaffInstrumentEventHandler(note, acc,
-                                Values.NOTES_IN_A_LINE - pos, line, theStaff, il);
+                StaffInstrumentEventHandler hd = new StaffInstrumentEventHandler(
+                        note, acc, Values.NOTES_IN_A_LINE - pos, line,
+                        theStaff, il);
                 note.addEventHandler(MouseEvent.ANY, hd);
             }
 
@@ -179,7 +185,9 @@ public class StaffImages {
 
     /**
      * These are the lines that divide up the staff.
-     * @param staffMLines The measure lines that divide the staff.
+     *
+     * @param staffMLines
+     *            The measure lines that divide the staff.
      */
     private void initializeStaffMeasureLines(HBox mLines) {
         measureLines = new ArrayList<ImageView>();
@@ -187,17 +195,19 @@ public class StaffImages {
             measureLines.add((ImageView) n);
         for (int i = 0; i < measureLines.size(); i++) {
             if (i % Values.TIMESIG_BEATS == 0)
-                measureLines.get(i).setImage(il.getSpriteFX(
-                        ImageIndex.STAFF_MLINE));
+                measureLines.get(i).setImage(
+                        il.getSpriteFX(ImageIndex.STAFF_MLINE));
             else
-                measureLines.get(i).setImage(il.getSpriteFX(
-                        ImageIndex.STAFF_LINE));
+                measureLines.get(i).setImage(
+                        il.getSpriteFX(ImageIndex.STAFF_LINE));
         }
     }
 
     /**
      * Redraws the staff measure lines and numbers.
-     * @param currLine The current line that we are on.
+     *
+     * @param currLine
+     *            The current line that we are on.
      */
     public void updateStaffMeasureLines(int currLine) {
         int counter = 0;
@@ -205,16 +215,12 @@ public class StaffImages {
             ImageView currImage = measureLines.get(i);
             Text currText = measureNums.get(i);
             if ((currLine + i) % Values.TIMESIG_BEATS == 0) {
-                currImage.setImage(il.getSpriteFX(
-                        ImageIndex.STAFF_MLINE));
-                currText.setText(String.valueOf((int) (
-                        Math.ceil(currLine / (double) Values.TIMESIG_BEATS) + 1
-                        + counter)));
+                currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_MLINE));
+                currText.setText(String.valueOf((int) (Math.ceil(currLine
+                        / (double) Values.TIMESIG_BEATS) + 1 + counter)));
                 counter++;
-            }
-            else {
-                currImage.setImage(il.getSpriteFX(
-                        ImageIndex.STAFF_LINE));
+            } else {
+                currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_LINE));
                 currText.setText("");
             }
         }
@@ -222,8 +228,9 @@ public class StaffImages {
 
     /**
      * Sets up the note highlighting functionality.
-     * @param staffPlayBars The bars that move to highlight different
-     * notes.
+     *
+     * @param staffPlayBars
+     *            The bars that move to highlight different notes.
      */
     private void initializeStaffPlayBars(HBox playBars) {
         staffPlayBars = new ArrayList<ImageView>();
@@ -238,43 +245,30 @@ public class StaffImages {
     /**
      * Sets up the staff expansion lines, which are to hold notes that are
      * higher than or lower than the regular lines of the staff.
-     * @param staffExpLines An array of expansion lines. This method
-     * expects that there will be two of these, one of which indicates
-     * the lines above the staff and the other of which indicates
-     * the lines below the staff.
+     *
+     * @param staffExpLines
+     *            An array of ledger lines. This method expects that there will
+     *            be four of these, two of which indicate the lines above the
+     *            staff and the other of which indicating the lines below the
+     *            staff.
      */
-    private void initializeStaffExpansionLines(HBox[] staffExpLines) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Draws the pictures on the staff.
-     */
-    void draw() {
-
-    }
-
-    /**
-     * Refreshes the staff images that are currently displaying by
-     * forcing everything to redraw itself.
-     */
-    public void redraw() {
+    private void initializeStaffLedgerLines(HBox[] staffExpLines) {
 
     }
 
     /**
      * Sets the parent staff object to the specified object.
-     * @param s The pointer to the parent staff object.
+     *
+     * @param s
+     *            The pointer to the parent staff object.
      */
     public void setStaff(Staff s) {
         theStaff = s;
     }
 
     /**
-     * @return The list of <code>ImageView</code> objects that
-     * holds the bars that will highlight the notes that we are playing
-     * on the staff.
+     * @return The list of <code>ImageView</code> objects that holds the bars
+     *         that will highlight the notes that we are playing on the staff.
      */
     public ArrayList<ImageView> getPlayBars() {
         return staffPlayBars;
@@ -282,7 +276,9 @@ public class StaffImages {
 
     /**
      * Sets the controller class.
-     * @param ct The FXML controller class.
+     *
+     * @param ct
+     *            The FXML controller class.
      */
     public void setController(SMPFXController ct) {
         controller = ct;

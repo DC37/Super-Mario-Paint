@@ -39,7 +39,7 @@ Tasklist:
 * Bookmarks
 * Undo/redo
 * More advanced Options dialog
-* [optional] Instrument replacing option
+* Instrument replacing option
 * Release to a test group (v0.95 - **Beta Release** - Scheduled January 5, 2015)
 * Staff ledger lines
 * Push new version of StaffSequence with note extensions - Maintain backwards compatibility (done - January 4, 2015)
