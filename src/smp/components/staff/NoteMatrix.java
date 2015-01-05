@@ -211,7 +211,7 @@ public class NoteMatrix {
         if (high >= Values.highC) {
             theStaff.getStaffImages().highC().get(index).setVisible(true);
             theStaff.getStaffImages().highA().get(index).setVisible(true);
-        } else if (high > Values.highA) {
+        } else if (high >= Values.highA) {
             theStaff.getStaffImages().highC().get(index).setVisible(false);
             theStaff.getStaffImages().highA().get(index).setVisible(true);
         } else {

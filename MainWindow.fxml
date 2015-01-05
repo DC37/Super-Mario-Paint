@@ -109,7 +109,7 @@
                         </Rectangle>
                         <ImageView id="" fitHeight="276.0" fitWidth="758.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/STAFF_BG_TREBLE.png" />
+                            <Image url="@sprites/STAFF_BG_TREBLE.png" />
                           </image>
                           <StackPane.margin>
                             <Insets top="14.0" />
@@ -219,7 +219,7 @@
                                     <Insets left="124.0" />
                                  </padding>
                               </HBox>
-                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="24.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
+                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="23.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
                       <children>
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
@@ -236,7 +236,7 @@
                         <Insets left="117.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="14.0" prefHeight="312.0" prefWidth="758.0" spacing="32.0">
+                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="13.0" prefHeight="312.0" prefWidth="758.0" spacing="32.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
                           <children>
@@ -463,7 +463,7 @@
                         <Insets left="105.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="14.0" prefHeight="312.0" prefWidth="758.0">
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="13.0" prefHeight="312.0" prefWidth="758.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" spacing="-20.0">
                           <children>
@@ -942,7 +942,7 @@
                                         </ImageView>
                                       </children>
                                       <padding>
-                                        <Insets top="30.0" />
+                                        <Insets top="33.0" />
                                       </padding>
                                     </VBox>
                                   </children>
