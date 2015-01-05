@@ -50,20 +50,37 @@ public class StaffImages {
     /** This is the ImageLoader class. */
     private ImageLoader il;
 
+    /** The ledger lines. */
+    private HBox[] staffLLines;
+
+    /** The ledger lines at the high C of the staff. */
+    private ArrayList<Node> highC;
+
+    /** The ledger lines at the high A of the staff. */
+    private ArrayList<Node> highA;
+
+    /** The ledger lines at the low C of the staff. */
+    private ArrayList<Node> lowC;
+
+    /** The ledger lines at the low A of the staff. */
+    private ArrayList<Node> lowA;
+
+    /**
+     * This is the list of lists of the ledger lines, so that we can quickly
+     * hide everything using a loop, if necessary.
+     */
+    private ArrayList<ArrayList<Node>> theLLines = new ArrayList<ArrayList<Node>>();
+
     /**
      * The parent staff object.
      */
     private Staff theStaff;
 
     /**
-     * Constructor that also sets up the staff expansion lines.
-     *
-     * @param staffExtLines
-     *            These
+     * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(HBox[] staffExtLines, ImageLoader i) {
+    public StaffImages(ImageLoader i) {
         il = i;
-        initializeStaffLedgerLines(staffExtLines);
     }
 
     /**
@@ -76,6 +93,7 @@ public class StaffImages {
         initializeStaffMeasureLines(controller.getStaffMeasureLines());
         initializeStaffPlayBars(controller.getStaffPlayBars());
         initializeStaffMeasureNums(controller.getStaffMeasureNums());
+        initializeStaffLedgerLines();
         initializeStaffInstruments(controller.getStaffInstruments(),
                 controller.getStaffAccidentals());
         initializeVolumeBars(controller.getVolumeBars());
@@ -246,13 +264,36 @@ public class StaffImages {
      * Sets up the staff expansion lines, which are to hold notes that are
      * higher than or lower than the regular lines of the staff.
      *
-     * @param staffExpLines
+     * @param staffLLines
      *            An array of ledger lines. This method expects that there will
      *            be four of these, two of which indicate the lines above the
      *            staff and the other of which indicating the lines below the
      *            staff.
      */
-    private void initializeStaffLedgerLines(HBox[] staffExpLines) {
+    private void initializeStaffLedgerLines() {
+        highC = new ArrayList<Node>();
+        highA = new ArrayList<Node>();
+        lowC = new ArrayList<Node>();
+        lowA = new ArrayList<Node>();
+        highC.addAll(staffLLines[0].getChildren());
+        highA.addAll(staffLLines[1].getChildren());
+        lowC.addAll(staffLLines[2].getChildren());
+        lowA.addAll(staffLLines[3].getChildren());
+        theLLines.add(highC);
+        theLLines.add(highA);
+        theLLines.add(lowC);
+        theLLines.add(lowA);
+        hideAllLedgerLines();
+    }
+
+    /**
+     * Hides all of the ledger lines.
+     */
+    public void hideAllLedgerLines() {
+
+        for (ArrayList<Node> n : theLLines)
+            for (Node nd : n)
+                nd.setVisible(false);
 
     }
 
@@ -282,6 +323,43 @@ public class StaffImages {
      */
     public void setController(SMPFXController ct) {
         controller = ct;
+    }
+
+    /**
+     * @param l
+     *            The array of <code>HBox</code>es that contains the rectangles
+     *            for the ledger lines.
+     */
+    public void setLedgerLines(HBox[] l) {
+        staffLLines = l;
+    }
+
+    /**
+     * @return The array of <code>HBox</code>es that contains the rectangles for
+     *         the ledger lines.
+     */
+    public HBox[] getLedgerLines() {
+        return staffLLines;
+    }
+
+    /** @return The ledger lines at position high C. */
+    public ArrayList<Node> highC() {
+        return highC;
+    }
+
+    /** @return The ledger lines at position high A. */
+    public ArrayList<Node> highA() {
+        return highA;
+    }
+
+    /** @return The ledger lines at position low C. */
+    public ArrayList<Node> lowC() {
+        return lowC;
+    }
+
+    /** @return The ledger lines at position low C. */
+    public ArrayList<Node> lowA() {
+        return lowA;
     }
 
 }

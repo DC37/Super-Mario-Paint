@@ -4,6 +4,7 @@ Added more support for external soundfonts (two instruments that used to be swap
 Import MPC files just by loading them.
 Import MPC arrangements just by loading them.
 Slight update to song files which allows saving the parameters for note extensions (green highlights)
+Staff ledger lines
 Note: Arrangements only work if they are in the "Prefs" folder along with all of the songs.
 
 v0.942 (Semantic version 0.11.2) [current]

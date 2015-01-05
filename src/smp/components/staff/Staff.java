@@ -117,23 +117,24 @@ public class Staff {
     /**
      * Creates a new Staff object.
      *
-     * @param staffExtLines
+     * @param staffLLines
      *            These are the ledger lines that appear under notes for the
      *            lower and upper portions of the staff.
      * @param arrList
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
      */
-    public Staff(HBox[] staffExtLines, SMPFXController ct, ImageLoader i,
+    public Staff(HBox[] staffLLines, SMPFXController ct, ImageLoader i,
             ListView<String> arrList) {
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
                 Values.NOTES_IN_A_LINE, this, i);
         setImageLoader(i);
         setController(ct);
         setArrangementList(arrList);
-        staffImages = new StaffImages(staffExtLines, i);
+        staffImages = new StaffImages(i);
         staffImages.setStaff(this);
         staffImages.setController(ct);
+        staffImages.setLedgerLines(staffLLines);
         staffImages.initialize();
         animationService = new AnimationService();
         tracker = new NoteTracker();
@@ -784,6 +785,8 @@ public class Staff {
                             // Do nothing
                         }
                     }
+                    if (!arrPlaying)
+                        break;
                 }
                 highlightsOff();
                 hitStop();

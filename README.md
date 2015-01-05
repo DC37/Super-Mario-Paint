@@ -41,7 +41,7 @@ Tasklist:
 * More advanced Options dialog
 * Instrument replacing option
 * Release to a test group (v0.95 - **Beta Release** - Scheduled January 5, 2015)
-* Staff ledger lines
+* Staff ledger lines (done - January 4, 2015)
 * Push new version of StaffSequence with note extensions - Maintain backwards compatibility (done - January 4, 2015)
 * Fix measure addition and subtraction (done - January 4, 2015)
 * Import MPC arrangements (done - January 4, 2015)

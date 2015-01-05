@@ -178,7 +178,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         } else if (muteA) {
             theStaffNote.setImage(il.getSpriteFX(theInd.imageIndex()
                     .silhouette()));
-        } else if (muteA) {
         }
 
         accidental = new StaffAccidental(theStaffNote);
@@ -206,6 +205,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         StaffVolumeEventHandler sveh = theStaff.getNoteMatrix().getVolHandler(
                 line);
         sveh.updateVolume();
+        theStaff.redraw();
     }
 
     /**
@@ -254,6 +254,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);
         }
+        theStaff.redraw();
     }
 
     /**

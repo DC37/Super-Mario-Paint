@@ -58,6 +58,18 @@ public class Values {
      */
     public static int NOTES_IN_A_LINE = 18;
 
+    /** Location of the high C note. */
+    public static int highC = 16;
+
+    /** Location of the high A note. */
+    public static int highA = 14;
+
+    /** Location of the low C note. */
+    public static int lowC = 2;
+
+    /** Location of the low A note. */
+    public static int lowA = 0;
+
     /**
      * The number of distinct lines of notes that exist on the staff. This
      * number is typically 10.
