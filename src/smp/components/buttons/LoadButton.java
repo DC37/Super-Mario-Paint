@@ -3,17 +3,12 @@ package smp.components.buttons;
 import java.io.EOFException;
 import java.io.StreamCorruptedException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import smp.ImageLoader;
-import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;

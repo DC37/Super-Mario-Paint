@@ -1,4 +1,4 @@
-v0.95 (Semantic version 0.12.0) [unreleased]
+v0.95 (Semantic version 0.12.0) [current]
 Beta release - major functionality should be equivalent to and/or exceed that of MPC2.0.
 Added more support for external soundfonts (two instruments that used to be swapped are not swapped anymore)
 Import MPC files just by loading them.
@@ -7,7 +7,7 @@ Slight update to song files which allows saving the parameters for note extensio
 Staff ledger lines
 Note: Arrangements only work if they are in the "Prefs" folder along with all of the songs.
 
-v0.942 (Semantic version 0.11.2) [current]
+v0.942 (Semantic version 0.11.2)
 Pre-Beta - Bugfix from v0.941 - arranger / song loop point fix. Automatic song length cleanup feature.
 Also, works on Java 7 again.
 
