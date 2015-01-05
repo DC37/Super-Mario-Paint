@@ -584,8 +584,7 @@ public class Staff {
         /**
          * This class keeps track of animation and sound. Note to self: While
          * running a service or a task, crashes do not print stack traces.
-         * Therefore, debug like crazy! Fun fact: This is the first time that
-         * I've used a do-while loop in practice!
+         * Therefore, debug like crazy!
          */
         class AnimationTask extends Task<Staff> {
 
@@ -769,7 +768,7 @@ public class Staff {
                     setTempo(theSequence.getTempo());
                     playBars = staffImages.getPlayBars();
                     int counter = StateMachine.getMeasureLineNum();
-                    do {
+                    while (songPlaying && arrPlaying) {
                         playNextLine();
                         counter++;
                         if (counter > lastLine && counter % 4 == 0) {
@@ -784,7 +783,7 @@ public class Staff {
                         } catch (InterruptedException e) {
                             // Do nothing
                         }
-                    } while (songPlaying && arrPlaying);
+                    }
                 }
                 highlightsOff();
                 hitStop();

@@ -1,7 +1,11 @@
-As you all know, this is an alpha release, so bugs and issues are to be expected.
+As you all know, this is a beta release, so bugs and issues are to be expected.
 Here is a list of currently-known bugs:
 
--Release note: The arranger mode does not work yet!!
--(MrGudtavosky) The play bar / highlighter bar will apparently sometimes get 'stuck' in a place. Restarting the program will fix this (it's not permanent)
+-Running a song above 5000 tempo may cause random lines to be skipped once in a
+while if your computer isn't fast enough. This is an efficiency problem that 
+may have to be sorted out over time and many iterations.
 -End-of-file behaviour seems to be solved, but keep a lookout.
--(Christeriousninja / VolcanBrimstone) The soundfont is missing a number of notes in the boat instrument. Some boat notes will not sound because of that.
+-Christeriousninja / VolcanBrimstone: The soundfont is missing a number of 
+notes in the boat instrument. Some boat notes will not sound because of that.
+-Axelrod777: Cannot use the Mochi soundfont - sound effects are currently 
+messed up.

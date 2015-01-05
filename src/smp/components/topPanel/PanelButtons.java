@@ -20,18 +20,22 @@ public class PanelButtons {
 
     /** The FXML controller class. */
     private SMPFXController controller;
-    
+
     /** The Image Loader class. */
     private ImageLoader il;
-    
+
+    /** The button line, where one selects instruments. */
+    private ButtonLine bl;
+
     /** Default constructor. */
-    public PanelButtons(Staff s, SMPFXController ct, ImageLoader im) {
+    public PanelButtons(Staff s, SMPFXController ct, ImageLoader im, ButtonLine b) {
         il = im;
         theStaff = s;
         setController(ct);
         mButton = new ModeButton(controller.getModeButton(),
                 controller.getModeText(), controller, il);
         mButton.setStaff(theStaff);
+        bl = b;
     }
 
     /**
@@ -40,6 +44,20 @@ public class PanelButtons {
      */
     public void setController(SMPFXController ct) {
         controller = ct;
+    }
+
+    /**
+     * @param b The Button Line that we want to associate with the top panel.
+     */
+    public void setButtonLine(ButtonLine b) {
+        bl = b;
+    }
+
+    /**
+     * @return The ButtonLine that is associated with the top panel.
+     */
+    public ButtonLine getButtonLine() {
+        return bl;
     }
 
 }

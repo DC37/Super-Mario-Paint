@@ -270,6 +270,7 @@ public class Utilities {
         }
         theStaff.setSequenceName(fname);
         controller.getNameTextField().setText(fname);
+        theStaff.getTopPanel().getButtonLine().setNoteExtension(loaded.getNoteExtensions());
     }
 
     public static void populateStaffArrangement(StaffArrangement loaded, File inputFile,

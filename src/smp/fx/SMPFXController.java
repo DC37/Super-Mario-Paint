@@ -257,9 +257,7 @@ public class SMPFXController {
                 continue;
             }
 
-        // Set up top line.
-        instBLine = new ButtonLine(instLine, selectedInst, il);
-        selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
+
 
         // Set up staff.
         HBox[] staffExtLines = { staffExtLinesHighC, staffExtLinesHighA,
@@ -267,8 +265,14 @@ public class SMPFXController {
         staff = new Staff(staffExtLines, this, il, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
-        topPanel = new PanelButtons(staff, this, il);
+
+        // Set up top line.
+        instBLine = new ButtonLine(instLine, selectedInst, il, staff);
+        selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
+
+        topPanel = new PanelButtons(staff, this, il, instBLine);
         staff.setTopPanel(topPanel);
+
         arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
         // Hide all arranger features for now.

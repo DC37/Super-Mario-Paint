@@ -16,6 +16,7 @@ import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
+import smp.components.staff.Staff;
 import smp.components.staff.sequences.Note;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
@@ -61,6 +62,9 @@ public class ButtonLine {
      */
     private MidiChannel[] chan;
 
+    /** This is the staff that we are editing. */
+    private Staff theStaff;
+
     /**
      * Initializes the ImageView ArrayList.
      *
@@ -68,11 +72,13 @@ public class ButtonLine {
      *            An ArrayList of ImageView references intended to be displayed
      *            as an instrument line.
      */
-    public ButtonLine(HBox instLine, ImageView selected, ImageLoader im) {
+    public ButtonLine(HBox instLine, ImageView selected, ImageLoader im,
+            Staff st) {
         il = im;
         for (Node i : instLine.getChildren())
             buttons.add((ImageView) i);
         selectedInst = selected;
+        theStaff = st;
         setupButtons();
         DEFAULT_NOTE = Note.A3.getKeyNum();
         /*
@@ -147,6 +153,20 @@ public class ButtonLine {
     }
 
     /**
+     * @param i
+     *            The bitfield that we want to set the note extensions to.
+     */
+    public void setNoteExtension(int i) {
+        boolean[] ext = StateMachine.getNoteExtensions();
+        for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
+            if (!(ext[j] == ((i & (1 << j)) != 0))) {
+                ext[j] = !ext[j];
+                changePortrait(j, ext[j]);
+            }
+        }
+    }
+
+    /**
      * Sets the selected instrument to extend mode.
      *
      * @param i
@@ -156,6 +176,9 @@ public class ButtonLine {
         boolean[] ext = StateMachine.getNoteExtensions();
         ext[i.getChannel() - 1] = !ext[i.getChannel() - 1];
         changePortrait(i.getChannel() - 1, ext[i.getChannel() - 1]);
+        int ex = theStaff.getSequence().getNoteExtensions();
+        ex ^= (1 << (i.getChannel() - 1));
+        theStaff.getSequence().setNoteExtensions(ex);
     }
 
     /**

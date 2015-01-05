@@ -9,17 +9,17 @@ Accepting cryptocurrency donations!
 * Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia
 
 
-Milestones:
+Major Releases:
 -----
-* August 7, 2012 - Project started
-* December 25, 2013 - v0.90 - Alpha
-* January 4, 2014 - v0.91 - Alpha (Update Release)
-* December 30, 2014 - v0.92 - Alpha (Stability Release + Java 7u71 / Java 8u25)
+* January 5, 2015 (Scheduled) - v0.95 - Initial Beta Release 
+* January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger) 
 * December 31, 2014 - v0.921 - Alpha (Mac + Windows)
-* January 1-2, 2015 - v0.94 & v0.941 - Pre-Beta (Arranger)
-* January 10, 2015 (Scheduled) - v0.95 - Beta Release  
+* December 30, 2014 - v0.92 - Alpha (Stability Release + Java 7u71 / Java 8u25)
+* January 4, 2014 - v0.91 - Alpha (Update Release)
+* December 25, 2013 - v0.90 - Initial Alpha Release
+* August 7, 2012 - Project started
 * Author: RehdBlob
-* Version: 0.942
+* Version: 0.95
 
 Confirmed Operating System Configurations:
 -----
@@ -34,21 +34,21 @@ Tasklist:
 -----
 * Release SMP v1.00
 * Splash screen animation and other extras
-* Splash screen is actually a splash screen
 * Import AMS songs
 * Speedmarks
 * Bookmarks
 * Undo/redo
 * More advanced Options dialog
-* Fix measure addition and subtraction
 * [optional] Instrument replacing option
-* Release to a test group (v0.95 - **Beta Release** - Scheduled January 10, 2015)
-* [optional] Staff ledger lines
-* Push new version of StaffSequence and StaffArrangement - Maintain backwards compatibility
+* Release to a test group (v0.95 - **Beta Release** - Scheduled January 5, 2015)
+* Staff ledger lines
+* Push new version of StaffSequence with note extensions - Maintain backwards compatibility (done - January 4, 2015)
+* Fix measure addition and subtraction (done - January 4, 2015)
 * Import MPC arrangements (done - January 4, 2015)
 * Arrangement files use relative paths (uses the ol' "Prefs" folder) (done - January 4, 2015)
 * Import MPC songs (done - January 3, 2015)
 * Arranger mode (done - January 1, 2015)
+* Splash screen is actually a splash screen (done - December 31, 2014)
 * Test run on more operating systems (done - December 31, 2014)
 * Tempo changing option (done - February 14, 2014)
 * Rudimentary Options dialog (done - January 19, 2014)
