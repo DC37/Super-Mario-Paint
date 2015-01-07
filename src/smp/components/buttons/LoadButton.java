@@ -84,15 +84,17 @@ public class LoadButton extends ImagePushButton {
                     return;
                 init = new File(inputFile.getParent());
                 StaffSequence loaded = Utilities.loadSong(inputFile);
-                Utilities.populateStaff(loaded, inputFile, false, theStaff,
-                        controller);
+                String fname = Utilities.populateStaff(loaded, inputFile,
+                        false, theStaff, controller);
+                controller.getNameTextField().setText(fname);
                 StateMachine.setSongModified(false);
             } catch (ClassCastException | EOFException | ClassNotFoundException
                     | StreamCorruptedException e) {
                 try {
                     StaffSequence loaded = MPCDecoder.decode(inputFile);
-                    Utilities.populateStaff(loaded, inputFile, true, theStaff,
-                            controller);
+                    String fname = Utilities.populateStaff(loaded, inputFile,
+                            true, theStaff, controller);
+                    controller.getNameTextField().setText(fname);
                     StateMachine.setSongModified(false);
                 } catch (Exception e1) {
                     e1.printStackTrace();

@@ -215,7 +215,8 @@ public class Utilities {
             inputFile = new File(Values.SONGFOLDER + inputFile.getName());
             StaffSequence loaded = loadSong(inputFile);
             populateStaff(loaded, inputFile, false, theStaff, controller);
-        } catch (ClassCastException | EOFException | StreamCorruptedException e) {
+        } catch (ClassCastException | EOFException | StreamCorruptedException
+                | ClassNotFoundException e) {
             try {
                 StaffSequence loaded = MPCDecoder.decode(inputFile);
                 Utilities.populateStaff(loaded, inputFile, true, theStaff,
@@ -223,13 +224,16 @@ public class Utilities {
             } catch (Exception e1) {
                 e1.printStackTrace();
                 Dialog.showDialog("Not a valid song file.");
+                return;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Dialog.showDialog("Not a valid song file.");
+            return;
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Dialog.showDialog("Not a valid song file.");
+            return;
         }
     }
 
@@ -243,7 +247,7 @@ public class Utilities {
      * @param mpc
      *            Whether this is an MPC file.
      */
-    public static void populateStaff(StaffSequence loaded, File inputFile,
+    public static String populateStaff(StaffSequence loaded, File inputFile,
             boolean mpc, Staff theStaff, SMPFXController controller) {
         Utilities.normalize(loaded);
         theStaff.setSequence(loaded);
@@ -269,16 +273,18 @@ public class Utilities {
             // Do nothing
         }
         theStaff.setSequenceName(fname);
-        controller.getNameTextField().setText(fname);
-        theStaff.getTopPanel().getButtonLine().setNoteExtension(loaded.getNoteExtensions());
+        theStaff.getTopPanel().getButtonLine()
+                .setNoteExtension(loaded.getNoteExtensions());
+        return fname;
     }
 
-    public static void populateStaffArrangement(StaffArrangement loaded, File inputFile,
-            boolean mpc, Staff theStaff, SMPFXController controller) {
+    public static void populateStaffArrangement(StaffArrangement loaded,
+            File inputFile, boolean mpc, Staff theStaff,
+            SMPFXController controller) {
         File firstFile = loaded.getTheSequenceFiles().get(0);
-        loadSequenceFromArrangement(firstFile, theStaff,
-                controller);
+        loadSequenceFromArrangement(firstFile, theStaff, controller);
         String fname = inputFile.getName();
+        controller.getNameTextField().setText(fname);
         try {
             if (mpc)
                 fname = fname.substring(0, fname.indexOf(']'));
@@ -297,11 +303,21 @@ public class Utilities {
         ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
         for (int i = 0; i < files.size(); i++) {
             try {
-                seq.add(MPCDecoder.decode(files.get(i)));
+                seq.add(Utilities.loadSong(files.get(i)));
+            } catch (ClassCastException | EOFException
+                    | StreamCorruptedException | ClassNotFoundException e) {
+                try {
+                    seq.add(MPCDecoder.decode(files.get(i)));
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    return;
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
+                return;
             }
         }
         theStaff.getArrangement().setTheSequences(seq);

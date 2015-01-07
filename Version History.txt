@@ -1,3 +1,6 @@
+v0.951 (Semantic version 0.12.1) [current]
+Fix bugs with arranger loading/saving.
+
 v0.95 (Semantic version 0.12.0) [current]
 Beta release - major functionality should be equivalent to and/or exceed that of MPC2.0.
 Added more support for external soundfonts (two instruments that used to be swapped are not swapped anymore)
