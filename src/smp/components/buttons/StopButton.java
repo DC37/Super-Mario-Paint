@@ -45,7 +45,7 @@ public class StopButton extends ImageRadioButton {
             theStaff.stopSong();
         } else if (StateMachine.getState() == ProgramState.ARR_PLAYING) {
             StateMachine.setState(ProgramState.ARR_EDITING);
-            theStaff.stopArrangement();
+            theStaff.stopSong();
         }
     }
 
