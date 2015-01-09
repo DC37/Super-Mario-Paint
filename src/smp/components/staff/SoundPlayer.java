@@ -47,13 +47,7 @@ public class SoundPlayer implements Runnable {
     @Override
     public void run() {
         currVal = theStaff.getCurrVal();
-        while (run) {
-            try {
-                Thread.sleep(0,1);
-            } catch (InterruptedException e) {
-
-            }
-        }
+        
     }
 
     /**

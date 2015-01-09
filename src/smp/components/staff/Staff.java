@@ -708,6 +708,17 @@ public class Staff {
                 soundPlayer.playSoundLine(index);
             }
 
+            /**
+             * Bumps the highlights on the staff by a certain amount.
+             * 
+             * @param playBars
+             *            The list of playbar objects
+             * @param index
+             *            The index that we are currently at
+             * @param advance
+             *            Whether we are moving onto a new 'screen' of notes or
+             *            not.
+             */
             private void bumpHighlights(ArrayList<ImageView> playBars,
                     int index, boolean advance) {
                 playBars.get(index).setVisible(true);
@@ -720,8 +731,6 @@ public class Staff {
                     setLocation(loc);
                     currVal.setValue(loc);
                 }
-                if ((Settings.debug & 0b10000) == 0b10000)
-                    System.out.println(currVal);
             }
 
         }
