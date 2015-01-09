@@ -17,15 +17,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
+import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
+import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -211,13 +214,16 @@ public class Staff {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                staffImages.getPlayBars().setVisible(false);
+                ArrayList<ImageView> playBars = staffImages.getPlayBars();
+                for (ImageView i : playBars) {
+                    i.setVisible(false);
+                }
             }
         });
     }
 
     /** Begins animation of the Staff. (Starts a song) */
-    public void startSong() {
+    public synchronized void startSong() {
         soundPlayer.setRun(true);
         highlightsOff();
         lastLine = findLastLine();
@@ -233,7 +239,7 @@ public class Staff {
     }
 
     /** Starts an arrangement. */
-    public void startArrangement() {
+    public synchronized void startArrangement() {
         soundPlayer.setRun(true);
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
@@ -334,6 +340,20 @@ public class Staff {
      */
     public void setArrangerMode(boolean b) {
         theControls.setArrangerMode(b);
+    }
+
+    /**
+     * Imports a Mario Paint Composer song.
+     */
+    public void importMPCSong() {
+
+    }
+
+    /**
+     * Imports an Advanced Mario Sequencer song.
+     */
+    public void importAMSSong() {
+
     }
 
     /**
@@ -575,13 +595,6 @@ public class Staff {
     }
 
     /**
-     * @return Whether we are currently playing an arrangement.
-     */
-    public boolean arrPlaying() {
-        return arrPlaying;
-    }
-
-    /**
      * This is a worker thread that helps run the animation on the staff.
      */
     class AnimationService extends Service<Staff> {
@@ -618,12 +631,9 @@ public class Staff {
             /** These are the play bars on the staff. */
             protected ArrayList<ImageView> playBars;
 
-            /** This is a single play bar. */
-            protected ImageView playBar;
-
             @Override
             protected Staff call() throws Exception {
-                playBar = staffImages.getPlayBars();
+                playBars = staffImages.getPlayBars();
                 int counter = StateMachine.getMeasureLineNum();
                 while (songPlaying) {
                     playNextLine();
@@ -636,7 +646,6 @@ public class Staff {
                             zero = true;
                         } else {
                             songPlaying = false;
-                            playBar.setLayoutX(53);
                         }
                     }
                     try {
@@ -656,7 +665,7 @@ public class Staff {
              * just play things as they are.
              */
             protected void playNextLine() {
-                runUI(playBar, index, advance);
+                runUI(playBars, index, advance);
                 advance = !(index < Values.NOTELINES_IN_THE_WINDOW - 1);
                 index = advance ? 0 : (index + 1);
             }
@@ -671,14 +680,13 @@ public class Staff {
              * @param advance
              *            Whether we need to move the staff by some bit.
              */
-            private void runUI(final ImageView playBar, final int index,
-                    final boolean advance) {
+            private void runUI(final ArrayList<ImageView> playBars,
+                    final int index, final boolean advance) {
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
-                        playBar.setVisible(true);
-                        bumpHighlights(playBar, index, advance);
+                        bumpHighlights(playBars, index, advance);
                         playSoundLine(index);
                         if (zero) {
                             setLocation(0);
@@ -700,29 +708,20 @@ public class Staff {
                 soundPlayer.playSoundLine(index);
             }
 
-            /**
-             * Moves the highlights on the staff by a certain amount, based on
-             * the current position.
-             * 
-             * @param playBars
-             *            The play bars that are on the staff.
-             * @param index
-             *            The current index to bump.
-             * @param advance
-             *            Whether we are moving onto the next staff segment or
-             *            not.
-             */
-            private void bumpHighlights(ImageView playBar, int index,
-                    boolean advance) {
-                if (!advance) {
-                    playBar.setLayoutX(playBar.getLayoutX() + 64);
-                } else {
-                    playBar.setLayoutX(53);
+            private void bumpHighlights(ArrayList<ImageView> playBars,
+                    int index, boolean advance) {
+                playBars.get(index).setVisible(true);
+                for (int i = 0; i < playBars.size(); i++)
+                    if (i != index)
+                        playBars.get(i).setVisible(false);
+                if (advance) {
                     int loc = (int) currVal.getValue().doubleValue()
                             + Values.NOTELINES_IN_THE_WINDOW;
                     setLocation(loc);
                     currVal.setValue(loc);
                 }
+                if ((Settings.debug & 0b10000) == 0b10000)
+                    System.out.println(currVal);
             }
 
         }
@@ -738,15 +737,17 @@ public class Staff {
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 for (int i = 0; i < seq.size(); i++) {
+                    highlightSong(i);
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
                     StateMachine.setTempo(theSequence.getTempo());
                     theControls.updateCurrTempo();
-                    setParams(i);
+                    setScrollbar();
+                    redraw();
                     lastLine = findLastLine();
                     songPlaying = true;
                     setTempo(theSequence.getTempo());
-                    playBar = staffImages.getPlayBars();
+                    playBars = staffImages.getPlayBars();
                     int counter = StateMachine.getMeasureLineNum();
                     while (songPlaying && arrPlaying) {
                         playNextLine();
@@ -757,7 +758,6 @@ public class Staff {
                             songPlaying = false;
                             advance = false;
                             zero = true;
-                            playBar.setLayoutX(53);
                         }
                         try {
                             Thread.sleep(delayMillis, delayNanos);
@@ -774,23 +774,31 @@ public class Staff {
             }
 
             /**
-             * Highlights the currently-playing song in the arranger list, sets
-             * the scrollbar to the correct position, and redraws the staff.
+             * Highlights the currently-playing song in the arranger list.
              *
              * @param i
              *            The index to highlight.
              */
-            private void setParams(final int i) {
+            private void highlightSong(final int i) {
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
                         theArrangementList.getSelectionModel().select(i);
                         theArrangementList.scrollTo(i);
+                    }
+
+                });
+            }
+
+            /** Sets the scrollbar max/min to the proper values. */
+            private void setScrollbar() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
                         theControls.getScrollbar().setMax(
                                 theSequence.getTheLines().size()
                                         - Values.NOTELINES_IN_THE_WINDOW);
-                        theMatrix.redraw();
                     }
                 });
             }

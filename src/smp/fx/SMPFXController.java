@@ -6,7 +6,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
@@ -188,13 +187,12 @@ public class SMPFXController {
     @FXML
     private HBox staffMeasureNumbers;
 
-
     /**
      * The staff layer that displays the bar that plays notes.
      */
     @FXML
-    private Pane staffPlayBar;
-    
+    private HBox staffPlayBars;
+
     /**
      * The staff layer that displays the instruments that have been placed on
      * the staff. Note: Images should be spaced 16 px.
@@ -300,8 +298,8 @@ public class SMPFXController {
     /**
      * @return The <code>HBox</code> that holds the staff play bars.
      */
-    public Pane getStaffPlayBars() {
-        return staffPlayBar;
+    public HBox getStaffPlayBars() {
+        return staffPlayBars;
     }
 
     /**
