@@ -7,7 +7,6 @@ import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
 
 /**
  *
@@ -49,7 +48,7 @@ public class SoundPlayer implements Runnable {
         currVal = theStaff.getCurrVal();
         while (run) {
             try {
-                Thread.sleep(0,1);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
 
             }

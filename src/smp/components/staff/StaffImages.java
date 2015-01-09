@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -42,7 +43,7 @@ public class StaffImages {
     private ArrayList<Text> measureNums;
 
     /** These are the bars that highlight notes. */
-    private ArrayList<ImageView> staffPlayBars;
+    private ImageView staffPlayBars;
 
     /** This is the FXML controller class. */
     private SMPFXController controller;
@@ -250,14 +251,10 @@ public class StaffImages {
      * @param staffPlayBars
      *            The bars that move to highlight different notes.
      */
-    private void initializeStaffPlayBars(HBox playBars) {
-        staffPlayBars = new ArrayList<ImageView>();
-        for (Node n : playBars.getChildren()) {
-            ImageView i = (ImageView) n;
-            i.setImage(il.getSpriteFX(ImageIndex.PLAY_BAR1));
-            i.setVisible(false);
-            staffPlayBars.add(i);
-        }
+    private void initializeStaffPlayBars(Pane playBars) {
+        staffPlayBars = (ImageView) playBars.getChildren().get(0);
+        staffPlayBars.setImage(il.getSpriteFX(ImageIndex.PLAY_BAR1));
+        staffPlayBars.setVisible(false);
     }
 
     /**
@@ -311,7 +308,7 @@ public class StaffImages {
      * @return The list of <code>ImageView</code> objects that holds the bars
      *         that will highlight the notes that we are playing on the staff.
      */
-    public ArrayList<ImageView> getPlayBars() {
+    public ImageView getPlayBars() {
         return staffPlayBars;
     }
 

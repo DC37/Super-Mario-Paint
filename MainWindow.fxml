@@ -219,23 +219,11 @@
                                     <Insets left="124.0" />
                                  </padding>
                               </HBox>
-                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="23.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
-                      <children>
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
-                      </children>
-                      <padding>
-                        <Insets left="117.0" />
-                      </padding>
-                    </HBox>
+                              <Pane fx:id="staffPlayBar" layoutX="20.0" layoutY="23.0">
+                                 <children>
+                        <ImageView fitHeight="281.0" fitWidth="56.0" layoutX="53.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </Pane>
                     <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="13.0" prefHeight="312.0" prefWidth="758.0" spacing="32.0">
                       <children>
                         <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
