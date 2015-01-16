@@ -74,9 +74,6 @@ public class Staff {
     /** This holds the notes on the staff. */
     private NoteMatrix theMatrix;
 
-    /** This keeps track of which notes are actually playing. */
-    private NoteTracker tracker;
-
     /** This is the name of the song that we are currently editing. */
     private String theSequenceName = "";
 
@@ -107,6 +104,15 @@ public class Staff {
     /** The image loader class. */
     private ImageLoader il;
 
+    /** This is the SoundPlayer object that we will invoke to set parameters. */
+    private SoundPlayer soundPlayer;
+
+    /**
+     * This is the SoundPlayer thread that we will be invoking whilst playing
+     * songs.
+     */
+    private Thread soundPlayerThread;
+
     /**
      * This is a service that will help run the animation and sound of playing a
      * song.
@@ -136,7 +142,9 @@ public class Staff {
         staffImages.setLedgerLines(staffLLines);
         staffImages.initialize();
         animationService = new AnimationService();
-        tracker = new NoteTracker();
+        soundPlayer = new SoundPlayer(this);
+        soundPlayerThread = new Thread(soundPlayer);
+        soundPlayerThread.setDaemon(true);
     }
 
     /**
@@ -214,8 +222,9 @@ public class Staff {
         });
     }
 
-    /** Begins animation of the Staff. */
+    /** Begins animation of the Staff. (Starts a song) */
     public synchronized void startSong() {
+        soundPlayer.setRun(true);
         highlightsOff();
         lastLine = findLastLine();
         if ((lastLine == 0 && theSequence.getLine(0).isEmpty())
@@ -223,13 +232,15 @@ public class Staff {
             theControls.getStopButton().reactPressed(null);
             return;
         }
+        soundPlayerThread.start();
         songPlaying = true;
         setTempo(StateMachine.getTempo());
         animationService.restart();
     }
 
     /** Starts an arrangement. */
-    public void startArrangement() {
+    public synchronized void startArrangement() {
+        soundPlayer.setRun(true);
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
         setLocation(0);
@@ -243,15 +254,16 @@ public class Staff {
                     seq.set(i, MPCDecoder.decode(f));
                 } catch (ParseException | IOException e1) {
                     e1.printStackTrace();
-                    stopArrangement();
+                    stopSong();
                     return;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                stopArrangement();
+                stopSong();
                 return;
             }
         }
+        soundPlayerThread.start();
         arrPlaying = true;
         animationService.restart();
     }
@@ -283,6 +295,12 @@ public class Staff {
 
     /** Stops the song that is currently playing. */
     public void stopSong() {
+        soundPlayer.setRun(false);
+        try {
+            soundPlayerThread.join();
+        } catch (InterruptedException e) {
+
+        }
         Platform.runLater(new Runnable() {
 
             @Override
@@ -303,11 +321,15 @@ public class Staff {
                 highlightsOff();
             }
         });
-    }
-
-    /** Stops the arrangement that is currently playing. */
-    public void stopArrangement() {
-        stopSong();
+        while (soundPlayerThread.isAlive()) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                // do nothing
+            }
+        }
+        soundPlayerThread = new Thread(soundPlayer);
+        soundPlayerThread.setDaemon(true);
     }
 
     /**
@@ -551,6 +573,13 @@ public class Staff {
     }
 
     /**
+     * @return The DoubleProperty value that we change to move the staff.
+     */
+    public DoubleProperty getCurrVal() {
+        return currVal;
+    }
+
+    /**
      * @return The Staff's Image Loader
      */
     public ImageLoader getImageLoader() {
@@ -668,6 +697,28 @@ public class Staff {
                 });
             }
 
+            /**
+             * Plays a sound line at the index specified. Or rather, tells the
+             * SoundPlayer thread to do that.
+             *
+             * @param index
+             *            The index to play.
+             */
+            private void playSoundLine(int index) {
+                soundPlayer.playSoundLine(index);
+            }
+
+            /**
+             * Bumps the highlights on the staff by a certain amount.
+             * 
+             * @param playBars
+             *            The list of playbar objects
+             * @param index
+             *            The index that we are currently at
+             * @param advance
+             *            Whether we are moving onto a new 'screen' of notes or
+             *            not.
+             */
             private void bumpHighlights(ArrayList<ImageView> playBars,
                     int index, boolean advance) {
                 playBars.get(index).setVisible(true);
@@ -680,67 +731,6 @@ public class Staff {
                     setLocation(loc);
                     currVal.setValue(loc);
                 }
-                if ((Settings.debug & 0b10000) == 0b10000)
-                    System.out.println(currVal);
-            }
-
-            /**
-             * Plays the current line of notes.
-             */
-            private void playSoundLine(int index) {
-                StaffNoteLine s = theSequence.getLine((int) (currVal
-                        .doubleValue() + index));
-                ArrayList<StaffNote> theNotes = s.getNotes();
-                tracker.stopNotes(s);
-                for (StaffNote sn : theNotes) {
-                    if (sn.muteNoteVal() == 1)
-                        stopSound(sn);
-                    else if (sn.muteNoteVal() == 2)
-                        stopInstrument(sn);
-                }
-                for (StaffNote sn : theNotes) {
-                    if (sn.muteNoteVal() == 0)
-                        playSound(sn, s);
-                }
-            }
-
-            /**
-             * Plays a sound.
-             *
-             * @param sn
-             *            The StaffNote.
-             * @param s
-             *            The StaffNoteLine.
-             */
-            private void playSound(StaffNote sn, StaffNoteLine s) {
-                SoundfontLoader.playSound(
-                        Values.staffNotes[sn.getPosition()].getKeyNum(),
-                        sn.getInstrument(), sn.getAccidental(), s.getVolume());
-                tracker.addNotePlaying(
-                        Values.staffNotes[sn.getPosition()].getKeyNum(),
-                        sn.getInstrument(), sn.getAccidental());
-            }
-
-            /**
-             * Stops a sound.
-             *
-             * @param sn
-             *            The StaffNote.
-             */
-            private void stopSound(StaffNote sn) {
-                SoundfontLoader.stopSound(
-                        Values.staffNotes[sn.getPosition()].getKeyNum(),
-                        sn.getInstrument(), sn.getAccidental());
-            }
-
-            /**
-             * Stops a full set of instruments from playing sounds.
-             *
-             * @param sn
-             *            The StaffNote.
-             */
-            private void stopInstrument(StaffNote sn) {
-                tracker.stopInstrument(sn);
             }
 
         }

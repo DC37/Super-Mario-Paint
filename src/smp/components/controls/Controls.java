@@ -139,9 +139,10 @@ public class Controls {
                     public void changed(
                             ObservableValue<? extends String> observable,
                             String oldValue, String newValue) {
+                        if (StateMachine.getState() == ProgramState.ARR_PLAYING)
+                            return;
                         int x = theList.getSelectionModel().getSelectedIndex();
-                        if (x != -1
-                                && StateMachine.getState() != ProgramState.ARR_PLAYING) {
+                        if (x != -1) {
                             ArrayList<StaffSequence> s = theStaff
                                     .getArrangement().getTheSequences();
                             ArrayList<File> f = theStaff.getArrangement()
