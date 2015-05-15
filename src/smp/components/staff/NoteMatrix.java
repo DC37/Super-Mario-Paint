@@ -159,8 +159,14 @@ public class NoteMatrix {
 
     /** Redraws the entire matrix. */
     public void redraw() {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++)
-            redraw(i);
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            try {
+                redraw(i);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+                // Otherwise, do nothing.
+            }
+        }
         if (focusPane != null)
             focusPane.redraw();
     }
@@ -222,14 +228,13 @@ public class NoteMatrix {
         if (low <= Values.lowA) {
             theStaff.getStaffImages().lowC().get(index).setVisible(true);
             theStaff.getStaffImages().lowA().get(index).setVisible(true);
-        } else if (low <= Values.lowC){
+        } else if (low <= Values.lowC) {
             theStaff.getStaffImages().lowC().get(index).setVisible(true);
             theStaff.getStaffImages().lowA().get(index).setVisible(false);
         } else {
             theStaff.getStaffImages().lowC().get(index).setVisible(false);
             theStaff.getStaffImages().lowA().get(index).setVisible(false);
         }
-
 
     }
 
@@ -253,7 +258,7 @@ public class NoteMatrix {
      * @param index
      *            The index that we are clearing.
      */
-    private void clearNoteDisplay(int index) {
+    private synchronized void clearNoteDisplay(int index) {
         ArrayList<StackPane> nt = matrix.get(index);
         ArrayList<StackPane> ac = accMatrix.get(index);
         for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {

@@ -11,7 +11,7 @@ Accepting cryptocurrency donations!
 
 Major Releases:
 -----
-* January 5, 2015 - v0.95 - Initial Beta Release 
+* January 5, 2015 - v0.95~0.951 - Initial Beta Release 
 * January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger) 
 * December 31, 2014 - v0.921 - Alpha (Mac + Windows)
 * December 30, 2014 - v0.92 - Alpha (Stability Release + Java 7u71 / Java 8u25)
@@ -41,6 +41,7 @@ Tasklist:
 * Undo/redo
 * More advanced Options dialog
 * Instrument replacing option
+* Human-readable save files
 * Release to a test group (v0.95 - **Beta Release** - January 5, 2015)
 * Staff ledger lines (done - January 4, 2015)
 * Push new version of StaffSequence with note extensions - Maintain backwards compatibility (done - January 4, 2015)

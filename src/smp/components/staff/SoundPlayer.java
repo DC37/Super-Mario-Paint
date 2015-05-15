@@ -7,7 +7,6 @@ import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
 
 /**
  *
@@ -35,10 +34,7 @@ public class SoundPlayer implements Runnable {
 
     /** This is the value of the scrollbar. */
     private DoubleProperty currVal;
-
-    /** Whether we want to play a note or not. */
-    private boolean play = false;
-
+    
     /** Initializes this sound player and binds a staff to it. */
     public SoundPlayer(Staff s) {
         theStaff = s;
@@ -117,15 +113,7 @@ public class SoundPlayer implements Runnable {
     public void setRun(boolean r) {
         run = r;
     }
-
-    /**
-     *
-     * @param p
-     */
-    public void setPlay(boolean p) {
-        play = p;
-    }
-
+    
     /**
      *
      * @param i

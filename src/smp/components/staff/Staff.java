@@ -17,18 +17,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
-import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
-import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
-import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
