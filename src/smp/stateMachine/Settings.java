@@ -18,6 +18,9 @@ public class Settings {
     /** The name of the file that we write to. */
     private final static String settingsFile = "settings.data";
 
+    /** Change this to true for old functionality of serializing objects. */
+    public final static boolean SAVE_OBJECTS = true;
+    
     /**
      * Classic debug on/off. Level 1.
      * 0b10000 - Print staff value every time it changes.

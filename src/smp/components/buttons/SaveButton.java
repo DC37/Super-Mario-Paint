@@ -19,6 +19,7 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
 import smp.stateMachine.ProgramState;
+import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -60,11 +61,6 @@ public class SaveButton extends ImagePushButton {
         // do nothing.
     }
 
-    /** This saves the song. */
-    private void saveSong() {
-        saveObject();
-    }
-
     /** Saves the arrangement. */
     private void saveArrangement() {
         try {
@@ -96,11 +92,9 @@ public class SaveButton extends ImagePushButton {
     }
 
     /**
-     * Saves in object file format. Makes decent use of serialization. There are
-     * some issues with this because if one changes the staff sequence class,
-     * there are going to be issues loading the file.
+     * Saves the current song to disk.
      */
-    private void saveObject() {
+    private void saveSong() {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(new File(System.getProperty("user.dir")));
@@ -113,11 +107,13 @@ public class SaveButton extends ImagePushButton {
             if (outputFile == null)
                 return;
             FileOutputStream f_out = new FileOutputStream(outputFile);
-            ObjectOutputStream o_out = new ObjectOutputStream(f_out);
             StaffSequence out = theStaff.getSequence();
             out.setTempo(StateMachine.getTempo());
-            o_out.writeObject(out);
-            o_out.close();
+            if (Settings.SAVE_OBJECTS) {
+                saveObject(f_out, out);
+            } else {
+                saveTxt(f_out, out);
+            }
             f_out.close();
             theStaff.setSequenceFile(outputFile);
             StateMachine.setSongModified(false);
@@ -128,25 +124,24 @@ public class SaveButton extends ImagePushButton {
         }
     }
 
-    /** Saves in text file format. CURRENTLY BROKEN. */
-    @SuppressWarnings("unused")
-    private void saveTxt() {
-        try {
-            String outputFile = controller.getNameTextField().getText();
-            outputFile = outputFile + "TXT.txt";
-            PrintStream p = new PrintStream(outputFile);
-            StaffSequence out = theStaff.getSequence();
-            out.setTempo(StateMachine.getTempo());
-            p.println(Values.VERSION);
-            for (StaffNoteLine s : out.getTheLines()) {
-                p.println(s);
-            }
-            p.println(out.getTempo());
-            p.close();
+    /**
+     * Saves in object file format. Makes decent use of serialization. There are
+     * some issues with this because if one changes the staff sequence class,
+     * there are going to be issues loading the file.
+     */
+    private void saveObject(FileOutputStream f_out, StaffSequence out)
+            throws IOException {
+        ObjectOutputStream o_out = new ObjectOutputStream(f_out);
+        o_out.writeObject(out);
+        o_out.close();
+    }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    /** Saves in text file format. */
+    private void saveTxt(FileOutputStream f_out, StaffSequence out)
+            throws IOException {
+        PrintStream pr = new PrintStream(f_out);
+        pr.println(out);
+        pr.close();
     }
 
 }

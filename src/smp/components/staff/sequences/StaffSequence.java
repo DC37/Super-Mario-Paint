@@ -141,5 +141,14 @@ public class StaffSequence implements Serializable {
     public int getNoteExtensions() {
         return noteExtensions;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder();
+        out.append("Tempo = " + tempo + "\n");
+        out.append("Extensions = " + noteExtensions + "\n");
+        out.append(theLines.toString() + "\n");
+        return out.toString();
+    }
 
 }
