@@ -170,9 +170,13 @@ public class StaffNote extends ImageView implements Serializable {
             break;
 
         }
-        return muteNote != 0 ? theInstrument.toString() + " " + noteName
-                + noteAcc + "m" : theInstrument.toString() + " " + noteName
-                + noteAcc;
+        if (muteNote == 2) {
+            return theInstrument.toString() + " " + noteName + noteAcc + "m2";
+        } else if (muteNote == 1) {
+            return theInstrument.toString() + " " + noteName + noteAcc + "m1";
+        } else {
+            return theInstrument.toString() + " " + noteName + noteAcc;
+        }
     }
 
 }
