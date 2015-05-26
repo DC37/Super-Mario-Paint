@@ -6,21 +6,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import smp.ImageLoader;
-import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffArrangement;
+import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
 import smp.stateMachine.ProgramState;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
+import smp.stateMachine.TimeSignature;
 
 /**
  * This is the button that saves a song.
@@ -140,7 +142,25 @@ public class SaveButton extends ImagePushButton {
     private void saveTxt(FileOutputStream f_out, StaffSequence out)
             throws IOException {
         PrintStream pr = new PrintStream(f_out);
-        pr.println(out);
+        ArrayList<StaffNoteLine> theLines = out.getTheLines();
+        TimeSignature t = out.getTimeSignature();
+        if (t == null) {
+            t = TimeSignature.FOUR_FOUR;
+        }
+        pr.printf("TEMPO: %f, EXT: %d, TIME: %s\n", out.getTempo(),
+                out.getNoteExtensions(), t);
+
+        for (int i = 0; i < theLines.size(); i++) {
+            if (theLines.get(i).isEmpty()) {
+                continue;
+            }
+            pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
+            ArrayList<StaffNote> line = theLines.get(i).getNotes();
+            for (int j = 0; j < line.size(); j++) {
+                pr.print(line.get(j) + ",");
+            }
+            pr.printf("VOL: %d\n", theLines.get(i).getVolume());
+        }
         pr.close();
     }
 

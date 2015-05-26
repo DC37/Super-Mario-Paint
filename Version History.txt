@@ -1,7 +1,12 @@
+v0.96 (Semantic version 0.13.0)
+Add in functionality for saving human-readable csv files.
+Add in time signatures to save files
+Add in functionality for loading human-readable csv files.
+
 v0.951 (Semantic version 0.12.1) [current]
 Fix bugs with arranger loading/saving.
 
-v0.95 (Semantic version 0.12.0) [current]
+v0.95 (Semantic version 0.12.0)
 Beta release - major functionality should be equivalent to and/or exceed that of MPC2.0.
 Added more support for external soundfonts (two instruments that used to be swapped are not swapped anymore)
 Import MPC files just by loading them.

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import smp.components.Values;
+import smp.stateMachine.TimeSignature;
 
 /**
  * We might not even need MIDI to do this sequencing stuff. This class keeps
@@ -29,6 +30,9 @@ public class StaffSequence implements Serializable {
 
     /** This tells us which notes are extended (green highlight) or not. */
     private int noteExtensions = 0;
+
+    /** The time signature of this sequence. */
+    private TimeSignature t = TimeSignature.FOUR_FOUR;
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
@@ -141,7 +145,12 @@ public class StaffSequence implements Serializable {
     public int getNoteExtensions() {
         return noteExtensions;
     }
-    
+
+    /** @return The time signature of this sequence. */
+    public TimeSignature getTimeSignature() {
+        return t;
+    }
+
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();
