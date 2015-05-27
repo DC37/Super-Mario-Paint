@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -171,12 +173,31 @@ public class Utilities {
      * @throws ClassNotFoundException
      */
     public static StaffSequence loadSong(File inputFile)
-            throws FileNotFoundException, IOException, ClassNotFoundException {
+            throws FileNotFoundException, IOException, NullPointerException {
         FileInputStream f_in = new FileInputStream(inputFile);
-        ObjectInputStream o_in = new ObjectInputStream(f_in);
-        StaffSequence loaded = (StaffSequence) o_in.readObject();
-        o_in.close();
+        StaffSequence loaded = null;
+        try {
+            // Decode as object
+            ObjectInputStream o_in = new ObjectInputStream(f_in);
+            loaded = (StaffSequence) o_in.readObject();
+            o_in.close();
+        } catch (ClassNotFoundException e) {
+            // If it's not an object, try using the human-readable option.
+            Scanner sc = new Scanner(f_in);
+            ArrayList<String> read = new ArrayList<String>();
+            while (sc.hasNext()) {
+                read.add(sc.nextLine());
+            }
+            sc.close();
+            loaded = new StaffSequence();
+            for (String s : read) {
+
+            }
+        }
         f_in.close();
+        if (loaded == null) {
+            throw new NullPointerException();
+        }
         return loaded;
     }
 
@@ -214,8 +235,7 @@ public class Utilities {
             inputFile = new File(Values.SONGFOLDER + inputFile.getName());
             StaffSequence loaded = loadSong(inputFile);
             populateStaff(loaded, inputFile, false, theStaff, controller);
-        } catch (ClassCastException | EOFException | StreamCorruptedException
-                | ClassNotFoundException e) {
+        } catch (ClassCastException | EOFException | StreamCorruptedException e) {
             try {
                 StaffSequence loaded = MPCDecoder.decode(inputFile);
                 Utilities.populateStaff(loaded, inputFile, true, theStaff,
@@ -277,6 +297,16 @@ public class Utilities {
         return fname;
     }
 
+    /**
+     * Populates the staff with the arrangement given.
+     *
+     * @param loaded
+     *            The loaded arrangement.
+     * @param inputFile
+     *            The input file.
+     * @param mpc
+     *            Whether this is an MPC file.
+     */
     public static void populateStaffArrangement(StaffArrangement loaded,
             File inputFile, boolean mpc, Staff theStaff,
             SMPFXController controller) {
@@ -304,7 +334,7 @@ public class Utilities {
             try {
                 seq.add(Utilities.loadSong(files.get(i)));
             } catch (ClassCastException | EOFException
-                    | StreamCorruptedException | ClassNotFoundException e) {
+                    | StreamCorruptedException e) {
                 try {
                     seq.add(MPCDecoder.decode(files.get(i)));
                 } catch (Exception e1) {

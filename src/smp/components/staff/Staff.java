@@ -245,16 +245,15 @@ public class Staff {
             File f = new File(Values.SONGFOLDER + files.get(i).getName());
             try {
                 seq.set(i, Utilities.loadSong(f));
-            } catch (ClassCastException | EOFException | ClassNotFoundException
-                    | StreamCorruptedException e) {
+            } catch (ClassCastException | EOFException | StreamCorruptedException e) {
                 try {
                     seq.set(i, MPCDecoder.decode(f));
-                } catch (ParseException | IOException e1) {
+                } catch (ParseException | IOException | NullPointerException e1) {
                     e1.printStackTrace();
                     stopSong();
                     return;
                 }
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
                 stopSong();
                 return;
@@ -707,7 +706,7 @@ public class Staff {
 
             /**
              * Bumps the highlights on the staff by a certain amount.
-             * 
+             *
              * @param playBars
              *            The list of playbar objects
              * @param index

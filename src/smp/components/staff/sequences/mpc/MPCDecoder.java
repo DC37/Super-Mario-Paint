@@ -63,7 +63,7 @@ public class MPCDecoder {
      */
     public static StaffSequence decode(String in) throws ParseException {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
-            throw new ParseException("Invalid MPC Text File.", 0);
+            throw new ParseException("Invalid Text File.", 0);
         }
         ArrayList<String> everything = chop(clean(in));
         String timeSig = in.substring(0, in.indexOf('*'));
@@ -174,7 +174,7 @@ public class MPCDecoder {
     private static StaffArrangement parseFiles(String str)
             throws ParseException, IOException {
         if (str.isEmpty() || str == null) {
-            throw new ParseException("Invalid MPC Arr File.", 0);
+            throw new ParseException("Invalid Arr File.", 0);
         }
         StaffArrangement theArr = new StaffArrangement();
 

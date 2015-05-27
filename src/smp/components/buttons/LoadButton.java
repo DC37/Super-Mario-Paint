@@ -88,8 +88,7 @@ public class LoadButton extends ImagePushButton {
                         false, theStaff, controller);
                 controller.getNameTextField().setText(fname);
                 StateMachine.setSongModified(false);
-            } catch (ClassCastException | EOFException | ClassNotFoundException
-                    | StreamCorruptedException e) {
+            } catch (ClassCastException | EOFException | StreamCorruptedException e) {
                 try {
                     StaffSequence loaded = MPCDecoder.decode(inputFile);
                     String fname = Utilities.populateStaff(loaded, inputFile,
