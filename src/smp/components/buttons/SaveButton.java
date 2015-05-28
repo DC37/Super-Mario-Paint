@@ -105,6 +105,9 @@ public class SaveButton extends ImagePushButton {
      */
     private void saveArrTxt(FileOutputStream f_out, StaffArrangement out) {
         PrintStream pr = new PrintStream(f_out);
+        for (String s : out.getTheSequenceNames()) {
+            pr.println(s);
+        }
         pr.close();
     }
 

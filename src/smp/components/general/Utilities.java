@@ -308,7 +308,8 @@ public class Utilities {
             inputFile = new File(Values.SONGFOLDER + inputFile.getName());
             StaffSequence loaded = loadSong(inputFile);
             populateStaff(loaded, inputFile, false, theStaff, controller);
-        } catch (ClassCastException | EOFException | StreamCorruptedException e) {
+        } catch (ClassCastException | EOFException | StreamCorruptedException
+                | NullPointerException e) {
             try {
                 StaffSequence loaded = MPCDecoder.decode(inputFile);
                 Utilities.populateStaff(loaded, inputFile, true, theStaff,
@@ -407,7 +408,7 @@ public class Utilities {
             try {
                 seq.add(Utilities.loadSong(files.get(i)));
             } catch (ClassCastException | EOFException
-                    | StreamCorruptedException e) {
+                    | StreamCorruptedException | NullPointerException e) {
                 try {
                     seq.add(MPCDecoder.decode(files.get(i)));
                 } catch (Exception e1) {

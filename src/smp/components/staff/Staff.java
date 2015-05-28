@@ -245,15 +245,15 @@ public class Staff {
             File f = new File(Values.SONGFOLDER + files.get(i).getName());
             try {
                 seq.set(i, Utilities.loadSong(f));
-            } catch (ClassCastException | EOFException | StreamCorruptedException e) {
+            } catch (StreamCorruptedException | NullPointerException e) {
                 try {
                     seq.set(i, MPCDecoder.decode(f));
-                } catch (ParseException | IOException | NullPointerException e1) {
+                } catch (ParseException | IOException e1) {
                     e1.printStackTrace();
                     stopSong();
                     return;
                 }
-            } catch (IOException | NullPointerException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 stopSong();
                 return;

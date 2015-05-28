@@ -3,6 +3,7 @@ package smp.components.buttons;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StreamCorruptedException;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -137,7 +138,8 @@ public class LoadButton extends ImagePushButton {
                         theStaff, controller);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
-            } catch (ClassNotFoundException | NullPointerException e) {
+            } catch (ClassNotFoundException | StreamCorruptedException
+                    | NullPointerException e) {
                 try {
                     StaffArrangement loaded = MPCDecoder
                             .decodeArrangement(inputFile);
