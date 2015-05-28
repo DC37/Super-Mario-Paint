@@ -2,9 +2,9 @@
 /Prefs/
 /sprites_PSD/
 
-.txt
-.sf2
-.zip
-.rar
-.jar
+*.txt
+*.sf2
+*.zip
+*.rar
+*.jar
 
