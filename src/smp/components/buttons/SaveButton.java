@@ -77,12 +77,14 @@ public class SaveButton extends ImagePushButton {
             if (outputFile == null)
                 return;
             FileOutputStream f_out = new FileOutputStream(outputFile);
-            ObjectOutputStream o_out = new ObjectOutputStream(f_out);
             StaffArrangement out = theStaff.getArrangement();
             out.getTheSequenceNames().clear();
             out.setTheSequenceNames(theStaff.getArrangementList().getItems());
-            o_out.writeObject(out);
-            o_out.close();
+            if (Settings.SAVE_OBJECTS) {
+                saveArrObject(f_out, out);
+            } else {
+                saveArrTxt(f_out, out);
+            }
             f_out.close();
             theStaff.setArrangementFile(outputFile);
             StateMachine.setArrModified(false);
@@ -91,6 +93,36 @@ public class SaveButton extends ImagePushButton {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Saves an arrangement to disk in human readable text format.
+     *
+     * @param f_out
+     *            The FileOutputStream to write in.
+     * @param out
+     *            The StaffArrangement to write.
+     */
+    private void saveArrTxt(FileOutputStream f_out, StaffArrangement out) {
+        PrintStream pr = new PrintStream(f_out);
+        pr.close();
+    }
+
+    /**
+     * Saves arrangement in object format.
+     *
+     * @param f_out
+     *            FileOutputStream to write in.
+     * @param out
+     *            The output arrangement file
+     * @throws IOException
+     * @deprecated
+     */
+    private void saveArrObject(FileOutputStream f_out, StaffArrangement out)
+            throws IOException {
+        ObjectOutputStream o_out = new ObjectOutputStream(f_out);
+        o_out.writeObject(out);
+        o_out.close();
     }
 
     /**
@@ -130,6 +162,13 @@ public class SaveButton extends ImagePushButton {
      * Saves in object file format. Makes decent use of serialization. There are
      * some issues with this because if one changes the staff sequence class,
      * there are going to be issues loading the file.
+     *
+     * @param f_out
+     *            FileOutputStream for saving into a file.
+     * @param out
+     *            The StaffSequence to write.
+     * @throws IOException
+     * @deprecated
      */
     private void saveObject(FileOutputStream f_out, StaffSequence out)
             throws IOException {
@@ -138,7 +177,15 @@ public class SaveButton extends ImagePushButton {
         o_out.close();
     }
 
-    /** Saves in text file format. */
+    /**
+     * Saves in text file format.
+     *
+     * @param f_out
+     *            The FileOutputStream to write in.
+     * @param out
+     *            The StaffSequence to write.
+     * @throws IOException
+     */
     private void saveTxt(FileOutputStream f_out, StaffSequence out)
             throws IOException {
         PrintStream pr = new PrintStream(f_out);
