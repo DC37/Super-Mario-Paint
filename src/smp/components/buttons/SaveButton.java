@@ -144,9 +144,9 @@ public class SaveButton extends ImagePushButton {
             StaffSequence out = theStaff.getSequence();
             out.setTempo(StateMachine.getTempo());
             if (Settings.SAVE_OBJECTS) {
-                saveObject(f_out, out);
+                saveSongObject(f_out, out);
             } else {
-                saveTxt(f_out, out);
+                saveSongTxt(f_out, out);
             }
             f_out.close();
             theStaff.setSequenceFile(outputFile);
@@ -170,7 +170,7 @@ public class SaveButton extends ImagePushButton {
      * @throws IOException
      * @deprecated
      */
-    private void saveObject(FileOutputStream f_out, StaffSequence out)
+    private void saveSongObject(FileOutputStream f_out, StaffSequence out)
             throws IOException {
         ObjectOutputStream o_out = new ObjectOutputStream(f_out);
         o_out.writeObject(out);
@@ -186,7 +186,7 @@ public class SaveButton extends ImagePushButton {
      *            The StaffSequence to write.
      * @throws IOException
      */
-    private void saveTxt(FileOutputStream f_out, StaffSequence out)
+    private void saveSongTxt(FileOutputStream f_out, StaffSequence out)
             throws IOException {
         PrintStream pr = new PrintStream(f_out);
         ArrayList<StaffNoteLine> theLines = out.getTheLines();
