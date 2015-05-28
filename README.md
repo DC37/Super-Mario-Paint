@@ -11,6 +11,8 @@ Accepting cryptocurrency donations!
 
 Major Releases:
 -----
+See "Version History.txt" for semantic versioning and more release notes.
+* May 29, 2015 - v0.96 - Beta Release
 * January 5, 2015 - v0.95~0.951 - Initial Beta Release 
 * January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger) 
 * December 31, 2014 - v0.921 - Alpha (Mac + Windows)
@@ -19,7 +21,7 @@ Major Releases:
 * December 25, 2013 - v0.90 - Initial Alpha Release
 * August 7, 2012 - Project started
 * Author: RehdBlob
-* Version: 0.95
+* Version: 0.96
 
 Confirmed Operating System Configurations:
 -----
@@ -33,7 +35,6 @@ Confirmed Operating System Configurations:
 
 Tasklist:
 -----
-* Release SMP v1.00
 * Splash screen animation and other extras
 * Import AMS songs
 * Speedmarks
@@ -41,7 +42,9 @@ Tasklist:
 * Undo/redo
 * More advanced Options dialog
 * Instrument replacing option
-* Human-readable save files
+* Release SMP v1.00
+* Solve some song playing thread stability issues
+* Human-readable save files (done - May 27, 2015)
 * Release to a test group (v0.95 - **Beta Release** - January 5, 2015)
 * Staff ledger lines (done - January 4, 2015)
 * Push new version of StaffSequence with note extensions - Maintain backwards compatibility (done - January 4, 2015)

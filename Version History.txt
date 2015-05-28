@@ -1,9 +1,9 @@
-v0.96 (Semantic version 0.13.0)
+v0.96 (Semantic version 0.13.0) [current]
 Add in functionality for saving human-readable csv files.
 Add in time signatures to save files
 Add in functionality for loading human-readable csv files.
 
-v0.951 (Semantic version 0.12.1) [current]
+v0.951 (Semantic version 0.12.1)
 Fix bugs with arranger loading/saving.
 
 v0.95 (Semantic version 0.12.0)
