@@ -44,6 +44,7 @@ Tasklist:
 * Instrument replacing option
 * Release SMP v1.00
 * Solve some song playing thread stability issues
+* Human-readable arranger files
 * Human-readable save files (done - May 27, 2015)
 * Release to a test group (v0.95 - **Beta Release** - January 5, 2015)
 * Staff ledger lines (done - January 4, 2015)
