@@ -146,6 +146,24 @@ public class StaffSequence implements Serializable {
         return noteExtensions;
     }
 
+    /**
+     * @param s
+     *            The time signature to set this <code>StaffSequence</code> to.
+     */
+    public void setTimeSignature(String s) {
+        int top = Integer.parseInt(s.substring(0, s.indexOf("/")));
+        int bottom = Integer.parseInt(s.substring(s.indexOf("/") + 1));
+        for (TimeSignature tSig : TimeSignature.values()) {
+            if (tSig.bottom() == bottom && tSig.top() == top) {
+                t = tSig;
+                break;
+            }
+        }
+        if (t == null) {
+            t = TimeSignature.FOUR_FOUR;
+        }
+    }
+
     /** @return The time signature of this sequence. */
     public TimeSignature getTimeSignature() {
         return t;

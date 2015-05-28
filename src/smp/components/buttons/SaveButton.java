@@ -147,7 +147,7 @@ public class SaveButton extends ImagePushButton {
         if (t == null) {
             t = TimeSignature.FOUR_FOUR;
         }
-        pr.printf("TEMPO: %f, EXT: %d, TIME: %s\n", out.getTempo(),
+        pr.printf("TEMPO: %f, EXT: %d, TIME: %s\r\n", out.getTempo(),
                 out.getNoteExtensions(), t);
 
         for (int i = 0; i < theLines.size(); i++) {
@@ -159,7 +159,7 @@ public class SaveButton extends ImagePushButton {
             for (int j = 0; j < line.size(); j++) {
                 pr.print(line.get(j) + ",");
             }
-            pr.printf("VOL: %d\n", theLines.get(i).getVolume());
+            pr.printf("VOL: %d\r\n", theLines.get(i).getVolume());
         }
         pr.close();
     }

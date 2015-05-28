@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,6 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffArrangement;
+import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
@@ -181,22 +183,93 @@ public class Utilities {
             ObjectInputStream o_in = new ObjectInputStream(f_in);
             loaded = (StaffSequence) o_in.readObject();
             o_in.close();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | ClassCastException | EOFException
+                | StreamCorruptedException e) {
             // If it's not an object, try using the human-readable option.
+            f_in.close();
+            f_in = new FileInputStream(inputFile);
             Scanner sc = new Scanner(f_in);
             ArrayList<String> read = new ArrayList<String>();
             while (sc.hasNext()) {
                 read.add(sc.nextLine());
             }
             sc.close();
-            loaded = new StaffSequence();
-            for (String s : read) {
-
-            }
+            loaded = parseText(read);
         }
         f_in.close();
         if (loaded == null) {
             throw new NullPointerException();
+        }
+        boolean empty = true;
+        for (StaffNoteLine s : loaded.getTheLines()) {
+            if (!s.isEmpty()) {
+                empty = false;
+                break;
+            }
+        }
+        if (empty) {
+            throw new NullPointerException();
+        }
+        return loaded;
+    }
+
+    /**
+     * Parses a bunch of text from a save file and makes a
+     * <code>StaffSequence</code> out of it.
+     *
+     * @param read
+     *            <code>ArrayList</code> of notes and parameters.
+     * @return Hopefully, a decoded <code>StaffSequence</code>
+     */
+    private static StaffSequence parseText(ArrayList<String> read) {
+        StaffSequence loaded = new StaffSequence();
+        for (String s : read) {
+            if (s.contains("TEMPO") || s.contains("EXT") || s.contains("TIME")) {
+                String[] sp = s.split(",");
+                for (String spl : sp) {
+                    String num = spl.substring(spl.indexOf(":") + 1);
+                    if (spl.contains("TEMPO")) {
+                        loaded.setTempo(Double.parseDouble(num.trim()));
+                    } else if (spl.contains("EXT")) {
+                        loaded.setNoteExtensions(Integer.parseInt(num.trim()));
+                    } else if (spl.contains("TIME")) {
+                        loaded.setTimeSignature(num.trim());
+                    }
+                }
+            } else {
+                String[] sp = s.split(",");
+                int lineNum = 0;
+                StaffNoteLine st = new StaffNoteLine();
+                for (String spl : sp) {
+                    if (spl.contains(":") && !spl.contains("VOL")) {
+                        String[] meas = spl.split(":");
+                        if (meas.length != 2) {
+                            continue;
+                        }
+                        lineNum = (Integer.parseInt(meas[0]) - 1)
+                                * loaded.getTimeSignature().top()
+                                + Integer.parseInt(meas[1]);
+                    } else {
+                        if (spl.contains("VOL")) {
+                            st.setVolume(Double.parseDouble(spl.substring(
+                                    spl.indexOf(":") + 1).trim()));
+                        } else {
+                            try {
+                                st.add(new StaffNote(spl));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+                if (loaded.getTheLines().size() < lineNum + 1) {
+                    int add = lineNum - loaded.getTheLines().size() - 1;
+                    for (int i = 0; i < add; i++) {
+                        loaded.addLine(new StaffNoteLine());
+                    }
+                }
+                loaded.setLine(lineNum, st);
+            }
         }
         return loaded;
     }

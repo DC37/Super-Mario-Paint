@@ -1,10 +1,9 @@
 package smp.components.buttons;
 
-import java.io.EOFException;
-import java.io.StreamCorruptedException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -88,7 +87,7 @@ public class LoadButton extends ImagePushButton {
                         false, theStaff, controller);
                 controller.getNameTextField().setText(fname);
                 StateMachine.setSongModified(false);
-            } catch (ClassCastException | EOFException | StreamCorruptedException e) {
+            } catch (NullPointerException e) {
                 try {
                     StaffSequence loaded = MPCDecoder.decode(inputFile);
                     String fname = Utilities.populateStaff(loaded, inputFile,
@@ -138,8 +137,7 @@ public class LoadButton extends ImagePushButton {
                         theStaff, controller);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
-            } catch (ClassCastException | ClassNotFoundException | EOFException
-                    | StreamCorruptedException e) {
+            } catch (ClassNotFoundException | NullPointerException e) {
                 try {
                     StaffArrangement loaded = MPCDecoder
                             .decodeArrangement(inputFile);

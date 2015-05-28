@@ -1,6 +1,7 @@
 package smp.components.staff.sequences;
 
 import java.io.Serializable;
+import java.text.ParseException;
 
 import javafx.scene.image.ImageView;
 import smp.components.Values;
@@ -74,6 +75,75 @@ public class StaffNote extends ImageView implements Serializable {
         accidental = acc;
         position = pos;
         volume = vol;
+    }
+
+    /**
+     * Construct a <code>StaffNote</code> given its printed
+     * <code>toString()</code>
+     *
+     * @param spl
+     *            The String to attempt to convert to a <code>StaffNote</code>
+     * @throws ParseException
+     *             In case we are trying to parse an invalid string.
+     */
+    public StaffNote(String spl) throws ParseException {
+        String[] sp = spl.split(" ");
+        if (sp.length != 2) {
+            throw new ParseException("Invalid note", 0);
+        }
+        theInstrument = InstrumentIndex.valueOf(sp[0]);
+        for (int i = 0; i < Values.staffNotes.length; i++) {
+            if (sp[1].contains(Values.staffNotes[i].name())) {
+                position = i;
+            }
+        }
+        // Single-note volumes not implemented yet.
+        volume = Values.HALF_VELOCITY;
+        switch (sp[1].length()) {
+        case 2:
+            accidental = 0;
+            muteNote = 0;
+            break;
+        case 3:
+            accidental = decodeAccidental(sp[1].charAt(2));
+            muteNote = 0;
+            break;
+        case 4:
+            accidental = 0;
+            muteNote = Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1));
+            break;
+        case 5:
+            accidental = decodeAccidental(sp[1].charAt(2));
+            muteNote = Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1));
+            break;
+        default:
+            accidental = 0;
+            muteNote = 0;
+            break;
+        }
+    }
+
+    /**
+     * Given character <code>c</code>, decode it as a doublesharp, sharp, flat,
+     * or doubleflat.
+     *
+     * @param c
+     *            The character to decode.
+     * @return The accidental to set.
+     */
+    private int decodeAccidental(char c) {
+        switch (c) {
+        case 'X':
+            return 2;
+        case '#':
+            return 1;
+        case 'b':
+            return -1;
+        case 'B':
+            return -2;
+        default:
+            return 0;
+        }
     }
 
     /**
@@ -164,7 +234,7 @@ public class StaffNote extends ImageView implements Serializable {
             noteAcc = "b";
             break;
         case -2:
-            noteAcc = "bb";
+            noteAcc = "B";
             break;
         default:
             break;
