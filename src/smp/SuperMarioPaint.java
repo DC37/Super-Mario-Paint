@@ -1,6 +1,8 @@
 package smp;
 
+import java.awt.event.FocusEvent;
 import java.io.File;
+
 import com.sun.javafx.application.LauncherImpl;
 
 import javafx.application.Application;
@@ -328,6 +330,16 @@ public class SuperMarioPaint extends Application {
                         }
                         StateMachine.updateFocusPane();
                         ke.consume();
+                    }
+                });
+
+        primaryStage.focusedProperty().addListener(
+                new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> ov,
+                            Boolean t, Boolean t1) {
+                        StateMachine.clearKeyPresses();
+                        StateMachine.updateFocusPane();
                     }
                 });
 

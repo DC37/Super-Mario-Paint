@@ -163,7 +163,12 @@ public class StateMachine {
 
     /** @return Whatever key is pressed at the moment on the keyboard. */
     public static int getKeyPressed() {
-        return 0;
+        return buttonPresses;
+    }
+
+    /** @return Clears all keys pressed. */
+    public static void clearKeyPresses() {
+        buttonPresses = 0;
     }
 
     /** Sets that we've pressed down the shift key. */
