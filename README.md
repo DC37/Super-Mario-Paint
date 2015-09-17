@@ -31,7 +31,7 @@ Confirmed Operating System Configurations:
 * Windows Vista + Java 7u71
 * Mac OSX 10.9.5 + Java 7u71
 * Mac OSX 10.9.5 + Java 8u25
-
+* Ubuntu 14.04 + Java 8 (thanks, @SomeonePlaymc !)
 
 Tasklist:
 -----
