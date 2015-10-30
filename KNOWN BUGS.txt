@@ -9,3 +9,6 @@ may have to be sorted out over time and many iterations.
 notes in the boat instrument. Some boat notes will not sound because of that.
 -Axelrod777: Cannot use the Mochi soundfont - sound effects are currently 
 messed up.
+-VolcansBrimstone: Arranger path issues (cannot play arrangements in some cases
+if moved from a directory) - need to edit code to address absolute vs relative
+paths.
