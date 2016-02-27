@@ -275,6 +275,26 @@ public class Utilities {
     }
 
     /**
+     * Parses a bunch of text from a save file and makes a
+     * <code>StaffArrangement</code> out of it.
+     *
+     * @param read
+     *            <code>ArrayList</code> of filenames and paths.
+     * @return Hopefully, a decoded <code>StaffArrangement</code>
+     */
+    private static StaffArrangement parseArrText(ArrayList<String> read) {
+        StaffArrangement loaded = new StaffArrangement();
+        File f = null;
+        ArrayList<File> files = new ArrayList<File>();
+        for (String s : read) {
+            f = new File(s + ".txt");
+            files.add(f);
+        }
+        loaded.setTheSequenceFiles(files);
+        return loaded;
+    }
+
+    /**
      * Loads an arrangement from the file specified.
      *
      * @param inputFile
@@ -288,7 +308,23 @@ public class Utilities {
             throws FileNotFoundException, IOException, ClassNotFoundException {
         FileInputStream f_in = new FileInputStream(inputFile);
         ObjectInputStream o_in = new ObjectInputStream(f_in);
-        StaffArrangement loaded = (StaffArrangement) o_in.readObject();
+        StaffArrangement loaded = null;
+        try {
+            loaded = (StaffArrangement) o_in.readObject();
+            o_in.close();
+        } catch (ClassNotFoundException | ClassCastException | EOFException
+                | StreamCorruptedException e) {
+            // If it's not an object, try using the human-readable option.
+            f_in.close();
+            f_in = new FileInputStream(inputFile);
+            Scanner sc = new Scanner(f_in);
+            ArrayList<String> read = new ArrayList<String>();
+            while (sc.hasNext()) {
+                read.add(sc.nextLine());
+            }
+            sc.close();
+            loaded = parseArrText(read);
+        }
         o_in.close();
         f_in.close();
         return loaded;
