@@ -12,7 +12,7 @@ Accepting cryptocurrency donations!
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
-* May 29, 2015 - v0.96 - Beta Release
+* v0.96 - Beta Release
 * January 5, 2015 - v0.95~0.951 - Initial Beta Release 
 * January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger) 
 * December 31, 2014 - v0.921 - Alpha (Mac + Windows)
@@ -44,7 +44,7 @@ Tasklist:
 * Instrument replacing option
 * Release SMP v1.00
 * Solve some song playing thread stability issues
-* Human-readable arranger files
+* Human-readable arranger files (done - February 27, 2016)
 * Human-readable save files (done - May 27, 2015)
 * Release to a test group (v0.95 - **Beta Release** - January 5, 2015)
 * Staff ledger lines (done - January 4, 2015)
