@@ -43,7 +43,7 @@ Tasklist:
 * More advanced Options dialog
 * Instrument replacing option
 * Release SMP v1.00
-* Solve some song playing thread stability issues
+* Solve some song playing thread stability issues (done - February 28, 2016)
 * Human-readable arranger files (done - February 27, 2016)
 * Human-readable save files (done - May 27, 2015)
 * Release to a test group (v0.95 - **Beta Release** - January 5, 2015)

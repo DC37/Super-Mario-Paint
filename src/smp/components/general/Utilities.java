@@ -382,7 +382,7 @@ public class Utilities {
         theStaff.setSequence(loaded);
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
-        theStaff.getControlPanel().updateCurrTempo();
+        theStaff.updateCurrTempo();
         if (theStaff.getControlPanel().getScrollbar().valueProperty().get() > loaded
                 .getTheLines().size() - Values.NOTELINES_IN_THE_WINDOW) {
             theStaff.setLocation(0);

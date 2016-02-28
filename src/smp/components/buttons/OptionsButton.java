@@ -172,7 +172,7 @@ public class OptionsButton extends ImagePushButton {
             s.clear();
             s.addAll(n);
             StateMachine.setTempo(theStaff.getSequence().getTempo() * num);
-            theStaff.getControlPanel().updateCurrTempo();
+            theStaff.updateCurrTempo();
             theStaff.getControlPanel().getScrollbar()
                     .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
         }

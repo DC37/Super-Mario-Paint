@@ -264,6 +264,17 @@ public class Staff {
         animationService.restart();
     }
 
+    /** Updates the current tempo - staff version. */
+    public synchronized void updateCurrTempo() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                theControls.getCurrTempo().setValue(
+                        String.valueOf(StateMachine.getTempo()));
+            }
+        });
+    }
+
     /**
      * Finds the last line in the sequence that we are playing.
      */
@@ -598,6 +609,9 @@ public class Staff {
         /** Whether we have zeroed the staff or not. */
         private boolean zero = false;
 
+        /** Number of lines queued up to play. */
+        protected volatile int queue = 0;
+
         @Override
         protected Task<Staff> createTask() {
             if (!arrPlaying)
@@ -620,7 +634,7 @@ public class Staff {
             protected int index = 0;
 
             /**
-             * Whether we need to advance the satff ahead by a few lines or not.
+             * Whether we need to advance the staff ahead by a few lines or not.
              */
             protected boolean advance = false;
 
@@ -632,6 +646,7 @@ public class Staff {
                 playBars = staffImages.getPlayBars();
                 int counter = StateMachine.getMeasureLineNum();
                 while (songPlaying) {
+                    queue++;
                     playNextLine();
                     counter++;
                     if (counter > lastLine && counter % 4 == 0) {
@@ -682,13 +697,14 @@ public class Staff {
 
                     @Override
                     public void run() {
-                        bumpHighlights(playBars, index, advance);
-                        playSoundLine(index);
                         if (zero) {
                             setLocation(0);
                             currVal.setValue(0);
                             zero = false;
                         }
+                        bumpHighlights(playBars, index, advance);
+                        playSoundLine(index);
+                        queue--;
                     }
                 });
             }
@@ -742,27 +758,34 @@ public class Staff {
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 for (int i = 0; i < seq.size(); i++) {
+                    while(queue > 0);
+                    /* Force emptying of queue before changing songs. */
+                    index = 0;
+                    advance = false;
+                    zero = true;
+                    queue++;
                     highlightSong(i);
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
                     StateMachine.setTempo(theSequence.getTempo());
-                    theControls.updateCurrTempo();
+                    queue++;
+                    updateCurrTempo();
+                    queue++;
                     setScrollbar();
-                    redraw();
                     lastLine = findLastLine();
                     songPlaying = true;
                     setTempo(theSequence.getTempo());
                     playBars = staffImages.getPlayBars();
-                    int counter = StateMachine.getMeasureLineNum();
+                    int counter = 0;
+                    StateMachine.setMeasureLineNum(0);
+                    while(queue > 0);
+                    /* Force operations to complete before starting a song. */
                     while (songPlaying && arrPlaying) {
+                        queue++;
                         playNextLine();
                         counter++;
                         if (counter > lastLine && counter % 4 == 0) {
-                            counter = 0;
-                            index = 0;
                             songPlaying = false;
-                            advance = false;
-                            zero = true;
                         }
                         try {
                             Thread.sleep(delayMillis, delayNanos);
@@ -791,6 +814,7 @@ public class Staff {
                     public void run() {
                         theArrangementList.getSelectionModel().select(i);
                         theArrangementList.scrollTo(i);
+                        queue--;
                     }
 
                 });
@@ -804,6 +828,19 @@ public class Staff {
                         theControls.getScrollbar().setMax(
                                 theSequence.getTheLines().size()
                                         - Values.NOTELINES_IN_THE_WINDOW);
+                        queue--;
+                    }
+                });
+            }
+
+            /** Updates the current tempo - arranger version. */
+            private void updateCurrTempo() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        theControls.getCurrTempo().setValue(
+                                String.valueOf(StateMachine.getTempo()));
+                        queue--;
                     }
                 });
             }

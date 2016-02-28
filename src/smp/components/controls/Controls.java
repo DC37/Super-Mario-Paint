@@ -386,14 +386,12 @@ public class Controls {
         return scrollbar;
     }
 
-    /** Updates the current tempo. */
-    public void updateCurrTempo() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                currTempo.setValue(String.valueOf(StateMachine.getTempo()));
-            }
-        });
+
+    /**
+     * @return The current tempo object that we want to modify.
+     */
+    public StringProperty getCurrTempo() {
+        return currTempo;
     }
 
     /**
