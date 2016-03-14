@@ -384,14 +384,11 @@ public class Utilities {
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
         theStaff.updateCurrTempo();
-        if (theStaff.getControlPanel().getScrollbar().valueProperty().get() > loaded
-                .getTheLines().size() - Values.NOTELINES_IN_THE_WINDOW) {
-            theStaff.setLocation(0);
-        }
         theStaff.getControlPanel()
                 .getScrollbar()
                 .setMax(loaded.getTheLines().size()
                         - Values.NOTELINES_IN_THE_WINDOW);
+        theStaff.setLocation(0);
         theStaff.getNoteMatrix().redraw();
         String fname = inputFile.getName();
         try {

@@ -91,6 +91,7 @@ public class LoadButton extends ImagePushButton {
             } catch (NullPointerException e) {
                 try {
                     StaffSequence loaded = MPCDecoder.decode(inputFile);
+                    init = new File(inputFile.getParent());
                     String fname = Utilities.populateStaff(loaded, inputFile,
                             true, theStaff, controller);
                     controller.getNameTextField().setText(fname);
@@ -133,6 +134,7 @@ public class LoadButton extends ImagePushButton {
                 inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
                     return;
+                init = new File(inputFile.getParent());
                 StaffArrangement loaded = Utilities.loadArrangement(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false,
@@ -144,6 +146,7 @@ public class LoadButton extends ImagePushButton {
                 try {
                     StaffArrangement loaded = MPCDecoder
                             .decodeArrangement(inputFile);
+                    init = new File(inputFile.getParent());
                     Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true,
                             theStaff, controller);

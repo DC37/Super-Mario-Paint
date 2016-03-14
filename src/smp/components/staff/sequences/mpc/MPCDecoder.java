@@ -183,7 +183,9 @@ public class MPCDecoder {
         StaffArrangement theArr = new StaffArrangement();
 
         for (String s : str.split("\n")) {
-            File f = new File(inputFile.getParent() + "\\" + s + "]MarioPaint.txt");
+            s = s.replace("/", "_");
+            String st = inputFile.getParent() + "\\" + s + "]MarioPaint.txt";
+            File f = new File(st);
             StaffSequence seq = decode(f);
             theArr.add(seq, f);
             theArr.getTheSequenceNames().add(s);

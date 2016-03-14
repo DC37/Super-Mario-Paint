@@ -1,5 +1,7 @@
 package smp.fx;
 
+import smp.components.Values;
+import smp.stateMachine.Settings;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
@@ -13,7 +15,7 @@ import javafx.stage.Stage;
  * implementation that persisted from 2012.08.17 to 2014.12.30. The basic
  * portion of this is taken directly from
  * http://docs.oracle.com/javafx/2/deployment/preloaders.htm
- * 
+ *
  * @author RehdBlob
  * @since 2014.12.30
  */
@@ -39,10 +41,20 @@ public class SplashScreen extends Preloader {
     }
 
     /** Creates and starts the preloader window. */
+    @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         stage.setScene(createPreloaderScene());
-        stage.setTitle("Loading...");
+        double c = java.lang.Math.random();
+        if (c < 0.2) {
+            stage.setTitle("Loading...");
+        } else if (c < 0.5) {
+            stage.setTitle("SMP" + Settings.version);
+        } else if (c < 0.8) {
+            stage.setTitle("Made by: RehdBlob");
+        } else {
+            stage.setTitle("Loading...");
+        }
         stage.show();
     }
 
