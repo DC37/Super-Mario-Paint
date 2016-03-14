@@ -1,6 +1,5 @@
 package smp;
 
-import java.awt.event.FocusEvent;
 import java.io.File;
 
 import com.sun.javafx.application.LauncherImpl;
@@ -181,7 +180,7 @@ public class SuperMarioPaint extends Application {
                         @Override
                         public void run() {
                             try {
-                                primaryStage.setTitle("Super Mario Paint");
+                                primaryStage.setTitle("Super Mario Paint " + Settings.version);
                                 setupCloseBehaviour(primaryStage);
                                 primaryStage.setResizable(false);
                                 primaryStage.setHeight(Values.DEFAULT_HEIGHT);

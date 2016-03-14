@@ -158,7 +158,7 @@ public class MPCDecoder {
             str += "\n";
         }
         bf.close();
-        return parseFiles(str);
+        return parseFiles(str, f);
     }
 
     /**
@@ -167,11 +167,15 @@ public class MPCDecoder {
      *
      * @param str
      *            The text from a Mario Paint Composer arranger file.
+     * @param inputFile
+     *            The location of the arrangement file.
      * @return A StaffArrangement (if successful).
-     * @throws ParseException If the file is the wrong format.
-     * @throws IOException If something goes wrong while attempting to read the files.
+     * @throws ParseException
+     *             If the file is the wrong format.
+     * @throws IOException
+     *             If something goes wrong while attempting to read the files.
      */
-    private static StaffArrangement parseFiles(String str)
+    private static StaffArrangement parseFiles(String str, File inputFile)
             throws ParseException, IOException {
         if (str.isEmpty() || str == null) {
             throw new ParseException("Invalid Arr File.", 0);
@@ -179,7 +183,7 @@ public class MPCDecoder {
         StaffArrangement theArr = new StaffArrangement();
 
         for (String s : str.split("\n")) {
-            File f = new File(Values.SONGFOLDER + s + "]MarioPaint.txt");
+            File f = new File(inputFile.getParent() + "\\" + s + "]MarioPaint.txt");
             StaffSequence seq = decode(f);
             theArr.add(seq, f);
             theArr.getTheSequenceNames().add(s);

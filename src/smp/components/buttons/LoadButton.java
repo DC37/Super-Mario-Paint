@@ -134,6 +134,7 @@ public class LoadButton extends ImagePushButton {
                 if (inputFile == null)
                     return;
                 StaffArrangement loaded = Utilities.loadArrangement(inputFile);
+                Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false,
                         theStaff, controller);
                 StateMachine.setSongModified(false);
@@ -143,6 +144,7 @@ public class LoadButton extends ImagePushButton {
                 try {
                     StaffArrangement loaded = MPCDecoder
                             .decodeArrangement(inputFile);
+                    Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true,
                             theStaff, controller);
                     StateMachine.setSongModified(false);

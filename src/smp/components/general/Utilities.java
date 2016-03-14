@@ -341,7 +341,8 @@ public class Utilities {
     public static void loadSequenceFromArrangement(File inputFile,
             Staff theStaff, SMPFXController controller) {
         try {
-            inputFile = new File(Values.SONGFOLDER + inputFile.getName());
+            inputFile = new File(inputFile.getParent() + "\\"
+                    + inputFile.getName());
             StaffSequence loaded = loadSong(inputFile);
             populateStaff(loaded, inputFile, false, theStaff, controller);
         } catch (ClassCastException | EOFException | StreamCorruptedException
@@ -405,6 +406,26 @@ public class Utilities {
         theStaff.getTopPanel().getButtonLine()
                 .setNoteExtension(loaded.getNoteExtensions());
         return fname;
+    }
+
+    /**
+     * Arrangement files might have absolute paths in them. Here's something
+     * that will help a little bit with relative paths.
+     *
+     * @param loaded
+     *            The loaded staff arrangement.
+     * @param filePath
+     *            The location in which this arrangement was found.
+     */
+    public static void normalizeArrangement(StaffArrangement loaded,
+            File filePath) {
+        String basePath = filePath.getParent() + "\\";
+        for (int i = 0; i < loaded.getTheSequenceFiles().size(); i++) {
+            File f = loaded.getTheSequenceFiles().get(i);
+            String fName = f.getName();
+            String newPath = basePath + fName;
+            loaded.getTheSequenceFiles().set(i, new File(newPath));
+        }
     }
 
     /**

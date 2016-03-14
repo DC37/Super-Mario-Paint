@@ -3,7 +3,6 @@ package smp.components.controls;
 import java.io.File;
 import java.util.ArrayList;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;

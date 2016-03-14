@@ -1,6 +1,5 @@
 package smp.components.staff;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
@@ -242,7 +241,7 @@ public class Staff {
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
         setLocation(0);
         for (int i = 0; i < seq.size(); i++) {
-            File f = new File(Values.SONGFOLDER + files.get(i).getName());
+            File f = files.get(i);
             try {
                 seq.set(i, Utilities.loadSong(f));
             } catch (StreamCorruptedException | NullPointerException e) {

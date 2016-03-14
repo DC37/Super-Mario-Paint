@@ -1,4 +1,4 @@
-v1.0.0 [current, in progress]
+v1.0.0 [current]
 First release.
 Fix threading issues for sound playing.
 Add in buttons for time signatures
