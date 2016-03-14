@@ -1,14 +1,10 @@
-v1.0.0 [future, in progress]
+v1.0.0 [current, in progress]
 First release.
-
-TODO:
 Fix threading issues for sound playing.
 Add in buttons for time signatures
-
-v0.96 (Semantic version 0.13.0) [current, in progress]
-Add in functionality for saving human-readable csv files.
+Add in functionality for saving human-readable files.
 Add in time signatures to save files
-Add in functionality for loading human-readable csv files.
+Add in functionality for loading human-readable files.
 
 v0.951 (Semantic version 0.12.1) [most recent release]
 Fix bugs with arranger loading/saving.

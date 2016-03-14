@@ -12,8 +12,8 @@ Accepting cryptocurrency donations!
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
-* v0.96 - Beta Release
-* January 5, 2015 - v0.95~0.951 - Initial Beta Release 
+* February / March 2016 - First full functionality release
+* January 5, 2015 - v0.95~0.951 - Beta Release 
 * January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger) 
 * December 31, 2014 - v0.921 - Alpha (Mac + Windows)
 * December 30, 2014 - v0.92 - Alpha (Stability Release + Java 7u71 / Java 8u25)
@@ -21,12 +21,13 @@ See "Version History.txt" for semantic versioning and more release notes.
 * December 25, 2013 - v0.90 - Initial Alpha Release
 * August 7, 2012 - Project started
 * Author: RehdBlob
-* Version: 0.96
+* Version: 1.0.0
 
 Confirmed Operating System Configurations:
 -----
 * Windows 7 + Java 7u71
 * Windows 7 + Java 8u25
+* Windows 7 + Java 8u73
 * Windows 8.1 + Java 8u25
 * Windows Vista + Java 7u71
 * Mac OSX 10.9.5 + Java 7u71
@@ -43,6 +44,7 @@ Tasklist:
 * More advanced Options dialog
 * Instrument replacing option
 * Release SMP v1.00
+* Aesthetic program edits, stability checks, arranger file stability check
 * Solve some song playing thread stability issues (done - February 28, 2016)
 * Human-readable arranger files (done - February 27, 2016)
 * Human-readable save files (done - May 27, 2015)

@@ -4,6 +4,7 @@ Here is a list of currently-known bugs:
 -Running a song above 5000 tempo may cause random lines to be skipped once in a
 while if your computer isn't fast enough. This is an efficiency problem that 
 may have to be sorted out over time and many iterations.
+[FIXED, v1.0.0]
 -End-of-file behaviour seems to be solved, but keep a lookout.
 -Christeriousninja / VolcanBrimstone: The soundfont is missing a number of 
 notes in the boat instrument. Some boat notes will not sound because of that.

@@ -606,9 +606,6 @@ public class Staff {
      */
     class AnimationService extends Service<Staff> {
 
-        /** Whether we have zeroed the staff or not. */
-        private boolean zero = false;
-
         /** Number of lines queued up to play. */
         protected volatile int queue = 0;
 
@@ -641,11 +638,39 @@ public class Staff {
             /** These are the play bars on the staff. */
             protected ArrayList<ImageView> playBars;
 
+            /**
+             * Zeros the staff to the beginning point. Use only at the beginning
+             * of a new song file.
+             */
+            protected void zeroEverything() {
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        setLocation(0);
+                        currVal.setValue(0);
+                        playBars.get(0).setVisible(true);
+                        for (int i = 1; i < playBars.size(); i++)
+                            playBars.get(i).setVisible(false);
+                        queue--;
+                    }
+
+                });
+            }
+
             @Override
             protected Staff call() throws Exception {
                 playBars = staffImages.getPlayBars();
                 int counter = StateMachine.getMeasureLineNum();
+                boolean zero = false;
                 while (songPlaying) {
+                    if (zero) {
+                        queue++;
+                        zeroEverything();
+                        while (queue > 0)
+                            ;
+                        zero = false;
+                    }
                     queue++;
                     playNextLine();
                     counter++;
@@ -697,12 +722,13 @@ public class Staff {
 
                     @Override
                     public void run() {
-                        if (zero) {
-                            setLocation(0);
-                            currVal.setValue(0);
-                            zero = false;
-                        }
                         bumpHighlights(playBars, index, advance);
+                        if (advance) {
+                            int loc = (int) currVal.getValue().doubleValue()
+                                    + Values.NOTELINES_IN_THE_WINDOW;
+                            setLocation(loc);
+                            currVal.setValue(loc);
+                        }
                         playSoundLine(index);
                         queue--;
                     }
@@ -737,12 +763,7 @@ public class Staff {
                 for (int i = 0; i < playBars.size(); i++)
                     if (i != index)
                         playBars.get(i).setVisible(false);
-                if (advance) {
-                    int loc = (int) currVal.getValue().doubleValue()
-                            + Values.NOTELINES_IN_THE_WINDOW;
-                    setLocation(loc);
-                    currVal.setValue(loc);
-                }
+
             }
 
         }
@@ -758,11 +779,11 @@ public class Staff {
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 for (int i = 0; i < seq.size(); i++) {
-                    while(queue > 0);
+                    while (queue > 0)
+                        ;
                     /* Force emptying of queue before changing songs. */
                     index = 0;
                     advance = false;
-                    zero = true;
                     queue++;
                     highlightSong(i);
                     theSequence = seq.get(i);
@@ -778,7 +799,10 @@ public class Staff {
                     playBars = staffImages.getPlayBars();
                     int counter = 0;
                     StateMachine.setMeasureLineNum(0);
-                    while(queue > 0);
+                    queue++;
+                    zeroEverything();
+                    while (queue > 0)
+                        ;
                     /* Force operations to complete before starting a song. */
                     while (songPlaying && arrPlaying) {
                         queue++;
