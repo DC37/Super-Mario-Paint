@@ -1,4 +1,7 @@
-v1.0.0 [current]
+v1.0.1
+Bugfix - Arranger now (hopefully) takes care of the different songfile loading cases properly.
+
+v1.0.0
 First release.
 Fix threading issues for sound playing.
 Add in buttons for time signatures
