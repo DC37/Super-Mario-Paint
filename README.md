@@ -21,7 +21,7 @@ See "Version History.txt" for semantic versioning and more release notes.
 * December 25, 2013 - v0.90 - Initial Alpha Release
 * August 7, 2012 - Project started
 * Author: RehdBlob
-* Version: 1.0.0
+* Version: 1.0.1
 
 Confirmed Operating System Configurations:
 -----
