@@ -1,6 +1,5 @@
 package smp.fx;
 
-import smp.components.Values;
 import smp.stateMachine.Settings;
 import javafx.application.Preloader;
 import javafx.scene.Scene;

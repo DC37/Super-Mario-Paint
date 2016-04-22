@@ -286,10 +286,13 @@ public class Utilities {
         StaffArrangement loaded = new StaffArrangement();
         File f = null;
         ArrayList<File> files = new ArrayList<File>();
+        ArrayList<String> names = new ArrayList<String>();
         for (String s : read) {
+            names.add(s);
             f = new File(s + ".txt");
             files.add(f);
         }
+        loaded.setTheSequenceNames(names);
         loaded.setTheSequenceFiles(files);
         return loaded;
     }
@@ -307,9 +310,9 @@ public class Utilities {
     public static StaffArrangement loadArrangement(File inputFile)
             throws FileNotFoundException, IOException, ClassNotFoundException {
         FileInputStream f_in = new FileInputStream(inputFile);
-        ObjectInputStream o_in = new ObjectInputStream(f_in);
         StaffArrangement loaded = null;
         try {
+            ObjectInputStream o_in = new ObjectInputStream(f_in);
             loaded = (StaffArrangement) o_in.readObject();
             o_in.close();
         } catch (ClassNotFoundException | ClassCastException | EOFException
@@ -325,7 +328,6 @@ public class Utilities {
             sc.close();
             loaded = parseArrText(read);
         }
-        o_in.close();
         f_in.close();
         return loaded;
     }
@@ -343,6 +345,10 @@ public class Utilities {
         try {
             inputFile = new File(inputFile.getParent() + "\\"
                     + inputFile.getName());
+            if (!inputFile.exists()) {
+                inputFile = new File(inputFile.getParent() + "\\"
+                    + inputFile.getName());
+            }
             StaffSequence loaded = loadSong(inputFile);
             populateStaff(loaded, inputFile, false, theStaff, controller);
         } catch (ClassCastException | EOFException | StreamCorruptedException
@@ -420,7 +426,15 @@ public class Utilities {
         for (int i = 0; i < loaded.getTheSequenceFiles().size(); i++) {
             File f = loaded.getTheSequenceFiles().get(i);
             String fName = f.getName();
+            int dot = f.getName().lastIndexOf(".");
             String newPath = basePath + fName;
+            File f2 = new File(newPath);
+            if (!f2.exists() && dot != -1) {
+                fName = fName.substring(0, dot) + "]MarioPaint.txt";
+                newPath = basePath + fName;
+                loaded.getTheSequenceFiles().set(i, new File(newPath));
+                continue;
+            }
             loaded.getTheSequenceFiles().set(i, new File(newPath));
         }
     }
