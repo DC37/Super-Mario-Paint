@@ -268,7 +268,11 @@ public class Utilities {
                         loaded.addLine(new StaffNoteLine());
                     }
                 }
-                loaded.setLine(lineNum, st);
+                if (lineNum >= loaded.getTheLines().size()) {
+                    loaded.addLine(st);
+                } else {
+                    loaded.setLine(lineNum, st);
+                }
             }
         }
         return loaded;
