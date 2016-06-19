@@ -1,3 +1,9 @@
+v1.0.3
+Yet more 100-line song fixes.
+
+v1.0.2
+Bugfix - Songs above 100 lines now (hopefully) load properly.
+
 v1.0.1
 Bugfix - Arranger now (hopefully) takes care of the different songfile loading cases properly.
 
