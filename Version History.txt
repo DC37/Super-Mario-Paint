@@ -1,8 +1,10 @@
 v1.0.3
 Yet more 100-line song fixes.
+Updated song-ending behaviour to gracefully play all notes, instead of just ending
+Loading songs with greater than 100 lines used to populate the array with null objects - hopefully fixed.
 
 v1.0.2
-Bugfix - Songs above 100 lines now (hopefully) load properly.
+Bugfix - Songs above 100 lines.
 
 v1.0.1
 Bugfix - Arranger now (hopefully) takes care of the different songfile loading cases properly.

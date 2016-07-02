@@ -702,7 +702,12 @@ public class Staff {
             protected void playNextLine() {
                 runUI(playBars, index, advance);
                 advance = !(index < Values.NOTELINES_IN_THE_WINDOW - 1);
-                index = advance ? 0 : (index + 1);
+                int remain = (int) (theControls.getScrollbar().getMax() - currVal.intValue());
+                if (Values.NOTELINES_IN_THE_WINDOW > remain && advance) {
+                    index -= (remain - 1);
+                } else {
+                    index = advance ? 0 : (index + 1);
+                }
             }
 
             /**
@@ -721,7 +726,7 @@ public class Staff {
 
                     @Override
                     public void run() {
-                        bumpHighlights(playBars, index, advance);
+                        bumpHighlights(playBars, index);
                         if (advance) {
                             int loc = (int) currVal.getValue().doubleValue()
                                     + Values.NOTELINES_IN_THE_WINDOW;
@@ -752,12 +757,9 @@ public class Staff {
              *            The list of playbar objects
              * @param index
              *            The index that we are currently at
-             * @param advance
-             *            Whether we are moving onto a new 'screen' of notes or
-             *            not.
              */
             private void bumpHighlights(ArrayList<ImageView> playBars,
-                    int index, boolean advance) {
+                    int index) {
                 playBars.get(index).setVisible(true);
                 for (int i = 0; i < playBars.size(); i++)
                     if (i != index)

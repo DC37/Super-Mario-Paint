@@ -275,6 +275,11 @@ public class Utilities {
                 }
             }
         }
+        if (loaded.getTheLines().size() % 10 != 0) {
+            do {
+                loaded.addLine(new StaffNoteLine());
+            } while (loaded.getTheLines().size() % 10 != 0);
+        }
         return loaded;
     }
 
