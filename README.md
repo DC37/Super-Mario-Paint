@@ -38,12 +38,14 @@ Confirmed Operating System Configurations:
 * Ubuntu 14.04 + Java 8
 
 Contributors to Operating Systems / Tests
- *SomeonePlaymc
- *VolcanBrimstone
- *Pokesonicddrninja
- *Adolfobaez
- *The Mario Paint Community
- *Many others...
+-----
+* SomeonePlaymc
+* VolcanBrimstone
+* Pokesonicddrninja
+* Adolfobaez
+* Cakewut
+* The Mario Paint Community
+* Many others...
 
 Tasklist:
 -----
