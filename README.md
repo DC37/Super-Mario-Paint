@@ -1,5 +1,6 @@
 Super Mario Paint
 ==========
+* Current Version: 1.0.3
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
@@ -23,7 +24,6 @@ See "Version History.txt" for semantic versioning and more release notes.
 * December 25, 2013 - v0.90 - Initial Alpha Release
 * August 7, 2012 - Project started
 * Author: RehdBlob
-* Version: 1.0.1
 
 Confirmed Operating System Configurations:
 -----
@@ -31,10 +31,19 @@ Confirmed Operating System Configurations:
 * Windows 7 + Java 8u25
 * Windows 7 + Java 8u73
 * Windows 8.1 + Java 8u25
+* Windows 10 + Java 8u73
 * Windows Vista + Java 7u71
 * Mac OSX 10.9.5 + Java 7u71
 * Mac OSX 10.9.5 + Java 8u25
-* Ubuntu 14.04 + Java 8 (thanks, @SomeonePlaymc !)
+* Ubuntu 14.04 + Java 8
+
+Contributors to Operating Systems / Tests
+ *SomeonePlaymc
+ *VolcanBrimstone
+ *Pokesonicddrninja
+ *Adolfobaez
+ *The Mario Paint Community
+ *Many others...
 
 Tasklist:
 -----
