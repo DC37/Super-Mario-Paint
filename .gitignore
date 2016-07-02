@@ -1,10 +1,14 @@
 /bin/
 /Prefs/
 /sprites_PSD/
+/P/
+/Release/
+
 
 *.txt
 *.sf2
 *.zip
 *.rar
 *.jar
+*.bat
 
