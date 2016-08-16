@@ -1,3 +1,8 @@
+v1.0.4
+Key-press behaviour generalized to include any key-press.
+
+
+
 v1.0.3
 Yet more 100-line song fixes.
 Updated song-ending behaviour to gracefully play all notes, instead of just ending

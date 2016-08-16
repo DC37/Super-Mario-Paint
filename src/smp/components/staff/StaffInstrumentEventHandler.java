@@ -1,6 +1,7 @@
 package smp.components.staff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
@@ -18,6 +19,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -146,7 +148,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      *            currently selected.
      */
     private void leftMousePressed(InstrumentIndex theInd) {
-        if (StateMachine.isEPressed()) {
+        if (StateMachine.getButtonsPressed().contains(KeyCode.E)) {
             removeNote();
         } else {
             placeNote(theInd);
@@ -302,14 +304,18 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     public void updateAccidental() {
         if (!focus)
             return;
+        HashSet<KeyCode> bp = StateMachine.getButtonsPressed();
+        boolean ctrl = bp.contains(KeyCode.CONTROL);
+        boolean shift = bp.contains(KeyCode.SHIFT);
+        boolean alt = bp.contains(KeyCode.ALT) || bp.contains(KeyCode.ALT_GRAPH);
 
-        if (StateMachine.isAltPressed() && StateMachine.isCtrlPressed())
+        if (alt && ctrl)
             acc = -2;
-        else if (StateMachine.isCtrlPressed() && StateMachine.isShiftPressed())
+        else if (ctrl && shift)
             acc = 2;
-        else if (StateMachine.isShiftPressed())
+        else if (shift)
             acc = 1;
-        else if (StateMachine.isAltPressed() || StateMachine.isCtrlPressed())
+        else if (alt || ctrl)
             acc = -1;
         else
             acc = 0;

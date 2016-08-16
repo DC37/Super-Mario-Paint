@@ -1,5 +1,8 @@
 package smp.stateMachine;
 
+import java.util.HashSet;
+
+import javafx.scene.input.KeyCode;
 import smp.components.Values;
 import smp.components.staff.StaffInstrumentEventHandler;
 
@@ -33,8 +36,8 @@ public class StateMachine {
     /** The list of values denoting which notes should be extended. */
     private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
-    /** Flips different bits to see which keys are pressed. */
-    private static int buttonPresses = 0b0;
+    /** Set of currently-pressed buttons. */
+    private static HashSet<KeyCode> buttonsPressed = new HashSet<KeyCode>();
 
     /**
      * The default state that the program is in is the EDITING state, in which
@@ -161,76 +164,6 @@ public class StateMachine {
         currentLine = num;
     }
 
-    /** @return Whatever key is pressed at the moment on the keyboard. */
-    public static int getKeyPressed() {
-        return buttonPresses;
-    }
-
-    /** @return Clears all keys pressed. */
-    public static void clearKeyPresses() {
-        buttonPresses = 0;
-    }
-
-    /** Sets that we've pressed down the shift key. */
-    public static void setShiftPressed() {
-        buttonPresses |= 0b001;
-    }
-
-    /** @return Is shift pressed down? */
-    public static boolean isShiftPressed() {
-        return (buttonPresses & 0b001) == 0b001;
-    }
-
-    /** Sets that we've pressed down the alt key. */
-    public static void setAltPressed() {
-        buttonPresses |= 0b010;
-    }
-
-    /** @return Is alt pressed down? */
-    public static boolean isAltPressed() {
-        return (buttonPresses & 0b010) == 0b010;
-    }
-
-    /** Sets that we've pressed down the ctrl key. */
-    public static void setCtrlPressed() {
-        buttonPresses |= 0b100;
-    }
-
-    /** @return Is ctrl pressed down? */
-    public static boolean isCtrlPressed() {
-        return (buttonPresses & 0b100) == 0b100;
-    }
-
-    /** Sets that we've pressed down "E". */
-    public static void setEPressed() {
-        buttonPresses |= 0b1000;
-    }
-
-    /** @return Is E pressed down? */
-    public static boolean isEPressed() {
-        return (buttonPresses & 0b1000) != 0;
-    }
-
-    /** Shows that we've released the shift key. */
-    public static void resetShiftPressed() {
-        buttonPresses &= ~(0b001);
-    }
-
-    /** Shows that we've released the alt key. */
-    public static void resetAltPressed() {
-        buttonPresses &= ~(0b010);
-    }
-
-    /** Shows that we've released the ctrl key. */
-    public static void resetCtrlPressed() {
-        buttonPresses &= ~(0b100);
-    }
-
-    /** Shows that we've released "E". */
-    public static void resetEPressed() {
-        buttonPresses &= ~(0b1000);
-    }
-
     /**
      * @param stHandle
      *            This is the pane that we want to update the flats or sharps.
@@ -329,6 +262,21 @@ public class StateMachine {
      */
     public static boolean[] getNoteExtensions() {
         return noteExtensions;
+    }
+
+    /**
+     * @return Set of currently-pressed buttons.
+     */
+    public static HashSet<KeyCode> getButtonsPressed() {
+        return buttonsPressed;
+    }
+
+    /**
+     * Clears the set of key presses in this program.
+     */
+    public static void clearKeyPresses() {
+        buttonsPressed.clear();
+
     }
 
 }

@@ -21,7 +21,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -46,7 +45,7 @@ import smp.stateMachine.StateMachine;
  *
  * @author RehdBlob
  * @since 2012.08.16
- * @version 1.0.3
+ * @version 1.0.4
  */
 public class SuperMarioPaint extends Application {
 
@@ -297,16 +296,7 @@ public class SuperMarioPaint extends Application {
 
                     @Override
                     public void handle(KeyEvent ke) {
-                        KeyCode n = ke.getCode();
-                        if (n == KeyCode.CONTROL) {
-                            StateMachine.setCtrlPressed();
-                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                            StateMachine.setAltPressed();
-                        } else if (n == KeyCode.SHIFT) {
-                            StateMachine.setShiftPressed();
-                        } else if (n == KeyCode.E) {
-                            StateMachine.setEPressed();
-                        }
+                        StateMachine.getButtonsPressed().add(ke.getCode());
                         StateMachine.updateFocusPane();
                         ke.consume();
                     }
@@ -317,16 +307,7 @@ public class SuperMarioPaint extends Application {
 
                     @Override
                     public void handle(KeyEvent ke) {
-                        KeyCode n = ke.getCode();
-                        if (n == KeyCode.CONTROL) {
-                            StateMachine.resetCtrlPressed();
-                        } else if (n == KeyCode.ALT || n == KeyCode.ALT_GRAPH) {
-                            StateMachine.resetAltPressed();
-                        } else if (n == KeyCode.SHIFT) {
-                            StateMachine.resetShiftPressed();
-                        } else if (n == KeyCode.E) {
-                            StateMachine.resetEPressed();
-                        }
+                        StateMachine.getButtonsPressed().remove(ke.getCode());
                         StateMachine.updateFocusPane();
                         ke.consume();
                     }
