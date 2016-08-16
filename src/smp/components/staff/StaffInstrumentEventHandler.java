@@ -1,7 +1,7 @@
 package smp.components.staff;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Set;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
@@ -304,7 +304,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     public void updateAccidental() {
         if (!focus)
             return;
-        HashSet<KeyCode> bp = StateMachine.getButtonsPressed();
+        Set<KeyCode> bp = StateMachine.getButtonsPressed();
         boolean ctrl = bp.contains(KeyCode.CONTROL);
         boolean shift = bp.contains(KeyCode.SHIFT);
         boolean alt = bp.contains(KeyCode.ALT) || bp.contains(KeyCode.ALT_GRAPH);

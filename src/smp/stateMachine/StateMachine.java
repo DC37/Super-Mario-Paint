@@ -1,6 +1,8 @@
 package smp.stateMachine;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 import javafx.scene.input.KeyCode;
 import smp.components.Values;
@@ -37,7 +39,8 @@ public class StateMachine {
     private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
     /** Set of currently-pressed buttons. */
-    private static HashSet<KeyCode> buttonsPressed = new HashSet<KeyCode>();
+    private static Set<KeyCode> buttonsPressed =
+            Collections.synchronizedSet(new HashSet<KeyCode>());
 
     /**
      * The default state that the program is in is the EDITING state, in which
@@ -267,7 +270,7 @@ public class StateMachine {
     /**
      * @return Set of currently-pressed buttons.
      */
-    public static HashSet<KeyCode> getButtonsPressed() {
+    public static Set<KeyCode> getButtonsPressed() {
         return buttonsPressed;
     }
 
