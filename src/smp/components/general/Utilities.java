@@ -263,7 +263,7 @@ public class Utilities {
                     }
                 }
                 if (loaded.getTheLines().size() < lineNum + 1) {
-                    int add = lineNum - loaded.getTheLines().size() - 1;
+                    int add = lineNum - loaded.getTheLines().size();
                     for (int i = 0; i < add; i++) {
                         loaded.addLine(new StaffNoteLine());
                     }
