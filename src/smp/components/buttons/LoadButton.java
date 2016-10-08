@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -86,6 +87,10 @@ public class LoadButton extends ImagePushButton {
                 String fname = Utilities.populateStaff(loaded, inputFile,
                         false, theStaff, controller);
                 controller.getNameTextField().setText(fname);
+                StateMachine.setNoteExtensions(
+                        Utilities.noteExtensionsFromLong(loaded.getNoteExtensions()));
+                controller.getInstBLine().setNoteExtension(loaded.getNoteExtensions());
+                controller.getInstBLine().updateNoteExtensions();
                 StateMachine.setSongModified(false);
             } catch (NullPointerException e) {
                 try {

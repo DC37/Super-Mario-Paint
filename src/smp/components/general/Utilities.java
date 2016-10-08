@@ -231,7 +231,7 @@ public class Utilities {
                     if (spl.contains("TEMPO")) {
                         loaded.setTempo(Double.parseDouble(num.trim()));
                     } else if (spl.contains("EXT")) {
-                        loaded.setNoteExtensions(Integer.parseInt(num.trim()));
+                        loaded.setNoteExtensions(Long.parseLong(num.trim()));
                     } else if (spl.contains("TIME")) {
                         loaded.setTimeSignature(num.trim());
                     }
@@ -349,7 +349,7 @@ public class Utilities {
      * @param inputFile
      *            This is the input filename.
      */
-    public static void loadSequenceFromArrangement(File inputFile,
+    public static StaffSequence loadSequenceFromArrangement(File inputFile,
             Staff theStaff, SMPFXController controller) {
         try {
             inputFile = new File(inputFile.getParent() + "\\"
@@ -360,26 +360,41 @@ public class Utilities {
             }
             StaffSequence loaded = loadSong(inputFile);
             populateStaff(loaded, inputFile, false, theStaff, controller);
+            return loaded;
+
         } catch (ClassCastException | EOFException | StreamCorruptedException
                 | NullPointerException e) {
             try {
                 StaffSequence loaded = MPCDecoder.decode(inputFile);
                 Utilities.populateStaff(loaded, inputFile, true, theStaff,
                         controller);
+                return loaded;
             } catch (Exception e1) {
                 e1.printStackTrace();
                 Dialog.showDialog("Not a valid song file.");
-                return;
+                return null;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Dialog.showDialog("Not a valid song file.");
-            return;
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
             Dialog.showDialog("Not a valid song file.");
-            return;
+            return null;
         }
+    }
+
+    /**
+     * @param i Long integer from loaded file.
+     * @return A boolean[] with the proper note extensions.
+     */
+    public static boolean[] noteExtensionsFromLong(long i) {
+        boolean[] bl = new boolean[Values.NUMINSTRUMENTS];
+        for(int j = 0; j < Values.NUMINSTRUMENTS; j++) {
+                bl[j] = (j & (1 << j)) != 0 ? true : false;
+        }
+        return bl;
     }
 
     /**
@@ -462,9 +477,15 @@ public class Utilities {
             File inputFile, boolean mpc, Staff theStaff,
             SMPFXController controller) {
         File firstFile = loaded.getTheSequenceFiles().get(0);
-        loadSequenceFromArrangement(firstFile, theStaff, controller);
+        StaffSequence first =
+                loadSequenceFromArrangement(firstFile, theStaff, controller);
         String fname = inputFile.getName();
+        long j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);
+        StateMachine.setNoteExtensions(
+                Utilities.noteExtensionsFromLong(j));
+        controller.getInstBLine().setNoteExtension(j);
+
         try {
             if (mpc)
                 fname = fname.substring(0, fname.indexOf(']'));

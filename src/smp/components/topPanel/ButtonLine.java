@@ -156,13 +156,23 @@ public class ButtonLine {
      * @param i
      *            The bitfield that we want to set the note extensions to.
      */
-    public void setNoteExtension(int i) {
+    public void setNoteExtension(long i) {
         boolean[] ext = StateMachine.getNoteExtensions();
-        for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
+        for (int j = 0; j < Values.NUMINSTRUMENTS; j++) {
             if (!(ext[j] == ((i & (1 << j)) != 0))) {
                 ext[j] = !ext[j];
                 changePortrait(j, ext[j]);
             }
+        }
+    }
+
+    /**
+     * Updates the note extensions display at the instrument selection line.
+     */
+    public void updateNoteExtensions() {
+        boolean[] ext = StateMachine.getNoteExtensions();
+        for (int j = 0; j < Values.NUMINSTRUMENTS; j++) {
+                changePortrait(j, ext[j]);
         }
     }
 
@@ -176,7 +186,7 @@ public class ButtonLine {
         boolean[] ext = StateMachine.getNoteExtensions();
         ext[i.getChannel() - 1] = !ext[i.getChannel() - 1];
         changePortrait(i.getChannel() - 1, ext[i.getChannel() - 1]);
-        int ex = theStaff.getSequence().getNoteExtensions();
+        long ex = theStaff.getSequence().getNoteExtensions();
         ex ^= (1 << (i.getChannel() - 1));
         theStaff.getSequence().setNoteExtensions(ex);
     }

@@ -789,6 +789,12 @@ public class Staff {
                     highlightSong(i);
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
+                    StateMachine.setNoteExtensions(
+                            Utilities.noteExtensionsFromLong(
+                                    theSequence.getNoteExtensions()));
+                    controller.getInstBLine().setNoteExtension(
+                            theSequence.getNoteExtensions());
+                    controller.getInstBLine().updateNoteExtensions();
                     StateMachine.setTempo(theSequence.getTempo());
                     queue++;
                     updateCurrTempo();

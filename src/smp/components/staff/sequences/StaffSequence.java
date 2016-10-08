@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import smp.components.Values;
+import smp.components.general.Utilities;
+import smp.stateMachine.StateMachine;
 import smp.stateMachine.TimeSignature;
 
 /**
@@ -29,7 +31,7 @@ public class StaffSequence implements Serializable {
     private ArrayList<StaffNoteLine> theLines;
 
     /** This tells us which notes are extended (green highlight) or not. */
-    private int noteExtensions = 0;
+    private long noteExtensions = 0;
 
     /** The time signature of this sequence. */
     private TimeSignature t = TimeSignature.FOUR_FOUR;
@@ -137,12 +139,13 @@ public class StaffSequence implements Serializable {
      * @param i
      *            The note extensions bitfield that we want to set.
      */
-    public void setNoteExtensions(int i) {
+    public void setNoteExtensions(long i) {
         noteExtensions = i;
+        StateMachine.setNoteExtensions(Utilities.noteExtensionsFromLong(i));
     }
 
     /** @return The bitfield denoting which notes are extended. */
-    public int getNoteExtensions() {
+    public long getNoteExtensions() {
         return noteExtensions;
     }
 

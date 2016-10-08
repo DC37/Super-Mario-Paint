@@ -261,6 +261,13 @@ public class StateMachine {
     }
 
     /**
+     * @param set The note extensions that we want to set.
+     */
+    public static void setNoteExtensions(boolean[] set) {
+        noteExtensions = set;
+    }
+
+    /**
      * @return A list of notes that we want to act like the coin.
      */
     public static boolean[] getNoteExtensions() {
