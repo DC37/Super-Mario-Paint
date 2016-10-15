@@ -87,9 +87,7 @@ public class LoadButton extends ImagePushButton {
                 String fname = Utilities.populateStaff(loaded, inputFile,
                         false, theStaff, controller);
                 controller.getNameTextField().setText(fname);
-                StateMachine.setNoteExtensions(
-                        Utilities.noteExtensionsFromLong(loaded.getNoteExtensions()));
-                controller.getInstBLine().setNoteExtension(loaded.getNoteExtensions());
+                StateMachine.setNoteExtensions(loaded.getNoteExtensions());
                 controller.getInstBLine().updateNoteExtensions();
                 StateMachine.setSongModified(false);
             } catch (NullPointerException e) {

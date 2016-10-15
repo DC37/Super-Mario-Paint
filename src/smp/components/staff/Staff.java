@@ -790,9 +790,6 @@ public class Staff {
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
                     StateMachine.setNoteExtensions(
-                            Utilities.noteExtensionsFromLong(
-                                    theSequence.getNoteExtensions()));
-                    controller.getInstBLine().setNoteExtension(
                             theSequence.getNoteExtensions());
                     controller.getInstBLine().updateNoteExtensions();
                     StateMachine.setTempo(theSequence.getTempo());

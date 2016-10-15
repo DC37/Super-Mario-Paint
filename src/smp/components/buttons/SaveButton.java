@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import smp.ImageLoader;
 import smp.components.general.ImagePushButton;
+import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -198,7 +199,7 @@ public class SaveButton extends ImagePushButton {
             t = TimeSignature.FOUR_FOUR;
         }
         pr.printf("TEMPO: %f, EXT: %d, TIME: %s\r\n", out.getTempo(),
-                out.getNoteExtensions(), t);
+                Utilities.longFromBool(out.getNoteExtensions()), t);
 
         for (int i = 0; i < theLines.size(); i++) {
             if (theLines.get(i).isEmpty()) {

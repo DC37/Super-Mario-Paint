@@ -7,6 +7,7 @@ may have to be sorted out over time and many iterations.
 [FIXED, v1.0.0]
 
 -End-of-file behaviour seems to be solved, but keep a lookout.
+[addressed, v1.0.4; ongoing checks]
 
 -Christeriousninja / VolcanBrimstone: The soundfont is missing a number of 
 notes in the boat instrument. Some boat notes will not sound because of that.

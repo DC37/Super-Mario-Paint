@@ -231,7 +231,8 @@ public class Utilities {
                     if (spl.contains("TEMPO")) {
                         loaded.setTempo(Double.parseDouble(num.trim()));
                     } else if (spl.contains("EXT")) {
-                        loaded.setNoteExtensions(Long.parseLong(num.trim()));
+                        loaded.setNoteExtensions(Utilities.boolFromLong(
+                                Long.parseLong(num.trim())));
                     } else if (spl.contains("TIME")) {
                         loaded.setTimeSignature(num.trim());
                     }
@@ -281,6 +282,33 @@ public class Utilities {
             } while (loaded.getTheLines().size() % 10 != 0);
         }
         return loaded;
+    }
+
+    /**
+     * Creates a boolean array from a parsed long array, from a loaded file.
+     * @param parseLong The long that we want to parse.
+     * @return A boolean array based on the long integer that we have loaded.
+     */
+    private static boolean[] boolFromLong(long parseLong) {
+        boolean[] loaded = new boolean[Values.NUMINSTRUMENTS];
+        for (int i = 0; i < Values.NUMINSTRUMENTS; i++) {
+            loaded[i] = ((1 << i) & parseLong) != 0 ? true : false;
+        }
+        return loaded;
+    }
+
+    /**
+     * Creates a long integer from a parsed boolean array.
+     * @param parseBool The boolean array that we want to parse.
+     * @return A long integer that is a bitfield that represents
+     * the boolean array.
+     */
+    public static long longFromBool(boolean[] parseBool) {
+        long parsed = 0;
+        for (int i = 0; i < parseBool.length; i++) {
+            parsed |= (1 << i);
+        }
+        return parsed;
     }
 
     /**
@@ -386,18 +414,6 @@ public class Utilities {
     }
 
     /**
-     * @param i Long integer from loaded file.
-     * @return A boolean[] with the proper note extensions.
-     */
-    public static boolean[] noteExtensionsFromLong(long i) {
-        boolean[] bl = new boolean[Values.NUMINSTRUMENTS];
-        for(int j = 0; j < Values.NUMINSTRUMENTS; j++) {
-                bl[j] = (j & (1 << j)) != 0 ? true : false;
-        }
-        return bl;
-    }
-
-    /**
      * Populates the staff with the sequence given.
      *
      * @param loaded
@@ -430,8 +446,8 @@ public class Utilities {
             // Do nothing
         }
         theStaff.setSequenceName(fname);
-        theStaff.getTopPanel().getButtonLine()
-                .setNoteExtension(loaded.getNoteExtensions());
+        StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+        controller.getInstBLine().updateNoteExtensions();
         return fname;
     }
 
@@ -480,11 +496,10 @@ public class Utilities {
         StaffSequence first =
                 loadSequenceFromArrangement(firstFile, theStaff, controller);
         String fname = inputFile.getName();
-        long j = first.getNoteExtensions();
+        boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);
-        StateMachine.setNoteExtensions(
-                Utilities.noteExtensionsFromLong(j));
-        controller.getInstBLine().setNoteExtension(j);
+        StateMachine.setNoteExtensions(j);
+        controller.getInstBLine().updateNoteExtensions();
 
         try {
             if (mpc)

@@ -1,6 +1,7 @@
 v1.0.4
 Key-press behaviour generalized to include any key-press.
-
+Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
+Slight update to internal data types for better readability of code.
 
 
 v1.0.3
