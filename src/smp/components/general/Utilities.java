@@ -179,22 +179,26 @@ public class Utilities {
         FileInputStream f_in = new FileInputStream(inputFile);
         StaffSequence loaded = null;
         try {
-            // Decode as object
-            ObjectInputStream o_in = new ObjectInputStream(f_in);
-            loaded = (StaffSequence) o_in.readObject();
-            o_in.close();
-        } catch (ClassNotFoundException | ClassCastException | EOFException
-                | StreamCorruptedException e) {
-            // If it's not an object, try using the human-readable option.
-            f_in.close();
-            f_in = new FileInputStream(inputFile);
-            Scanner sc = new Scanner(f_in);
-            ArrayList<String> read = new ArrayList<String>();
-            while (sc.hasNext()) {
-                read.add(sc.nextLine());
+        loaded = MPCDecoder.decode(inputFile);
+        } catch (ParseException e1) {
+            try {
+                // Decode as object
+                ObjectInputStream o_in = new ObjectInputStream(f_in);
+                loaded = (StaffSequence) o_in.readObject();
+                o_in.close();
+            } catch (ClassNotFoundException | ClassCastException | EOFException
+                    | StreamCorruptedException e) {
+                // If it's not an object, try using the human-readable option.
+                f_in.close();
+                f_in = new FileInputStream(inputFile);
+                Scanner sc = new Scanner(f_in);
+                ArrayList<String> read = new ArrayList<String>();
+                while (sc.hasNext()) {
+                    read.add(sc.nextLine());
+                }
+                sc.close();
+                loaded = parseText(read);
             }
-            sc.close();
-            loaded = parseText(read);
         }
         f_in.close();
         if (loaded == null) {
@@ -221,8 +225,8 @@ public class Utilities {
                     if (spl.contains("TEMPO")) {
                         loaded.setTempo(Double.parseDouble(num.trim()));
                     } else if (spl.contains("EXT")) {
-                        loaded.setNoteExtensions(Utilities.boolFromLong(
-                                Long.parseLong(num.trim())));
+                        loaded.setNoteExtensions(Utilities.boolFromLong(Long
+                                .parseLong(num.trim())));
                     } else if (spl.contains("TIME")) {
                         loaded.setTimeSignature(num.trim());
                     }
@@ -276,7 +280,9 @@ public class Utilities {
 
     /**
      * Creates a boolean array from a parsed long array, from a loaded file.
-     * @param parseLong The long that we want to parse.
+     *
+     * @param parseLong
+     *            The long that we want to parse.
      * @return A boolean array based on the long integer that we have loaded.
      */
     private static boolean[] boolFromLong(long parseLong) {
@@ -289,16 +295,18 @@ public class Utilities {
 
     /**
      * Creates a long integer from a parsed boolean array.
-     * @param parseBool The boolean array that we want to parse.
-     * @return A long integer that is a bitfield that represents
-     * the boolean array.
+     *
+     * @param parseBool
+     *            The boolean array that we want to parse.
+     * @return A long integer that is a bitfield that represents the boolean
+     *         array.
      */
     public static long longFromBool(boolean[] parseBool) {
         long parsed = 0;
         for (int i = 0; i < parseBool.length; i++) {
-           if (parseBool[i]) {
-               parsed |= (1 << i);
-           }
+            if (parseBool[i]) {
+                parsed |= (1 << i);
+            }
         }
         return parsed;
     }
@@ -376,24 +384,24 @@ public class Utilities {
                     + inputFile.getName());
             if (!inputFile.exists()) {
                 inputFile = new File(inputFile.getParent() + "\\"
-                    + inputFile.getName());
+                        + inputFile.getName());
             }
-            StaffSequence loaded = loadSong(inputFile);
+            StaffSequence loaded = null;
+            try {
+                loaded = MPCDecoder.decode(inputFile);
+            } catch (ParseException e1) {
+                loaded = Utilities.loadSong(inputFile);
+            }
+            if (loaded == null) {
+                throw new IOException();
+            }
             populateStaff(loaded, inputFile, false, theStaff, controller);
             return loaded;
 
         } catch (ClassCastException | EOFException | StreamCorruptedException
                 | NullPointerException e) {
-            try {
-                StaffSequence loaded = MPCDecoder.decode(inputFile);
-                Utilities.populateStaff(loaded, inputFile, true, theStaff,
-                        controller);
-                return loaded;
-            } catch (Exception e1) {
-                e1.printStackTrace();
-                Dialog.showDialog("Not a valid song file.");
-                return null;
-            }
+            Dialog.showDialog("Not a valid song file.");
+            return null;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Dialog.showDialog("Not a valid song file.");
@@ -451,10 +459,21 @@ public class Utilities {
      *            The loaded staff arrangement.
      * @param filePath
      *            The location in which this arrangement was found.
+     * @throws IOException
+     * @throws NullPointerException
+     * @throws FileNotFoundException
      */
     public static void normalizeArrangement(StaffArrangement loaded,
-            File filePath) {
+            File filePath) throws FileNotFoundException, NullPointerException,
+            IOException {
         String basePath = filePath.getParent() + "\\";
+        int sz1 = loaded.getTheSequenceFiles().size();
+        int sz2 = loaded.getTheSequences().size();
+        if (sz2 < sz1) {
+            for (int i = 0; i < sz1 - sz2; i++) {
+                loaded.getTheSequences().add(new StaffSequence());
+            }
+        }
         for (int i = 0; i < loaded.getTheSequenceFiles().size(); i++) {
             File f = loaded.getTheSequenceFiles().get(i);
             String fName = f.getName();
@@ -465,6 +484,7 @@ public class Utilities {
                 fName = fName.substring(0, dot) + "]MarioPaint.txt";
                 newPath = basePath + fName;
                 loaded.getTheSequenceFiles().set(i, new File(newPath));
+                loaded.getTheSequences().set(i, loadSong(new File(newPath)));
                 continue;
             }
             loaded.getTheSequenceFiles().set(i, new File(newPath));
@@ -485,8 +505,8 @@ public class Utilities {
             File inputFile, boolean mpc, Staff theStaff,
             SMPFXController controller) {
         File firstFile = loaded.getTheSequenceFiles().get(0);
-        StaffSequence first =
-                loadSequenceFromArrangement(firstFile, theStaff, controller);
+        StaffSequence first = loadSequenceFromArrangement(firstFile, theStaff,
+                controller);
         String fname = inputFile.getName();
         boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);

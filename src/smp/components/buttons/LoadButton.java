@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
+import java.text.ParseException;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -83,30 +84,38 @@ public class LoadButton extends ImagePushButton {
                 if (inputFile == null)
                     return;
                 init = new File(inputFile.getParent());
-                StaffSequence loaded = Utilities.loadSong(inputFile);
-                String fname = Utilities.populateStaff(loaded, inputFile,
-                        false, theStaff, controller);
-                controller.getNameTextField().setText(fname);
-                StateMachine.setNoteExtensions(loaded.getNoteExtensions());
-                controller.getInstBLine().updateNoteExtensions();
-                StateMachine.setSongModified(false);
-            } catch (NullPointerException e) {
-                try {
-                    StaffSequence loaded = MPCDecoder.decode(inputFile);
-                    init = new File(inputFile.getParent());
-                    String fname = Utilities.populateStaff(loaded, inputFile,
-                            true, theStaff, controller);
-                    controller.getNameTextField().setText(fname);
-                    StateMachine.setSongModified(false);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                    Dialog.showDialog("Not a valid song file.");
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                loadSong(inputFile);
+            } catch (Exception e) {
+                Dialog.showDialog("Not a valid song file.");
             }
+        }
+    }
+
+    /** This loads a song, given a file. */
+    private void loadSong(File inputFile) {
+        try {
+            StaffSequence loaded = null;
+            try {
+                loaded = MPCDecoder.decode(inputFile);
+            } catch (ParseException e1) {
+                loaded = Utilities.loadSong(inputFile);
+            }
+            if (loaded == null) {
+                throw new IOException();
+            }
+            String fname = Utilities.populateStaff(loaded, inputFile, false,
+                    theStaff, controller);
+            controller.getNameTextField().setText(fname);
+            StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+            controller.getInstBLine().updateNoteExtensions();
+            StateMachine.setSongModified(false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            Dialog.showDialog("Problem loading file!");
+            e.printStackTrace();
+        } catch (Exception e) {
+            Dialog.showDialog("Not a valid song file.");
         }
     }
 
