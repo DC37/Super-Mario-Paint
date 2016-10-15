@@ -200,16 +200,6 @@ public class Utilities {
         if (loaded == null) {
             throw new NullPointerException();
         }
-        boolean empty = true;
-        for (StaffNoteLine s : loaded.getTheLines()) {
-            if (!s.isEmpty()) {
-                empty = false;
-                break;
-            }
-        }
-        if (empty) {
-            throw new NullPointerException();
-        }
         return loaded;
     }
 
@@ -306,7 +296,9 @@ public class Utilities {
     public static long longFromBool(boolean[] parseBool) {
         long parsed = 0;
         for (int i = 0; i < parseBool.length; i++) {
-            parsed |= (1 << i);
+           if (parseBool[i]) {
+               parsed |= (1 << i);
+           }
         }
         return parsed;
     }
