@@ -1,23 +1,25 @@
 Super Mario Paint
 ==========
+
 * Current Version: 1.0.4
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
-Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (2002), TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany, 2007-2008), and FordPrefect86's Advanced Mario Sequencer (2009). This will be a free program when completed, open to those who want to download it.  
+Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (2002), TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany, 2007-2008), and FordPrefect86's Advanced Mario Sequencer (2009). This will be a free program when completed, open to those who want to download it.
 
+Accepting cryptocurrency donations!
 
-Accepting cryptocurrency donations!  
 * Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL
 * Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia
 
-
-Major Releases:
+Major Releases
 -----
+
 See "Version History.txt" for semantic versioning and more release notes.
+
 * March 14, 2016 - First full functionality release, v1.0.0
-* January 5, 2015 - v0.95~0.951 - Beta Release 
-* January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger) 
+* January 5, 2015 - v0.95~0.951 - Beta Release
+* January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger)
 * December 31, 2014 - v0.921 - Alpha (Mac + Windows)
 * December 30, 2014 - v0.92 - Alpha (Stability Release + Java 7u71 / Java 8u25)
 * January 4, 2014 - v0.91 - Alpha (Update Release)
@@ -25,8 +27,9 @@ See "Version History.txt" for semantic versioning and more release notes.
 * August 7, 2012 - Project started
 * Author: RehdBlob
 
-Confirmed Operating System Configurations:
+Confirmed Operating System Configurations
 -----
+
 * Windows 7 + Java 7u71
 * Windows 7 + Java 8u25
 * Windows 7 + Java 8u73
@@ -39,6 +42,7 @@ Confirmed Operating System Configurations:
 
 Contributors to Operating Systems / Tests
 -----
+
 * SomeonePlaymc
 * VolcanBrimstone
 * Pokesonicddrninja
@@ -47,8 +51,9 @@ Contributors to Operating Systems / Tests
 * The Mario Paint Community
 * Many others...
 
-Tasklist:
+Tasklist
 -----
+
 * Splash screen animation and other extras
 * Import AMS songs
 * Speedmarks
