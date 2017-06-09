@@ -210,7 +210,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 line);
         sveh.updateVolume();
         theStaff.redraw();
-        System.out.println(theStaffNote + " " + theStaffNote.getPosition());
+//        System.out.println(theStaffNote + " " + theStaffNote.getPosition());
     }
 
     /**

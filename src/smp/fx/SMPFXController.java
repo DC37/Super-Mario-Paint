@@ -14,6 +14,7 @@ import smp.ImageLoader;
 import smp.clipboard.DataClipboard;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffInstrumentEventHandler_Hack;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
 
@@ -250,6 +251,8 @@ public class SMPFXController {
     
     @FXML
     private AnchorPane basePane;
+    
+    private StaffInstrumentEventHandler_Hack staffInstrumentEventHandlerHack;
     private DataClipboard clipboard;
     
     /** This is the image loader. */
@@ -279,7 +282,9 @@ public class SMPFXController {
         staff = new Staff(staffLedgerLines, this, il, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
-       
+        
+        // HACK
+        staffInstrumentEventHandlerHack = new StaffInstrumentEventHandler_Hack(staff, il);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
@@ -536,5 +541,9 @@ public class SMPFXController {
     
     public HBox getInstLine() {
     	return instLine;
+    }
+    
+    public StaffInstrumentEventHandler_Hack getStaffInstrumentEventHandler_Hack() {
+        return staffInstrumentEventHandlerHack;
     }
 }

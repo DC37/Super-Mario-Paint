@@ -7,8 +7,6 @@ import smp.components.staff.sequences.StaffNoteLine;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -90,6 +88,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         	if(event.getY() < 0 || stp.getHeight() < event.getY())
         		return;
             double h = stp.getHeight() - event.getY();
+//            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             setVolumeDisplay(h);
             try {
                 setVolumePercent(h / stp.getHeight());
