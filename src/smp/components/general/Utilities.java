@@ -448,6 +448,9 @@ public class Utilities {
         theStaff.setSequenceName(fname);
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         controller.getInstBLine().updateNoteExtensions();
+        
+        controller.getModifySongManager().reset();
+        
         return fname;
     }
 

@@ -12,8 +12,10 @@ import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.clipboard.DataClipboard;
+import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffInstrumentEventHandler;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
 
@@ -91,6 +93,13 @@ public class SMPFXController {
     /** The 'mute-all' button. */
     @FXML
     private ImageView muteA;
+    
+    /** The clipboard selection button. */
+    @FXML
+    private ImageView clipboardButton;
+    
+    @FXML
+    private ImageView clipboardLabel;
 
     /** The arranger view piece that holds the list of songs. */
     @FXML
@@ -250,7 +259,11 @@ public class SMPFXController {
     
     @FXML
     private AnchorPane basePane;
+    
+    private StaffInstrumentEventHandler staffInstrumentEventHandler;
     private DataClipboard clipboard;
+    
+    private ModifySongManager commandManager;
     
     /** This is the image loader. */
     private ImageLoader il;
@@ -272,6 +285,9 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
+
+        // Set up command manager (undo and redo)
+        commandManager = new ModifySongManager(staff, this);
         
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
@@ -279,7 +295,11 @@ public class SMPFXController {
         staff = new Staff(staffLedgerLines, this, il, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
+        
+        // HACK
+        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
        
+        commandManager.setStaff(staff);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
@@ -298,7 +318,8 @@ public class SMPFXController {
         downButton.setVisible(false);
         
         // Set up clipboard.
-        clipboard = new DataClipboard(staff, this, il);		
+        clipboard = new DataClipboard(staff, this, il);	
+        
     }
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
@@ -416,6 +437,18 @@ public class SMPFXController {
      */
     public ImageView getMuteAButton() {
         return muteA;
+    }
+
+	/**
+	 * @return The <code>ImageView</code> object that contains the clipboard
+	 *         selection button.
+	 */
+    public ImageView getClipboardButton() {
+    	return clipboardButton;
+    }
+    
+    public ImageView getClipboardLabel() {
+    	return clipboardLabel;
     }
 
     /** @return The control panel of the program. */
@@ -536,5 +569,13 @@ public class SMPFXController {
     
     public HBox getInstLine() {
     	return instLine;
+    }
+    
+    public StaffInstrumentEventHandler getStaffInstrumentEventHandler() {
+        return staffInstrumentEventHandler;
+    }
+    
+    public ModifySongManager getModifySongManager() {
+    	return commandManager;
     }
 }

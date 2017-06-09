@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -124,7 +123,7 @@ public class StaffImages {
             StackPane volBar = (StackPane) v;
             vol.add(volBar);
             StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar,
-                    il);
+                    il, controller.getModifySongManager());
             volBar.addEventHandler(Event.ANY, sveh);
             theStaff.getNoteMatrix().addVolHandler(sveh);
         }

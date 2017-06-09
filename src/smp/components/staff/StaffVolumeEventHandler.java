@@ -2,10 +2,17 @@ package smp.components.staff;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.commandmanager.ModifySongManager;
+import smp.commandmanager.commands.AddVolumeCommand;
+import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.stateMachine.StateMachine;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -45,13 +52,16 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 	private static double mouseX;
 	private static double mouseY;
 
+	private ModifySongManager commandManager;
+	
 	/** Makes a new StaffVolumeEventHandler. */
-    public StaffVolumeEventHandler(StackPane st, ImageLoader i) {
+    public StaffVolumeEventHandler(StackPane st, ImageLoader i, ModifySongManager cm) {
         stp = st;
         il = i;
         theVolBar = (ImageView) st.getChildren().get(0);
         theVolBar.setImage(il.getSpriteFX(ImageIndex.VOL_BAR));
         theVolBar.setVisible(false);
+        commandManager = cm;
     }
 
     @Override
@@ -77,6 +87,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     		mouseX = -1;
     		mouseY = -1;
     		mouseExited();
+    	} else if(event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+    		mouseReleased();
     	} else {
     		mouseEntered();
     	}
@@ -85,9 +97,14 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     /** Called whenever the mouse is pressed. */
     private void mousePressed(MouseEvent event) {
         if (!theLine.getNotes().isEmpty()) {
+
+        	if(event.getEventType() == MouseEvent.MOUSE_PRESSED)
+        		commandManager.execute(new RemoveVolumeCommand(theLine, theLine.getVolume()));
+
         	if(event.getY() < 0 || stp.getHeight() < event.getY())
         		return;
             double h = stp.getHeight() - event.getY();
+//            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             setVolumeDisplay(h);
             try {
                 setVolumePercent(h / stp.getHeight());
@@ -96,6 +113,11 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
                 setVolumeDisplay(stp.getHeight());
             }
         }
+    }
+    
+    private void mouseReleased() {
+    	commandManager.execute(new AddVolumeCommand(theLine, theLine.getVolume()));//.addVolume(theLine, theLine.getVolume());
+    	commandManager.record();
     }
     
     /** Called whenever the mouse enters the area. */
