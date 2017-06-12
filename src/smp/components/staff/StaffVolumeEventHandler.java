@@ -88,6 +88,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         	if(event.getY() < 0 || stp.getHeight() < event.getY())
         		return;
             double h = stp.getHeight() - event.getY();
+//            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             setVolumeDisplay(h);
             try {
                 setVolumePercent(h / stp.getHeight());
