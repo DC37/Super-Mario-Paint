@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 
 /**
  * This takes care of the volume bars on the staff.
@@ -33,6 +34,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     
     /** The ImageLoader class. */
     private ImageLoader il;
+    
+    private static Text volText;
 
     /** Makes a new StaffVolumeEventHandler. */
     public StaffVolumeEventHandler(StackPane st, ImageLoader i) {
@@ -52,8 +55,15 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 //        } else if (event.getEventType() == DragEvent.DRAG_DONE) {
 //            mouseDragEnd();
 //        }
-    	if(((MouseEvent)event).isPrimaryButtonDown()){
+    	if(event instanceof MouseEvent && 
+    			((MouseEvent)event).isPrimaryButtonDown()){
     		mousePressed((MouseEvent) event);
+    	} else if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
+    		mouseEntered();
+    	} else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
+    		mouseExited();
+    	} else {
+    		mouseEntered();
     	}
     }
 
@@ -62,18 +72,44 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         if (!theLine.getNotes().isEmpty()) {
         	if(event.getY() < 0 || stp.getHeight() < event.getY())
         		return;
+//          System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             double h = stp.getHeight() - event.getY();
-//            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             setVolumeDisplay(h);
+            //show the velocity as volume is changed
+            if(volText == null){
+            	volText = new Text("" + theLine.getVolume());
+            }
+            if(!stp.getChildren().contains(volText)){
+            	stp.getChildren().add(volText);
+            }
             try {
                 setVolumePercent(h / stp.getHeight());
+                volText.setText("" + theLine.getVolume());
             } catch (IllegalArgumentException e) {
                 setVolume(Values.MAX_VELOCITY);
                 setVolumeDisplay(stp.getHeight());
             }
         }
     }
-
+    
+    /** Called whenever the mouse enters the area. */
+    private void mouseEntered() {
+    	if (!theLine.getNotes().isEmpty()) {
+	        if(volText == null){
+	        	volText = new Text("" + theLine.getVolume());
+	        }
+	        if(!stp.getChildren().contains(volText)){
+	        	stp.getChildren().add(volText);
+	        }
+	        volText.setText("" + theLine.getVolume());
+    	}
+    }
+    
+    /** Called whenever the mouse exits the area. */
+    private void mouseExited() {
+    	stp.getChildren().remove(volText);
+    }
+    
     /** Called whenever the mouse is dragged. */
     private void mouseDragStart() {
     	
