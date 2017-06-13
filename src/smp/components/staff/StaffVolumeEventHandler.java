@@ -37,6 +37,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     
     private static Text volText;
     private static double mouseX;
+    private static double mouseY;
 
     /** Makes a new StaffVolumeEventHandler. */
     public StaffVolumeEventHandler(StackPane st, ImageLoader i) {
@@ -58,19 +59,24 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 //        }
     	if(event instanceof MouseEvent && 
     			((MouseEvent)event).isPrimaryButtonDown()){
+    		mouseX = stp.getBoundsInParent().getMinX();
+    		mouseY = stp.getBoundsInParent().getMinY();
     		mousePressed((MouseEvent) event);
     	} else if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
+    		mouseX = stp.getBoundsInParent().getMinX();
+    		mouseY = stp.getBoundsInParent().getMinY();
     		mouseEntered();
     	} else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
+    		mouseY = -1;
     		mouseExited();
     	} else {
     		mouseEntered();
     	}
     	
-    	if(event instanceof MouseEvent){
-    		mouseX = stp.getBoundsInParent().getMinX();
-//    		System.out.println("MOUSEX" + mouseX);
-    	}
+//    	if(event instanceof MouseEvent){
+//    		mouseX = stp.getBoundsInParent().getMinX();
+////    		System.out.println("MOUSEX" + mouseX);
+//    	}
 //    	System.out.println("STPGTX" + stp.getTranslateX());
 //    	System.out.println("STPGLX" + stp.getLayoutX());
 //    	System.out.println("STPGBIL-GMX" + stp.getBoundsInLocal().getMinX());
@@ -219,8 +225,9 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     }
     
     private boolean stpContainsMouse(){
-    	System.out.println("STPGBIP-GMX scm" + stp.getBoundsInParent().getMinX() + "MOUSEX" + mouseX);
-    	return mouseX >= stp.getBoundsInParent().getMinX();
+//    	System.out.println("STPGBIP-GMX scm" + stp.getBoundsInParent().getMinX() + "MOUSEX" + mouseX);
+    	return mouseX >= stp.getBoundsInParent().getMinX() 
+    			&& mouseY >= stp.getBoundsInParent().getMinY();
     }
     
 //    public static void setUpdateFinished(boolean finished){
