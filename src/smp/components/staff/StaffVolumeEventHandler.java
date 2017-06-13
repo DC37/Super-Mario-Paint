@@ -36,6 +36,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     private ImageLoader il;
     
     private static Text volText;
+    private static double mouseX;
 
     /** Makes a new StaffVolumeEventHandler. */
     public StaffVolumeEventHandler(StackPane st, ImageLoader i) {
@@ -65,6 +66,15 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     	} else {
     		mouseEntered();
     	}
+    	
+    	if(event instanceof MouseEvent){
+    		mouseX = stp.getBoundsInParent().getMinX();
+//    		System.out.println("MOUSEX" + mouseX);
+    	}
+//    	System.out.println("STPGTX" + stp.getTranslateX());
+//    	System.out.println("STPGLX" + stp.getLayoutX());
+//    	System.out.println("STPGBIL-GMX" + stp.getBoundsInLocal().getMinX());
+//    	System.out.println("STPGBIP-GMX" + stp.getBoundsInParent().getMinX());
     }
 
     /** Called whenever the mouse is pressed. */
@@ -85,6 +95,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
             try {
                 setVolumePercent(h / stp.getHeight());
                 volText.setText("" + theLine.getVolume());
+    	        System.out.println("setTextMP" + theLine.getVolume());
             } catch (IllegalArgumentException e) {
                 setVolume(Values.MAX_VELOCITY);
                 setVolumeDisplay(stp.getHeight());
@@ -94,6 +105,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     
     /** Called whenever the mouse enters the area. */
     private void mouseEntered() {
+//    	while(!updateFinished){System.out.println("WAIT");}
+    	
     	if (!theLine.getNotes().isEmpty()) {
 	        if(volText == null){
 	        	volText = new Text("" + theLine.getVolume());
@@ -102,11 +115,13 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 	        	stp.getChildren().add(volText);
 	        }
 	        volText.setText("" + theLine.getVolume());
+	        System.out.println("setTextME" + theLine.getVolume());
     	}
     }
     
     /** Called whenever the mouse exits the area. */
     private void mouseExited() {
+    	System.out.println("MOUSEEXIT");
     	stp.getChildren().remove(volText);
     }
     
@@ -178,17 +193,42 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * Updates the volume display on this volume displayer.
      */
     public void updateVolume() {
+//        StaffVolumeEventHandler.setUpdateFinished(false);
         setVolumeDisplay(theLine.getVolumePercent() * stp.getHeight());
         if (theLine.getVolume() == 0 || theLine.isEmpty()) {
             setVolumeVisible(false);
         }
+
+        if(stpContainsMouse()){
+        	System.out.println("STPGBIP-GMX" + stp.getBoundsInParent().getMinX());
+        	mouseExited();
+        	mouseEntered();
+        }
+//        System.out.println(toString());
+        //not thread safe
+//    	if (!theLine.getNotes().isEmpty()) {
+//	        if(volText == null){
+//	        	volText = new Text("" + theLine.getVolume());
+//	        }
+////	        if(!stp.getChildren().contains(volText)){
+////	        	stp.getChildren().add(volText);
+////	        }
+//	        volText.setText("" + theLine.getVolume());
+//	        System.out.println("setTextUV" + theLine.getVolume());
+//    	}
     }
+    
+    private boolean stpContainsMouse(){
+    	System.out.println("STPGBIP-GMX scm" + stp.getBoundsInParent().getMinX() + "MOUSEX" + mouseX);
+    	return mouseX >= stp.getBoundsInParent().getMinX();
+    }
+    
+//    public static void setUpdateFinished(boolean finished){
+//    	updateFinished = finished;
+//    }
 
     @Override
     public String toString() {
         return "Line: " + line;
     }
-
-
-
 }
