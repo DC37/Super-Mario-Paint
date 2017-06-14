@@ -8,6 +8,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -35,7 +36,10 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     /** The ImageLoader class. */
     private ImageLoader il;
     
+    /** The text representing the volume the mouse is currently hovering over. */
     private static Text volText;
+    
+    /** Mouse position. Used for finding which volume the mouse is hovering over. */
     private static double mouseX;
     private static double mouseY;
 
@@ -62,6 +66,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     		mouseX = stp.getBoundsInParent().getMinX();
     		mouseY = stp.getBoundsInParent().getMinY();
     		mousePressed((MouseEvent) event);
+    		mouseEntered();
     	} else if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
     		mouseX = stp.getBoundsInParent().getMinX();
     		mouseY = stp.getBoundsInParent().getMinY();
@@ -72,15 +77,6 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     	} else {
     		mouseEntered();
     	}
-    	
-//    	if(event instanceof MouseEvent){
-//    		mouseX = stp.getBoundsInParent().getMinX();
-////    		System.out.println("MOUSEX" + mouseX);
-//    	}
-//    	System.out.println("STPGTX" + stp.getTranslateX());
-//    	System.out.println("STPGLX" + stp.getLayoutX());
-//    	System.out.println("STPGBIL-GMX" + stp.getBoundsInLocal().getMinX());
-//    	System.out.println("STPGBIP-GMX" + stp.getBoundsInParent().getMinX());
     }
 
     /** Called whenever the mouse is pressed. */
@@ -88,20 +84,10 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         if (!theLine.getNotes().isEmpty()) {
         	if(event.getY() < 0 || stp.getHeight() < event.getY())
         		return;
-//          System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             double h = stp.getHeight() - event.getY();
             setVolumeDisplay(h);
-            //show the velocity as volume is changed
-            if(volText == null){
-            	volText = new Text("" + theLine.getVolume());
-            }
-            if(!stp.getChildren().contains(volText)){
-            	stp.getChildren().add(volText);
-            }
             try {
                 setVolumePercent(h / stp.getHeight());
-                volText.setText("" + theLine.getVolume());
-    	        System.out.println("setTextMP" + theLine.getVolume());
             } catch (IllegalArgumentException e) {
                 setVolume(Values.MAX_VELOCITY);
                 setVolumeDisplay(stp.getHeight());
@@ -111,8 +97,6 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     
     /** Called whenever the mouse enters the area. */
     private void mouseEntered() {
-//    	while(!updateFinished){System.out.println("WAIT");}
-    	
     	if (!theLine.getNotes().isEmpty()) {
 	        if(volText == null){
 	        	volText = new Text("" + theLine.getVolume());
@@ -121,13 +105,11 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 	        	stp.getChildren().add(volText);
 	        }
 	        volText.setText("" + theLine.getVolume());
-	        System.out.println("setTextME" + theLine.getVolume());
     	}
     }
     
     /** Called whenever the mouse exits the area. */
     private void mouseExited() {
-    	System.out.println("MOUSEEXIT");
     	stp.getChildren().remove(volText);
     }
     
@@ -199,40 +181,24 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * Updates the volume display on this volume displayer.
      */
     public void updateVolume() {
-//        StaffVolumeEventHandler.setUpdateFinished(false);
         setVolumeDisplay(theLine.getVolumePercent() * stp.getHeight());
         if (theLine.getVolume() == 0 || theLine.isEmpty()) {
             setVolumeVisible(false);
         }
 
-        if(stpContainsMouse()){
-        	System.out.println("STPGBIP-GMX" + stp.getBoundsInParent().getMinX());
+        if(stpHasMouse()){
         	mouseExited();
         	mouseEntered();
         }
-//        System.out.println(toString());
-        //not thread safe
-//    	if (!theLine.getNotes().isEmpty()) {
-//	        if(volText == null){
-//	        	volText = new Text("" + theLine.getVolume());
-//	        }
-////	        if(!stp.getChildren().contains(volText)){
-////	        	stp.getChildren().add(volText);
-////	        }
-//	        volText.setText("" + theLine.getVolume());
-//	        System.out.println("setTextUV" + theLine.getVolume());
-//    	}
     }
     
-    private boolean stpContainsMouse(){
-//    	System.out.println("STPGBIP-GMX scm" + stp.getBoundsInParent().getMinX() + "MOUSEX" + mouseX);
+    /**
+     * @return Whether the mouse is currently in the volume stack pane.
+     */
+    private boolean stpHasMouse(){
     	return mouseX >= stp.getBoundsInParent().getMinX() 
     			&& mouseY >= stp.getBoundsInParent().getMinY();
     }
-    
-//    public static void setUpdateFinished(boolean finished){
-//    	updateFinished = finished;
-//    }
 
     @Override
     public String toString() {
