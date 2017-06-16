@@ -321,14 +321,14 @@ public class SuperMarioPaint extends Application {
 			@Override
 			public void handle(ScrollEvent se) {
 				if (se.getDeltaY() < 0) {
-					if (se.isControlDown())
-						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
-					else
+//					if (se.isControlDown())
+//						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
+//					else
 						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 1);
 				} else if (se.getDeltaY() > 0) {
-					if (se.isControlDown())
-						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
-					else
+//					if (se.isControlDown())
+//						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
+//					else
 						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 1);
 				}
 				se.consume();
