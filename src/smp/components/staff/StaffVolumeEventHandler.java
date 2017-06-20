@@ -45,19 +45,25 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     @Override
     public void handle(Event event) {
-        if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            mousePressed((MouseEvent) event);
-        } else if (event.getEventType() == MouseEvent.DRAG_DETECTED) {
-            mouseDragStart();
-        } else if (event.getEventType() == DragEvent.DRAG_DONE) {
-            mouseDragEnd();
-        }
+//        if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+//            mousePressed((MouseEvent) event);
+//        } else if (event.getEventType() == MouseEvent.DRAG_DETECTED) {
+//            mouseDragStart();
+//        } else if (event.getEventType() == DragEvent.DRAG_DONE) {
+//            mouseDragEnd();
+//        }
+    	if(((MouseEvent)event).isPrimaryButtonDown()){
+    		mousePressed((MouseEvent) event);
+    	}
     }
 
     /** Called whenever the mouse is pressed. */
     private void mousePressed(MouseEvent event) {
         if (!theLine.getNotes().isEmpty()) {
+        	if(event.getY() < 0 || stp.getHeight() < event.getY())
+        		return;
             double h = stp.getHeight() - event.getY();
+//            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             setVolumeDisplay(h);
             try {
                 setVolumePercent(h / stp.getHeight());
@@ -70,7 +76,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     /** Called whenever the mouse is dragged. */
     private void mouseDragStart() {
-
+    	
     }
 
     /** Called whenever we finish dragging the mouse. */
