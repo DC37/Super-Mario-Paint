@@ -509,4 +509,8 @@ public class SMPFXController {
     public void setImageLoader(ImageLoader imgLoader) {
         il = imgLoader;
     }
+    
+    public Staff getStaff(){
+    	return staff;
+    }
 }

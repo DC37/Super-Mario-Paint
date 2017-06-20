@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -209,6 +210,7 @@ public class SuperMarioPaint extends Application {
      */
     @Override
     public void stop() {
+//    	Platform.exit();
         System.exit(0);
     }
 
@@ -313,6 +315,26 @@ public class SuperMarioPaint extends Application {
                     }
                 });
 
+        //put this into StateMachine?
+		primaryScene.addEventHandler(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+
+			@Override
+			public void handle(ScrollEvent se) {
+				if (se.getDeltaY() < 0) {
+//					if (se.isControlDown())
+//						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
+//					else
+						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 1);
+				} else if (se.getDeltaY() > 0) {
+//					if (se.isControlDown())
+//						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
+//					else
+						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 1);
+				}
+				se.consume();
+			}
+		});
+        
         primaryStage.focusedProperty().addListener(
                 new ChangeListener<Boolean>() {
                     @Override
