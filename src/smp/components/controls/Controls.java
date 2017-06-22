@@ -275,6 +275,7 @@ public class Controls {
             @Override
             public void changed(ObservableValue<? extends Number> arg0,
                     Number oldVal, Number newVal) {
+            	StateMachine.SCROLL_FLAG = true;
                 StateMachine.setMeasureLineNum(newVal.intValue());
                 theStaff.setLocation(newVal.intValue());
                 theStaff.getStaffImages().updateStaffMeasureLines(

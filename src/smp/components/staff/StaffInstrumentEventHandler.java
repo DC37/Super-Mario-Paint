@@ -82,6 +82,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
 
+    private StackPane stPane;
+    
+    
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
      * a StackPane and a position on the staff.
@@ -111,6 +114,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             System.out.println("Line: " + l);
             System.out.println("Position: " + pos);
         }
+        
+        this.stPane = stPane;
+        this.stPane.setDisable(true);
     }
 
     @Override
@@ -129,12 +135,16 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             focus = true;
             mouseEntered(theInd);
             event.consume();
-
+            
+            System.out.println(this.toString());
+//            this.stPane.setDisable(false);
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             focus = false;
             mouseExited(theInd);
             event.consume();
 
+            System.out.println("DISABLE");
+            this.stPane.setDisable(true);
         }
 
     }
