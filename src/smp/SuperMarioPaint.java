@@ -21,7 +21,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -285,6 +287,29 @@ public class SuperMarioPaint extends Application {
     }
 
     /**
+     * 
+     * @param x mouse pos
+     * @return line in the current window based on x coord
+     */
+    private int getLine(double x){
+
+    	if(x < 135 || x > 775)
+    		return -1;
+    	return (((int)x - 135) / 64);
+    }
+    
+    /**
+     * 
+     * @param y mouse pos
+     * @return note position based on y coord
+     */
+    private int getPosition(double y){
+    	if(y < 66 || y >= 354)
+    		return -1;
+    	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
+    }
+    
+    /**
      * Creates the keyboard listeners that we will be using for various other
      * portions of the program. Ctrl, alt, and shift are of interest here, but
      * the arrow keys will also be considered.
@@ -293,6 +318,53 @@ public class SuperMarioPaint extends Application {
      *            The main window.
      */
     private void makeKeyboardListeners(Scene primaryScene) {
+    	
+		primaryScene.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent me) {
+				
+				final int x = getLine(me.getX());
+				final int y = getPosition(me.getY());
+				if(!StateMachine.SCROLL_FLAG){
+					if (x > -1 && y > -1)
+						if(controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled())
+							controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
+					return;
+				}
+				if (x > -1 && y > -1) {
+					controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(true);
+					if (controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled()) {
+						if (StateMachine.THREAD_DELAY_1 != null) {
+							StateMachine.THREAD_DELAY_1.interrupt();
+							try {
+								StateMachine.THREAD_DELAY_1.join();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							StateMachine.THREAD_DELAY_1 = null;
+						}
+						if (StateMachine.THREAD_DELAY_1 == null) {
+							StateMachine.THREAD_DELAY_1 = new Thread() {
+								public void run() {
+									try {
+										System.out.println("SLEEPING_1");
+										Thread.sleep(100);
+										controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
+										StateMachine.THREAD_DELAY_1 = null;
+									} catch (InterruptedException v) {
+										System.out.println(v);
+									}
+								}
+							};
+							StateMachine.THREAD_DELAY_1.start();
+						}
+					}
+				}
+			}
+		});
+    	
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
@@ -312,6 +384,36 @@ public class SuperMarioPaint extends Application {
                         StateMachine.getButtonsPressed().remove(ke.getCode());
                         StateMachine.updateFocusPane();
                         ke.consume();
+                        
+                        //wait 1s to turn off scroll flag
+                        if(ke.getCode() == KeyCode.LEFT || ke.getCode() == KeyCode.RIGHT){
+//                        	StateMachine.SCROLL_FLAG = true;
+                        	if (StateMachine.THREAD_DELAY_2 != null) {
+    							StateMachine.THREAD_DELAY_2.interrupt();
+    							try {
+    								StateMachine.THREAD_DELAY_2.join();
+    							} catch (InterruptedException e) {
+    								// TODO Auto-generated catch block
+    								e.printStackTrace();
+    							}
+    							StateMachine.THREAD_DELAY_2 = null;
+    						}
+    						if (StateMachine.THREAD_DELAY_2 == null) {
+    							StateMachine.THREAD_DELAY_2 = new Thread() {
+    								public void run() {
+    									try {
+    										System.out.println("SLEEPING_2");
+    										Thread.sleep(1000);
+    			                        	StateMachine.SCROLL_FLAG = false;
+    										StateMachine.THREAD_DELAY_2 = null;
+    									} catch (InterruptedException v) {
+    										System.out.println(v);
+    									}
+    								}
+    							};
+    							StateMachine.THREAD_DELAY_2.start();
+    						}
+                        }
                     }
                 });
 
