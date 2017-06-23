@@ -146,6 +146,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
 	@Override
     public void handle(Event event) {
     	
+		boolean newNote = false;
     	if(event instanceof MouseEvent){
     		int lineTmp = getLine(((MouseEvent)event).getX());
     		int positionTmp = getPosition(((MouseEvent)event).getY());
@@ -159,6 +160,8 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     		
     		//new note
     		if(line != lineTmp || position != positionTmp){
+    			newNote = true;
+    			
     			line = lineTmp;
     			position = positionTmp;
     			StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(line, position);
@@ -173,7 +176,8 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         //Drag-add notes, hold e to drag-remove notes
-		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown()) {
+		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown()
+				&& newNote) {
 			leftMousePressed(theInd);
 			event.consume();
 			StateMachine.setSongModified(true);
