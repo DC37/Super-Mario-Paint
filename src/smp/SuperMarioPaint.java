@@ -33,6 +33,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
+import smp.components.staff.StaffInstrumentEventHandler_Hack;
 import smp.components.topPanel.ButtonLine;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
@@ -322,59 +323,8 @@ public class SuperMarioPaint extends Application {
      */
     private void makeKeyboardListeners(Scene primaryScene) {
     	
-		primaryScene.addEventHandler(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent me) {
-				
-				final int x = getLine(me.getX());
-				final int y = getPosition(me.getY());
-				if(x > -1 && y > -1){
-					InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
-					ImageView theStaffNote = new ImageView();
-					theStaffNote.setImage(controller.getStaff().getImageLoader().getSpriteFX(theInd.imageIndex()));
-					controller.getStaff().getNoteMatrix().getNote(x, y)[0].getChildren().add(theStaffNote);
-				}
-//				theStaffNote.setImage(il.getSpriteFX(theInd.imageIndex()));
-//				controller.getStaff().getNoteMatrix().getNote(x, y)[0].add
-//				if(!StateMachine.SCROLL_FLAG){
-//					if (x > -1 && y > -1)
-//						if(controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled())
-//							controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
-//					return;
-//				}
-//				if (x > -1 && y > -1) {
-//					controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(true);
-//					if (controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled()) {
-//						if (StateMachine.THREAD_DELAY_1 != null) {
-//							StateMachine.THREAD_DELAY_1.interrupt();
-//							try {
-//								StateMachine.THREAD_DELAY_1.join();
-//							} catch (InterruptedException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//							StateMachine.THREAD_DELAY_1 = null;
-//						}
-//						if (StateMachine.THREAD_DELAY_1 == null) {
-//							StateMachine.THREAD_DELAY_1 = new Thread() {
-//								public void run() {
-//									try {
-//										System.out.println("SLEEPING_1");
-//										Thread.sleep(100);
-//										controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
-//										StateMachine.THREAD_DELAY_1 = null;
-//									} catch (InterruptedException v) {
-//										System.out.println(v);
-//									}
-//								}
-//							};
-//							StateMachine.THREAD_DELAY_1.start();
-//						}
-//					}
-//				}
-			}
-		});
+		primaryScene.addEventHandler(MouseEvent.ANY, 
+				new StaffInstrumentEventHandler_Hack(controller.getStaff(), (ImageLoader) imgLoader));
     	
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {

@@ -81,8 +81,6 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
-
-    private StackPane stPane;
     
     
     /**
@@ -105,27 +103,25 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
      *            The pointer to the Staff object that this event handler is
      *            linked to.
      */
-    public StaffInstrumentEventHandler_Hack(StackPane stPane, StackPane acc,
-            Staff s, ImageLoader i) {
+    public StaffInstrumentEventHandler_Hack(Staff s, ImageLoader i) {
     	
-    	disableAllStackPanes();
+//    	disableAllStackPanes();
     	
         il = i;
 //        position = pos;
 //        line = l;
-        theImages = stPane.getChildren();//-
-        accList = acc.getChildren();//-
+//        theImages = stPane.getChildren();//-
+//        accList = acc.getChildren();//-
         theStaff = s;
         accSilhouette = new ImageView();
         if ((Settings.debug & 0b10) == 0b10) {
 //            System.out.println("Line: " + l);
 //            System.out.println("Position: " + pos);
         }
-        
-        this.stPane = stPane;
     }
 
     private void disableAllStackPanes() {
+    	
 		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
 			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
 				StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(index, i);
@@ -138,8 +134,25 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     public void handle(Event event) {
     	
     	if(event instanceof MouseEvent){
-    		line = getLine(((MouseEvent)event).getX());
-    		position = getPosition(((MouseEvent)event).getY());
+    		int lineTmp = getLine(((MouseEvent)event).getX());
+    		int positionTmp = getPosition(((MouseEvent)event).getY());
+    		
+    		//invalid
+    		if(lineTmp < 0 || positionTmp < 0)
+    			return;
+    		
+    		//new note
+    		if(line != lineTmp || position != positionTmp){
+    			line = lineTmp;
+    			position = positionTmp;
+    			StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(line, position);
+    			
+    			if(!noteAndAcc[0].isDisabled())
+    				disableAllStackPanes();
+    			
+    			theImages = noteAndAcc[0].getChildren();
+    			accList = noteAndAcc[1].getChildren();
+    		}
     	}
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
