@@ -288,9 +288,5 @@ public class StateMachine {
         buttonsPressed.clear();
 
     }
-    
-    public static Thread THREAD_DELAY_1;
-    public static Thread THREAD_DELAY_2;
-    public static boolean SCROLL_FLAG;
 
 }
