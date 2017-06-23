@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -30,7 +31,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import smp.components.InstrumentIndex;
 import smp.components.Values;
+import smp.components.topPanel.ButtonLine;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -326,42 +329,50 @@ public class SuperMarioPaint extends Application {
 				
 				final int x = getLine(me.getX());
 				final int y = getPosition(me.getY());
-				if(!StateMachine.SCROLL_FLAG){
-					if (x > -1 && y > -1)
-						if(controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled())
-							controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
-					return;
+				if(x > -1 && y > -1){
+					InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
+					ImageView theStaffNote = new ImageView();
+					theStaffNote.setImage(controller.getStaff().getImageLoader().getSpriteFX(theInd.imageIndex()));
+					controller.getStaff().getNoteMatrix().getNote(x, y)[0].getChildren().add(theStaffNote);
 				}
-				if (x > -1 && y > -1) {
-					controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(true);
-					if (controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled()) {
-						if (StateMachine.THREAD_DELAY_1 != null) {
-							StateMachine.THREAD_DELAY_1.interrupt();
-							try {
-								StateMachine.THREAD_DELAY_1.join();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							StateMachine.THREAD_DELAY_1 = null;
-						}
-						if (StateMachine.THREAD_DELAY_1 == null) {
-							StateMachine.THREAD_DELAY_1 = new Thread() {
-								public void run() {
-									try {
-										System.out.println("SLEEPING_1");
-										Thread.sleep(100);
-										controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
-										StateMachine.THREAD_DELAY_1 = null;
-									} catch (InterruptedException v) {
-										System.out.println(v);
-									}
-								}
-							};
-							StateMachine.THREAD_DELAY_1.start();
-						}
-					}
-				}
+//				theStaffNote.setImage(il.getSpriteFX(theInd.imageIndex()));
+//				controller.getStaff().getNoteMatrix().getNote(x, y)[0].add
+//				if(!StateMachine.SCROLL_FLAG){
+//					if (x > -1 && y > -1)
+//						if(controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled())
+//							controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
+//					return;
+//				}
+//				if (x > -1 && y > -1) {
+//					controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(true);
+//					if (controller.getStaff().getNoteMatrix().getNote(x, y)[0].isDisabled()) {
+//						if (StateMachine.THREAD_DELAY_1 != null) {
+//							StateMachine.THREAD_DELAY_1.interrupt();
+//							try {
+//								StateMachine.THREAD_DELAY_1.join();
+//							} catch (InterruptedException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							StateMachine.THREAD_DELAY_1 = null;
+//						}
+//						if (StateMachine.THREAD_DELAY_1 == null) {
+//							StateMachine.THREAD_DELAY_1 = new Thread() {
+//								public void run() {
+//									try {
+//										System.out.println("SLEEPING_1");
+//										Thread.sleep(100);
+//										controller.getStaff().getNoteMatrix().getNote(x, y)[0].setDisable(false);
+//										StateMachine.THREAD_DELAY_1 = null;
+//									} catch (InterruptedException v) {
+//										System.out.println(v);
+//									}
+//								}
+//							};
+//							StateMachine.THREAD_DELAY_1.start();
+//						}
+//					}
+//				}
 			}
 		});
     	
@@ -386,34 +397,34 @@ public class SuperMarioPaint extends Application {
                         ke.consume();
                         
                         //wait 1s to turn off scroll flag
-                        if(ke.getCode() == KeyCode.LEFT || ke.getCode() == KeyCode.RIGHT){
-//                        	StateMachine.SCROLL_FLAG = true;
-                        	if (StateMachine.THREAD_DELAY_2 != null) {
-    							StateMachine.THREAD_DELAY_2.interrupt();
-    							try {
-    								StateMachine.THREAD_DELAY_2.join();
-    							} catch (InterruptedException e) {
-    								// TODO Auto-generated catch block
-    								e.printStackTrace();
-    							}
-    							StateMachine.THREAD_DELAY_2 = null;
-    						}
-    						if (StateMachine.THREAD_DELAY_2 == null) {
-    							StateMachine.THREAD_DELAY_2 = new Thread() {
-    								public void run() {
-    									try {
-    										System.out.println("SLEEPING_2");
-    										Thread.sleep(1000);
-    			                        	StateMachine.SCROLL_FLAG = false;
-    										StateMachine.THREAD_DELAY_2 = null;
-    									} catch (InterruptedException v) {
-    										System.out.println(v);
-    									}
-    								}
-    							};
-    							StateMachine.THREAD_DELAY_2.start();
-    						}
-                        }
+//                        if(ke.getCode() == KeyCode.LEFT || ke.getCode() == KeyCode.RIGHT){
+////                        	StateMachine.SCROLL_FLAG = true;
+//                        	if (StateMachine.THREAD_DELAY_2 != null) {
+//    							StateMachine.THREAD_DELAY_2.interrupt();
+//    							try {
+//    								StateMachine.THREAD_DELAY_2.join();
+//    							} catch (InterruptedException e) {
+//    								// TODO Auto-generated catch block
+//    								e.printStackTrace();
+//    							}
+//    							StateMachine.THREAD_DELAY_2 = null;
+//    						}
+//    						if (StateMachine.THREAD_DELAY_2 == null) {
+//    							StateMachine.THREAD_DELAY_2 = new Thread() {
+//    								public void run() {
+//    									try {
+//    										System.out.println("SLEEPING_2");
+//    										Thread.sleep(1000);
+//    			                        	StateMachine.SCROLL_FLAG = false;
+//    										StateMachine.THREAD_DELAY_2 = null;
+//    									} catch (InterruptedException v) {
+//    										System.out.println(v);
+//    									}
+//    								}
+//    							};
+//    							StateMachine.THREAD_DELAY_2.start();
+//    						}
+//                        }
                     }
                 });
 
