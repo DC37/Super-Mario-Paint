@@ -32,7 +32,7 @@ import javafx.scene.layout.StackPane;
  * @author RehdBlob
  * @since 2013.07.27
  */
-public class StaffInstrumentEventHandler implements EventHandler<Event> {
+public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
 
     /** The line number of this note, on the screen. */
     private int line;
@@ -81,42 +81,67 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
+
+    private StackPane stPane;
     
     
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
      * a StackPane and a position on the staff.
      *
-     * @param stPane
+     * -@param stPane
      *            The StackPane that we are interested in.
-     * @param acc
+     *            This will be updated whenever the mouse moves to a new stackpane.
+     * -@param acc
      *            The accidental display pane.
-     * @param pos
-     *            The position that this handler is located on the staff.
-     * @param l
+     *            This will be updated whenever the mouse moves to a new stackpane.
+     * -@param pos
+     *            The position that this handler is located on the staff. 
+     *            This will be updated whenever the mouse moves.
+     * -@param l
      *            The line of this event handler. Typically between 0 and 9.
+     *            This will be updated whenever the mouse moves.
      * @param s
      *            The pointer to the Staff object that this event handler is
      *            linked to.
      */
-    public StaffInstrumentEventHandler(StackPane stPane, StackPane acc,
-            int pos, int l, Staff s, ImageLoader i) {
+    public StaffInstrumentEventHandler_Hack(StackPane stPane, StackPane acc,
+            Staff s, ImageLoader i) {
+    	
+    	disableAllStackPanes();
+    	
         il = i;
-        position = pos;
-        line = l;
-        theImages = stPane.getChildren();
-        accList = acc.getChildren();
+//        position = pos;
+//        line = l;
+        theImages = stPane.getChildren();//-
+        accList = acc.getChildren();//-
         theStaff = s;
         accSilhouette = new ImageView();
         if ((Settings.debug & 0b10) == 0b10) {
-            System.out.println("Line: " + l);
-            System.out.println("Position: " + pos);
+//            System.out.println("Line: " + l);
+//            System.out.println("Position: " + pos);
         }
-
+        
+        this.stPane = stPane;
     }
 
-    @Override
+    private void disableAllStackPanes() {
+		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
+			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
+				StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(index, i);
+				noteAndAcc[0].setDisable(true);
+			}
+		}
+	}
+
+	@Override
     public void handle(Event event) {
+    	
+    	if(event instanceof MouseEvent){
+    		line = getLine(((MouseEvent)event).getX());
+    		position = getPosition(((MouseEvent)event).getY());
+    	}
+    	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             MouseButton b = ((MouseEvent) event).getButton();
@@ -131,12 +156,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             focus = true;
             mouseEntered(theInd);
             event.consume();
-
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             focus = false;
             mouseExited(theInd);
             event.consume();
-
         }
 
     }
@@ -269,8 +292,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-        StateMachine.setFocusPane(this);
-        theStaff.getNoteMatrix().setFocusPane(this);
+//        StateMachine.setFocusPane(this);
+//        theStaff.getNoteMatrix().setFocusPane(this);
         updateAccidental();
         silhouette.setImage(il.getSpriteFX(theInd.imageIndex().silhouette()));
         if (!theImages.contains(silhouette))
@@ -420,5 +443,29 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 + "\nPosition: " + position + "\nAccidental: " + acc;
         return out;
     }
+    
+    /**
+     * 
+     * @param x mouse pos
+     * @return line in the current window based on x coord
+     */
+    private static int getLine(double x){
+
+    	if(x < 135 || x > 775)
+    		return -1;
+    	return (((int)x - 135) / 64);
+    }
+    
+    /**
+     * 
+     * @param y mouse pos
+     * @return note position based on y coord
+     */
+    private static int getPosition(double y){
+    	if(y < 66 || y >= 354)
+    		return -1;
+    	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
+    }
+    
 
 }
