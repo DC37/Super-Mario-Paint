@@ -25,12 +25,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 /**
+ * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
+ * RESPONSE TO THE MULTITHREADING ISSUE WITH ARRAYLISTS AND STACKPANES OR
+ * SOMETHING. THERE WILL ONLY BE ONE OF THIS EVENT HANDLER AND IT WILL BE ADDED
+ * TO THE ENTIRE SCENE. WITH THIS HANDLER, ALL STACKPANES ARE DISABLED AND
+ * EVENTS WILL BE REGISTERED TO THE STACKPANES BY CALCULATING WHICH PANE TO
+ * FETCH VIA MOUSE POSITION.
+ * 
  * A Staff event handler. The StaffImages implementation was getting bulky and
  * there are still many many features to be implemented here. This handler
  * primarily handles mouse events.
  *
  * @author RehdBlob
  * @since 2013.07.27
+ * @version 2.0, modified by j574y923 on 2017.06.22
  */
 public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
 
@@ -120,7 +128,12 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
         }
     }
 
-    private void disableAllStackPanes() {
+	/**
+	 * Disable all the stack panes. Called when the first mouse event in the
+	 * scene is registered. It is called at that point because the stackpanes
+	 * may not have been initialized yet.
+	 */
+	private void disableAllStackPanes() {
     	
 		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
 			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
@@ -138,8 +151,11 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     		int positionTmp = getPosition(((MouseEvent)event).getY());
     		
     		//invalid
-    		if(lineTmp < 0 || positionTmp < 0)//MOUSE_EXITED
+    		if(lineTmp < 0 || positionTmp < 0) {//MOUSE_EXITED
+    	        InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
+    			mouseExited(theInd);
     			return;
+    		}
     		
     		//new note
     		if(line != lineTmp || position != positionTmp){
