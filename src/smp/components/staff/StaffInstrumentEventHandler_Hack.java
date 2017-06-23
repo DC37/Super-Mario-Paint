@@ -138,7 +138,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     		int positionTmp = getPosition(((MouseEvent)event).getY());
     		
     		//invalid
-    		if(lineTmp < 0 || positionTmp < 0)
+    		if(lineTmp < 0 || positionTmp < 0)//MOUSE_EXITED
     			return;
     		
     		//new note
@@ -165,7 +165,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
             event.consume();
             StateMachine.setSongModified(true);
 
-        } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+        } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {//was MOUSE_ENTERED
             focus = true;
             mouseEntered(theInd);
             event.consume();
