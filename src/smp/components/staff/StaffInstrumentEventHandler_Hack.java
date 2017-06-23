@@ -174,11 +174,14 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         //Drag-add notes, hold e to drag-remove notes
 		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown()) {
-			MouseButton b = ((MouseEvent) event).getButton();
-			if (b == MouseButton.PRIMARY)
-				leftMousePressed(theInd);
-			else if (b == MouseButton.SECONDARY)
-				rightMousePressed(theInd);
+			leftMousePressed(theInd);
+			event.consume();
+			StateMachine.setSongModified(true);
+
+		}
+		//Drag-remove notes
+		else if (event instanceof MouseEvent && ((MouseEvent) event).isSecondaryButtonDown()) {
+			rightMousePressed(theInd);
 			event.consume();
 			StateMachine.setSongModified(true);
 
