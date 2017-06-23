@@ -49,22 +49,22 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     private int position;
 
     /** Whether the mouse is in the frame or not. */
-    private boolean focus = false;
+    private static boolean focus = false;
 
     /**
      * This is the list of image notes that we have. These should all be
      * ImageView-type objects.
      */
-    private ObservableList<Node> theImages;
+    private static ObservableList<Node> theImages;
 
     /** The StackPane that will display sharps, flats, etc. */
-    private ObservableList<Node> accList;
+    private static ObservableList<Node> accList;
 
     /**
      * This is the <code>ImageView</code> object responsible for displaying the
      * silhouette of the note that we are about to place on the staff.
      */
-    private ImageView silhouette = new ImageView();
+    private static ImageView silhouette = new ImageView();
 
     /** The pointer to the staff object that this handler is linked to. */
     private Staff theStaff;
@@ -74,7 +74,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
      * silhouette of the sharp / flat of the note that we are about to place on
      * the staff.
      */
-    private ImageView accSilhouette;
+    private static ImageView accSilhouette;
 
     /** The topmost image of the instrument. */
     private StaffNote theStaffNote;
@@ -85,7 +85,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     private StaffAccidental accidental;
 
     /** This is the ImageLoader class. */
-    private ImageLoader il;
+    private static ImageLoader il;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
@@ -131,7 +131,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
 	/**
 	 * Disable all the stack panes. Called when the first mouse event in the
 	 * scene is registered. It is called at that point because the stackpanes
-	 * may not have been initialized yet.
+	 * may not have been initialized before then.
 	 */
 	private void disableAllStackPanes() {
     	
@@ -347,15 +347,17 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
      */
     private void mouseExited(InstrumentIndex theInd) {
 
-        theImages.remove(silhouette);
-        accList.remove(accSilhouette);
+    	if(silhouette.getImage() != null)
+    		theImages.remove(silhouette);
+    	if(accSilhouette.getImage() != null)
+    		accList.remove(accSilhouette);
 
     }
 
     /**
      * Updates how much we want to sharp / flat a note.
      */
-    public void updateAccidental() {
+    public static void updateAccidental() {
         if (!focus)
             return;
         Set<KeyCode> bp = StateMachine.getButtonsPressed();
@@ -403,9 +405,10 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
                     .getSelectedInstrument().imageIndex().silhouette()));
             silhouette.setVisible(true);
         }
-        if ((Settings.debug & 0b01) == 0b01) {
-            System.out.println(this);
-        }
+        //Cannot use this in a static context... will fix this later
+//        if ((Settings.debug & 0b01) == 0b01) {
+//            System.out.println(this);
+//        }
 
     }
 

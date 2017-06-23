@@ -333,6 +333,7 @@ public class SuperMarioPaint extends Application {
                     public void handle(KeyEvent ke) {
                         StateMachine.getButtonsPressed().add(ke.getCode());
                         StateMachine.updateFocusPane();
+                        StaffInstrumentEventHandler_Hack.updateAccidental();
                         ke.consume();
                     }
                 });
@@ -344,37 +345,8 @@ public class SuperMarioPaint extends Application {
                     public void handle(KeyEvent ke) {
                         StateMachine.getButtonsPressed().remove(ke.getCode());
                         StateMachine.updateFocusPane();
+                        StaffInstrumentEventHandler_Hack.updateAccidental();
                         ke.consume();
-                        
-                        //wait 1s to turn off scroll flag
-//                        if(ke.getCode() == KeyCode.LEFT || ke.getCode() == KeyCode.RIGHT){
-////                        	StateMachine.SCROLL_FLAG = true;
-//                        	if (StateMachine.THREAD_DELAY_2 != null) {
-//    							StateMachine.THREAD_DELAY_2.interrupt();
-//    							try {
-//    								StateMachine.THREAD_DELAY_2.join();
-//    							} catch (InterruptedException e) {
-//    								// TODO Auto-generated catch block
-//    								e.printStackTrace();
-//    							}
-//    							StateMachine.THREAD_DELAY_2 = null;
-//    						}
-//    						if (StateMachine.THREAD_DELAY_2 == null) {
-//    							StateMachine.THREAD_DELAY_2 = new Thread() {
-//    								public void run() {
-//    									try {
-//    										System.out.println("SLEEPING_2");
-//    										Thread.sleep(1000);
-//    			                        	StateMachine.SCROLL_FLAG = false;
-//    										StateMachine.THREAD_DELAY_2 = null;
-//    									} catch (InterruptedException v) {
-//    										System.out.println(v);
-//    									}
-//    								}
-//    							};
-//    							StateMachine.THREAD_DELAY_2.start();
-//    						}
-//                        }
                     }
                 });
 
