@@ -36,14 +36,18 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     /** The ImageLoader class. */
     private ImageLoader il;
     
-    /** The text representing the volume the mouse is currently hovering over. */
+    /** The text representing the volume bar the mouse is currently hovering over. */
     private static Text volText;
     
-    /** Mouse position. Used for finding which volume the mouse is hovering over. */
-    private static double mouseX;
-    private static double mouseY;
+	/**
+	 * Mouse position. Used for finding which volume bar the mouse is hovering
+	 * over. Note: mouseX is set only to the beginning x coordinate of the
+	 * volume bar's stack pane it hovers over.
+	 */
+	private static double mouseX;
+	private static double mouseY;
 
-    /** Makes a new StaffVolumeEventHandler. */
+	/** Makes a new StaffVolumeEventHandler. */
     public StaffVolumeEventHandler(StackPane st, ImageLoader i) {
         stp = st;
         il = i;
@@ -72,6 +76,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     		mouseY = stp.getBoundsInParent().getMinY();
     		mouseEntered();
     	} else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
+    		mouseX = -1;
     		mouseY = -1;
     		mouseExited();
     	} else {
@@ -189,14 +194,15 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         if(stpHasMouse()){
         	mouseExited();
         	mouseEntered();
-        }
+        } 
     }
     
     /**
-     * @return Whether the mouse is currently in the volume stack pane.
+     * @return Whether the mouse is currently in the volume bar's stack pane.
      */
     private boolean stpHasMouse(){
     	return mouseX >= stp.getBoundsInParent().getMinX() 
+    			&& mouseX < stp.getBoundsInParent().getMaxX()
     			&& mouseY >= stp.getBoundsInParent().getMinY();
     }
 
