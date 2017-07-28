@@ -152,26 +152,11 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
     		int positionTmp = getPosition(((MouseEvent)event).getY());
     		
     		//invalid
-    		if(lineTmp < 0 || positionTmp < 0) {//MOUSE_EXITED
-    	        InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
-    			mouseExited(theInd);
+    		if(!validNote(lineTmp, positionTmp))
     			return;
-    		}
     		
     		//new note
-    		if(line != lineTmp || position != positionTmp){
-    			newNote = true;
-    			
-    			line = lineTmp;
-    			position = positionTmp;
-    			StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(line, position);
-    			
-    			if(!noteAndAcc[0].isDisabled())
-    				disableAllStackPanes();
-    			
-    			theImages = noteAndAcc[0].getChildren();
-    			accList = noteAndAcc[1].getChildren();
-    		}
+    		newNote = updateNote(lineTmp, positionTmp);
     	}
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
@@ -211,6 +196,41 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
 
     }
 
+	/**
+	 * Take in a line and position and check if they are valid. If the note is
+	 * not valid then it will call mouseExited().
+	 * 
+	 * @param lineTmp
+	 * @param positionTmp
+	 * @return if the given line and position are at a valid note.
+	 */
+	private boolean validNote(int lineTmp, int positionTmp) {
+		if (lineTmp < 0 || positionTmp < 0) {// MOUSE_EXITED
+			InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
+			mouseExited(theInd);
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean updateNote(int lineTmp, int positionTmp) {
+		if(line != lineTmp || position != positionTmp){
+			
+			line = lineTmp;
+			position = positionTmp;
+			StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(line, position);
+			
+			if(!noteAndAcc[0].isDisabled())
+				disableAllStackPanes();
+			
+			theImages = noteAndAcc[0].getChildren();
+			accList = noteAndAcc[1].getChildren();
+			
+			return true;
+		}
+		return false;
+	}
+	
     /**
      * The method that is called when the left mouse button is pressed. This is
      * generally the signal to add an instrument to that line.
