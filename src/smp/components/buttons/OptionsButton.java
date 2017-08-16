@@ -2,17 +2,23 @@ package smp.components.buttons;
 
 import java.util.ArrayList;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -40,6 +46,8 @@ public class OptionsButton extends ImagePushButton {
 
     /** A slider that changes the default volume of placed notes. */
     private Slider defaultVolume;
+    
+    private boolean clipboardSelected;
 
     /**
      * Default constructor.
@@ -91,8 +99,11 @@ public class OptionsButton extends ImagePushButton {
         vBox.setAlignment(Pos.CENTER);
         Label tempoAdjustHack = new Label("Increase tempo by how many times?");
         tempoField = new TextField();
+        
+        HBox clipboardOptions = makeClipboardOptions();
+        
         vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
-                tempoField, pane);
+                tempoField, clipboardOptions, pane);
         defaultVolume.autosize();
         Scene scene1 = new Scene(vBox);
         dialog.setScene(scene1);
@@ -142,6 +153,7 @@ public class OptionsButton extends ImagePushButton {
     private void updateValues() {
         changeDefaultVol();
         multiplyTempo();
+        StateMachine.setClipboardPressed(clipboardSelected);
     }
 
     /** Updates the default volume of the program notes. */
@@ -177,4 +189,28 @@ public class OptionsButton extends ImagePushButton {
                     .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
         }
     }
+    
+	private HBox makeClipboardOptions() {
+		Label clipboardToggle = new Label("Clipboard tool\t\t");
+		ToggleGroup clipboardButtonGroup = new ToggleGroup();
+		RadioButton clipboardButtonOn = new RadioButton("On\t");
+		clipboardButtonOn.setUserData(true);
+		clipboardButtonOn.setToggleGroup(clipboardButtonGroup);
+		RadioButton clipboardButtonOff = new RadioButton("Off");
+		clipboardButtonOff.setUserData(false);
+		clipboardButtonOff.setToggleGroup(clipboardButtonGroup);
+		clipboardButtonGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				// TODO Auto-generated method stub
+				System.out.println(newValue.getUserData());
+				clipboardSelected = (boolean)newValue.getUserData();
+			}
+		});
+		
+		HBox options = new HBox(clipboardToggle, clipboardButtonOn, clipboardButtonOff);
+		options.setAlignment(Pos.CENTER);
+		return options;
+	}
 }
