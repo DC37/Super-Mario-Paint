@@ -1,18 +1,16 @@
 package smp.fx;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.clipboard.DataClipboard;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.topPanel.ButtonLine;
@@ -249,6 +247,10 @@ public class SMPFXController {
     @FXML
     private StackPane staffPane;
     
+    @FXML
+    private StackPane rubberBandLayer;
+    private DataClipboard clipboard;
+    
     /** This is the image loader. */
     private ImageLoader il;
 
@@ -269,17 +271,9 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
-
-        System.out.println("line273 SMPFXController aAJwi4e2DNS4CX " + staffInstruments);
-        staffInstruments.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				System.out.println(event.getX());
-			}
-        	
-        });
+        
+        // Set up clipboard.
+        clipboard = new DataClipboard(staff, this, il);
         
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
@@ -533,5 +527,9 @@ public class SMPFXController {
     
     public Staff getStaff(){
     	return staff;
+    }
+    
+    public StackPane getRubberBandLayer() {
+    	return rubberBandLayer;
     }
 }
