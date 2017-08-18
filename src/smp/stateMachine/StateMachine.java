@@ -271,7 +271,7 @@ public class StateMachine {
     public static void setClipboardPressed(boolean b) {
     	clipboardPressed = b;
     }
-    public static boolean isClipboardPressed(boolean b) {
+    public static boolean isClipboardPressed() {
     	return clipboardPressed;
     }
     

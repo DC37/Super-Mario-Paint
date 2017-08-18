@@ -153,7 +153,12 @@ public class OptionsButton extends ImagePushButton {
     private void updateValues() {
         changeDefaultVol();
         multiplyTempo();
+        
         StateMachine.setClipboardPressed(clipboardSelected);
+        if(clipboardSelected)
+        	controller.getRubberBandLayer().toFront();
+        else
+        	controller.getRubberBandLayer().toBack();
     }
 
     /** Updates the default volume of the program notes. */
@@ -203,11 +208,15 @@ public class OptionsButton extends ImagePushButton {
 
 			@Override
 			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				// TODO Auto-generated method stub
 				System.out.println(newValue.getUserData());
 				clipboardSelected = (boolean)newValue.getUserData();
 			}
 		});
+		
+		if(StateMachine.isClipboardPressed())
+			clipboardButtonOn.setSelected(true);
+		else
+			clipboardButtonOff.setSelected(true);
 		
 		HBox options = new HBox(clipboardToggle, clipboardButtonOn, clipboardButtonOff);
 		options.setAlignment(Pos.CENTER);
