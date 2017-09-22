@@ -96,7 +96,7 @@
       <center>
         <Pane id="MidPane" prefHeight="200.0" prefWidth="200.0">
           <children>
-                  <StackPane fx:id="rubberBandLayer" prefHeight="360.0" prefWidth="798.0" />
+                  <StackPane fx:id="rubberBandLayer" alignment="TOP_LEFT" prefHeight="360.0" prefWidth="798.0" />
             <VBox id="MidHolder" blendMode="MULTIPLY" layoutY="-14.0" prefHeight="500.0" prefWidth="798.0">
               <children>
                 <Pane id="StaffFrame" prefHeight="316.0" prefWidth="798.0">
