@@ -80,6 +80,10 @@ public class RubberBand extends Rectangle {
     private static final double MIN_W = 1;
     private static final double MIN_H = 1;
 
+    //use this until the rubberBandLayer's dimensions are linked
+	private static final int HEIGHT_DEFAULT = 360;
+	private static final int WIDTH_DEFAULT = 798;
+
     private double xOrigin;
     private double yOrigin;
 
@@ -130,16 +134,16 @@ public class RubberBand extends Rectangle {
 //        if (postResizable) {
 //            return;
 //        }
-//        if (x > Constants.WIDTH_DEFAULT) {
-//            x = Constants.WIDTH_DEFAULT;
-//        } else if (x < 0) {
-//            x = 0;
-//        }
-//        if (y > Constants.HEIGHT_DEFAULT) {
-//            y = Constants.HEIGHT_DEFAULT;
-//        } else if (y < 0) {
-//            y = 0;
-//        }
+        if (x > WIDTH_DEFAULT) {
+            x = WIDTH_DEFAULT;
+        } else if (x < 0) {
+            x = 0;
+        }
+        if (y > HEIGHT_DEFAULT) {
+            y = HEIGHT_DEFAULT;
+        } else if (y < 0) {
+            y = 0;
+        }
 
         if (x >= xOrigin) {
             this.setTranslateX(xOrigin);
@@ -164,6 +168,7 @@ public class RubberBand extends Rectangle {
      *
      * @param x x-coord to resize to
      */
+    @Deprecated
     public void resizeX(double x){
         
 //        if (x > Constants.WIDTH_DEFAULT) {
@@ -187,6 +192,7 @@ public class RubberBand extends Rectangle {
      *
      * @param y y-coord to resize to
      */
+    @Deprecated
     public void resizeY(double y){
 
 //        if (y > Constants.HEIGHT_DEFAULT) {
