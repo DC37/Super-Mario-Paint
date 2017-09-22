@@ -141,7 +141,6 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
             }
 //            
             rubberBand.begin(mouseEvent.getX(), mouseEvent.getY());
-            System.out.println(mouseEvent.getX() + " " + mouseEvent.getY());
 //            
         } else if (mouseEvent.isPrimaryButtonDown()) {
             rubberBand.resize(mouseEvent.getX(), mouseEvent.getY());
