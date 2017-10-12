@@ -236,11 +236,12 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 	 *
 	 * 
 	 * 
-	 * @relevant Values.NOTELINES_IN_THE_WINDOW, StateMachine.getMeasureLineNum()
+	 * @relevant Values.NOTELINES_IN_THE_WINDOW,
+	 *           StateMachine.getMeasureLineNum()
 	 * 
 	 * @param x
 	 *            mouse pos for entire scene
-	 * @return line based on x coord
+	 * @return -1 if out of bounds (x < 128 || x > 784), 0-9 otherwise
 	 */
 	private int getLine(double x) {
 		// HARD CODED FOR NOW

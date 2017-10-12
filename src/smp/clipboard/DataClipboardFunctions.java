@@ -169,7 +169,7 @@ public class DataClipboardFunctions {
 		for (int i = lineMoveTo; i < Math.min(Values.DEFAULT_LINES_PER_SONG, lineMoveTo + dataLength); i++) {
 			int dataIndex = theDataClipboard.getDataLineBegin() + (i - lineMoveTo);
 
-			ArrayList<StackPane> matrixLineDest = matrix.getLine(i);
+			ArrayList<StackPane> matrixLineDest = matrix.getLine(i - StateMachine.getMeasureLineNum());
 			
 			StaffNoteLine lineDest = theStaff.getSequence().getLine(i);
 			StaffNoteLine lineSrc = data.get(dataIndex);
