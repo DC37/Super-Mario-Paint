@@ -14,6 +14,7 @@ import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.NoteMatrix;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffVolumeEventHandler;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
@@ -45,20 +46,19 @@ public class DataClipboardFunctions {
 		// TODO: use instrFiltered in DataClipboard
 		theDataClipboard.clearData();
 		ArrayList<SelectionBounds> selection = theDataClipboard.getSelection();
-		NoteMatrix matrix = theStaff.getNoteMatrix();
 
 		for (SelectionBounds bounds : selection) {
 			theDataClipboard.updateDataLineBegin(bounds.getLineBegin());
 			theDataClipboard.updateDataLineEnd(bounds.getLineEnd());
 			
 			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
-				ArrayList<StackPane> nt = matrix.getLine(line);
+				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
 
-				for (int pos = bounds.getPositionBegin(); pos <= bounds.getPositionEnd(); pos++) {
-					ObservableList<Node> ntList = nt.get(pos).getChildren();
-					for (Node node : ntList) {
-						theDataClipboard.copyNote(line, (StaffNote) node);
-					}
+				ArrayList<StaffNote> ntList = lineSrc.getNotes();
+				for (StaffNote note : ntList) {
+					if (bounds.getPositionBegin() <= note.getPosition()
+							&& note.getPosition() <= bounds.getPositionEnd())
+						theDataClipboard.copyNote(line, note);
 				}
 			}
 		}
@@ -169,30 +169,42 @@ public class DataClipboardFunctions {
 		for (int i = lineMoveTo; i < Math.min(Values.DEFAULT_LINES_PER_SONG, lineMoveTo + dataLength); i++) {
 			int dataIndex = theDataClipboard.getDataLineBegin() + (i - lineMoveTo);
 
-			ArrayList<StackPane> matrixLineDest = matrix.getLine(i - StateMachine.getMeasureLineNum());
+			ArrayList<StackPane> matrixLineDest = null;
+			if(i - StateMachine.getMeasureLineNum() < 10)
+				matrix.getLine(i - StateMachine.getMeasureLineNum());
 			
 			StaffNoteLine lineDest = theStaff.getSequence().getLine(i);
 			StaffNoteLine lineSrc = data.get(dataIndex);
 			for(StaffNote note : lineSrc.getNotes()) {
 				
-				//TODO!!! SET IMAGE, GET STACKPANE, ADD TO BOTH STACKPANE AND STAFFNOTELINE, see StaffInstrumentEventHandler's placeNote function
+				// see StaffInstrumentEventHandler's placeNote function
 				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
 				theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex()));
 				
-				StackPane matrixPosDest = matrixLineDest.get((Values.NOTES_IN_A_LINE - 1) - theStaffNote.getPosition());
-				ObservableList<Node> matrixNotes = matrixPosDest.getChildren();
-		        if (!matrixNotes.contains(theStaffNote))
-		            matrixNotes.add(theStaffNote);
-				
-		        if (lineDest.isEmpty()) {
-		        	lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY)
-		                    / Values.MAX_VELOCITY);
-		        }
+				if (matrixLineDest != null) {
+					StackPane matrixPosDest = matrixLineDest
+							.get(theStaffNote.getPosition());//(Values.NOTES_IN_A_LINE - 1) - 
+					ObservableList<Node> matrixNotes = matrixPosDest.getChildren();
+					if (!matrixNotes.contains(theStaffNote))
+						matrixNotes.add(theStaffNote);
+				}
 
-		        if (!lineDest.contains(theStaffNote))
+				if (lineDest.isEmpty()) {
+					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
+					
+					if (i - StateMachine.getMeasureLineNum() < 10) {
+						StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+								.getVolHandler(i - StateMachine.getMeasureLineNum());
+						sveh.updateVolume();
+					}
+				}
+
+				if (!lineDest.contains(theStaffNote))
 		        	lineDest.add(theStaffNote);
 			}
 		}
+
+        theStaff.redraw();
 	}
 
 	// /**

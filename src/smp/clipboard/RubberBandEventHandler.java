@@ -125,9 +125,9 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 						//select code should not be with the copy code obviously
 						System.out.println("COPY");
 						int lb = getLine(rubberBand.getTranslateX()) + StateMachine.getMeasureLineNum();
-						int pb = getPosition(rubberBand.getTranslateY());
+						int pb = getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
 						int le = getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
-						int pe = getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
+						int pe = getPosition(rubberBand.getTranslateY());
 						theDataClipboard.getFunctions().select(lb, pb, le, pe);
 						theDataClipboard.getFunctions().copy();
 						for ( StaffNoteLine line : theDataClipboard.getData() ) {
@@ -161,8 +161,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
             if(!mouseEvent.isControlDown()) {
 //                scrollPane.unhighlightAllNotes();
 //                scrollPane.unhighlightAllVols();
-//                DataClipboard.clearSelection();
-//                
+                theDataClipboard.clearSelection(); 
             } else {
             }
 
@@ -266,7 +265,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 		if (y < 0 || y > 304) {
 			return -1;
 		}
-		return (((int) y - 0) / 16);
+		return (Values.NOTES_IN_A_LINE - ((int) y - 0) / 16);
 	}
 //  public int getLineBegin() {
 //  //x, 32px is exactly at the line
