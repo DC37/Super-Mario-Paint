@@ -66,7 +66,7 @@ public class DataClipboard {
 	private ArrayList<StaffNoteLine> data;
 	
 	/* Corresponds with the first selection line */
-	private int dataLineBegin = 0;
+	private int dataLineBegin = 400;
 	/* Corresponds with the last selection line */
 	private int dataLineEnd = -1;
 
@@ -128,7 +128,7 @@ public class DataClipboard {
 			StaffNoteLine line = data.get(i);
 			line.getNotes().clear();
 		}
-		dataLineBegin = 0;
+		dataLineBegin = 400;
 		dataLineEnd = -1;
 	}
 	
