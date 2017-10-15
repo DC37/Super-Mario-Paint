@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import smp.components.Values;
 
 /**
  * Rubber band is drawn by the mouse. Click and drag to create a rectangle that
@@ -227,64 +228,47 @@ public class RubberBand extends Rectangle {
         setPostResizable(true);
     }
 
-//    public int getLineBegin() {
-//        //x, 32px is exactly at the line
-//        /* lineOffsetX is indices 0-31 of the row */
-//        int lineOffsetX = 0;
-//        if (this.getTranslateX() < 122 + 32) {//122 is arbitrary 
-//            lineOffsetX = 0;
-//        } else if (this.getTranslateX() > Constants.WIDTH_DEFAULT - 48 + 32 - 64) {//48 is arbitrary
-////            return -1;
-//            lineOffsetX = 32;
-//        } else {
-//            lineOffsetX = ((int)this.getTranslateX() - (122 + 32)) / Constants.LINE_SPACING + 1;
-//        }
-//
-//        //y
-//        /* lineOffsetY is row */
-//        int lineOffsetY = 0;
-//        if(!zby(this.getTranslateY())){
-//            lineOffsetY = (int)this.getTranslateY() / Constants.ROW_HEIGHT_TOTAL + 1;
-//        } else {
-//            lineOffsetY = (int)this.getTranslateY() / Constants.ROW_HEIGHT_TOTAL;
-//        }
-//        System.out.println("BEG" + lineOffsetY * Constants.LINES_IN_A_ROW + " " + lineOffsetX);
-//    	return lineOffsetY * Constants.LINES_IN_A_ROW + lineOffsetX;
-////        return getLine(xOrigin, yOrigin);
-//    }
-//
-//    public int getLineEnd() {
-//        //x, 32px is exactly at the line
-//        /* lineOffsetX is indices 0-31 of the row */
-//        int lineOffsetX = 0;
-//        if ((this.getTranslateX() + this.getWidth()) < 122 + 32) {//122 is arbitrary 
-////            return -1;
-//            lineOffsetX = -1;
-//        } else if ((this.getTranslateX() + this.getWidth()) > Constants.WIDTH_DEFAULT - 48 + 32) {//48 is arbitrary
-//            lineOffsetX = 31;
-//        } else {
-//            lineOffsetX = ((int)(this.getTranslateX() + this.getWidth()) - (122 + 32 + 64)) / Constants.LINE_SPACING + 1;
-//        }
-//
-//        //y
-//        /* lineOffsetY is row */
-//        int lineOffsetY = 0;
-//        if(!zby(this.getTranslateY() + this.getHeight())){
-//            lineOffsetY = (int)(this.getTranslateY() + this.getHeight()) / Constants.ROW_HEIGHT_TOTAL;
-//        } else {
-//            lineOffsetY = (int)(this.getTranslateY() + this.getHeight()) / Constants.ROW_HEIGHT_TOTAL;
-//        }
-//        System.out.println("END" + lineOffsetY * Constants.LINES_IN_A_ROW + " " + lineOffsetX);
-//    	return lineOffsetY * Constants.LINES_IN_A_ROW + lineOffsetX;
-////        return getLine(xOrigin + this.getWidth(), yOrigin + this.getHeight());
-//    }
-//
-//    public Note.Position getPositionBegin() {    	
-//        if(!zby(this.getTranslateY()))
-//            return Note.Position.values()[0];
-//        return Note.Position.values()[getPosition(this.getTranslateY())];
-//    }
-//
+    //hard coded for now
+    public int getLineBegin() {
+        //x, 32px is exactly at the line
+        /* lineOffsetX is indices 0-31 of the row */
+        int lineOffsetX = 0;
+        if (this.getTranslateX() < 128 + 32) {
+            lineOffsetX = 0;
+        } else if (this.getTranslateX() > 784 - 32) {
+            lineOffsetX = Values.NOTELINES_IN_THE_WINDOW;
+        } else {
+            lineOffsetX = ((int)this.getTranslateX() - (128 + 32)) / 64 + 1;
+        }
+        
+        return lineOffsetX;
+    }
+
+    public int getLineEnd() {
+
+        int lineOffsetX = 0;
+        if ((this.getTranslateX() + this.getWidth()) < 128 + 32) {
+            lineOffsetX = -1;
+        } else if ((this.getTranslateX() + this.getWidth()) > 784 - 32) {
+            lineOffsetX = Values.NOTELINES_IN_THE_WINDOW - 1;
+        } else {
+            lineOffsetX = ((int)(this.getTranslateX() + this.getWidth()) - (128 + 32)) / 64;
+        }
+        
+        return lineOffsetX;
+    }
+
+    public int getPositionBegin() {    	
+    	
+        if ((this.getTranslateY()) < 0 + 16) {
+            return Values.NOTES_IN_A_LINE;
+        } else if ((this.getTranslateY()) > 310 - 16) {
+            return 0;
+        } else {
+            return ((int)(this.getTranslateY()) - (128 + 32)) / 64 + 1;
+        }
+    }
+
 //    public Note.Position getPositionEnd() {	
 //        if(!zby(this.getTranslateY() + this.getHeight()))
 //            return Note.Position.values()[Note.Position.values().length - 1];

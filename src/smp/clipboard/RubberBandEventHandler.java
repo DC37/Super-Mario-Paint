@@ -32,7 +32,6 @@ import smp.stateMachine.StateMachine;
 public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 
     RubberBand rubberBand;
-    List<RubberBand> rubberBands;
     
     Staff theStaff;
 	StackPane rubberBandLayer;
@@ -110,8 +109,9 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 		// TODO Auto-generated constructor stub
     	theStaff = st;
     	rubberBandLayer = rbl;
-    	rubberBands = new ArrayList<>();
     	theDataClipboard = clippy;
+    	
+        rubberBand = new RubberBand();
 
 		// TEMPORARY, should probably be in a dataclipboardeventhandler
 		rbl.setFocusTraversable(true);
@@ -124,9 +124,9 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 					case C:
 						//select code should not be with the copy code obviously
 						System.out.println("COPY");
-						int lb = getLine(rubberBand.getTranslateX()) + StateMachine.getMeasureLineNum();
+						int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX()) + StateMachine.getMeasureLineNum();
 						int pb = getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
-						int le = getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
+						int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
 						int pe = getPosition(rubberBand.getTranslateY());
 						theDataClipboard.getFunctions().select(lb, pb, le, pe);
 						theDataClipboard.getFunctions().copy();
@@ -166,7 +166,6 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
             }
 
         	rubberBandLayer.getChildren().remove(rubberBand);
-            rubberBand = new RubberBand();
         	rubberBandLayer.getChildren().add(rubberBand);
             
             rubberBand.begin(mouseEvent.getX(), mouseEvent.getY());
