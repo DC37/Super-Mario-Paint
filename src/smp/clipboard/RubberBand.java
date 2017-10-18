@@ -258,23 +258,28 @@ public class RubberBand extends Rectangle {
         return lineOffsetX;
     }
 
-    public int getPositionBegin() {    	
+    public int getPositionBegin() {  
     	
-        if ((this.getTranslateY()) < 0 + 16) {
-            return Values.NOTES_IN_A_LINE;
-        } else if ((this.getTranslateY()) > 310 - 16) {
-            return 0;
+        if ((this.getTranslateY() + this.getHeight()) < 0 + 16) {
+            return Values.NOTES_IN_A_LINE - 1;
+        } else if ((this.getTranslateY()) > 304 - 16) {
+            return 0;//-1;
         } else {
-            return ((int)(this.getTranslateY()) - (128 + 32)) / 64 + 1;
+            return Values.NOTES_IN_A_LINE - (((int)(this.getTranslateY() + this.getHeight()) - (0 + 16)) / 16);
         }
     }
 
-//    public Note.Position getPositionEnd() {	
-//        if(!zby(this.getTranslateY() + this.getHeight()))
-//            return Note.Position.values()[Note.Position.values().length - 1];
-//        return Note.Position.values()[getPosition(this.getTranslateY() + this.getHeight())];
-//    }
-//    
+	public int getPositionEnd() {
+		
+		if ((this.getTranslateY()) < 0 + 16) {
+			return Values.NOTES_IN_A_LINE;
+		} else if ((this.getTranslateY()) > 304 - 16) {
+			return 1;//0;
+		} else {
+			return Values.NOTES_IN_A_LINE - (((int) (this.getTranslateY()) - (0 + 16)) / 16 + 1);
+		}
+	}
+    
     private void setPostResizable(boolean postResizable) {
         this.postResizable = postResizable;
     }

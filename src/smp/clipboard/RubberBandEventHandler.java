@@ -125,9 +125,10 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 						//select code should not be with the copy code obviously
 						System.out.println("COPY");
 						int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX()) + StateMachine.getMeasureLineNum();
-						int pb = getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
+						int pb = rubberBand.getPositionBegin();//getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
 						int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
-						int pe = getPosition(rubberBand.getTranslateY());
+						int pe = rubberBand.getPositionEnd();//getPosition(rubberBand.getTranslateY());
+						System.out.println("COPY POS: pb" + pb + " pe" + pe);
 						theDataClipboard.getFunctions().select(lb, pb, le, pe);
 						theDataClipboard.getFunctions().copy();
 						for ( StaffNoteLine line : theDataClipboard.getData() ) {
