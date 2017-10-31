@@ -1,13 +1,16 @@
 package smp.clipboard;
 
 import java.util.ArrayList;
-import java.util.List;
-
+import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import smp.ImageLoader;
-import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNote;
@@ -54,7 +57,7 @@ public class DataClipboard {
 	private Staff theStaff;
 	private SMPFXController controller;
 	private ImageLoader il;
-	private StackPane rubberBandLayer;
+	private Pane rubberBandLayer;
 	private RubberBandEventHandler rbeh;
 
 	private DataClipboardFunctions functions;
@@ -83,8 +86,78 @@ public class DataClipboard {
 		
 		//temp? merge the two classes together?
 		functions = new DataClipboardFunctions(this, theStaff, im);
+		
+		rubberBandLayer = controller.getBasePane();
+        RubberBandEventHandler rbeh = new RubberBandEventHandler(theStaff, rubberBandLayer, this);
+        initializeRBEH(rbeh, controller);
+		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
 	}
 
+	private void initializeRBEH(RubberBandEventHandler rbeh, SMPFXController ct) {
+
+		//trigger layout pass in basePane and all its children
+		//this will initialize the bounds for everything
+		AnchorPane basePane = ct.getBasePane();
+		basePane.applyCss();
+		basePane.layout();
+		
+		//initialize lineMinBound
+		HBox staffInstruments = ct.getStaffInstruments();
+		ObservableList<Node> instrumentLines = staffInstruments.getChildren();
+		VBox firstLine = (VBox) instrumentLines.get(0);
+		Bounds firstLineBounds = firstLine.localToScene(firstLine.getBoundsInLocal()); 
+		rbeh.initializeLineMinBound(firstLineBounds.getMinX());
+
+		//initialize lineMaxBound
+		VBox lastLine = (VBox) instrumentLines.get(instrumentLines.size() - 1);
+		Bounds lastLineBounds = lastLine.localToScene(lastLine.getBoundsInLocal()); 
+		rbeh.initializeLineMaxBound(lastLineBounds.getMaxX());
+		
+		//initialize lineSpacing
+		rbeh.initializeLineSpacing(firstLineBounds.getWidth());
+		
+		//initialize positionMinBound
+		ObservableList<Node> positions = firstLine.getChildren();
+		StackPane firstPosition = (StackPane) positions.get(0);
+		Bounds firstPositionBounds = firstPosition.localToScene(firstPosition.getBoundsInLocal()); 
+		rbeh.initializePositionMinBound(firstPositionBounds.getMinY());		
+		
+		//initialize positionMaxBound
+		StackPane lastPosition = (StackPane) positions.get(positions.size() - 1);
+		Bounds lastPositionBounds = lastPosition.localToScene(lastPosition.getBoundsInLocal());
+		rbeh.initializePositionMaxBound(lastPositionBounds.getMaxY());
+	
+		//initialize positionSpacing
+		rbeh.initializePositionSpacing(firstPosition.getHeight());
+		
+		//initialize volume YMax coordinate
+		HBox volumeBars = ct.getVolumeBars();
+		Bounds volumeBarsBounds = volumeBars.localToScene(volumeBars.getBoundsInLocal());
+		rbeh.initializeVolumeYMaxCoord(volumeBarsBounds.getMaxY());
+		
+		//set margins
+		StackPane staffPane = ct.getStaffPane();
+		Bounds staffPaneBounds = staffPane.localToScene(staffPane.getBoundsInLocal());
+		double marginDeltaX = firstLineBounds.getMinX() - staffPaneBounds.getMinX();
+		double marginDeltaY = firstPositionBounds.getMinY() - staffPaneBounds.getMinY();
+		rbeh.setMarginVertical(marginDeltaY);
+		rbeh.setMarginHorizontal(marginDeltaX);
+	}
+	
+//	private void DEBUG(Node x) {
+//		System.out.println("NODE:" + x);
+//		System.out.println("x.getBoundsInLocal" + x.getBoundsInLocal());
+//		System.out.println("x.getBoundsInParent" + x.getBoundsInParent());
+//		System.out.println("x.getLayoutBounds" + x.getLayoutBounds());
+//		System.out.println(x.localToScene(x.getBoundsInLocal()));
+//		System.out.println(x.localToScene(x.getBoundsInParent()));
+//		System.out.println(x.localToScene(x.getLayoutBounds()));
+//		System.out.println(x.localToParent(x.getBoundsInLocal()));
+//		System.out.println(x.localToParent(x.getBoundsInParent()));
+//		System.out.println(x.localToParent(x.getLayoutBounds()));
+//		System.out.println(x.localToScene(x.getLayoutBounds().getMinX(), x.getLayoutBounds().getMinY()));
+//	}
+	
 	/**
 	 * Add a new SelectionBounds to the selection ArrayList. 
 	 * 

@@ -155,10 +155,8 @@ public class OptionsButton extends ImagePushButton {
         multiplyTempo();
         
         StateMachine.setClipboardPressed(clipboardSelected);
-        if(clipboardSelected)
-        	controller.getRubberBandLayer().toFront();
-        else
-        	controller.getRubberBandLayer().toBack();
+        this.controller.getStaffInstruments().setMouseTransparent(clipboardSelected);
+        this.controller.getVolumeBars().setMouseTransparent(clipboardSelected);
     }
 
     /** Updates the default volume of the program notes. */

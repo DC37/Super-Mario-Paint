@@ -10,12 +10,15 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import smp.components.Values;
 import smp.components.staff.Staff;
@@ -34,88 +37,24 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
     RubberBand rubberBand;
     
     Staff theStaff;
-	StackPane rubberBandLayer;
+	Pane rubberBandLayer;
 	DataClipboard theDataClipboard;
-    /**
-     * Margin at the edge of the scrollpane. When a rectangle is being created
-     * and the mouse resizes into this margin, the scrollpane will scroll to
-     * accommodate resizing.
-     */
-    private static final double MARGIN = 8;
-    
+	
     /* Get line with these */
     private static double mouseX;
     private static double mouseY;
     
     private static boolean selVolAtNoteFlag;
-//    /**
-//     *
-//     * @param child contained in parent, this will be where rubber band is added
-//     * @param parent is the layout container for child and needed for retrieving
-//     * scene dimensions
-//     */
-//    public EventHandlerRubberBand(Pane child, CompositionPane parent) {
-//        DataClipboard.initialize();
-//        rubberBands = new ArrayList<>();
-//        
-////        rubberBand = new RubberBand();
-////        child.getChildren().add(rubberBand);
-//        this.scrollPane = parent;
-//        /* rubber band resize if scrollbars change */
-//        this.scrollPane.hvalueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//                if (autoFlagH) {
-//                    if (mutexH) {
-//                        return;
-//                    }
-//                    mutexH = true;
-//                    double sizeOffset = scrollPane.getViewportBounds().getWidth();
-//                    if (newValue.doubleValue() > oldValue.doubleValue() && newValue.doubleValue() > 0) {
-//                        rubberBand.resizeX(newValue.doubleValue() * (Constants.WIDTH_DEFAULT - sizeOffset) + sizeOffset);
-//                    } else if (newValue.doubleValue() < 1) {
-//                        rubberBand.resizeX(newValue.doubleValue() * (Constants.WIDTH_DEFAULT- sizeOffset));
-//                    }
-//                    mutexH = false;
-//                }
-//            }
-//
-//        });
-//        this.scrollPane.vvalueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//                if (autoFlagV) {
-//                    if (mutexV) {
-//                        return;
-//                    }
-//                    mutexV = true;
-//                    double sizeOffset = scrollPane.getViewportBounds().getHeight();
-//                    /* prevent from redrawing rubberband to the bottom of viewport, scroll goes from 0.0 to -0.005 then -0.005 to 0.0 triggering this if statement */
-//                    if (newValue.doubleValue() > oldValue.doubleValue() && newValue.doubleValue() > 0) {
-//                        rubberBand.resizeY(newValue.doubleValue() * (Constants.HEIGHT_DEFAULT - sizeOffset) + sizeOffset);
-//                    } 
-//                    /* prevent from redrawing rubberband to the top of viewport, scroll goes from 1.0 to 1.005 then 1.005 to 1.0 triggering this statement */ 
-//                    else if (newValue.doubleValue() < 1) {
-//                        rubberBand.resizeY(newValue.doubleValue() * (Constants.HEIGHT_DEFAULT - sizeOffset));
-//                    }
-//                    mutexV = false;
-//                }
-//            }
-//
-//        });
-//    }
 
-    public RubberBandEventHandler(Staff st, StackPane rbl, DataClipboard clippy) {
-		// TODO Auto-generated constructor stub
+    public RubberBandEventHandler(Staff st, Pane basePane, DataClipboard clippy) {
     	theStaff = st;
-    	rubberBandLayer = rbl;
     	theDataClipboard = clippy;
+    	rubberBandLayer = basePane;
     	
         rubberBand = new RubberBand();
 
 		// TEMPORARY, should probably be in a dataclipboardeventhandler
-		rbl.setFocusTraversable(true);
-    	rbl.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+    	basePane.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
@@ -165,7 +104,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
                 theDataClipboard.clearSelection(); 
             } else {
             }
-
+            
         	rubberBandLayer.getChildren().remove(rubberBand);
         	rubberBandLayer.getChildren().add(rubberBand);
             
@@ -174,7 +113,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
             System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
 //            
         } else if (mouseEvent.isPrimaryButtonDown()) {
-            rubberBand.resize(mouseEvent.getX(), mouseEvent.getY());
+            rubberBand.resizeBand(mouseEvent.getX(), mouseEvent.getY());
 //            navigatePane(mouseEvent);
         } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
             rubberBand.end();
@@ -215,22 +154,6 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
         }
     }
 
-//    private double zdh(int destX) {
-//        if (destX == 1) {
-//            return 2 - scrollPane.hvalueProperty().get() * 2;
-//        } else {
-//            return scrollPane.hvalueProperty().get() * 2;
-//        }
-//    }
-//
-//    private double zdv(int destY) {
-//        if (destY == 1) {
-//            return 2 - scrollPane.vvalueProperty().get() * 2;
-//        } else {
-//            return scrollPane.vvalueProperty().get() * 2;
-//        }
-//    }
-//    
     /**
 	 *
 	 * 
@@ -243,7 +166,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 	 * @return -1 if out of bounds (x < 128 || x > 784), 0-9 otherwise
 	 */
 	private int getLine(double x) {
-		// HARD CODED FOR NOW
+		
 		if (x < 128 || x > 784) {
 			return -1;
 		}
@@ -370,5 +293,114 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 	
 	public RubberBand getRubberBand() {
 		return rubberBand;
+	}
+	
+	/**
+	 * ----------------------------------------------------------------------
+	 * Initialization functions for layout. Needed to calculate line and
+	 * position.
+	 * ----------------------------------------------------------------------
+	 */
+
+	/**
+	 * REQUIRED. will define min x bound for rubberband
+	 * 
+	 * @param x
+	 *            coord of left edge of the left-most line in the staff frame.
+	 *            Use absolute(window) coordinates
+	 */
+	public void initializeLineMinBound(double x) {
+		rubberBand.setLineMinBound(x);
+	}
+
+	/**
+	 * REQUIRED. will define max x bound for rubberband
+	 * 
+	 * @param x
+	 *            coord of right edge of the right-most line in the staff frame.
+	 *            Use absolute(window) coordinates
+	 */
+	public void initializeLineMaxBound(double x) {
+		rubberBand.setLineMaxBound(x);
+	}
+
+	/**
+	 * REQUIRED. will define min y bound for rubberband
+	 * 
+	 * @param y
+	 *            coord of top edge of the top-most position in the staff frame.
+	 *            Use absolute(window) coordinates
+	 */
+	public void initializePositionMinBound(double y) {
+		rubberBand.setPositionMinBound(y);
+	}
+
+	/**
+	 * REQUIRED. will define max y bound for rubberband
+	 * 
+	 * @param y
+	 *            coord of bottom edge of the bottom-most position in the staff
+	 *            frame. Use absolute(window) coordinates
+	 */
+	public void initializePositionMaxBound(double y) {
+		rubberBand.setPositionMaxBound(y);
+	}
+
+	/**
+	 * REQUIRED. will define extra bound for selecting volume for rubberband.
+	 * should be > positionMaxBound + marginVertical
+	 * 
+	 * @param y
+	 *            coord of bottom edge of the bottom-most position in the staff
+	 *            frame. Use absolute(window) coordinates
+	 */
+	public void initializeVolumeYMaxCoord(double y) {
+		rubberBand.setVolumeYMaxCoord(y);
+	}
+	
+	//calculate this with line width
+	@Deprecated
+	public void initializeVolumeSpacing(double x) {
+
+	}
+
+	/**
+	 * REQUIRED. will be used to define width between lines
+	 * 
+	 * @param dx
+	 *            delta x 
+	 */
+	public void initializeLineSpacing(double dx) {
+		rubberBand.setLineSpacing(dx);
+	}
+
+	/**
+	 * REQUIRED. will be used to define height between positions
+	 * 
+	 * @param dy
+	 *            delta y
+	 */
+	public void initializePositionSpacing(double dy) {
+		rubberBand.setPositionSpacing(dy);
+	}
+
+	/**
+	 * increase top and bottom margins around staff for drawing rubberband.
+	 * default is 0.0.
+	 * 
+	 * @param margin
+	 */
+	public void setMarginVertical(double m) {
+		rubberBand.setMarginVertical(m);
+	}	
+	
+	/**
+	 * increase left and right margins around staff for drawing rubberband.
+	 * default is 0.0.
+	 * 
+	 * @param margin
+	 */
+	public void setMarginHorizontal(double m) {
+		rubberBand.setMarginHorizontal(m);
 	}
 }

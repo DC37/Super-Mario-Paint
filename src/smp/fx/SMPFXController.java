@@ -5,14 +5,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.clipboard.DataClipboard;
-import smp.clipboard.RubberBandEventHandler;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.topPanel.ButtonLine;
@@ -250,7 +249,7 @@ public class SMPFXController {
     private StackPane staffPane;
     
     @FXML
-    private StackPane rubberBandLayer;
+    private AnchorPane basePane;
     private DataClipboard clipboard;
     
     /** This is the image loader. */
@@ -281,10 +280,6 @@ public class SMPFXController {
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
        
-        // Set up clipboard.
-        clipboard = new DataClipboard(staff, this, il);
-        RubberBandEventHandler rbeh = new RubberBandEventHandler(staff, rubberBandLayer, clipboard);
-		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
@@ -301,8 +296,10 @@ public class SMPFXController {
         deleteButton.setVisible(false);
         upButton.setVisible(false);
         downButton.setVisible(false);
+        
+        // Set up clipboard.
+        clipboard = new DataClipboard(staff, this, il);		
     }
-
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
      */
@@ -533,7 +530,7 @@ public class SMPFXController {
     	return staff;
     }
     
-    public StackPane getRubberBandLayer() {
-    	return rubberBandLayer;
+    public AnchorPane getBasePane() {
+    	return basePane;
     }
 }
