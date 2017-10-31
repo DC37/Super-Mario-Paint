@@ -12,11 +12,14 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -156,7 +160,7 @@ public class SuperMarioPaint extends Application {
         sfLd = new Thread(sfLoader);
         controller.setImageLoader((ImageLoader) imgLoader);
     }
-
+    
     /**
      * Starts the application and loads the FXML file that contains a lot of the
      * class hierarchy.
@@ -170,6 +174,7 @@ public class SuperMarioPaint extends Application {
         primaryStage = ps;
 
         longStart();
+        
 
         ready.addListener(new ChangeListener<Boolean>() {
             @Override
