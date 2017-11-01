@@ -295,7 +295,7 @@ public class RubberBand extends Rectangle {
         	double firstPosY = positionMinBound + positionSpacing / 2;
         	//this is half: positions overlap one another
         	double positionHalfSpacing = positionSpacing / 2;
-            return Values.NOTES_IN_A_LINE - (int)((bandBottomPosY - firstPosY) / positionHalfSpacing);
+            return Values.NOTES_IN_A_LINE - (int)((bandBottomPosY - firstPosY) / positionHalfSpacing) - 1;
         }
     }
 
@@ -311,7 +311,7 @@ public class RubberBand extends Rectangle {
         	double firstPosY = positionMinBound + positionSpacing / 2;
         	//this is half because positions overlap one another
         	double positionHalfSpacing = positionSpacing / 2;
-            return Values.NOTES_IN_A_LINE - (int)((bandTopPosY - firstPosY) / positionHalfSpacing + 1);
+            return Values.NOTES_IN_A_LINE - (int)((bandTopPosY - firstPosY) / positionHalfSpacing);
 		}
 	}
     
