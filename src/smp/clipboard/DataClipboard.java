@@ -98,7 +98,7 @@ public class DataClipboard {
 		//trigger layout pass in basePane and all its children
 		//this will initialize the bounds for everything
 		AnchorPane basePane = ct.getBasePane();
-		basePane.applyCss();
+		basePane.applyCss();//requestLayout??
 		basePane.layout();
 		
 		//initialize lineMinBound
