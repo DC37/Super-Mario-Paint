@@ -12,7 +12,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -402,5 +404,9 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 	 */
 	public void setMarginHorizontal(double m) {
 		rubberBand.setMarginHorizontal(m);
+	}
+	
+	public void setScrollBarResizable(Slider slider) {
+		rubberBand.setScrollBarResizable(slider);
 	}
 }
