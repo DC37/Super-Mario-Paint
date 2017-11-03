@@ -1,13 +1,18 @@
 package smp.clipboard;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import smp.components.Values;
+import smp.stateMachine.StateMachine;
 
 /**
  * Rubber band is drawn by the mouse. Click and drag to create a rectangle that
@@ -100,6 +105,8 @@ public class RubberBand extends Rectangle {
     private double positionSpacing = 0;
 	private double marginVertical = 0;
 	private double marginHorizontal = 0;
+	private int scrollOffsetBegin = 0;
+	private int scrollOffsetEnd = 0;
 
     public RubberBand() {
         super();
@@ -108,6 +115,76 @@ public class RubberBand extends Rectangle {
         postResizable = false;
     }
 
+    public void setScrollBarResizable(Slider slider) {
+    	
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {
+				//TODO: WILL NOT TAKE EFFECT UNTIL MOUSE IS MOVED... NEEDS ANIMATION ??					
+				double sameEndX = 0;
+        		if(getTranslateX() < xOrigin) {
+//        			setWidth(getWidth() - lineSpacing);
+//        			//TODO: if getwidth - linespacing < 0 then need to set translate x left to the (nonnegative) result
+        			sameEndX = getTranslateX();
+        		}
+//        		//expand (shifted right, move min bound left)
+				else {// if (rbRef.getTranslateX() == xOrigin)
+					sameEndX = getTranslateX() + getWidth();
+				}
+        		
+				if (newVal.intValue() > oldVal.intValue()) {
+					// before moving xOrigin, check if it moves off the frame so
+					// it is one more line off
+//            		//collapse (shifted right, move max bound left)
+
+            		
+					// three cases:
+					// 1. the band is going out of bounds toward the left, move
+					// xOrigin to the left
+					if (xOrigin < lineMinBound + lineSpacing / 2) {
+						scrollOffsetBegin--;
+						xOrigin = Math.max(xOrigin - lineSpacing, lineMinBound);
+					}
+					// 2. the band is not out of bounds, normally move the
+					// xOrigin to the left
+					else if (scrollOffsetEnd == 0) 
+						xOrigin = Math.max(xOrigin - lineSpacing, lineMinBound);
+					// 3. the band is out of bounds toward the right, it
+					// needs to get in bounds again
+					else if (scrollOffsetEnd > 0)
+						scrollOffsetEnd--;
+
+            		
+				} else {
+					// shifted left, move max bound right
+//            		if(xOrigin > lineMaxBound - lineSpacing / 2)
+//            			scrollOffsetBegin++;
+//            		xOrigin = Math.min(xOrigin + lineSpacing, lineMaxBound);
+					
+					// three cases:
+					// 1. the band is out of bounds toward the right, move the
+					// xOrigin to the right
+					if (xOrigin > lineMaxBound - lineSpacing / 2){
+						scrollOffsetEnd++;
+						xOrigin = Math.min(xOrigin + lineSpacing, lineMaxBound);
+					}
+					// 2. the band is not out of bounds, normally move the
+					// xOrigin to the right
+					else if (scrollOffsetBegin == 0) 
+						xOrigin = Math.min(xOrigin + lineSpacing, lineMaxBound);
+					// 3. the band is out of bounds toward the left, it
+					// needs to get in bounds again
+					else if (scrollOffsetBegin < 0) 
+						scrollOffsetBegin++;
+				}
+				
+				resize(sameEndX, getTranslateY());
+			}
+
+        });
+    }
+    
     /**
 	 * First, call this to begin drawing the rubber band. Sets rubber band
 	 * visible.
@@ -133,8 +210,8 @@ public class RubberBand extends Rectangle {
 				|| y < positionMinBound - marginVertical
 				|| y > Math.max(volumeYMaxCoord, positionMaxBound + marginVertical)) {
 			return;
-		}
-
+		}  
+		
         this.setWidth(0);
         this.setHeight(0);
         this.setTranslateX(x);
@@ -143,7 +220,9 @@ public class RubberBand extends Rectangle {
         
         xOrigin = x;
         yOrigin = y;
-        
+
+		scrollOffsetBegin = 0;    
+		scrollOffsetEnd = 0;    
     }
 
 	/**

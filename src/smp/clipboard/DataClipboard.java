@@ -142,6 +142,9 @@ public class DataClipboard {
 		double marginDeltaY = firstPositionBounds.getMinY() - staffPaneBounds.getMinY();
 		rbeh.setMarginVertical(marginDeltaY);
 		rbeh.setMarginHorizontal(marginDeltaX);
+		
+		//set scrollbar resizing
+		rbeh.setScrollBarResizable(controller.getScrollbar());
 	}
 	
 //	private void DEBUG(Node x) {
