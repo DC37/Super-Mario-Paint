@@ -335,6 +335,11 @@ public class RubberBand extends Rectangle {
 
 	public int getLineBegin() {
 
+		return getLineBeginRaw() + scrollOffsetBegin;
+	}
+
+	private int getLineBeginRaw() {
+
 		double bandMinX = this.getTranslateX();
 		
 		if (bandMinX < lineMinBound + lineSpacing / 2) {
@@ -347,8 +352,12 @@ public class RubberBand extends Rectangle {
 			return (int) ((bandMinX - firstLineX) / lineSpacing) + 1;
 		}
 	}
-
+	
 	public int getLineEnd() {
+		return getLineEndRaw() + scrollOffsetEnd;
+	}
+	
+	private int getLineEndRaw() {
 
 		double bandMaxX = this.getTranslateX() + this.getWidth();
 		if (bandMaxX < lineMinBound + lineSpacing / 2) {
@@ -371,10 +380,10 @@ public class RubberBand extends Rectangle {
             return 0;//-1;
         } else {
         	
-        	double firstPosY = positionMinBound + positionSpacing / 2;
-        	//this is half: positions overlap one another
+        	double firstPosY = positionMinBound;// + positionSpacing / 2;
+        	//this is half because positions overlap one another
         	double positionHalfSpacing = positionSpacing / 2;
-            return Values.NOTES_IN_A_LINE - (int)((bandBottomPosY - firstPosY) / positionHalfSpacing) - 1;
+            return Values.NOTES_IN_A_LINE - (int)((bandBottomPosY - firstPosY) / positionHalfSpacing);// - 1;
         }
     }
 
@@ -382,15 +391,15 @@ public class RubberBand extends Rectangle {
 		
 		double bandTopPosY = this.getTranslateY();
 		if (bandTopPosY <  positionMinBound + positionSpacing / 2) {
-			return Values.NOTES_IN_A_LINE;
-		} else if (bandTopPosY > 304 - 16) {
-			return 1;//0;
+			return Values.NOTES_IN_A_LINE - 1;
+		} else if (bandTopPosY > positionMaxBound - positionSpacing / 2) {
+			return 0;//0;
 		} else {
         	
-        	double firstPosY = positionMinBound + positionSpacing / 2;
+        	double firstPosY = positionMinBound;// + positionSpacing / 2;
         	//this is half because positions overlap one another
         	double positionHalfSpacing = positionSpacing / 2;
-            return Values.NOTES_IN_A_LINE - (int)((bandTopPosY - firstPosY) / positionHalfSpacing);
+            return Values.NOTES_IN_A_LINE - (int)((bandTopPosY - firstPosY) / positionHalfSpacing) - 1;
 		}
 	}
     
