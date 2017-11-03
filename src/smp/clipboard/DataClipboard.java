@@ -128,7 +128,7 @@ public class DataClipboard {
 		rbeh.initializePositionMaxBound(lastPositionBounds.getMaxY());
 	
 		//initialize positionSpacing
-		rbeh.initializePositionSpacing(firstPosition.getHeight());
+		rbeh.initializePositionSpacing(firstPosition.getHeight() - 2);
 		
 		//initialize volume YMax coordinate
 		HBox volumeBars = ct.getVolumeBars();
