@@ -1,6 +1,8 @@
 package smp.clipboard;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -66,12 +68,10 @@ public class DataClipboard {
 	private ArrayList<SelectionBounds> selection;
 	
 	/* The list that will keep track of copied notes */
-	private ArrayList<StaffNoteLine> data;
+	private HashMap<Integer, StaffNoteLine> data;
 	
 	/* Corresponds with the first selection line */
-	private int dataLineBegin = 400;
-	/* Corresponds with the last selection line */
-	private int dataLineEnd = -1;
+	private int dataLineBegin = Integer.MAX_VALUE;
 
 	public DataClipboard(Staff st, SMPFXController ct, ImageLoader im) {
 
@@ -80,9 +80,7 @@ public class DataClipboard {
 		controller = ct;
 
 		selection = new ArrayList<>();
-		data = new ArrayList<>(Values.DEFAULT_LINES_PER_SONG);
-		for (int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
-			data.add(new StaffNoteLine());
+		data = new HashMap<>();
 		
 		//temp? merge the two classes together?
 		functions = new DataClipboardFunctions(this, theStaff, im);
@@ -198,19 +196,17 @@ public class DataClipboard {
 	 */
 	public void copyNote(int line, StaffNote note) {
 		StaffNote newNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
+		if(!data.containsKey(line))
+			data.put(line, new StaffNoteLine());
 		data.get(line).add(newNote);
 	}
 	
 	public void clearData() {
-		for (int i = dataLineBegin; i <= dataLineEnd; i++) {
-			StaffNoteLine line = data.get(i);
-			line.getNotes().clear();
-		}
-		dataLineBegin = 400;
-		dataLineEnd = -1;
+		data.clear();
+		dataLineBegin = Integer.MAX_VALUE;
 	}
 	
-	public ArrayList<StaffNoteLine> getData() {
+	public HashMap<Integer, StaffNoteLine> getData() {
 		return data;
 	}
 	
@@ -218,18 +214,6 @@ public class DataClipboard {
 		return dataLineBegin;
 	}
 	
-	public int getDataLineEnd() {
-		return dataLineEnd;
-	}
-	
-	public void setDataLineBegin(int line) {
-		dataLineBegin = line;
-	}
-	
-	public void setDataLineEnd(int line) {
-		dataLineEnd = line;
-	}
-
 	/**
 	 * convenience method, update dataLineBegin only if line is less. Should
 	 * call this because dataLineBegin will be used to define bounds of data.
@@ -240,18 +224,6 @@ public class DataClipboard {
 	public void updateDataLineBegin(int line) {
 		if (line < dataLineBegin)
 			dataLineBegin = line;
-	}
-
-	/**
-	 * convenience method, update dataLineEnd only if line is more. Should call
-	 * this because dataLineEnd will be used to define bounds of data.
-	 * 
-	 * @param line
-	 *            to update dataLineEnd to
-	 */
-	public void updateDataLineEnd(int line) {
-		if(line > dataLineEnd)
-			dataLineEnd = line;
 	}
 	
 	//temp? merge the two classes together?
