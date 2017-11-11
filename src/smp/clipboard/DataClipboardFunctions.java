@@ -1,11 +1,13 @@
 package smp.clipboard;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 //import mpoverviewer.data_layer.data.MeasureLine;
 //import mpoverviewer.data_layer.data.Note;
 //import mpoverviewer.data_layer.data.Song;
 //import mpoverviewer.global.Constants;
+import java.util.Map;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -49,7 +51,6 @@ public class DataClipboardFunctions {
 
 		for (SelectionBounds bounds : selection) {
 			theDataClipboard.updateDataLineBegin(bounds.getLineBegin());
-			theDataClipboard.updateDataLineEnd(bounds.getLineEnd());
 			
 			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
 				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
@@ -161,20 +162,19 @@ public class DataClipboardFunctions {
 	 */
 	public void paste(int lineMoveTo) {
 
-		ArrayList<StaffNoteLine> data = theDataClipboard.getData();
+		HashMap<Integer, StaffNoteLine> data = theDataClipboard.getData();
 		
 		NoteMatrix matrix = theStaff.getNoteMatrix();
 		
-		int dataLength = theDataClipboard.getDataLineEnd() - theDataClipboard.getDataLineBegin() + 1;
-		for (int i = lineMoveTo; i < Math.min(Values.DEFAULT_LINES_PER_SONG, lineMoveTo + dataLength); i++) {
-			int dataIndex = theDataClipboard.getDataLineBegin() + (i - lineMoveTo);
+		for (Map.Entry<Integer, StaffNoteLine> lineCopy : data.entrySet()) {
+			int i = lineMoveTo + lineCopy.getKey() - theDataClipboard.getDataLineBegin();
 
 			ArrayList<StackPane> matrixLineDest = null;
 			if(i - StateMachine.getMeasureLineNum() < 10)
 				matrix.getLine(i - StateMachine.getMeasureLineNum());
 			
 			StaffNoteLine lineDest = theStaff.getSequence().getLine(i);
-			StaffNoteLine lineSrc = data.get(dataIndex);
+			StaffNoteLine lineSrc = lineCopy.getValue();
 			for(StaffNote note : lineSrc.getNotes()) {
 				
 				// see StaffInstrumentEventHandler's placeNote function

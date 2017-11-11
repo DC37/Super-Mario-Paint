@@ -72,7 +72,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 						System.out.println("COPY POS: pb" + pb + " pe" + pe);
 						theDataClipboard.getFunctions().select(lb, pb, le, pe);
 						theDataClipboard.getFunctions().copy();
-						for ( StaffNoteLine line : theDataClipboard.getData() ) {
+						for ( StaffNoteLine line : theDataClipboard.getData().values() ) {
 							if(!line.isEmpty())
 								System.out.println(line);
 						}
