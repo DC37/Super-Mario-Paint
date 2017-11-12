@@ -107,52 +107,18 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
             } else {
             }
             
-        	rubberBandLayer.getChildren().remove(rubberBand);
         	rubberBandLayer.getChildren().add(rubberBand);
             
             rubberBand.begin(mouseEvent.getX(), mouseEvent.getY());
             System.out.print("begin GetLine:" + getLine(mouseEvent.getX()));
             System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
-//            
         } else if (mouseEvent.isPrimaryButtonDown()) {
             rubberBand.resizeBand(mouseEvent.getX(), mouseEvent.getY());
-//            navigatePane(mouseEvent);
         } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
             rubberBand.end();
+        	rubberBandLayer.getChildren().remove(rubberBand);
             System.out.print("end GetLine:" + getLine(mouseEvent.getX()));
             System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
-//            
-//            Selection type = ((RibbonMenuMPO)Variables.stageInFocus.getRibbonMenu()).getSelectionToolbar().getSelectionType();
-//            if (type.equals(Selection.SELECTION_NOTES) || type.equals(Selection.SELECTION_NOTES_AND_VOL)) {
-//
-//                int lineBegin = rubberBand.getLineBegin();
-//                List<MeasureLine> selection = DataClipboardFunctions.sel(scrollPane.getSong(),
-//                        lineBegin,
-//                        rubberBand.getPositionBegin(),
-//                        rubberBand.getLineEnd(),
-//                        rubberBand.getPositionEnd());
-//                for (MeasureLine ml : selection) {
-//                    if (ml != null) {
-//                        for (Note n : ml) {
-//                            scrollPane.highlightNote(n, true);
-//                        }
-//                    }
-//                }
-//            }
-//            if (type.equals(Selection.SELECTION_VOL) || type.equals(Selection.SELECTION_NOTES_AND_VOL)) {
-//                int lineBeginVol = rubberBand.getLineBeginVol();
-//                int lineEndVol = rubberBand.getLineEndVol();
-//                System.out.println("lineBeginVol" + lineBeginVol);
-//                System.out.println("lineEndVol" + lineEndVol);
-//                List<MeasureLine> selectionVol = DataClipboardFunctions.selVol(scrollPane.getSong(),
-//                        lineBeginVol,
-//                        lineEndVol);
-//                for (int i = 0; i < selectionVol.size(); i++) {
-//                    if (selectionVol.get(i) != null && selectionVol.get(i).getVolume() >= 0) {
-//                        scrollPane.highlightVol(selectionVol.get(i).getLineNumber(), true);
-//                    }
-//                }
-//            }
         }
     }
 
