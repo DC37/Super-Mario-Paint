@@ -2,11 +2,6 @@ package smp.clipboard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-//import mpoverviewer.data_layer.data.MeasureLine;
-//import mpoverviewer.data_layer.data.Note;
-//import mpoverviewer.data_layer.data.Song;
-//import mpoverviewer.global.Constants;
 import java.util.Map;
 
 import javafx.collections.ObservableList;

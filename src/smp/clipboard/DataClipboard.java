@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import smp.ImageLoader;
-import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
