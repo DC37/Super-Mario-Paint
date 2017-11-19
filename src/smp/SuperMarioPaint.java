@@ -336,6 +336,25 @@ public class SuperMarioPaint extends Application {
 
                     @Override
                     public void handle(KeyEvent ke) {
+                    	
+                    	switch(ke.getCode()) {
+                    	case PAGE_UP:
+                    		controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - Values.NOTELINES_IN_THE_WINDOW);
+                    		break;
+                    	case PAGE_DOWN:
+                    		controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + Values.NOTELINES_IN_THE_WINDOW);
+                    		break;
+                    	case HOME:
+                    		if(ke.isControlDown())
+                    			controller.getStaff().setLocation(0);
+                    		break;
+                    	case END:
+                    		if(ke.isControlDown())
+                    			controller.getStaff().setLocation((int)controller.getScrollbar().getMax());
+                    		break;
+                    	default:
+                    	}
+                    	
                         StateMachine.getButtonsPressed().add(ke.getCode());
                         StateMachine.updateFocusPane();
                         StaffInstrumentEventHandler_Hack.updateAccidental();

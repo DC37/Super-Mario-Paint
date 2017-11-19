@@ -37,6 +37,7 @@ public class RubberBand extends Rectangle {
 	private double marginVertical = 0;
 	private double marginHorizontal = 0;
 	private int scrollOffset = 0;
+	private int originLine = 0;
 	
 	private Text outsideBoundText = new Text();
 
@@ -54,9 +55,9 @@ public class RubberBand extends Rectangle {
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {		
 				
-	        	Pane rubberBandLayer = (Pane) getParent();
-	        	if(rubberBandLayer == null)
-	        		return;
+//	        	Pane rubberBandLayer = (Pane) getParent();
+//	        	if(rubberBandLayer == null)
+//	        		return;
 				
 				//only xOrigin will move so we need to get the other x bound that will remain the same	
 			    double sameEndX = 0;
@@ -66,41 +67,9 @@ public class RubberBand extends Rectangle {
 					sameEndX = getTranslateX() + getWidth();
 				}
         		
-				if (newVal.intValue() > oldVal.intValue()) {
-					// three cases:
-					// 1. the band is going out of bounds toward the left, move
-					// xOrigin to the left
-					if (xOrigin < lineMinBound + lineSpacing / 2) {
-						scrollOffset--;
-						xOrigin = Math.max(xOrigin - lineSpacing, lineMinBound);
-					}
-					// 2. the band is not out of bounds, as normal move xOrigin
-					// to the left
-					else if (scrollOffset == 0)
-						xOrigin = Math.max(xOrigin - lineSpacing, lineMinBound);
-					// 3. the band is out of bounds toward the right, it needs
-					// to get in bounds again
-					else if (scrollOffset > 0)
-						scrollOffset--;
+				int change = newVal.intValue() - oldVal.intValue();
+				applyScroll(change);
 
-				} else {
-					// three cases:
-					// 1. the band is out of bounds toward the right, move the
-					// xOrigin to the right
-					if (xOrigin > lineMaxBound - lineSpacing / 2) {
-						scrollOffset++;
-						xOrigin = Math.min(xOrigin + lineSpacing, lineMaxBound);
-					}
-					// 2. the band is not out of bounds, as normal move xOrigin
-					// to the right
-					else if (scrollOffset == 0)
-						xOrigin = Math.min(xOrigin + lineSpacing, lineMaxBound);
-					// 3. the band is out of bounds toward the left, it needs to
-					// get in bounds again
-					else if (scrollOffset < 0)
-						scrollOffset++;
-				}
-				
 //				resizeBand(sameEndX, getTranslateY()); doesn't work for some reason...
 				//do this instead
 		        if (sameEndX >= xOrigin) {
@@ -110,27 +79,65 @@ public class RubberBand extends Rectangle {
 		            setTranslateX(sameEndX);
 		            setWidth(xOrigin - sameEndX);
 		        }
-				
-		        if(scrollOffset != 0){
-					if (!rubberBandLayer.getChildren().contains(outsideBoundText)) {
-						rubberBandLayer.getChildren().add(outsideBoundText);
-
-						int outsideBoundLineNum = scrollOffset < 0 ? (StateMachine.getMeasureLineNum() - 1) / 4 + 1
-								: (StateMachine.getMeasureLineNum() + Values.NOTELINES_IN_THE_WINDOW) / 4 + 1;
-						outsideBoundText.setText("" + outsideBoundLineNum);
-						
-						double transX = scrollOffset < 0 ? getTranslateX() + 10 : getTranslateX() + getWidth() - 10;
-						outsideBoundText.setTranslateX(transX);
-						outsideBoundText.setTranslateY(getTranslateY() + getHeight());
-					}
-
-		        } else {
-		        	rubberBandLayer.getChildren().remove(outsideBoundText);
-		        }
+		        
+		        applyBoundsText();
 		        
 			}
 
         });
+    }
+
+	/**
+	 * add the out of bounds text in the rubberBandLayer if bound goes off the
+	 * window. remove the out of bounds text if in the window. this tells where
+	 * the line bound is.
+	 */
+	public void applyBoundsText() {
+		Pane rubberBandLayer = (Pane) getParent();
+    	if(rubberBandLayer == null)
+    		return;
+    	
+        //out of bounds line text
+        if(scrollOffset + originLine < 0 || Values.NOTELINES_IN_THE_WINDOW < scrollOffset + originLine){
+			if (!rubberBandLayer.getChildren().contains(outsideBoundText)) {
+				rubberBandLayer.getChildren().add(outsideBoundText);
+
+				int outsideBoundLineNum = scrollOffset < 0 ? (StateMachine.getMeasureLineNum() - 1) / 4 + 1
+						: (StateMachine.getMeasureLineNum() + Values.NOTELINES_IN_THE_WINDOW) / 4 + 1;
+				outsideBoundText.setText("" + outsideBoundLineNum);
+				
+				double transX = scrollOffset + originLine < 0 ? getTranslateX() + 10 : getTranslateX() + getWidth() - 10;
+				outsideBoundText.setTranslateX(transX);
+				outsideBoundText.setTranslateY(getTranslateY() + getHeight());
+			}
+
+        } else {
+        	rubberBandLayer.getChildren().remove(outsideBoundText);
+        }
+    }
+    /**
+     * Update scrollOffset with change. Then update xOrigin.
+     * 
+     * @param change scroll delta
+     */
+    public void applyScroll(int change) {
+		//note -change because xOrigin moves other way
+		int begPos = scrollOffset + originLine;
+		int endPos = scrollOffset - change + originLine;
+		int xOriginChange = Math.max(0, Math.min(endPos, Values.NOTELINES_IN_THE_WINDOW))
+				- Math.max(0, Math.min(begPos, Values.NOTELINES_IN_THE_WINDOW));
+		
+		xOrigin = Math.max(lineMinBound, Math.min(xOrigin + lineSpacing * xOriginChange, lineMaxBound));
+		
+		//if xOrigin moves out of bounds still, set min and max bound positioning
+		if(xOriginChange == 0) {
+			if(Values.NOTELINES_IN_THE_WINDOW < endPos)
+				xOrigin = lineMaxBound;
+			else if(endPos < 0)
+				xOrigin = lineMinBound;
+		}
+		
+		scrollOffset -= change;
     }
     
     /**
@@ -170,6 +177,7 @@ public class RubberBand extends Rectangle {
         yOrigin = y;
 
         scrollOffset = 0;    
+        originLine = getLineBegin();
     }
 
 	/**
@@ -289,7 +297,7 @@ public class RubberBand extends Rectangle {
      */
 	public int getLineBegin() {
 
-		return scrollOffset < 0 ? getLineBeginRaw() + scrollOffset : getLineBeginRaw();
+		return scrollOffset < 0 ? getLineBeginRaw() + scrollOffset + originLine : getLineBeginRaw();
 	}
 
 	private int getLineBeginRaw() {
@@ -312,7 +320,7 @@ public class RubberBand extends Rectangle {
      * @return ending line of rubberband relative to the current frame of lines
      */
 	public int getLineEnd() {
-		return scrollOffset > 0 ? getLineEndRaw() + scrollOffset : getLineEndRaw();
+		return scrollOffset > 0 ? getLineEndRaw() + scrollOffset + originLine : getLineEndRaw();
 	}
 	
 	private int getLineEndRaw() {
