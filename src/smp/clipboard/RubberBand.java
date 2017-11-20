@@ -55,10 +55,6 @@ public class RubberBand extends Rectangle {
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {		
 				
-//	        	Pane rubberBandLayer = (Pane) getParent();
-//	        	if(rubberBandLayer == null)
-//	        		return;
-				
 				//only xOrigin will move so we need to get the other x bound that will remain the same	
 			    double sameEndX = 0;
 				if (getTranslateX() < xOrigin) {
@@ -80,7 +76,7 @@ public class RubberBand extends Rectangle {
 		            setWidth(xOrigin - sameEndX);
 		        }
 		        
-		        applyBoundsText();
+		        displayBoundsText();
 		        
 			}
 
@@ -88,33 +84,34 @@ public class RubberBand extends Rectangle {
     }
 
 	/**
-	 * add the out of bounds text in the rubberBandLayer if bound goes off the
-	 * window. remove the out of bounds text if in the window. this tells where
-	 * the line bound is.
+	 * this tells where the line bound is. add the out of bounds text in the
+	 * rubberBandLayer if bound goes off the window. remove the out of bounds
+	 * text if in the window.
 	 */
-	public void applyBoundsText() {
+	public void displayBoundsText() {
 		Pane rubberBandLayer = (Pane) getParent();
     	if(rubberBandLayer == null)
     		return;
     	
-        //out of bounds line text
-        if(scrollOffset + originLine < 0 || Values.NOTELINES_IN_THE_WINDOW < scrollOffset + originLine){
+		int relativeScrollOffset = scrollOffset + originLine;
+		if (relativeScrollOffset < 0 || Values.NOTELINES_IN_THE_WINDOW < relativeScrollOffset) {
 			if (!rubberBandLayer.getChildren().contains(outsideBoundText)) {
 				rubberBandLayer.getChildren().add(outsideBoundText);
 
-				int outsideBoundLineNum = scrollOffset < 0 ? (StateMachine.getMeasureLineNum() - 1) / 4 + 1
-						: (StateMachine.getMeasureLineNum() + Values.NOTELINES_IN_THE_WINDOW) / 4 + 1;
-				outsideBoundText.setText("" + outsideBoundLineNum);
-				
-				double transX = scrollOffset + originLine < 0 ? getTranslateX() + 10 : getTranslateX() + getWidth() - 10;
+				double transX = relativeScrollOffset < 0 ? getTranslateX() + 10 : getTranslateX() + getWidth() - 10;
 				outsideBoundText.setTranslateX(transX);
 				outsideBoundText.setTranslateY(getTranslateY() + getHeight());
 			}
 
-        } else {
-        	rubberBandLayer.getChildren().remove(outsideBoundText);
-        }
-    }
+			int outsideBoundLineNum = relativeScrollOffset < 0
+					? (relativeScrollOffset + StateMachine.getMeasureLineNum()) / 4 + 1
+					: (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) / 4 + 1;
+			outsideBoundText.setText("" + outsideBoundLineNum);
+
+		} else {
+			rubberBandLayer.getChildren().remove(outsideBoundText);
+		}
+	}
     /**
      * Update scrollOffset with change. Then update xOrigin.
      * 
