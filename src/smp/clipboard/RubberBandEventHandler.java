@@ -65,12 +65,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 					case C:
 						//select code should not be with the copy code obviously
 						System.out.println("COPY");
-						int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX()) + StateMachine.getMeasureLineNum();
-						int pb = rubberBand.getPositionBegin();//getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
-						int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
-						int pe = rubberBand.getPositionEnd();//getPosition(rubberBand.getTranslateY());
-						System.out.println("COPY POS: pb" + pb + " pe" + pe);
-						theDataClipboard.getFunctions().select(lb, pb, le, pe);
+//						System.out.println("COPY POS: pb" + pb + " pe" + pe);
 						theDataClipboard.getFunctions().copy();
 						for ( StaffNoteLine line : theDataClipboard.getData().values() ) {
 							if(!line.isEmpty())
@@ -117,6 +112,12 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
         } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
             rubberBand.end();
         	rubberBandLayer.getChildren().remove(rubberBand);
+
+			int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX()) + StateMachine.getMeasureLineNum();
+			int pb = rubberBand.getPositionBegin();//getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
+			int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
+			int pe = rubberBand.getPositionEnd();//getPosition(rubberBand.getTranslateY());
+			theDataClipboard.getFunctions().select(lb, pb, le, pe);
             System.out.print("end GetLine:" + getLine(mouseEvent.getX()));
             System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
         }
