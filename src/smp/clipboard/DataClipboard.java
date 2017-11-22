@@ -61,6 +61,8 @@ public class DataClipboard {
 	private Pane rubberBandLayer;
 	private RubberBandEventHandler rbeh;
 
+	private InstrumentFilter instFilter;
+	
 	private DataClipboardFunctions functions;
 	
 	/* A list that keeps track of all the selections' bounds made by the user */
@@ -88,6 +90,8 @@ public class DataClipboard {
         RubberBandEventHandler rbeh = new RubberBandEventHandler(theStaff, rubberBandLayer, this);
         initializeRBEH(rbeh, controller);
 		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
+		
+		instFilter = new InstrumentFilter(ct.getInstLine());
 	}
 
 	private void initializeRBEH(RubberBandEventHandler rbeh, SMPFXController ct) {

@@ -533,4 +533,8 @@ public class SMPFXController {
     public AnchorPane getBasePane() {
     	return basePane;
     }
+    
+    public HBox getInstLine() {
+    	return instLine;
+    }
 }
