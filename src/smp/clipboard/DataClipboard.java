@@ -229,6 +229,10 @@ public class DataClipboard {
 			dataLineBegin = line;
 	}
 	
+	public InstrumentFilter getInstrumentFilter() {
+		return instFilter;
+	}
+	
 	//temp? merge the two classes together?
 	public DataClipboardFunctions getFunctions(){
 		return functions;
