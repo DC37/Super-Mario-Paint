@@ -98,20 +98,49 @@ public class RubberBand extends Rectangle {
 			if (!rubberBandLayer.getChildren().contains(outsideBoundText)) {
 				rubberBandLayer.getChildren().add(outsideBoundText);
 
-				double transX = relativeScrollOffset < 0 ? getTranslateX() + 10 : getTranslateX() + getWidth() - 10;
+				double transX = relativeScrollOffset < 0 ? getTranslateX() + 10 : getTranslateX() + getWidth() - 40;
 				outsideBoundText.setTranslateX(transX);
 				outsideBoundText.setTranslateY(getTranslateY() + getHeight());
 			}
 
-			int outsideBoundLineNum = relativeScrollOffset < 0
-					? (relativeScrollOffset + StateMachine.getMeasureLineNum()) / 4 + 1
-					: (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) / 4 + 1;
-			outsideBoundText.setText("" + outsideBoundLineNum);
+			if(relativeScrollOffset < 0){
+				int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getMeasureLineNum()) / 4 + 1;
+				int numerator = (relativeScrollOffset + StateMachine.getMeasureLineNum()) % 4 + 1;
+				outsideBoundText.setText(outsideBoundLineNum + " " + getFraction(numerator) + " . . .");
+			} else {
+				int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) / 4 + 1;
+				int numerator = (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) % 4 + 1;
+				outsideBoundText.setText(". . . " + outsideBoundLineNum + " " + getFraction(numerator));
+			}
 
 		} else {
 			rubberBandLayer.getChildren().remove(outsideBoundText);
 		}
 	}
+	
+	private String getFraction(int numerator) {
+		char numeratorCharacter;
+		switch (numerator) {
+		case 1:
+			numeratorCharacter = '\u2071';
+			break;
+		case 2:
+			numeratorCharacter = '\u00B2';
+			break;
+		case 3:
+			numeratorCharacter = '\u00B3';
+			break;
+		case 4:
+			numeratorCharacter = '\u2074';
+			break;
+		default:
+			numeratorCharacter = '\u2071';
+			break;
+		}
+		//return "x/4"
+		return numeratorCharacter + "\u2044\u2084";
+	}
+	
     /**
      * Update scrollOffset with change. Then update xOrigin.
      * 
