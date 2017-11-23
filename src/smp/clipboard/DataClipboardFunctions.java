@@ -85,15 +85,29 @@ public class DataClipboardFunctions {
 			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
 				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
 
+				// see StaffInstrumentEventHandler's removeNote function
 				ArrayList<StaffNote> ntList = lineSrc.getNotes();
-				for (StaffNote note : ntList) {
+				for (int i = 0; i < ntList.size(); i++) {
+					StaffNote note = ntList.get(i);
 					if (bounds.getPositionBegin() <= note.getPosition()
 							&& note.getPosition() <= bounds.getPositionEnd()
-							&& instFilter.isFiltered(note.getInstrument()))
-						theDataClipboard.copyNote(line, note);
+							&& instFilter.isFiltered(note.getInstrument())) {
+						
+						ntList.remove(note);
+						i--;
+
+						if (lineSrc.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
+								&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+							StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+									.getVolHandler(line - StateMachine.getMeasureLineNum());
+							sveh.setVolumeVisible(false);
+						}
+					}
 				}
 			}
 		}
+		
+        theStaff.redraw();
     }
 
 //    /**
@@ -136,14 +150,10 @@ public class DataClipboardFunctions {
 
 		HashMap<Integer, StaffNoteLine> data = theDataClipboard.getData();
 		
-		NoteMatrix matrix = theStaff.getNoteMatrix();
-		
 		for (Map.Entry<Integer, StaffNoteLine> lineCopy : data.entrySet()) {
 			int i = lineMoveTo + lineCopy.getKey();
 
 			ArrayList<StackPane> matrixLineDest = null;
-			if(i - StateMachine.getMeasureLineNum() < 10)
-				matrix.getLine(i - StateMachine.getMeasureLineNum());
 			
 			StaffNoteLine lineDest = theStaff.getSequence().getLine(i);
 			StaffNoteLine lineSrc = lineCopy.getValue();
@@ -164,7 +174,7 @@ public class DataClipboardFunctions {
 				if (lineDest.isEmpty()) {
 					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
 					
-					if (i - StateMachine.getMeasureLineNum() < 10) {
+					if (i - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 						StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
 								.getVolHandler(i - StateMachine.getMeasureLineNum());
 						sveh.updateVolume();
