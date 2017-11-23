@@ -72,7 +72,7 @@ public class DataClipboard {
 	private HashMap<Integer, StaffNoteLine> data;
 	
 	/* Corresponds with the first selection line */
-	private int dataLineBegin = Integer.MAX_VALUE;
+	private int selectionLineBegin = Integer.MAX_VALUE;
 
 	public DataClipboard(Staff st, SMPFXController ct, ImageLoader im) {
 
@@ -176,6 +176,7 @@ public class DataClipboard {
 	 */
 	public void addSelection(int lb, int le, int pb, int pe) {
 		selection.add(new SelectionBounds(lb, le, pb, pe));
+		updateSelectionLineBegin(lb);
 	}
 
 	/**
@@ -183,6 +184,7 @@ public class DataClipboard {
 	 */
 	public void clearSelection() {
 		selection.clear();
+		selectionLineBegin = Integer.MAX_VALUE;
 	}
 	
 	public ArrayList<SelectionBounds> getSelection() {
@@ -206,27 +208,27 @@ public class DataClipboard {
 	
 	public void clearData() {
 		data.clear();
-		dataLineBegin = Integer.MAX_VALUE;
 	}
 	
 	public HashMap<Integer, StaffNoteLine> getData() {
 		return data;
 	}
 	
-	public int getDataLineBegin() {
-		return dataLineBegin;
+	public int getSelectionLineBegin() {
+		return selectionLineBegin;
 	}
-	
+
 	/**
-	 * convenience method, update dataLineBegin only if line is less. Should
-	 * call this because dataLineBegin will be used to define bounds of data.
+	 * convenience method called when adding new selection. set selectionLineBegin to
+	 * line if line < selectionLineBegin. selectionLineBegin gets subtracted from copied
+	 * data lines to get relative bounds
 	 * 
 	 * @param line
-	 *            to update dataLineBegin to
+	 *            to update selectionLineBegin to
 	 */
-	public void updateDataLineBegin(int line) {
-		if (line < dataLineBegin)
-			dataLineBegin = line;
+	public void updateSelectionLineBegin(int line) {
+		if (line < selectionLineBegin)
+			selectionLineBegin = line;
 	}
 	
 	public InstrumentFilter getInstrumentFilter() {

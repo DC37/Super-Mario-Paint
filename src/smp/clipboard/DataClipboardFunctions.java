@@ -46,7 +46,6 @@ public class DataClipboardFunctions {
 		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
 
 		for (SelectionBounds bounds : selection) {
-			theDataClipboard.updateDataLineBegin(bounds.getLineBegin());
 			
 			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
 				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
@@ -56,7 +55,8 @@ public class DataClipboardFunctions {
 					if (bounds.getPositionBegin() <= note.getPosition()
 							&& note.getPosition() <= bounds.getPositionEnd()
 							&& instFilter.isFiltered(note.getInstrument()))
-						theDataClipboard.copyNote(line, note);
+						//store the copied note at the relative line
+						theDataClipboard.copyNote(line - theDataClipboard.getSelectionLineBegin(), note);
 				}
 			}
 		}
@@ -75,13 +75,12 @@ public class DataClipboardFunctions {
     /**
      * Use the bounds for notes to delete in the song. 
      */
-    public HashMap<Integer, StaffNoteLine> delete() {
+    public void delete() {
 
 		ArrayList<SelectionBounds> selection = theDataClipboard.getSelection();
 		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
 
 		for (SelectionBounds bounds : selection) {
-			theDataClipboard.updateDataLineBegin(bounds.getLineBegin());
 			
 			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
 				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
@@ -95,7 +94,6 @@ public class DataClipboardFunctions {
 				}
 			}
 		}
-        return null;
     }
 
 //    /**
@@ -141,7 +139,7 @@ public class DataClipboardFunctions {
 		NoteMatrix matrix = theStaff.getNoteMatrix();
 		
 		for (Map.Entry<Integer, StaffNoteLine> lineCopy : data.entrySet()) {
-			int i = lineMoveTo + lineCopy.getKey() - theDataClipboard.getDataLineBegin();
+			int i = lineMoveTo + lineCopy.getKey();
 
 			ArrayList<StackPane> matrixLineDest = null;
 			if(i - StateMachine.getMeasureLineNum() < 10)
