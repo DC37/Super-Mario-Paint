@@ -5,10 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -30,11 +33,37 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 	private List<Text> filterTexts = new ArrayList<>();
 	private List<FadeTransition> filterTextsFades = new ArrayList<>();
 	
-	private Node prevFocus;
+	//the instrument that will be toggled when entering an instrumentimage
+	private InstrumentIndex instInFocus;
 	
 	public InstrumentFilter(HBox instLine){
 		super();
 		instrumentLine = instLine;
+
+		/*
+		 * wait for the scene to get initialized then add a keyevent handler
+		 * that listens for pressing 'f' to filter. this way we can avoid coding
+		 * requestfocus logic
+		 */
+		instLine.sceneProperty().addListener(new ChangeListener<Scene>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Scene> observable, Scene oldScene, Scene newScene) {
+				if (oldScene == null && newScene != null) {
+					newScene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+						@Override
+						public void handle(KeyEvent event) {
+							if (event.getCode() == KeyCode.F) {
+								if(instInFocus != null)
+									toggleInstrumentNoText(instInFocus);
+							}
+						}
+					});
+				}
+
+			}
+		});
+		
 		ObservableList<Node> instrumentImages = instLine.getChildren();
 		for (int i = 0; i < instrumentImages.size(); i++) {
 			final int index = i;
@@ -45,8 +74,7 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 
 				@Override
 				public void handle(MouseEvent event) {
-					prevFocus = instrumentImage.getScene().focusOwnerProperty().get();
-					instrumentImage.requestFocus();
+					instInFocus = InstrumentIndex.values()[index];
 					fadeFilterTexts(false);
 					for(Text filterText : filterTexts)
 						filterText.setOpacity(1.0);
@@ -55,20 +83,9 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 
 				@Override
 				public void handle(MouseEvent event) {
-					prevFocus.requestFocus();
+					instInFocus = null;
 					fadeFilterTexts(true);
 				}});
-			
-			instrumentImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-				@Override
-				public void handle(KeyEvent event) {
-					// TODO Auto-generated method stub
-					if(event.getCode() == KeyCode.F) {
-						toggleInstrumentNoText(InstrumentIndex.values()[index]);
-					} 
-				}
-			});
 		}
 	}
 	

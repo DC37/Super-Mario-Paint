@@ -40,9 +40,10 @@ public class DataClipboardFunctions {
 	 * data in DataClipboard.
 	 */
 	public void copy() {
-		// TODO: use instrFiltered in DataClipboard
+		
 		theDataClipboard.clearData();
 		ArrayList<SelectionBounds> selection = theDataClipboard.getSelection();
+		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
 
 		for (SelectionBounds bounds : selection) {
 			theDataClipboard.updateDataLineBegin(bounds.getLineBegin());
@@ -53,7 +54,8 @@ public class DataClipboardFunctions {
 				ArrayList<StaffNote> ntList = lineSrc.getNotes();
 				for (StaffNote note : ntList) {
 					if (bounds.getPositionBegin() <= note.getPosition()
-							&& note.getPosition() <= bounds.getPositionEnd())
+							&& note.getPosition() <= bounds.getPositionEnd()
+							&& instFilter.isFiltered(note.getInstrument()))
 						theDataClipboard.copyNote(line, note);
 				}
 			}
@@ -61,7 +63,6 @@ public class DataClipboardFunctions {
 
 	}
 
-	//
 //    /**
 //     * Copy and delete.
 //     */
@@ -70,55 +71,33 @@ public class DataClipboardFunctions {
 //        copy(song, lineBegin, positionBegin, lineEnd, positionEnd);
 //        return delete(song, lineBegin, positionBegin, lineEnd, positionEnd);
 //    }
-//
-//    /**
-//     * Use the bounds for notes to delete in the song. 
-//     */
-//    @Deprecated
-//    public static List<MeasureLine> delete(Song song, int lineBegin, Note.Position positionBegin, int lineEnd, Note.Position positionEnd) {
-//        //TODO: use instrFiltered in DataClipboard
-//        //TODO: ... return deleted notes
-//        int rowBegin = lineBegin / Constants.LINES_IN_A_ROW;
-//        int rowEnd = lineEnd / Constants.LINES_IN_A_ROW;
-//        int rowLineBegin = lineBegin % Constants.LINES_IN_A_ROW;
-//        int rowLineEnd = lineEnd % Constants.LINES_IN_A_ROW;
-//
-//        List<MeasureLine> content = new ArrayList<>();
-//        for(int y = rowBegin; y <= rowEnd; y ++) {
-//            for (int x = rowLineBegin; x <= rowLineEnd; x++) {
-//                MeasureLine measureLineShallowCopy = new MeasureLine();
-//
-//                int line = y * Constants.LINES_IN_A_ROW + x;
-//                MeasureLine measureLineOriginal = song.get(line);
-//
-//                for (int i = 0; i < measureLineOriginal.size(); i++) {
-//                    
-//                    //TODO: use instrFiltered in DataClipboard
-//                    Note n = measureLineOriginal.get(i);
-//                    //if rowBegin, consider positionBegin
-//                    //if rowEnd, consider positionEnd
-//                    if (!(y == rowBegin && n.getPosition().ordinal() < positionBegin.ordinal()
-//                            || y == rowEnd && n.getPosition().ordinal() > positionEnd.ordinal()) 
-//                            && instrFiltered(n.getInstrument())){
-//                        
-//                        measureLineOriginal.remove(n);
-//                        measureLineShallowCopy.add(n);
-//                        i--;//element removed, adjust index back
-//                    }
-//                }
-//                content.add(measureLineShallowCopy);
-//            }          
-//            
-//            //empty filler for pasting correct offset
-//            if(y != rowEnd) {
-//                for (int i = 0; i < Constants.LINES_IN_A_ROW - (rowLineEnd - rowLineBegin); i++) {
-//                    content.add(new MeasureLine());
-//                }
-//            }
-//        }
-//        return content;
-//    }
-//
+
+    /**
+     * Use the bounds for notes to delete in the song. 
+     */
+    public HashMap<Integer, StaffNoteLine> delete() {
+
+		ArrayList<SelectionBounds> selection = theDataClipboard.getSelection();
+		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
+
+		for (SelectionBounds bounds : selection) {
+			theDataClipboard.updateDataLineBegin(bounds.getLineBegin());
+			
+			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
+				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
+
+				ArrayList<StaffNote> ntList = lineSrc.getNotes();
+				for (StaffNote note : ntList) {
+					if (bounds.getPositionBegin() <= note.getPosition()
+							&& note.getPosition() <= bounds.getPositionEnd()
+							&& instFilter.isFiltered(note.getInstrument()))
+						theDataClipboard.copyNote(line, note);
+				}
+			}
+		}
+        return null;
+    }
+
 //    /**
 //     * Shift all content at and after lineMoveTo a number of content.size()
 //     * lines over. Paste copied content at lineMoveTo.
