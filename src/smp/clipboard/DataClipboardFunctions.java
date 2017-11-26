@@ -4,10 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.scene.CacheHint;
 import javafx.scene.Node;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
+import javafx.scene.effect.Effect;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import smp.ImageLoader;
+import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.NoteMatrix;
 import smp.components.staff.Staff;
@@ -28,10 +37,27 @@ public class DataClipboardFunctions {
 	private DataClipboard theDataClipboard;
 	private ImageLoader il;
 	
+	/* Corresponds with the first selection line */
+	private int selectionLineBegin = Integer.MAX_VALUE;
+	
+	private Blend highlightBlend;
+	
 	public DataClipboardFunctions(DataClipboard dc, Staff st, ImageLoader i) {
 		theDataClipboard = dc;
 		theStaff = st;
 		il = i;
+		
+		highlightBlend = new Blend(
+	            BlendMode.SRC_OVER,
+	            null,
+	            new ColorInput(
+	                    0,
+	                    0,
+	                    il.getSpriteFX(InstrumentIndex.BOAT.imageIndex()).getWidth(),
+	                    il.getSpriteFX(InstrumentIndex.BOAT.imageIndex()).getHeight(),
+	                    DataClipboard.HIGHLIGHT_FILL
+	            )
+	    );
 	}
 
 	/**
@@ -40,25 +66,17 @@ public class DataClipboardFunctions {
 	 * data in DataClipboard.
 	 */
 	public void copy() {
-		
-		theDataClipboard.clearData();
-		ArrayList<SelectionBounds> selection = theDataClipboard.getSelection();
-		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
+		//if there's something new selected, make way for new data
+		//else just use old data
+		if(!theDataClipboard.getSelection().isEmpty())
+			clearData();
 
-		for (SelectionBounds bounds : selection) {
-			
-			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
-				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
-
-				ArrayList<StaffNote> ntList = lineSrc.getNotes();
-				for (StaffNote note : ntList) {
-					if (bounds.getPositionBegin() <= note.getPosition()
-							&& note.getPosition() <= bounds.getPositionEnd()
-							&& instFilter.isFiltered(note.getInstrument()))
-						//store the copied note at the relative line
-						theDataClipboard.copyNote(line - theDataClipboard.getSelectionLineBegin(), note);
-				}
-			}
+		for (Map.Entry<Integer, StaffNoteLine> noteLine : theDataClipboard.getSelection().entrySet()) {
+			int line = noteLine.getKey();
+			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
+			for(StaffNote note : ntList)
+				//relative index
+				copyNote(line - selectionLineBegin, note);
 		}
 
 	}
@@ -77,37 +95,27 @@ public class DataClipboardFunctions {
      */
     public void delete() {
 
-		ArrayList<SelectionBounds> selection = theDataClipboard.getSelection();
-		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
-
-		for (SelectionBounds bounds : selection) {
+		for (Map.Entry<Integer, StaffNoteLine> noteLine : theDataClipboard.getSelection().entrySet()) {
+			int line = noteLine.getKey();
+			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
 			
-			for (int line = bounds.getLineBegin(); line <= bounds.getLineEnd(); line++) {
-				StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
+			StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
+			
+			for(StaffNote note : ntList){
+				lineSrc.remove(note);
 
-				// see StaffInstrumentEventHandler's removeNote function
-				ArrayList<StaffNote> ntList = lineSrc.getNotes();
-				for (int i = 0; i < ntList.size(); i++) {
-					StaffNote note = ntList.get(i);
-					if (bounds.getPositionBegin() <= note.getPosition()
-							&& note.getPosition() <= bounds.getPositionEnd()
-							&& instFilter.isFiltered(note.getInstrument())) {
-						
-						ntList.remove(note);
-						i--;
-
-						if (lineSrc.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
-								&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
-							StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
-									.getVolHandler(line - StateMachine.getMeasureLineNum());
-							sveh.setVolumeVisible(false);
-						}
-					}
+				if (lineSrc.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
+						&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+							.getVolHandler(line - StateMachine.getMeasureLineNum());
+					sveh.setVolumeVisible(false);
 				}
 			}
+	        theStaff.redraw();
 		}
 		
-        theStaff.redraw();
+		clearSelection();
+		
     }
 
 //    /**
@@ -151,32 +159,22 @@ public class DataClipboardFunctions {
 		HashMap<Integer, StaffNoteLine> data = theDataClipboard.getData();
 		
 		for (Map.Entry<Integer, StaffNoteLine> lineCopy : data.entrySet()) {
-			int i = lineMoveTo + lineCopy.getKey();
-
-			ArrayList<StackPane> matrixLineDest = null;
+			int line = lineMoveTo + lineCopy.getKey();
 			
-			StaffNoteLine lineDest = theStaff.getSequence().getLine(i);
+			StaffNoteLine lineDest = theStaff.getSequence().getLine(line);
 			StaffNoteLine lineSrc = lineCopy.getValue();
 			for(StaffNote note : lineSrc.getNotes()) {
 				
 				// see StaffInstrumentEventHandler's placeNote function
 				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
 				theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex()));
-				
-				if (matrixLineDest != null) {
-					StackPane matrixPosDest = matrixLineDest
-							.get(theStaffNote.getPosition());//(Values.NOTES_IN_A_LINE - 1) - 
-					ObservableList<Node> matrixNotes = matrixPosDest.getChildren();
-					if (!matrixNotes.contains(theStaffNote))
-						matrixNotes.add(theStaffNote);
-				}
 
 				if (lineDest.isEmpty()) {
 					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
 					
-					if (i - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+					if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 						StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
-								.getVolHandler(i - StateMachine.getMeasureLineNum());
+								.getVolHandler(line - StateMachine.getMeasureLineNum());
 						sveh.updateVolume();
 					}
 				}
@@ -422,7 +420,22 @@ public class DataClipboardFunctions {
 //    }
 //    
     public void select(int lineBegin, int positionBegin, int lineEnd, int positionEnd) {
-    	theDataClipboard.addSelection(lineBegin, lineEnd, positionBegin, positionEnd);
+		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
+
+		for (int line = lineBegin; line <= lineEnd; line++) {
+			StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
+
+			ArrayList<StaffNote> ntList = lineSrc.getNotes();
+			for (StaffNote note : ntList) {
+				if (positionBegin <= note.getPosition() && note.getPosition() <= positionEnd
+						&& instFilter.isFiltered(note.getInstrument())) {
+					// store the copied note at the relative line
+					selectNote(line, note);
+				}
+			}
+		}
+
+		updateSelectionLineBegin(lineBegin);
     }
 //    
 //    public static List<MeasureLine> selVol(Song song, int lineBegin, int lineEnd) {
@@ -617,4 +630,81 @@ public class DataClipboardFunctions {
 //        }
 //        return linesDeleted;
 //    }
+	
+	public void clearData() {
+		theDataClipboard.getData().clear();
+	}
+
+	/**
+	 * Unhighlight all notes and clear the selection map.
+	 */
+	public void clearSelection() {
+		HashMap<Integer, StaffNoteLine> selection = theDataClipboard.getSelection();
+		for(StaffNoteLine line : selection.values()) 
+			for(StaffNote note : line.getNotes())
+				highlightNote(note, false);
+		
+		selection.clear();
+		selectionLineBegin = Integer.MAX_VALUE;
+	}
+	
+	/**
+	 * convenience method called when adding new selection. set
+	 * selectionLineBegin to line if line < selectionLineBegin.
+	 * selectionLineBegin gets subtracted from copied data lines to get relative
+	 * bounds.
+	 * 
+	 * 
+	 * make selection line lower to copy more blank lines before actual content.
+	 * 
+	 * @param line
+	 *            to update selectionLineBegin to
+	 */
+	public void updateSelectionLineBegin(int line) {
+		if (line < selectionLineBegin)
+			selectionLineBegin = line;
+	}
+	
+	public int getSelectionLineBegin() {
+		return selectionLineBegin;
+	}
+	
+	/**
+	 * Copy information from note. Add new note into data.
+	 * 
+	 * @param line
+	 *            where the note occurs
+	 * @param note
+	 *            that will have its info copied
+	 */
+	public void copyNote(int line, StaffNote note) {
+		StaffNote newNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
+		HashMap<Integer, StaffNoteLine> data = theDataClipboard.getData();
+		if(!data.containsKey(line))
+			data.put(line, new StaffNoteLine());
+		data.get(line).add(newNote);
+	}
+	
+	/**
+	 * Select note. Add existing note into selection. Highlight note.
+	 * 
+	 * @param line
+	 *            where the note occurs
+	 * @param note
+	 *            that will be placed into selection
+	 */
+	public void selectNote(int line, StaffNote note) {
+		HashMap<Integer, StaffNoteLine> selection = theDataClipboard.getSelection();
+		if(!selection.containsKey(line))
+			selection.put(line, new StaffNoteLine());
+		selection.get(line).add(note);
+		highlightNote(note, true);
+	}
+	
+	public void highlightNote(StaffNote note, boolean highlight) {
+		if(highlight)
+			note.setEffect(highlightBlend);
+		else
+			note.setEffect(null);
+	}
 }

@@ -1,6 +1,5 @@
 package smp.clipboard;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.collections.ObservableList;
@@ -12,49 +11,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import smp.ImageLoader;
 import smp.components.staff.Staff;
-import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
 
-/**
- * This class can be used to keep track of the bounds that we will copy, delete,
- * etc. notes from.
- *
- */
-class SelectionBounds {
-	private int lineBegin;
-	private int lineEnd;
-	private int positionBegin;
-	private int positionEnd;
-
-	public SelectionBounds(int lb, int le, int pb, int pe) {
-		this.lineBegin = lb;
-		this.lineEnd = le;
-		this.positionBegin = pb;
-		this.positionEnd = pe;
-	}
-
-	public int getLineBegin() {
-		return lineBegin;
-	}
-
-	public int getLineEnd() {
-		return lineEnd;
-	}
-
-	public int getPositionBegin() {
-		return positionBegin;
-	}
-
-	public int getPositionEnd() {
-		return positionEnd;
-	}
-}
-
 public class DataClipboard {
 
+	public static Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
+	
 	private Staff theStaff;
 	private SMPFXController controller;
 	private ImageLoader il;
@@ -66,13 +32,10 @@ public class DataClipboard {
 	private DataClipboardFunctions functions;
 	
 	/* A list that keeps track of all the selections' bounds made by the user */
-	private ArrayList<SelectionBounds> selection;
+	private HashMap<Integer, StaffNoteLine> selection;
 	
 	/* The list that will keep track of copied notes */
 	private HashMap<Integer, StaffNoteLine> data;
-	
-	/* Corresponds with the first selection line */
-	private int selectionLineBegin = Integer.MAX_VALUE;
 
 	public DataClipboard(Staff st, SMPFXController ct, ImageLoader im) {
 
@@ -80,7 +43,7 @@ public class DataClipboard {
 		theStaff = st;
 		controller = ct;
 
-		selection = new ArrayList<>();
+		selection = new HashMap<>();
 		data = new HashMap<>();
 		
 		//temp? merge the two classes together?
@@ -164,71 +127,12 @@ public class DataClipboard {
 //		System.out.println(x.localToScene(x.getLayoutBounds().getMinX(), x.getLayoutBounds().getMinY()));
 //	}
 	
-	/**
-	 * Add a new SelectionBounds to the selection ArrayList. 
-	 * 
-	 * This will be used to keep track of all the selections made by the user.
-	 * 
-	 * @param lb lineBegin
-	 * @param le lineEnd
-	 * @param pb positionBegin
-	 * @param pe positionEnd
-	 */
-	public void addSelection(int lb, int le, int pb, int pe) {
-		selection.add(new SelectionBounds(lb, le, pb, pe));
-		updateSelectionLineBegin(lb);
-	}
-
-	/**
-	 * Clear the selection ArrayList.
-	 */
-	public void clearSelection() {
-		selection.clear();
-		selectionLineBegin = Integer.MAX_VALUE;
-	}
-	
-	public ArrayList<SelectionBounds> getSelection() {
+	public HashMap<Integer, StaffNoteLine> getSelection() {
 		return selection;
-	}
-	
-	/**
-	 * Copy information from note. Add new note into data.
-	 * 
-	 * @param line
-	 *            where the note occurs
-	 * @param note
-	 *            that will have its info copied
-	 */
-	public void copyNote(int line, StaffNote note) {
-		StaffNote newNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
-		if(!data.containsKey(line))
-			data.put(line, new StaffNoteLine());
-		data.get(line).add(newNote);
-	}
-	
-	public void clearData() {
-		data.clear();
 	}
 	
 	public HashMap<Integer, StaffNoteLine> getData() {
 		return data;
-	}
-	
-	public int getSelectionLineBegin() {
-		return selectionLineBegin;
-	}
-
-	/**
-	 * convenience method called when adding new selection. set selectionLineBegin to
-	 * line if line < selectionLineBegin. selectionLineBegin gets subtracted from copied
-	 * data lines to get relative bounds
-	 * 
-	 * @param line
-	 *            to update selectionLineBegin to
-	 */
-	public void updateSelectionLineBegin(int line) {
-		if (line < selectionLineBegin)
-			selectionLineBegin = line;
 	}
 	
 	public InstrumentFilter getInstrumentFilter() {
