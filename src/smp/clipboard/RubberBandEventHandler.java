@@ -101,7 +101,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
             if(!mouseEvent.isControlDown()) {
 //                scrollPane.unhighlightAllNotes();
 //                scrollPane.unhighlightAllVols();
-                theDataClipboard.clearSelection(); 
+                theDataClipboard.getFunctions().clearSelection(); 
             } else {
             }
             

@@ -19,8 +19,6 @@ import smp.stateMachine.StateMachine;
  */
 public class RubberBand extends Rectangle {
 
-    private static final Color FILL_TRANSPARENT = new Color(0.5, 0.5, 0.5, 0.5);
-
     private double xOrigin;
     private double yOrigin;
 
@@ -43,7 +41,7 @@ public class RubberBand extends Rectangle {
 
     public RubberBand() {
         super();
-        this.setFill(FILL_TRANSPARENT);
+        this.setFill(DataClipboard.HIGHLIGHT_FILL);
 //        makeResizable(this);
         outsideBoundText.setFill(Color.RED);
     }
