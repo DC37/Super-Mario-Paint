@@ -78,6 +78,9 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 						System.out.println(currentLine);
 						theDataClipboard.getFunctions().paste(currentLine);
 						break;
+					case X:
+						theDataClipboard.getFunctions().cut();
+						break;
 					case DELETE:
 						theDataClipboard.getFunctions().delete();
 						break;
