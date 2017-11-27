@@ -4,21 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
-import javafx.scene.CacheHint;
-import javafx.scene.Node;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.ColorInput;
-import javafx.scene.effect.Effect;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import smp.ImageLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
-import smp.components.staff.NoteMatrix;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffVolumeEventHandler;
 import smp.components.staff.sequences.StaffNote;
@@ -61,9 +52,8 @@ public class DataClipboardFunctions {
 	}
 
 	/**
-	 * Take the bounds from DataClipboard's selection ArrayList and use that to
-	 * locate all notes to that need to be copied. Copy those notes and set the
-	 * data in DataClipboard.
+	 * Get all notes from selection and copy them into data. lines are relative
+	 * to selectionLineBegin. they are not absolute.
 	 */
 	public void copy() {
 		//if there's something new selected, make way for new data
@@ -81,17 +71,16 @@ public class DataClipboardFunctions {
 
 	}
 
-//    /**
-//     * Copy and delete.
-//     */
-//    @Deprecated
-//    public static List<MeasureLine> cut(Song song, int lineBegin, Note.Position positionBegin, int lineEnd, Note.Position positionEnd) {
-//        copy(song, lineBegin, positionBegin, lineEnd, positionEnd);
-//        return delete(song, lineBegin, positionBegin, lineEnd, positionEnd);
-//    }
+    /**
+     * Copy and delete.
+     */
+    public void cut() {
+        copy();
+        delete();
+    }
 
     /**
-     * Use the bounds for notes to delete in the song. 
+     * Delete selected notes.
      */
     public void delete() {
 
@@ -111,6 +100,7 @@ public class DataClipboardFunctions {
 					sveh.setVolumeVisible(false);
 				}
 			}
+			//idk why but redraw needs to be called every line or else weird stuff happens
 	        theStaff.redraw();
 		}
 		
@@ -152,7 +142,9 @@ public class DataClipboardFunctions {
 //    }
 
 	/**
-	 * Paste data from clipboard at lineMoveTo.
+	 * Paste data.
+	 * 
+	 * @param lineMoveTo starting line to paste data at
 	 */
 	public void paste(int lineMoveTo) {
 
@@ -167,7 +159,15 @@ public class DataClipboardFunctions {
 				
 				// see StaffInstrumentEventHandler's placeNote function
 				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
-				theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex()));
+				theStaffNote.setMuteNote(note.muteNoteVal());
+		        if (theStaffNote.muteNoteVal() == 0) {
+		            theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex()));
+		        } else if (theStaffNote.muteNoteVal() == 1) {
+		            theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex().alt()));
+		        } else if (theStaffNote.muteNoteVal() == 2) {
+		            theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex()
+		                    .silhouette()));
+		        }
 
 				if (lineDest.isEmpty()) {
 					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
@@ -419,7 +419,18 @@ public class DataClipboardFunctions {
 //        return linesOOB;
 //    }
 //    
-    public void select(int lineBegin, int positionBegin, int lineEnd, int positionEnd) {
+	/**
+	 * get all notes in the line and position bounds that are filtered and put
+	 * them into the selection map
+	 * 
+	 * @param lineBegin
+	 * @param positionBegin
+	 *            (<= positionEnd, e.g. lower octave notes)
+	 * @param lineEnd
+	 * @param positionEnd
+	 *            (>= positionBegin, e.g. upper octave notes)
+	 */
+	public void select(int lineBegin, int positionBegin, int lineEnd, int positionEnd) {
 		InstrumentFilter instFilter = theDataClipboard.getInstrumentFilter();
 
 		for (int line = lineBegin; line <= lineEnd; line++) {
@@ -679,6 +690,7 @@ public class DataClipboardFunctions {
 	 */
 	public void copyNote(int line, StaffNote note) {
 		StaffNote newNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
+		newNote.setMuteNote(note.muteNoteVal());
 		HashMap<Integer, StaffNoteLine> data = theDataClipboard.getData();
 		if(!data.containsKey(line))
 			data.put(line, new StaffNoteLine());
