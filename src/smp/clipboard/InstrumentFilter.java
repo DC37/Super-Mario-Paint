@@ -20,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import smp.ImageIndex;
 import smp.components.InstrumentIndex;
 
 public class InstrumentFilter extends HashSet<InstrumentIndex> {
@@ -74,7 +75,7 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 
 				@Override
 				public void handle(MouseEvent event) {
-					instInFocus = InstrumentIndex.values()[index];
+					instInFocus = indexToInst(index);//InstrumentIndex.values()[index];
 					fadeFilterTexts(false);
 					for(Text filterText : filterTexts)
 						filterText.setOpacity(1.0);
@@ -149,15 +150,45 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 	 * @return true if it now contains ind, false if it doesn't
 	 */
 	public boolean toggleInstrumentNoText(InstrumentIndex ind) {
+		int index = instToIndex(ind);
 		if(!this.contains(ind)){
 			this.add(ind);
-			filterTexts.get(ind.ordinal()).setText("[f]");
+			filterTexts.get(index).setText("[f]");
 			return true;
 		}
 		else{
 			this.remove(ind);
-			filterTexts.get(ind.ordinal()).setText("[_]");
+			filterTexts.get(index).setText("[_]");
 			return false;
 		}
+	}
+	
+	/**
+	 * switch COIN and PIRANHA
+	 * @param ind
+	 * @return
+	 */
+	private int instToIndex(InstrumentIndex ind) {
+		switch(ind.imageIndex()) {
+		case COIN:
+			return (ind.getChannel() - 1) + 1;
+		case PIRANHA:
+			return (ind.getChannel() - 1) - 1;
+		default:
+			return (ind.getChannel() - 1);
+		}
+	}
+
+	/**
+	 * switch COIN AND PIRANHA
+	 * @param index
+	 * @return
+	 */
+	private InstrumentIndex indexToInst(int index) {
+		if(index == InstrumentIndex.COIN.ordinal())
+			return InstrumentIndex.PIRANHA;
+		if(index == InstrumentIndex.PIRANHA.ordinal())
+			return InstrumentIndex.COIN;
+		return InstrumentIndex.values()[index];
 	}
 }
