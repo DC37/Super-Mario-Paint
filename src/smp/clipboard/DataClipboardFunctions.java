@@ -442,11 +442,10 @@ public class DataClipboardFunctions {
 						&& instFilter.isFiltered(note.getInstrument())) {
 					// store the copied note at the relative line
 					selectNote(line, note);
+					updateSelectionLineBegin(line);
 				}
 			}
 		}
-
-		updateSelectionLineBegin(lineBegin);
     }
 //    
 //    public static List<MeasureLine> selVol(Song song, int lineBegin, int lineEnd) {
