@@ -1,27 +1,10 @@
 package smp.clipboard;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -81,6 +64,12 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 					case X:
 						theDataClipboard.getFunctions().cut();
 						break;
+					default:
+						break;
+					}
+				} else {
+					switch (event.getCode()) {
+
 					case DELETE:
 						theDataClipboard.getFunctions().delete();
 						break;
@@ -94,10 +83,15 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 
 	@Override
     public void handle(MouseEvent mouseEvent) {
-		if(!StateMachine.isClipboardPressed())
-			return;
         mouseX = mouseEvent.getX();
         mouseY = mouseEvent.getY();
+		if(!StateMachine.isClipboardPressed()){
+			
+			if (mouseEvent.getEventType() == MouseEvent.MOUSE_CLICKED) 
+                theDataClipboard.getFunctions().clearSelection(); 
+			
+			return;
+		}
 ////        rubberBand.toFront();
         if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) {
 //            

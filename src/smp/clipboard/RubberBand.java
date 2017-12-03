@@ -21,9 +21,6 @@ public class RubberBand extends Rectangle {
 
     private double xOrigin;
     private double yOrigin;
-
-    /* Allow resizing by dragging the edges of the rectangle, will prevent conventional resizing */
-    private boolean postResizable = false;
  
 	private double lineMinBound = 0;
 	private double lineMaxBound = 0;
@@ -42,7 +39,6 @@ public class RubberBand extends Rectangle {
     public RubberBand() {
         super();
         this.setFill(DataClipboard.HIGHLIGHT_FILL);
-//        makeResizable(this);
         outsideBoundText.setFill(Color.RED);
     }
     
@@ -304,16 +300,9 @@ public class RubberBand extends Rectangle {
         this.setVisible(false);
 
         Pane rubberBandLayer = (Pane)this.getParent();
-        rubberBandLayer.getChildren().remove(outsideBoundText);
+        if(rubberBandLayer != null)
+        	rubberBandLayer.getChildren().remove(outsideBoundText);
     }
-
-//    /**
-//     * Finally call this to end drawing the rubber band BUT keep the rubber band
-//     * visible and allow resizing by dragging the edges of the rectangle.
-//     */
-//    public void endButKeepUsable() {
-//        setPostResizable(true);
-//    }
 
     /**
      * 
