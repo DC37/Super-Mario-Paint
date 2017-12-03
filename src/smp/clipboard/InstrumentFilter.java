@@ -20,7 +20,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import smp.ImageIndex;
 import smp.components.InstrumentIndex;
 
 public class InstrumentFilter extends HashSet<InstrumentIndex> {
