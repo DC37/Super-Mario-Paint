@@ -268,8 +268,11 @@ public class StateMachine {
     /**
      * @since 08.2017
      */
-    public static void setClipboardPressed(boolean b) {
-    	clipboardPressed = b;
+    public static void setClipboardPressed() {
+    	clipboardPressed = true;
+    }
+    public static void resetClipboardPressed() {
+    	clipboardPressed = false;
     }
     public static boolean isClipboardPressed() {
     	return clipboardPressed;

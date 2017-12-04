@@ -100,10 +100,8 @@ public class OptionsButton extends ImagePushButton {
         Label tempoAdjustHack = new Label("Increase tempo by how many times?");
         tempoField = new TextField();
         
-        HBox clipboardOptions = makeClipboardOptions();
-        
         vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
-                tempoField, clipboardOptions, pane);
+                tempoField, pane);
         defaultVolume.autosize();
         Scene scene1 = new Scene(vBox);
         dialog.setScene(scene1);
@@ -153,10 +151,6 @@ public class OptionsButton extends ImagePushButton {
     private void updateValues() {
         changeDefaultVol();
         multiplyTempo();
-        
-        StateMachine.setClipboardPressed(clipboardSelected);
-        this.controller.getStaffInstruments().setMouseTransparent(clipboardSelected);
-        this.controller.getVolumeBars().setMouseTransparent(clipboardSelected);
     }
 
     /** Updates the default volume of the program notes. */
@@ -192,32 +186,4 @@ public class OptionsButton extends ImagePushButton {
                     .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
         }
     }
-    
-	private HBox makeClipboardOptions() {
-		Label clipboardToggle = new Label("Clipboard tool\t\t");
-		ToggleGroup clipboardButtonGroup = new ToggleGroup();
-		RadioButton clipboardButtonOn = new RadioButton("On\t");
-		clipboardButtonOn.setUserData(true);
-		clipboardButtonOn.setToggleGroup(clipboardButtonGroup);
-		RadioButton clipboardButtonOff = new RadioButton("Off");
-		clipboardButtonOff.setUserData(false);
-		clipboardButtonOff.setToggleGroup(clipboardButtonGroup);
-		clipboardButtonGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				System.out.println(newValue.getUserData());
-				clipboardSelected = (boolean)newValue.getUserData();
-			}
-		});
-		
-		if(StateMachine.isClipboardPressed())
-			clipboardButtonOn.setSelected(true);
-		else
-			clipboardButtonOff.setSelected(true);
-		
-		HBox options = new HBox(clipboardToggle, clipboardButtonOn, clipboardButtonOff);
-		options.setAlignment(Pos.CENTER);
-		return options;
-	}
 }
