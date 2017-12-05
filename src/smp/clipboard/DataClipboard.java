@@ -60,7 +60,7 @@ public class DataClipboard {
 		redrawUI(ct);
 		
 		rubberBandLayer = controller.getBasePane();
-        RubberBandEventHandler rbeh = new RubberBandEventHandler(theStaff, rubberBandLayer, this);
+        RubberBandEventHandler rbeh = new RubberBandEventHandler(controller, rubberBandLayer, this);
         initializeRBEH(rbeh, controller);
 		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
 		

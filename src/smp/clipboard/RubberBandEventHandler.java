@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -21,7 +22,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 
     RubberBand rubberBand;
     
-    Staff theStaff;
+    SMPFXController controller;
 	Pane rubberBandLayer;
 	DataClipboard theDataClipboard;
 	
@@ -31,8 +32,8 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
     
     private static boolean selVolAtNoteFlag;
 
-    public RubberBandEventHandler(Staff st, Pane basePane, DataClipboard clippy) {
-    	theStaff = st;
+    public RubberBandEventHandler(SMPFXController ct, Pane basePane, DataClipboard clippy) {
+    	controller = ct;
     	theDataClipboard = clippy;
     	rubberBandLayer = basePane;
     	
@@ -45,6 +46,10 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 			public void handle(KeyEvent event) {
 				if (event.isControlDown()) {
 					switch (event.getCode()) {
+					case A:
+						theDataClipboard.getFunctions().select(0, 0, (int) controller.getScrollbar().getMax(),
+								Values.NOTES_IN_A_LINE);
+						break;
 					case C:
 						//select code should not be with the copy code obviously
 						System.out.println("COPY");
