@@ -47,7 +47,9 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 				if (event.isControlDown()) {
 					switch (event.getCode()) {
 					case A:
-						theDataClipboard.getFunctions().select(0, 0, (int) controller.getScrollbar().getMax(),
+						theDataClipboard.getFunctions().clearSelection();
+						theDataClipboard.getFunctions().select(0, 0,
+								(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
 								Values.NOTES_IN_A_LINE);
 						break;
 					case C:
