@@ -88,12 +88,13 @@ public class DataClipboardFunctions {
 			int line = noteLine.getKey();
 			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
 			
-			StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
+			StaffNoteLine lineDest = theStaff.getSequence().getLine(line);
 			
 			for(StaffNote note : ntList){
-				lineSrc.remove(note);
+				lineDest.remove(note);
+	            StateMachine.setSongModified(true);
 
-				if (lineSrc.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
+				if (lineDest.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
 						&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
 							.getVolHandler(line - StateMachine.getMeasureLineNum());
@@ -179,8 +180,10 @@ public class DataClipboardFunctions {
 					}
 				}
 
-				if (!lineDest.contains(theStaffNote))
+				if (!lineDest.contains(theStaffNote)) {
 		        	lineDest.add(theStaffNote);
+		            StateMachine.setSongModified(true);
+				}
 			}
 		}
 

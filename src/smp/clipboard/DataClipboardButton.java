@@ -34,9 +34,10 @@ public class DataClipboardButton extends ImageToggleButton {
 		releaseImage();
 		Tooltip.install(i, new Tooltip("Click (or Shift+R) to toggle region selection\n"
 				+ "Hover over instrument & press F to filter instrument\n"
+				+ "Ctrl+A to select all\n"
 				+ "Ctrl+C to copy notes\n"
-				+ "Ctrl+X to cut notes\n"
 				+ "Ctrl+V to paste notes\n"
+				+ "Ctrl+X to cut notes\n"
 				+ "Delete to delete notes\n"));
 	}
 
