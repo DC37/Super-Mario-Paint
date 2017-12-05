@@ -63,7 +63,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 						}
 						break;
 					case V:
-						System.out.println("PASTE");
+//						System.out.println("PASTE");
 						int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
 						System.out.println(currentLine);
 						theDataClipboard.getFunctions().paste(currentLine);
@@ -112,8 +112,8 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
         	rubberBandLayer.getChildren().add(rubberBand);
             
             rubberBand.begin(mouseEvent.getX(), mouseEvent.getY());
-            System.out.print("begin GetLine:" + getLine(mouseEvent.getX()));
-            System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
+//            System.out.print("begin GetLine:" + getLine(mouseEvent.getX()));
+//            System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
         } else if (mouseEvent.isPrimaryButtonDown()) {
             rubberBand.resizeBand(mouseEvent.getX(), mouseEvent.getY());
         } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
@@ -125,8 +125,8 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 			int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
 			int pe = rubberBand.getPositionEnd();//getPosition(rubberBand.getTranslateY());
 			theDataClipboard.getFunctions().select(lb, pb, le, pe);
-            System.out.print("end GetLine:" + getLine(mouseEvent.getX()));
-            System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
+//            System.out.print("end GetLine:" + getLine(mouseEvent.getX()));
+//            System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
         }
     }
 
