@@ -12,33 +12,25 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.StaffInstrumentEventHandler_Hack;
-import smp.components.topPanel.ButtonLine;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -54,9 +46,16 @@ import smp.stateMachine.StateMachine;
  * FordPrefect's Advanced Mario Sequencer (2009) <br>
  * The GUI is primarily written with JavaFX <br>
  *
+ * Dev team: 
+ * RehdBlob (2012 - current)
+ * j574y923 (2017 - current)
+ *
+ *
  * @author RehdBlob
+ * @author j574y923
+ * 
  * @since 2012.08.16
- * @version 1.0.5
+ * @version 1.1.0
  */
 public class SuperMarioPaint extends Application {
 
