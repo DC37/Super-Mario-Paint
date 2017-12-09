@@ -5,11 +5,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.clipboard.DataClipboard;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.topPanel.ButtonLine;
@@ -243,6 +245,13 @@ public class SMPFXController {
     @FXML
     private ImageView rightFastArrow;
 
+    @FXML
+    private StackPane staffPane;
+    
+    @FXML
+    private AnchorPane basePane;
+    private DataClipboard clipboard;
+    
     /** This is the image loader. */
     private ImageLoader il;
 
@@ -263,14 +272,15 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
-
+        
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC, staffExtLinesLowA };
         staff = new Staff(staffLedgerLines, this, il, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
-
+       
+        
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
         selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
@@ -286,8 +296,10 @@ public class SMPFXController {
         deleteButton.setVisible(false);
         upButton.setVisible(false);
         downButton.setVisible(false);
+        
+        // Set up clipboard.
+        clipboard = new DataClipboard(staff, this, il);		
     }
-
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
      */
@@ -510,7 +522,19 @@ public class SMPFXController {
         il = imgLoader;
     }
     
+    public StackPane getStaffPane() {
+    	return staffPane;
+    }
+    
     public Staff getStaff(){
     	return staff;
+    }
+    
+    public AnchorPane getBasePane() {
+    	return basePane;
+    }
+    
+    public HBox getInstLine() {
+    	return instLine;
     }
 }

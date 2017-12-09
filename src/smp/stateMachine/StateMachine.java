@@ -27,13 +27,18 @@ public class StateMachine {
     /** This keeps track of whether we have pressed the loop button or not. */
     private static boolean loopPressed = false;
 
-    /** This keeps track of whether we have pressed the mute button or not. */
-    private static boolean mutePressed = false;
+	/** This keeps track of whether we have pressed the mute button or not. */
+	private static boolean mutePressed = false;
 
     /**
      * This keeps track of whether we have pressed the low A mute button or not.
      */
     private static boolean muteAPressed = false;
+
+	/**
+	 * This keeps track of whether we have pressed the clipboard button or not.
+	 */
+	private static boolean clipboardPressed = false;
 
     /** The list of values denoting which notes should be extended. */
     private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
@@ -259,6 +264,20 @@ public class StateMachine {
     public static boolean isMuteAPressed() {
         return muteAPressed;
     }
+    
+    /**
+     * @since 08.2017
+     */
+    public static void setClipboardPressed() {
+    	clipboardPressed = true;
+    }
+    public static void resetClipboardPressed() {
+    	clipboardPressed = false;
+    }
+    public static boolean isClipboardPressed() {
+    	return clipboardPressed;
+    }
+    
 
     /**
      * @param set The note extensions that we want to set.

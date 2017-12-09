@@ -99,7 +99,6 @@ public class StaffImages {
         initializeVolumeBars(controller.getVolumeBars());
         initializeVolumeBarLinks();
     }
-
     /**
      * Sets up the links between the volume bars display and StaffNoteLines.
      */

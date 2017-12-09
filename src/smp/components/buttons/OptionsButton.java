@@ -40,6 +40,8 @@ public class OptionsButton extends ImagePushButton {
 
     /** A slider that changes the default volume of placed notes. */
     private Slider defaultVolume;
+    
+    private boolean clipboardSelected;
 
     /**
      * Default constructor.
@@ -91,6 +93,7 @@ public class OptionsButton extends ImagePushButton {
         vBox.setAlignment(Pos.CENTER);
         Label tempoAdjustHack = new Label("Increase tempo by how many times?");
         tempoField = new TextField();
+        
         vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
                 tempoField, pane);
         defaultVolume.autosize();

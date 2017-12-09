@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
+import smp.components.staff.StaffInstrumentEventHandler_Hack;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -44,9 +46,16 @@ import smp.stateMachine.StateMachine;
  * FordPrefect's Advanced Mario Sequencer (2009) <br>
  * The GUI is primarily written with JavaFX <br>
  *
+ * Dev team: 
+ * RehdBlob (2012 - current)
+ * j574y923 (2017 - current)
+ *
+ *
  * @author RehdBlob
+ * @author j574y923
+ * 
  * @since 2012.08.16
- * @version 1.0.5
+ * @version 1.1.0
  */
 public class SuperMarioPaint extends Application {
 
@@ -156,7 +165,7 @@ public class SuperMarioPaint extends Application {
         sfLd = new Thread(sfLoader);
         controller.setImageLoader((ImageLoader) imgLoader);
     }
-
+    
     /**
      * Starts the application and loads the FXML file that contains a lot of the
      * class hierarchy.
@@ -170,6 +179,7 @@ public class SuperMarioPaint extends Application {
         primaryStage = ps;
 
         longStart();
+        
 
         ready.addListener(new ChangeListener<Boolean>() {
             @Override
@@ -285,6 +295,29 @@ public class SuperMarioPaint extends Application {
     }
 
     /**
+     * 
+     * @param x mouse pos
+     * @return line in the current window based on x coord
+     */
+    private int getLine(double x){
+
+    	if(x < 135 || x > 775)
+    		return -1;
+    	return (((int)x - 135) / 64);
+    }
+    
+    /**
+     * 
+     * @param y mouse pos
+     * @return note position based on y coord
+     */
+    private int getPosition(double y){
+    	if(y < 66 || y >= 354)
+    		return -1;
+    	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
+    }
+    
+    /**
      * Creates the keyboard listeners that we will be using for various other
      * portions of the program. Ctrl, alt, and shift are of interest here, but
      * the arrow keys will also be considered.
@@ -293,13 +326,37 @@ public class SuperMarioPaint extends Application {
      *            The main window.
      */
     private void makeKeyboardListeners(Scene primaryScene) {
+    	
+		primaryScene.addEventHandler(MouseEvent.ANY, 
+				new StaffInstrumentEventHandler_Hack(controller.getStaff(), (ImageLoader) imgLoader));
+    	
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
                     @Override
                     public void handle(KeyEvent ke) {
+                    	
+                    	switch(ke.getCode()) {
+                    	case PAGE_UP:
+                    		controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - Values.NOTELINES_IN_THE_WINDOW);
+                    		break;
+                    	case PAGE_DOWN:
+                    		controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + Values.NOTELINES_IN_THE_WINDOW);
+                    		break;
+                    	case HOME:
+                    		if(ke.isControlDown())
+                    			controller.getStaff().setLocation(0);
+                    		break;
+                    	case END:
+                    		if(ke.isControlDown())
+                    			controller.getStaff().setLocation((int)controller.getScrollbar().getMax());
+                    		break;
+                    	default:
+                    	}
+                    	
                         StateMachine.getButtonsPressed().add(ke.getCode());
                         StateMachine.updateFocusPane();
+                        StaffInstrumentEventHandler_Hack.updateAccidental();
                         ke.consume();
                     }
                 });
@@ -311,6 +368,7 @@ public class SuperMarioPaint extends Application {
                     public void handle(KeyEvent ke) {
                         StateMachine.getButtonsPressed().remove(ke.getCode());
                         StateMachine.updateFocusPane();
+                        StaffInstrumentEventHandler_Hack.updateAccidental();
                         ke.consume();
                     }
                 });
