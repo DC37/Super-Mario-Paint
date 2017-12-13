@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.clipboard.DataClipboard;
+import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.topPanel.ButtonLine;
@@ -252,6 +253,8 @@ public class SMPFXController {
     private AnchorPane basePane;
     private DataClipboard clipboard;
     
+    private ModifySongManager commandManager;
+    
     /** This is the image loader. */
     private ImageLoader il;
 
@@ -272,6 +275,9 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
+
+        // Set up command manager (undo and redo)
+        commandManager = new ModifySongManager(staff, this);
         
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
@@ -280,6 +286,7 @@ public class SMPFXController {
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
        
+        commandManager.setStaff(staff);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
@@ -298,7 +305,8 @@ public class SMPFXController {
         downButton.setVisible(false);
         
         // Set up clipboard.
-        clipboard = new DataClipboard(staff, this, il);		
+        clipboard = new DataClipboard(staff, this, il);	
+        
     }
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
@@ -536,5 +544,9 @@ public class SMPFXController {
     
     public HBox getInstLine() {
     	return instLine;
+    }
+    
+    public ModifySongManager getModifySongManager() {
+    	return commandManager;
     }
 }
