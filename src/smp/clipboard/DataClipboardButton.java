@@ -53,7 +53,7 @@ public class DataClipboardButton extends ImageToggleButton {
     		this.controller.getVolumeBars().setMouseTransparent(false);
     		
     		this.controller.getBasePane().getScene().addEventHandler(MouseEvent.ANY,
-    				 					controller.getStaffInstrumentEventHandler_Hack());
+    				 					controller.getStaffInstrumentEventHandler());
         } else {
             isPressed = true;
             pressImage();
@@ -62,7 +62,7 @@ public class DataClipboardButton extends ImageToggleButton {
     		this.controller.getVolumeBars().setMouseTransparent(true);
     		
     		this.controller.getBasePane().getScene().removeEventHandler(MouseEvent.ANY,
-    				 					controller.getStaffInstrumentEventHandler_Hack());
+    				 					controller.getStaffInstrumentEventHandler());
         }
     }
 }

@@ -12,9 +12,10 @@ import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.clipboard.DataClipboard;
+import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
-import smp.components.staff.StaffInstrumentEventHandler_Hack;
+import smp.components.staff.StaffInstrumentEventHandler;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
 
@@ -252,8 +253,10 @@ public class SMPFXController {
     @FXML
     private AnchorPane basePane;
     
-    private StaffInstrumentEventHandler_Hack staffInstrumentEventHandlerHack;
+    private StaffInstrumentEventHandler staffInstrumentEventHandler;
     private DataClipboard clipboard;
+    
+    private ModifySongManager commandManager;
     
     /** This is the image loader. */
     private ImageLoader il;
@@ -275,6 +278,9 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
+
+        // Set up command manager (undo and redo)
+        commandManager = new ModifySongManager(staff, this);
         
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
@@ -284,7 +290,9 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         
         // HACK
-        staffInstrumentEventHandlerHack = new StaffInstrumentEventHandler_Hack(staff, il);
+        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il);
+       
+        commandManager.setStaff(staff);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
@@ -303,7 +311,8 @@ public class SMPFXController {
         downButton.setVisible(false);
         
         // Set up clipboard.
-        clipboard = new DataClipboard(staff, this, il);		
+        clipboard = new DataClipboard(staff, this, il);	
+        
     }
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
@@ -543,7 +552,11 @@ public class SMPFXController {
     	return instLine;
     }
     
-    public StaffInstrumentEventHandler_Hack getStaffInstrumentEventHandler_Hack() {
-        return staffInstrumentEventHandlerHack;
+    public StaffInstrumentEventHandler getStaffInstrumentEventHandler() {
+        return staffInstrumentEventHandler;
+    }
+    
+    public ModifySongManager getModifySongManager() {
+    	return commandManager;
     }
 }
