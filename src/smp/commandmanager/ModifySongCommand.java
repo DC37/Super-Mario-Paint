@@ -27,12 +27,14 @@ public class ModifySongCommand implements CommandInterface {
 
 	public void undo() {
 		System.out.println("modifySongCommand undo");
-//		if (addedNotes != null)
-//			for (Entry<StaffNote, Integer> entry : addedNotes.entrySet()) {
-//			}
-//		if (removedNotes != null)
-//			for (Entry<StaffNote, Integer> entry : removedNotes.entrySet()) {
-//			}
+		if (addedNotes != null)
+			for (Entry<StaffNote, StaffNoteLine> entry : addedNotes.entrySet()) {
+				entry.getValue().remove(entry.getKey());
+			}
+		if (removedNotes != null)
+			for (Entry<StaffNote, StaffNoteLine> entry : removedNotes.entrySet()) {
+				entry.getValue().add(entry.getKey());
+			}
 		if (addedVolumes != null)
 			for (Entry<StaffNoteLine, Integer> entry : addedVolumes.entrySet()) {
 				entry.getKey().setVolume(Values.DEFAULT_VELOCITY);
@@ -43,6 +45,7 @@ public class ModifySongCommand implements CommandInterface {
 //				System.out.println(theStaff.getSequence().getLine(entry.getKey()).getVolume());
 			}
 		
+		theStaff.redraw();
 		//update volume display
 		if(addedVolumes != null || removedVolumes != null)
 			for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++){
@@ -54,12 +57,14 @@ public class ModifySongCommand implements CommandInterface {
 	public void redo() {
 
 		System.out.println("modifySongCommand redo");
-//		if (removedNotes != null)
-//			for (Entry<StaffNote, Integer> entry : removedNotes.entrySet()) {
-//			}
-//		if (addedNotes != null)
-//			for (Entry<StaffNote, Integer> entry : addedNotes.entrySet()) {
-//			}
+		if (removedNotes != null)
+			for (Entry<StaffNote, StaffNoteLine> entry : removedNotes.entrySet()) {
+				entry.getValue().remove(entry.getKey());
+			}
+		if (addedNotes != null)
+			for (Entry<StaffNote, StaffNoteLine> entry : addedNotes.entrySet()) {
+				entry.getValue().add(entry.getKey());
+			}
 		if (removedVolumes != null)
 			for (Entry<StaffNoteLine, Integer> entry : removedVolumes.entrySet()) {
 				entry.getKey().setVolume(Values.DEFAULT_VELOCITY);
@@ -70,7 +75,8 @@ public class ModifySongCommand implements CommandInterface {
 				entry.getKey().setVolume(entry.getValue());
 //				System.out.println(theStaff.getSequence().getLine(entry.getKey()).getVolume());
 			}
-		
+
+		theStaff.redraw();
 		//update volume display
 		if(addedVolumes != null || removedVolumes != null)
 			for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++){
