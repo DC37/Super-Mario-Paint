@@ -53,7 +53,7 @@ public class DataClipboard {
 		data = new HashMap<>();
 		
 		//temp? merge the two classes together?
-		functions = new DataClipboardFunctions(this, theStaff, im);
+		functions = new DataClipboardFunctions(this, theStaff, im, ct.getModifySongManager());
 
 		addClipboardButton(ct, im);
 		

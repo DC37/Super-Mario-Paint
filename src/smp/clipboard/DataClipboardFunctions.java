@@ -8,6 +8,7 @@ import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import smp.ImageLoader;
+import smp.commandmanager.ModifySongManager;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.Staff;
@@ -27,16 +28,18 @@ public class DataClipboardFunctions {
 	private Staff theStaff;
 	private DataClipboard theDataClipboard;
 	private ImageLoader il;
+	private ModifySongManager commandManager;
 	
 	/* Corresponds with the first selection line */
 	private int selectionLineBegin = Integer.MAX_VALUE;
 	
 	private Blend highlightBlend;
 	
-	public DataClipboardFunctions(DataClipboard dc, Staff st, ImageLoader i) {
+	public DataClipboardFunctions(DataClipboard dc, Staff st, ImageLoader i, ModifySongManager cm) {
 		theDataClipboard = dc;
 		theStaff = st;
 		il = i;
+		commandManager = cm;
 		
 		highlightBlend = new Blend(
 	            BlendMode.SRC_OVER,
@@ -93,12 +96,14 @@ public class DataClipboardFunctions {
 			for(StaffNote note : ntList){
 				lineDest.remove(note);
 	            StateMachine.setSongModified(true);
+	            commandManager.removeNote(lineDest, note);
 
 				if (lineDest.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
 						&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
 							.getVolHandler(line - StateMachine.getMeasureLineNum());
 					sveh.setVolumeVisible(false);
+					commandManager.removeVolume(lineDest, lineDest.getVolume());
 				}
 			}
 			//idk why but redraw needs to be called every line or else weird stuff happens
@@ -106,7 +111,7 @@ public class DataClipboardFunctions {
 		}
 		
 		clearSelection();
-		
+        commandManager.record();
     }
 
 //    /**
@@ -178,16 +183,20 @@ public class DataClipboardFunctions {
 								.getVolHandler(line - StateMachine.getMeasureLineNum());
 						sveh.updateVolume();
 					}
+
+		            commandManager.addVolume(lineDest, Values.DEFAULT_VELOCITY);
 				}
 
 				if (!lineDest.contains(theStaffNote)) {
 		        	lineDest.add(theStaffNote);
 		            StateMachine.setSongModified(true);
+		            commandManager.addNote(lineDest, theStaffNote);
 				}
 			}
 		}
 
         theStaff.redraw();
+        commandManager.record();
 	}
 
 	// /**
