@@ -70,7 +70,7 @@ public class DataClipboard {
 		copiedData = new HashMap<>();
 		
 		//temp? merge the two classes together?
-		theAPI = new DataClipboardAPI(this, theStaff, im);
+		theAPI = new DataClipboardAPI(this, theStaff, im, ct.getModifySongManager());
 
 		redrawUI(ct);
 		
