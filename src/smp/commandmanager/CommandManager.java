@@ -1,47 +1,81 @@
 package smp.commandmanager;
 
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import smp.components.Values;
+
+/**
+ * A command manager responsible for recording commands, undoing, and redoing
+ * commands.
+ * 
+ * Several commands can be executed then recorded into a list and, when undoing
+ * or redoing, will undo or redo all those commands together.
+ * 
+ * @author J
+ *
+ */
 public class CommandManager {
 
-	public static final int MAX_SIZE = 1000;
+	protected Deque<List<CommandInterface>> undoStack;
+	protected Deque<List<CommandInterface>> redoStack;
 
-	protected Deque<CommandInterface> undoStack;
-	protected Deque<CommandInterface> redoStack;
-
+	private List<CommandInterface> nextCommands;
+	
 	public CommandManager() {
-		undoStack = new LinkedBlockingDeque<>(MAX_SIZE);
-		redoStack = new LinkedBlockingDeque<>(MAX_SIZE);
+		undoStack = new LinkedBlockingDeque<>(Values.MAX_UNDO_REDO_SIZE);
+		redoStack = new LinkedBlockingDeque<>(Values.MAX_UNDO_REDO_SIZE);
 	}
 
 	public void undo() {
-		System.out.println("cm undo");
 		if (undoStack.isEmpty())
 			return;
 
-		CommandInterface command = undoStack.pop();
-		command.undo();
+		List<CommandInterface> commands = undoStack.pop();
+		for(CommandInterface command : commands)
+			command.undo();
 
-		redoStack.push(command);
+		redoStack.push(commands);
 	}
 
 	public void redo() {
-		System.out.println("cm redo");
 		if (redoStack.isEmpty())
 			return;
 
-		CommandInterface command = redoStack.pop();
-		command.redo();
+		List<CommandInterface> commands = redoStack.pop();
+		for(CommandInterface command : commands)
+			command.redo();
 
-		undoStack.push(command);
+		undoStack.push(commands);
 	}
 
+	/**
+	 * This does not literally execute the command. It will put the command into
+	 * a list then you can call record() to put the command list into the
+	 * undoStack.
+	 * 
+	 * @param command
+	 */
 	public void execute(CommandInterface command) {
-		if (undoStack.size() == MAX_SIZE)
+
+		if (nextCommands == null)
+			nextCommands = new ArrayList<>();
+		
+		nextCommands.add(command);
+	}
+	
+	public void record() {		
+		if (nextCommands == null)
+			return;
+		if (undoStack.size() == Values.MAX_UNDO_REDO_SIZE)
 			undoStack.removeLast();
-		undoStack.push(command);
+		
+		undoStack.push(nextCommands);
 		redoStack.clear();
+		
+		nextCommands = null;
 	}
 	
 	public void reset() {

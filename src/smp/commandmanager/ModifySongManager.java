@@ -7,6 +7,7 @@ import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
 
+@Deprecated
 public class ModifySongManager extends CommandManager {
 
 	private Staff theStaff;
@@ -25,11 +26,9 @@ public class ModifySongManager extends CommandManager {
 				if(event.isControlDown())
 					switch(event.getCode()) {
 					case Y:
-						System.out.println("REDO");
 						redo();
 						break;
 					case Z:
-						System.out.println("UNDO");
 						undo();
 						break;
 					default:
