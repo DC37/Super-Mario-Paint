@@ -26,24 +26,31 @@ public class ModifySongCommand implements CommandInterface {
 	private Map<StaffNoteLine, Integer> removedVolumes;
 
 	public void undo() {
-		System.out.println("modifySongCommand undo");
-		if (addedNotes != null)
+		System.out.println("===modifySongCommand undo===");
+		if (addedNotes != null) {
 			for (Entry<StaffNote, StaffNoteLine> entry : addedNotes.entrySet()) {
 				entry.getValue().remove(entry.getKey());
 			}
-		if (removedNotes != null)
+			System.out.println("removed new notes...");
+		}
+		if (removedNotes != null) {
 			for (Entry<StaffNote, StaffNoteLine> entry : removedNotes.entrySet()) {
 				entry.getValue().add(entry.getKey());
 			}
-		if (addedVolumes != null)
+			System.out.println("added old notes...");
+		}
+		if (addedVolumes != null) {
 			for (Entry<StaffNoteLine, Integer> entry : addedVolumes.entrySet()) {
 				entry.getKey().setVolume(Values.DEFAULT_VELOCITY);
 			}
-		if (removedVolumes != null)
+//			System.out.println("reset volumes...");
+		}
+		if (removedVolumes != null) {
 			for (Entry<StaffNoteLine, Integer> entry : removedVolumes.entrySet()) {
 				entry.getKey().setVolume(entry.getValue());
-//				System.out.println(theStaff.getSequence().getLine(entry.getKey()).getVolume());
 			}
+			System.out.println("overwrote volumes to prev values...");
+		}
 		
 		theStaff.redraw();
 		//update volume display
@@ -56,25 +63,31 @@ public class ModifySongCommand implements CommandInterface {
 
 	public void redo() {
 
-		System.out.println("modifySongCommand redo");
-		if (removedNotes != null)
+		System.out.println("===modifySongCommand redo===");
+		if (removedNotes != null) {
 			for (Entry<StaffNote, StaffNoteLine> entry : removedNotes.entrySet()) {
 				entry.getValue().remove(entry.getKey());
 			}
-		if (addedNotes != null)
+			System.out.println("removed notes...");
+		}
+		if (addedNotes != null) {
 			for (Entry<StaffNote, StaffNoteLine> entry : addedNotes.entrySet()) {
 				entry.getValue().add(entry.getKey());
 			}
-		if (removedVolumes != null)
+			System.out.println("added new notes...");
+		}
+		if (removedVolumes != null) {
 			for (Entry<StaffNoteLine, Integer> entry : removedVolumes.entrySet()) {
 				entry.getKey().setVolume(Values.DEFAULT_VELOCITY);
-//				sveh.updateVolume();
 			}
-		if (addedVolumes != null)
+//			System.out.println("reset volumes...");
+		}
+		if (addedVolumes != null) {
 			for (Entry<StaffNoteLine, Integer> entry : addedVolumes.entrySet()) {
 				entry.getKey().setVolume(entry.getValue());
-//				System.out.println(theStaff.getSequence().getLine(entry.getKey()).getVolume());
 			}
+			System.out.println("overwrote volumes to new values...");
+		}
 
 		theStaff.redraw();
 		//update volume display

@@ -25,11 +25,9 @@ public class ModifySongManager extends CommandManager {
 				if(event.isControlDown())
 					switch(event.getCode()) {
 					case Y:
-						System.out.println("REDO");
 						redo();
 						break;
 					case Z:
-						System.out.println("UNDO");
 						undo();
 						break;
 					default:

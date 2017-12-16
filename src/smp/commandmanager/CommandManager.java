@@ -16,7 +16,6 @@ public class CommandManager {
 	}
 
 	public void undo() {
-		System.out.println("cm undo");
 		if (undoStack.isEmpty())
 			return;
 
@@ -27,7 +26,6 @@ public class CommandManager {
 	}
 
 	public void redo() {
-		System.out.println("cm redo");
 		if (redoStack.isEmpty())
 			return;
 
