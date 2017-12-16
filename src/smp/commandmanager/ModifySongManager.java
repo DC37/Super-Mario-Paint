@@ -17,7 +17,8 @@ public class ModifySongManager extends CommandManager {
 		super();
 		theStaff = st;
 		controller = ct;
-		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
+		
+		controller.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
 
 			@Override
 			public void handle(KeyEvent event) {
@@ -39,8 +40,10 @@ public class ModifySongManager extends CommandManager {
 	}
 	
 	private void checkNewCommand() {
-		if(newCommand == null)
+		if(newCommand == null) {
+			this.redoStack.clear();
 			newCommand = new ModifySongCommand(theStaff);
+		}
 	}
 	
 	public void addNote(StaffNoteLine line, StaffNote note) {
@@ -64,8 +67,19 @@ public class ModifySongManager extends CommandManager {
 	}
 	
 	public void record() {
-		execute(newCommand);
-		newCommand = null;
+		if(newCommand != null) {
+			execute(newCommand);
+			newCommand = null;
+		}
+	}
+	
+	/**
+	 * if currently placing or erasing notes and you undo, record the command
+	 * and then undo that command
+	 */
+	public void undo() {
+		record();
+		super.undo();
 	}
 	
 	/**
