@@ -6,7 +6,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import smp.components.Values;
-import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
@@ -30,8 +29,6 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
     private static double mouseX;
     private static double mouseY;
     
-    private static boolean selVolAtNoteFlag;
-
     public RubberBandEventHandler(SMPFXController ct, Pane basePane, DataClipboard clippy) {
     	controller = ct;
     	theDataClipboard = clippy;
@@ -47,29 +44,27 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 				if (event.isControlDown()) {
 					switch (event.getCode()) {
 					case A:
-						theDataClipboard.getFunctions().clearSelection();
-						theDataClipboard.getFunctions().select(0, 0,
+						theDataClipboard.getAPI().clearSelection();
+						theDataClipboard.getAPI().select(0, 0,
 								(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
 								Values.NOTES_IN_A_LINE);
 						break;
 					case C:
 						//select code should not be with the copy code obviously
 						System.out.println("COPY");
-//						System.out.println("COPY POS: pb" + pb + " pe" + pe);
-						theDataClipboard.getFunctions().copy();
-						for ( StaffNoteLine line : theDataClipboard.getData().values() ) {
+						theDataClipboard.getAPI().copy();
+						for ( StaffNoteLine line : theDataClipboard.getCopiedData().values() ) {
 							if(!line.isEmpty())
 								System.out.println(line);
 						}
 						break;
 					case V:
-//						System.out.println("PASTE");
 						int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
-						System.out.println(currentLine);
-						theDataClipboard.getFunctions().paste(currentLine);
+						System.out.println("PASTE @ " + currentLine);
+						theDataClipboard.getAPI().paste(currentLine);
 						break;
 					case X:
-						theDataClipboard.getFunctions().cut();
+						theDataClipboard.getAPI().cut();
 						break;
 					default:
 						break;
@@ -78,7 +73,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 					switch (event.getCode()) {
 
 					case DELETE:
-						theDataClipboard.getFunctions().delete();
+						theDataClipboard.getAPI().delete();
 						break;
 					default:
 						break;
@@ -95,7 +90,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 		if(!StateMachine.isClipboardPressed()){
 			
 			if (mouseEvent.getEventType() == MouseEvent.MOUSE_CLICKED) 
-                theDataClipboard.getFunctions().clearSelection(); 
+                theDataClipboard.getAPI().clearSelection(); 
 			
 			return;
 		}
@@ -105,7 +100,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
             if(!mouseEvent.isControlDown()) {
 //                scrollPane.unhighlightAllNotes();
 //                scrollPane.unhighlightAllVols();
-                theDataClipboard.getFunctions().clearSelection(); 
+                theDataClipboard.getAPI().clearSelection(); 
             } else {
             }
             
@@ -124,7 +119,7 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 			int pb = rubberBand.getPositionBegin();//getPosition(rubberBand.getTranslateY() + rubberBand.getHeight());
 			int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();//getLine(rubberBand.getTranslateX() + rubberBand.getWidth()) + StateMachine.getMeasureLineNum();
 			int pe = rubberBand.getPositionEnd();//getPosition(rubberBand.getTranslateY());
-			theDataClipboard.getFunctions().select(lb, pb, le, pe);
+			theDataClipboard.getAPI().select(lb, pb, le, pe);
 //            System.out.print("end GetLine:" + getLine(mouseEvent.getX()));
 //            System.out.println(" GetPos:" + getPosition(mouseEvent.getY()));
         }
@@ -166,106 +161,6 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 		}
 		return (Values.NOTES_IN_A_LINE - ((int) y - 0) / 16);
 	}
-//  public int getLineBegin() {
-//  //x, 32px is exactly at the line
-//  /* lineOffsetX is indices 0-31 of the row */
-//  int lineOffsetX = 0;
-//  if (this.getTranslateX() < 122 + 32) {//122 is arbitrary 
-//      lineOffsetX = 0;
-//  } else if (this.getTranslateX() > Constants.WIDTH_DEFAULT - 48 + 32 - 64) {//48 is arbitrary
-////      return -1;
-//      lineOffsetX = 32;
-//  } else {
-//      lineOffsetX = ((int)this.getTranslateX() - (122 + 32)) / Constants.LINE_SPACING + 1;
-//  }
-//
-//  //y
-//  /* lineOffsetY is row */
-//  int lineOffsetY = 0;
-//  if(!zby(this.getTranslateY())){
-//      lineOffsetY = (int)this.getTranslateY() / Constants.ROW_HEIGHT_TOTAL + 1;
-//  } else {
-//      lineOffsetY = (int)this.getTranslateY() / Constants.ROW_HEIGHT_TOTAL;
-//  }
-//  System.out.println("BEG" + lineOffsetY * Constants.LINES_IN_A_ROW + " " + lineOffsetX);
-//	return lineOffsetY * Constants.LINES_IN_A_ROW + lineOffsetX;
-////  return getLine(xOrigin, yOrigin);
-//}
-//
-//public int getLineEnd() {
-//  //x, 32px is exactly at the line
-//  /* lineOffsetX is indices 0-31 of the row */
-//  int lineOffsetX = 0;
-//  if ((this.getTranslateX() + this.getWidth()) < 122 + 32) {//122 is arbitrary 
-////      return -1;
-//      lineOffsetX = -1;
-//  } else if ((this.getTranslateX() + this.getWidth()) > Constants.WIDTH_DEFAULT - 48 + 32) {//48 is arbitrary
-//      lineOffsetX = 31;
-//  } else {
-//      lineOffsetX = ((int)(this.getTranslateX() + this.getWidth()) - (122 + 32 + 64)) / Constants.LINE_SPACING + 1;
-//  }
-//
-//  //y
-//  /* lineOffsetY is row */
-//  int lineOffsetY = 0;
-//  if(!zby(this.getTranslateY() + this.getHeight())){
-//      lineOffsetY = (int)(this.getTranslateY() + this.getHeight()) / Constants.ROW_HEIGHT_TOTAL;
-//  } else {
-//      lineOffsetY = (int)(this.getTranslateY() + this.getHeight()) / Constants.ROW_HEIGHT_TOTAL;
-//  }
-//  System.out.println("END" + lineOffsetY * Constants.LINES_IN_A_ROW + " " + lineOffsetX);
-//	return lineOffsetY * Constants.LINES_IN_A_ROW + lineOffsetX;
-////  return getLine(xOrigin + this.getWidth(), yOrigin + this.getHeight());
-//}	
-	
-//
-//    /* If valid y */
-//    private boolean zby(double y) {
-//        return y % Constants.ROW_HEIGHT_TOTAL <= Constants.ROW_HEIGHT_NOTES;
-//    }
-    
-//    public void selectNotes() {
-//        Selection type = ((RibbonMenuMPO) Variables.stageInFocus.getRibbonMenu()).getSelectionToolbar().getSelectionType();
-//        if (type.equals(Selection.SELECTION_NOTES) || type.equals(Selection.SELECTION_NOTES_AND_VOL)) {
-//            //Note: overlapping rubberbands will highlight the same notes and this might have a big impact on performance and may need to be optimized later.
-//            for (RubberBand rb : rubberBands) {
-//
-//                int lineBegin = rb.getLineBegin();
-//                List<MeasureLine> selection = DataClipboardFunctions.sel(scrollPane.getSong(),
-//                        lineBegin,
-//                        rb.getPositionBegin(),
-//                        rb.getLineEnd(),
-//                        rb.getPositionEnd());
-//                for (MeasureLine ml : selection) {
-//                    if(ml != null) {
-//                        for (Note n : ml) {
-//                            scrollPane.highlightNote(n, true);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    
-//    public void selectVols() {
-//        Selection type = ((RibbonMenuMPO) Variables.stageInFocus.getRibbonMenu()).getSelectionToolbar().getSelectionType();
-//        if (type.equals(Selection.SELECTION_VOL) || type.equals(Selection.SELECTION_NOTES_AND_VOL)) {
-//            for (RubberBand rb : rubberBands) {
-//                int lineBeginVol = rb.getLineBeginVol();
-//                int lineEndVol = rb.getLineEndVol();
-//                System.out.println("SV_lBV:" + lineBeginVol);
-//                System.out.println("SV_lEV:" + lineEndVol);
-//                List<MeasureLine> selectionVol = DataClipboardFunctions.selVol(scrollPane.getSong(),
-//                        lineBeginVol,
-//                        lineEndVol);
-//                for (int i = 0; i < selectionVol.size(); i++) {
-//                    if (selectionVol.get(i) != null) {
-//                        scrollPane.highlightVol(selectionVol.get(i).getLineNumber(), true);
-//                    }
-//                }
-//            }
-//        }
-//    }
 	
 	public RubberBand getRubberBand() {
 		return rubberBand;
