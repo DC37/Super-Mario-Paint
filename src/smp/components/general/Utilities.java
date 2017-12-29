@@ -515,9 +515,9 @@ public class Utilities {
 
         try {
             if (mpc)
-                fname = fname.substring(0, fname.indexOf(']'));
+                fname = fname.substring(0, fname.lastIndexOf(']'));
             else
-                fname = fname.substring(0, fname.indexOf("."));
+                fname = fname.substring(0, fname.lastIndexOf("."));
         } catch (IndexOutOfBoundsException e) {
             // Do nothing
         }
