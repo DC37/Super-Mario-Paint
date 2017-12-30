@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
-import smp.components.staff.StaffInstrumentEventHandler_Hack;
+import smp.components.staff.StaffInstrumentEventHandler;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -328,7 +328,7 @@ public class SuperMarioPaint extends Application {
     private void makeKeyboardListeners(Scene primaryScene) {
     	
 		primaryScene.addEventHandler(MouseEvent.ANY, 
-				new StaffInstrumentEventHandler_Hack(controller.getStaff(), (ImageLoader) imgLoader));
+				new StaffInstrumentEventHandler(controller.getStaff(), (ImageLoader) imgLoader));
     	
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
@@ -355,8 +355,7 @@ public class SuperMarioPaint extends Application {
                     	}
                     	
                         StateMachine.getButtonsPressed().add(ke.getCode());
-                        StateMachine.updateFocusPane();
-                        StaffInstrumentEventHandler_Hack.updateAccidental();
+                        StaffInstrumentEventHandler.updateAccidental();
                         ke.consume();
                     }
                 });
@@ -367,8 +366,7 @@ public class SuperMarioPaint extends Application {
                     @Override
                     public void handle(KeyEvent ke) {
                         StateMachine.getButtonsPressed().remove(ke.getCode());
-                        StateMachine.updateFocusPane();
-                        StaffInstrumentEventHandler_Hack.updateAccidental();
+                        StaffInstrumentEventHandler.updateAccidental();
                         ke.consume();
                     }
                 });
@@ -399,7 +397,6 @@ public class SuperMarioPaint extends Application {
                     public void changed(ObservableValue<? extends Boolean> ov,
                             Boolean t, Boolean t1) {
                         StateMachine.clearKeyPresses();
-                        StateMachine.updateFocusPane();
                     }
                 });
 

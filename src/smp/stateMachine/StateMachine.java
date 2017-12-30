@@ -6,7 +6,6 @@ import java.util.Set;
 
 import javafx.scene.input.KeyCode;
 import smp.components.Values;
-import smp.components.staff.StaffInstrumentEventHandler;
 
 /**
  * This is the state machine that keeps track of what state the main window is
@@ -57,12 +56,6 @@ public class StateMachine {
      * The default time signature that we start out with is 4/4 time.
      */
     private static TimeSignature currentTimeSignature = TimeSignature.FOUR_FOUR;
-
-    /**
-     * The current focus that we have on the staff which we are going to update
-     * flats and sharps for.
-     */
-    private static StaffInstrumentEventHandler focusPane;
 
     /**
      * The current measure line number that the program is on. Typically a
@@ -170,22 +163,6 @@ public class StateMachine {
      */
     public static void setMeasureLineNum(int num) {
         currentLine = num;
-    }
-
-    /**
-     * @param stHandle
-     *            This is the pane that we want to update the flats or sharps.
-     */
-    public static void setFocusPane(StaffInstrumentEventHandler stHandle) {
-        focusPane = stHandle;
-    }
-
-    /**
-     * Forces an update of the current pane in focus.
-     */
-    public static void updateFocusPane() {
-        if (focusPane != null)
-            focusPane.updateAccidental();
     }
 
     /** Sets that the song is now loop-enabled. */
