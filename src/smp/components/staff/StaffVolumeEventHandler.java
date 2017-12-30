@@ -2,10 +2,15 @@ package smp.components.staff;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.clipboard.DataClipboard;
+import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -52,6 +57,16 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         theVolBar = (ImageView) st.getChildren().get(0);
         theVolBar.setImage(il.getSpriteFX(ImageIndex.VOL_BAR));
         theVolBar.setVisible(false);
+//        theVolBar.setEffect(new Blend(
+//	            BlendMode.SRC_OVER,
+//	            null,
+//	            new ColorInput(
+//	            		-theVolBar.getFitWidth(),
+//	                    0,
+//	                    theVolBar.getFitWidth() * 3,
+//	                    theVolBar.getFitHeight(),
+//	                    DataClipboard.HIGHLIGHT_FILL
+//	            )));
     }
 
     @Override
@@ -88,6 +103,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         	if(event.getY() < 0 || stp.getHeight() < event.getY())
         		return;
             double h = stp.getHeight() - event.getY();
+//            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             setVolumeDisplay(h);
             try {
                 setVolumePercent(h / stp.getHeight());

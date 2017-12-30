@@ -293,29 +293,6 @@ public class SuperMarioPaint extends Application {
             }
         });
     }
-
-    /**
-     * 
-     * @param x mouse pos
-     * @return line in the current window based on x coord
-     */
-    private int getLine(double x){
-
-    	if(x < 135 || x > 775)
-    		return -1;
-    	return (((int)x - 135) / 64);
-    }
-    
-    /**
-     * 
-     * @param y mouse pos
-     * @return note position based on y coord
-     */
-    private int getPosition(double y){
-    	if(y < 66 || y >= 354)
-    		return -1;
-    	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
-    }
     
     /**
      * Creates the keyboard listeners that we will be using for various other
@@ -327,8 +304,7 @@ public class SuperMarioPaint extends Application {
      */
     private void makeKeyboardListeners(Scene primaryScene) {
     	
-		primaryScene.addEventHandler(MouseEvent.ANY, 
-				new StaffInstrumentEventHandler(controller.getStaff(), (ImageLoader) imgLoader));
+    	primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler_Hack());
     	
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {

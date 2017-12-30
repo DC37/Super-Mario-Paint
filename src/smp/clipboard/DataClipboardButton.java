@@ -38,7 +38,9 @@ public class DataClipboardButton extends ImageToggleButton {
 				+ "Ctrl+C to copy notes\n"
 				+ "Ctrl+V to paste notes\n"
 				+ "Ctrl+X to cut notes\n"
-				+ "Delete to delete notes\n"));
+				+ "Delete to delete notes\n"
+				+ "Alt+N to toggle notes selection\n"
+				+ "Alt+V to toggle volumes selection"));
 	}
 
     @Override
@@ -50,6 +52,8 @@ public class DataClipboardButton extends ImageToggleButton {
     		this.controller.getStaffInstruments().setMouseTransparent(false);
     		this.controller.getVolumeBars().setMouseTransparent(false);
     		
+    		this.controller.getBasePane().getScene().addEventHandler(MouseEvent.ANY,
+    				 					controller.getStaffInstrumentEventHandler_Hack());
         } else {
             isPressed = true;
             pressImage();
@@ -57,6 +61,8 @@ public class DataClipboardButton extends ImageToggleButton {
     		this.controller.getStaffInstruments().setMouseTransparent(true);
     		this.controller.getVolumeBars().setMouseTransparent(true);
     		
+    		this.controller.getBasePane().getScene().removeEventHandler(MouseEvent.ANY,
+    				 					controller.getStaffInstrumentEventHandler_Hack());
         }
     }
 }
