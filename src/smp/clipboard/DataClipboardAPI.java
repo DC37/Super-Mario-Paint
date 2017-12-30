@@ -32,6 +32,25 @@ public class DataClipboardAPI {
 	private int selectionLineBegin = Integer.MAX_VALUE;
 	
 	private Blend highlightBlend;
+
+	/*
+	 * If false, the selected notes remain in selection but are unhighlighted
+	 * and will not be copied
+	 */
+	private boolean selectNotesFlag = true;
+	/*
+	 * If false, the selected volumes remain in selection but are unhighlighted
+	 * and will not be copied but there WILL still be volume data.
+	 * ignoreVolumesFlag will toggle on telling not to paste those volumes in
+	 * copy().
+	 */
+	private boolean selectVolumesFlag = true;
+	/*
+	 * Because there is always volume data, this flag will indicate when to
+	 * ignore pasting those volumes. If !selectVolumesFlag then toggle on when
+	 * copying and toggle off when clearing copiedData.
+	 */
+	private boolean ignoreVolumesFlag = false;
 	
 	public DataClipboardAPI(DataClipboard dc, Staff st, ImageLoader i) {
 		theDataClipboard = dc;
@@ -60,20 +79,23 @@ public class DataClipboardAPI {
 	public void copy() {
 		//if there's something new selected, make way for new data
 		//else just use old data
-		if(!theDataClipboard.getSelection().isEmpty())
+		if(!theDataClipboard.getSelection().isEmpty() && (selectNotesFlag || selectVolumesFlag))
 			clearCopiedData();
 
 		for (Map.Entry<Integer, StaffNoteLine> noteLine : theDataClipboard.getSelection().entrySet()) {
 			int line = noteLine.getKey();
 			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
-			for(StaffNote note : ntList) {
-				//relative index
-				copyNote(line - selectionLineBegin, note);
-				
+			if (selectNotesFlag)
+				for(StaffNote note : ntList) 
+					//relative index
+					copyNote(line - selectionLineBegin, note);
+			
+			if (selectVolumesFlag)
 				copyVolume(line - selectionLineBegin, noteLine.getValue().getVolume());
-			}
 		}
-
+		
+		if (!selectVolumesFlag)
+			ignoreVolumesFlag = true;
 	}
 
     /**
@@ -176,30 +198,34 @@ public class DataClipboardAPI {
 		                    .silhouette()));
 		        }
 
-//				if (lineDest.isEmpty()) {
-//					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
-//					
-//					if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
-//						StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
-//								.getVolHandler(line - StateMachine.getMeasureLineNum());
-//						sveh.updateVolume();
-//					}
-//				}
+				if (lineDest.isEmpty()) {
+					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
+					
+					if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+						StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+								.getVolHandler(line - StateMachine.getMeasureLineNum());
+						sveh.updateVolume();
+					}
+				}
 
-				if (!lineDest.contains(theStaffNote)) 
+				if (!lineDest.contains(theStaffNote)) {
 		        	lineDest.add(theStaffNote);
+		            StateMachine.setSongModified(true);
+				}
 			}
 			
 			// paste volume
-			lineDest.setVolume(lineSrc.getVolume());
-			
-			if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
-				StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
-						.getVolHandler(line - StateMachine.getMeasureLineNum());
-				sveh.updateVolume();
+			if(!ignoreVolumesFlag) {
+				lineDest.setVolume(lineSrc.getVolume());
+				
+				if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+							.getVolHandler(line - StateMachine.getMeasureLineNum());
+					sveh.updateVolume();
+				}
+	            StateMachine.setSongModified(true);
 			}
 			
-            StateMachine.setSongModified(true);
 		}
 
         theStaff.redraw();
@@ -663,6 +689,8 @@ public class DataClipboardAPI {
 	
 	public void clearCopiedData() {
 		theDataClipboard.getCopiedData().clear();
+		
+		ignoreVolumesFlag = false;
 	}
 
 	/**
@@ -681,6 +709,8 @@ public class DataClipboardAPI {
 
 		selection.clear();
 		selectionLineBegin = Integer.MAX_VALUE;
+		selectNotesFlag = true;
+		selectVolumesFlag = true;
 	}
 	
 	/**
@@ -771,5 +801,40 @@ public class DataClipboardAPI {
 		if (StateMachine.getMeasureLineNum() <= line
 				&& line < StateMachine.getMeasureLineNum() + Values.NOTELINES_IN_THE_WINDOW)
 			theDataClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+	}
+	
+	public void selectNotesToggle(boolean selectNotes) {
+		selectNotesFlag = selectNotes;
+		if(selectNotesFlag) {
+			//highlight notes
+			for(StaffNoteLine line : theDataClipboard.getSelection().values()) 
+				for(StaffNote note : line.getNotes())
+					highlightNote(note, true);
+		} else {
+			//unhighlight notes
+			for(StaffNoteLine line : theDataClipboard.getSelection().values()) 
+				for(StaffNote note : line.getNotes())
+					highlightNote(note, false);
+		}
+	}
+	
+	public void selectVolumesToggle(boolean selectVolumes) {
+		selectVolumesFlag = selectVolumes;
+		if(selectVolumesFlag) {
+			for(Integer line : theDataClipboard.getSelection().keySet())
+				highlightVolume(line, true);
+		} else {
+			//unhighlight volumes
+			theDataClipboard.getHighlightedVolumes().clear();
+			theDataClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+		}
+	}
+	
+	public boolean isSelectNotesOn() {
+		return selectNotesFlag;
+	}
+	
+	public boolean isSelectVolumesOn() {
+		return selectVolumesFlag;
 	}
 }

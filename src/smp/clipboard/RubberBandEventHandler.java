@@ -41,43 +41,49 @@ public class RubberBandEventHandler implements EventHandler<MouseEvent> {
 
 			@Override
 			public void handle(KeyEvent event) {
-				if (event.isControlDown()) {
-					switch (event.getCode()) {
-					case A:
+				switch (event.getCode()) {
+				case A:
+					if (event.isControlDown()) {
 						theDataClipboard.getAPI().clearSelection();
 						theDataClipboard.getAPI().select(0, 0,
 								(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
 								Values.NOTES_IN_A_LINE);
-						break;
-					case C:
-						//select code should not be with the copy code obviously
+					}
+					break;
+				case C:
+					if (event.isControlDown()) {
 						System.out.println("COPY");
 						theDataClipboard.getAPI().copy();
-						for ( StaffNoteLine line : theDataClipboard.getCopiedData().values() ) {
-							if(!line.isEmpty())
+						for (StaffNoteLine line : theDataClipboard.getCopiedData().values()) {
+							if (!line.isEmpty())
 								System.out.println(line);
 						}
-						break;
-					case V:
+					}
+					break;
+				case N:
+					if (event.isAltDown()) {
+						theDataClipboard.getAPI().selectNotesToggle(!theDataClipboard.getAPI().isSelectNotesOn());
+					}
+					break;
+				case V:
+					if (event.isAltDown()) {
+						theDataClipboard.getAPI().selectVolumesToggle(!theDataClipboard.getAPI().isSelectVolumesOn());
+					} else if (event.isControlDown()) {
 						int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
 						System.out.println("PASTE @ " + currentLine);
 						theDataClipboard.getAPI().paste(currentLine);
-						break;
-					case X:
+					}
+					break;
+				case X:
+					if (event.isControlDown()) {
 						theDataClipboard.getAPI().cut();
-						break;
-					default:
-						break;
 					}
-				} else {
-					switch (event.getCode()) {
-
-					case DELETE:
-						theDataClipboard.getAPI().delete();
-						break;
-					default:
-						break;
-					}
+					break;
+				case DELETE:
+					theDataClipboard.getAPI().delete();
+					break;
+				default:
+					break;
 				}
 			}
 		});

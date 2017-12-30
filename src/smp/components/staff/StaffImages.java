@@ -189,10 +189,6 @@ public class StaffImages {
                 StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
                 notes.add(note);
                 accs.add(acc);
-                StaffInstrumentEventHandler hd = new StaffInstrumentEventHandler(
-                        note, acc, Values.NOTES_IN_A_LINE - pos, line,
-                        theStaff, il);
-                note.addEventHandler(MouseEvent.ANY, hd);
             }
 
             staffMatrix.addLine(notes);
