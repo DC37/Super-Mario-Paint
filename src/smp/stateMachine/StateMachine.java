@@ -1,5 +1,6 @@
 package smp.stateMachine;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,6 +42,12 @@ public class StateMachine {
 
     /** The list of values denoting which notes should be extended. */
     private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+    
+    /**
+     * The file directory that we are currently located in. We'll start in the
+     * user directory.
+     */
+    private static File currentDirectory = new File(System.getProperty("user.dir"));
 
     /** Set of currently-pressed buttons. */
     private static Set<KeyCode> buttonsPressed =
@@ -283,6 +290,16 @@ public class StateMachine {
     public static void clearKeyPresses() {
         buttonsPressed.clear();
 
+    }
+
+    /** @return Last directory we accessed. */
+    public static File getCurrentDirectory() {
+        return currentDirectory;
+    }
+
+    /** @param cDir Set current directory to this. */
+    public static void setCurrentDirectory(File cDir) {
+        StateMachine.currentDirectory = cDir;
     }
 
 }
