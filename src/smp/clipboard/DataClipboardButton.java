@@ -38,7 +38,9 @@ public class DataClipboardButton extends ImageToggleButton {
 				+ "Ctrl+C to copy notes\n"
 				+ "Ctrl+V to paste notes\n"
 				+ "Ctrl+X to cut notes\n"
-				+ "Delete to delete notes\n"));
+				+ "Delete to delete notes\n"
+				+ "Alt+N to toggle notes selection\n"
+				+ "Alt+V to toggle volumes selection"));
 	}
 
     @Override
