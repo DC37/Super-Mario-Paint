@@ -10,6 +10,7 @@ import smp.components.staff.StaffVolumeEventHandler;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 
+@Deprecated
 public class ModifySongCommand implements CommandInterface {
 
 	private Staff theStaff;

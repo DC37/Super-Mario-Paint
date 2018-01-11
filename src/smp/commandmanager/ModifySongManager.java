@@ -7,6 +7,7 @@ import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
 
+@Deprecated
 public class ModifySongManager extends CommandManager {
 
 	private Staff theStaff;
