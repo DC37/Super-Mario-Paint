@@ -3,6 +3,8 @@ package smp.components.staff;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.commandmanager.ModifySongManager;
+import smp.commandmanager.commands.AddVolumeCommand;
+import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
@@ -93,7 +95,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     private void mousePressed(MouseEvent event) {
         if (!theLine.getNotes().isEmpty()) {
 
-			commandManager.removeVolume(theLine, theLine.getVolume());
+        	if(event.getEventType() == MouseEvent.MOUSE_PRESSED)
+        		commandManager.execute(new RemoveVolumeCommand(theLine, theLine.getVolume()));
 
         	if(event.getY() < 0 || stp.getHeight() < event.getY())
         		return;
@@ -110,7 +113,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     }
     
     private void mouseReleased() {
-    	commandManager.addVolume(theLine, theLine.getVolume());
+    	commandManager.execute(new AddVolumeCommand(theLine, theLine.getVolume()));//.addVolume(theLine, theLine.getVolume());
     	commandManager.record();
     }
     

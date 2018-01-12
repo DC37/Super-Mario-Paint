@@ -1,7 +1,6 @@
 package smp.commandmanager.commands;
 
 import smp.commandmanager.CommandInterface;
-import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 
