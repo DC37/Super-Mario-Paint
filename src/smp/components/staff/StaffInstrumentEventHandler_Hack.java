@@ -7,6 +7,10 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.commandmanager.ModifySongManager;
+import smp.commandmanager.commands.AddNoteCommand;
+import smp.commandmanager.commands.AddVolumeCommand;
+import smp.commandmanager.commands.RemoveNoteCommand;
+import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.StaffAccidental;
@@ -304,12 +308,12 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
         if (temp.isEmpty()) {
             temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY)
                     / Values.MAX_VELOCITY);
-            commandManager.addVolume(temp, Values.DEFAULT_VELOCITY);
+            commandManager.execute(new AddVolumeCommand(temp, Values.DEFAULT_VELOCITY));
         }
 
         if (!temp.contains(theStaffNote)) {
             temp.add(theStaffNote);
-            commandManager.addNote(temp, theStaffNote);
+            commandManager.execute(new AddNoteCommand(temp, theStaffNote));
         }
         StaffVolumeEventHandler sveh = theStaff.getNoteMatrix().getVolHandler(
                 line);
@@ -353,7 +357,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
                 StaffNote s = nt.get(i);
                 if (s.getPosition() == position) {
                     StaffNote removedNote = nt.remove(i);
-                    commandManager.removeNote(temp, removedNote);
+                    commandManager.execute(new RemoveNoteCommand(temp, removedNote));
                     break;
                 }
             }
@@ -363,7 +367,7 @@ public class StaffInstrumentEventHandler_Hack implements EventHandler<Event> {
             StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);
-            commandManager.removeVolume(temp, temp.getVolume());
+            commandManager.execute(new RemoveVolumeCommand(temp, temp.getVolume()));
         }
         theStaff.redraw();
     }

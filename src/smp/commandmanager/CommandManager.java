@@ -30,12 +30,17 @@ public class CommandManager {
 	}
 
 	public void undo() {
+		//make sure any current action is recorded before undoing
+		record();
+		
 		if (undoStack.isEmpty())
 			return;
 
 		List<CommandInterface> commands = undoStack.pop();
-		for(CommandInterface command : commands)
+		System.out.println("...undo...");
+		for(CommandInterface command : commands) {
 			command.undo();
+		}
 
 		redoStack.push(commands);
 	}
@@ -45,15 +50,17 @@ public class CommandManager {
 			return;
 
 		List<CommandInterface> commands = redoStack.pop();
-		for(CommandInterface command : commands)
+		System.out.println("...redo...");
+		for(CommandInterface command : commands) {
 			command.redo();
+		}
 
 		undoStack.push(commands);
 	}
 
 	/**
 	 * This does not literally execute the command. It will put the command into
-	 * a list then you can call record() to put the command list into the
+	 * a list then you can call record() to put the command list onto the
 	 * undoStack.
 	 * 
 	 * @param command
@@ -66,10 +73,13 @@ public class CommandManager {
 		nextCommands.add(command);
 	}
 	
+	/**
+	 * record the commands given to execute()
+	 */
 	public void record() {		
 		if (nextCommands == null)
 			return;
-		if (undoStack.size() == Values.MAX_UNDO_REDO_SIZE)
+		if (undoStack.size() >= Values.MAX_UNDO_REDO_SIZE)
 			undoStack.removeLast();
 		
 		undoStack.push(nextCommands);

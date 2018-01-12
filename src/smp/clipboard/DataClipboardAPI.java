@@ -10,6 +10,10 @@ import javafx.scene.effect.ColorInput;
 import smp.ImageLoader;
 import smp.commandmanager.CommandManager;
 import smp.commandmanager.ModifySongManager;
+import smp.commandmanager.commands.AddNoteCommand;
+import smp.commandmanager.commands.AddVolumeCommand;
+import smp.commandmanager.commands.RemoveNoteCommand;
+import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.Staff;
@@ -124,14 +128,14 @@ public class DataClipboardAPI {
 			for(StaffNote note : ntList){
 				lineDest.remove(note);
 	            StateMachine.setSongModified(true);
-	            commandManager.removeNote(lineDest, note);
+	            commandManager.execute(new RemoveNoteCommand(lineDest, note));
 
 				if (lineDest.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
 						&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
 							.getVolHandler(line - StateMachine.getMeasureLineNum());
 					sveh.setVolumeVisible(false);
-					commandManager.removeVolume(lineDest, lineDest.getVolume());
+					commandManager.execute(new RemoveVolumeCommand(lineDest, lineDest.getVolume()));
 				}
 			}
 			// idk why but redraw needs to be called every line or else weird
@@ -213,13 +217,13 @@ public class DataClipboardAPI {
 						sveh.updateVolume();
 					}
 
-		            commandManager.addVolume(lineDest, Values.DEFAULT_VELOCITY);
+		            commandManager.execute(new AddVolumeCommand(lineDest, Values.DEFAULT_VELOCITY));
 				}
 
 				if (!lineDest.contains(theStaffNote)) {
 		        	lineDest.add(theStaffNote);
 		            StateMachine.setSongModified(true);
-		            commandManager.addNote(lineDest, theStaffNote);
+		            commandManager.execute(new AddNoteCommand(lineDest, theStaffNote));
 				}
 			}
 			
