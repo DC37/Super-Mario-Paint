@@ -31,7 +31,6 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
 import smp.components.staff.StaffInstrumentEventHandler;
-import smp.components.staff.StaffInstrumentEventHandler_Hack;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
@@ -329,7 +328,7 @@ public class SuperMarioPaint extends Application {
     private void makeKeyboardListeners(Scene primaryScene) {
     	
 		primaryScene.addEventHandler(MouseEvent.ANY, 
-				new StaffInstrumentEventHandler_Hack(controller.getStaff(), (ImageLoader) imgLoader, controller.getModifySongManager()));
+				new StaffInstrumentEventHandler(controller.getStaff(), (ImageLoader) imgLoader, controller.getModifySongManager()));
     	
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
