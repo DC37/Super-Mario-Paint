@@ -6,6 +6,11 @@ import java.util.Set;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
+import smp.commandmanager.ModifySongManager;
+import smp.commandmanager.commands.AddNoteCommand;
+import smp.commandmanager.commands.AddVolumeCommand;
+import smp.commandmanager.commands.RemoveNoteCommand;
+import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.StaffAccidental;
@@ -38,7 +43,7 @@ import javafx.scene.layout.StackPane;
  *
  * @author RehdBlob
  * @since 2013.07.27
- * Modified by j574y923 on 2017.06.22
+ * @version 2.0, modified by j574y923 on 2017.06.22
  */
 public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
@@ -90,6 +95,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
     
+    private ModifySongManager commandManager;
     
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
@@ -110,8 +116,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @param s
      *            The pointer to the Staff object that this event handler is
      *            linked to.
+     * @param modifySongManager 
      */
-    public StaffInstrumentEventHandler(Staff s, ImageLoader i) {
+    public StaffInstrumentEventHandler(Staff s, ImageLoader i, ModifySongManager cm) {
     	
 //    	disableAllStackPanes();
     	
@@ -122,6 +129,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 //        accList = acc.getChildren();//-
         theStaff = s;
         accSilhouette = new ImageView();
+        
+        commandManager = cm;
+        
         if ((Settings.debug & 0b10) == 0b10) {
 //            System.out.println("Line: " + l);
 //            System.out.println("Position: " + pos);
@@ -161,15 +171,14 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         //Drag-add notes, hold e to drag-remove notes
-		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown()
-				&& newNote) {
+		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown() && newNote) {
 			leftMousePressed(theInd);
 			event.consume();
 			StateMachine.setSongModified(true);
 
 		}
-		//Drag-remove notes
-		else if (event instanceof MouseEvent && ((MouseEvent) event).isSecondaryButtonDown()) {
+		// Drag-remove notes
+		else if (event instanceof MouseEvent && ((MouseEvent) event).isSecondaryButtonDown() && newNote) {
 			rightMousePressed(theInd);
 			event.consume();
 			StateMachine.setSongModified(true);
@@ -192,9 +201,15 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             focus = false;
             mouseExited(theInd);
             event.consume();
+        } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+        	mouseReleased();
         }
 
     }
+
+	private void mouseReleased() {
+		commandManager.record();
+	}
 
 	/**
 	 * Take in a line and position and check if they are valid. If the note is
@@ -292,10 +307,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (temp.isEmpty()) {
             temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY)
                     / Values.MAX_VELOCITY);
+            commandManager.execute(new AddVolumeCommand(temp, Values.DEFAULT_VELOCITY));
         }
 
-        if (!temp.contains(theStaffNote))
+        if (!temp.contains(theStaffNote)) {
             temp.add(theStaffNote);
+            commandManager.execute(new AddNoteCommand(temp, theStaffNote));
+        }
         StaffVolumeEventHandler sveh = theStaff.getNoteMatrix().getVolHandler(
                 line);
         sveh.updateVolume();
@@ -337,7 +355,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             for (int i = nt.size() - 1; i >= 0; i--) {
                 StaffNote s = nt.get(i);
                 if (s.getPosition() == position) {
-                    nt.remove(i);
+                    StaffNote removedNote = nt.remove(i);
+                    commandManager.execute(new RemoveNoteCommand(temp, removedNote));
                     break;
                 }
             }
@@ -347,6 +366,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);
+            commandManager.execute(new RemoveVolumeCommand(temp, temp.getVolume()));
         }
         theStaff.redraw();
     }

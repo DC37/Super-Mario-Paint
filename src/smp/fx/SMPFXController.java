@@ -93,6 +93,13 @@ public class SMPFXController {
     /** The 'mute-all' button. */
     @FXML
     private ImageView muteA;
+    
+    /** The clipboard selection button. */
+    @FXML
+    private ImageView clipboardButton;
+    
+    @FXML
+    private ImageView clipboardLabel;
 
     /** The arranger view piece that holds the list of songs. */
     @FXML
@@ -290,7 +297,7 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         
         // HACK
-        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il);
+        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
        
         commandManager.setStaff(staff);
         
@@ -430,6 +437,18 @@ public class SMPFXController {
      */
     public ImageView getMuteAButton() {
         return muteA;
+    }
+
+	/**
+	 * @return The <code>ImageView</code> object that contains the clipboard
+	 *         selection button.
+	 */
+    public ImageView getClipboardButton() {
+    	return clipboardButton;
+    }
+    
+    public ImageView getClipboardLabel() {
+    	return clipboardLabel;
     }
 
     /** @return The control panel of the program. */

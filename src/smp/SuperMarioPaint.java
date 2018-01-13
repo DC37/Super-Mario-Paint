@@ -31,7 +31,6 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
 import smp.components.staff.StaffInstrumentEventHandler;
-import smp.components.staff.StaffInstrumentEventHandler_Hack;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;

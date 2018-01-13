@@ -38,7 +38,9 @@ public class CommandManager {
 
 		List<CommandInterface> commands = undoStack.pop();
 		System.out.println("...undo...");
-		for(CommandInterface command : commands) {
+		//undo needs reverse order on the commands
+		for(int i = commands.size() - 1; i >= 0; i--) {
+			CommandInterface command = commands.get(i);
 			command.undo();
 		}
 

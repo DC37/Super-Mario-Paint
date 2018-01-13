@@ -229,7 +229,9 @@ public class DataClipboardAPI {
 			
 			// paste volume
 			if(!ignoreVolumesFlag) {
+	            commandManager.execute(new RemoveVolumeCommand(lineDest, lineDest.getVolume()));
 				lineDest.setVolume(lineSrc.getVolume());
+	            commandManager.execute(new AddVolumeCommand(lineDest, lineDest.getVolume()));
 				
 				if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
@@ -237,6 +239,7 @@ public class DataClipboardAPI {
 					sveh.updateVolume();
 				}
 	            StateMachine.setSongModified(true);
+	            
 			}
 			
 		}
