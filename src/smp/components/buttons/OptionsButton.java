@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import smp.ImageLoader;
+import smp.commandmanager.commands.MultiplyTempoCommand;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -178,6 +179,9 @@ public class OptionsButton extends ImagePushButton {
             theStaff.updateCurrTempo();
             theStaff.getControlPanel().getScrollbar()
                     .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
+            
+            controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num));
+            controller.getModifySongManager().record();
         }
     }
 }
