@@ -1,11 +1,17 @@
 package smp.clipboard;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
@@ -35,13 +42,23 @@ public class DataClipboard {
 
 	private InstrumentFilter instFilter;
 	
-	private DataClipboardFunctions functions;
+	/* The functions class for copy, cut, paste, etc. */
+	private DataClipboardAPI theAPI;
 	
-	/* A list that keeps track of all the selections' bounds made by the user */
+	/* The list that keeps track of all the selections' bounds made by the user */
 	private HashMap<Integer, StaffNoteLine> selection;
 	
-	/* The list that will keep track of copied notes */
-	private HashMap<Integer, StaffNoteLine> data;
+	/* The list that will keep track of copied notes (and volumes) */
+	private HashMap<Integer, StaffNoteLine> copiedData;
+
+	/* Volumes aren't node references so we keep track of the volumes' lines */
+	private HashSet<Integer> highlightedVolumes;
+	
+	/*
+	 * The listener that will update which volume bars are highlighted every
+	 * scrollbar change
+	 */
+	private ChangeListener<Number> highlightedVolumesRedrawer;
 
 	public DataClipboard(Staff st, SMPFXController ct, ImageLoader im) {
 
@@ -50,21 +67,59 @@ public class DataClipboard {
 		controller = ct;
 
 		selection = new HashMap<>();
-		data = new HashMap<>();
+		copiedData = new HashMap<>();
 		
 		//temp? merge the two classes together?
-		functions = new DataClipboardFunctions(this, theStaff, im, ct.getModifySongManager());
+		theAPI = new DataClipboardAPI(this, theStaff, im);
 
-		addClipboardButton(ct, im);
-		
 		redrawUI(ct);
+		
+		addClipboardButton(ct, im);
 		
 		rubberBandLayer = controller.getBasePane();
         RubberBandEventHandler rbeh = new RubberBandEventHandler(controller, rubberBandLayer, this);
         initializeRBEH(rbeh, controller);
 		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
 		
+		initializeHighlightedVolumes(ct);
+		
 		instFilter = new InstrumentFilter(ct.getInstLine());
+	}
+
+	private void initializeHighlightedVolumes(SMPFXController ct) {
+		
+		final ObservableList<Node> volumeBars = ct.getVolumeBars().getChildren();
+		ImageView theVolBar = (ImageView) ((StackPane)volumeBars.get(0)).getChildren().get(0);
+		final Blend highlightBlendVolume = new Blend(
+	            BlendMode.SRC_OVER,
+	            null,
+	            new ColorInput(
+	            		-theVolBar.getFitWidth(),
+	                    0,
+	                    theVolBar.getFitWidth() * 3,
+	                    theVolBar.getFitHeight(),
+	                    DataClipboard.HIGHLIGHT_FILL
+	            ));
+
+		highlightedVolumes = new HashSet<>();
+		highlightedVolumesRedrawer = new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+
+					// we want the actual volumebar image to highlight
+					ImageView theVolBar = (ImageView) ((StackPane) volumeBars.get(i)).getChildren().get(0);
+
+					if (highlightedVolumes.contains(i + newValue.intValue()))
+						theVolBar.setEffect(highlightBlendVolume);
+					else
+						theVolBar.setEffect(null);
+				}
+			}
+		};
+		
+		ct.getScrollbar().valueProperty().addListener(highlightedVolumesRedrawer);
 	}
 
 	/**
@@ -168,34 +223,28 @@ public class DataClipboard {
 		rbeh.setScrollBarResizable(controller.getScrollbar());
 	}
 	
-//	private void DEBUG(Node x) {
-//		System.out.println("NODE:" + x);
-//		System.out.println("x.getBoundsInLocal" + x.getBoundsInLocal());
-//		System.out.println("x.getBoundsInParent" + x.getBoundsInParent());
-//		System.out.println("x.getLayoutBounds" + x.getLayoutBounds());
-//		System.out.println(x.localToScene(x.getBoundsInLocal()));
-//		System.out.println(x.localToScene(x.getBoundsInParent()));
-//		System.out.println(x.localToScene(x.getLayoutBounds()));
-//		System.out.println(x.localToParent(x.getBoundsInLocal()));
-//		System.out.println(x.localToParent(x.getBoundsInParent()));
-//		System.out.println(x.localToParent(x.getLayoutBounds()));
-//		System.out.println(x.localToScene(x.getLayoutBounds().getMinX(), x.getLayoutBounds().getMinY()));
-//	}
-	
 	public HashMap<Integer, StaffNoteLine> getSelection() {
 		return selection;
 	}
 	
-	public HashMap<Integer, StaffNoteLine> getData() {
-		return data;
+	public HashMap<Integer, StaffNoteLine> getCopiedData() {
+		return copiedData;
+	}
+	
+	public HashSet<Integer> getHighlightedVolumes() {
+		return highlightedVolumes;
+	}
+	
+	public ChangeListener<Number> getHighlightedVolumesRedrawer() {
+		return highlightedVolumesRedrawer;
 	}
 	
 	public InstrumentFilter getInstrumentFilter() {
 		return instFilter;
 	}
 	
-	//temp? merge the two classes together?
-	public DataClipboardFunctions getFunctions(){
-		return functions;
+	// temp? merge the two classes together?
+	public DataClipboardAPI getAPI() {
+		return theAPI;
 	}
 }

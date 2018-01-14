@@ -42,8 +42,6 @@ public class OptionsButton extends ImagePushButton {
     /** A slider that changes the default volume of placed notes. */
     private Slider defaultVolume;
     
-    private boolean clipboardSelected;
-
     /**
      * Default constructor.
      *

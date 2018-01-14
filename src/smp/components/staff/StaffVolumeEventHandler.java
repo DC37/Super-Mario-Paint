@@ -7,7 +7,6 @@ import smp.commandmanager.commands.AddVolumeCommand;
 import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
-import smp.stateMachine.StateMachine;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -58,6 +57,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         theVolBar = (ImageView) st.getChildren().get(0);
         theVolBar.setImage(il.getSpriteFX(ImageIndex.VOL_BAR));
         theVolBar.setVisible(false);
+
         commandManager = cm;
     }
 

@@ -15,6 +15,7 @@ import smp.clipboard.DataClipboard;
 import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffInstrumentEventHandler;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
 
@@ -251,6 +252,8 @@ public class SMPFXController {
     
     @FXML
     private AnchorPane basePane;
+    
+    private StaffInstrumentEventHandler staffInstrumentEventHandler;
     private DataClipboard clipboard;
     
     private ModifySongManager commandManager;
@@ -285,8 +288,11 @@ public class SMPFXController {
         staff = new Staff(staffLedgerLines, this, il, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
-       
-        commandManager.setStaff(staff);
+
+		commandManager.setStaff(staff);
+		
+        // HACK
+        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
@@ -546,6 +552,10 @@ public class SMPFXController {
     	return instLine;
     }
     
+    public StaffInstrumentEventHandler getStaffInstrumentEventHandler() {
+        return staffInstrumentEventHandler;
+	}
+
     public ModifySongManager getModifySongManager() {
     	return commandManager;
     }
