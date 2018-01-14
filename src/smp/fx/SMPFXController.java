@@ -93,6 +93,13 @@ public class SMPFXController {
     /** The 'mute-all' button. */
     @FXML
     private ImageView muteA;
+    
+    /** The clipboard selection button. */
+    @FXML
+    private ImageView clipsel;
+    
+    @FXML
+    private ImageView clipselLabel;
 
     /** The arranger view piece that holds the list of songs. */
     @FXML
@@ -430,6 +437,18 @@ public class SMPFXController {
      */
     public ImageView getMuteAButton() {
         return muteA;
+    }
+
+	/**
+	 * @return The <code>ImageView</code> object that contains the clipboard
+	 *         selection button.
+	 */
+    public ImageView getClipselButton() {
+    	return clipsel;
+    }
+    
+    public ImageView getClipselLabel() {
+    	return clipselLabel;
     }
 
     /** @return The control panel of the program. */

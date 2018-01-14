@@ -47,9 +47,13 @@ public class ModeButton extends ImageToggleButton {
             if (curr == ProgramState.EDITING) {
                 modeDisp.setText("Arranger");
                 theStaff.setArrangerMode(true);
+                controller.getClipselLabel().setVisible(false);
+                controller.getClipselButton().setVisible(false);
             } else if (curr == ProgramState.ARR_EDITING) {
                 modeDisp.setText("Song");
                 theStaff.setArrangerMode(false);
+                controller.getClipselLabel().setVisible(true);
+                controller.getClipselButton().setVisible(true);
             }
         }
     }

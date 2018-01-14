@@ -6,15 +6,12 @@ import java.util.HashSet;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -22,8 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.Staff;
@@ -74,8 +69,6 @@ public class DataClipboard {
 
 		redrawUI(ct);
 		
-		addClipboardButton(ct, im);
-		
 		rubberBandLayer = controller.getBasePane();
         RubberBandEventHandler rbeh = new RubberBandEventHandler(controller, rubberBandLayer, this);
         initializeRBEH(rbeh, controller);
@@ -120,37 +113,6 @@ public class DataClipboard {
 		};
 		
 		ct.getScrollbar().valueProperty().addListener(highlightedVolumesRedrawer);
-	}
-
-	/**
-	 * add a button to toggle the dataclipboard. add text to label the
-	 * dataclipboard button. translates are temporarily hard coded
-	 * 
-	 * @param ct
-	 * @param im
-	 */
-	private void addClipboardButton(SMPFXController ct, ImageLoader im) {
-		ImageView e = new ImageView(im.getSpriteFX(ImageIndex.STOP_PRESSED));
-		final DataClipboardButton dcb = new DataClipboardButton(e, ct, im);
-		e.setTranslateX(600);
-		e.setTranslateY(460);
-		Text t = new Text("clipboard (s-R)");
-		t.setTranslateX(580);
-		t.setTranslateY(455);
-		
-		AnchorPane basePane = ct.getBasePane();
-		basePane.getChildren().add(e);
-		basePane.getChildren().add(t);
-
-		// TODO: should be added to the entire scene
-		basePane.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				if(event.isShiftDown() && event.getCode() == KeyCode.R)
-					dcb.reactPressed(null);
-			}
-		});
 	}
 	
 	/**
