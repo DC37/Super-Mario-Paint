@@ -29,12 +29,6 @@ import smp.stateMachine.StateMachine;
 public class LoadButton extends ImagePushButton {
 
     /**
-     * The file directory that we are currently located in. We'll start in the
-     * user directory.
-     */
-    private File init = new File(System.getProperty("user.dir"));
-
-    /**
      * Default constructor.
      *
      * @param i
@@ -79,11 +73,11 @@ public class LoadButton extends ImagePushButton {
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
-                f.setInitialDirectory(init);
+                f.setInitialDirectory(StateMachine.getCurrentDirectory());
                 inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
                     return;
-                init = new File(inputFile.getParent());
+                StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                 loadSong(inputFile);
             } catch (Exception e) {
                 Dialog.showDialog("Not a valid song file.");
@@ -109,6 +103,7 @@ public class LoadButton extends ImagePushButton {
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             controller.getInstBLine().updateNoteExtensions();
             StateMachine.setSongModified(false);
+            controller.getModifySongManager().reset();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -141,11 +136,11 @@ public class LoadButton extends ImagePushButton {
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
-                f.setInitialDirectory(init);
+                f.setInitialDirectory(StateMachine.getCurrentDirectory());
                 inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
                     return;
-                init = new File(inputFile.getParent());
+                StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                 StaffArrangement loaded = Utilities.loadArrangement(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false,
@@ -157,7 +152,7 @@ public class LoadButton extends ImagePushButton {
                 try {
                     StaffArrangement loaded = MPCDecoder
                             .decodeArrangement(inputFile);
-                    init = new File(inputFile.getParent());
+                    StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                     Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true,
                             theStaff, controller);

@@ -68,7 +68,7 @@ public class SaveButton extends ImagePushButton {
     private void saveArrangement() {
         try {
             FileChooser f = new FileChooser();
-            f.setInitialDirectory(new File(System.getProperty("user.dir")));
+            f.setInitialDirectory(StateMachine.getCurrentDirectory());
             f.setInitialFileName(controller.getNameTextField().getText()
                     + ".txt");
             f.getExtensionFilters().addAll(
@@ -87,6 +87,7 @@ public class SaveButton extends ImagePushButton {
                 saveArrTxt(f_out, out);
             }
             f_out.close();
+            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             theStaff.setArrangementFile(outputFile);
             StateMachine.setArrModified(false);
         } catch (FileNotFoundException e) {
@@ -135,7 +136,7 @@ public class SaveButton extends ImagePushButton {
     private void saveSong() {
         try {
             FileChooser f = new FileChooser();
-            f.setInitialDirectory(new File(System.getProperty("user.dir")));
+            f.setInitialDirectory(StateMachine.getCurrentDirectory());
             f.setInitialFileName(controller.getNameTextField().getText()
                     + ".txt");
             f.getExtensionFilters().addAll(
@@ -153,6 +154,7 @@ public class SaveButton extends ImagePushButton {
                 saveSongTxt(f_out, out);
             }
             f_out.close();
+            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             theStaff.setSequenceFile(outputFile);
             StateMachine.setSongModified(false);
         } catch (FileNotFoundException e) {

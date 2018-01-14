@@ -53,9 +53,6 @@ public class NoteMatrix {
     /** Pointer to the staff object with which this is linked. */
     private transient Staff theStaff;
 
-    /** Pointer to the current StaffInstrumentEventHandler in focus. */
-    private transient StaffInstrumentEventHandler focusPane;
-
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
 
@@ -167,8 +164,6 @@ public class NoteMatrix {
                 // Otherwise, do nothing.
             }
         }
-        if (focusPane != null)
-            focusPane.redraw();
     }
 
     /**
@@ -328,16 +323,6 @@ public class NoteMatrix {
      */
     public StaffVolumeEventHandler getVolHandler(int index) {
         return volumeBarHandlers.get(index);
-    }
-
-    /**
-     * Sets the current focused StaffInstrumentEventHandler.
-     *
-     * @param st
-     *            The pane that is currently in focus.
-     */
-    public void setFocusPane(StaffInstrumentEventHandler st) {
-        focusPane = st;
     }
 
     /** @return The staff that this NoteMatrix is linked to. */

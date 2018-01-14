@@ -6,6 +6,11 @@ import java.util.Set;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
+import smp.commandmanager.ModifySongManager;
+import smp.commandmanager.commands.AddNoteCommand;
+import smp.commandmanager.commands.AddVolumeCommand;
+import smp.commandmanager.commands.RemoveNoteCommand;
+import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.StaffAccidental;
@@ -25,12 +30,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 /**
+ * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
+ * RESPONSE TO THE MULTITHREADING ISSUE WITH ARRAYLISTS AND STACKPANES OR
+ * SOMETHING. THERE WILL ONLY BE ONE OF THIS EVENT HANDLER AND IT WILL BE ADDED
+ * TO THE ENTIRE SCENE. WITH THIS HANDLER, ALL STACKPANES ARE DISABLED AND
+ * EVENTS WILL BE REGISTERED TO THE STACKPANES BY CALCULATING WHICH PANE TO
+ * FETCH VIA MOUSE POSITION.
+ * 
  * A Staff event handler. The StaffImages implementation was getting bulky and
  * there are still many many features to be implemented here. This handler
  * primarily handles mouse events.
  *
  * @author RehdBlob
  * @since 2013.07.27
+ * @version 2.0, modified by j574y923 on 2017.06.22
  */
 public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
@@ -41,22 +54,22 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private int position;
 
     /** Whether the mouse is in the frame or not. */
-    private boolean focus = false;
+    private static boolean focus = false;
 
     /**
      * This is the list of image notes that we have. These should all be
      * ImageView-type objects.
      */
-    private ObservableList<Node> theImages;
+    private static ObservableList<Node> theImages;
 
     /** The StackPane that will display sharps, flats, etc. */
-    private ObservableList<Node> accList;
+    private static ObservableList<Node> accList;
 
     /**
      * This is the <code>ImageView</code> object responsible for displaying the
      * silhouette of the note that we are about to place on the staff.
      */
-    private ImageView silhouette = new ImageView();
+    private static ImageView silhouette = new ImageView();
 
     /** The pointer to the staff object that this handler is linked to. */
     private Staff theStaff;
@@ -66,7 +79,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * silhouette of the sharp / flat of the note that we are about to place on
      * the staff.
      */
-    private ImageView accSilhouette;
+    private static ImageView accSilhouette;
 
     /** The topmost image of the instrument. */
     private StaffNote theStaffNote;
@@ -77,49 +90,103 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private StaffAccidental accidental;
 
     /** This is the ImageLoader class. */
-    private ImageLoader il;
+    private static ImageLoader il;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private static int acc = 0;
     
+    private ModifySongManager commandManager;
     
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
      * a StackPane and a position on the staff.
      *
-     * @param stPane
+     * -@param stPane
      *            The StackPane that we are interested in.
-     * @param acc
+     *            This will be updated whenever the mouse moves to a new stackpane.
+     * -@param acc
      *            The accidental display pane.
-     * @param pos
-     *            The position that this handler is located on the staff.
-     * @param l
+     *            This will be updated whenever the mouse moves to a new stackpane.
+     * -@param pos
+     *            The position that this handler is located on the staff. 
+     *            This will be updated whenever the mouse moves.
+     * -@param l
      *            The line of this event handler. Typically between 0 and 9.
+     *            This will be updated whenever the mouse moves.
      * @param s
      *            The pointer to the Staff object that this event handler is
      *            linked to.
+     * @param modifySongManager 
      */
-    public StaffInstrumentEventHandler(StackPane stPane, StackPane acc,
-            int pos, int l, Staff s, ImageLoader i) {
+    public StaffInstrumentEventHandler(Staff s, ImageLoader i, ModifySongManager cm) {
+    	
+//    	disableAllStackPanes();
+    	
         il = i;
-        position = pos;
-        line = l;
-        theImages = stPane.getChildren();
-        accList = acc.getChildren();
+//        position = pos;
+//        line = l;
+//        theImages = stPane.getChildren();//-
+//        accList = acc.getChildren();//-
         theStaff = s;
         accSilhouette = new ImageView();
+        
+        commandManager = cm;
+        
         if ((Settings.debug & 0b10) == 0b10) {
-            System.out.println("Line: " + l);
-            System.out.println("Position: " + pos);
+//            System.out.println("Line: " + l);
+//            System.out.println("Position: " + pos);
         }
-
     }
 
-    @Override
+	/**
+	 * Disable all the stack panes. Called when the first mouse event in the
+	 * scene is registered. It is called at that point because the stackpanes
+	 * may not have been initialized before then.
+	 */
+	private void disableAllStackPanes() {
+    	
+		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
+			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
+				StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(index, i);
+				noteAndAcc[0].setDisable(true);
+			}
+		}
+	}
+
+	@Override
     public void handle(Event event) {
+    	
+		boolean newNote = false;
+    	if(event instanceof MouseEvent){
+    		int lineTmp = getLine(((MouseEvent)event).getX());
+    		int positionTmp = getPosition(((MouseEvent)event).getY());
+    		
+    		//invalid
+    		if(!validNote(lineTmp, positionTmp))
+    			return;
+    		
+    		//new note
+    		newNote = updateNote(lineTmp, positionTmp);
+    	}
+    	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
-        if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            MouseButton b = ((MouseEvent) event).getButton();
+        //Drag-add notes, hold e to drag-remove notes
+		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown()
+				&& newNote) {
+			leftMousePressed(theInd);
+			event.consume();
+			StateMachine.setSongModified(true);
+
+		}
+		//Drag-remove notes
+		else if (event instanceof MouseEvent && ((MouseEvent) event).isSecondaryButtonDown()) {
+			rightMousePressed(theInd);
+			event.consume();
+			StateMachine.setSongModified(true);
+
+		}
+		else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			MouseButton b = ((MouseEvent) event).getButton();
             if (b == MouseButton.PRIMARY)
                 leftMousePressed(theInd);
             else if (b == MouseButton.SECONDARY)
@@ -127,20 +194,59 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             event.consume();
             StateMachine.setSongModified(true);
 
-        } else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+        } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {//was MOUSE_ENTERED
             focus = true;
             mouseEntered(theInd);
             event.consume();
-
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             focus = false;
             mouseExited(theInd);
             event.consume();
-
+        } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+        	mouseReleased();
         }
 
     }
 
+	private void mouseReleased() {
+		commandManager.record();
+	}
+
+	/**
+	 * Take in a line and position and check if they are valid. If the note is
+	 * not valid then it will call mouseExited().
+	 * 
+	 * @param lineTmp
+	 * @param positionTmp
+	 * @return if the given line and position are at a valid note.
+	 */
+	private boolean validNote(int lineTmp, int positionTmp) {
+		if (lineTmp < 0 || positionTmp < 0) {// MOUSE_EXITED
+			InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
+			mouseExited(theInd);
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean updateNote(int lineTmp, int positionTmp) {
+		if(line != lineTmp || position != positionTmp){
+			
+			line = lineTmp;
+			position = positionTmp;
+			StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(line, position);
+			
+			if(!noteAndAcc[0].isDisabled())
+				disableAllStackPanes();
+			
+			theImages = noteAndAcc[0].getChildren();
+			accList = noteAndAcc[1].getChildren();
+			
+			return true;
+		}
+		return false;
+	}
+	
     /**
      * The method that is called when the left mouse button is pressed. This is
      * generally the signal to add an instrument to that line.
@@ -202,15 +308,17 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (temp.isEmpty()) {
             temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY)
                     / Values.MAX_VELOCITY);
+            commandManager.execute(new AddVolumeCommand(temp, Values.DEFAULT_VELOCITY));
         }
 
-        if (!temp.contains(theStaffNote))
+        if (!temp.contains(theStaffNote)) {
             temp.add(theStaffNote);
+            commandManager.execute(new AddNoteCommand(temp, theStaffNote));
+        }
         StaffVolumeEventHandler sveh = theStaff.getNoteMatrix().getVolHandler(
                 line);
         sveh.updateVolume();
         theStaff.redraw();
-//        System.out.println(theStaffNote + " " + theStaffNote.getPosition());
     }
 
     /**
@@ -248,7 +356,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             for (int i = nt.size() - 1; i >= 0; i--) {
                 StaffNote s = nt.get(i);
                 if (s.getPosition() == position) {
-                    nt.remove(i);
+                    StaffNote removedNote = nt.remove(i);
+                    commandManager.execute(new RemoveNoteCommand(temp, removedNote));
                     break;
                 }
             }
@@ -258,6 +367,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);
+            commandManager.execute(new RemoveVolumeCommand(temp, temp.getVolume()));
         }
         theStaff.redraw();
     }
@@ -270,8 +380,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-        StateMachine.setFocusPane(this);
-        theStaff.getNoteMatrix().setFocusPane(this);
+//        StateMachine.setFocusPane(this);
+//        theStaff.getNoteMatrix().setFocusPane(this);
         updateAccidental();
         silhouette.setImage(il.getSpriteFX(theInd.imageIndex().silhouette()));
         if (!theImages.contains(silhouette))
@@ -296,15 +406,17 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void mouseExited(InstrumentIndex theInd) {
 
-        theImages.remove(silhouette);
-        accList.remove(accSilhouette);
+    	if(silhouette.getImage() != null)
+    		theImages.remove(silhouette);
+    	if(accSilhouette.getImage() != null)
+    		accList.remove(accSilhouette);
 
     }
 
     /**
      * Updates how much we want to sharp / flat a note.
      */
-    public void updateAccidental() {
+    public static void updateAccidental() {
         if (!focus)
             return;
         Set<KeyCode> bp = StateMachine.getButtonsPressed();
@@ -352,9 +464,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                     .getSelectedInstrument().imageIndex().silhouette()));
             silhouette.setVisible(true);
         }
-        if ((Settings.debug & 0b01) == 0b01) {
-            System.out.println(this);
-        }
+        //Cannot use this in a static context... will fix this later
+//        if ((Settings.debug & 0b01) == 0b01) {
+//            System.out.println(this);
+//        }
 
     }
 
@@ -421,5 +534,29 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 + "\nPosition: " + position + "\nAccidental: " + acc;
         return out;
     }
+    
+    /**
+     * 
+     * @param x mouse pos
+     * @return line in the current window based on x coord
+     */
+    private static int getLine(double x){
+
+    	if(x < 135 || x > 775)
+    		return -1;
+    	return (((int)x - 135) / 64);
+    }
+    
+    /**
+     * 
+     * @param y mouse pos
+     * @return note position based on y coord
+     */
+    private static int getPosition(double y){
+    	if(y < 66 || y >= 354)
+    		return -1;
+    	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
+    }
+    
 
 }

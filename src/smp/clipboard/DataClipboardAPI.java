@@ -8,6 +8,11 @@ import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import smp.ImageLoader;
+import smp.commandmanager.ModifySongManager;
+import smp.commandmanager.commands.AddNoteCommand;
+import smp.commandmanager.commands.AddVolumeCommand;
+import smp.commandmanager.commands.RemoveNoteCommand;
+import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.Staff;
@@ -27,6 +32,7 @@ public class DataClipboardAPI {
 	private Staff theStaff;
 	private DataClipboard theDataClipboard;
 	private ImageLoader il;
+	private ModifySongManager commandManager;
 	
 	/* Corresponds with the first selection line */
 	private int selectionLineBegin = Integer.MAX_VALUE;
@@ -52,10 +58,11 @@ public class DataClipboardAPI {
 	 */
 	private boolean ignoreVolumesFlag = false;
 	
-	public DataClipboardAPI(DataClipboard dc, Staff st, ImageLoader i) {
+	public DataClipboardAPI(DataClipboard dc, Staff st, ImageLoader i, ModifySongManager cm) {
 		theDataClipboard = dc;
 		theStaff = st;
 		il = i;
+		commandManager = cm;
 		
 		highlightBlend = new Blend(
 	            BlendMode.SRC_OVER,
@@ -120,12 +127,14 @@ public class DataClipboardAPI {
 			for(StaffNote note : ntList){
 				lineDest.remove(note);
 	            StateMachine.setSongModified(true);
+	            commandManager.execute(new RemoveNoteCommand(lineDest, note));
 
 				if (lineDest.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
 						&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
 							.getVolHandler(line - StateMachine.getMeasureLineNum());
 					sveh.setVolumeVisible(false);
+					commandManager.execute(new RemoveVolumeCommand(lineDest, lineDest.getVolume()));
 				}
 			}
 			// idk why but redraw needs to be called every line or else weird
@@ -134,7 +143,7 @@ public class DataClipboardAPI {
 		}
 		
 		clearSelection();
-		
+        commandManager.record();
     }
 
 //    /**
@@ -206,11 +215,14 @@ public class DataClipboardAPI {
 								.getVolHandler(line - StateMachine.getMeasureLineNum());
 						sveh.updateVolume();
 					}
+
+		            commandManager.execute(new AddVolumeCommand(lineDest, Values.DEFAULT_VELOCITY));
 				}
 
 				if (!lineDest.contains(theStaffNote)) {
 		        	lineDest.add(theStaffNote);
 		            StateMachine.setSongModified(true);
+		            commandManager.execute(new AddNoteCommand(lineDest, theStaffNote));
 				}
 			}
 			
@@ -229,6 +241,7 @@ public class DataClipboardAPI {
 		}
 
         theStaff.redraw();
+        commandManager.record();
 	}
 
 	// /**
