@@ -16,7 +16,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.buttons.AddButton;
 import smp.components.buttons.ArrowButton;
-import smp.components.buttons.ClipSelButton;
+import smp.components.buttons.ClipboardButton;
 import smp.components.buttons.DeleteButton;
 import smp.components.buttons.LoadButton;
 import smp.components.buttons.LoopButton;
@@ -76,7 +76,7 @@ public class Controls {
 	private MuteInstButton muteA;
 	
 	/** The pointer to the clipboard selection button on the staff. */
-	private ClipSelButton clipsel;
+	private ClipboardButton clipsel;
 
 	/** This is the slider at the bottom of the screen. */
 	private Slider scrollbar;
@@ -205,7 +205,7 @@ public class Controls {
 		loop = new LoopButton(controller.getLoopButton(), controller, il);
 		mute = new MuteButton(controller.getMuteButton(), controller, il);
 		muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
-		clipsel = new ClipSelButton(controller.getClipselButton(), controller, il);
+		clipsel = new ClipboardButton(controller.getClipboardButton(), controller, il);
 		options = new OptionsButton(controller.getOptionsButton(), controller, il);
 		add = new AddButton(controller.getAddButton(), controller, il);
 		delete = new DeleteButton(controller.getDeleteButton(), controller, il);

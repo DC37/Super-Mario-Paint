@@ -96,10 +96,10 @@ public class SMPFXController {
     
     /** The clipboard selection button. */
     @FXML
-    private ImageView clipsel;
+    private ImageView clipboardButton;
     
     @FXML
-    private ImageView clipselLabel;
+    private ImageView clipboardLabel;
 
     /** The arranger view piece that holds the list of songs. */
     @FXML
@@ -443,12 +443,12 @@ public class SMPFXController {
 	 * @return The <code>ImageView</code> object that contains the clipboard
 	 *         selection button.
 	 */
-    public ImageView getClipselButton() {
-    	return clipsel;
+    public ImageView getClipboardButton() {
+    	return clipboardButton;
     }
     
-    public ImageView getClipselLabel() {
-    	return clipselLabel;
+    public ImageView getClipboardLabel() {
+    	return clipboardLabel;
     }
 
     /** @return The control panel of the program. */

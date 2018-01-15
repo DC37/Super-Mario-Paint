@@ -21,7 +21,7 @@ import smp.stateMachine.StateMachine;
  * 
  * @since 2018.01.14
  */
-public class ClipSelButton extends ImageToggleButton {
+public class ClipboardButton extends ImageToggleButton {
 
     /**
      * Instantiates the clipboard selection button.
@@ -33,9 +33,9 @@ public class ClipSelButton extends ImageToggleButton {
      * @param im
      *            The Image loader object.
      */
-	public ClipSelButton(ImageView i, SMPFXController ct, ImageLoader im) {
+	public ClipboardButton(ImageView i, SMPFXController ct, ImageLoader im) {
 		super(i, ct, im);
-		getImages(ImageIndex.CLIPSEL_PRESSED, ImageIndex.CLIPSEL_RELEASED);
+		getImages(ImageIndex.CLIPBOARD_PRESSED, ImageIndex.CLIPBOARD_RELEASED);
 		releaseImage();
 		Tooltip.install(i, new Tooltip("Click (or Shift+R) to toggle region selection\n"
 				+ "Hover over instrument & press F to filter instrument\n"

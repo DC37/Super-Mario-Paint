@@ -903,14 +903,14 @@
                                                 </VBox>
                                                 <VBox alignment="CENTER" prefHeight="88.0" prefWidth="128.0">
                                                    <children>
-                                                      <ImageView fx:id="clipselLabel" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fx:id="clipboardLabel" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/CLIPSEL_LABEL.png" />
+                                                            <Image url="@sprites/CLIPBOARD_LABEL.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <ImageView fx:id="clipsel" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/CLIPSEL_RELEASED.png" />
+                                                            <Image url="@sprites/CLIPBOARD_RELEASED.png" />
                                                          </image>
                                                       </ImageView>
                                                    </children>
