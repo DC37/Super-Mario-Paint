@@ -37,7 +37,6 @@ public class CommandManager {
 			return;
 
 		List<CommandInterface> commands = undoStack.pop();
-		System.out.println("...undo...");
 		//undo needs reverse order on the commands
 		for(int i = commands.size() - 1; i >= 0; i--) {
 			CommandInterface command = commands.get(i);
@@ -45,6 +44,7 @@ public class CommandManager {
 		}
 
 		redoStack.push(commands);
+		System.out.println("...undo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
 	}
 
 	public void redo() {
@@ -52,12 +52,12 @@ public class CommandManager {
 			return;
 
 		List<CommandInterface> commands = redoStack.pop();
-		System.out.println("...redo...");
 		for(CommandInterface command : commands) {
 			command.redo();
 		}
 
 		undoStack.push(commands);
+		System.out.println("...redo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
 	}
 
 	/**

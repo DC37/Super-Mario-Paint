@@ -76,7 +76,7 @@ public class Controls {
 	private MuteInstButton muteA;
 	
 	/** The pointer to the clipboard selection button on the staff. */
-	private ClipboardButton clipsel;
+	private ClipboardButton clipboard;
 
 	/** This is the slider at the bottom of the screen. */
 	private Slider scrollbar;
@@ -205,7 +205,7 @@ public class Controls {
 		loop = new LoopButton(controller.getLoopButton(), controller, il);
 		mute = new MuteButton(controller.getMuteButton(), controller, il);
 		muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
-		clipsel = new ClipboardButton(controller.getClipboardButton(), controller, il);
+		clipboard = new ClipboardButton(controller.getClipboardButton(), controller, il);
 		options = new OptionsButton(controller.getOptionsButton(), controller, il);
 		add = new AddButton(controller.getAddButton(), controller, il);
 		delete = new DeleteButton(controller.getDeleteButton(), controller, il);
@@ -357,6 +357,12 @@ public class Controls {
 		return muteA;
 	}
 
+	/**
+	 * @return The clipboard button.
+	 */
+	public ClipboardButton getClipboardButton() {
+		return clipboard;
+	}
 	/**
 	 * @return The options button.
 	 */

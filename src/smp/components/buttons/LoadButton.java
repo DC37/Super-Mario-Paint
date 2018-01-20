@@ -103,7 +103,6 @@ public class LoadButton extends ImagePushButton {
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             controller.getInstBLine().updateNoteExtensions();
             StateMachine.setSongModified(false);
-            controller.getModifySongManager().reset();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
