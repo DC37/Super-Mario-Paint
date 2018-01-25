@@ -53,9 +53,14 @@ Tasklist:
 * Import AMS songs
 * Speedmarks
 * Bookmarks
-* Undo/redo
 * More advanced Options dialog
 * Instrument replacing option
+* SoundFont creator
+* Hotkey for mute note/instrument and others
+* More aesthetic buttons and button layout
+* Fix audio desync error when returning to program after sleep
+* Mario Paint Recorder?
+* Undo/redo (done - January 19, 2018)
 * Release SMP v1.0.0 (done - March 14, 2016)
 * Aesthetic program edits, stability checks, arranger file stability check (done - March 13, 2016)
 * Solve some song playing thread stability issues (done - February 28, 2016)
