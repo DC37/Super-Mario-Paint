@@ -43,7 +43,7 @@ import javafx.scene.layout.StackPane;
  *
  * @author RehdBlob
  * @since 2013.07.27
- * @version 2.0, modified by j574y923 on 2017.06.22
+ * Modified by j574y923 on 2017.06.22
  */
 public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
