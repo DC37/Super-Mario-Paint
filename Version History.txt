@@ -1,3 +1,31 @@
+v1.1.0
+FIXES
+Fixed crashing that occurs when mouse interacts with a densely populated staff as it scrolls
+Fixed bug where loading file or arrangement would terminate name at first ']' or '.' Now terminates at the last ']' or '.'
+Fixed bug with save / load directories not being harmonized. Now has a program-wide variable for "last-accessed" directory.
+
+NEW FEATURES
+Drag click to add/remove notes
+Drag to change volume
+Volume value now appears as text when you hover over them
+Clipboard
+Click CLIP button (or Shift+R) to toggle region selection, drag mouse along the staff to draw a rectangle that will select all notes inside
+Filter instrument for selecting (On the instrument toolbar, hover over instrument & press F)
+Select all notes (Ctrl+A)
+Copy selected notes (Ctrl+C)
+Paste notes at line where mouse is (Ctrl+V)
+Cut selected notes (Ctrl+X)
+Delete selected notes (Delete)
+Toggle selected volumes in selection (Alt+V)
+Toggle selected notes in selection (Alt+N)
+Undo/redo
+Ctrl+Z to undo
+Ctrl+Y to redo
+Commands that can be undone/redone:
+Add/Remove note(s)
+Change volume
+Multiply tempo
+
 v1.0.4
 Key-press behaviour generalized to include any key-press.
 Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
