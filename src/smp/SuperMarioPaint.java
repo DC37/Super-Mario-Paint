@@ -304,7 +304,7 @@ public class SuperMarioPaint extends Application {
      */
     private void makeKeyboardListeners(Scene primaryScene) {
     	
-    	primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
+    	  primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
     	
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
