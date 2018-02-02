@@ -90,6 +90,7 @@ public enum ImageIndex {
     SHYGUY_SM  (SHYGUY_SMA, NONE),
     BOO_SM     (BOO_SMA, NONE),
     LUIGI_SM   (LUIGI_SMA, NONE),
+    FILTER,
 
     /*
      * Clefs.
