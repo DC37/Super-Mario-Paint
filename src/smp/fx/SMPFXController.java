@@ -15,6 +15,7 @@ import smp.clipboard.DataClipboard;
 import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffInstrumentEventHandler;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
 
@@ -92,6 +93,13 @@ public class SMPFXController {
     /** The 'mute-all' button. */
     @FXML
     private ImageView muteA;
+    
+    /** The clipboard selection button. */
+    @FXML
+    private ImageView clipboardButton;
+    
+    @FXML
+    private ImageView clipboardLabel;
 
     /** The arranger view piece that holds the list of songs. */
     @FXML
@@ -251,6 +259,8 @@ public class SMPFXController {
     
     @FXML
     private AnchorPane basePane;
+    
+    private StaffInstrumentEventHandler staffInstrumentEventHandler;
     private DataClipboard clipboard;
     
     private ModifySongManager commandManager;
@@ -285,6 +295,9 @@ public class SMPFXController {
         staff = new Staff(staffLedgerLines, this, il, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
+        
+        // HACK
+        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
        
         commandManager.setStaff(staff);
         
@@ -426,6 +439,18 @@ public class SMPFXController {
         return muteA;
     }
 
+	/**
+	 * @return The <code>ImageView</code> object that contains the clipboard
+	 *         selection button.
+	 */
+    public ImageView getClipboardButton() {
+    	return clipboardButton;
+    }
+    
+    public ImageView getClipboardLabel() {
+    	return clipboardLabel;
+    }
+
     /** @return The control panel of the program. */
     public Controls getControls() {
         return controlPanel;
@@ -546,6 +571,10 @@ public class SMPFXController {
     	return instLine;
     }
     
+    public StaffInstrumentEventHandler getStaffInstrumentEventHandler() {
+        return staffInstrumentEventHandler;
+    }
+  
     public ModifySongManager getModifySongManager() {
     	return commandManager;
     }

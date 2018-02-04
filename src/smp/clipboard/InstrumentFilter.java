@@ -8,18 +8,22 @@ import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
+import smp.ImageIndex;
+import smp.ImageLoader;
 import smp.components.InstrumentIndex;
 
 public class InstrumentFilter extends HashSet<InstrumentIndex> {
@@ -30,15 +34,17 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 	private static final long serialVersionUID = 1L;
 	
 	private HBox instrumentLine;
-	private List<Text> filterTexts = new ArrayList<>();
-	private List<FadeTransition> filterTextsFades = new ArrayList<>();
+	private ImageLoader il;
+	private List<ImageView> filterImages = new ArrayList<>();
+	private List<FadeTransition> filterImagesFades = new ArrayList<>();
 	
 	//the instrument that will be toggled when entering an instrumentimage
 	private InstrumentIndex instInFocus;
 	
-	public InstrumentFilter(HBox instLine){
+	public InstrumentFilter(HBox instLine, ImageLoader im){
 		super();
 		instrumentLine = instLine;
+		il = im;
 
 		/*
 		 * wait for the scene to get initialized then add a keyevent handler
@@ -55,7 +61,7 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 						public void handle(KeyEvent event) {
 							if (event.getCode() == KeyCode.F) {
 								if(instInFocus != null)
-									toggleInstrumentNoText(instInFocus);
+									toggleInstrumentNoImage(instInFocus);
 							}
 						}
 					});
@@ -68,47 +74,60 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 		for (int i = 0; i < instrumentImages.size(); i++) {
 			final int index = i;
 			final Node instrumentImage = instrumentImages.get(i);
-			addFilterText(instrumentImage);
+			addFilterImage(instrumentImage);
 			
 			instrumentImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 				@Override
 				public void handle(MouseEvent event) {
-					instInFocus = indexToInst(index);//InstrumentIndex.values()[index];
-					fadeFilterTexts(false);
-					for(Text filterText : filterTexts)
-						filterText.setOpacity(1.0);
+					instInFocus = indexToInst(index);
+					fadeFilterImages(false);
+					for(ImageView filterImage : filterImages)
+						filterImage.setOpacity(1.0);
 				}});
 			instrumentImage.setOnMouseExited(new EventHandler<MouseEvent>() {
 
 				@Override
 				public void handle(MouseEvent event) {
 					instInFocus = null;
-					fadeFilterTexts(true);
+					fadeFilterImages(true);
 				}});
 		}
 	}
 	
-	private void addFilterText(Node instrumentImage) {
-		Text filterText = new Text("[_]");
-		filterText.setFill(Color.RED);
-		filterTexts.add(filterText);
+	/**
+	 * Add a filter icon on top of the instrument icon.
+	 * @param instrumentImage
+	 */
+	private void addFilterImage(final Node instrumentImage) {
+		ImageView filterImage = new ImageView();
+		filterImages.add(filterImage);
 		Pane instLinePane = (Pane) instrumentLine.getParent();
-		instLinePane.getChildren().add(filterText);
+		instLinePane.getChildren().add(filterImage);
 		
 		Bounds instrumentImageBounds = instrumentImage.localToScene(instrumentImage.getBoundsInLocal());
-		filterText.setTranslateX(instrumentImageBounds.getMinX());
-		filterText.setTranslateY(instrumentImageBounds.getMinY() - 5);
-		filterText.setOpacity(0.0);
+		// the bounds are off by 2 for some reason
+		filterImage.setTranslateX(instrumentImageBounds.getMinX() - 2);
+		filterImage.setTranslateY(instrumentImageBounds.getMinY() - 2);
+		filterImage.setOpacity(0.0);
 		
-		FadeTransition ft = new FadeTransition(Duration.millis(2000), filterText);
+		FadeTransition ft = new FadeTransition(Duration.millis(2000), filterImage);
 		ft.setFromValue(1.0);
 		ft.setToValue(0.0);
-		filterTextsFades.add(ft);
+		filterImagesFades.add(ft);
+		
+		// filterImage consumes events so pass the events off to the instrumentImage
+		filterImage.addEventHandler(InputEvent.ANY, new EventHandler() {
+
+			@Override
+			public void handle(Event event) {
+				instrumentImage.fireEvent(event);
+			}
+		});
 	}
 	
-	private void fadeFilterTexts(boolean fadeThem) {
-		for (FadeTransition fade : filterTextsFades)
+	private void fadeFilterImages(boolean fadeThem) {
+		for (FadeTransition fade : filterImagesFades)
 			if(fadeThem)
 				fade.playFromStart();
 			else
@@ -125,39 +144,39 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 	}
 	
 	/**
-	 * turn instrument on/off in filter, display and fade the filter text
+	 * turn instrument on/off in filter, display and fade the filter image
 	 * 
 	 * @param ind
 	 *            instrument to filter
 	 * @return true if it now contains ind, false if it doesn't
 	 */
 	public boolean toggleInstrument(InstrumentIndex ind) {
-		if(toggleInstrumentNoText(ind)) {
-			fadeFilterTexts(true);
+		if(toggleInstrumentNoImage(ind)) {
+			fadeFilterImages(true);
 			return true;
 		} else {
-			fadeFilterTexts(true);
+			fadeFilterImages(true);
 			return false;
 		}
 	}
 	
 	/**
-	 * toggleInstrument but don't display text
+	 * toggleInstrument but don't display image
 	 * 
 	 * @param ind
 	 *            instrument to filter
 	 * @return true if it now contains ind, false if it doesn't
 	 */
-	public boolean toggleInstrumentNoText(InstrumentIndex ind) {
+	public boolean toggleInstrumentNoImage(InstrumentIndex ind) {
 		int index = instToIndex(ind);
 		if(!this.contains(ind)){
 			this.add(ind);
-			filterTexts.get(index).setText("[f]");
+			filterImages.get(index).setImage(il.getSpriteFX(ImageIndex.FILTER));
 			return true;
 		}
 		else{
 			this.remove(ind);
-			filterTexts.get(index).setText("[_]");
+			filterImages.get(index).setImage(null);
 			return false;
 		}
 	}

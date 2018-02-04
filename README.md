@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.0.4
+* Current Version: 1.1.0
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
@@ -15,6 +15,8 @@ Accepting cryptocurrency donations!
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
+* January 29, 2018 - First relatively major functionality upgrade, v1.1.0
+* June 2017 - Addition of team member j574y923 
 * March 14, 2016 - First full functionality release, v1.0.0
 * January 5, 2015 - v0.95~0.951 - Beta Release 
 * January 1-3, 2015 - v0.94~0.942 - Pre-Beta (Arranger) 
@@ -53,9 +55,14 @@ Tasklist:
 * Import AMS songs
 * Speedmarks
 * Bookmarks
-* Undo/redo
 * More advanced Options dialog
 * Instrument replacing option
+* SoundFont creator
+* Hotkey for mute note/instrument and others
+* More aesthetic buttons and button layout
+* Fix audio desync error when returning to program after sleep
+* Mario Paint Recorder?
+* Undo/redo (done - January 19, 2018)
 * Release SMP v1.0.0 (done - March 14, 2016)
 * Aesthetic program edits, stability checks, arranger file stability check (done - March 13, 2016)
 * Solve some song playing thread stability issues (done - February 28, 2016)

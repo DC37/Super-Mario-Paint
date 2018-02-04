@@ -874,7 +874,7 @@
                             </HBox>
                             <HBox id="" prefHeight="100.0" prefWidth="300.0">
                               <children>
-                                                <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                                <VBox alignment="CENTER_LEFT" prefHeight="88.0" prefWidth="128.0">
                                                    <children>
                                                       <ImageView id="" fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -901,7 +901,24 @@
                                                       <Insets left="4.0" />
                                                    </padding>
                                                 </VBox>
-                                <VBox id="VBox" alignment="CENTER">
+                                                <VBox alignment="CENTER" prefHeight="88.0" prefWidth="128.0">
+                                                   <children>
+                                                      <ImageView fx:id="clipboardLabel" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/CLIPBOARD_LABEL.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/CLIPBOARD_RELEASED.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="4.0" />
+                                                   </padding>
+                                                </VBox>
+                                <VBox id="VBox" alignment="CENTER" prefHeight="88.0" prefWidth="104.0">
                                   <children>
                                                       <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
