@@ -574,7 +574,7 @@ public class SMPFXController {
     public StaffInstrumentEventHandler getStaffInstrumentEventHandler() {
         return staffInstrumentEventHandler;
     }
-    
+  
     public ModifySongManager getModifySongManager() {
     	return commandManager;
     }
