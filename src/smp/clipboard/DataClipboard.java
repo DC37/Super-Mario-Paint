@@ -76,7 +76,7 @@ public class DataClipboard {
 		
 		initializeHighlightedVolumes(ct);
 		
-		instFilter = new InstrumentFilter(ct.getInstLine());
+		instFilter = new InstrumentFilter(ct.getInstLine(), im);
 	}
 
 	private void initializeHighlightedVolumes(SMPFXController ct) {
