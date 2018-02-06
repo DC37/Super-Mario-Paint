@@ -100,6 +100,11 @@
               <children>
                 <Pane id="StaffFrame" prefHeight="316.0" prefWidth="798.0">
                   <children>
+                    <ImageView fitHeight="544.0" fitWidth="799.0" layoutX="0.0" layoutY="-52.0" pickOnBounds="true">
+                      <image>
+                        <Image url="@sprites/INST_BACKGROUND.PNG" />
+                      </image>
+                    </ImageView>
                     <StackPane fx:id="staffPane" prefHeight="296.0" prefWidth="798.0">
                       <children>
                         <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="312.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
