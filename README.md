@@ -15,6 +15,7 @@ Accepting cryptocurrency donations!
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
+* February 4, 2018 - v1.1.1 release
 * January 29, 2018 - First relatively major functionality upgrade, v1.1.0
 * June 2017 - Addition of team member j574y923 
 * March 14, 2016 - First full functionality release, v1.0.0
@@ -25,19 +26,23 @@ See "Version History.txt" for semantic versioning and more release notes.
 * January 4, 2014 - v0.91 - Alpha (Update Release)
 * December 25, 2013 - v0.90 - Initial Alpha Release
 * August 7, 2012 - Project started
-* Author: RehdBlob
 
 Confirmed Operating System Configurations:
------
-* Windows 7 + Java 7u71
 * Windows 7 + Java 8u25
 * Windows 7 + Java 8u73
 * Windows 8.1 + Java 8u25
 * Windows 10 + Java 8u73
-* Windows Vista + Java 7u71
-* Mac OSX 10.9.5 + Java 7u71
+* Windows 10 + Java 8u161
 * Mac OSX 10.9.5 + Java 8u25
 * Ubuntu 14.04 + Java 8
+
+Deprecated Operating System Configurations:
+-----
+Java 7 is no longer supported as of v1.1.0
+* Windows 7 + Java 7u71
+* Windows Vista + Java 7u71
+* Mac OSX 10.9.5 + Java 7u71
+
 
 Contributors to Operating Systems / Tests
 -----
@@ -46,11 +51,14 @@ Contributors to Operating Systems / Tests
 * Pokesonicddrninja
 * Adolfobaez
 * Cakewut
+* SupraTheHedgehog
 * The Mario Paint Community
 * Many others...
 
 Tasklist:
 -----
+* Build user's guide... probably on this README or bundled with releases
+* Build contributor's guide... probably also on this README
 * Splash screen animation and other extras
 * Import AMS songs
 * Speedmarks
