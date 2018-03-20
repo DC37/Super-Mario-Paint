@@ -20,8 +20,8 @@
 	      <artifactId>javafx-maven-plugin</artifactId>
 	      <version>8.6.0</version>
 	      <configuration>
-		      <mainClass>smp.SuperMarioPaint</mainClass>
-          <preLoader>smp.fx.SplashScreen</preLoader>
+		<mainClass>smp.SuperMarioPaint</mainClass>
+          	<preLoader>smp.fx.SplashScreen</preLoader>
 	      </configuration>
       </plugin>
     </plugins>
