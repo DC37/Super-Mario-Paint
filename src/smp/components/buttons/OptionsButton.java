@@ -1,12 +1,19 @@
 package smp.components.buttons;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -14,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import smp.ImageLoader;
@@ -35,13 +43,19 @@ public class OptionsButton extends ImagePushButton {
 
     /** This is the text that labels the slider. */
     private String txt = "Default Note Volume";
+    
+    private String soundfontsPath = System.getenv("APPDATA") + "\\Super Mario Paint\\SoundFonts";
+    private String soundfontsPathSoundset = soundfontsPath + "\\soundset3.sf2";
 
     /** This is the place where we type in the amount to adjust tempo by. */
     private TextField tempoField;
 
     /** A slider that changes the default volume of placed notes. */
     private Slider defaultVolume;
-    
+
+	/** A drop down menu to choose the soundfont in the AppData folder. */
+	private ComboBox<String> soundfontsMenu;
+
     /**
      * Default constructor.
      *
@@ -92,9 +106,18 @@ public class OptionsButton extends ImagePushButton {
         vBox.setAlignment(Pos.CENTER);
         Label tempoAdjustHack = new Label("Increase tempo by how many times?");
         tempoField = new TextField();
-        
+
+        Label sfLabel = new Label("Current soundfont");
+		soundfontsMenu = makeSoundfontsComboBox();
+		CheckBox bindBox = new CheckBox();
+		bindBox.setText("Bind to song");
+		bindBox.setStyle("-fx-font-size: 10;");
+        VBox soundfontsOptions = new VBox(1);
+        soundfontsOptions.setAlignment(Pos.CENTER);
+		soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
+
         vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
-                tempoField, pane);
+                tempoField, soundfontsOptions, pane);
         defaultVolume.autosize();
         Scene scene1 = new Scene(vBox);
         dialog.setScene(scene1);
@@ -110,14 +133,81 @@ public class OptionsButton extends ImagePushButton {
         theStaff.redraw();
     }
 
-    /**
+	/**
+	 * @return A ComboBox listing all soundfonts in the AppData folder and an
+	 *         additional item to "Add Soundfont"
+	 */
+	private ComboBox<String> makeSoundfontsComboBox() {
+		// windows only for now
+		// 1. Let's make sure the folder exists
+		File soundfontsFolder = new File(soundfontsPath);
+		if(!soundfontsFolder.exists()) {
+			if(!soundfontsFolder.mkdirs())
+				System.out.println("Error: failed to create " + soundfontsPath);
+		}
+		
+		// 2. Let's copy soundset3.sf2 if it's not already in there
+		File soundfontsFolderSoundset = new File(soundfontsPathSoundset);
+		if (!soundfontsFolderSoundset.exists()) {
+			try {
+				Files.copy(new File("soundset3.sf2").toPath(), soundfontsFolderSoundset.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// 3. Populate combobox list with soundfonts in AppData
+		final ComboBox<String> soundfontsMenu = new ComboBox<>();
+		File[] listOfFiles = soundfontsFolder.listFiles();
+		for (File file : listOfFiles) {
+		    if (file.isFile()) {
+		    	String name = file.getName();
+		    	if(name.endsWith(".sf2")) {
+			        soundfontsMenu.getItems().add(name);
+		    	}
+		    }
+		}
+		soundfontsMenu.setPrefWidth(150);
+		soundfontsMenu.getItems().add("Add Soundfont...");
+		soundfontsMenu.valueProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> obsv, String oldVal, String newValue) {
+				if(newValue.equals("Add Soundfont...")) {
+					FileChooser f = new FileChooser();
+					f.setInitialDirectory(new File(System.getProperty("user.dir")));
+					f.setTitle("Add Soundfont...");
+					f.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("soundfonts (*.sf2)", "*.sf2"));
+					File sf = f.showOpenDialog(null);
+					if(sf == null)
+						return;
+					File destSf = new File(soundfontsPath + "\\" + sf.getName());
+					if(!destSf.exists()) {
+						try {
+							Files.copy(sf.toPath(), destSf.toPath());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						int index = soundfontsMenu.getItems().size() - 1;
+						soundfontsMenu.getItems().add(index, sf.getName());
+						soundfontsMenu.getSelectionModel().select(index);
+					}
+				} else {
+					
+				}
+			}
+		});
+		
+		return soundfontsMenu;
+	}
+
+	/**
      * Sets the height, width, and other basic properties of this dialog box.
      *
      * @param dialog
      *            The dialog box that we are setting up.
      */
     private void initializeDialog(Stage dialog) {
-        dialog.setHeight(250);
+        dialog.setHeight(280);
         dialog.setWidth(250);
         dialog.setResizable(false);
         dialog.setTitle("Options");

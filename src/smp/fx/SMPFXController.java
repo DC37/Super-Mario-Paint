@@ -16,6 +16,7 @@ import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffInstrumentEventHandler;
+import smp.components.textfield.SongNameController;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
 
@@ -319,6 +320,9 @@ public class SMPFXController {
         
         // Set up clipboard.
         clipboard = new DataClipboard(staff, this, il);	
+        
+        // Fix TextField focus problems.
+        new SongNameController(songName, this);
         
     }
     /**
