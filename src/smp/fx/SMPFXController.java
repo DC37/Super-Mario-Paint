@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.SoundfontLoader;
 import smp.clipboard.DataClipboard;
 import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
@@ -268,6 +269,9 @@ public class SMPFXController {
     
     /** This is the image loader. */
     private ImageLoader il;
+    
+    /** This is the soundfont loader. */
+    private SoundfontLoader sf;
 
     /**
      * Zero-argument constructor (explicitly declared).
@@ -558,6 +562,11 @@ public class SMPFXController {
     public void setImageLoader(ImageLoader imgLoader) {
         il = imgLoader;
     }
+
+    /** @since v1.1.2 */
+	public void setSoundfontLoader(SoundfontLoader sfLoader) {
+		sf = sfLoader;
+	}
     
     public StackPane getStaffPane() {
     	return staffPane;
@@ -581,5 +590,13 @@ public class SMPFXController {
     
     public ModifySongManager getModifySongManager() {
     	return commandManager;
+    }
+    
+    /**
+     * @return the program's Soundfont Loader
+     * @since v1.1.2
+     */
+    public SoundfontLoader getSoundfontLoader() {
+    	return sf;
     }
 }

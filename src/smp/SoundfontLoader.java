@@ -2,6 +2,8 @@ package smp;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
@@ -50,15 +52,26 @@ public class SoundfontLoader implements Loader {
     /**
      * The default soundset name.
      */
-    private String soundset = "soundset3.sf2";
+    private String defaultSoundset = "soundset3.sf2";
 
-    /**
-     * Initializes a MultiSynthesizer with the soundfont.
-     */
+	/**
+	 * The current soundset name. This changes when a new soundfont is loaded.
+	 */
+	private String currentSoundset = defaultSoundset;
+
+	/**
+	 * The cache that will contain all soundbanks. Each soundbank is indexed by
+	 * its filename.
+	 */
+	private static Map<String, Soundbank> bankCache = new HashMap<>();
+
+	/**
+	 * Initializes a MultiSynthesizer with the soundfont.
+	 */
     @Override
     public void run() {
         try {
-            File f = new File("./" + soundset);
+    		File f = new File("./" + defaultSoundset);
             bank = MidiSystem.getSoundbank(f);
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();
@@ -120,13 +133,98 @@ public class SoundfontLoader implements Loader {
             e.printStackTrace();
             System.exit(0);
         }
+	}
+
+	/**
+	 * Takes in the absolute path of a soundfont file and constructs a new
+	 * soundbank with all the soundfont's instruments loaded in. The
+	 * MultiSynthesizer will then use the new soundbank.
+	 * 
+	 * @param path
+	 *            the soundfont file
+	 * @throws IOException
+	 * @throws InvalidMidiDataException
+	 * @throws MidiUnavailableException
+	 * @since v1.1.2
+	 */
+	public void loadSoundfont(String path) throws InvalidMidiDataException, IOException, MidiUnavailableException {
+		File f = new File(path);
+		if (!f.getName().equals(currentSoundset)) {
+			bank = MidiSystem.getSoundbank(f);
+			theSynthesizer.loadAllInstruments(bank);
+			currentSoundset = f.getName();
+		}
+	}
+
+	/**
+	 * Stores the current soundbank in cache for quick loading. This function
+	 * will be used when there is an arrangement with multiple songs with
+	 * different soundfonts; the soundfonts will all be stored into cache first
+	 * for quick loading {@link #loadFromCache(String)} before starting each
+	 * next song.
+	 * 
+	 * @since v1.1.2
+	 */
+	public void storeInCache() {
+		if(!bankCache.containsKey(currentSoundset))
+			bankCache.put(currentSoundset, bank);
+	}
+
+	/**
+	 * Loads the Soundbank by the soundset name from bankCache and sets it as
+	 * the MultiSynthesizer's current soundfont. This is the fast way to set the
+	 * program's soundfont.
+	 * 
+	 * @param soundset
+	 *            The soundset name (e.g. soundset3.sf2)
+	 * @since v1.1.2
+	 */
+	public void loadFromCache(String soundset) {
+		if(bankCache.containsKey(soundset)) {
+			bank = bankCache.get(soundset);
+			theSynthesizer.loadAllInstruments(bank);
+			currentSoundset = soundset;
+		}
+	}
+
+	/**
+	 * Clears the bankCache.
+	 * 
+	 * @since v1.1.2
+	 */
+	public void clearCache() {
+		bankCache.clear();
+	}
+
+	/**
+	 * @return The current soundset name.
+	 * @since v1.1.2
+	 */
+	public String getCurrentSoundset() {
+		return currentSoundset;
+	}	
+	
+	/**
+	 * @return The default soundset name.
+	 * @since v1.1.2
+	 */
+	public String getDefaultSoundset() {
+		return defaultSoundset;
+	}
+	
+	/**
+	 * @return The Soundbank cache that holds a map of soundbanks.
+	 * @since v1.1.2
+	 */
+	public static Map<String, Soundbank> getBankCache() {
+        return bankCache;
     }
 
-    /**
-     * @return The MultiSynthesizer that holds a list of Synthesizers.
-     */
-    public static Synthesizer getSynth() {
-        return theSynthesizer;
+	/**
+	 * @return The current MultiSynthesizer that holds a list of Synthesizers.
+	 */
+	public static Synthesizer getSynth() {
+		return theSynthesizer;
     }
 
     /**

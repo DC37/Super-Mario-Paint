@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -25,6 +28,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import smp.ImageLoader;
+import smp.SoundfontLoader;
 import smp.commandmanager.commands.MultiplyTempoCommand;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
@@ -191,9 +195,7 @@ public class OptionsButton extends ImagePushButton {
 						soundfontsMenu.getItems().add(index, sf.getName());
 						soundfontsMenu.getSelectionModel().select(index);
 					}
-				} else {
-					
-				}
+				} 
 			}
 		});
 		
@@ -234,6 +236,7 @@ public class OptionsButton extends ImagePushButton {
     private void updateValues() {
         changeDefaultVol();
         multiplyTempo();
+        changeSoundfont();
     }
 
     /** Updates the default volume of the program notes. */
@@ -271,5 +274,16 @@ public class OptionsButton extends ImagePushButton {
             controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num));
             controller.getModifySongManager().record();
         }
+    }
+    
+    /** Updates the program's soundfont based on soundfont selected. */
+    private void changeSoundfont() {
+		SoundfontLoader sfLoader = controller.getSoundfontLoader();
+		String selectedSoundfont = soundfontsMenu.getSelectionModel().getSelectedItem();
+		try {
+			sfLoader.loadSoundfont(soundfontsPath + "\\" + selectedSoundfont);
+		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+			e.printStackTrace();
+		}
     }
 }

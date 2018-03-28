@@ -164,6 +164,7 @@ public class SuperMarioPaint extends Application {
         imgLd = new Thread(imgLoader);
         sfLd = new Thread(sfLoader);
         controller.setImageLoader((ImageLoader) imgLoader);
+        controller.setSoundfontLoader((SoundfontLoader) sfLoader);
     }
     
     /**
@@ -411,6 +412,15 @@ public class SuperMarioPaint extends Application {
             }
         }
 
-    }
+	}
 
+	/**
+	 * Gets the soundfont Loader. This function will probably only be temporary
+	 * if we plan to move the loader to another class.
+	 * 
+	 * @return the soundfont Loader
+	 */
+	public Loader getSoundfontLoader() {
+    	return sfLoader;
+    }
 }
