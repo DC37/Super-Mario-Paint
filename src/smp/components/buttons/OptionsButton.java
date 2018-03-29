@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -168,6 +170,9 @@ public class OptionsButton extends ImagePushButton {
 		    	String name = file.getName();
 		    	if(name.endsWith(".sf2")) {
 			        soundfontsMenu.getItems().add(name);
+			        
+			        if(name.equals(controller.getSoundfontLoader().getCurrentSoundset()))
+			        	soundfontsMenu.getSelectionModel().selectLast();
 		    	}
 		    }
 		}
@@ -182,19 +187,43 @@ public class OptionsButton extends ImagePushButton {
 					f.setTitle("Add Soundfont...");
 					f.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("soundfonts (*.sf2)", "*.sf2"));
 					File sf = f.showOpenDialog(null);
-					if(sf == null)
+					if(sf == null) {
+						soundfontsMenu.getSelectionModel().selectPrevious();
 						return;
-					File destSf = new File(soundfontsPath + "\\" + sf.getName());
+					}
+					
+					String sfName = sf.getName();
+					File destSf = new File(soundfontsPath + "\\" + sfName);
 					if(!destSf.exists()) {
 						try {
 							Files.copy(sf.toPath(), destSf.toPath());
 						} catch (IOException e) {
 							e.printStackTrace();
+							soundfontsMenu.getSelectionModel().selectPrevious();
+							return;
 						}
-						int index = soundfontsMenu.getItems().size() - 1;
-						soundfontsMenu.getItems().add(index, sf.getName());
-						soundfontsMenu.getSelectionModel().select(index);
 					}
+					// Add soundfont name, or just pick it
+					ObservableList<String> soundfonts = soundfontsMenu.getItems();
+					int i;
+					for (i = 0; i < soundfonts.size() - 1; i++) {
+						int compare = soundfonts.get(i).compareTo(sfName);
+						if (compare == 0)
+							break;
+						else if (compare > 0) {
+							soundfontsMenu.getItems().add(i, sfName);
+							break;
+						}
+					}
+					// Wrap in a Runnable to avoid a huge stacktrace
+					final int i2 = i;
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							soundfontsMenu.getSelectionModel().select(i2);
+						}
+					});
 				} 
 			}
 		});
