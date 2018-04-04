@@ -200,9 +200,9 @@ public class SaveButton extends ImagePushButton {
         if (t == null) {
             t = TimeSignature.FOUR_FOUR;
         }
-        pr.printf("TEMPO: %f, EXT: %d, TIME: %s\r\n", out.getTempo(),
-                Utilities.longFromBool(out.getNoteExtensions()), t);
-
+        pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", out.getTempo(),
+                Utilities.longFromBool(out.getNoteExtensions()), t, out.getSoundset());
+        
         for (int i = 0; i < theLines.size(); i++) {
             if (theLines.get(i).isEmpty()) {
                 continue;

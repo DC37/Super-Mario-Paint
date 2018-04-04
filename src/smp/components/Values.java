@@ -105,7 +105,7 @@ public class Values {
      * @deprecated
      */
     public static String SONGFOLDER = "./Prefs/";
-
+    
     /** This is the number of lines in a Mario Paint Composer song. */
     public static final int LINES_PER_MPC_SONG = 384;
 
@@ -142,6 +142,20 @@ public class Values {
             Note.D4, Note.E4, Note.F4, Note.G4, Note.A4, Note.B4, Note.C5,
             Note.D5 };
     
-    /** Max undo/redo stack size for recorded commands. */
+    /** The max undo/redo stack size for recorded commands. */
     public static final int MAX_UNDO_REDO_SIZE = 1000;
+
+	/**
+	 * This is where we store soundfonts.
+	 * 
+	 * @since v1.1.2
+	 */
+	public static final String SOUNDFONTS_FOLDER = System.getenv("APPDATA") + "\\Super Mario Paint\\SoundFonts\\";
+	
+	/**
+	 * The default Mario Paint Composer soundfont.
+	 * 
+	 * @since v1.1.2
+	 */
+	public static final String DEFAULT_SOUNDFONT = "soundset3.sf2";
 }

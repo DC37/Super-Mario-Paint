@@ -33,6 +33,9 @@ public class StaffSequence implements Serializable {
 
     /** The time signature of this sequence. */
     private TimeSignature t = TimeSignature.FOUR_FOUR;
+    
+    /** The soundset bound to and should be loaded for this sequence. */
+    private String soundsetBinding = "";
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
@@ -169,6 +172,23 @@ public class StaffSequence implements Serializable {
         return t;
     }
 
+	/**
+	 * Sets the soundset for this sequence which should be loaded with the
+	 * sequence.
+	 * @since v1.1.2
+	 */
+	public void setSoundset(String soundset) {
+		soundsetBinding = soundset;
+    }
+
+	/**
+	 * @return The soundset bound to this sequence.
+	 * @since v1.1.2
+	 */
+	public String getSoundset() {
+		return soundsetBinding;
+    }
+    
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();

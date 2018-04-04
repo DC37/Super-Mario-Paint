@@ -50,6 +50,7 @@ public class OptionsButton extends ImagePushButton {
     /** This is the text that labels the slider. */
     private String txt = "Default Note Volume";
     
+    /** This is the location of the default soundset and its folder. */
     private String soundfontsPath = System.getenv("APPDATA") + "\\Super Mario Paint\\SoundFonts";
     private String soundfontsPathSoundset = soundfontsPath + "\\soundset3.sf2";
 
@@ -61,6 +62,9 @@ public class OptionsButton extends ImagePushButton {
 
 	/** A drop down menu to choose the soundfont in the AppData folder. */
 	private ComboBox<String> soundfontsMenu;
+	
+	/** A checkbox to set the sequence's soundset to the one selected. */
+	private CheckBox bindBox;
 
     /**
      * Default constructor.
@@ -115,9 +119,7 @@ public class OptionsButton extends ImagePushButton {
 
         Label sfLabel = new Label("Current soundfont");
 		soundfontsMenu = makeSoundfontsComboBox();
-		CheckBox bindBox = new CheckBox();
-		bindBox.setText("Bind to song");
-		bindBox.setStyle("-fx-font-size: 10;");
+		bindBox = makeBindCheckBox();
         VBox soundfontsOptions = new VBox(1);
         soundfontsOptions.setAlignment(Pos.CENTER);
 		soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
@@ -144,7 +146,7 @@ public class OptionsButton extends ImagePushButton {
 	 *         additional item to "Add Soundfont"
 	 */
 	private ComboBox<String> makeSoundfontsComboBox() {
-		// windows only for now
+		// windows only for now, TODO: linux and mac, TODO: make this soundfontLoader's responsibility
 		// 1. Let's make sure the folder exists
 		File soundfontsFolder = new File(soundfontsPath);
 		if(!soundfontsFolder.exists()) {
@@ -215,7 +217,8 @@ public class OptionsButton extends ImagePushButton {
 							break;
 						}
 					}
-					// Wrap in a Runnable to avoid a huge stacktrace
+					// This triggers the ChangedListener again 
+					// Wrap in a runLater to avoid a huge stacktrace
 					final int i2 = i;
 					Platform.runLater(new Runnable() {
 
@@ -225,12 +228,38 @@ public class OptionsButton extends ImagePushButton {
 						}
 					});
 				} 
+				
+				bindBox.setSelected(newValue.equals(theStaff.getSequence().getSoundset()));
+				// we don't want to change the state of bindBox's userData
+				// so set it back to theStaff.getSequence().getSoundset()
+				bindBox.setUserData(theStaff.getSequence().getSoundset());
 			}
 		});
 		
 		return soundfontsMenu;
 	}
 
+
+	private CheckBox makeBindCheckBox() {
+		final CheckBox bindBox = new CheckBox();
+		bindBox.setText("Bind to song");
+		bindBox.setStyle("-fx-font-size: 9;");
+		bindBox.setUserData(theStaff.getSequence().getSoundset());
+		if (soundfontsMenu.getSelectionModel().getSelectedItem().equals(theStaff.getSequence().getSoundset()))
+			bindBox.setSelected(true);
+		bindBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean checked) {
+				if(checked) {
+					bindBox.setUserData(soundfontsMenu.getSelectionModel().getSelectedItem());
+				} else {
+					bindBox.setUserData("");
+				}
+			}
+		});
+		
+		return bindBox;
+	}
+	
 	/**
      * Sets the height, width, and other basic properties of this dialog box.
      *
@@ -305,7 +334,7 @@ public class OptionsButton extends ImagePushButton {
         }
     }
     
-    /** Updates the program's soundfont based on soundfont selected. */
+    /** Updates the program's soundfont, bind to song if checked. */
     private void changeSoundfont() {
 		SoundfontLoader sfLoader = controller.getSoundfontLoader();
 		String selectedSoundfont = soundfontsMenu.getSelectionModel().getSelectedItem();
@@ -314,5 +343,6 @@ public class OptionsButton extends ImagePushButton {
 		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
 			e.printStackTrace();
 		}
+		theStaff.getSequence().setSoundset((String) bindBox.getUserData());
     }
 }

@@ -19,6 +19,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -218,7 +220,7 @@ public class Utilities {
     private static StaffSequence parseText(ArrayList<String> read) {
         StaffSequence loaded = new StaffSequence();
         for (String s : read) {
-            if (s.contains("TEMPO") || s.contains("EXT") || s.contains("TIME")) {
+            if (s.contains("TEMPO") || s.contains("EXT") || s.contains("TIME") || s.contains("SOUNDSET")) {
                 String[] sp = s.split(",");
                 for (String spl : sp) {
                     String num = spl.substring(spl.indexOf(":") + 1);
@@ -229,6 +231,8 @@ public class Utilities {
                                 .parseLong(num.trim())));
                     } else if (spl.contains("TIME")) {
                         loaded.setTimeSignature(num.trim());
+                    } else if (spl.contains("SOUNDSET")) {
+                        loaded.setSoundset(num.trim());
                     }
                 }
             } else {
@@ -448,6 +452,12 @@ public class Utilities {
         theStaff.setSequenceName(fname);
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         controller.getInstBLine().updateNoteExtensions();
+        
+        try {
+			controller.getSoundfontLoader().loadSoundfont(Values.SOUNDFONTS_FOLDER + theStaff.getSequence().getSoundset());
+		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+			e.printStackTrace();
+		}
         
         controller.getModifySongManager().reset();
         
