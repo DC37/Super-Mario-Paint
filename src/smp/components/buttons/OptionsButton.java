@@ -49,10 +49,6 @@ public class OptionsButton extends ImagePushButton {
 
     /** This is the text that labels the slider. */
     private String txt = "Default Note Volume";
-    
-    /** This is the location of the default soundset and its folder. */
-    private String soundfontsPath = System.getenv("APPDATA") + "\\Super Mario Paint\\SoundFonts";
-    private String soundfontsPathSoundset = soundfontsPath + "\\soundset3.sf2";
 
     /** This is the place where we type in the amount to adjust tempo by. */
     private TextField tempoField;
@@ -146,37 +142,17 @@ public class OptionsButton extends ImagePushButton {
 	 *         additional item to "Add Soundfont"
 	 */
 	private ComboBox<String> makeSoundfontsComboBox() {
-		// windows only for now, TODO: linux and mac, TODO: make this soundfontLoader's responsibility
-		// 1. Let's make sure the folder exists
-		File soundfontsFolder = new File(soundfontsPath);
-		if(!soundfontsFolder.exists()) {
-			if(!soundfontsFolder.mkdirs())
-				System.out.println("Error: failed to create " + soundfontsPath);
-		}
-		
-		// 2. Let's copy soundset3.sf2 if it's not already in there
-		File soundfontsFolderSoundset = new File(soundfontsPathSoundset);
-		if (!soundfontsFolderSoundset.exists()) {
-			try {
-				Files.copy(new File("soundset3.sf2").toPath(), soundfontsFolderSoundset.toPath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+
+		controller.getSoundfontLoader().ensureSoundfontsFolderExists();
 		
 		// 3. Populate combobox list with soundfonts in AppData
 		final ComboBox<String> soundfontsMenu = new ComboBox<>();
-		File[] listOfFiles = soundfontsFolder.listFiles();
-		for (File file : listOfFiles) {
-		    if (file.isFile()) {
-		    	String name = file.getName();
-		    	if(name.endsWith(".sf2")) {
-			        soundfontsMenu.getItems().add(name);
-			        
-			        if(name.equals(controller.getSoundfontLoader().getCurrentSoundset()))
-			        	soundfontsMenu.getSelectionModel().selectLast();
-		    	}
-		    }
+		String[] listOfFiles = controller.getSoundfontLoader().getSoundfontsList();
+		for (String filename : listOfFiles) {
+			soundfontsMenu.getItems().add(filename);
+
+			if (filename.equals(StateMachine.getCurrentSoundset()))
+				soundfontsMenu.getSelectionModel().selectLast();
 		}
 		soundfontsMenu.setPrefWidth(150);
 		soundfontsMenu.getItems().add("Add Soundfont...");
@@ -195,7 +171,7 @@ public class OptionsButton extends ImagePushButton {
 					}
 					
 					String sfName = sf.getName();
-					File destSf = new File(soundfontsPath + "\\" + sfName);
+					File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
 					if(!destSf.exists()) {
 						try {
 							Files.copy(sf.toPath(), destSf.toPath());
@@ -339,7 +315,7 @@ public class OptionsButton extends ImagePushButton {
 		SoundfontLoader sfLoader = controller.getSoundfontLoader();
 		String selectedSoundfont = soundfontsMenu.getSelectionModel().getSelectedItem();
 		try {
-			sfLoader.loadSoundfont(soundfontsPath + "\\" + selectedSoundfont);
+			sfLoader.loadSoundfont(Values.SOUNDFONTS_FOLDER + selectedSoundfont);
 		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
 			e.printStackTrace();
 		}

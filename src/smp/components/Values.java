@@ -142,8 +142,12 @@ public class Values {
             Note.D4, Note.E4, Note.F4, Note.G4, Note.A4, Note.B4, Note.C5,
             Note.D5 };
     
-    /** The max undo/redo stack size for recorded commands. */
-    public static final int MAX_UNDO_REDO_SIZE = 1000;
+	/**
+	 * The max undo/redo stack size for recorded commands.
+	 * 
+	 * @since v1.1.1
+	 */
+	public static final int MAX_UNDO_REDO_SIZE = 1000;
 
 	/**
 	 * This is where we store soundfonts.

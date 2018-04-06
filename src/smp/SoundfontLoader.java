@@ -1,7 +1,9 @@
 package smp;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +20,7 @@ import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sounds.SMPSynthesizer;
 import smp.stateMachine.Settings;
+import smp.stateMachine.StateMachine;
 
 /**
  * Loads the soundfonts that will be used to play sounds.
@@ -49,16 +52,6 @@ public class SoundfontLoader implements Loader {
      */
     private static Soundbank bank;
 
-    /**
-     * The default soundset name.
-     */
-    private String defaultSoundset = "soundset3.sf2";
-
-	/**
-	 * The current soundset name. This changes when a new soundfont is loaded.
-	 */
-	private String currentSoundset = defaultSoundset;
-
 	/**
 	 * The cache that will contain all soundbanks. Each soundbank is indexed by
 	 * its filename.
@@ -71,7 +64,7 @@ public class SoundfontLoader implements Loader {
     @Override
     public void run() {
         try {
-    		File f = new File("./" + defaultSoundset);
+    		File f = new File("./" + Values.DEFAULT_SOUNDFONT);
             bank = MidiSystem.getSoundbank(f);
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();
@@ -136,6 +129,52 @@ public class SoundfontLoader implements Loader {
 	}
 
 	/**
+	 * Creates soundfonts folder in appdata if it doesn't already exist. Next,
+	 * copies over the default soundfont soundset3.sf2 if it isn't already in
+	 * the folder.
+	 * 
+	 * @since v1.1.2
+	 */
+	public void ensureSoundfontsFolderExists() {
+		// windows only for now, TODO: linux and mac
+		// 1. Let's make sure the folder exists
+		File soundfontsFolder = new File(Values.SOUNDFONTS_FOLDER);
+		if(!soundfontsFolder.exists()) {
+			if(!soundfontsFolder.mkdirs())
+				System.out.println("Error: failed to create " + Values.SOUNDFONTS_FOLDER);
+		}
+		
+		// 2. Let's copy soundset3.sf2 if it's not already in there
+		File soundfontsFolderSoundset = new File(Values.SOUNDFONTS_FOLDER + Values.DEFAULT_SOUNDFONT);
+		if (!soundfontsFolderSoundset.exists()) {
+			try {
+				Files.copy(new File("./" + Values.DEFAULT_SOUNDFONT).toPath(), soundfontsFolderSoundset.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+    }
+    
+	/**
+	 * @return The list of filenames *.sf2 in the soundfonts folder.
+	 * @since v1.1.2
+	 */
+	public String[] getSoundfontsList() {
+		File soundfontsFolder = new File(Values.SOUNDFONTS_FOLDER);
+		if(!soundfontsFolder.exists()) {
+			System.out.println("Error: no such directory " + Values.SOUNDFONTS_FOLDER);
+			return null;
+		}
+		
+		return soundfontsFolder.list(new FilenameFilter() {
+		    @Override
+		    public boolean accept(File dir, String name) {
+		        return name.toLowerCase().endsWith(".sf2");
+		    }
+		});
+    }
+    
+	/**
 	 * Takes in the absolute path of a soundfont file and constructs a new
 	 * soundbank with all the soundfont's instruments loaded in. The
 	 * MultiSynthesizer will then use the new soundbank.
@@ -149,10 +188,10 @@ public class SoundfontLoader implements Loader {
 	 */
 	public void loadSoundfont(String path) throws InvalidMidiDataException, IOException, MidiUnavailableException {
 		File f = new File(path);
-		if (!f.getName().equals(currentSoundset)) {
+		if (!f.getName().equals(StateMachine.getCurrentSoundset())) {
 			bank = MidiSystem.getSoundbank(f);
 			theSynthesizer.loadAllInstruments(bank);
-			currentSoundset = f.getName();
+			StateMachine.setCurrentSoundset(f.getName());
 		}
 	}
 
@@ -166,6 +205,7 @@ public class SoundfontLoader implements Loader {
 	 * @since v1.1.2
 	 */
 	public void storeInCache() {
+		String currentSoundset = StateMachine.getCurrentSoundset();
 		if(!bankCache.containsKey(currentSoundset))
 			bankCache.put(currentSoundset, bank);
 	}
@@ -183,7 +223,7 @@ public class SoundfontLoader implements Loader {
 		if(bankCache.containsKey(soundset)) {
 			bank = bankCache.get(soundset);
 			theSynthesizer.loadAllInstruments(bank);
-			currentSoundset = soundset;
+			StateMachine.setCurrentSoundset(soundset);
 		}
 	}
 
@@ -196,22 +236,6 @@ public class SoundfontLoader implements Loader {
 		bankCache.clear();
 	}
 
-	/**
-	 * @return The current soundset name.
-	 * @since v1.1.2
-	 */
-	public String getCurrentSoundset() {
-		return currentSoundset;
-	}	
-	
-	/**
-	 * @return The default soundset name.
-	 * @since v1.1.2
-	 */
-	public String getDefaultSoundset() {
-		return defaultSoundset;
-	}
-	
 	/**
 	 * @return The Soundbank cache that holds a map of soundbanks.
 	 * @since v1.1.2

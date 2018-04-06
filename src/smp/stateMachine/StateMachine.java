@@ -75,6 +75,12 @@ public class StateMachine {
      */
     private static double tempo = Values.DEFAULT_TEMPO;
 
+	/**
+	 * The current soundset name. This should change when a new soundfont is
+	 * loaded.
+	 */
+	private static String currentSoundset = Values.DEFAULT_SOUNDFONT;
+
     /**
      * Do not make an instance of this class! The implementation is such that
      * several classes may check the overall state of the program, so there
@@ -300,6 +306,23 @@ public class StateMachine {
     /** @param cDir Set current directory to this. */
     public static void setCurrentDirectory(File cDir) {
         StateMachine.currentDirectory = cDir;
+    }
+
+	/**
+	 * @return The current soundset name.
+	 * @since v1.1.2
+	 */
+	public static String getCurrentSoundset() {
+		return currentSoundset;
+	}
+
+	/**
+	 * @param soundset
+	 *            Set current soundset to this.
+	 * @since v1.1.2
+	 */
+	public static void setCurrentSoundset(String soundset) {
+		StateMachine.currentSoundset = soundset;
     }
 
 }
