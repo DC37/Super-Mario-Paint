@@ -129,7 +129,7 @@ public class SoundfontLoader implements Loader {
 	}
 
 	/**
-	 * Creates soundfonts folder in appdata if it doesn't already exist. Next,
+	 * Creates soundfonts folder in AppData if it doesn't already exist. Next,
 	 * copies over the default soundfont soundset3.sf2 if it isn't already in
 	 * the folder.
 	 * 
@@ -194,7 +194,55 @@ public class SoundfontLoader implements Loader {
 			StateMachine.setCurrentSoundset(f.getName());
 		}
 	}
+	
+	/**
+	 * Loads the passed-in filename from AppData.
+	 * 
+	 * @param filename
+	 *            The soundfont name
+	 * @throws InvalidMidiDataException
+	 * @throws IOException
+	 * @throws MidiUnavailableException
+	 * @since v1.1.2
+	 */
+	public void loadFromAppData(String filename) throws InvalidMidiDataException, IOException, MidiUnavailableException {
+		//TODO: check linux or mac, choose platform-specific folder
+		loadSoundfont(Values.SOUNDFONTS_FOLDER + filename);
+	}
 
+	/**
+	 * Copies the soundfont file to AppData.
+	 * 
+	 * @param path
+	 *            Path to the soundfont
+	 * @return if soundfont exists in AppData now
+	 * @since v1.1.2
+	 */
+	public boolean addSoundfont(String path) {
+		return addSoundfont(new File(path));
+	}
+	
+	/**
+	 * Copies the soundfont file to AppData.
+	 * 
+	 * @param sf The soundfont file.
+	 * @return if soundfont exists in AppData now
+	 * @since v1.1.2
+	 */
+	public boolean addSoundfont(File sf) {
+		String sfName = sf.getName();
+		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
+		if(!destSf.exists()) {
+			try {
+				Files.copy(sf.toPath(), destSf.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * Stores the current soundbank in cache for quick loading. This function
 	 * will be used when there is an arrangement with multiple songs with

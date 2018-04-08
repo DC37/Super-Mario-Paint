@@ -2,7 +2,6 @@ package smp.components.buttons;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -145,7 +144,7 @@ public class OptionsButton extends ImagePushButton {
 
 		controller.getSoundfontLoader().ensureSoundfontsFolderExists();
 		
-		// 3. Populate combobox list with soundfonts in AppData
+		// Populate combobox list with soundfonts in AppData
 		final ComboBox<String> soundfontsMenu = new ComboBox<>();
 		String[] listOfFiles = controller.getSoundfontLoader().getSoundfontsList();
 		for (String filename : listOfFiles) {
@@ -164,43 +163,36 @@ public class OptionsButton extends ImagePushButton {
 					f.setInitialDirectory(new File(System.getProperty("user.dir")));
 					f.setTitle("Add Soundfont...");
 					f.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("soundfonts (*.sf2)", "*.sf2"));
-					File sf = f.showOpenDialog(null);
-					if(sf == null) {
-						soundfontsMenu.getSelectionModel().selectPrevious();
-						return;
-					}
+					final File sf = f.showOpenDialog(null);
 					
-					String sfName = sf.getName();
-					File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
-					if(!destSf.exists()) {
-						try {
-							Files.copy(sf.toPath(), destSf.toPath());
-						} catch (IOException e) {
-							e.printStackTrace();
-							soundfontsMenu.getSelectionModel().selectPrevious();
-							return;
-						}
-					}
-					// Add soundfont name, or just pick it
-					ObservableList<String> soundfonts = soundfontsMenu.getItems();
-					int i;
-					for (i = 0; i < soundfonts.size() - 1; i++) {
-						int compare = soundfonts.get(i).compareTo(sfName);
-						if (compare == 0)
-							break;
-						else if (compare > 0) {
-							soundfontsMenu.getItems().add(i, sfName);
-							break;
-						}
-					}
-					// This triggers the ChangedListener again 
+					// Any programmed selection triggers the ChangedListener again 
 					// Wrap in a runLater to avoid a huge stacktrace
-					final int i2 = i;
 					Platform.runLater(new Runnable() {
-
 						@Override
 						public void run() {
-							soundfontsMenu.getSelectionModel().select(i2);
+							if (sf == null) {
+								soundfontsMenu.getSelectionModel().selectPrevious();
+								return;
+							}
+							
+							if(!controller.getSoundfontLoader().addSoundfont(sf)) {
+								soundfontsMenu.getSelectionModel().selectPrevious();
+								return;
+							}
+							// Add soundfont name, or just pick it
+							ObservableList<String> soundfonts = soundfontsMenu.getItems();
+							int i;
+							String sfName = sf.getName();
+							for (i = 0; i < soundfonts.size() - 1; i++) {
+								int compare = soundfonts.get(i).compareTo(sfName);
+								if (compare == 0)
+									break;
+								else if (compare > 0) {
+									soundfontsMenu.getItems().add(i, sfName);
+									break;
+								}
+							}
+							soundfontsMenu.getSelectionModel().select(i);
 						}
 					});
 				} 
@@ -315,10 +307,11 @@ public class OptionsButton extends ImagePushButton {
 		SoundfontLoader sfLoader = controller.getSoundfontLoader();
 		String selectedSoundfont = soundfontsMenu.getSelectionModel().getSelectedItem();
 		try {
-			sfLoader.loadSoundfont(Values.SOUNDFONTS_FOLDER + selectedSoundfont);
+			sfLoader.loadFromAppData(selectedSoundfont);
 		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
 			e.printStackTrace();
 		}
+		
 		theStaff.getSequence().setSoundset((String) bindBox.getUserData());
     }
 }

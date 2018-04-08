@@ -454,7 +454,7 @@ public class Utilities {
         controller.getInstBLine().updateNoteExtensions();
         
         try {
-			controller.getSoundfontLoader().loadSoundfont(Values.SOUNDFONTS_FOLDER + theStaff.getSequence().getSoundset());
+			controller.getSoundfontLoader().loadFromAppData(theStaff.getSequence().getSoundset());
 		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
 			e.printStackTrace();
 		}
