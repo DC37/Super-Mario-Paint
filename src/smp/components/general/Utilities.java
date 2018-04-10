@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import javafx.concurrent.Task;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffArrangement;
@@ -516,7 +517,7 @@ public class Utilities {
      */
     public static void populateStaffArrangement(StaffArrangement loaded,
             File inputFile, boolean mpc, Staff theStaff,
-            SMPFXController controller) {
+            final SMPFXController controller) {
         File firstFile = loaded.getTheSequenceFiles().get(0);
         StaffSequence first = loadSequenceFromArrangement(firstFile, theStaff,
                 controller);
@@ -541,7 +542,7 @@ public class Utilities {
                 .addAll(loaded.getTheSequenceNames());
 
         ArrayList<File> files = loaded.getTheSequenceFiles();
-        ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
+        final ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
         for (int i = 0; i < files.size(); i++) {
             try {
                 seq.add(Utilities.loadSong(files.get(i)));
@@ -564,6 +565,28 @@ public class Utilities {
         theStaff.getArrangement().setTheSequences(seq);
 
         controller.getNameTextField().setText(fname);
+        
+        Task<Void> soundsetsTask = new Task<Void>() {
+        	@Override
+            public Void call() {
+        		controller.getSoundfontLoader().clearCache();
+        		for(StaffSequence s : seq) {
+        			try {
+						controller.getSoundfontLoader().loadToCache(s.getSoundset());
+					} catch (InvalidMidiDataException | IOException e) {
+						e.printStackTrace();
+					}
+        		}
+                return null;
+            }
+        };
+        new Thread(soundsetsTask).start();
+        
+        try {
+			controller.getSoundfontLoader().loadFromAppData(first.getSoundset());
+		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+			e.printStackTrace();
+		}
     }
 
 }

@@ -188,6 +188,8 @@ public class SoundfontLoader implements Loader {
 	 */
 	public void loadSoundfont(String path) throws InvalidMidiDataException, IOException, MidiUnavailableException {
 		File f = new File(path);
+		if(f.getName().isEmpty())
+			return;
 		if (!f.getName().equals(StateMachine.getCurrentSoundset())) {
 			bank = MidiSystem.getSoundbank(f);
 			theSynthesizer.loadAllInstruments(bank);
@@ -198,16 +200,18 @@ public class SoundfontLoader implements Loader {
 	/**
 	 * Loads the passed-in filename from AppData.
 	 * 
-	 * @param filename
+	 * @param soundset
 	 *            The soundfont name
 	 * @throws InvalidMidiDataException
 	 * @throws IOException
 	 * @throws MidiUnavailableException
 	 * @since v1.1.2
 	 */
-	public void loadFromAppData(String filename) throws InvalidMidiDataException, IOException, MidiUnavailableException {
+	public void loadFromAppData(String soundset) throws InvalidMidiDataException, IOException, MidiUnavailableException {
 		//TODO: check linux or mac, choose platform-specific folder
-		loadSoundfont(Values.SOUNDFONTS_FOLDER + filename);
+		if(soundset.isEmpty())
+			return;
+		loadSoundfont(Values.SOUNDFONTS_FOLDER + soundset);
 	}
 
 	/**
@@ -231,6 +235,8 @@ public class SoundfontLoader implements Loader {
 	 */
 	public boolean addSoundfont(File sf) {
 		String sfName = sf.getName();
+		if(sfName.isEmpty())
+			return false;
 		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
 		if(!destSf.exists()) {
 			try {
@@ -244,11 +250,7 @@ public class SoundfontLoader implements Loader {
 	}
 	
 	/**
-	 * Stores the current soundbank in cache for quick loading. This function
-	 * will be used when there is an arrangement with multiple songs with
-	 * different soundfonts; the soundfonts will all be stored into cache first
-	 * for quick loading {@link #loadFromCache(String)} before starting each
-	 * next song.
+	 * Stores the current soundbank in cache for quick loading. 
 	 * 
 	 * @since v1.1.2
 	 */
@@ -256,6 +258,27 @@ public class SoundfontLoader implements Loader {
 		String currentSoundset = StateMachine.getCurrentSoundset();
 		if(!bankCache.containsKey(currentSoundset))
 			bankCache.put(currentSoundset, bank);
+	}
+	
+	/**
+	 * Loads the soundset from AppData and stores the soundbank in cache for
+	 * quick loading. This will not change the program's current soundbank.
+	 * 
+	 * @param soundset
+	 *            The soundfont name
+	 * @throws IOException 
+	 * @throws InvalidMidiDataException 
+	 * @since v1.1.2
+	 */
+	public void loadToCache(String soundset) throws InvalidMidiDataException, IOException {
+		//TODO: check linux or mac, choose platform-specific folder
+		if(soundset.isEmpty())
+			return;
+		File f = new File(Values.SOUNDFONTS_FOLDER + soundset);
+		if(!bankCache.containsKey(soundset)) {
+			Soundbank sb = MidiSystem.getSoundbank(f);
+			bankCache.put(soundset, sb);
+		}
 	}
 
 	/**
