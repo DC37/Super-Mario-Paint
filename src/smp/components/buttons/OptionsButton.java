@@ -312,6 +312,10 @@ public class OptionsButton extends ImagePushButton {
 			e.printStackTrace();
 		}
 		
-		theStaff.getSequence().setSoundset((String) bindBox.getUserData());
+		String newSoundset = (String) bindBox.getUserData();
+		if(!theStaff.getSequence().getSoundset().equals(newSoundset)) {
+			theStaff.getSequence().setSoundset(newSoundset);
+			StateMachine.setSongModified(true);
+		}
     }
 }

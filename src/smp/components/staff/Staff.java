@@ -6,6 +6,9 @@ import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.concurrent.Service;
@@ -783,6 +786,8 @@ public class Staff {
                     while (queue > 0)
                         ;
                     /* Force emptying of queue before changing songs. */
+                    queue++;
+                    setSoundset(seq.get(i).getSoundset());
                     index = 0;
                     advance = false;
                     queue++;
@@ -828,6 +833,31 @@ public class Staff {
                 hitStop();
                 return theMatrix.getStaff();
             }
+            
+            /**
+			 * Sets the soundset.
+			 *
+			 * @param soundset
+			 *            The soundset.
+			 * @since v1.1.2
+			 */
+			private void setSoundset(final String soundset) {
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						if (!controller.getSoundfontLoader().loadFromCache(soundset)) {
+							try {
+								controller.getSoundfontLoader().loadFromAppData(soundset);
+							} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+								e.printStackTrace();
+							}
+							controller.getSoundfontLoader().storeInCache();
+						}
+						queue--;
+					}
+				});
+			}
 
             /**
              * Highlights the currently-playing song in the arranger list.

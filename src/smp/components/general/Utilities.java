@@ -418,16 +418,17 @@ public class Utilities {
         }
     }
 
-    /**
-     * Populates the staff with the sequence given.
-     *
-     * @param loaded
-     *            The loaded sequence.
-     * @param inputFile
-     *            The input file.
-     * @param mpc
-     *            Whether this is an MPC file.
-     */
+	/**
+	 * Populates the staff with the sequence given. Sets the program's soundfont
+	 * to the sequence's.
+	 *
+	 * @param loaded
+	 *            The loaded sequence.
+	 * @param inputFile
+	 *            The input file.
+	 * @param mpc
+	 *            Whether this is an MPC file.
+	 */
     public static String populateStaff(StaffSequence loaded, File inputFile,
             boolean mpc, Staff theStaff, SMPFXController controller) {
         Utilities.normalize(loaded);
@@ -505,16 +506,17 @@ public class Utilities {
         }
     }
 
-    /**
-     * Populates the staff with the arrangement given.
-     *
-     * @param loaded
-     *            The loaded arrangement.
-     * @param inputFile
-     *            The input file.
-     * @param mpc
-     *            Whether this is an MPC file.
-     */
+	/**
+	 * Populates the staff with the arrangement given. Loads each soundfont
+	 * from each song in the arrangement into cache.
+	 *
+	 * @param loaded
+	 *            The loaded arrangement.
+	 * @param inputFile
+	 *            The input file.
+	 * @param mpc
+	 *            Whether this is an MPC file.
+	 */
     public static void populateStaffArrangement(StaffArrangement loaded,
             File inputFile, boolean mpc, Staff theStaff,
             final SMPFXController controller) {
@@ -566,7 +568,7 @@ public class Utilities {
 
         controller.getNameTextField().setText(fname);
         
-        Task<Void> soundsetsTask = new Task<Void>() {
+        Task<Void> soundsetsTaskUtilities = new Task<Void>() {
         	@Override
             public Void call() {
         		controller.getSoundfontLoader().clearCache();
@@ -580,7 +582,7 @@ public class Utilities {
                 return null;
             }
         };
-        new Thread(soundsetsTask).start();
+        new Thread(soundsetsTaskUtilities).start();
         
         try {
 			controller.getSoundfontLoader().loadFromAppData(first.getSoundset());

@@ -45,6 +45,7 @@ public class AddButton extends ImagePushButton {
                         .add(theStaff.getSequenceName());
                 theStaff.getArrangement().add(theStaff.getSequence(),
                         theStaff.getSequenceFile());
+                controller.getSoundfontLoader().storeInCache();
             }
         }
     }

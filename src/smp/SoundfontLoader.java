@@ -288,14 +288,19 @@ public class SoundfontLoader implements Loader {
 	 * 
 	 * @param soundset
 	 *            The soundset name (e.g. soundset3.sf2)
+	 * @return if program's current soundset successfully set to soundset
 	 * @since v1.1.2
 	 */
-	public void loadFromCache(String soundset) {
+	public boolean loadFromCache(String soundset) {
+		if(StateMachine.getCurrentSoundset().equals(soundset))
+			return true;
 		if(bankCache.containsKey(soundset)) {
 			bank = bankCache.get(soundset);
 			theSynthesizer.loadAllInstruments(bank);
 			StateMachine.setCurrentSoundset(soundset);
+			return true;
 		}
+		return false;
 	}
 
 	/**

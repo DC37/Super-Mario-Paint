@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import javafx.concurrent.Task;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -214,7 +215,25 @@ public class SaveButton extends ImagePushButton {
             }
             pr.printf("VOL: %d\r\n", theLines.get(i).getVolume());
         }
-        pr.close();
-    }
+		pr.close();
+
+		// when we change the soundfont for a song in the arr, we should store
+		// the new soundfont in cache
+		Task<Void> soundsetsTaskSave = new Task<Void>() {
+			@Override
+			public Void call() {
+				ArrayList<String> seqNames = controller.getStaff().getArrangement().getTheSequenceNames();
+				String currSeqName = controller.getNameTextField().getText();
+				for (String seqName : seqNames) 
+					if (seqName.equals(currSeqName)) {
+						controller.getSoundfontLoader().storeInCache();
+						break;
+					}
+				return null;
+			}
+		};
+		
+		new Thread(soundsetsTaskSave).start();
+	}
 
 }
