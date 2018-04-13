@@ -1,3 +1,20 @@
+v1.1.2
+FIXES
+Fixed song name text field focus issues--click anywhere other than the text field to defocus it
+NEW FEATURES
+Added middle-button selecting
+Soundfont loading (WINDOWS ONLY RIGHT NOW)
+Choose soundfont
+Bind the soundfont to the song 
+Load song's soundfont when loading song
+Load soundfonts for every song in an arrangement
+Load existing soundfonts from AppData
+
+v1.1.1
+NEW FEATURES
+Replaced filter text with filter images
+Added an INST_BACKGROUND.png in sprites/ to skin the window's background
+
 v1.1.0
 FIXES
 Fixed crashing that occurs when mouse interacts with a densely populated staff as it scrolls
