@@ -13,10 +13,12 @@ import smp.commandmanager.commands.RemoveNoteCommand;
 import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
+import smp.components.staff.clipboard.StaffRubberBand;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.topPanel.ButtonLine;
+import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
@@ -31,19 +33,19 @@ import javafx.scene.layout.StackPane;
 
 /**
  * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
- * RESPONSE TO THE MULTITHREADING ISSUE WITH ARRAYLISTS AND STACKPANES OR
- * SOMETHING. THERE WILL ONLY BE ONE OF THIS EVENT HANDLER AND IT WILL BE ADDED
- * TO THE ENTIRE SCENE. WITH THIS HANDLER, ALL STACKPANES ARE DISABLED AND
- * EVENTS WILL BE REGISTERED TO THE STACKPANES BY CALCULATING WHICH PANE TO
- * FETCH VIA MOUSE POSITION.
+ * RESPONSE TO THE MULTITHREADING ISSUE WITH ARRAYLISTS AND STACKPANES. THERE
+ * WILL ONLY BE ONE OF THIS EVENT HANDLER AND IT WILL BE ADDED TO THE ENTIRE
+ * SCENE. WITH THIS HANDLER, ALL STACKPANES ARE DISABLED AND EVENTS WILL BE
+ * REGISTERED TO THE STACKPANES BY CALCULATING WHICH PANE TO FETCH VIA MOUSE
+ * POSITION.
  * 
  * A Staff event handler. The StaffImages implementation was getting bulky and
  * there are still many many features to be implemented here. This handler
  * primarily handles mouse events.
  *
  * @author RehdBlob
- * @since 2013.07.27
- * @version 2.0, modified by j574y923 on 2017.06.22
+ * @author j574y923
+ * @since 2013.07.27 (2017.06.22)
  */
 public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
@@ -90,6 +92,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private StaffAccidental accidental;
 
     /** This is the ImageLoader class. */
+    private SMPFXController controller;
+    
+    /** This is the ImageLoader class. */
     private static ImageLoader il;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
@@ -101,32 +106,19 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * Constructor for this StaffEventHandler. This creates a handler that takes
      * a StackPane and a position on the staff.
      *
-     * -@param stPane
-     *            The StackPane that we are interested in.
-     *            This will be updated whenever the mouse moves to a new stackpane.
-     * -@param acc
-     *            The accidental display pane.
-     *            This will be updated whenever the mouse moves to a new stackpane.
-     * -@param pos
-     *            The position that this handler is located on the staff. 
-     *            This will be updated whenever the mouse moves.
-     * -@param l
-     *            The line of this event handler. Typically between 0 and 9.
-     *            This will be updated whenever the mouse moves.
      * @param s
      *            The pointer to the Staff object that this event handler is
      *            linked to.
-     * @param modifySongManager 
+     * @param ct 
+     * @param i
+     * 			  The program's image loader.
+     * @param cm
+     * 			  The undo/redo manager.
      */
-    public StaffInstrumentEventHandler(Staff s, ImageLoader i, ModifySongManager cm) {
+    public StaffInstrumentEventHandler(Staff s, SMPFXController ct, ImageLoader i, ModifySongManager cm) {
     	
-//    	disableAllStackPanes();
-    	
+    	controller = ct;
         il = i;
-//        position = pos;
-//        line = l;
-//        theImages = stPane.getChildren();//-
-//        accList = acc.getChildren();//-
         theStaff = s;
         accSilhouette = new ImageView();
         
@@ -139,12 +131,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     }
 
 	/**
-	 * Disable all the stack panes. Called when the first mouse event in the
-	 * scene is registered. It is called at that point because the stackpanes
-	 * may not have been initialized before then.
+	 * Disables all the stack panes. 
 	 */
 	private void disableAllStackPanes() {
-    	
 		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
 			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
 				StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(index, i);
@@ -170,19 +159,26 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     	}
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
-        //Drag-add notes, hold e to drag-remove notes
+        // Drag-add notes, hold e to drag-remove notes
 		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown() && newNote) {
 			leftMousePressed(theInd);
 			event.consume();
 			StateMachine.setSongModified(true);
-
+		}
+		// Fire event to clipboard's rubberband event handler @since v1.1.2 
+		else if (event instanceof MouseEvent && ((MouseEvent) event).isMiddleButtonDown()) {
+			//TODO: this is not working, fix it
+//			StaffRubberBand rubberBand = controller.getStaffRubberBand();
+//			if(!rubberBand.isActive())
+//				rubberBand.begin(((MouseEvent) event).getX(), ((MouseEvent) event).getY());
+//			else
+//				rubberBand.resizeBand(((MouseEvent) event).getX(), ((MouseEvent) event).getY());
 		}
 		// Drag-remove notes
 		else if (event instanceof MouseEvent && ((MouseEvent) event).isSecondaryButtonDown() && newNote) {
 			rightMousePressed(theInd);
 			event.consume();
 			StateMachine.setSongModified(true);
-
 		}
 		else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
 			MouseButton b = ((MouseEvent) event).getButton();
@@ -192,8 +188,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                 rightMousePressed(theInd);
             event.consume();
             StateMachine.setSongModified(true);
-
-        } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {//was MOUSE_ENTERED
+        } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
             focus = true;
             mouseEntered(theInd);
             event.consume();
@@ -204,7 +199,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
         	mouseReleased();
         }
-
+		// mouse release event for middle button @since v1.1.2
+        else if (event.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
+        	//TODO: This is not working, fix it
+//        	StaffRubberBand rubberBand = controller.getStaffRubberBand();
+//        	if(rubberBand.isActive())
+//        		rubberBand.end();
+        }
     }
 
 	private void mouseReleased() {
@@ -212,7 +213,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 	}
 
 	/**
-	 * Take in a line and position and check if they are valid. If the note is
+	 * Takes in a line and position and check if they are valid. If the note is
 	 * not valid then it will call mouseExited().
 	 * 
 	 * @param lineTmp
@@ -220,7 +221,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 	 * @return if the given line and position are at a valid note.
 	 */
 	private boolean validNote(int lineTmp, int positionTmp) {
-		if (lineTmp < 0 || positionTmp < 0) {// MOUSE_EXITED
+		// MOUSE_EXITED
+		if (lineTmp < 0 || positionTmp < 0) {
 			InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
 			mouseExited(theInd);
 			return false;
@@ -228,6 +230,16 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 		return true;
 	}
 	
+	/**
+	 * Updates member variables to new note values. Detects if stackpanes are
+	 * disabled and if they aren't this will disable them.
+	 * 
+	 * @param lineTmp
+	 *            the note's line
+	 * @param positionTmp
+	 *            the note's position
+	 * @return success if we updated note to new line or position
+	 */
 	private boolean updateNote(int lineTmp, int positionTmp) {
 		if(line != lineTmp || position != positionTmp){
 			

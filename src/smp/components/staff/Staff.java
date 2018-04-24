@@ -36,6 +36,8 @@ import smp.stateMachine.StateMachine;
  * of the animation of the staff when one hits the play button.
  *
  * @author RehdBlob
+ * @author j574y923
+ * @author Cynagen
  * @since 2012.08.13
  */
 public class Staff {

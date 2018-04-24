@@ -27,7 +27,9 @@ import smp.stateMachine.StateMachine;
  * Also holds a Synthesizer and Soundbank that will be used
  * to play more sounds.
  * @author RehdBlob
+ * @author j574y923
  * @since 2012.08.14
+ * @version v1.1.2
  */
 public class SoundfontLoader implements Loader {
 
@@ -229,7 +231,8 @@ public class SoundfontLoader implements Loader {
 	/**
 	 * Copies the soundfont file to AppData.
 	 * 
-	 * @param sf The soundfont file.
+	 * @param sf
+	 *            The soundfont file.
 	 * @return if soundfont exists in AppData now
 	 * @since v1.1.2
 	 */
@@ -282,9 +285,9 @@ public class SoundfontLoader implements Loader {
 	}
 
 	/**
-	 * Loads the Soundbank by the soundset name from bankCache and sets it as
-	 * the MultiSynthesizer's current soundfont. This is the fast way to set the
-	 * program's soundfont.
+	 * Loads the Soundbank with the soundset name from bankCache and sets it as
+	 * the program's MultiSynthesizer's current soundfont. This is the fast way
+	 * to set the program's soundfont.
 	 * 
 	 * @param soundset
 	 *            The soundset name (e.g. soundset3.sf2)

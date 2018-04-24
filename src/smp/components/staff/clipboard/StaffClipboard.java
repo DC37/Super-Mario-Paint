@@ -1,4 +1,4 @@
-package smp.clipboard;
+package smp.components.staff.clipboard;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
 
-public class DataClipboard {
+public class StaffClipboard {
 
 	public static Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
 	
@@ -33,30 +33,33 @@ public class DataClipboard {
 	private SMPFXController controller;
 	private ImageLoader il;
 	private Pane rubberBandLayer;
-	private RubberBandEventHandler rbeh;
+	private StaffRubberBand rubberBand;
+	private StaffRubberBandEventHandler rbeh;
 
-	private InstrumentFilter instFilter;
+	private StaffClipboardFilter instFilter;
 	
-	/* The functions class for copy, cut, paste, etc. */
-	private DataClipboardAPI theAPI;
+	/** The functions class for copy, cut, paste, etc. */
+	private StaffClipboardAPI theAPI;
 	
-	/* The list that keeps track of all the selections' bounds made by the user */
+	/** The list that keeps track of all the selections' bounds made by the user */
 	private HashMap<Integer, StaffNoteLine> selection;
 	
-	/* The list that will keep track of copied notes (and volumes) */
+	/** The list that will keep track of copied notes (and volumes) */
 	private HashMap<Integer, StaffNoteLine> copiedData;
 
-	/* Volumes aren't node references so we keep track of the volumes' lines */
+	/** Volumes aren't node references so we keep track of the volumes' lines */
 	private HashSet<Integer> highlightedVolumes;
 	
-	/*
+	/**
 	 * The listener that will update which volume bars are highlighted every
 	 * scrollbar change
 	 */
 	private ChangeListener<Number> highlightedVolumesRedrawer;
 
-	public DataClipboard(Staff st, SMPFXController ct, ImageLoader im) {
+	public StaffClipboard(StaffRubberBand rb, Staff st, SMPFXController ct, ImageLoader im) {
 
+		//TODO: move rubberband's API into staffclipboardAPI
+		rubberBand = rb;
 		il = im;
 		theStaff = st;
 		controller = ct;
@@ -64,19 +67,19 @@ public class DataClipboard {
 		selection = new HashMap<>();
 		copiedData = new HashMap<>();
 		
-		//temp? merge the two classes together?
-		theAPI = new DataClipboardAPI(this, theStaff, im, ct.getModifySongManager());
+		//TODO: merge staffclipboard and staffclipboardapi together
+		theAPI = new StaffClipboardAPI(this, theStaff, im, ct.getModifySongManager());
 
 		redrawUI(ct);
 		
 		rubberBandLayer = controller.getBasePane();
-        RubberBandEventHandler rbeh = new RubberBandEventHandler(controller, rubberBandLayer, this);
+		rbeh = new StaffRubberBandEventHandler(rubberBand, controller, rubberBandLayer, this);
         initializeRBEH(rbeh, controller);
 		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
 		
 		initializeHighlightedVolumes(ct);
 		
-		instFilter = new InstrumentFilter(ct.getInstLine(), im);
+		instFilter = new StaffClipboardFilter(ct.getInstLine(), il);
 	}
 
 	private void initializeHighlightedVolumes(SMPFXController ct) {
@@ -91,7 +94,7 @@ public class DataClipboard {
 	                    0,
 	                    theVolBar.getFitWidth() * 3,
 	                    theVolBar.getFitHeight(),
-	                    DataClipboard.HIGHLIGHT_FILL
+	                    StaffClipboard.HIGHLIGHT_FILL
 	            ));
 
 		highlightedVolumes = new HashSet<>();
@@ -135,7 +138,7 @@ public class DataClipboard {
 	 * @param rbeh
 	 * @param ct
 	 */
-	private void initializeRBEH(RubberBandEventHandler rbeh, SMPFXController ct) {
+	private void initializeRBEH(StaffRubberBandEventHandler rbeh, SMPFXController ct) {
 		
 		//initialize lineMinBound
 		HBox staffInstruments = ct.getStaffInstruments();
@@ -201,12 +204,12 @@ public class DataClipboard {
 		return highlightedVolumesRedrawer;
 	}
 	
-	public InstrumentFilter getInstrumentFilter() {
+	public StaffClipboardFilter getInstrumentFilter() {
 		return instFilter;
 	}
 	
 	// temp? merge the two classes together?
-	public DataClipboardAPI getAPI() {
+	public StaffClipboardAPI getAPI() {
 		return theAPI;
 	}
 }

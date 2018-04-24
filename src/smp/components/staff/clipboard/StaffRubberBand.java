@@ -1,4 +1,4 @@
-package smp.clipboard;
+package smp.components.staff.clipboard;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,7 +17,7 @@ import smp.stateMachine.StateMachine;
  *
  * Adapted from https://github.com/varren/JavaFX-Resizable-Draggable-Node
  */
-public class RubberBand extends Rectangle {
+public class StaffRubberBand extends Rectangle {
 
     private double xOrigin;
     private double yOrigin;
@@ -36,20 +36,26 @@ public class RubberBand extends Rectangle {
 	
 	private Text outsideBoundText = new Text();
 
-    public RubberBand() {
+    public StaffRubberBand() {
         super();
-        this.setFill(DataClipboard.HIGHLIGHT_FILL);
+        this.setFill(StaffClipboard.HIGHLIGHT_FILL);
         outsideBoundText.setFill(Color.RED);
     }
     
-    public void setScrollBarResizable(Slider slider) {
-    	
+	/**
+	 * Adds a change listener to slider. Every change that occurs will
+	 * horizontally resize the rubberband.
+	 * 
+	 * @param slider
+	 */
+	public void setScrollBarResizable(Slider slider) {
+
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {		
 				
-				//only xOrigin will move so we need to get the other x bound that will remain the same	
+				// only xOrigin will move so we need to get the other x bound that will remain the same	
 			    double sameEndX = 0;
 				if (getTranslateX() < xOrigin) {
 					sameEndX = getTranslateX();
@@ -60,8 +66,8 @@ public class RubberBand extends Rectangle {
 				int change = newVal.intValue() - oldVal.intValue();
 				applyScroll(change);
 
-//				resizeBand(sameEndX, getTranslateY()); doesn't work for some reason...
-				//do this instead
+				// resizeBand(sameEndX, getTranslateY()); doesn't work for some reason...
+				// do this instead
 		        if (sameEndX >= xOrigin) {
 		            setTranslateX(xOrigin);
 		            setWidth(sameEndX - xOrigin);
@@ -78,8 +84,8 @@ public class RubberBand extends Rectangle {
     }
 
 	/**
-	 * this tells where the line bound is. add the out of bounds text in the
-	 * rubberBandLayer if bound goes off the window. remove the out of bounds
+	 * tells us where the line bound is. adds the out of bounds text in the
+	 * rubberBandLayer if bound goes off the window. removes the out of bounds
 	 * text if in the window.
 	 */
 	public void displayBoundsText() {
@@ -136,7 +142,7 @@ public class RubberBand extends Rectangle {
 	}
 	
     /**
-     * Update scrollOffset with change. Then update xOrigin.
+     * Updates scrollOffset with change then updates xOrigin.
      * 
      * @param change scroll delta
      */
@@ -161,8 +167,8 @@ public class RubberBand extends Rectangle {
     }
     
     /**
-	 * First, call this to begin drawing the rubber band. Sets rubber band
-	 * visible.
+	 * Makes rubber band visible. First, call this to begin drawing the rubber
+	 * band.
 	 *
 	 * @param x
 	 *            x-coord to begin rectangle shape at
@@ -170,16 +176,6 @@ public class RubberBand extends Rectangle {
 	 *            y-coord to begin rectangle shape at
 	 */
 	public void begin(double x, double y) {
-		// if (postResizable) {
-		// return;
-		// }
-
-//		System.out.println("rb:" + lineMinBound);
-//		System.out.println(lineMaxBound);
-//		System.out.println(positionMinBound);
-//		System.out.println(positionMaxBound);
-//		System.out.println(marginVertical);
-//		System.out.println(marginHorizontal);
 
 		if (x < lineMinBound - marginHorizontal || x > lineMaxBound + marginHorizontal
 				|| y < positionMinBound - marginVertical
@@ -201,7 +197,7 @@ public class RubberBand extends Rectangle {
     }
 
 	/**
-	 * Second call this to redraw the rubber band to a new size.
+	 * Redraws the rubber band to a new size. Second call this.
 	 * 
 	 * Note: this method isn't called resize because the JavaFX API uses a
 	 * function of that name.
@@ -212,9 +208,6 @@ public class RubberBand extends Rectangle {
 	 *            y-coord to resize to
 	 */
 	public void resizeBand(double x, double y) {
-		// if (postResizable) {
-//            return;
-//        }
         if (x > lineMaxBound + marginHorizontal) {
             x = lineMaxBound + marginHorizontal;
         } else if (x < lineMinBound - marginHorizontal) {
@@ -291,12 +284,12 @@ public class RubberBand extends Rectangle {
         }
         
     }
-    
-    /**
-     * Finally call this to end drawing the rubber band and hide it. Sets rubber
-     * band invisible.
-     */
-    public void end() {
+
+	/**
+	 * Ends drawing the rubber band and hide it. Sets rubber band invisible.
+	 * Lastly call this.
+	 */
+	public void end() {
         this.setVisible(false);
 
         Pane rubberBandLayer = (Pane)this.getParent();
@@ -416,5 +409,13 @@ public class RubberBand extends Rectangle {
 	
 	public void setMarginHorizontal(double m) {
 		marginHorizontal = m;
+	}
+	
+	/**
+	 * @return if rubberband currently in use
+	 * @since v1.1.2
+	 */
+	public boolean isActive() {
+		return this.isVisible();
 	}
 }

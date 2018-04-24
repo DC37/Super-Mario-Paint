@@ -12,11 +12,12 @@ import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
-import smp.clipboard.DataClipboard;
 import smp.commandmanager.ModifySongManager;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffInstrumentEventHandler;
+import smp.components.staff.clipboard.StaffClipboard;
+import smp.components.staff.clipboard.StaffRubberBand;
 import smp.components.textfield.SongNameController;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
@@ -263,7 +264,8 @@ public class SMPFXController {
     private AnchorPane basePane;
     
     private StaffInstrumentEventHandler staffInstrumentEventHandler;
-    private DataClipboard clipboard;
+    private StaffClipboard clipboard;
+    private StaffRubberBand rubberBand;
     
     private ModifySongManager commandManager;
     
@@ -302,7 +304,7 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         
         // HACK
-        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
+        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, this, il, commandManager);
        
         commandManager.setStaff(staff);
         
@@ -323,7 +325,8 @@ public class SMPFXController {
         downButton.setVisible(false);
         
         // Set up clipboard.
-        clipboard = new DataClipboard(staff, this, il);	
+        rubberBand = new StaffRubberBand();
+        clipboard = new StaffClipboard(rubberBand, staff, this, il);	
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
@@ -598,5 +601,21 @@ public class SMPFXController {
      */
     public SoundfontLoader getSoundfontLoader() {
     	return sf;
+    }
+    
+    /**
+     * @return the staff's clipboard
+     * @since v1.1.2
+     */
+    public StaffClipboard getStaffClipboard() {
+    	return clipboard;
+    }
+    
+    /**
+     * @return the staff's rubberband used with the clipboard
+     * @since v1.1.2
+     */
+    public StaffRubberBand getStaffRubberBand() {
+    	return rubberBand;
     }
 }

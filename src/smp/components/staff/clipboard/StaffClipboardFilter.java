@@ -1,4 +1,4 @@
-package smp.clipboard;
+package smp.components.staff.clipboard;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,7 +10,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -26,7 +25,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.InstrumentIndex;
 
-public class InstrumentFilter extends HashSet<InstrumentIndex> {
+public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 
 	/**
 	 * wot
@@ -41,7 +40,7 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 	//the instrument that will be toggled when entering an instrumentimage
 	private InstrumentIndex instInFocus;
 	
-	public InstrumentFilter(HBox instLine, ImageLoader im){
+	public StaffClipboardFilter(HBox instLine, ImageLoader im){
 		super();
 		instrumentLine = instLine;
 		il = im;
@@ -117,7 +116,7 @@ public class InstrumentFilter extends HashSet<InstrumentIndex> {
 		filterImagesFades.add(ft);
 		
 		// filterImage consumes events so pass the events off to the instrumentImage
-		filterImage.addEventHandler(InputEvent.ANY, new EventHandler() {
+		filterImage.addEventHandler(InputEvent.ANY, new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
