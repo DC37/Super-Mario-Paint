@@ -13,12 +13,10 @@ import smp.commandmanager.commands.RemoveNoteCommand;
 import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
-import smp.components.staff.clipboard.StaffClipboardAPI;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.topPanel.ButtonLine;
-import smp.fx.SMPFXController;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
@@ -90,9 +88,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * This is the image that holds the different types of sharps/flats etc.
      */
     private StaffAccidental accidental;
-
-    /** This is the ImageLoader class. */
-    private SMPFXController controller;
     
     /** This is the ImageLoader class. */
     private static ImageLoader il;
@@ -115,9 +110,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @param cm
      * 			  The undo/redo manager.
      */
-    public StaffInstrumentEventHandler(Staff s, SMPFXController ct, ImageLoader i, ModifySongManager cm) {
+    public StaffInstrumentEventHandler(Staff s, ImageLoader i, ModifySongManager cm) {
     	
-    	controller = ct;
         il = i;
         theStaff = s;
         accSilhouette = new ImageView();

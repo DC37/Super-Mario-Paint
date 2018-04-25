@@ -304,7 +304,7 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         
         // HACK
-        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, this, il, commandManager);
+        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
        
         commandManager.setStaff(staff);
         

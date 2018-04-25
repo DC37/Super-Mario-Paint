@@ -150,11 +150,56 @@ public class Values {
 	public static final int MAX_UNDO_REDO_SIZE = 1000;
 
 	/**
+	 * This works in lieu of preprocessor directives to define the
+	 * platform-specific folder for AppData. Use like this: 
+	 * 'new PlatformDependency().getPlatformFolder()'
+	 * 
+	 * @author j574y923
+	 * @since v1.1.2
+	 */
+	private static class PlatformDependency {
+
+		/** the platform specific folder for appdata */
+		private String platformFolder;
+		
+		/**
+		 * Instantiates the platformFolder. Uses if-else statements because
+		 * preprocessor directives are non-existent in Java.
+		 */
+		public PlatformDependency() {
+
+			//cross-platform solution taken from https://stackoverflow.com/a/16660314/9363442
+			String os = (System.getProperty("os.name")).toUpperCase();
+			// if it is some version of Windows
+			if (os.contains("WIN")) {
+				// it is simply the location of the "AppData" folder
+				platformFolder = System.getenv("AppData");
+			}
+			// Otherwise, we assume Linux or Mac
+			else {
+				// in either case, we would start in the user's home directory
+				platformFolder = System.getProperty("user.home");
+				// if we are on a Mac, we are not done, we look for "Application Support"
+				if (os.contains("MAC")) {
+					platformFolder += "/Library/Application Support";
+				}
+			}
+		}
+		
+		/**
+		 * @return the platform specific folder for appdata
+		 */
+		public String getPlatformFolder() {
+			return platformFolder;
+		}
+	}
+	
+	/**
 	 * This is where we store soundfonts.
 	 * 
 	 * @since v1.1.2
 	 */
-	public static final String SOUNDFONTS_FOLDER = System.getenv("APPDATA") + "\\Super Mario Paint\\SoundFonts\\";
+	public static final String SOUNDFONTS_FOLDER = new PlatformDependency().getPlatformFolder() + "\\Super Mario Paint\\SoundFonts\\";
 	
 	/**
 	 * The default Mario Paint Composer soundfont.
