@@ -13,7 +13,7 @@ import smp.commandmanager.commands.RemoveNoteCommand;
 import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
-import smp.components.staff.clipboard.StaffRubberBand;
+import smp.components.staff.clipboard.StaffClipboardAPI;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -165,15 +165,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 			event.consume();
 			StateMachine.setSongModified(true);
 		}
-		// Fire event to clipboard's rubberband event handler @since v1.1.2 
-		else if (event instanceof MouseEvent && ((MouseEvent) event).isMiddleButtonDown()) {
-			//TODO: this is not working, fix it
-//			StaffRubberBand rubberBand = controller.getStaffRubberBand();
-//			if(!rubberBand.isActive())
-//				rubberBand.begin(((MouseEvent) event).getX(), ((MouseEvent) event).getY());
-//			else
-//				rubberBand.resizeBand(((MouseEvent) event).getX(), ((MouseEvent) event).getY());
-		}
 		// Drag-remove notes
 		else if (event instanceof MouseEvent && ((MouseEvent) event).isSecondaryButtonDown() && newNote) {
 			rightMousePressed(theInd);
@@ -196,15 +187,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             focus = false;
             mouseExited(theInd);
             event.consume();
-        } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+        } 
+        else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
         	mouseReleased();
-        }
-		// mouse release event for middle button @since v1.1.2
-        else if (event.getEventType() == MouseEvent.MOUSE_EXITED_TARGET) {
-        	//TODO: This is not working, fix it
-//        	StaffRubberBand rubberBand = controller.getStaffRubberBand();
-//        	if(rubberBand.isActive())
-//        		rubberBand.end();
         }
     }
 

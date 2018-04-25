@@ -22,15 +22,18 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
 
 /**
- * The API that will contain functions for clipboard. These include copy, cut,
- * delete, insert, move, paste.
+ * The API will contain functions for <code>StaffClipboard</code>. These include
+ * copy, cut, delete, insert, move, paste.
+ * 
+ * Since v1.1.2, the API will also contain <code>StaffRubberBand</code>
+ * functions such as resizing.
  *
  * @author j574y923
  */
 public class StaffClipboardAPI {
-	
+
 	private Staff theStaff;
-	private StaffClipboard theDataClipboard;
+	private StaffClipboard theStaffClipboard;
 	private ImageLoader il;
 	private ModifySongManager commandManager;
 	
@@ -58,8 +61,8 @@ public class StaffClipboardAPI {
 	 */
 	private boolean ignoreVolumesFlag = false;
 	
-	public StaffClipboardAPI(StaffClipboard dc, Staff st, ImageLoader i, ModifySongManager cm) {
-		theDataClipboard = dc;
+	public StaffClipboardAPI(StaffClipboard sc, Staff st, ImageLoader i, ModifySongManager cm) {
+		theStaffClipboard = sc;
 		theStaff = st;
 		il = i;
 		commandManager = cm;
@@ -86,10 +89,10 @@ public class StaffClipboardAPI {
 	public void copy() {
 		//if there's something new selected, make way for new data
 		//else just use old data
-		if(!theDataClipboard.getSelection().isEmpty() && (selectNotesFlag || selectVolumesFlag))
+		if(!theStaffClipboard.getSelection().isEmpty() && (selectNotesFlag || selectVolumesFlag))
 			clearCopiedData();
 
-		for (Map.Entry<Integer, StaffNoteLine> noteLine : theDataClipboard.getSelection().entrySet()) {
+		for (Map.Entry<Integer, StaffNoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
 			int line = noteLine.getKey();
 			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
 			if (selectNotesFlag)
@@ -118,7 +121,7 @@ public class StaffClipboardAPI {
      */
     public void delete() {
 
-		for (Map.Entry<Integer, StaffNoteLine> noteLine : theDataClipboard.getSelection().entrySet()) {
+		for (Map.Entry<Integer, StaffNoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
 			int line = noteLine.getKey();
 			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
 			
@@ -153,7 +156,7 @@ public class StaffClipboardAPI {
 	 */
 	public void paste(int lineMoveTo) {
 
-		HashMap<Integer, StaffNoteLine> copiedData = theDataClipboard.getCopiedData();
+		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		
 		for (Map.Entry<Integer, StaffNoteLine> lineCopy : copiedData.entrySet()) {
 			int line = lineMoveTo + lineCopy.getKey();
@@ -226,7 +229,7 @@ public class StaffClipboardAPI {
 	 *            (>= positionBegin, i.e. positionEnd could be higher notes)
 	 */
 	public void select(int lineBegin, int positionBegin, int lineEnd, int positionEnd) {
-		StaffClipboardFilter instFilter = theDataClipboard.getInstrumentFilter();
+		StaffClipboardFilter instFilter = theStaffClipboard.getInstrumentFilter();
 
 		for (int line = lineBegin; line <= lineEnd; line++) {
 			StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
@@ -246,7 +249,7 @@ public class StaffClipboardAPI {
     }
 	
 	public void clearCopiedData() {
-		theDataClipboard.getCopiedData().clear();
+		theStaffClipboard.getCopiedData().clear();
 		ignoreVolumesFlag = false;
 	}
 
@@ -255,14 +258,14 @@ public class StaffClipboardAPI {
 	 */
 	public void clearSelection() {
 		//unhighlight notes
-		HashMap<Integer, StaffNoteLine> selection = theDataClipboard.getSelection();
+		HashMap<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
 		for(StaffNoteLine line : selection.values()) 
 			for(StaffNote note : line.getNotes())
 				highlightNote(note, false);
 
 		//unhighlight volumes
-		theDataClipboard.getHighlightedVolumes().clear();
-		theDataClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+		theStaffClipboard.getHighlightedVolumes().clear();
+		theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
 
 		selection.clear();
 		selectionLineBegin = Integer.MAX_VALUE;
@@ -304,7 +307,7 @@ public class StaffClipboardAPI {
 	public void copyNote(int line, StaffNote note) {
 		StaffNote newNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
 		newNote.setMuteNote(note.muteNoteVal());
-		HashMap<Integer, StaffNoteLine> copiedData = theDataClipboard.getCopiedData();
+		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		if(!copiedData.containsKey(line))
 			copiedData.put(line, new StaffNoteLine());
 		copiedData.get(line).add(newNote);
@@ -319,7 +322,7 @@ public class StaffClipboardAPI {
 	 *            that will be placed into selection
 	 */
 	public void selectNote(int line, StaffNote note) {
-		HashMap<Integer, StaffNoteLine> selection = theDataClipboard.getSelection();
+		HashMap<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
 		if(!selection.containsKey(line))
 			selection.put(line, new StaffNoteLine());
 		selection.get(line).add(note);
@@ -334,14 +337,14 @@ public class StaffClipboardAPI {
 	}
 	
 	public void copyVolume(int line, int volume) {
-		HashMap<Integer, StaffNoteLine> copiedData = theDataClipboard.getCopiedData();
+		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		if(!copiedData.containsKey(line))
 			copiedData.put(line, new StaffNoteLine());
 		copiedData.get(line).setVolume(volume);
 	}
 	
 	public void selectVolume(int line, int volume) {
-		HashMap<Integer, StaffNoteLine> selection = theDataClipboard.getSelection();
+		HashMap<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
 		if(!selection.containsKey(line))
 			selection.put(line, new StaffNoteLine());
 		selection.get(line).setVolume(volume);
@@ -350,26 +353,26 @@ public class StaffClipboardAPI {
 
 	public void highlightVolume(int line, boolean highlight) {
 		if(highlight) 
-			theDataClipboard.getHighlightedVolumes().add(line);
+			theStaffClipboard.getHighlightedVolumes().add(line);
 		else 
-			theDataClipboard.getHighlightedVolumes().remove(line);
+			theStaffClipboard.getHighlightedVolumes().remove(line);
 		
 		// trigger the ChangeListener that will set the highlight effect
 		if (StateMachine.getMeasureLineNum() <= line
 				&& line < StateMachine.getMeasureLineNum() + Values.NOTELINES_IN_THE_WINDOW)
-			theDataClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+			theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
 	}
 	
 	public void selectNotesToggle(boolean selectNotes) {
 		selectNotesFlag = selectNotes;
 		if(selectNotesFlag) {
 			//highlight notes
-			for(StaffNoteLine line : theDataClipboard.getSelection().values()) 
+			for(StaffNoteLine line : theStaffClipboard.getSelection().values()) 
 				for(StaffNote note : line.getNotes())
 					highlightNote(note, true);
 		} else {
 			//unhighlight notes
-			for(StaffNoteLine line : theDataClipboard.getSelection().values()) 
+			for(StaffNoteLine line : theStaffClipboard.getSelection().values()) 
 				for(StaffNote note : line.getNotes())
 					highlightNote(note, false);
 		}
@@ -378,12 +381,12 @@ public class StaffClipboardAPI {
 	public void selectVolumesToggle(boolean selectVolumes) {
 		selectVolumesFlag = selectVolumes;
 		if(selectVolumesFlag) {
-			for(Integer line : theDataClipboard.getSelection().keySet())
+			for(Integer line : theStaffClipboard.getSelection().keySet())
 				highlightVolume(line, true);
 		} else {
 			//unhighlight volumes
-			theDataClipboard.getHighlightedVolumes().clear();
-			theDataClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+			theStaffClipboard.getHighlightedVolumes().clear();
+			theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
 		}
 	}
 	
@@ -393,5 +396,64 @@ public class StaffClipboardAPI {
 	
 	public boolean isSelectVolumesOn() {
 		return selectVolumesFlag;
+	}
+
+	/**
+	 * Begins the first point for the clipboard's rubberband at the specified x
+	 * and y coords. Adds the rubberband to the rubberBandLayer so it actually
+	 * shows up.
+	 * 
+	 * @param x
+	 *            the first x coord
+	 * @param y
+	 *            the first y coord
+	 * @since v1.1.2
+	 */
+	public void beginBand(double x, double y) {
+		StaffRubberBand rubberBand = theStaffClipboard.getRubberBand();
+    	theStaffClipboard.getRubberBandLayer().getChildren().add(rubberBand);
+    	rubberBand.begin(x, y);
+	}
+	
+	/**
+	 * Draws and resizes the rubberband from the first point from beginBand() to
+	 * the next point specified by x and y. beginBand() should be called before
+	 * this.
+	 * 
+	 * @param x
+	 *            the second x coord
+	 * @param y
+	 *            the second y coord
+	 * @since v1.1.2
+	 */
+	public void resizeBand(double x, double y) {
+		theStaffClipboard.getRubberBand().resizeBand(x, y);
+	}	
+
+	/**
+	 * Ends the band and selects all notes inside the region. Notes selected are
+	 * modified by the <code>StaffClipboardFilter</code>. resizeBand() should be
+	 * called before this.
+	 * 
+	 * @since v1.1.2
+	 */
+	public void endBand() {
+		StaffRubberBand rubberBand = theStaffClipboard.getRubberBand();
+		rubberBand.end();
+		theStaffClipboard.getRubberBandLayer().getChildren().remove(rubberBand);
+
+		int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();
+		int pb = rubberBand.getPositionBegin();
+		int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();
+		int pe = rubberBand.getPositionEnd();
+		select(lb, pb, le, pe);
+	}
+	
+	/**
+	 * @return if rubberband is in the rubberbandlayer
+	 * @since v1.1.2
+	 */
+	public boolean isRubberBandActive() {
+		return theStaffClipboard.getRubberBandLayer().getChildren().contains(theStaffClipboard.getRubberBand());
 	}
 }

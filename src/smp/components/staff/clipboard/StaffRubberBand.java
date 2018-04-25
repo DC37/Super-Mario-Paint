@@ -11,10 +11,10 @@ import smp.components.Values;
 import smp.stateMachine.StateMachine;
 
 /**
- * Rubber band is drawn by the mouse. Click and drag to create a rectangle that
- * will overlay a region on top of the composition. This rectangular region will
- * grab all notes in that region.
- *
+ * The rubber band is just a rectangle that gets resized by the mouse. It is a
+ * model to hold boundary information. The bounds can then be used to represent
+ * a region encapsulating notes useful for clipboard functions like copy.
+ * 
  * Adapted from https://github.com/varren/JavaFX-Resizable-Draggable-Node
  */
 public class StaffRubberBand extends Rectangle {
@@ -84,13 +84,14 @@ public class StaffRubberBand extends Rectangle {
     }
 
 	/**
-	 * tells us where the line bound is. adds the out of bounds text in the
-	 * rubberBandLayer if bound goes off the window. removes the out of bounds
-	 * text if in the window.
+	 * Displays bounds text at either the left or right edge of the rubberband,
+	 * whichever is cut off. This tells us where the line bound is. Adds the out
+	 * of bounds text in the rubberBandLayer if bound goes off the window.
+	 * Removes the out of bounds text if in the window.
 	 */
 	public void displayBoundsText() {
 		Pane rubberBandLayer = (Pane) getParent();
-    	if(rubberBandLayer == null)
+		if (rubberBandLayer == null)
     		return;
     	
 		int relativeScrollOffset = scrollOffset + originLine;
@@ -409,13 +410,5 @@ public class StaffRubberBand extends Rectangle {
 	
 	public void setMarginHorizontal(double m) {
 		marginHorizontal = m;
-	}
-	
-	/**
-	 * @return if rubberband currently in use
-	 * @since v1.1.2
-	 */
-	public boolean isActive() {
-		return this.isVisible();
 	}
 }

@@ -58,7 +58,6 @@ public class StaffClipboard {
 
 	public StaffClipboard(StaffRubberBand rb, Staff st, SMPFXController ct, ImageLoader im) {
 
-		//TODO: move rubberband's API into staffclipboardAPI
 		rubberBand = rb;
 		il = im;
 		theStaff = st;
@@ -211,5 +210,21 @@ public class StaffClipboard {
 	// temp? merge the two classes together?
 	public StaffClipboardAPI getAPI() {
 		return theAPI;
+	}
+	
+	/**
+	 * @return the node the rubberband is added to or removed from
+	 * @since v1.1.2
+	 */
+	public Pane getRubberBandLayer() {
+		return rubberBandLayer;
+	}
+	
+	/**
+	 * @return the rubberband
+	 * @since v1.1.2
+	 */
+	public StaffRubberBand getRubberBand() {
+		return rubberBand;
 	}
 }

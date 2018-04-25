@@ -90,9 +90,15 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 	@Override
     public void handle(MouseEvent mouseEvent) {
         mouseX = mouseEvent.getX();
-		if(!StateMachine.isClipboardPressed()){
+        // the middlebutton can now bypass the clipboard button @since v1.1.2
+		if(!StateMachine.isClipboardPressed() && !mouseEvent.isMiddleButtonDown()){
 			
-			if (mouseEvent.getEventType() == MouseEvent.MOUSE_CLICKED) 
+			// for middlebutton handling @since v1.1.2
+			if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
+				if(theStaffClipboard.getAPI().isRubberBandActive())
+					theStaffClipboard.getAPI().endBand();
+			}
+			else if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) 
                 theStaffClipboard.getAPI().clearSelection(); 
 			
 			return;
@@ -102,19 +108,11 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
             if(!mouseEvent.isControlDown()) {
                 theStaffClipboard.getAPI().clearSelection(); 
             } 
-        	rubberBandLayer.getChildren().add(rubberBand);
-            rubberBand.begin(mouseEvent.getX(), mouseEvent.getY());
+        	theStaffClipboard.getAPI().beginBand(mouseEvent.getX(), mouseEvent.getY());
         } else if (mouseEvent.isPrimaryButtonDown() || mouseEvent.isMiddleButtonDown()) {
-            rubberBand.resizeBand(mouseEvent.getX(), mouseEvent.getY());
+        	theStaffClipboard.getAPI().resizeBand(mouseEvent.getX(), mouseEvent.getY());
         } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
-            rubberBand.end();
-        	rubberBandLayer.getChildren().remove(rubberBand);
-
-			int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();
-			int pb = rubberBand.getPositionBegin();
-			int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();
-			int pe = rubberBand.getPositionEnd();
-			theStaffClipboard.getAPI().select(lb, pb, le, pe);
+        	theStaffClipboard.getAPI().endBand();
         }
     }
 
