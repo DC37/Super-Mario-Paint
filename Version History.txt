@@ -2,8 +2,8 @@ v1.1.2
 FIXES
 Fixed song name text field focus issues--click anywhere other than the text field to defocus it
 NEW FEATURES
-Added middle-button selecting
-Soundfont loading (WINDOWS ONLY RIGHT NOW)
+Added middle-button selecting to bypass clipboard button
+Soundfont loading (WINDOWS, LINUX, and MAC)
 Choose soundfont
 Bind the soundfont to the song 
 Load song's soundfont when loading song
