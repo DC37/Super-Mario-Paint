@@ -307,6 +307,7 @@ public class SuperMarioPaint extends Application {
     	
     	primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
     	
+    	// TODO: move to its own keyhandler
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
 
@@ -327,6 +328,15 @@ public class SuperMarioPaint extends Application {
                     	case END:
                     		if(ke.isControlDown())
                     			controller.getStaff().setLocation((int)controller.getScrollbar().getMax());
+                    		break;
+                    	// @since v1.1.2, requested by seymour schlong
+                    	case LEFT:
+                    		if(ke.isControlDown())
+                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
+                    		break;
+                    	case RIGHT:
+                    		if(ke.isControlDown())
+                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
                     		break;
                     	default:
                     	}

@@ -47,6 +47,7 @@ public class ClipboardButton extends ImageToggleButton {
 				+ "Alt+N to toggle notes selection\n"
 				+ "Alt+V to toggle volumes selection"));
 		
+		// TODO: create getClipboardButton() somewhere so adding a hotkey can be done elsewhere
 		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 			@Override

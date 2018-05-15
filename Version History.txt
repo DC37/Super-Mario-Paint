@@ -3,6 +3,8 @@ FIXES
 Fixed song name text field focus issues--click anywhere other than the text field to defocus it
 NEW FEATURES
 Added middle-button selecting to bypass clipboard button
+Added 4-line scrolling with Ctrl+Left or Ctrl+Right per request of seymour schlong
+Added hotkeys for Mute button (N) and MuteInst button (M) per request of seymour schlong
 Soundfont loading (WINDOWS, LINUX, and MAC)
 Choose soundfont
 Bind the soundfont to the song 

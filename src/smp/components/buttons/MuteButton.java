@@ -1,6 +1,9 @@
 package smp.components.buttons;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.ImageLoader;
@@ -37,6 +40,20 @@ public class MuteButton extends ImageToggleButton {
         getImages(ImageIndex.MUTE_PRESSED, ImageIndex.MUTE_RELEASED);
         releaseImage();
         isPressed = false;
+        
+		// TODO: create getMuteButton() somewhere so adding a hotkey can be done elsewhere
+        // @since v1.1.2 per request of seymour schlong
+		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				/** alt+n is for deselecting notes @see <code>StaffRubberBandEventHandler</code> */
+				if(event.isAltDown())
+					return;
+				if(event.getCode() == KeyCode.N)
+					reactPressed(null);
+			}
+		});
     }
 
     @Override
