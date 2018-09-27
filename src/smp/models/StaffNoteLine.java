@@ -3,6 +3,8 @@ package smp.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import smp.components.Values;
+
 /**
  * A line of notes on the staff. This can include
  * notes, bookmarks, etc.
@@ -16,13 +18,24 @@ public class StaffNoteLine implements Serializable {
      */
     private static final long serialVersionUID = 3876410979457142750L;
 
+    /**
+     * This is the list of note volumes (we will use this later as an extension
+     * to the usual volume-bar-sets-the-volume-of-the-whole-line thing.
+     */
+    private ArrayList<Integer> volumes;
+
     /** This is the volume of the entire <code>StaffNoteLine</code> */
     private int volume;
 
     /** This ArrayList holds staff notes inside it. */
-    private ArrayList<StaffNote> notes = new ArrayList<StaffNote>();
+    private ArrayList<StaffNote> notes;
 
+    /**
+     * Creates a new staff note line with the specified
+     * line number.
+     */
     public StaffNoteLine() {
+        notes = new ArrayList<StaffNote>();
     }
 
     /**
@@ -73,17 +86,40 @@ public class StaffNoteLine implements Serializable {
         return notes;
     }
 
+    /** @return The list of volumes of the different notes. */
+    public ArrayList<Integer> getVolumes() {
+        return volumes;
+    }
+
     /** @return The volume of this <code>StaffNoteLine</code>. */
     public int getVolume() {
         return volume;
     }
 
-	/**
-	 * @param y The volume that we want to set this note line to.
-	 */
-	public void setVolume(int y) {
-		volume = (int) y;
-	}
+    /**
+     * @param y The volume that we want to set this note line to.
+     */
+    public void setVolume(double y) {
+        if (volume >= Values.MIN_VELOCITY &&
+                volume <= Values.MAX_VELOCITY)
+            volume = (int) y;
+    }
+
+    /**
+     * @param vol A percentage (between 0 and 1) that we want
+     * to scale this volume by.
+     */
+    public void setVolumePercent(double vol) {
+        if (vol >= 0 && vol <= 1)
+            volume = (int) (vol * Values.MAX_VELOCITY);
+    }
+
+    /**
+     * @return The percent volume of this StaffNoteLine.
+     */
+    public double getVolumePercent() {
+        return ((double) volume) / Values.MAX_VELOCITY;
+    }
 
     @Override
     public String toString() {

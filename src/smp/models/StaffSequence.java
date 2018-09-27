@@ -26,7 +26,7 @@ public class StaffSequence implements Serializable {
     private double tempo = Values.DEFAULT_TEMPO;
 
     /** These are all of the lines on the staff. */
-    private ArrayList<StaffNoteLine> theLines = new ArrayList<StaffNoteLine>();
+    private ArrayList<StaffNoteLine> theLines;
 
     /** This tells us which notes are extended (green highlight) or not. */
     private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
@@ -39,6 +39,7 @@ public class StaffSequence implements Serializable {
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
+        theLines = new ArrayList<StaffNoteLine>();
         for (int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
             theLines.add(new StaffNoteLine());
     }
@@ -48,9 +49,18 @@ public class StaffSequence implements Serializable {
      *            The index that we want to get some line from.
      * @return Gets a <code>StaffNoteLine</code> that resides at index i.
      */
-	public StaffNoteLine getLine(int i) {
-		return theLines.get(i);
-	}
+    public StaffNoteLine getLine(int i) {
+        try {
+            return theLines.get(i);
+        } catch (IndexOutOfBoundsException e) {
+            theLines.add(new StaffNoteLine());
+            try {
+                return theLines.get(i);
+            } catch (IndexOutOfBoundsException e2) {
+                return getLine(i);
+            }
+        }
+    }
 
     /**
      * @return The entire list of the StaffNoteLines of this song.
@@ -140,14 +150,24 @@ public class StaffSequence implements Serializable {
     }
 
     /**
-	 * @param s
-	 *            The time signature to set this <code>StaffSequence</code> to.
-	 */
-	public void setTimeSignature(TimeSignature s) {
-		t = TimeSignature.FOUR_FOUR;
-	}
+     * @param s
+     *            The time signature to set this <code>StaffSequence</code> to.
+     */
+    public void setTimeSignature(String s) {
+        int top = Integer.parseInt(s.substring(0, s.indexOf("/")));
+        int bottom = Integer.parseInt(s.substring(s.indexOf("/") + 1));
+        for (TimeSignature tSig : TimeSignature.values()) {
+            if (tSig.bottom() == bottom && tSig.top() == top) {
+                t = tSig;
+                break;
+            }
+        }
+        if (t == null) {
+            t = TimeSignature.FOUR_FOUR;
+        }
+    }
 
-	/** @return The time signature of this sequence. */
+    /** @return The time signature of this sequence. */
     public TimeSignature getTimeSignature() {
         return t;
     }
