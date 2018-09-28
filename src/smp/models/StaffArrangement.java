@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  * This is an arrangement on the staff, a collection of
  * <code>StaffSequence</code>s and their filepaths.
@@ -21,19 +24,19 @@ public class StaffArrangement implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** This is the list of <code>StaffSequence</code> objects. */
-    private transient ArrayList<StaffSequence> theSequences;
+    private transient ObservableList<StaffSequence> theSequences;
 
     /** This is the list of <code>StaffSequence</code> file locations. */
-    private ArrayList<File> theSequenceFiles;
+    private ObservableList<File> theSequenceFiles;
 
     /** This is the list of sequence / song names. */
-    private ArrayList<String> theSequenceNames;
+    private ObservableList<String> theSequenceNames;
 
     /** Default constructor. Creates two empty lists. */
     public StaffArrangement() {
-        theSequences = new ArrayList<StaffSequence>();
-        theSequenceFiles = new ArrayList<File>();
-        theSequenceNames = new ArrayList<String>();
+        theSequences = FXCollections.observableArrayList();
+        theSequenceFiles = FXCollections.observableArrayList();
+        theSequenceNames = FXCollections.observableArrayList();
     }
 
     /**
@@ -106,7 +109,7 @@ public class StaffArrangement implements Serializable {
     /**
      * @return The list of sequence files.
      */
-    public ArrayList<StaffSequence> getTheSequences() {
+    public ObservableList<StaffSequence> getTheSequences() {
         return theSequences;
     }
 
@@ -115,13 +118,13 @@ public class StaffArrangement implements Serializable {
      *            The list of sequence files to set.
      */
     public void setTheSequences(ArrayList<StaffSequence> t) {
-        theSequences = t;
+        theSequences.setAll(t);
     }
 
     /**
      * @return The list of file locations for the sequence files.
      */
-    public ArrayList<File> getTheSequenceFiles() {
+    public ObservableList<File> getTheSequenceFiles() {
         return theSequenceFiles;
     }
 
@@ -130,13 +133,13 @@ public class StaffArrangement implements Serializable {
      *            The list of file locations to set.
      */
     public void setTheSequenceFiles(ArrayList<File> tsf) {
-        theSequenceFiles = tsf;
+        theSequenceFiles.setAll(tsf);
     }
 
     /**
      * @return the The names of the files in this arrangement.
      */
-    public ArrayList<String> getTheSequenceNames() {
+    public ObservableList<String> getTheSequenceNames() {
         return theSequenceNames;
     }
 

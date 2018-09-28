@@ -1,8 +1,11 @@
 package smp.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import smp.components.Values;
 import smp.stateMachine.TimeSignature;
 
@@ -23,23 +26,25 @@ public class StaffSequence implements Serializable {
     /**
      * The tempo of this sequence.
      */
-    private double tempo = Values.DEFAULT_TEMPO;
+    private DoubleProperty tempo;
 
     /** These are all of the lines on the staff. */
-    private ArrayList<StaffNoteLine> theLines;
+    private ObservableList<StaffNoteLine> theLines;
 
     /** This tells us which notes are extended (green highlight) or not. */
-    private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+    private BooleanProperty[] noteExtensions = new BooleanProperty[Values.NUMINSTRUMENTS];
 
     /** The time signature of this sequence. */
     private TimeSignature t = TimeSignature.FOUR_FOUR;
     
     /** The soundset bound to and should be loaded for this sequence. */
-    private String soundsetBinding = "";
+    private StringProperty soundsetBinding;
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
-        theLines = new ArrayList<StaffNoteLine>();
+    	tempo.set(Values.DEFAULT_TEMPO);
+    	soundsetBinding.set("");
+        theLines = FXCollections.observableArrayList();
         for (int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
             theLines.add(new StaffNoteLine());
     }
@@ -65,7 +70,7 @@ public class StaffSequence implements Serializable {
     /**
      * @return The entire list of the StaffNoteLines of this song.
      */
-    public ArrayList<StaffNoteLine> getTheLines() {
+    public ObservableList<StaffNoteLine> getTheLines() {
         return theLines;
     }
 
@@ -122,7 +127,7 @@ public class StaffSequence implements Serializable {
     }
 
     /** @return The tempo of this sequence. */
-    public double getTempo() {
+    public DoubleProperty getTempo() {
         return tempo;
     }
 
@@ -133,7 +138,7 @@ public class StaffSequence implements Serializable {
      *            The tempo of this sequence.
      */
     public void setTempo(double t) {
-        tempo = t;
+        tempo.set(t);
     }
 
     /**
@@ -141,11 +146,12 @@ public class StaffSequence implements Serializable {
      *            The note extensions bitfield that we want to set.
      */
     public void setNoteExtensions(boolean[] i) {
-        noteExtensions = i;
+    	for(int idx = 0; idx < Values.NUMINSTRUMENTS; idx++)
+    		noteExtensions[idx].set(i[idx]);
     }
 
     /** @return The bitfield denoting which notes are extended. */
-    public boolean[] getNoteExtensions() {
+    public BooleanProperty[] getNoteExtensions() {
         return noteExtensions;
     }
 
@@ -178,14 +184,14 @@ public class StaffSequence implements Serializable {
 	 * @since v1.1.2
 	 */
 	public void setSoundset(String soundset) {
-		soundsetBinding = soundset;
+		soundsetBinding.set(soundset);
     }
 
 	/**
 	 * @return The soundset bound to this sequence.
 	 * @since v1.1.2
 	 */
-	public String getSoundset() {
+	public StringProperty getSoundset() {
 		return soundsetBinding;
     }
     

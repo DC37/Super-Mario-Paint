@@ -1,8 +1,9 @@
 package smp.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
+import javafx.beans.property.IntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import smp.components.Values;
 
 /**
@@ -22,20 +23,24 @@ public class StaffNoteLine implements Serializable {
      * This is the list of note volumes (we will use this later as an extension
      * to the usual volume-bar-sets-the-volume-of-the-whole-line thing.
      */
-    private ArrayList<Integer> volumes;
+    private ObservableList<IntegerProperty> volumes;
 
     /** This is the volume of the entire <code>StaffNoteLine</code> */
-    private int volume;
+    private IntegerProperty volume;
 
     /** This ArrayList holds staff notes inside it. */
-    private ArrayList<StaffNote> notes;
+    private ObservableList<StaffNote> notes;
+
+    /** This ArrayList holds staff events in it. */
+    private ObservableList<StaffEvent> marks;
 
     /**
      * Creates a new staff note line with the specified
      * line number.
      */
     public StaffNoteLine() {
-        notes = new ArrayList<StaffNote>();
+        notes = FXCollections.observableArrayList();
+        marks = FXCollections.observableArrayList();
     }
 
     /**
@@ -44,6 +49,14 @@ public class StaffNoteLine implements Serializable {
      */
     public void add(StaffNote n) {
         notes.add(n);
+    }
+
+    /**
+     * Adds an event to this staff note line.
+     * @param e The event that we are trying to add.
+     */
+    public void addEvent(StaffEvent e) {
+        marks.add(e);
     }
 
     /**
@@ -64,6 +77,16 @@ public class StaffNoteLine implements Serializable {
         return notes.remove(index);
     }
 
+
+    /**
+     * Deletes an event from this staff note line.
+     * @param e The event that we are trying to remove.
+     * @return True if we successfully removed the event.
+     */
+    public boolean removeEvent(StaffEvent e) {
+        return marks.remove(e);
+    }
+
     /** @return Whether this StaffNoteLine contains the staff note already. */
     public boolean contains(StaffNote theNote) {
         return notes.contains(theNote);
@@ -82,17 +105,17 @@ public class StaffNoteLine implements Serializable {
     /**
      * @return The list of notes that this <code>StaffNoteLine</code> contains.
      */
-    public ArrayList<StaffNote> getNotes() {
+    public ObservableList<StaffNote> getNotes() {
         return notes;
     }
 
     /** @return The list of volumes of the different notes. */
-    public ArrayList<Integer> getVolumes() {
+    public ObservableList<IntegerProperty> getVolumes() {
         return volumes;
     }
 
     /** @return The volume of this <code>StaffNoteLine</code>. */
-    public int getVolume() {
+    public IntegerProperty getVolume() {
         return volume;
     }
 
@@ -100,9 +123,9 @@ public class StaffNoteLine implements Serializable {
      * @param y The volume that we want to set this note line to.
      */
     public void setVolume(double y) {
-        if (volume >= Values.MIN_VELOCITY &&
-                volume <= Values.MAX_VELOCITY)
-            volume = (int) y;
+        if (volume.get() >= Values.MIN_VELOCITY &&
+                volume.get() <= Values.MAX_VELOCITY)
+            volume.set((int) y);
     }
 
     /**
@@ -111,14 +134,14 @@ public class StaffNoteLine implements Serializable {
      */
     public void setVolumePercent(double vol) {
         if (vol >= 0 && vol <= 1)
-            volume = (int) (vol * Values.MAX_VELOCITY);
+            volume.set((int) (vol * Values.MAX_VELOCITY));
     }
 
     /**
      * @return The percent volume of this StaffNoteLine.
      */
     public double getVolumePercent() {
-        return ((double) volume) / Values.MAX_VELOCITY;
+        return volume.doubleValue() / Values.MAX_VELOCITY;
     }
 
     @Override
