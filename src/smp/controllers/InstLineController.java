@@ -2,6 +2,9 @@ package smp.controllers;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -16,7 +19,6 @@ import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
-import smp.components.staff.Staff;
 import smp.components.staff.sequences.Note;
 import smp.models.Variables;
 import smp.stateMachine.Settings;
@@ -31,7 +33,7 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @since 2012.08.21
  */
-public class ButtonLineController {
+public class InstLineController {
 
     /**
      * The default note number.
@@ -43,16 +45,8 @@ public class ButtonLineController {
      */
     private ArrayList<ImageView> buttons = new ArrayList<ImageView>();
 
-    /**
-     * The InstrumentIndex of the selected instrument. Default is Mario.
-     */
-    private static InstrumentIndex selectedInstrument = Variables.selectedInstrument.get();
-
     /** This is a list of names for the different instrument line instruments. */
     private ArrayList<String> instrumentLineImages = new ArrayList<String>();
-
-    /** The picture of the currently-selected instrument. */
-    private ImageView selectedInst;
 
     /** This is the image loader class. */
     private ImageLoader il;
@@ -63,9 +57,6 @@ public class ButtonLineController {
      */
     private MidiChannel[] chan;
 
-    /** This is the staff that we are editing. */
-    private Staff theStaff;
-
     /**
      * Initializes the ImageView ArrayList.
      *
@@ -73,7 +64,7 @@ public class ButtonLineController {
      *            An ArrayList of ImageView references intended to be displayed
      *            as an instrument line.
      */
-    public ButtonLineController(HBox instLine) {
+    public InstLineController(HBox instLine) {
         for (Node i : instLine.getChildren())
             buttons.add((ImageView) i);
         setupButtons();
@@ -85,6 +76,8 @@ public class ButtonLineController {
         ObservableList<Node> n = instLine.getChildren();
         Node nd = n.remove(15);
         n.add(16, nd);
+        
+        setupViewUpdater();
     }
 
     /**
@@ -107,18 +100,7 @@ public class ButtonLineController {
                                 event.consume();
                             } else {
                                 playSound(i);
-                                try {
-                                    selectedInst.setImage(il
-                                            .getSpriteFX(ImageIndex.valueOf(i
-                                                    .toString())));
-                                    setSelectedInstrument(i);
-                                } catch (IllegalArgumentException e) {
-                                    e.printStackTrace();
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    event.consume();
-                                }
+                                event.consume();
                             }
                         }
 
@@ -152,6 +134,7 @@ public class ButtonLineController {
     /**
      * Updates the note extensions display at the instrument selection line.
      */
+    @Deprecated
     public void updateNoteExtensions() {
         boolean[] ext = StateMachine.getNoteExtensions();
         for (int j = 0; j < Values.NUMINSTRUMENTS; j++) {
@@ -166,13 +149,9 @@ public class ButtonLineController {
      *            The instrument that we are trying to set to extend.
      */
     private void toggleNoteExtension(InstrumentIndex i) {
-        boolean[] ext = StateMachine.getNoteExtensions();
-        ext[i.getChannel() - 1] = !ext[i.getChannel() - 1];
-        StateMachine.setNoteExtensions(ext);
-        changePortrait(i.getChannel() - 1, ext[i.getChannel() - 1]);
-        boolean[] ext2 = theStaff.getSequence().getNoteExtensions();
-        ext2 = ext;
-        theStaff.getSequence().setNoteExtensions(ext2);
+        BooleanProperty[] ext = Variables.noteExtensions;
+        ext[i.getChannel() - 1].set(!ext[i.getChannel() - 1].get());
+        Variables.loadedSequence.get().setNoteExtensions(ext);
     }
 
     /**
@@ -197,27 +176,25 @@ public class ButtonLineController {
     }
 
     /**
-     * Sets the currently selected instrument.
-     *
-     * @param i
-     *            The <code>InstrumentIndex</code> that one wants to set the
-     *            currently selected instrument by.
-     */
-    private void setSelectedInstrument(InstrumentIndex i) {
-        selectedInstrument = i;
-    }
-
-    /** @return The current selected instrument. */
-    public static InstrumentIndex getSelectedInstrument() {
-        return selectedInstrument;
-    }
-
-    /**
      * @param n
      *            The Note that all of the InstrumentLine instruments will play
      *            when clicked on.
      */
     public void setDefaultNote(Note n) {
         DEFAULT_NOTE = n.getKeyNum();
+    }
+    
+    private void setupViewUpdater() {
+    	BooleanProperty[] ext = Variables.noteExtensions;
+		for (int i = 0; i < ext.length; i++) {
+			final int i2 = i;
+			ext[i].addListener(new ChangeListener<Boolean>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					changePortrait(i2, newValue.booleanValue());
+				}
+			});
+		}
     }
 }

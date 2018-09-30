@@ -32,7 +32,7 @@ public class StaffSequence implements Serializable {
     private ObservableList<StaffNoteLine> theLines;
 
     /** This tells us which notes are extended (green highlight) or not. */
-    private BooleanProperty[] noteExtensions = new BooleanProperty[Values.NUMINSTRUMENTS];
+    private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
     /** The time signature of this sequence. */
     private TimeSignature t = TimeSignature.FOUR_FOUR;
@@ -145,13 +145,13 @@ public class StaffSequence implements Serializable {
      * @param i
      *            The note extensions bitfield that we want to set.
      */
-    public void setNoteExtensions(boolean[] i) {
+    public void setNoteExtensions(BooleanProperty[] i) {
     	for(int idx = 0; idx < Values.NUMINSTRUMENTS; idx++)
-    		noteExtensions[idx].set(i[idx]);
+    		noteExtensions[idx] = i[idx].get();
     }
 
     /** @return The bitfield denoting which notes are extended. */
-    public BooleanProperty[] getNoteExtensions() {
+    public boolean[] getNoteExtensions() {
         return noteExtensions;
     }
 
