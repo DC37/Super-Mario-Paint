@@ -1,4 +1,4 @@
-package smp.controllers;
+package smp.presenters;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -9,7 +9,7 @@ import smp.ImageLoader;
 import smp.components.InstrumentIndex;
 import smp.models.Variables;
 
-public class SelectedInstController {
+public class SelectedInstPresenter {
 	
     /** The picture of the currently-selected instrument. */
     private ImageView selectedInst;
@@ -17,7 +17,7 @@ public class SelectedInstController {
     /** This is the image loader class. */
     private ImageLoader il;
     
-	public SelectedInstController(ImageView selectedInst) {
+	public SelectedInstPresenter(ImageView selectedInst) {
 		this.selectedInst = selectedInst;
 		setupViewUpdater();
 	}

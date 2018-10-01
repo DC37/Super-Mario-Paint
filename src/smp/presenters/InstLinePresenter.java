@@ -1,4 +1,4 @@
-package smp.controllers;
+package smp.presenters;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @since 2012.08.21
  */
-public class InstLineController {
+public class InstLinePresenter {
 
     /**
      * The default note number.
@@ -64,7 +64,7 @@ public class InstLineController {
      *            An ArrayList of ImageView references intended to be displayed
      *            as an instrument line.
      */
-    public InstLineController(HBox instLine) {
+    public InstLinePresenter(HBox instLine) {
         for (Node i : instLine.getChildren())
             buttons.add((ImageView) i);
         setupButtons();

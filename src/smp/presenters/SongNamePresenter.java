@@ -1,4 +1,4 @@
-package smp.controllers;
+package smp.presenters;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,7 +20,7 @@ import smp.models.Variables;
  * @since v1.1.2
  *
  */
-public class SongNameController {
+public class SongNamePresenter {
 
 	TextField songName;
 	SMPFXController controller;
@@ -33,7 +33,7 @@ public class SongNameController {
 
 	boolean mouseExited = false;
 
-	public SongNameController(TextField tf) {
+	public SongNamePresenter(TextField tf) {
 		this.songName = tf;
 
 		// click somewhere to unfocus only if the mouse exited
