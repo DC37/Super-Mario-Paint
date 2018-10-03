@@ -1,4 +1,4 @@
-package smp.models;
+package smp.models.staff;
 
 import java.io.File;
 import java.io.Serializable;

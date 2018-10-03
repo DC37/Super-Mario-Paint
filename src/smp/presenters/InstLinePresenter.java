@@ -20,9 +20,9 @@ import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
-import smp.models.Variables;
-import smp.stateMachine.Settings;
-import smp.stateMachine.StateMachine;
+import smp.models.stateMachine.Settings;
+import smp.models.stateMachine.StateMachine;
+import smp.models.stateMachine.Variables;
 
 /**
  * The line of buttons that appear for the Instrument Line at the top of the
@@ -136,9 +136,9 @@ public class InstLinePresenter {
      */
     @Deprecated
     public void updateNoteExtensions() {
-        boolean[] ext = StateMachine.getNoteExtensions();
+        BooleanProperty[] ext = StateMachine.getNoteExtensions();
         for (int j = 0; j < Values.NUMINSTRUMENTS; j++) {
-                changePortrait(j, ext[j]);
+                changePortrait(j, ext[j].get());
         }
     }
 
@@ -149,9 +149,9 @@ public class InstLinePresenter {
      *            The instrument that we are trying to set to extend.
      */
     private void toggleNoteExtension(InstrumentIndex i) {
-        BooleanProperty[] ext = Variables.noteExtensions;
+        BooleanProperty[] ext = StateMachine.getNoteExtensions();
         ext[i.getChannel() - 1].set(!ext[i.getChannel() - 1].get());
-        Variables.loadedSequence.get().setNoteExtensions(ext);
+        Variables.theSequence.get().setNoteExtensions(ext);
     }
 
     /**
@@ -185,7 +185,7 @@ public class InstLinePresenter {
     }
     
     private void setupViewUpdater() {
-    	BooleanProperty[] ext = Variables.noteExtensions;
+    	BooleanProperty[] ext = StateMachine.getNoteExtensions();
 		for (int i = 0; i < ext.length; i++) {
 			final int i2 = i;
 			ext[i].addListener(new ChangeListener<Boolean>() {

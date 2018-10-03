@@ -6,7 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import smp.fx.SMPFXController;
-import smp.models.Variables;
+import smp.models.stateMachine.Variables;
 
 /**
  * Use this to add several eventhandlers and a focus listener to the song name
@@ -82,6 +82,6 @@ public class SongNamePresenter {
 	}
 	
     private void setupViewUpdater() {
-    	songName.textProperty().bindBidirectional(Variables.songName);
+    	songName.textProperty().bindBidirectional(Variables.theSequenceName);
     }
 }

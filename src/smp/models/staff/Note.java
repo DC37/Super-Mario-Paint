@@ -1,4 +1,4 @@
-package smp.models;
+package smp.models.staff;
 
 /**
  * This gives some note names to values that are used in

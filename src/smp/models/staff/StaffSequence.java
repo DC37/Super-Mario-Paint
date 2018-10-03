@@ -1,4 +1,4 @@
-package smp.models;
+package smp.models.staff;
 
 import java.io.Serializable;
 import javafx.beans.property.BooleanProperty;

@@ -1,4 +1,4 @@
-package smp.models;
+package smp.models.staff;
 
 /**
  * Keeps track of the different types of staff events.

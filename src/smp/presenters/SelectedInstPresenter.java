@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.InstrumentIndex;
-import smp.models.Variables;
+import smp.models.stateMachine.Variables;
 
 public class SelectedInstPresenter {
 	
