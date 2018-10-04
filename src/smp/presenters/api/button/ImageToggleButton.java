@@ -1,7 +1,5 @@
 package smp.presenters.api.button;
 
-import smp.ImageLoader;
-import smp.fx.SMPFXController;
 import javafx.scene.image.ImageView;
 
 /**
@@ -19,9 +17,8 @@ public abstract class ImageToggleButton extends AbstractImageButton {
      * @param controller
      *            The FXML controller class.
      */
-    public ImageToggleButton(ImageView i, SMPFXController controller,
-            ImageLoader im) {
-        super(i, controller, im);
+    public ImageToggleButton(ImageView i) {
+        super(i);
     }
 
 }

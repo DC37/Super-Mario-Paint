@@ -55,9 +55,7 @@ public abstract class AbstractImageButton {
      * wrapper.
      * @param ct 
      */
-    public AbstractImageButton(ImageView i, SMPFXController ct, ImageLoader im) {
-        il = im;
-        setController(ct);
+    public AbstractImageButton(ImageView i) {
         theImage = i;
         initializeHandler();
     }

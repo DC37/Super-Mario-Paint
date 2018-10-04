@@ -1,8 +1,6 @@
 package smp.presenters.api.button;
 
 import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.fx.SMPFXController;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -24,9 +22,8 @@ public abstract class ImagePushButton extends AbstractImageButton {
      * @param controller
      *            The FXML controller class.
      */
-    public ImagePushButton(ImageView i, SMPFXController controller,
-            ImageLoader im) {
-        super(i, controller, im);
+    public ImagePushButton(ImageView i) {
+        super(i);
     }
 
     @Override

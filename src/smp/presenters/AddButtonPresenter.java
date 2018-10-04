@@ -2,12 +2,12 @@ package smp.presenters;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import smp.ImageLoader;
-import smp.components.general.ImagePushButton;
-import smp.fx.SMPFXController;
+import smp.models.staff.StaffArrangement;
 import smp.models.stateMachine.ProgramState;
 import smp.models.stateMachine.Settings;
 import smp.models.stateMachine.StateMachine;
+import smp.models.stateMachine.Variables;
+import smp.presenters.api.button.ImagePushButton;
 
 /**
  * This is a button that adds a song to an arrangement.
@@ -28,8 +28,8 @@ public class AddButtonPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public AddButtonPresenter(ImageView i, SMPFXController ct, ImageLoader im) {
-        super(i, ct, im);
+    public AddButtonPresenter(ImageView i) {
+        super(i);
     }
 
     @Override
@@ -39,12 +39,11 @@ public class AddButtonPresenter extends ImagePushButton {
             if ((Settings.debug & 0b100000) != 0)
                 System.out.println("Add song");
 
-            if (theStaff.getSequenceFile() != null) {
+            if (Variables.theSequenceFile.get() != null) {
                 StateMachine.setArrModified(true);
-                theStaff.getArrangementList().getItems()
-                        .add(theStaff.getSequenceName());
-                theStaff.getArrangement().add(theStaff.getSequence(),
-                        theStaff.getSequenceFile());
+                Variables.arrangementList.add(Variables.theSequenceName.get());
+                ((StaffArrangement)Variables.theArrangement.get()).add(Variables.theSequence.get(),
+                        Variables.theSequenceFile.get());
                 controller.getSoundfontLoader().storeInCache();
             }
         }

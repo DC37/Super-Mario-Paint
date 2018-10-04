@@ -27,7 +27,7 @@ public abstract class ImageRadioButton extends AbstractImageButton {
      * @param controller The FXML controller object.
      */
     public ImageRadioButton(ImageView i, SMPFXController controller, ImageLoader im) {
-        super(i, controller, im);
+        super(i);
         linkedButtons = new ArrayList<ImageRadioButton>();
     }
 

@@ -33,8 +33,8 @@ public class SongNamePresenter {
 
 	boolean mouseExited = false;
 
-	public SongNamePresenter(TextField tf) {
-		this.songName = tf;
+	public SongNamePresenter(TextField songName) {
+		this.songName = songName;
 
 		// click somewhere to unfocus only if the mouse exited
 		unfocusMouseEventHandler = new EventHandler<MouseEvent>() {
