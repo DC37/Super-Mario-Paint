@@ -4,6 +4,7 @@ import java.io.File;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import smp.components.InstrumentIndex;
 import smp.models.staff.StaffArrangement;
@@ -29,7 +30,7 @@ public class Variables {
 		theSequenceFile.set(null);
 		selectedInstrument.set(InstrumentIndex.MARIO);
 		theSequenceName.set("");
-//		arrangementList = FXCollections.observableArrayList();
+		arrangementList = FXCollections.observableArrayList();
 	}
 	
 	public static void setArrangementList(ObservableList<String> arrangementList) {

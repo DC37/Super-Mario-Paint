@@ -3,6 +3,7 @@ package smp.presenters;
 import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import smp.SoundfontLoader;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
+import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.Settings;
 import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
@@ -35,6 +37,11 @@ import smp.models.stateMachine.Variables;
  */
 public class InstLinePresenter {
 
+	//TODO: auto-add these model comments
+	//====Models====
+	private BooleanProperty[] ext;
+	private ObjectProperty<StaffSequence> theSequence;
+	
     /**
      * The default note number.
      */
@@ -77,6 +84,8 @@ public class InstLinePresenter {
         Node nd = n.remove(15);
         n.add(16, nd);
         
+        this.ext = StateMachine.getNoteExtensions();
+        this.theSequence = Variables.theSequence;
         setupViewUpdater();
     }
 
@@ -149,9 +158,8 @@ public class InstLinePresenter {
      *            The instrument that we are trying to set to extend.
      */
     private void toggleNoteExtension(InstrumentIndex i) {
-        BooleanProperty[] ext = StateMachine.getNoteExtensions();
-        ext[i.getChannel() - 1].set(!ext[i.getChannel() - 1].get());
-        Variables.theSequence.get().setNoteExtensions(ext);
+        this.ext[i.getChannel() - 1].set(!ext[i.getChannel() - 1].get());
+        this.theSequence.get().setNoteExtensions(ext);
     }
 
     /**
@@ -185,10 +193,9 @@ public class InstLinePresenter {
     }
     
     private void setupViewUpdater() {
-    	BooleanProperty[] ext = StateMachine.getNoteExtensions();
-		for (int i = 0; i < ext.length; i++) {
+		for (int i = 0; i < this.ext.length; i++) {
 			final int i2 = i;
-			ext[i].addListener(new ChangeListener<Boolean>() {
+			this.ext[i].addListener(new ChangeListener<Boolean>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {

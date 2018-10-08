@@ -1,5 +1,6 @@
 package smp.presenters;
 
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -22,9 +23,12 @@ import smp.models.stateMachine.Variables;
  */
 public class SongNamePresenter {
 
+	//TODO: auto-add these model comments
+	//====Models====
+	private StringProperty theSequenceName;
+
 	TextField songName;
 	SMPFXController controller;
-
 	/**
 	 * The event handler that will handle unfocusing the TextField and
 	 * refocusing the ScrollBar. 
@@ -78,10 +82,11 @@ public class SongNamePresenter {
 			}
 		});
 		
+		this.theSequenceName = Variables.theSequenceName;		
 		setupViewUpdater();
 	}
 	
     private void setupViewUpdater() {
-    	songName.textProperty().bindBidirectional(Variables.theSequenceName);
+    	songName.textProperty().bindBidirectional(this.theSequenceName);
     }
 }

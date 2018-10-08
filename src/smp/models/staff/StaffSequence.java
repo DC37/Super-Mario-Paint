@@ -1,8 +1,11 @@
 package smp.models.staff;
 
 import java.io.Serializable;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +33,8 @@ public class StaffSequence implements Serializable {
 
     /** These are all of the lines on the staff. */
     private ObservableList<StaffNoteLine> theLines;
+    
+    private ReadOnlyIntegerProperty theLinesSize;
 
     /** This tells us which notes are extended (green highlight) or not. */
     private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
@@ -45,6 +50,7 @@ public class StaffSequence implements Serializable {
     	tempo.set(Values.DEFAULT_TEMPO);
     	soundsetBinding.set("");
         theLines = FXCollections.observableArrayList();
+        theLinesSize =  new SimpleListProperty<>(theLines).sizeProperty();
         for (int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
             theLines.add(new StaffNoteLine());
     }
@@ -194,6 +200,14 @@ public class StaffSequence implements Serializable {
 	public StringProperty getSoundset() {
 		return soundsetBinding;
     }
+	
+	/**
+	 * @return IntegerProperty of theLines's size
+	 * @since v1.1.3
+	 */
+	public ReadOnlyIntegerProperty getTheLinesSize() {
+		return theLinesSize;
+	}
     
     @Override
     public String toString() {

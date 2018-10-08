@@ -10,21 +10,26 @@ import smp.components.InstrumentIndex;
 import smp.models.stateMachine.Variables;
 
 public class SelectedInstPresenter {
-	
+
+    
+	//TODO: auto-add these model comments
+	//====Models====
+	private ObjectProperty<InstrumentIndex> selectedInstrument;
+
     /** The picture of the currently-selected instrument. */
     private ImageView selectedInst;
-
+    
     /** This is the image loader class. */
     private ImageLoader il;
     
 	public SelectedInstPresenter(ImageView selectedInst) {
 		this.selectedInst = selectedInst;
+		this.selectedInstrument = Variables.selectedInstrument;
 		setupViewUpdater();
 	}
 	
     private void setupViewUpdater() {
-    	ObjectProperty<InstrumentIndex> inst = Variables.selectedInstrument;
-		inst.addListener(new ChangeListener<Object>() {
+    	this.selectedInstrument.addListener(new ChangeListener<Object>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {

@@ -7,11 +7,9 @@ import java.util.Set;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -78,7 +76,7 @@ public class StateMachine {
      * The current measure line number that the program is on. Typically a
      * number between 0 and 383. This is zero by default.
      */
-    private static IntegerProperty currentLine = new SimpleIntegerProperty(0);
+    private static DoubleProperty currentLine = new SimpleDoubleProperty(0);
 
     /**
      * This is the current tempo that the program is running at.
@@ -173,7 +171,7 @@ public class StateMachine {
      *
      * @return The current line number (left justify)
      */
-    public static IntegerProperty getMeasureLineNum() {
+    public static DoubleProperty getMeasureLineNum() {
         return currentLine;
     }
 
@@ -187,7 +185,7 @@ public class StateMachine {
     public static void setMeasureLineNum(int num) {
         currentLine.set(num);
     }
-
+    
     /** Sets that the song is now loop-enabled. */
     public static void setLoopPressed(boolean b) {
         loopPressed.set(b);

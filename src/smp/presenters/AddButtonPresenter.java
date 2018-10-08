@@ -1,5 +1,7 @@
 package smp.presenters;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.models.staff.StaffArrangement;
@@ -17,7 +19,12 @@ import smp.presenters.api.button.ImagePushButton;
  */
 public class AddButtonPresenter extends ImagePushButton {
 
-    /**
+	//TODO: auto-add these model comments
+	//====Models====
+	private ObservableList<String> arrangementList;
+	private ObjectProperty<StaffArrangement> theArrangement;
+
+	/**
      * Default constructor.
      *
      * @param i
@@ -30,6 +37,8 @@ public class AddButtonPresenter extends ImagePushButton {
      */
     public AddButtonPresenter(ImageView i) {
         super(i);
+        this.arrangementList = Variables.arrangementList;
+        this.theArrangement = Variables.theArrangement;
     }
 
     @Override
@@ -41,9 +50,10 @@ public class AddButtonPresenter extends ImagePushButton {
 
             if (Variables.theSequenceFile.get() != null) {
                 StateMachine.setArrModified(true);
-                Variables.arrangementList.add(Variables.theSequenceName.get());
-                ((StaffArrangement)Variables.theArrangement.get()).add(Variables.theSequence.get(),
+                this.arrangementList.add(Variables.theSequenceName.get());
+                this.theArrangement.get().add(Variables.theSequence.get(),
                         Variables.theSequenceFile.get());
+                //TODO: create a stand-alone sound controller presenter
                 controller.getSoundfontLoader().storeInCache();
             }
         }
