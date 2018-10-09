@@ -1,4 +1,4 @@
-package smp.presenters;
+package smp.presenters.buttons;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -1,4 +1,4 @@
-package smp.presenters;
+package smp.presenters.buttons;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;

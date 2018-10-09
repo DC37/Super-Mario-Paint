@@ -1,14 +1,19 @@
-package smp.presenters;
+package smp.presenters.buttons;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import smp.ImageIndex;
 import smp.components.Values;
+import smp.models.staff.StaffNoteLine;
+import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.StateMachine;
+import smp.models.stateMachine.Variables;
 import smp.presenters.api.button.ImagePushButton;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -19,12 +24,16 @@ import javafx.scene.input.MouseEvent;
  * @since 2013.08.23
  * 
  */
-public class LeftFastArrowPresenter extends ImagePushButton {
+public class RightFastArrowPresenter extends ImagePushButton {
 	
 	//TODO: auto-add these model comments
 	//====Models====
 	private DoubleProperty measureLineNum;
-	
+	private ObjectProperty<StaffSequence> theSequence;
+
+    /** Tells us whether we're at the end of the file. */
+    private static boolean endOfFile = false;
+    
     /**
      * The amount of movement that this arrow button will cause on the staff.
      * For a regular arrow, this will be a single measure line, but that can be
@@ -46,15 +55,16 @@ public class LeftFastArrowPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public LeftFastArrowPresenter(ImageView leftFastArrow) {
+    public RightFastArrowPresenter(ImageView leftFastArrow) {
         super(leftFastArrow);
         t = new Timer();
         //TODO: create a stand-alone imageloader presenter and pass in images from there
         getImages(ImageIndex.SCROLLBAR_LEFT2_PRESSED, ImageIndex.SCROLLBAR_LEFT2);
         
-        skipAmount = -Double.MAX_VALUE;
+        skipAmount = Double.MAX_VALUE;
         
         this.measureLineNum = StateMachine.getMeasureLineNum();
+		this.theSequence = Variables.theSequence;
     }
 
     /**
@@ -85,12 +95,24 @@ public class LeftFastArrowPresenter extends ImagePushButton {
     }
 
     /** Bumps the staff by some amount. */
+    //TODO: refactor into setupViewUpdater
 	private void bumpStaff() {
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
 				measureLineNum.set(measureLineNum.get() + skipAmount);
+				StaffSequence seq = theSequence.get();
+				ObservableList<StaffNoteLine> s = seq.getTheLines();
+				if (s.size() - Values.NOTELINES_IN_THE_WINDOW <= measureLineNum.get() && endOfFile) {
+					int start = (int) s.size();
+					for (int i = start; i < start + Values.NOTELINES_IN_THE_WINDOW * 2; i++)
+						seq.addLine(new StaffNoteLine());
+				}
+				if (s.size() - Values.NOTELINES_IN_THE_WINDOW <= measureLineNum.get())
+					endOfFile = true;
+				else
+					endOfFile = false;
 			}
 		});
 	}
