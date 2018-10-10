@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.models.staff.StaffArrangement;
@@ -14,16 +15,16 @@ import smp.models.stateMachine.Variables;
 import smp.presenters.api.button.ImagePushButton;
 
 /**
- * This is a button that adds a song to an arrangement.
+ * This is a button that deletes a song from an arrangement.
  *
  * @author RehdBlob
  * @since 2014.07.27
  */
-public class AddButtonPresenter extends ImagePushButton {
+public class DeleteButtonPresenter extends ImagePushButton {
 
 	//TODO: auto-add these model comments
 	//====Models====
-	private ObservableList<String> arrangementList;
+    private ObservableList<String> arrangementList;
 	private ObjectProperty<StaffArrangement> theArrangement;
 	private ObjectProperty<ProgramState> programState;
 
@@ -38,7 +39,7 @@ public class AddButtonPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public AddButtonPresenter(ImageView i) {
+    public DeleteButtonPresenter(ImageView i) {
         super(i);
         this.arrangementList = Variables.arrangementList;
         this.theArrangement = Variables.theArrangement;
@@ -46,19 +47,17 @@ public class AddButtonPresenter extends ImagePushButton {
         setupViewUpdater();
     }
 
-	@Override
+    @Override
     protected void reactPressed(MouseEvent event) {
         if (this.programState.get() != ProgramState.ARR_PLAYING) {
             if ((Settings.debug & 0b100000) != 0)
-                System.out.println("Add song");
-
-            if (Variables.theSequenceFile.get() != null) {
+                System.out.println("Delete song");
+            ObservableList<String> l = this.arrangementList;
+			int x = ((MultipleSelectionModel<String>) Variables.selectionModelProperty.get()).getSelectedIndex();
+            if (x != -1) {
                 StateMachine.setArrModified(true);
-                this.arrangementList.add(Variables.theSequenceName.get());
-                this.theArrangement.get().add(Variables.theSequence.get(),
-                        Variables.theSequenceFile.get());
-                //TODO: create a stand-alone sound controller presenter
-                controller.getSoundfontLoader().storeInCache();
+                this.theArrangement.get().remove(x);
+                l.remove(x);
             }
         }
     }
@@ -67,7 +66,7 @@ public class AddButtonPresenter extends ImagePushButton {
     protected void reactReleased(MouseEvent event) {
 
     }
-
+    
     private void setupViewUpdater() {
     	this.programState.addListener(new ChangeListener<Object>() {
 

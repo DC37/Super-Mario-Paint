@@ -55,11 +55,12 @@ public class ClipboardButtonPresenter extends ImageToggleButton {
 
     @Override
     public void reactPressed(MouseEvent e) {
-    	//TODO: fix clipboard
         if (isPressed) {
             isPressed = false;
             releaseImage();
     		StateMachine.setClipboardPressed(false);
+        	//TODO: staff, volume presenter
+    		//TODO: make clipboard api more intuitive to mvp
     		this.controller.getStaffInstruments().setMouseTransparent(false);
     		this.controller.getVolumeBars().setMouseTransparent(false);
     		
