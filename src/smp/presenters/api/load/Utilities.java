@@ -26,17 +26,18 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import smp.components.Values;
 import smp.components.staff.Staff;
-import smp.components.staff.sequences.StaffArrangement;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
-import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
+import smp.models.staff.StaffArrangement;
+import smp.models.staff.StaffNote;
+import smp.models.staff.StaffNoteLine;
+import smp.models.staff.StaffSequence;
+import smp.models.stateMachine.StateMachine;
+import smp.presenters.api.load.MPCDecoder;
 
 /**
  * A somewhat useful utilities class for images and such. Not so much use right
@@ -146,8 +147,9 @@ public class Utilities {
      * @param theSeq
      *            The sequence to normalize.
      */
+    @Deprecated
     public static void normalize(StaffSequence theSeq) {
-        ArrayList<StaffNoteLine> theLines = theSeq.getTheLines();
+        ObservableList<StaffNoteLine> theLines = theSeq.getTheLines();
         int last = theLines.size() - 1;
         for (int i = theLines.size() - 1; i >= 0; i--) {
             if (i < Values.DEFAULT_LINES_PER_SONG)
@@ -247,7 +249,7 @@ public class Utilities {
                             continue;
                         }
                         lineNum = (Integer.parseInt(meas[0]) - 1)
-                                * loaded.getTimeSignature().top()
+                                * loaded.getTimeSignature().get().top()
                                 + Integer.parseInt(meas[1]);
                     } else {
                         if (spl.contains("VOL")) {
@@ -382,6 +384,7 @@ public class Utilities {
      * @param inputFile
      *            This is the input filename.
      */
+    @Deprecated
     public static StaffSequence loadSequenceFromArrangement(File inputFile,
             Staff theStaff, SMPFXController controller) {
         try {
@@ -429,12 +432,13 @@ public class Utilities {
 	 * @param mpc
 	 *            Whether this is an MPC file.
 	 */
+    @Deprecated
     public static String populateStaff(StaffSequence loaded, File inputFile,
             boolean mpc, Staff theStaff, SMPFXController controller) {
         Utilities.normalize(loaded);
-        theStaff.setSequence(loaded);
+//        theStaff.setSequence(loaded);
         theStaff.setSequenceFile(inputFile);
-        StateMachine.setTempo(loaded.getTempo());
+//        StateMachine.setTempo(loaded.getTempo());
         theStaff.updateCurrTempo();
         theStaff.getControlPanel()
                 .getScrollbar()
@@ -517,6 +521,7 @@ public class Utilities {
 	 * @param mpc
 	 *            Whether this is an MPC file.
 	 */
+    @Deprecated
     public static void populateStaffArrangement(StaffArrangement loaded,
             File inputFile, boolean mpc, Staff theStaff,
             final SMPFXController controller) {
@@ -524,9 +529,9 @@ public class Utilities {
         StaffSequence first = loadSequenceFromArrangement(firstFile, theStaff,
                 controller);
         String fname = inputFile.getName();
-        boolean[] j = first.getNoteExtensions();
+//        boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);
-        StateMachine.setNoteExtensions(j);
+//        StateMachine.setNoteExtensions(j);
         controller.getInstBLine().updateNoteExtensions();
 
         try {
@@ -537,58 +542,58 @@ public class Utilities {
         } catch (IndexOutOfBoundsException e) {
             // Do nothing
         }
-        theStaff.setArrangement(loaded);
+//        theStaff.setArrangement(loaded);
         theStaff.setArrangementName(fname);
         theStaff.getArrangementList().getItems().clear();
         theStaff.getArrangementList().getItems()
                 .addAll(loaded.getTheSequenceNames());
 
-        ArrayList<File> files = loaded.getTheSequenceFiles();
+//        ArrayList<File> files = loaded.getTheSequenceFiles();
         final ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
-        for (int i = 0; i < files.size(); i++) {
-            try {
-                seq.add(Utilities.loadSong(files.get(i)));
-            } catch (ClassCastException | EOFException
-                    | StreamCorruptedException | NullPointerException e) {
-                try {
-                    seq.add(MPCDecoder.decode(files.get(i)));
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                    return;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-        theStaff.getArrangement().setTheSequences(seq);
+//        for (int i = 0; i < files.size(); i++) {
+//            try {
+//                seq.add(Utilities.loadSong(files.get(i)));
+//            } catch (ClassCastException | EOFException
+//                    | StreamCorruptedException | NullPointerException e) {
+//                try {
+//                    seq.add(MPCDecoder.decode(files.get(i)));
+//                } catch (Exception e1) {
+//                    e1.printStackTrace();
+//                    return;
+//                }
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//                return;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                return;
+//            }
+//        }
+//        theStaff.getArrangement().setTheSequences(seq);
 
         controller.getNameTextField().setText(fname);
         
-        Task<Void> soundsetsTaskUtilities = new Task<Void>() {
-        	@Override
-            public Void call() {
-        		controller.getSoundfontLoader().clearCache();
-        		for(StaffSequence s : seq) {
-        			try {
-						controller.getSoundfontLoader().loadToCache(s.getSoundset());
-					} catch (InvalidMidiDataException | IOException e) {
-						e.printStackTrace();
-					}
-        		}
-                return null;
-            }
-        };
-        new Thread(soundsetsTaskUtilities).start();
-        
-        try {
-			controller.getSoundfontLoader().loadFromAppData(first.getSoundset());
-		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-			e.printStackTrace();
-		}
+//        Task<Void> soundsetsTaskUtilities = new Task<Void>() {
+//        	@Override
+//            public Void call() {
+//        		controller.getSoundfontLoader().clearCache();
+//        		for(StaffSequence s : seq) {
+//        			try {
+//						controller.getSoundfontLoader().loadToCache(s.getSoundset());
+//					} catch (InvalidMidiDataException | IOException e) {
+//						e.printStackTrace();
+//					}
+//        		}
+//                return null;
+//            }
+//        };
+//        new Thread(soundsetsTaskUtilities).start();
+//        
+//        try {
+//			controller.getSoundfontLoader().loadFromAppData(first.getSoundset());
+//		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+//			e.printStackTrace();
+//		}
     }
 
 }

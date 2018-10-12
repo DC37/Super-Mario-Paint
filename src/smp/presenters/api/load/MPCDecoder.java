@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 import smp.components.InstrumentIndex;
 import smp.components.Values;
-import smp.components.staff.sequences.StaffArrangement;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
+import smp.models.staff.StaffArrangement;
+import smp.models.staff.StaffNote;
+import smp.models.staff.StaffNoteLine;
+import smp.models.staff.StaffSequence;
 import static smp.components.staff.sequences.mpc.TextUtil.*;
 
 /**

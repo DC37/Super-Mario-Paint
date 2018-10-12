@@ -4,8 +4,13 @@ import java.io.Serializable;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,30 +34,29 @@ public class StaffSequence implements Serializable {
     /**
      * The tempo of this sequence.
      */
-    private DoubleProperty tempo;
+    private DoubleProperty tempo  = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
 
     /** These are all of the lines on the staff. */
-    private ObservableList<StaffNoteLine> theLines;
+    private ObservableList<StaffNoteLine> theLines = FXCollections.observableArrayList();
     
-    private ReadOnlyIntegerProperty theLinesSize;
+    /** @since v1.1.3*/
+    private ReadOnlyIntegerProperty theLinesSize = new SimpleListProperty<>(theLines).sizeProperty();
 
     /** This tells us which notes are extended (green highlight) or not. */
-    private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+    private BooleanProperty[] noteExtensions = new BooleanProperty[Values.NUMINSTRUMENTS];
 
     /** The time signature of this sequence. */
-    private TimeSignature t = TimeSignature.FOUR_FOUR;
+    private ObjectProperty<TimeSignature> t = new SimpleObjectProperty<TimeSignature>(TimeSignature.FOUR_FOUR);
     
     /** The soundset bound to and should be loaded for this sequence. */
-    private StringProperty soundsetBinding;
+    private StringProperty soundsetBinding = new SimpleStringProperty("");
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
-    	tempo.set(Values.DEFAULT_TEMPO);
-    	soundsetBinding.set("");
-        theLines = FXCollections.observableArrayList();
-        theLinesSize =  new SimpleListProperty<>(theLines).sizeProperty();
         for (int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
             theLines.add(new StaffNoteLine());
+        for (int i = 0; i < Values.NUMINSTRUMENTS; i++)
+        	noteExtensions[i] = new SimpleBooleanProperty();
     }
 
     /**
@@ -151,13 +155,22 @@ public class StaffSequence implements Serializable {
      * @param i
      *            The note extensions bitfield that we want to set.
      */
+    public void setNoteExtensions(boolean[] i) {
+    	for(int idx = 0; idx < Values.NUMINSTRUMENTS; idx++)
+    		noteExtensions[idx].set(i[idx]);
+    }    
+    
+    /**
+     * @param i
+     *            The note extensions bitfield that we want to set.
+     */
     public void setNoteExtensions(BooleanProperty[] i) {
     	for(int idx = 0; idx < Values.NUMINSTRUMENTS; idx++)
-    		noteExtensions[idx] = i[idx].get();
+    		noteExtensions[idx].set(i[idx].get());
     }
 
     /** @return The bitfield denoting which notes are extended. */
-    public boolean[] getNoteExtensions() {
+    public BooleanProperty[] getNoteExtensions() {
         return noteExtensions;
     }
 
@@ -170,17 +183,17 @@ public class StaffSequence implements Serializable {
         int bottom = Integer.parseInt(s.substring(s.indexOf("/") + 1));
         for (TimeSignature tSig : TimeSignature.values()) {
             if (tSig.bottom() == bottom && tSig.top() == top) {
-                t = tSig;
+                t.set(tSig);
                 break;
             }
         }
-        if (t == null) {
-            t = TimeSignature.FOUR_FOUR;
+        if (t.get() == null) {
+            t.set(TimeSignature.FOUR_FOUR);
         }
     }
 
     /** @return The time signature of this sequence. */
-    public TimeSignature getTimeSignature() {
+    public ObjectProperty<TimeSignature> getTimeSignature() {
         return t;
     }
 

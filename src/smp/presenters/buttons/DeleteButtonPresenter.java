@@ -4,7 +4,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.models.staff.StaffArrangement;
@@ -53,7 +52,7 @@ public class DeleteButtonPresenter extends ImagePushButton {
             if ((Settings.debug & 0b100000) != 0)
                 System.out.println("Delete song");
             ObservableList<String> l = this.arrangementList;
-			int x = ((MultipleSelectionModel<String>) Variables.selectionModelProperty.get()).getSelectedIndex();
+			int x = Variables.selectionModelProperty.get().getSelectedIndex();
             if (x != -1) {
                 StateMachine.setArrModified(true);
                 this.theArrangement.get().remove(x);
