@@ -24,17 +24,20 @@ import smp.presenters.api.button.ImagePushButton;
  */
 public class UpButtonPresenter extends ImagePushButton {
 
-    /** The amount to move a song up or down. */
-    private int moveAmt = 0;
+	//TODO: auto-add these model comments
+	//====Models====
 	private ObservableList<String> arrangementList;
 	private ObjectProperty<MultipleSelectionModel<String>> selectionModelProperty;
 	private BooleanProperty arrModified;
 	private ObjectProperty<StaffArrangement> theArrangement;
+	
+    /** The amount to move a song up or down. */
+    private int moveAmt = 0;
 
     /**
      * Default constructor.
      *
-     * @param downButton
+     * @param upButton
      *            The <code>ImageView</code> object that we are going to make
      *            into a button.
      * @param ct
@@ -42,8 +45,8 @@ public class UpButtonPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public UpButtonPresenter(ImageView downButton) {
-        super(downButton);
+    public UpButtonPresenter(ImageView upButton) {
+        super(upButton);
         moveAmt = 1;
         
         this.arrangementList = Variables.arrangementList;

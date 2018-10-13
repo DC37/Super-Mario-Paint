@@ -24,12 +24,15 @@ import smp.presenters.api.button.ImagePushButton;
  */
 public class DownButtonPresenter extends ImagePushButton {
 
-    /** The amount to move a song up or down. */
-    private int moveAmt = 0;
+	//TODO: auto-add these model comments
+	//====Models====
 	private ObservableList<String> arrangementList;
 	private ObjectProperty<MultipleSelectionModel<String>> selectionModelProperty;
 	private BooleanProperty arrModified;
 	private ObjectProperty<StaffArrangement> theArrangement;
+	
+    /** The amount to move a song up or down. */
+    private int moveAmt = 0;
 
     /**
      * Default constructor.
