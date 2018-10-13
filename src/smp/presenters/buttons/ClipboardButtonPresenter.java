@@ -29,18 +29,18 @@ public class ClipboardButtonPresenter extends ImageToggleButton {
 	/**
      * Instantiates the clipboard selection button.
      *
-     * @param i
+     * @param clipboardButton
      *            The ImageView that will be manipulated by this class.
      * @param ct
      *            The FXML controller object.
      * @param im
      *            The Image loader object.
      */
-	public ClipboardButtonPresenter(ImageView i) {
-		super(i);
+	public ClipboardButtonPresenter(ImageView clipboardButton) {
+		super(clipboardButton);
 		getImages(ImageIndex.CLIPBOARD_PRESSED, ImageIndex.CLIPBOARD_RELEASED);
 		releaseImage();
-		Tooltip.install(i, new Tooltip("Click (or Shift+R) to toggle region selection\n"
+		Tooltip.install(clipboardButton, new Tooltip("Click (or Shift+R) to toggle region selection\n"
 				+ "Hover over instrument & press F to filter instrument\n"
 				+ "Ctrl+A to select all\n"
 				+ "Ctrl+C to copy notes\n"

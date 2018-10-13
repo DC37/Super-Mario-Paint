@@ -30,7 +30,7 @@ public class AddButtonPresenter extends ImagePushButton {
 	/**
      * Default constructor.
      *
-     * @param i
+     * @param addButton
      *            The <code>ImageView</code> object that we are going to make
      *            into a button.
      * @param ct
@@ -38,8 +38,8 @@ public class AddButtonPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public AddButtonPresenter(ImageView i) {
-        super(i);
+    public AddButtonPresenter(ImageView addButton) {
+        super(addButton);
         this.arrangementList = Variables.arrangementList;
         this.theArrangement = Variables.theArrangement;
         this.programState = StateMachine.getState();

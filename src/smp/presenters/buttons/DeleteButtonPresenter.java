@@ -30,7 +30,7 @@ public class DeleteButtonPresenter extends ImagePushButton {
 	/**
      * Default constructor.
      *
-     * @param i
+     * @param deleteButton
      *            The <code>ImageView</code> object that we are going to make
      *            into a button.
      * @param ct
@@ -38,8 +38,8 @@ public class DeleteButtonPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public DeleteButtonPresenter(ImageView i) {
-        super(i);
+    public DeleteButtonPresenter(ImageView deleteButton) {
+        super(deleteButton);
         this.arrangementList = Variables.arrangementList;
         this.theArrangement = Variables.theArrangement;
         this.programState = StateMachine.getState();

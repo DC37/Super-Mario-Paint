@@ -19,7 +19,7 @@ public class LoopPresenter extends ImageToggleButton {
     /**
      * This creates a new LoopButton object.
      *
-     * @param i
+     * @param loop
      *            This <code>ImageView</code> object that you are trying to link
      *            this button with.
      * @param ct
@@ -27,8 +27,8 @@ public class LoopPresenter extends ImageToggleButton {
      * @param im
      *            The Image loader object.
      */
-    public LoopPresenter(ImageView i) {
-        super(i);
+    public LoopPresenter(ImageView loop) {
+        super(loop);
         getImages(ImageIndex.LOOP_PRESSED, ImageIndex.LOOP_RELEASED);
         releaseImage();
         isPressed = false;

@@ -23,7 +23,7 @@ public class ModeButtonPresenter extends ImageToggleButton {
     /**
      * This creates a new ModeButton object.
      *
-     * @param i
+     * @param modeButton
      *            This <code>ImageView</code> object that you are trying to link
      *            this button with.
      * @param ct
@@ -31,8 +31,8 @@ public class ModeButtonPresenter extends ImageToggleButton {
      * @param im
      *            The Image loader object.
      */
-    public ModeButtonPresenter(ImageView i) {
-        super(i);
+    public ModeButtonPresenter(ImageView modeButton) {
+        super(modeButton);
         this.programState = StateMachine.getState();
     }
 

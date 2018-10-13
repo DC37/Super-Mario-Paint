@@ -42,7 +42,7 @@ public class LoadButtonPresenter extends ImagePushButton {
 	/**
      * Default constructor.
      *
-     * @param i
+     * @param loadButton
      *            This is the <code>ImageView</code> object that will house the
      *            Load button.
      * @param ct
@@ -50,8 +50,8 @@ public class LoadButtonPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public LoadButtonPresenter(ImageView i) {
-        super(i);
+    public LoadButtonPresenter(ImageView loadButton) {
+        super(loadButton);
         this.theSequenceName = Variables.theSequenceName;
         this.theSequence = Variables.theSequence;
         this.theArrangement = Variables.theArrangement;

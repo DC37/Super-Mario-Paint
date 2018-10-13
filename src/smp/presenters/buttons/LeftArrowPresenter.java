@@ -46,8 +46,8 @@ public class LeftArrowPresenter extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public LeftArrowPresenter(ImageView leftFastArrow) {
-        super(leftFastArrow);
+    public LeftArrowPresenter(ImageView leftArrow) {
+        super(leftArrow);
         t = new Timer();
         //TODO: create a stand-alone imageloader presenter and pass in images from there
         getImages(ImageIndex.SCROLLBAR_LEFT2_PRESSED, ImageIndex.SCROLLBAR_LEFT2);
