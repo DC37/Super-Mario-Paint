@@ -1,9 +1,13 @@
 package smp.presenters.buttons;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
+import smp.models.stateMachine.ProgramState;
 import smp.models.stateMachine.StateMachine;
 import smp.presenters.api.button.ImageToggleButton;
 
@@ -18,7 +22,11 @@ import smp.presenters.api.button.ImageToggleButton;
  */
 public class ClipboardButtonPresenter extends ImageToggleButton {
 
-    /**
+	//TODO: auto-add these model comments
+	//====Models====
+    private ObjectProperty<ProgramState> programState;
+
+	/**
      * Instantiates the clipboard selection button.
      *
      * @param i
@@ -51,9 +59,24 @@ public class ClipboardButtonPresenter extends ImageToggleButton {
 //					reactPressed(null);
 //			}
 //		});
+		this.programState = StateMachine.getState();
+		setupViewUpdater();
 	}
 
-    @Override
+    private void setupViewUpdater() {
+    	this.programState.addListener(new ChangeListener<Object>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				if (newValue.equals(ProgramState.EDITING))
+					theImage.setVisible(true);
+				else if (newValue.equals(ProgramState.ARR_EDITING))
+					theImage.setVisible(false);
+			}
+		});
+	}
+
+	@Override
     public void reactPressed(MouseEvent e) {
         if (isPressed) {
             isPressed = false;
