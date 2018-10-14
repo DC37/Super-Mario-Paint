@@ -19,9 +19,9 @@ public class Variables {
 	/** from <code>Staff</code> */
 	public static ObjectProperty<StaffArrangement> theArrangement = new SimpleObjectProperty<>();
 	/** from <code>Staff</code> */
-    public static ObjectProperty<File> theSequenceFile= new SimpleObjectProperty<>();
+	public static ObjectProperty<File> theSequenceFile = new SimpleObjectProperty<>();
 	/** @since 1.3 */
-	public static ObjectProperty<InstrumentIndex> selectedInstrument= new SimpleObjectProperty<>();
+	public static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>();
 	/** from <code>Staff</code> */
 	public static StringProperty theSequenceName = new SimpleStringProperty();
 	/** from either <code>StaffArrangement</code> or maybe <code>Staff</code> */ 
