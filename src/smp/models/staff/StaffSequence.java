@@ -15,7 +15,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import smp.components.Values;
-import smp.stateMachine.TimeSignature;
+import smp.models.stateMachine.TimeSignature;
 
 /**
  * We might not even need MIDI to do this sequencing stuff. This class keeps

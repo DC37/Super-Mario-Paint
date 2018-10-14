@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import smp.components.Values;
@@ -312,6 +313,16 @@ public class Utilities {
         long parsed = 0;
         for (int i = 0; i < parseBool.length; i++) {
             if (parseBool[i]) {
+                parsed |= (1 << i);
+            }
+        }
+        return parsed;
+    }    
+    
+    public static long longFromBool(BooleanProperty[] parseBool) {
+        long parsed = 0;
+        for (int i = 0; i < parseBool.length; i++) {
+            if (parseBool[i].get()) {
                 parsed |= (1 << i);
             }
         }
