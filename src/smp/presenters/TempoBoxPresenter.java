@@ -10,6 +10,8 @@ import smp.models.stateMachine.StateMachine;
 
 public class TempoBoxPresenter {
 
+	//TODO: auto-add these model comments
+	//====Models====
 	private DoubleProperty tempo;
 	
 	private StackPane tempoBox;

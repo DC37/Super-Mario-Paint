@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+
+<VBox alignment="TOP_CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Default Note Volume" />
+      <Slider fx:id="defaultVolume" majorTickUnit="16.0" max="128.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="96.0" />
+      <Label text="Increase Tempo by how many times?" />
+      <TextField fx:id="tempoMultiplier" />
+      <VBox alignment="CENTER" spacing="1.0">
+         <children>
+            <Label text="Current Soundfont" />
+            <ComboBox fx:id="currentSoundfont" prefWidth="150.0" />
+            <CheckBox fx:id="bindSoundfont" mnemonicParsing="false" text="Bind to Song">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </CheckBox>
+         </children>
+      </VBox>
+      <FlowPane alignment="CENTER">
+         <children>
+            <Button fx:id="optionsOK" mnemonicParsing="false" text="OK" />
+         </children>
+      </FlowPane>
+   </children>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
+</VBox>

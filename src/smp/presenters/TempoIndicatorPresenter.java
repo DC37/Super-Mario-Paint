@@ -6,6 +6,8 @@ import smp.models.stateMachine.StateMachine;
 
 public class TempoIndicatorPresenter {
 
+	//TODO: auto-add these model comments
+	//====Models====
 	private DoubleProperty tempo;
 	
 	private Text tempoIndicator;

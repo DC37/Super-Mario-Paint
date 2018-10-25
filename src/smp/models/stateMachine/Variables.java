@@ -2,7 +2,11 @@ package smp.models.stateMachine;
 
 import java.io.File;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,29 +14,36 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MultipleSelectionModel;
 import smp.components.InstrumentIndex;
+import smp.components.Values;
 import smp.models.staff.StaffArrangement;
 import smp.models.staff.StaffSequence;
 
 public class Variables {
 	/** from <code>Staff</code> */
-	public static ObjectProperty<StaffSequence> theSequence = new SimpleObjectProperty<>();
+	public static ObjectProperty<StaffSequence> theSequence = new SimpleObjectProperty<>(new StaffSequence());
 	/** from <code>Staff</code> */
-	public static ObjectProperty<StaffArrangement> theArrangement = new SimpleObjectProperty<>();
+	public static ObjectProperty<StaffArrangement> theArrangement = new SimpleObjectProperty<>(new StaffArrangement());
 	/** from <code>Staff</code> */
-	public static ObjectProperty<File> theSequenceFile = new SimpleObjectProperty<>();
+	public static ObjectProperty<File> theSequenceFile = new SimpleObjectProperty<>(null);
 	/** @since 1.3 */
-	public static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>();
+	public static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>(InstrumentIndex.MARIO);
 	/** from <code>Staff</code> */
-	public static StringProperty theSequenceName = new SimpleStringProperty();
+	public static StringProperty theSequenceName = new SimpleStringProperty("");
 	/** from either <code>StaffArrangement</code> or maybe <code>Staff</code> */ 
 	public static ObservableList<String> arrangementList = FXCollections.observableArrayList();
 	public static ObjectProperty<MultipleSelectionModel<String>> selectionModelProperty = new SimpleObjectProperty<>();
 	
-	public Variables() {
-		theSequence.set(new StaffSequence());
-		theArrangement.set(new StaffArrangement());
-		theSequenceFile.set(null);
-		selectedInstrument.set(InstrumentIndex.MARIO);
-		theSequenceName.set("");
-	}
+	public static IntegerProperty defaultVelocity = new SimpleIntegerProperty(Values.DEFAULT_VELOCITY);
+	
+	//OPTIONS
+	/** The default volume that appears on the options' volume slider. */
+	public static IntegerProperty optionsDefaultVolume = new SimpleIntegerProperty(Values.DEFAULT_VELOCITY);
+	/** The number string in the tempo-multiplier text field. */
+	public static StringProperty optionsTempoMultiplier = new SimpleStringProperty("");
+	/** The soundfont string that is selected in the current-soundfont combobox. */
+	public static StringProperty optionsCurrentSoundfont = new SimpleStringProperty("");
+	/** The checked value in the bind checkbox. */
+	public static BooleanProperty optionsBindSoundfont = new SimpleBooleanProperty(false);
+	/** The soundfont in the current-soundfont combobox that, when selected, will toggle the bind checkbox. */
+	public static StringProperty optionsBindedSoundfont = new SimpleStringProperty("");
 }
