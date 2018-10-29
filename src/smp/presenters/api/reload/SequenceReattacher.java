@@ -12,7 +12,7 @@ import smp.models.staff.StaffNoteLine;
 import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.Variables;
 
-public class SequenceReloader {
+public class SequenceReattacher {
 
 	//TODO: auto-add these model comments
 	//====Models====
@@ -28,7 +28,7 @@ public class SequenceReloader {
 
 	protected ChangeListener<Object> timeSignatureListener;
 	
-	public SequenceReloader() {
+	public SequenceReattacher() {
 		this.theSequence = Variables.theSequence;
 		setupReloader();
 	}

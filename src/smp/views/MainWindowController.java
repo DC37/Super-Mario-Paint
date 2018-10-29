@@ -14,9 +14,16 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import smp.presenters.buttons.PlayPresenter;
 
 public class MainWindowController {
-
+	
+    /**
+     * Location of the Options Window fxml file. 
+     * TODO: move fxml string to somewhere in models layer
+     */
+    private String fxml = "./MainWindow.fxml";
+    
     @FXML
     private HBox staffExtLinesHighC;
 
@@ -168,5 +175,19 @@ public class MainWindowController {
     private ImageView muteA;
 
     @FXML
-    private Text modeText;
+    private Text modeText;    
+    
+    /**
+     * Initializes the Controller class for the options window
+     */
+    public void initialize() {
+    	new PlayPresenter(play);
+    }
+    
+    /**
+     * @return Location of the Options Window fxml file.
+     */
+    public String getFXML() {
+    	return fxml;
+    }
 }
