@@ -1,6 +1,7 @@
 package smp.models.stateMachine;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -16,11 +17,21 @@ import javafx.scene.control.MultipleSelectionModel;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.models.staff.StaffArrangement;
+import smp.models.staff.StaffNoteLine;
 import smp.models.staff.StaffSequence;
 
 public class Variables {
 	/** from <code>Staff</code> */
 	public static ObjectProperty<StaffSequence> theSequence = new SimpleObjectProperty<>(new StaffSequence());
+
+	public static class WindowLines extends ArrayList<ObjectProperty<StaffNoteLine>> {
+		private static final long serialVersionUID = -2815381084664525320L;
+		public WindowLines(int capacity) {
+			for (int i = 0; i < capacity; i++)
+				this.add(new SimpleObjectProperty<StaffNoteLine>(theSequence.get().getLine(i)));
+		}
+	}
+	public static WindowLines windowLines = new WindowLines(Values.NOTELINES_IN_THE_WINDOW);
 	/** from <code>Staff</code> */
 	public static ObjectProperty<StaffArrangement> theArrangement = new SimpleObjectProperty<>(new StaffArrangement());
 	/** from <code>Staff</code> */

@@ -1,4 +1,4 @@
-package smp.presenters.api.reload;
+package smp.presenters.api.reattachers;
 
 import java.util.ArrayList;
 
@@ -10,30 +10,43 @@ import javafx.collections.ListChangeListener;
 import smp.components.Values;
 import smp.models.staff.StaffNoteLine;
 import smp.models.staff.StaffSequence;
-import smp.models.stateMachine.Variables;
 
+/**
+ * This will reattach listeners to the StaffSequence's member properties when a
+ * new sequence gets set.
+ * 
+ * @author J
+ *
+ */
 public class SequenceReattacher {
 
-	//TODO: auto-add these model comments
-	//====Models====
+	// ====(not a Model)====
 	private ObjectProperty<StaffSequence> theSequence;
-	
-	protected ChangeListener<Number> tempoListener;
 
-	protected ChangeListener<String> soundsetListener;
+	public ChangeListener<Number> tempoListener;
 
-	protected ListChangeListener<StaffNoteLine> theLinesListener;
-	
-	protected ArrayList<ChangeListener<Boolean>> noteExtensionsListeners = new ArrayList<ChangeListener<Boolean>>(Values.NUMINSTRUMENTS);
+	public ChangeListener<String> soundsetListener;
 
-	protected ChangeListener<Object> timeSignatureListener;
+	public ListChangeListener<StaffNoteLine> theLinesListener;
+
+	public ArrayList<ChangeListener<Boolean>> noteExtensionsListeners = new ArrayList<ChangeListener<Boolean>>(
+			Values.NUMINSTRUMENTS);
+
+	public ChangeListener<Object> timeSignatureListener;
+
+	/**
+	 * The listener for when a new sequence is set. For instance, a new sequence
+	 * is set: the new sequence's tempo should be listened for and the tempo
+	 * view updated.
+	 */
+	public ChangeListener<Object> onReattachListener;
 	
-	public SequenceReattacher() {
-		this.theSequence = Variables.theSequence;
-		setupReloader();
+	public SequenceReattacher(ObjectProperty<StaffSequence> theSequence) {
+		this.theSequence = theSequence;
+		setupReattacher();
 	}
 
-	private void setupReloader() {
+	private void setupReattacher() {
 		this.theSequence.addListener(new ChangeListener<Object>() {
 
 			@Override
@@ -46,7 +59,7 @@ public class SequenceReattacher {
 				oldSequence.getTempo().removeListener(tempoListener);
 				oldSequence.getTheLines().removeListener(theLinesListener);
 				oldSequence.getTimeSignature().removeListener(timeSignatureListener);
-				
+
 				StaffSequence newSequence = (StaffSequence) newValue;
 				noteExtensions = newSequence.getNoteExtensions();
 				for (int i = 0; i < noteExtensions.length; i++)
@@ -64,33 +77,38 @@ public class SequenceReattacher {
 		});
 	}
 
-	protected void addNewTempoListener(ChangeListener<Number> tempoListener) {
+	public void setNewTempoListener(ChangeListener<Number> tempoListener) {
 		this.theSequence.get().getTempo().removeListener(this.tempoListener);
 		this.tempoListener = tempoListener;
 		this.theSequence.get().getTempo().addListener(this.tempoListener);
 	}
-	
-	protected void addNewSoundsetListener(ChangeListener<String> soundsetListener) {
+
+	public void setNewSoundsetListener(ChangeListener<String> soundsetListener) {
 		this.theSequence.get().getSoundset().removeListener(this.soundsetListener);
 		this.soundsetListener = soundsetListener;
 		this.theSequence.get().getSoundset().addListener(this.soundsetListener);
 	}
-	
-	protected void addNewTheLinesListener(ListChangeListener<StaffNoteLine> theLinesListener) {
+
+	public void setNewTheLinesListener(ListChangeListener<StaffNoteLine> theLinesListener) {
 		this.theSequence.get().getTheLines().removeListener(this.theLinesListener);
 		this.theLinesListener = theLinesListener;
 		this.theSequence.get().getTheLines().addListener(this.theLinesListener);
 	}
-	
-	protected void addNewNoteExtensionListener(int index, ChangeListener<Boolean> noteExtensionsListener) {
+
+	public void setNewNoteExtensionListener(int index, ChangeListener<Boolean> noteExtensionsListener) {
 		this.theSequence.get().getNoteExtensions()[index].removeListener(this.noteExtensionsListeners.get(index));
 		this.noteExtensionsListeners.set(index, noteExtensionsListener);
 		this.theSequence.get().getNoteExtensions()[index].addListener(this.noteExtensionsListeners.get(index));
 	}
-	
-	protected void addNewTimeSignatureListener(ChangeListener<Object> timeSignatureListener) {
+
+	public void setNewTimeSignatureListener(ChangeListener<Object> timeSignatureListener) {
 		this.theSequence.get().getTimeSignature().removeListener(this.timeSignatureListener);
 		this.timeSignatureListener = timeSignatureListener;
 		this.theSequence.get().getTimeSignature().addListener(this.timeSignatureListener);
+	}
+	
+	public void setOnReattachListener(ChangeListener<Object> onReattachListener) {
+		this.onReattachListener = onReattachListener;
+		this.theSequence.addListener(onReattachListener);
 	}
 }
