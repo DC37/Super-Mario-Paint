@@ -29,8 +29,7 @@ public class StaffExtLinesHighAPresenter {
 
 	public StaffExtLinesHighAPresenter(HBox staffExtLinesHighA) {
 		this.staffExtLinesHighA = staffExtLinesHighA;
-		highA = new ArrayList<Node>();
-		highA.addAll(this.staffExtLinesHighA.getChildren());
+		initializeStaffLedgerLines();
 
 		this.windowLines = Variables.windowLines;
 		this.noteLineReattachers = new ArrayList<NoteLineReattacher>();
@@ -38,6 +37,7 @@ public class StaffExtLinesHighAPresenter {
 	}
 
 	private void setupViewUpdater() {
+		
 		for (int i = 0; i < windowLines.size(); i++) {
 			final int index=  i;
 			final ObjectProperty<StaffNoteLine> windowLine = windowLines.get(i);
@@ -80,5 +80,30 @@ public class StaffExtLinesHighAPresenter {
 				high = nt;
 		}
 		highA.get(index).setVisible(high >= Values.highA);
+	}
+    
+    /**
+     * Sets up the staff expansion lines, which are to hold notes that are
+     * higher than or lower than the regular lines of the staff.
+     *
+     * @param staffLLines
+     *            An array of ledger lines. This method expects that there will
+     *            be four of these, two of which indicate the lines above the
+     *            staff and the other of which indicating the lines below the
+     *            staff.
+     */
+    private void initializeStaffLedgerLines() {
+		highA = new ArrayList<Node>();
+		highA.addAll(this.staffExtLinesHighA.getChildren());
+		hideAllLedgerLines();
+    }
+    
+	/**
+	 * Hides all of the ledger lines.
+	 */
+	public void hideAllLedgerLines() {
+
+		for (Node nd : highA)
+			nd.setVisible(false);
 	}
 }

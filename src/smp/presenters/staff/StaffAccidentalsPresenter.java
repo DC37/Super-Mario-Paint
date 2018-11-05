@@ -77,40 +77,23 @@ public class StaffAccidentalsPresenter {
 
 	private void setupViewUpdater() {
 		for (int i = 0; i < windowLines.size(); i++) {
-			final ArrayList<StackPane> accColumn = accMatrix.get(i);
+			final int index = i;
 			final ObjectProperty<StaffNoteLine> windowLine = windowLines.get(i);
 			NoteLineReattacher nlr = new NoteLineReattacher(windowLine);
 			nlr.setNewNotesListener(new ListChangeListener<StaffNote>() {
 
 				@Override
 				public void onChanged(Change<? extends StaffNote> c) {
-					//clearnotedisplay
-					for (StackPane sp : accColumn)
-						sp.getChildren().clear();
-					//populatenotedisplay
-					for (StaffNote s : windowLine.get().getNotes()) {
-						int pos = s.getPosition();
-						int acc = s.getAccidental();
-						ImageView accIV = new ImageView(il.getSpriteFX(switchAcc(acc)));
-						accColumn.get(pos).getChildren().add(accIV);
-					}
+					clearNoteDisplay(index);
+					populateNoteDisplay(windowLine.get(), index);
 				}
 			});
 			nlr.setOnReattachListener(new ChangeListener<Object>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-					//clearnotedisplay
-					for (StackPane sp : accColumn)
-						sp.getChildren().clear();
-					//populatenotedisplay
-					StaffNoteLine newLine = (StaffNoteLine) newValue;
-					for (StaffNote s : newLine.getNotes()) {
-						int pos = s.getPosition();
-						int acc = s.getAccidental();
-						ImageView accIV = new ImageView(il.getSpriteFX(switchAcc(acc)));
-						accColumn.get(pos).getChildren().add(accIV);
-					}
+					clearNoteDisplay(index);
+					populateNoteDisplay((StaffNoteLine) newValue, index);
 				}
 			});
 			noteLineReattachers.add(nlr);
@@ -138,5 +121,37 @@ public class StaffAccidentalsPresenter {
         default:
             return ImageIndex.BLANK;
         }
+    }
+    
+    /**
+     * Clears the note display on the staff.
+     *
+     * @param index
+     *            The index that we are clearing.
+     */
+    private synchronized void clearNoteDisplay(int index) {
+        ArrayList<StackPane> ac = accMatrix.get(index);
+        for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
+            ObservableList<Node> acList = ac.get(i).getChildren();
+            acList.clear();
+        }
+    }
+
+    /**
+     * Repopulates the note display on the staff.
+     *
+     * @param stl
+     *            The StaffNoteLine that we are interested in.
+     * @param index
+     *            The index to repopulate.
+     */
+	private void populateNoteDisplay(StaffNoteLine stl, int index) {
+		ObservableList<StaffNote> st = stl.getNotes();
+		for (StaffNote s : st) {
+			StackPane accSP = accMatrix.get(index).get(s.getPosition());
+			ImageView accidental = new ImageView();
+			accidental.setImage(il.getSpriteFX(switchAcc(s.getAccidental())));
+			accSP.getChildren().add(accidental);
+		}
     }
 }
