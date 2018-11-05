@@ -1,33 +1,84 @@
 package smp.presenters.staff;
 
-import javafx.beans.property.DoubleProperty;
+import java.util.ArrayList;
+
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import smp.models.stateMachine.StateMachine;
+import smp.components.Values;
+import smp.models.staff.StaffNote;
+import smp.models.staff.StaffNoteLine;
+import smp.models.stateMachine.Variables;
+import smp.models.stateMachine.Variables.WindowLines;
+import smp.presenters.api.reattachers.NoteLineReattacher;
 
 public class StaffExtLinesLowCPresenter {
 
 	// TODO: auto-add these model comments
 	// ====Models====
-	private DoubleProperty measureLineNumber;
+	private WindowLines windowLines;
+
+	private ArrayList<NoteLineReattacher> noteLineReattachers;
 
 	private HBox staffExtLinesLowC;
 
+	private ArrayList<Node> lowC;
+
 	public StaffExtLinesLowCPresenter(HBox staffExtLinesLowC) {
 		this.staffExtLinesLowC = staffExtLinesLowC;
+		lowC = new ArrayList<Node>();
+		lowC.addAll(this.staffExtLinesLowC.getChildren());
 
-		this.measureLineNumber = StateMachine.getMeasureLineNum();
+		this.windowLines = Variables.windowLines;
+		this.noteLineReattachers = new ArrayList<NoteLineReattacher>();
 		setupViewUpdater();
 	}
 
 	private void setupViewUpdater() {
-		this.measureLineNumber.addListener(new ChangeListener<Number>() {
+		for (int i = 0; i < windowLines.size(); i++) {
+			final int index=  i;
+			final ObjectProperty<StaffNoteLine> windowLine = windowLines.get(i);
+			NoteLineReattacher nlr = new NoteLineReattacher(windowLines.get(i));
+			nlr.setNewNotesListener(new ListChangeListener<StaffNote>() {
 
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				// TODO:
-			}
-		});
+				@Override
+				public void onChanged(Change<? extends StaffNote> c) {
+					populateStaffLedgerLines(windowLine.get(), index);
+				}
+			});
+			nlr.setOnReattachListener(new ChangeListener<Object>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+					populateStaffLedgerLines((StaffNoteLine) newValue, index);
+				}
+			});
+			noteLineReattachers.add(nlr);
+		}
+	}
+	
+    /**
+     * Re-draws the staff ledger lines based on the notes present in a
+     * StaffNoteLine at a certain index. Position 14 & 16 are the positions of
+     * the high A and high C lines, and positions 0 and 2 are the positions of
+     * the low A and low C lines.
+     *
+     * @param stl
+     *            The <code>StaffNoteLine</code> that we want to check.
+     * @param index
+     *            The index that we are updating.
+     *
+     */
+    private void populateStaffLedgerLines(StaffNoteLine stl, int index) {
+		int low = Values.NOTES_IN_A_LINE;
+		for (StaffNote n : stl.getNotes()) {
+			int nt = n.getPosition();
+            if (nt <= low)
+                low = nt;
+		}
+		lowC.get(index).setVisible(low <= Values.lowC);
 	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -82,8 +81,7 @@ public class VolumeBarsPresenter {
     }
 
 	private void setupViewUpdater() {
-		ObservableList<Node> bars = this.volumeBars.getChildren();
-		for (int i = 0; i < bars.size(); i++) {
+		for (int i = 0; i < windowLines.size(); i++) {
 			final StaffVolumeEventHandler sveh = volumeBarHandlers.get(i);
 			NoteLineReattacher nlr = new NoteLineReattacher(windowLines.get(i));
 			nlr.setNewVolumeListener(new ChangeListener<Number>() {
