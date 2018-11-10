@@ -467,7 +467,7 @@ public class Utilities {
             // Do nothing
         }
         theStaff.setSequenceName(fname);
-        StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+//        StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         controller.getInstBLine().updateNoteExtensions();
         
         try {

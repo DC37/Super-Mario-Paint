@@ -9,6 +9,7 @@ import java.io.PrintStream;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -42,6 +43,8 @@ public class SaveButtonPresenter extends ImagePushButton {
 	private ObjectProperty<File> currentDirectory;
 	private BooleanProperty songModified;
 	private BooleanProperty arrModified;
+	private StringProperty theSequenceName;
+	private ObjectProperty<ProgramState> programState;
 
 	/**
      * Default constructor.
@@ -61,11 +64,13 @@ public class SaveButtonPresenter extends ImagePushButton {
         this.currentDirectory = StateMachine.getCurrentDirectory();
         this.songModified = StateMachine.getSongModified();
         this.arrModified = StateMachine.getArrModified();
+        this.theSequenceName = Variables.theSequenceName;
+        this.programState = StateMachine.getState();
     }
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        ProgramState curr = StateMachine.getState().get();
+        ProgramState curr = this.programState.get();
         if (curr == ProgramState.EDITING || curr == ProgramState.SONG_PLAYING)
             saveSong();
         else if (curr == ProgramState.ARR_EDITING
@@ -83,8 +88,7 @@ public class SaveButtonPresenter extends ImagePushButton {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(StateMachine.getCurrentDirectory().get());
-            f.setInitialFileName(Variables.theSequenceName.get()
-                    + ".txt");
+			f.setInitialFileName(this.theSequenceName.get() + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
@@ -152,7 +156,7 @@ public class SaveButtonPresenter extends ImagePushButton {
 		try {
 			FileChooser f = new FileChooser();
 			f.setInitialDirectory(this.currentDirectory.get());
-			f.setInitialFileName(Variables.theSequenceName.get() + ".txt");
+			f.setInitialFileName(this.theSequenceName.get() + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));

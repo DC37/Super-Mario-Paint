@@ -48,9 +48,6 @@ public class StateMachine {
 	 */
 	private static BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
 
-    /** The list of values denoting which notes should be extended. */
-    private static BooleanProperty[] noteExtensions = new BooleanProperty[Values.NUMINSTRUMENTS];
-    
     /**
      * The file directory that we are currently located in. We'll start in the
      * user directory.
@@ -263,30 +260,6 @@ public class StateMachine {
     	return clipboardPressed;
     }
     
-
-    /**
-     * @param set The note extensions that we want to set.
-     */
-    public static void setNoteExtensions(boolean[] set) {
-    	for (int i = 0; i < set.length; i++)
-    		noteExtensions[i].set(set[i]);
-    }
-    
-    /**
-     * @param set The note extensions that we want to set.
-     */
-    public static void setNoteExtensions(BooleanProperty[] set) {
-    	for (int i = 0; i < set.length; i++)
-    		noteExtensions[i].set(set[i].get());
-    }
-
-    /**
-     * @return A list of notes that we want to act like the coin.
-     */
-    public static BooleanProperty[] getNoteExtensions() {
-        return noteExtensions;
-    }
-
     /**
      * @return Set of currently-pressed buttons.
      */

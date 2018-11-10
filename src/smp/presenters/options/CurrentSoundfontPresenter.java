@@ -30,12 +30,12 @@ public class CurrentSoundfontPresenter {
 		this.currentSoundfont.valueProperty().bindBidirectional(optionsCurrentSoundfont);
 		
 		String[] listOfFiles = null;//TODO: = controller.getSoundfontLoader().getSoundfontsList();
-		for (String filename : listOfFiles) {
-			this.currentSoundfont.getItems().add(filename);
-
-			if (filename.equals(StateMachine.getCurrentSoundset().get()))
-				this.currentSoundfont.getSelectionModel().selectLast();
-		}
+//FIXME:		for (String filename : listOfFiles) {
+//			this.currentSoundfont.getItems().add(filename);
+//
+//			if (filename.equals(StateMachine.getCurrentSoundset().get()))
+//				this.currentSoundfont.getSelectionModel().selectLast();
+//		}
 		this.currentSoundfont.getItems().add("Add Soundfont...");
 		this.currentSoundfont.valueProperty().addListener(new ChangeListener<String>() {
 			@Override

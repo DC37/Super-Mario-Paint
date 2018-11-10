@@ -4,9 +4,10 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import smp.fx.SMPFXController;
 import smp.models.stateMachine.Variables;
 
 /**
@@ -28,30 +29,50 @@ public class SongNamePresenter {
 	private StringProperty theSequenceName;
 
 	TextField songName;
-	SMPFXController controller;
+
 	/**
 	 * The event handler that will handle unfocusing the TextField and
 	 * refocusing the ScrollBar. 
 	 */
 	EventHandler<MouseEvent> unfocusMouseEventHandler;
 
+	/**
+	 * The default node to focus (hopefully the slider).
+	 */
+	Node defaultFocusNode;
+
 	boolean mouseExited = false;
 
 	public SongNamePresenter(TextField songName) {
 		this.songName = songName;
 
+		// get default focus node
+		songName.sceneProperty().addListener(new ChangeListener<Scene>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newScene) {
+				newScene.focusOwnerProperty().addListener(new ChangeListener<Node>() {
+
+					@Override
+					public void changed(ObservableValue<? extends Node> observable, Node oldValue, Node newValue) {
+						if (defaultFocusNode == null)
+							defaultFocusNode = newValue;
+					}
+				});
+			}
+		});
+		
 		// click somewhere to unfocus only if the mouse exited
 		unfocusMouseEventHandler = new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				if (mouseExited)
-					controller.getScrollbar().requestFocus();
+					defaultFocusNode.requestFocus();
 			}
 		};
 
-		// when we get focused, prepare for the unfocusing mouse press event
-		// when we get unfocused, clean up the event filter
+		// remove eventfilter after unfocusing
 		songName.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue,
@@ -88,5 +109,6 @@ public class SongNamePresenter {
 	
     private void setupViewUpdater() {
     	songName.textProperty().bindBidirectional(this.theSequenceName);
+    	//TODO: in arr state, bindbidirectional with thearrangementname
     }
 }

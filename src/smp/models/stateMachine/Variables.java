@@ -39,7 +39,9 @@ public class Variables {
 	/** @since 1.3 */
 	public static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>(InstrumentIndex.MARIO);
 	/** from <code>Staff</code> */
-	public static StringProperty theSequenceName = new SimpleStringProperty("");
+	public static StringProperty theSequenceName = new SimpleStringProperty("");	
+	/** from <code>Staff</code> */
+	public static StringProperty theArrangementName = new SimpleStringProperty("");
 	/** from either <code>StaffArrangement</code> or maybe <code>Staff</code> */ 
 	public static ObservableList<String> arrangementList = FXCollections.observableArrayList();
 	public static ObjectProperty<MultipleSelectionModel<String>> selectionModelProperty = new SimpleObjectProperty<>();

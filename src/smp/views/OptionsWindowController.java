@@ -18,7 +18,7 @@ public class OptionsWindowController {
      * Location of the Options Window fxml file. 
      * TODO: move fxml string to somewhere in models layer
      */
-    private String fxml = "./OptionsWindow.fxml";
+    private String fxml = "OptionsWindow.fxml";
 	
     @FXML
     private Slider defaultVolume;

@@ -2,6 +2,7 @@ package smp.models.staff;
 
 import java.io.Serializable;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import smp.components.Values;
@@ -26,7 +27,7 @@ public class StaffNoteLine implements Serializable {
     private ObservableList<IntegerProperty> volumes;
 
     /** This is the volume of the entire <code>StaffNoteLine</code> */
-    private IntegerProperty volume;
+    private IntegerProperty volume = new SimpleIntegerProperty(Values.DEFAULT_VELOCITY);
 
     /** This ArrayList holds staff notes inside it. */
     private ObservableList<StaffNote> notes;

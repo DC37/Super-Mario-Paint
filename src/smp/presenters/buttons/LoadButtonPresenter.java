@@ -38,6 +38,8 @@ public class LoadButtonPresenter extends ImagePushButton {
 	private BooleanProperty songModified;
 	private BooleanProperty arrModified;
 	private ObjectProperty<File> currentDirectory;
+	private StringProperty theArrangementName;
+	private ObjectProperty<ProgramState> programState;
 
 	/**
      * Default constructor.
@@ -54,10 +56,12 @@ public class LoadButtonPresenter extends ImagePushButton {
         super(loadButton);
         this.theSequenceName = Variables.theSequenceName;
         this.theSequence = Variables.theSequence;
+        this.theArrangementName = Variables.theArrangementName;
         this.theArrangement = Variables.theArrangement;
         this.songModified = StateMachine.getSongModified();
         this.arrModified = StateMachine.getArrModified();
         this.currentDirectory = StateMachine.getCurrentDirectory();
+        this.programState = StateMachine.getState();
     }
 
     @Override
@@ -72,7 +76,7 @@ public class LoadButtonPresenter extends ImagePushButton {
 
     /** This loads the song or arrangement. */
     private void load() {
-        ProgramState curr = StateMachine.getState().get();
+        ProgramState curr = this.programState.get();
         if (curr == ProgramState.EDITING)
             loadSong();
         else if (curr == ProgramState.ARR_EDITING)
@@ -98,6 +102,7 @@ public class LoadButtonPresenter extends ImagePushButton {
                 loadSong(inputFile);
             } catch (Exception e) {
                 Dialog.showDialog("Not a valid song file.");
+                e.printStackTrace();
             }
         }
     }
@@ -118,9 +123,15 @@ public class LoadButtonPresenter extends ImagePushButton {
             }
 //            String fname = Utilities.populateStaff(loaded, inputFile, false,
 //                    theStaff, controller);
-            this.theSequence.set(loaded);
-            this.theSequenceName.set(inputFile.getName());
-            StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+            boolean mpc = false;
+			String fname = inputFile.getName();
+			if (mpc)
+				fname = fname.substring(0, fname.lastIndexOf(']'));
+			else
+				fname = fname.substring(0, fname.lastIndexOf("."));
+			
+			this.theSequence.set(loaded);
+            this.theSequenceName.set(fname);
             this.songModified.set(false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -129,6 +140,7 @@ public class LoadButtonPresenter extends ImagePushButton {
             e.printStackTrace();
         } catch (Exception e) {
             Dialog.showDialog("Not a valid song file.");
+            e.printStackTrace();
         }
     }
 
@@ -166,7 +178,7 @@ public class LoadButtonPresenter extends ImagePushButton {
 //                Utilities.populateStaffArrangement(loaded, inputFile, false,
 //                        theStaff, controller);
                 this.theArrangement.set(loaded);
-                this.theSequenceName.set(inputFile.getName());
+                this.theArrangementName.set(inputFile.getName());
                 this.songModified.set(false);
                 this.arrModified.set(false);
             } catch (ClassNotFoundException | StreamCorruptedException
@@ -179,7 +191,7 @@ public class LoadButtonPresenter extends ImagePushButton {
 //                    Utilities.populateStaffArrangement(loaded, inputFile, true,
 //                            theStaff, controller);
                     this.theArrangement.set(loaded);
-                    this.theSequenceName.set(inputFile.getName());
+                    this.theArrangementName.set(inputFile.getName());
                     this.songModified.set(false);
                 } catch (Exception e1) {
                     e1.printStackTrace();

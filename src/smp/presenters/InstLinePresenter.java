@@ -23,7 +23,6 @@ import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
 import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.Settings;
-import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
 
 /**
@@ -84,8 +83,8 @@ public class InstLinePresenter {
         Node nd = n.remove(15);
         n.add(16, nd);
         
-        this.ext = StateMachine.getNoteExtensions();
         this.theSequence = Variables.theSequence;
+        //TODO: sequencereattacher
         setupViewUpdater();
     }
 
@@ -145,7 +144,6 @@ public class InstLinePresenter {
      */
     @Deprecated
     public void updateNoteExtensions() {
-        BooleanProperty[] ext = StateMachine.getNoteExtensions();
         for (int j = 0; j < Values.NUMINSTRUMENTS; j++) {
                 changePortrait(j, ext[j].get());
         }

@@ -14,7 +14,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import smp.presenters.buttons.PlayPresenter;
+import smp.presenters.ScrollbarPresenter;
+import smp.presenters.SongNamePresenter;
+import smp.presenters.buttons.LoadButtonPresenter;
+import smp.presenters.buttons.NewButtonPresenter;
+import smp.presenters.buttons.OptionsButtonPresenter;
+import smp.presenters.buttons.SaveButtonPresenter;
 
 public class MainWindowController {
 	
@@ -181,7 +186,13 @@ public class MainWindowController {
      * Initializes the Controller class for the options window
      */
     public void initialize() {
-    	new PlayPresenter(play);
+    	new ScrollbarPresenter(scrollbar);
+    	new SongNamePresenter(songName);
+    	
+    	new LoadButtonPresenter(loadButton);
+    	new NewButtonPresenter(newButton);
+    	new OptionsButtonPresenter(optionsButton);
+    	new SaveButtonPresenter(saveButton);
     }
     
     /**

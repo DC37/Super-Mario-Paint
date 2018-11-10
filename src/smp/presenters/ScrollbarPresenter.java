@@ -6,9 +6,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import smp.components.Values;
+import smp.models.staff.StaffNoteLine;
 import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
+import smp.models.stateMachine.Variables.WindowLines;
+import smp.presenters.api.reattachers.SequenceReattacher;
 
 public class ScrollbarPresenter {
 
@@ -16,14 +19,19 @@ public class ScrollbarPresenter {
 	//====Models====
 	private DoubleProperty measureLineNum;
 	private ObjectProperty<StaffSequence> theSequence;
+	private WindowLines windowLines;
 	
 	private Slider scrollbar;
+	
+	private SequenceReattacher sequenceReattacher;
 
 	public ScrollbarPresenter(Slider scrollbar) {
 		this.scrollbar = scrollbar;
 		
 		this.measureLineNum = StateMachine.getMeasureLineNum();
 		this.theSequence = Variables.theSequence;
+		this.windowLines = Variables.windowLines;
+		this.sequenceReattacher = new SequenceReattacher(this.theSequence);
 		setupViewUpdater();
 	}
 	
@@ -45,12 +53,14 @@ public class ScrollbarPresenter {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {
-				//TODO: update staff measures
-				//theStaff.getStaffImages().updateStaffMeasureLines(newVal.intValue());
+				for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+					ObjectProperty<StaffNoteLine> windowLine = windowLines.get(i);
+					StaffNoteLine newWindowLine = theSequence.get().getLine(measureLineNum.intValue() + i);
+					windowLine.set(newWindowLine);
+				}
 			}
-
 		});
-		this.theSequence.get().getTheLinesSize().addListener(new ChangeListener<Number>() {
+		this.sequenceReattacher.setNewTheLinesSizeListener(new ChangeListener<Number>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {
@@ -59,6 +69,12 @@ public class ScrollbarPresenter {
 				scrollbar.setMax(newMax - Values.NOTELINES_IN_THE_WINDOW);
 			}
 		});
-		//TODO: code sequence reloading which will re-add listeners
+		this.sequenceReattacher.setOnReattachListener(new ChangeListener<Object>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				measureLineNum.set(0);
+			}
+		});
 	}
 }

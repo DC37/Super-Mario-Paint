@@ -3,6 +3,7 @@ package smp.presenters.buttons;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.fx.Dialog;
@@ -29,6 +30,8 @@ public class NewButtonPresenter extends ImagePushButton {
 	private BooleanProperty songModified;
 	private BooleanProperty arrModified;
 	private ObjectProperty<StaffArrangement> theArrangement;
+	private StringProperty theSequenceName;
+	private StringProperty theArrangementName;
 
 	/**
      * Default constructor.
@@ -48,6 +51,8 @@ public class NewButtonPresenter extends ImagePushButton {
         this.songModified = StateMachine.getSongModified();
         this.arrModified = StateMachine.getArrModified();
         this.theArrangement = Variables.theArrangement;
+        this.theSequenceName = Variables.theSequenceName;
+        this.theArrangementName = Variables.theArrangementName;
     }
 
     @Override
@@ -78,7 +83,8 @@ public class NewButtonPresenter extends ImagePushButton {
         if (cont) {
             this.theSequence.set(new StaffSequence());
 //            theStaff.setSequenceFile(null);??
-            measureLineNum.set(0);
+            this.theSequenceName.set("");
+            this.measureLineNum.set(0);
             this.songModified.set(false);
         }
     }
@@ -98,6 +104,7 @@ public class NewButtonPresenter extends ImagePushButton {
         if (cont) {
         	this.theArrangement.set(new StaffArrangement());
 //            theStaff.setArrangementFile(null);??
+        	this.theArrangementName.set("");
             this.arrModified.set(false);
         }
     }
