@@ -37,7 +37,6 @@ public class OptionsButtonPresenter extends ImagePushButton {
 	//====Models====
 	private ObjectProperty<StaffSequence> theSequence;
 	private IntegerProperty defaultVelocity;
-	private DoubleProperty tempo;
 	private StringProperty currentSoundset;
 	private BooleanProperty songModified;
 
@@ -55,7 +54,6 @@ public class OptionsButtonPresenter extends ImagePushButton {
         super(optionsButton);
         this.defaultVelocity = Variables.defaultVelocity;
         this.theSequence = Variables.theSequence;
-        this.tempo = StateMachine.getTempo();
         this.currentSoundset = StateMachine.getCurrentSoundset();
         this.songModified = StateMachine.getSongModified();
     }
@@ -148,6 +146,7 @@ public class OptionsButtonPresenter extends ImagePushButton {
             }
             s.clear();
             s.addAll(n);
+            DoubleProperty tempo = this.theSequence.get().getTempo();
             tempo.set(tempo.get() * num);
             
             //TODO:

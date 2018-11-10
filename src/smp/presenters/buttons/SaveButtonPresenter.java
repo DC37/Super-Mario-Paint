@@ -165,8 +165,6 @@ public class SaveButtonPresenter extends ImagePushButton {
                 return;
             FileOutputStream f_out = new FileOutputStream(outputFile);
             StaffSequence out = this.theSequence.get();
-            //TODO: put listeners on tempo model in theSequence
-            out.setTempo(StateMachine.getTempo().get());
             if (Settings.SAVE_OBJECTS) {
                 saveSongObject(f_out, out);
             } else {

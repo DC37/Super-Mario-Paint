@@ -9,8 +9,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.components.Values;
+import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.ProgramState;
 import smp.models.stateMachine.StateMachine;
+import smp.models.stateMachine.Variables;
 import smp.presenters.api.button.ImagePushButton;
 
 /**
@@ -20,12 +22,12 @@ import smp.presenters.api.button.ImagePushButton;
  * @author RehdBlob
  * @since 2013.09.28
  */
-public class TempoPlusButton extends ImagePushButton {
+public class TempoMinusPresenter extends ImagePushButton {
 
 	//TODO: auto-add these model comments
 	//====Models====
+	private ObjectProperty<StaffSequence> theSequence;
 	private ObjectProperty<ProgramState> programState;
-	private DoubleProperty tempo;
 	
     /** Tells us whether this is a plus or minus button. */
     private boolean isPositive;
@@ -36,7 +38,7 @@ public class TempoPlusButton extends ImagePushButton {
     /**
      * Default constructor
      *
-     * @param tempoPlus
+     * @param tempoMinus
      *            The <code>ImageView</code> object that we want this adjustment
      *            button to be linked to.
      * @param ct
@@ -44,13 +46,13 @@ public class TempoPlusButton extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public TempoPlusButton(ImageView tempoPlus) {
-        super(tempoPlus);
+    public TempoMinusPresenter(ImageView tempoMinus) {
+        super(tempoMinus);
         t = new Timer();
-        this.setPositive(true);
-        
+        this.setPositive(false);
+
+		this.theSequence = Variables.theSequence;
         this.programState = StateMachine.getState();
-        this.tempo = StateMachine.getTempo();
     }
 
     /**
@@ -101,6 +103,7 @@ public class TempoPlusButton extends ImagePushButton {
                     ch = add;
                 else
                     ch = -add;
+                DoubleProperty tempo = theSequence.get().getTempo();
                 tempo.set(tempo.get() + ch);
             }
         });

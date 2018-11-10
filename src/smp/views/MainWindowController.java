@@ -16,10 +16,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.presenters.ScrollbarPresenter;
 import smp.presenters.SongNamePresenter;
+import smp.presenters.TempoBoxPresenter;
+import smp.presenters.TempoIndicatorPresenter;
 import smp.presenters.buttons.LoadButtonPresenter;
 import smp.presenters.buttons.NewButtonPresenter;
 import smp.presenters.buttons.OptionsButtonPresenter;
 import smp.presenters.buttons.SaveButtonPresenter;
+import smp.presenters.buttons.TempoMinusPresenter;
+import smp.presenters.buttons.TempoPlusPresenter;
 
 public class MainWindowController {
 	
@@ -188,11 +192,15 @@ public class MainWindowController {
     public void initialize() {
     	new ScrollbarPresenter(scrollbar);
     	new SongNamePresenter(songName);
+    	new TempoBoxPresenter(tempoBox);
+    	new TempoIndicatorPresenter(tempoIndicator);
     	
     	new LoadButtonPresenter(loadButton);
     	new NewButtonPresenter(newButton);
     	new OptionsButtonPresenter(optionsButton);
     	new SaveButtonPresenter(saveButton);
+    	new TempoMinusPresenter(tempoMinus);
+    	new TempoPlusPresenter(tempoPlus);
     }
     
     /**

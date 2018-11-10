@@ -75,11 +75,6 @@ public class StateMachine {
      */
     private static DoubleProperty currentLine = new SimpleDoubleProperty(0);
 
-    /**
-     * This is the current tempo that the program is running at.
-     */
-    private static DoubleProperty tempo = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
-
 	/**
 	 * The current soundset name. This should change when a new soundfont is
 	 * loaded.
@@ -141,24 +136,6 @@ public class StateMachine {
     /** Sets the time signature back to "4/4" by default. */
     public static void resetTimeSignature() {
         currentTimeSignature.set(TimeSignature.FOUR_FOUR);
-    }
-
-    /**
-     * @return The tempo that this program is running at.
-     */
-    public static DoubleProperty getTempo() {
-        return tempo;
-    }
-
-    /**
-     * Sets the tempo to what we give it here.
-     *
-     * @param num
-     *            The tempo we want to set the program to run at.
-     * @return The current tempo.
-     */
-    public static void setTempo(double num) {
-        tempo.set(num);
     }
 
     /**

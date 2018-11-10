@@ -1,25 +1,29 @@
 package smp.presenters;
 
-import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import smp.fx.Dialog;
+import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.ProgramState;
 import smp.models.stateMachine.StateMachine;
+import smp.models.stateMachine.Variables;
 
 public class TempoBoxPresenter {
 
 	//TODO: auto-add these model comments
 	//====Models====
-	private DoubleProperty tempo;
+	private ObjectProperty<StaffSequence> theSequence;
+	private ObjectProperty<ProgramState> programState;
 	
 	private StackPane tempoBox;
 
 	public TempoBoxPresenter(StackPane tempoBox) {
 		this.tempoBox = tempoBox;
 		
-		this.tempo = StateMachine.getTempo();
+		this.theSequence = Variables.theSequence;
+		this.programState = StateMachine.getState();
 		setupViewUpdater();
 	}
 
@@ -28,10 +32,10 @@ public class TempoBoxPresenter {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					ProgramState curr = StateMachine.getState().get();
+					ProgramState curr = programState.get();
 					if (curr == ProgramState.EDITING) {
 						String tempoString = Dialog.showTextDialog("Tempo");
-						tempo.set(Double.parseDouble(tempoString));
+						theSequence.get().getTempo().set(Double.parseDouble(tempoString));
 					}
 				} catch (NumberFormatException e) {
 					// Do nothing.

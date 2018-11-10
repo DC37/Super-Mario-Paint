@@ -40,7 +40,7 @@ public class SequenceReattacher {
 	 * is set: the new sequence's tempo should be listened for and the tempo
 	 * view updated.
 	 */
-	public ChangeListener<Object> onReattachListener;
+	public ChangeListener<StaffSequence> onReattachListener;
 
 	public SequenceReattacher(ObjectProperty<StaffSequence> theSequence) {
 		this.theSequence = theSequence;
@@ -131,7 +131,7 @@ public class SequenceReattacher {
 		this.theSequence.get().getTimeSignature().addListener(this.timeSignatureListener);
 	}
 
-	public void setOnReattachListener(ChangeListener<Object> onReattachListener) {
+	public void setOnReattachListener(ChangeListener<StaffSequence> onReattachListener) {
 		this.onReattachListener = onReattachListener;
 		this.theSequence.addListener(onReattachListener);
 	}

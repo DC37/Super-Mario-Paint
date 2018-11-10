@@ -69,10 +69,11 @@ public class ScrollbarPresenter {
 				scrollbar.setMax(newMax - Values.NOTELINES_IN_THE_WINDOW);
 			}
 		});
-		this.sequenceReattacher.setOnReattachListener(new ChangeListener<Object>() {
+		this.sequenceReattacher.setOnReattachListener(new ChangeListener<StaffSequence>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+			public void changed(ObservableValue<? extends StaffSequence> observable, StaffSequence oldValue,
+					StaffSequence newValue) {
 				measureLineNum.set(0);
 			}
 		});
