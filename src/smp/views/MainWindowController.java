@@ -14,11 +14,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import smp.presenters.ArrangementListPresenter;
+import smp.presenters.ModeTextPresenter;
 import smp.presenters.ScrollbarPresenter;
 import smp.presenters.SongNamePresenter;
 import smp.presenters.TempoBoxPresenter;
 import smp.presenters.TempoIndicatorPresenter;
 import smp.presenters.buttons.LoadButtonPresenter;
+import smp.presenters.buttons.ModeButtonPresenter;
 import smp.presenters.buttons.NewButtonPresenter;
 import smp.presenters.buttons.OptionsButtonPresenter;
 import smp.presenters.buttons.SaveButtonPresenter;
@@ -85,7 +88,7 @@ public class MainWindowController {
     private ImageView optionsButton;
 
     @FXML
-    private ListView<?> arrangementList;
+    private ListView<String> arrangementList;
 
     @FXML
     private ImageView mute;
@@ -190,12 +193,15 @@ public class MainWindowController {
      * Initializes the Controller class for the options window
      */
     public void initialize() {
+    	new ArrangementListPresenter(arrangementList);
+    	new ModeTextPresenter(modeText);
     	new ScrollbarPresenter(scrollbar);
     	new SongNamePresenter(songName);
     	new TempoBoxPresenter(tempoBox);
     	new TempoIndicatorPresenter(tempoIndicator);
     	
     	new LoadButtonPresenter(loadButton);
+    	new ModeButtonPresenter(modeButton);
     	new NewButtonPresenter(newButton);
     	new OptionsButtonPresenter(optionsButton);
     	new SaveButtonPresenter(saveButton);

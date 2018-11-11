@@ -1,5 +1,6 @@
 package smp.presenters;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,6 +9,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import smp.models.stateMachine.ProgramState;
+import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
 
 /**
@@ -27,6 +30,8 @@ public class SongNamePresenter {
 	//TODO: auto-add these model comments
 	//====Models====
 	private StringProperty theSequenceName;
+	private StringProperty theArrangementName;
+	private ObjectProperty<ProgramState> programState;
 
 	TextField songName;
 
@@ -103,12 +108,30 @@ public class SongNamePresenter {
 			}
 		});
 		
-		this.theSequenceName = Variables.theSequenceName;		
+		this.theSequenceName = Variables.theSequenceName;	
+		this.theArrangementName = Variables.theArrangementName;	
+		this.programState = StateMachine.getState();	
 		setupViewUpdater();
 	}
 	
     private void setupViewUpdater() {
-    	songName.textProperty().bindBidirectional(this.theSequenceName);
-    	//TODO: in arr state, bindbidirectional with thearrangementname
-    }
+		songName.textProperty().bindBidirectional(this.theSequenceName);
+		songName.setPromptText("Song Name");
+		this.programState.addListener(new ChangeListener<Object>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				if (newValue.equals(ProgramState.EDITING)) {
+					songName.textProperty().unbindBidirectional(theArrangementName);
+					songName.textProperty().bindBidirectional(theSequenceName);
+					songName.setPromptText("Song Name");
+				}
+				else if (newValue.equals(ProgramState.ARR_EDITING)) {
+					songName.textProperty().unbindBidirectional(theSequenceName);
+					songName.textProperty().bindBidirectional(theArrangementName);
+					songName.setPromptText("Arrangement Name");
+				}
+			}
+		});
+	}
 }

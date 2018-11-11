@@ -22,6 +22,7 @@ public class ModeTextPresenter {
 	}
 
 	private void setupViewUpdater() {
+		this.modeText.setText("Song");
 		this.programState.addListener(new ChangeListener<Object>() {
 
 			@Override
