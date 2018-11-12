@@ -1,32 +1,39 @@
 package smp.presenters;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
+import smp.models.staff.StaffArrangement;
 import smp.models.stateMachine.ProgramState;
 import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
+import smp.presenters.api.reattachers.ArrangementReattacher;
 
 public class ArrangementListPresenter {
 	
 	//TODO: auto-add these model comments
 	//====Models====
-	private ObservableList<String> arrangementListModel;
-	private ObjectProperty<MultipleSelectionModel<String>> selectionModelProperty;
+	private ObjectProperty<StaffArrangement> theArrangement;
 	private ObjectProperty<ProgramState> programState;
+	private IntegerProperty arrangementListSelectedIndex;
 	
 	private ListView<String> arrangementList;
 	
+	private ArrangementReattacher arrangementReattacher;
+
+	ListProperty<String> listProperty = new SimpleListProperty<>();
+
 	public ArrangementListPresenter(ListView<String> arrangementList) {
 		this.arrangementList = arrangementList;
-		this.arrangementListModel = Variables.arrangementList;
-		this.selectionModelProperty = Variables.selectionModelProperty;
+		
+		this.theArrangement = Variables.theArrangement;
+		this.arrangementListSelectedIndex = Variables.arrangementListSelectedIndex;
 		this.programState = StateMachine.getState();
+		this.arrangementReattacher = new ArrangementReattacher(this.theArrangement);
 		setupViewUpdater();
 	}
 
@@ -34,12 +41,33 @@ public class ArrangementListPresenter {
 		this.arrangementList.setEditable(true);
 		this.arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
 		this.arrangementList.setVisible(false);
+
+		this.arrangementReattacher.setOnReattachListener(new ChangeListener<StaffArrangement>() {
+
+			@Override
+			public void changed(ObservableValue<? extends StaffArrangement> observable, StaffArrangement oldValue,
+					StaffArrangement newValue) {
+				listProperty.set(theArrangement.get().getTheSequenceNames());
+				arrangementList.itemsProperty().unbind();
+				arrangementList.itemsProperty().bind(listProperty);
+			}
+		});
 		
-		ListProperty<String> listProperty = new SimpleListProperty<>();
-		listProperty.set(arrangementListModel);
-		arrangementList.itemsProperty().bind(listProperty);
-		arrangementList.selectionModelProperty().bindBidirectional(this.selectionModelProperty);
-		
+		arrangementList.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				arrangementListSelectedIndex.set(newValue.intValue());
+			}
+		});
+		this.arrangementListSelectedIndex.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				arrangementList.getSelectionModel().select(newValue.intValue());
+			}
+		});
+
 		this.programState.addListener(new ChangeListener<Object>() {
 
 			@Override

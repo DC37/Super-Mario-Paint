@@ -1,5 +1,6 @@
 package smp.presenters.buttons;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,9 +24,9 @@ public class DeleteButtonPresenter extends ImagePushButton {
 
 	//TODO: auto-add these model comments
 	//====Models====
-    private ObservableList<String> arrangementList;
 	private ObjectProperty<StaffArrangement> theArrangement;
 	private ObjectProperty<ProgramState> programState;
+	private IntegerProperty arrangementListSelectedIndex;
 
 	/**
      * Default constructor.
@@ -40,8 +41,8 @@ public class DeleteButtonPresenter extends ImagePushButton {
      */
     public DeleteButtonPresenter(ImageView deleteButton) {
         super(deleteButton);
-        this.arrangementList = Variables.arrangementList;
         this.theArrangement = Variables.theArrangement;
+        this.arrangementListSelectedIndex = Variables.arrangementListSelectedIndex;
         this.programState = StateMachine.getState();
         setupViewUpdater();
     }
@@ -51,8 +52,8 @@ public class DeleteButtonPresenter extends ImagePushButton {
         if (this.programState.get() != ProgramState.ARR_PLAYING) {
             if ((Settings.debug & 0b100000) != 0)
                 System.out.println("Delete song");
-            ObservableList<String> l = this.arrangementList;
-			int x = Variables.selectionModelProperty.get().getSelectedIndex();
+            ObservableList<String> l = this.theArrangement.get().getTheSequenceNames();
+			int x = this.arrangementListSelectedIndex.get();
             if (x != -1) {
                 StateMachine.setArrModified(true);
                 this.theArrangement.get().remove(x);
@@ -67,6 +68,7 @@ public class DeleteButtonPresenter extends ImagePushButton {
     }
     
     private void setupViewUpdater() {
+		theImage.setVisible(false);
     	this.programState.addListener(new ChangeListener<Object>() {
 
 			@Override

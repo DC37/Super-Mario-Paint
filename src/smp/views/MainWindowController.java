@@ -20,6 +20,9 @@ import smp.presenters.ScrollbarPresenter;
 import smp.presenters.SongNamePresenter;
 import smp.presenters.TempoBoxPresenter;
 import smp.presenters.TempoIndicatorPresenter;
+import smp.presenters.buttons.AddButtonPresenter;
+import smp.presenters.buttons.DeleteButtonPresenter;
+import smp.presenters.buttons.DownButtonPresenter;
 import smp.presenters.buttons.LoadButtonPresenter;
 import smp.presenters.buttons.ModeButtonPresenter;
 import smp.presenters.buttons.NewButtonPresenter;
@@ -27,6 +30,7 @@ import smp.presenters.buttons.OptionsButtonPresenter;
 import smp.presenters.buttons.SaveButtonPresenter;
 import smp.presenters.buttons.TempoMinusPresenter;
 import smp.presenters.buttons.TempoPlusPresenter;
+import smp.presenters.buttons.UpButtonPresenter;
 
 public class MainWindowController {
 	
@@ -200,6 +204,9 @@ public class MainWindowController {
     	new TempoBoxPresenter(tempoBox);
     	new TempoIndicatorPresenter(tempoIndicator);
     	
+    	new AddButtonPresenter(addButton);
+    	new DeleteButtonPresenter(deleteButton);
+    	new DownButtonPresenter(downButton);
     	new LoadButtonPresenter(loadButton);
     	new ModeButtonPresenter(modeButton);
     	new NewButtonPresenter(newButton);
@@ -207,6 +214,7 @@ public class MainWindowController {
     	new SaveButtonPresenter(saveButton);
     	new TempoMinusPresenter(tempoMinus);
     	new TempoPlusPresenter(tempoPlus);
+    	new UpButtonPresenter(upButton);
     }
     
     /**

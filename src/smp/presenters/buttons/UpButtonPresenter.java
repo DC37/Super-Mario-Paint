@@ -3,9 +3,11 @@ package smp.presenters.buttons;
 import java.io.File;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.models.staff.StaffArrangement;
@@ -26,10 +28,10 @@ public class UpButtonPresenter extends ImagePushButton {
 
 	//TODO: auto-add these model comments
 	//====Models====
-	private ObservableList<String> arrangementList;
-	private ObjectProperty<MultipleSelectionModel<String>> selectionModelProperty;
+	private IntegerProperty arrangementListSelectedIndex;
 	private BooleanProperty arrModified;
 	private ObjectProperty<StaffArrangement> theArrangement;
+	private ObjectProperty<ProgramState> programState;
 	
     /** The amount to move a song up or down. */
     private int moveAmt = 0;
@@ -49,10 +51,11 @@ public class UpButtonPresenter extends ImagePushButton {
         super(upButton);
         moveAmt = 1;
         
-        this.arrangementList = Variables.arrangementList;
-        this.selectionModelProperty = Variables.selectionModelProperty;
+        this.arrangementListSelectedIndex = Variables.arrangementListSelectedIndex;
         this.arrModified = StateMachine.getArrModified();
         this.theArrangement = Variables.theArrangement;
+        this.programState = StateMachine.getState();
+        setupViewUpdater();
     }
 
     @Override
@@ -61,8 +64,8 @@ public class UpButtonPresenter extends ImagePushButton {
         if (curr != ProgramState.ARR_PLAYING) {
             if ((Settings.debug & 0b100000) != 0)
                 System.out.println("Move song " + moveAmt);
-            ObservableList<String> l = this.arrangementList;
-            int x = this.selectionModelProperty.get().getSelectedIndex();
+            ObservableList<String> l = this.theArrangement.get().getTheSequenceNames();
+            int x = this.arrangementListSelectedIndex.get();
             if (x != -1) {
             	this.arrModified.set(true);
                 Object[] o = this.theArrangement.get().remove(x);
@@ -76,7 +79,7 @@ public class UpButtonPresenter extends ImagePushButton {
                     moveTo = 0;
                 l.add(moveTo, s);
 				this.theArrangement.get().add(moveTo, ss, f);
-				this.selectionModelProperty.get().select(moveTo);
+				this.arrangementListSelectedIndex.set(moveTo);
             }
         }
     }
@@ -86,4 +89,17 @@ public class UpButtonPresenter extends ImagePushButton {
 
     }
 
+    private void setupViewUpdater() {
+		theImage.setVisible(false);
+    	this.programState.addListener(new ChangeListener<Object>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+				if (newValue.equals(ProgramState.EDITING))
+					theImage.setVisible(false);
+				else if (newValue.equals(ProgramState.ARR_EDITING))
+					theImage.setVisible(true);
+			}
+		});
+	}
 }

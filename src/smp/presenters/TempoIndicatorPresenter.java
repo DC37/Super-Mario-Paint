@@ -34,6 +34,7 @@ public class TempoIndicatorPresenter {
 			public void changed(ObservableValue<? extends StaffSequence> observable, StaffSequence oldValue,
 					StaffSequence newValue) {
 				StaffSequence newSequence = (StaffSequence) newValue;
+				tempoIndicator.textProperty().unbind();
 				tempoIndicator.textProperty().bind(newSequence.getTempo().asString());
 			}
 		});

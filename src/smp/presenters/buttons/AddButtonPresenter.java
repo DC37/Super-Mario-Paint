@@ -1,9 +1,9 @@
 package smp.presenters.buttons;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import smp.models.staff.StaffArrangement;
@@ -23,9 +23,9 @@ public class AddButtonPresenter extends ImagePushButton {
 
 	//TODO: auto-add these model comments
 	//====Models====
-	private ObservableList<String> arrangementList;
 	private ObjectProperty<StaffArrangement> theArrangement;
 	private ObjectProperty<ProgramState> programState;
+	private StringProperty theSequenceName;
 
 	/**
      * Default constructor.
@@ -40,8 +40,8 @@ public class AddButtonPresenter extends ImagePushButton {
      */
     public AddButtonPresenter(ImageView addButton) {
         super(addButton);
-        this.arrangementList = Variables.arrangementList;
         this.theArrangement = Variables.theArrangement;
+        this.theSequenceName = Variables.theSequenceName;
         this.programState = StateMachine.getState();
         setupViewUpdater();
     }
@@ -54,7 +54,7 @@ public class AddButtonPresenter extends ImagePushButton {
 
             if (Variables.theSequenceFile.get() != null) {
                 StateMachine.setArrModified(true);
-                this.arrangementList.add(Variables.theSequenceName.get());
+                this.theArrangement.get().getTheSequenceNames().add(this.theSequenceName.get());
                 this.theArrangement.get().add(Variables.theSequence.get(),
                         Variables.theSequenceFile.get());
                 //TODO: create a stand-alone sound controller presenter
@@ -69,6 +69,7 @@ public class AddButtonPresenter extends ImagePushButton {
     }
 
     private void setupViewUpdater() {
+		theImage.setVisible(false);
     	this.programState.addListener(new ChangeListener<Object>() {
 
 			@Override

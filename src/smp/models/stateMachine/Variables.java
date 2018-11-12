@@ -11,9 +11,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.MultipleSelectionModel;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.models.staff.StaffArrangement;
@@ -42,9 +39,7 @@ public class Variables {
 	public static StringProperty theSequenceName = new SimpleStringProperty("");	
 	/** from <code>Staff</code> */
 	public static StringProperty theArrangementName = new SimpleStringProperty("");
-	/** from either <code>StaffArrangement</code> or maybe <code>Staff</code> */ 
-	public static ObservableList<String> arrangementList = FXCollections.observableArrayList();
-	public static ObjectProperty<MultipleSelectionModel<String>> selectionModelProperty = new SimpleObjectProperty<>();
+	public static IntegerProperty arrangementListSelectedIndex = new SimpleIntegerProperty(-1);
 	
 	public static IntegerProperty defaultVelocity = new SimpleIntegerProperty(Values.DEFAULT_VELOCITY);
 	
