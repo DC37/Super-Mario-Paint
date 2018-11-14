@@ -33,6 +33,8 @@ import smp.presenters.buttons.SaveButtonPresenter;
 import smp.presenters.buttons.TempoMinusPresenter;
 import smp.presenters.buttons.TempoPlusPresenter;
 import smp.presenters.buttons.UpButtonPresenter;
+import smp.presenters.staff.StaffAccidentalsPresenter;
+import smp.presenters.staff.StaffInstrumentsPresenter;
 
 public class MainWindowController {
 	
@@ -219,6 +221,9 @@ public class MainWindowController {
     	new TempoMinusPresenter(tempoMinus);
     	new TempoPlusPresenter(tempoPlus);
     	new UpButtonPresenter(upButton);
+    	
+    	new StaffAccidentalsPresenter(staffAccidentals);
+    	new StaffInstrumentsPresenter(staffInstruments);
     }
     
     /**

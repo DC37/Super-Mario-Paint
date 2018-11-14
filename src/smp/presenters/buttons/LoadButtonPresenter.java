@@ -8,16 +8,21 @@ import java.text.ParseException;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import smp.fx.Dialog;
 import smp.models.staff.StaffArrangement;
+import smp.models.staff.StaffNoteLine;
 import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.ProgramState;
 import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
+import smp.models.stateMachine.Variables.WindowLines;
 import smp.presenters.api.button.ImagePushButton;
 import smp.presenters.api.load.MPCDecoder;
 import smp.presenters.api.load.Utilities;
@@ -40,6 +45,7 @@ public class LoadButtonPresenter extends ImagePushButton {
 	private ObjectProperty<File> currentDirectory;
 	private StringProperty theArrangementName;
 	private ObjectProperty<ProgramState> programState;
+	private WindowLines windowLines;
 
 	/**
      * Default constructor.
@@ -56,15 +62,17 @@ public class LoadButtonPresenter extends ImagePushButton {
         super(loadButton);
         this.theSequenceName = Variables.theSequenceName;
         this.theSequence = Variables.theSequence;
+        this.windowLines = Variables.windowLines;
         this.theArrangementName = Variables.theArrangementName;
         this.theArrangement = Variables.theArrangement;
         this.songModified = StateMachine.getSongModified();
         this.arrModified = StateMachine.getArrModified();
         this.currentDirectory = StateMachine.getCurrentDirectory();
         this.programState = StateMachine.getState();
+        setupViewUpdater();
     }
 
-    @Override
+	@Override
     protected void reactPressed(MouseEvent event) {
         load();
     }
@@ -202,4 +210,16 @@ public class LoadButtonPresenter extends ImagePushButton {
             }
         }
     }
+
+	private void setupViewUpdater() {
+		this.theSequence.addListener(new ChangeListener<StaffSequence>() {
+
+			@Override
+			public void changed(ObservableValue<? extends StaffSequence> observable, StaffSequence oldValue,
+					StaffSequence newSequence) {
+				for (int i = 0; i < windowLines.size(); i++)
+					windowLines.get(i).set(newSequence.getLine(i));
+			}
+		});
+	}
 }

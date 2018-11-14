@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.TestMain;
 import smp.components.Values;
 import smp.models.staff.StaffNote;
 import smp.models.staff.StaffNoteLine;
@@ -39,14 +40,15 @@ public class StaffInstrumentsPresenter {
 	private ArrayList<ArrayList<StackPane>> matrix;
 	
     /** Pointer to the image loader object. */
-    private transient ImageLoader il;
+    private transient ImageLoader il = (ImageLoader) TestMain.imgLoader;
 
 	public StaffInstrumentsPresenter(HBox staffInstruments) {
 		this.staffInstruments = staffInstruments;
-		initializeStaffInstruments(this.staffInstruments);
+        matrix = new ArrayList<ArrayList<StackPane>>();
 
 		this.windowLines = Variables.windowLines;
 		this.noteLineReattachers = new ArrayList<NoteLineReattacher>();
+		initializeStaffInstruments(this.staffInstruments);
 		setupViewUpdater();
 	}
 
@@ -151,7 +153,7 @@ public class StaffInstrumentsPresenter {
 	private void populateNoteDisplay(StaffNoteLine stl, int index) {
 		ObservableList<StaffNote> st = stl.getNotes();
 		for (StaffNote s : st) {
-			StackPane noteSP = matrix.get(index).get(s.getPosition());
+			StackPane noteSP = getNote(index, s.getPosition());
 			ImageView sIV = new ImageView();
 			noteSP.getChildren().add(sIV);
 
@@ -166,5 +168,23 @@ public class StaffInstrumentsPresenter {
 
             sIV.setVisible(true);
 		}
+    }    
+	
+	/**
+     * Gets you an object based on the coordinate that you give this method.
+     * This method should help a lot when working on those portions of code that
+     * ask the entire staff to update its images. Bypassing the individual
+     * StackPane object links should be a lot easier with this here.
+     *
+     * @param x
+     *            The note line number.
+     * @param y
+     *            The note number.
+     * @return Index 0 is the <code>StackPane</code> of the note that is located
+     *         at the location. Index 1 is the <code>StackPane</code> of the
+     *         flat / sharp / etc box that it is associated with.
+     */
+    public StackPane getNote(int x, int y) {
+        return matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
     }
 }

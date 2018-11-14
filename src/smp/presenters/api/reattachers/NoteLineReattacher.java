@@ -41,8 +41,10 @@ public class NoteLineReattacher {
 			@Override
 			public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
 				StaffNoteLine oldNoteLine = (StaffNoteLine) oldValue;
-				oldNoteLine.getVolume().removeListener(volumeListener);
-				oldNoteLine.getNotes().removeListener(notesListener);
+				if (volumeListener != null)
+					oldNoteLine.getVolume().removeListener(volumeListener);
+				if (notesListener != null)
+					oldNoteLine.getNotes().removeListener(notesListener);
 
 				StaffNoteLine newNoteLine = (StaffNoteLine) newValue;
 				if (volumeListener != null)
@@ -54,13 +56,15 @@ public class NoteLineReattacher {
 	}
 
 	public void setNewVolumeListener(ChangeListener<Number> volumeListener) {
-		this.noteLine.get().getVolume().removeListener(this.volumeListener);
+		if (this.volumeListener != null)
+			this.noteLine.get().getVolume().removeListener(this.volumeListener);
 		this.volumeListener = volumeListener;
 		this.noteLine.get().getVolume().addListener(this.volumeListener);
 	}
 
 	public void setNewNotesListener(ListChangeListener<StaffNote> notesListener) {
-		this.noteLine.get().getNotes().removeListener(this.notesListener);
+		if (this.notesListener != null)
+			this.noteLine.get().getNotes().removeListener(this.notesListener);
 		this.notesListener = notesListener;
 		this.noteLine.get().getNotes().addListener(this.notesListener);
 	}
