@@ -18,6 +18,7 @@ import smp.presenters.ArrangementListPresenter;
 import smp.presenters.InstLinePresenter;
 import smp.presenters.ModeTextPresenter;
 import smp.presenters.ScrollbarPresenter;
+import smp.presenters.SelectedInstPresenter;
 import smp.presenters.SongNamePresenter;
 import smp.presenters.TempoBoxPresenter;
 import smp.presenters.TempoIndicatorPresenter;
@@ -201,6 +202,7 @@ public class MainWindowController {
     	new ArrangementListPresenter(arrangementList);
     	new InstLinePresenter(instLine);
     	new ModeTextPresenter(modeText);
+    	new SelectedInstPresenter(selectedInst);
     	new ScrollbarPresenter(scrollbar);
     	new SongNamePresenter(songName);
     	new TempoBoxPresenter(tempoBox);

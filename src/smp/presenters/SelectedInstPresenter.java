@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.image.ImageView;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.TestMain;
 import smp.components.InstrumentIndex;
 import smp.models.stateMachine.Variables;
 
@@ -20,7 +21,7 @@ public class SelectedInstPresenter {
     private ImageView selectedInst;
     
     /** This is the image loader class. */
-    private ImageLoader il;
+    private ImageLoader il = (ImageLoader) TestMain.imgLoader;
     
 	public SelectedInstPresenter(ImageView selectedInst) {
 		this.selectedInst = selectedInst;
@@ -29,6 +30,7 @@ public class SelectedInstPresenter {
 	}
 	
     private void setupViewUpdater() {
+		selectedInst.setImage(il.getSpriteFX(ImageIndex.valueOf(selectedInstrument.get().toString())));
     	this.selectedInstrument.addListener(new ChangeListener<Object>() {
 
 			@Override

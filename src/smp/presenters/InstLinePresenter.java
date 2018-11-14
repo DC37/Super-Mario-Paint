@@ -41,6 +41,7 @@ public class InstLinePresenter {
 	//TODO: auto-add these model comments
 	//====Models====
 	private ObjectProperty<StaffSequence> theSequence;
+	private ObjectProperty<InstrumentIndex> selectedInstrument;
 	
     /**
      * The default note number.
@@ -66,6 +67,7 @@ public class InstLinePresenter {
     
 	private SequenceReattacher sequenceReattacher;
 
+
     /**
      * Initializes the ImageView ArrayList.
      *
@@ -87,7 +89,7 @@ public class InstLinePresenter {
         n.add(16, nd);
         
         this.theSequence = Variables.theSequence;
-        //TODO: sequencereattacher
+        this.selectedInstrument = Variables.selectedInstrument;
         this.sequenceReattacher = new SequenceReattacher(this.theSequence);
         setupViewUpdater();
     }
@@ -111,6 +113,7 @@ public class InstLinePresenter {
                                 toggleNoteExtension(i);
                                 event.consume();
                             } else {
+                            	selectedInstrument.set(i);
                                 playSound(i);
                                 event.consume();
                             }
