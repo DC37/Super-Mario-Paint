@@ -72,6 +72,22 @@ public class TestMain extends Application {
      */
     private static final int NUM_THREADS = 2;
 
+    /**
+     * Loads all the sprites that will be used in Super Mario Paint.
+     */
+    public static Loader imgLoader = new ImageLoader();
+
+    /**
+     * Loads the soundfonts that will be used in Super Mario Paint.
+     */
+    public static Loader sfLoader = new SoundfontLoader();
+
+    /** Image Loader thread. */
+    private Thread imgLd;
+
+    /** Soundfont loader thread. */
+    private Thread sfLd;
+
     /** This is the main application stage. */
     private Stage primaryStage;
 
@@ -99,6 +115,20 @@ public class TestMain extends Application {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
+                sfLd.start();
+                imgLd.start();
+                do {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    double imgStatus = imgLoader.getLoadStatus();
+                    double sfStatus = sfLoader.getLoadStatus();
+                    double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS
+                            * 0.5;
+                    notifyPreloader(new ProgressNotification(ld));
+                } while (imgLd.isAlive() || sfLd.isAlive());
                 FXMLLoader loader = new FXMLLoader();
                 loader.setController(controller);
                 loader.setLocation(new File(controller.getFXML()).toURI().toURL());
@@ -126,6 +156,8 @@ public class TestMain extends Application {
      */
     @Override
     public void init() {
+        imgLd = new Thread(imgLoader);
+        sfLd = new Thread(sfLoader);
     }
     
     /**

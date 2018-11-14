@@ -395,9 +395,7 @@ public class Utilities {
      * @param inputFile
      *            This is the input filename.
      */
-    @Deprecated
-    public static StaffSequence loadSequenceFromArrangement(File inputFile,
-            Staff theStaff, SMPFXController controller) {
+    public static StaffSequence loadSequenceFromArrangement(File inputFile) {
         try {
             inputFile = new File(inputFile.getParent() + "\\"
                     + inputFile.getName());
@@ -414,7 +412,7 @@ public class Utilities {
             if (loaded == null) {
                 throw new IOException();
             }
-            populateStaff(loaded, inputFile, false, theStaff, controller);
+//            populateStaff(loaded, inputFile, false, theStaff, controller);
             return loaded;
 
         } catch (ClassCastException | EOFException | StreamCorruptedException
@@ -537,8 +535,7 @@ public class Utilities {
             File inputFile, boolean mpc, Staff theStaff,
             final SMPFXController controller) {
         File firstFile = loaded.getTheSequenceFiles().get(0);
-        StaffSequence first = loadSequenceFromArrangement(firstFile, theStaff,
-                controller);
+        StaffSequence first = loadSequenceFromArrangement(firstFile);
         String fname = inputFile.getName();
 //        boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);

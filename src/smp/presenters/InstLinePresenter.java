@@ -18,12 +18,14 @@ import javax.sound.midi.MidiChannel;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
+import smp.TestMain;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Note;
 import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.Settings;
 import smp.models.stateMachine.Variables;
+import smp.presenters.api.reattachers.SequenceReattacher;
 
 /**
  * The line of buttons that appear for the Instrument Line at the top of the
@@ -38,7 +40,6 @@ public class InstLinePresenter {
 
 	//TODO: auto-add these model comments
 	//====Models====
-	private BooleanProperty[] ext;
 	private ObjectProperty<StaffSequence> theSequence;
 	
     /**
@@ -55,13 +56,15 @@ public class InstLinePresenter {
     private ArrayList<String> instrumentLineImages = new ArrayList<String>();
 
     /** This is the image loader class. */
-    private ImageLoader il;
+    private ImageLoader il = (ImageLoader) TestMain.imgLoader;
 
     /**
      * The MidiChannel array objects that will be holding references for
      * sound-playing capabilities.
      */
     private MidiChannel[] chan;
+    
+	private SequenceReattacher sequenceReattacher;
 
     /**
      * Initializes the ImageView ArrayList.
@@ -85,6 +88,7 @@ public class InstLinePresenter {
         
         this.theSequence = Variables.theSequence;
         //TODO: sequencereattacher
+        this.sequenceReattacher = new SequenceReattacher(this.theSequence);
         setupViewUpdater();
     }
 
@@ -145,7 +149,7 @@ public class InstLinePresenter {
     @Deprecated
     public void updateNoteExtensions() {
         for (int j = 0; j < Values.NUMINSTRUMENTS; j++) {
-                changePortrait(j, ext[j].get());
+//                changePortrait(j, ext[j].get());
         }
     }
 
@@ -156,8 +160,8 @@ public class InstLinePresenter {
      *            The instrument that we are trying to set to extend.
      */
     private void toggleNoteExtension(InstrumentIndex i) {
-        this.ext[i.getChannel() - 1].set(!ext[i.getChannel() - 1].get());
-        this.theSequence.get().setNoteExtensions(ext);
+        BooleanProperty[] ext = this.theSequence.get().getNoteExtensions();
+        ext[i.getChannel() - 1].set(!ext[i.getChannel() - 1].get());
     }
 
     /**
@@ -191,15 +195,26 @@ public class InstLinePresenter {
     }
     
     private void setupViewUpdater() {
-		for (int i = 0; i < this.ext.length; i++) {
-			final int i2 = i;
-			this.ext[i].addListener(new ChangeListener<Boolean>() {
+		for (int i = 0; i < Values.NUMINSTRUMENTS; i++) {
+			final int index = i;
+			this.sequenceReattacher.setNewNoteExtensionListener(index, new ChangeListener<Boolean>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					changePortrait(i2, newValue.booleanValue());
+					changePortrait(index, newValue.booleanValue());
 				}
 			});
 		}
+		this.sequenceReattacher.setOnReattachListener(new ChangeListener<StaffSequence>() {
+
+			@Override
+			public void changed(ObservableValue<? extends StaffSequence> observable, StaffSequence oldValue,
+					StaffSequence newValue) {
+				BooleanProperty[] ext = newValue.getNoteExtensions();
+				for (int i = 0; i < Values.NUMINSTRUMENTS; i++) {
+					changePortrait(i, ext[i].get());
+				}
+			}
+		});
     }
 }

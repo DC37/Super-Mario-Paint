@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.presenters.ArrangementListPresenter;
+import smp.presenters.InstLinePresenter;
 import smp.presenters.ModeTextPresenter;
 import smp.presenters.ScrollbarPresenter;
 import smp.presenters.SongNamePresenter;
@@ -198,6 +199,7 @@ public class MainWindowController {
      */
     public void initialize() {
     	new ArrangementListPresenter(arrangementList);
+    	new InstLinePresenter(instLine);
     	new ModeTextPresenter(modeText);
     	new ScrollbarPresenter(scrollbar);
     	new SongNamePresenter(songName);
