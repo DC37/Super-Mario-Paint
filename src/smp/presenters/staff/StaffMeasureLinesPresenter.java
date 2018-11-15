@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.TestMain;
 import smp.components.Values;
 import smp.models.stateMachine.StateMachine;
 
@@ -24,13 +25,13 @@ public class StaffMeasureLinesPresenter {
 	private ArrayList<ImageView> measureLines;
 
 	// TODO: set
-	private ImageLoader il;
+	private ImageLoader il = (ImageLoader) TestMain.imgLoader;
 
 	public StaffMeasureLinesPresenter(HBox staffMeasureLines) {
 		this.staffMeasureLines = staffMeasureLines;
-		initializeStaffMeasureLines(this.staffMeasureLines);
 
 		this.measureLineNumber = StateMachine.getMeasureLineNum();
+		initializeStaffMeasureLines(this.staffMeasureLines);
 		setupViewUpdater();
 	}
 	

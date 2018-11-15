@@ -29,10 +29,10 @@ public class StaffExtLinesHighAPresenter {
 
 	public StaffExtLinesHighAPresenter(HBox staffExtLinesHighA) {
 		this.staffExtLinesHighA = staffExtLinesHighA;
-		initializeStaffLedgerLines();
 
 		this.windowLines = Variables.windowLines;
 		this.noteLineReattachers = new ArrayList<NoteLineReattacher>();
+		initializeStaffLedgerLines();
 		setupViewUpdater();
 	}
 

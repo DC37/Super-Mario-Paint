@@ -42,11 +42,11 @@ public class VolumeBarsPresenter {
 	public VolumeBarsPresenter(HBox volumeBars) {
 		this.volumeBars = volumeBars;
         volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
-		initializeVolumeBars(this.volumeBars);
-		initializeVolumeBarLinks();
 
 		this.windowLines = Variables.windowLines;
 		this.noteLineReattachers = new ArrayList<NoteLineReattacher>();
+		initializeVolumeBars(this.volumeBars);
+		initializeVolumeBarLinks();
 		setupViewUpdater();
 	}
 

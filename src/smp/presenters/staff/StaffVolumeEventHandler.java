@@ -2,6 +2,7 @@ package smp.presenters.staff;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.TestMain;
 import smp.components.Values;
 import smp.models.staff.StaffNoteLine;
 import javafx.event.Event;
@@ -33,7 +34,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     
     /** The ImageLoader class. */
     //TODO:
-    private ImageLoader il;
+    private ImageLoader il = (ImageLoader) TestMain.imgLoader;
     
     /** The text representing the volume bar the mouse is currently hovering over. */
     private static Text volText;
@@ -114,12 +115,12 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     private void mouseEntered() {
     	if (!theLine.getNotes().isEmpty()) {
 	        if(volText == null){
-	        	volText = new Text("" + theLine.getVolume());
+	        	volText = new Text("" + theLine.getVolume().get());
 	        }
 	        if(!stp.getChildren().contains(volText)){
 	        	stp.getChildren().add(volText);
 	        }
-	        volText.setText("" + theLine.getVolume());
+	        volText.setText("" + theLine.getVolume().get());
     	}
     }
     

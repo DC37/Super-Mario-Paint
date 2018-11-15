@@ -6,11 +6,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import smp.components.Values;
-import smp.models.staff.StaffNoteLine;
 import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
-import smp.models.stateMachine.Variables.WindowLines;
 import smp.presenters.api.reattachers.SequenceReattacher;
 
 public class ScrollbarPresenter {
@@ -19,7 +17,6 @@ public class ScrollbarPresenter {
 	//====Models====
 	private DoubleProperty measureLineNum;
 	private ObjectProperty<StaffSequence> theSequence;
-	private WindowLines windowLines;
 	
 	private Slider scrollbar;
 	
@@ -30,7 +27,6 @@ public class ScrollbarPresenter {
 		
 		this.measureLineNum = StateMachine.getMeasureLineNum();
 		this.theSequence = Variables.theSequence;
-		this.windowLines = Variables.windowLines;
 		this.sequenceReattacher = new SequenceReattacher(this.theSequence);
 		setupViewUpdater();
 	}

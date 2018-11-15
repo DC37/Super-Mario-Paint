@@ -23,9 +23,9 @@ public class StaffMeasureNumbersPresenter {
 
 	public StaffMeasureNumbersPresenter(HBox staffMeasureNumbers) {
 		this.staffMeasureNumbers = staffMeasureNumbers;
-		initializeStaffMeasureNums(this.staffMeasureNumbers);
 
 		this.measureLineNumber = StateMachine.getMeasureLineNum();
+		initializeStaffMeasureNums(this.staffMeasureNumbers);
 		setupViewUpdater();
 	}
 

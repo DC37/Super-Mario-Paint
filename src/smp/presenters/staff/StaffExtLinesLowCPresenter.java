@@ -29,10 +29,10 @@ public class StaffExtLinesLowCPresenter {
 
 	public StaffExtLinesLowCPresenter(HBox staffExtLinesLowC) {
 		this.staffExtLinesLowC = staffExtLinesLowC;
-		initializeStaffLedgerLines();
 
 		this.windowLines = Variables.windowLines;
 		this.noteLineReattachers = new ArrayList<NoteLineReattacher>();
+		initializeStaffLedgerLines();
 		setupViewUpdater();
 	}
 

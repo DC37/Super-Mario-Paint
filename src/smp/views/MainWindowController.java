@@ -34,7 +34,14 @@ import smp.presenters.buttons.TempoMinusPresenter;
 import smp.presenters.buttons.TempoPlusPresenter;
 import smp.presenters.buttons.UpButtonPresenter;
 import smp.presenters.staff.StaffAccidentalsPresenter;
+import smp.presenters.staff.StaffExtLinesHighAPresenter;
+import smp.presenters.staff.StaffExtLinesHighCPresenter;
+import smp.presenters.staff.StaffExtLinesLowAPresenter;
+import smp.presenters.staff.StaffExtLinesLowCPresenter;
 import smp.presenters.staff.StaffInstrumentsPresenter;
+import smp.presenters.staff.StaffMeasureLinesPresenter;
+import smp.presenters.staff.StaffMeasureNumbersPresenter;
+import smp.presenters.staff.VolumeBarsPresenter;
 
 public class MainWindowController {
 	
@@ -223,7 +230,14 @@ public class MainWindowController {
     	new UpButtonPresenter(upButton);
     	
     	new StaffAccidentalsPresenter(staffAccidentals);
+    	new StaffExtLinesHighAPresenter(staffExtLinesHighA);
+    	new StaffExtLinesHighCPresenter(staffExtLinesHighC);
+    	new StaffExtLinesLowAPresenter(staffExtLinesLowA);
+    	new StaffExtLinesLowCPresenter(staffExtLinesLowC);
     	new StaffInstrumentsPresenter(staffInstruments);
+    	new StaffMeasureLinesPresenter(staffMeasureLines);
+    	new StaffMeasureNumbersPresenter(staffMeasureNumbers);
+    	new VolumeBarsPresenter(volumeBars);
     }
     
     /**
