@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,6 +12,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.models.staff.StaffArrangement;
@@ -23,9 +26,33 @@ public class Variables {
 
 	public static class WindowLines extends ArrayList<ObjectProperty<StaffNoteLine>> {
 		private static final long serialVersionUID = -2815381084664525320L;
+		//====Models====
+		private DoubleProperty measureLineNum;
 		public WindowLines(int capacity) {
 			for (int i = 0; i < capacity; i++)
 				this.add(new SimpleObjectProperty<StaffNoteLine>(theSequence.get().getLine(i)));
+			this.measureLineNum = StateMachine.getMeasureLineNum();
+			setupModelRelations();
+		}
+
+		private void setupModelRelations() {
+			theSequence.addListener(new ChangeListener<StaffSequence>() {
+				@Override
+				public void changed(ObservableValue<? extends StaffSequence> observable, StaffSequence oldValue,
+						StaffSequence newSequence) {
+					for (int i = 0; i < size(); i++)
+						get(i).set(newSequence.getLine(i));
+				}
+			});
+			this.measureLineNum.addListener(new ChangeListener<Number>() {
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					for(int i = 0; i < size(); i++) {
+						StaffNoteLine newWindowLine = theSequence.get().getLine(newValue.intValue() + i);
+						get(i).set(newWindowLine);
+					}
+				}
+			});
 		}
 	}
 	public static WindowLines windowLines = new WindowLines(Values.NOTELINES_IN_THE_WINDOW);

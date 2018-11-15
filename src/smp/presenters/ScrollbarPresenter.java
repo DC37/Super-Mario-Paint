@@ -49,17 +49,7 @@ public class ScrollbarPresenter {
 					measureLineNum.set(0);
 			}
 		});
-		scrollbar.valueProperty().addListener(new ChangeListener<Number>() {
 
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {
-				for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-					ObjectProperty<StaffNoteLine> windowLine = windowLines.get(i);
-					StaffNoteLine newWindowLine = theSequence.get().getLine(measureLineNum.intValue() + i);
-					windowLine.set(newWindowLine);
-				}
-			}
-		});
 		this.sequenceReattacher.setNewTheLinesSizeListener(new ChangeListener<Number>() {
 
 			@Override
