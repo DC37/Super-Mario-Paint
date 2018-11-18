@@ -81,4 +81,9 @@ public class Variables {
 	public static BooleanProperty optionsBindSoundfont = new SimpleBooleanProperty(false);
 	/** The soundfont in the current-soundfont combobox that, when selected, will toggle the bind checkbox. */
 	public static StringProperty optionsBindedSoundfont = new SimpleStringProperty("");
+	
+	//INSTRUMENTEVENTHANDLER
+	public static IntegerProperty selectedAccidental = new SimpleIntegerProperty(0);
+	public static IntegerProperty selectedLine = new SimpleIntegerProperty(-1);
+	public static IntegerProperty selectedPosition = new SimpleIntegerProperty(-1);
 }

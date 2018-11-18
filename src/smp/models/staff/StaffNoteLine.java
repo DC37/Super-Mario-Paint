@@ -2,7 +2,9 @@ package smp.models.staff;
 
 import java.io.Serializable;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import smp.components.Values;
@@ -30,18 +32,20 @@ public class StaffNoteLine implements Serializable {
     private IntegerProperty volume = new SimpleIntegerProperty(Values.DEFAULT_VELOCITY);
 
     /** This ArrayList holds staff notes inside it. */
-    private ObservableList<StaffNote> notes;
+    private ObservableList<StaffNote> notes = FXCollections.observableArrayList();  
+    
+    /** @since v1.1.3*/
+    private ReadOnlyIntegerProperty notesSize = new SimpleListProperty<>(notes).sizeProperty();
 
     /** This ArrayList holds staff events in it. */
-    private ObservableList<StaffEvent> marks;
+    private ObservableList<StaffEvent> marks = FXCollections.observableArrayList();
 
     /**
      * Creates a new staff note line with the specified
      * line number.
      */
     public StaffNoteLine() {
-        notes = FXCollections.observableArrayList();
-        marks = FXCollections.observableArrayList();
+    	
     }
 
     /**
@@ -145,6 +149,10 @@ public class StaffNoteLine implements Serializable {
         return volume.doubleValue() / Values.MAX_VELOCITY;
     }
 
+    public ReadOnlyIntegerProperty getNotesSize() {
+    	return notesSize;
+    }
+    
     @Override
     public String toString() {
         return notes.toString();

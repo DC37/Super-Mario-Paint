@@ -1,13 +1,12 @@
-package smp.presenters.staff;
+package smp.presenters.staff.VolumeBarsPresenter;
 
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.TestMain;
 import smp.components.Values;
 import smp.models.staff.StaffNoteLine;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -26,18 +25,11 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     /** The StackPane that this event handler is linked to. */
     private StackPane stp;
 
-    /** The ImageView object that is this volume bar. */
-    private ImageView theVolBar;
-
     /** The StaffNoteLine that this event handler is associated with. */
-    private StaffNoteLine theLine;
-    
-    /** The ImageLoader class. */
-    //TODO:
-    private ImageLoader il = (ImageLoader) TestMain.imgLoader;
+    private ObjectProperty<StaffNoteLine> theLine;
     
     /** The text representing the volume bar the mouse is currently hovering over. */
-    private static Text volText;
+    private static Text volText = new Text("");
     
 	/**
 	 * Mouse position. Used for finding which volume bar the mouse is hovering
@@ -50,17 +42,30 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 	//TODO:
 //	private ModifySongManager commandManager;
 	
-	/** Makes a new StaffVolumeEventHandler. */
-    public StaffVolumeEventHandler(StackPane st) {
+	/** Makes a new StaffVolumeEventHandler. 
+	 * @param windowLine */
+    public StaffVolumeEventHandler(StackPane st, ObjectProperty<StaffNoteLine> windowLine) {
         stp = st;
-//        il = i;
-        theVolBar = (ImageView) st.getChildren().get(0);
-        theVolBar.setImage(il.getSpriteFX(ImageIndex.VOL_BAR));
-        theVolBar.setVisible(false);
+        theLine = windowLine;
 //        commandManager = cm;
+        setupViewUpdater();
     }
 
-    @Override
+	private void setupViewUpdater() {
+		theLine.addListener(new ChangeListener<StaffNoteLine>() {
+
+			@Override
+			public void changed(ObservableValue<? extends StaffNoteLine> observable, StaffNoteLine oldValue,
+					StaffNoteLine newValue) {
+				if (stpHasMouse()) {
+					mouseExited();
+					mouseEntered();
+				}
+			}
+		});
+	}
+
+	@Override
     public void handle(Event event) {
     	if(event instanceof MouseEvent && 
     			((MouseEvent)event).isPrimaryButtonDown()){
@@ -85,7 +90,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 
     /** Called whenever the mouse is pressed. */
     private void mousePressed(MouseEvent event) {
-        if (!theLine.getNotes().isEmpty()) {
+        if (!theLine.get().getNotes().isEmpty()) {
         	
 //TODO:
 //        	if(event.getEventType() == MouseEvent.MOUSE_PRESSED)
@@ -95,12 +100,10 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         		return;
             double h = stp.getHeight() - event.getY();
 //            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
-            setVolumeDisplay(h);
             try {
                 setVolumePercent(h / stp.getHeight());
             } catch (IllegalArgumentException e) {
                 setVolume(Values.MAX_VELOCITY);
-                setVolumeDisplay(stp.getHeight());
             }
         }
     }
@@ -113,14 +116,11 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     
     /** Called whenever the mouse enters the area. */
     private void mouseEntered() {
-    	if (!theLine.getNotes().isEmpty()) {
-	        if(volText == null){
-	        	volText = new Text("" + theLine.getVolume().get());
-	        }
+    	if (!theLine.get().getNotes().isEmpty()) {
 	        if(!stp.getChildren().contains(volText)){
 	        	stp.getChildren().add(volText);
 	        }
-	        volText.setText("" + theLine.getVolume().get());
+	        volText.setText("" + theLine.get().getVolume().get());
     	}
     }
     
@@ -134,7 +134,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * @param y The y-location of the click.
      */
     private void setVolume(double y) {
-        theLine.setVolume(y);
+        theLine.get().setVolume(y);
     }
 
     /**
@@ -143,65 +143,13 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * between 0 and 1.
      */
     private void setVolumePercent(double y) throws IllegalArgumentException {
-        theLine.setVolumePercent(y);
-    }
-
-    /**
-     * Displays the volume of this note line.
-     * @param y The volume that we want to show.
-     */
-    public void setVolumeDisplay(double y) {
-        if (y <= 0) {
-            theVolBar.setVisible(false);
-            return;
-        }
-        theVolBar.setVisible(true);
-        theVolBar.setFitHeight(y);
-    }
-
-    /**
-     * Do we actually want this volume bar to be visible?
-     * @param b Whether this volume bar is visible or not.
-     */
-    public void setVolumeVisible(boolean b) {
-        theVolBar.setVisible(b);
-    }
-
-    /**
-     * Sets the StaffNoteLine that this event handler is controlling.
-     * @param s The StaffNoteLine that this handler is controlling
-     * at the moment.
-     */
-    public void setStaffNoteLine(StaffNoteLine s) {
-        theLine = s;
-    }
-
-    /**
-     * @return The StaffNoteLine that this handler is currently controlling.
-     */
-    public StaffNoteLine getStaffNoteLine() {
-        return theLine;
-    }
-
-    /**
-     * Updates the volume display on this volume displayer.
-     */
-    public void updateVolume() {
-        setVolumeDisplay(theLine.getVolumePercent() * stp.getHeight());
-        if (theLine.getVolume().get() == 0 || theLine.isEmpty()) {
-            setVolumeVisible(false);
-        }
-
-        if(stpHasMouse()){
-        	mouseExited();
-        	mouseEntered();
-        } 
+        theLine.get().setVolumePercent(y);
     }
     
     /**
      * @return Whether the mouse is currently in the volume bar's stack pane.
      */
-    private boolean stpHasMouse(){
+	private boolean stpHasMouse(){
     	return mouseX >= stp.getBoundsInParent().getMinX() 
     			&& mouseX < stp.getBoundsInParent().getMaxX()
     			&& mouseY >= stp.getBoundsInParent().getMinY();

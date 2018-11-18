@@ -23,6 +23,7 @@ public class NoteLineReattacher {
 
 	public ListChangeListener<StaffNote> notesListener;
 
+	public ChangeListener<Number> notesSizeListener;
 	/**
 	 * The listener for when a new noteLine is set. For instance, a new note
 	 * line is set: the new note line's volume should be listened for and the
@@ -68,7 +69,14 @@ public class NoteLineReattacher {
 		this.notesListener = notesListener;
 		this.noteLine.get().getNotes().addListener(this.notesListener);
 	}
-	
+
+	public void setNewNotesSizeListener(ChangeListener<Number> notesSizeListener) {
+		if (this.notesSizeListener != null)
+			this.noteLine.get().getNotesSize().removeListener(this.notesSizeListener);
+		this.notesSizeListener = notesSizeListener;
+		this.noteLine.get().getNotesSize().addListener(this.notesSizeListener);
+	}
+
 	public void setOnReattachListener(ChangeListener<Object> onReattachListener) {
 		this.onReattachListener = onReattachListener;
 		this.noteLine.addListener(onReattachListener);

@@ -1,4 +1,4 @@
-package smp.presenters.staff;
+package smp.presenters.staff.StaffInstrumentsPresenter;
 
 import java.util.ArrayList;
 

@@ -38,10 +38,10 @@ import smp.presenters.staff.StaffExtLinesHighAPresenter;
 import smp.presenters.staff.StaffExtLinesHighCPresenter;
 import smp.presenters.staff.StaffExtLinesLowAPresenter;
 import smp.presenters.staff.StaffExtLinesLowCPresenter;
-import smp.presenters.staff.StaffInstrumentsPresenter;
 import smp.presenters.staff.StaffMeasureLinesPresenter;
 import smp.presenters.staff.StaffMeasureNumbersPresenter;
-import smp.presenters.staff.VolumeBarsPresenter;
+import smp.presenters.staff.StaffInstrumentsPresenter.StaffInstrumentsPresenter;
+import smp.presenters.staff.VolumeBarsPresenter.VolumeBarsPresenter;
 
 public class MainWindowController {
 	
