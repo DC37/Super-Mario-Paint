@@ -8,7 +8,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -41,6 +43,9 @@ public class StaffInstrumentsPresenter {
 	
     /** Pointer to the image loader object. */
     private transient ImageLoader il = (ImageLoader) TestMain.imgLoader;
+    
+    //TODO: re-abstract so this can be added to a node again (with addEventHandler)
+	private StaffInstrumentEventHandler hd;
 
 	public StaffInstrumentsPresenter(HBox staffInstruments) {
 		this.staffInstruments = staffInstruments;
@@ -78,6 +83,15 @@ public class StaffInstrumentsPresenter {
 
 			matrix.add(notes);
 		}
+		
+		hd = new StaffInstrumentEventHandler(matrix ,windowLines);
+		staffInstruments.sceneProperty().addListener(new ChangeListener<Scene>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newScene) {
+				newScene.addEventHandler(MouseEvent.ANY, hd);
+			}
+		});
 	}
 
 	private void setupViewUpdater() {

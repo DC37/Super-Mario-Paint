@@ -103,6 +103,7 @@ public class VolumeBarsPresenter {
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldSize, Number newSize) {
 					// either old size or new size is empty
+					// we are observing whether its empty
 					// we only want to update visibility depending on whether its empty
 					if((oldSize.intValue() & newSize.intValue()) == 0)
 						updateVolume(index);

@@ -21,12 +21,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
+import smp.components.staff.StaffInstrumentEventHandler;
 import smp.fx.SplashScreen;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
@@ -191,6 +195,7 @@ public class TestMain extends Application {
                                 primaryStage.setWidth(Values.DEFAULT_WIDTH);
                                 primaryScene = new Scene(root, 800, 600);
                                 primaryStage.setScene(primaryScene);
+                                new KeyboardListeners(primaryStage);
                                 notifyPreloader(new ProgressNotification(1));
                                 notifyPreloader(new StateChangeNotification(
                                         StateChangeNotification.Type.BEFORE_START));

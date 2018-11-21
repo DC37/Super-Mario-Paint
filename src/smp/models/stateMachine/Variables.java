@@ -84,6 +84,7 @@ public class Variables {
 	
 	//INSTRUMENTEVENTHANDLER
 	public static IntegerProperty selectedAccidental = new SimpleIntegerProperty(0);
+	public static BooleanProperty accSilhouetteVisible = new SimpleBooleanProperty(true);
 	public static IntegerProperty selectedLine = new SimpleIntegerProperty(-1);
 	public static IntegerProperty selectedPosition = new SimpleIntegerProperty(-1);
 }

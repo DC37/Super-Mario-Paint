@@ -2,6 +2,9 @@ package smp.presenters.staff;
 
 import java.util.ArrayList;
 
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,6 +30,10 @@ public class StaffAccidentalsPresenter {
 	// TODO: auto-add these model comments
 	// ====Models====
 	private WindowLines windowLines;
+	private IntegerProperty selectedAccidental;
+	private BooleanProperty accSilhouetteVisible;
+	private IntegerProperty selectedLine;
+	private IntegerProperty selectedPosition;
 
 	private ArrayList<NoteLineReattacher> noteLineReattachers;
 
@@ -38,12 +45,19 @@ public class StaffAccidentalsPresenter {
 	
     /** Pointer to the image loader object. */
     private transient ImageLoader il = (ImageLoader) TestMain.imgLoader;
+    
+    private ImageView accSilhouette = new ImageView();
 
 	public StaffAccidentalsPresenter(HBox staffAccidentals) {
 		this.staffAccidentals = staffAccidentals;
         accMatrix = new ArrayList<ArrayList<StackPane>>();
+        accSilhouette.setImage(il.getSpriteFX(ImageIndex.BLANK));
 
 		this.windowLines = Variables.windowLines;
+		this.selectedAccidental = Variables.selectedAccidental;
+		this.accSilhouetteVisible = Variables.accSilhouetteVisible;
+		this.selectedLine  = Variables.selectedLine;
+		this.selectedPosition = Variables.selectedPosition;
 		this.noteLineReattachers = new ArrayList<NoteLineReattacher>();
 		initializeStaffInstruments(this.staffAccidentals);
 		setupViewUpdater();
@@ -100,8 +114,43 @@ public class StaffAccidentalsPresenter {
 			});
 			noteLineReattachers.add(nlr);
 		}
+
+		//INSTRUMENTEVENTHANDLER
+		this.selectedAccidental.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				accSilhouette.setImage(il.getSpriteFX(switchAcc(newValue.intValue()).silhouette()));
+			}
+		});
+		this.accSilhouette.visibleProperty().bindBidirectional(accSilhouetteVisible);
+		DoubleBinding accCoords = new DoubleBinding(){
+			{
+				super.bind(selectedLine, selectedPosition);
+			}
+
+			@Override
+			protected double computeValue() {
+				moveAcc();
+				return selectedLine.get() * 100 + selectedPosition.get();
+			}
+
+			private void moveAcc() {
+				if(selectedLine.get() < 0 || selectedPosition.get() < 0)
+					return;
+				StackPane stp = getNote(selectedLine.get(), selectedPosition.get());
+				stp.getChildren().add(accSilhouette);
+			}
+		};
+		accCoords.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+			}
+		});
 	}
-	
+
     /**
      * @param acc
      *            The offset that we are deciding upon.
