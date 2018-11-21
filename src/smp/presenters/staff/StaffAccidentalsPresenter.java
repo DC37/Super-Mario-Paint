@@ -2,7 +2,6 @@ package smp.presenters.staff;
 
 import java.util.ArrayList;
 
-import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -124,33 +123,28 @@ public class StaffAccidentalsPresenter {
 			}
 		});
 		this.accSilhouette.visibleProperty().bindBidirectional(accSilhouetteVisible);
-		DoubleBinding accCoords = new DoubleBinding(){
-			{
-				super.bind(selectedLine, selectedPosition);
-			}
-
-			@Override
-			protected double computeValue() {
-				moveAcc();
-				return selectedLine.get() * 100 + selectedPosition.get();
-			}
-
-			private void moveAcc() {
-				if(selectedLine.get() < 0 || selectedPosition.get() < 0)
-					return;
-				StackPane stp = getNote(selectedLine.get(), selectedPosition.get());
-				stp.getChildren().add(accSilhouette);
-			}
-		};
-		accCoords.addListener(new ChangeListener<Number>() {
+		this.selectedLine.addListener(new ChangeListener<Number>(){
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				moveAcc();
+			}
+		});
+		this.selectedPosition.addListener(new ChangeListener<Number>(){
 
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				moveAcc();
 			}
 		});
 	}
-
+	
+	private void moveAcc() {
+		if(selectedLine.get() < 0 || selectedPosition.get() < 0)
+			return;
+		StackPane stp = getNote(selectedLine.get(), selectedPosition.get());
+		stp.getChildren().add(accSilhouette);
+	}
     /**
      * @param acc
      *            The offset that we are deciding upon.

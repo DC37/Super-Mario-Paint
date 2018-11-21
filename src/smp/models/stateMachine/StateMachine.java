@@ -13,6 +13,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import javafx.scene.input.KeyCode;
 import smp.components.Values;
 
@@ -54,14 +56,14 @@ public class StateMachine {
      */
     private static ObjectProperty<File> currentDirectory = new SimpleObjectProperty<>(new File(System.getProperty("user.dir")));
 
-    /** Set of currently-pressed buttons. */
-    private static Set<KeyCode> buttonsPressed =
-            Collections.synchronizedSet(new HashSet<KeyCode>());
+	/** Set of currently-pressed buttons. */
+	private static ObservableSet<KeyCode> buttonsPressed = FXCollections
+			.synchronizedObservableSet(FXCollections.observableSet(new HashSet<KeyCode>()));
 
-    /**
-     * The default state that the program is in is the EDITING state, in which
-     * notes are being placed on the staff.
-     */
+	/**
+	 * The default state that the program is in is the EDITING state, in which
+	 * notes are being placed on the staff.
+	 */
     private static ObjectProperty<ProgramState> currentState = new SimpleObjectProperty<>(ProgramState.EDITING);
 
     /**
@@ -240,7 +242,7 @@ public class StateMachine {
     /**
      * @return Set of currently-pressed buttons.
      */
-    public static Set<KeyCode> getButtonsPressed() {
+    public static ObservableSet<KeyCode> getButtonsPressed() {
         return buttonsPressed;
     }
 
@@ -249,7 +251,6 @@ public class StateMachine {
      */
     public static void clearKeyPresses() {
         buttonsPressed.clear();
-
     }
 
     /** @return Last directory we accessed. */

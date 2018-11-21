@@ -16,7 +16,6 @@ import smp.components.Values;
 import smp.models.staff.StaffSequence;
 import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
-import smp.presenters.staff.StaffInstrumentsPresenter.StaffInstrumentEventHandler;
 
 public class KeyboardListeners {
 

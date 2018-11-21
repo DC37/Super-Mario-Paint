@@ -19,6 +19,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
+import javafx.collections.SetChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -59,6 +61,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 	private BooleanProperty mutePressed;
 	private BooleanProperty muteAPressed;
 	private DoubleProperty measureLineNum;
+	private ObservableSet<KeyCode> buttonsPressed;
 
     /** Whether the mouse is in the frame or not. */
     private static boolean focus = false;
@@ -132,6 +135,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 		this.mutePressed = StateMachine.getMutePressed();
 		this.muteAPressed = StateMachine.getMuteAPressed();
 		this.measureLineNum = StateMachine.getMeasureLineNum();
+		this.buttonsPressed = StateMachine.getButtonsPressed();
+		setupKeyListener();
 		
         if ((Settings.debug & 0b10) == 0b10) {
 //            System.out.println("Line: " + l);
@@ -139,8 +144,32 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         }
     }
 
+	private void setupKeyListener() {
+		buttonsPressed.addListener(new SetChangeListener<KeyCode>() {
+
+			@Override
+			public void onChanged(javafx.collections.SetChangeListener.Change<? extends KeyCode> change) {
+				Set<KeyCode> bp = buttonsPressed;
+		        boolean ctrl = bp.contains(KeyCode.CONTROL);
+		        boolean shift = bp.contains(KeyCode.SHIFT);
+		        boolean alt = bp.contains(KeyCode.ALT) || bp.contains(KeyCode.ALT_GRAPH);
+
+		        if (alt && ctrl)
+		            selectedAccidental.set(-2);
+		        else if (ctrl && shift)
+		            selectedAccidental.set(2);
+		        else if (shift)
+		            selectedAccidental.set(1);
+		        else if (alt || ctrl)
+		            selectedAccidental.set(-1);
+		        else
+		            selectedAccidental.set(0);
+			}
+		});
+	}
+
 	/**
-	 * Disables all the stack panes. 
+	 * Disables all the stack panes.
 	 */
 	private void disableAllStackPanes() {
 		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
@@ -362,7 +391,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-        updateAccidental();
+//        updateAccidental();
         silhouette.setImage(il.getSpriteFX(theInd.imageIndex().silhouette()));
         if (!theImages.contains(silhouette))
             theImages.add(silhouette);
