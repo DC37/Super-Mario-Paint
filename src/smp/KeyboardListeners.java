@@ -97,7 +97,6 @@ public class KeyboardListeners {
 			}
 		});
 
-		// put this into StateMachine?
 		primaryScene.addEventHandler(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
 
 			@Override

@@ -1,9 +1,7 @@
 package smp.models.stateMachine;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -17,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.scene.input.KeyCode;
 import smp.components.Values;
+import smp.models.staff.StaffSequence;
 
 /**
  * This is the state machine that keeps track of what state the main window is
@@ -70,12 +69,28 @@ public class StateMachine {
      * The default time signature that we start out with is 4/4 time.
      */
     private static ObjectProperty<TimeSignature> currentTimeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
-
+    
+    public static class CurrentLineProperty extends SimpleDoubleProperty {
+    	//TODO: auto-add these model comments
+    	//====Models====
+    	private ObjectProperty<StaffSequence> theSequence;
+		public CurrentLineProperty(double initialValue) {
+    		super(initialValue);
+    		this.theSequence = Variables.theSequence;
+		}
+		@Override
+    	public void set(double value) {
+			value = value > 0 ? value : 0;
+			int max = this.theSequence.get().getTheLinesSize().get() - Values.NOTELINES_IN_THE_WINDOW;
+			value = value < max ? value : max;
+            super.set(value);
+    	}
+    }
     /**
      * The current measure line number that the program is on. Typically a
      * number between 0 and 383. This is zero by default.
      */
-    private static DoubleProperty currentLine = new SimpleDoubleProperty(0);
+    private static DoubleProperty currentLine = new CurrentLineProperty(0);
 
 	/**
 	 * The current soundset name. This should change when a new soundfont is

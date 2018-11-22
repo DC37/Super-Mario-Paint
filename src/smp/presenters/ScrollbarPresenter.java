@@ -33,26 +33,17 @@ public class ScrollbarPresenter {
 	
 	private void setupViewUpdater() {
 		scrollbar.valueProperty().bindBidirectional(this.measureLineNum);
-		this.measureLineNum.addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				double newVal = newValue.doubleValue();
-				// we have these if statements because measureLineNum can go out of bounds of bidirectional binding 
-				if (newVal > scrollbar.getMax())
-					measureLineNum.set(scrollbar.getMax());
-				else if (newVal < 0)
-					measureLineNum.set(0);
-			}
-		});
-
 		this.sequenceReattacher.setNewTheLinesSizeListener(new ChangeListener<Number>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {
+			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newSize) {
+				// TODO: confirm that max-checking occurs in the
+				// StaffSequence OR whatever function is doing the resizing
+				
 				// Make sure the newVal is not less than the default size.
-				int newMax = Math.max(Values.DEFAULT_LINES_PER_SONG, newVal.intValue());
-				scrollbar.setMax(newMax - Values.NOTELINES_IN_THE_WINDOW);
+				// int newMax = Math.max(Values.DEFAULT_LINES_PER_SONG,
+				// newSize.intValue());
+				scrollbar.setMax(newSize.intValue() - Values.NOTELINES_IN_THE_WINDOW);
 			}
 		});
 		this.sequenceReattacher.setOnReattachListener(new ChangeListener<StaffSequence>() {
