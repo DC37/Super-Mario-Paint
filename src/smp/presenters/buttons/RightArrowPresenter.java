@@ -59,7 +59,7 @@ public class RightArrowPresenter extends ImagePushButton {
         super(rightArrow);
         t = new Timer();
         //TODO: create a stand-alone imageloader presenter and pass in images from there
-        getImages(ImageIndex.SCROLLBAR_LEFT2_PRESSED, ImageIndex.SCROLLBAR_LEFT2);
+        getImages(ImageIndex.SCROLLBAR_RIGHT1_PRESSED, ImageIndex.SCROLLBAR_RIGHT1);
         
         skipAmount = 1;
         

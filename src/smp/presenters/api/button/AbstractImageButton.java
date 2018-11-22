@@ -2,6 +2,7 @@ package smp.presenters.api.button;
 
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.TestMain;
 import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
 import javafx.event.EventHandler;
@@ -48,7 +49,7 @@ public abstract class AbstractImageButton {
     protected SMPFXController controller;
     
     /** This is the image loader class. */
-    protected ImageLoader il;
+    protected ImageLoader il = (ImageLoader) TestMain.imgLoader;
     
     /**
      * @param i The ImageView passed to the Button
