@@ -29,7 +29,9 @@ public enum InstrumentIndex {
     PIRANHA  (17, ImageIndex.PIRANHA),
     SHYGUY   (18, ImageIndex.SHYGUY),
     BOO      (19, ImageIndex.BOO),
-    LUIGI    (20, ImageIndex.LUIGI);
+    LUIGI    (20, ImageIndex.LUIGI),
+    PEACH    (21, ImageIndex.PEACH),
+    FEATHER  (22, ImageIndex.FEATHER);
 
     /**
      * The channel that the instrument is to be played on. For use
