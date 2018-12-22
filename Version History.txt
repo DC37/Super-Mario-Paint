@@ -1,133 +1,190 @@
 v1.1.2.1
-FIXES
-Shortens "Arranger" to "Arr" to accomodate for the new instruments
-NEW FEATURES
-Adds Luigi, Peach, and Feather as instruments
-You can now use Ctrl and/or shift to scroll more
+--FIXES
+
+    Shortens "Arranger" to "Arr" to accomodate for the new instruments
+
+--NEW FEATURES
+    
+    Ctrl and/or shift increases scroll speed
+    Adds Luigi, Pach, and Feather as instruments
 
 v1.1.2
-FIXES
-Fixed song name text field focus issues--click anywhere other than the text field to defocus it
-NEW FEATURES
-Added middle-button selecting to bypass clipboard button
-Added 4-line scrolling with Ctrl+Left or Ctrl+Right per request of seymour schlong
-Added hotkeys for Mute button (N) and MuteInst button (M) per request of seymour schlong
-Soundfont loading (WINDOWS, LINUX, and MAC)
-Choose soundfont
-Bind the soundfont to the song 
-Load song's soundfont when loading song
-Load soundfonts for every song in an arrangement
-Load existing soundfonts from AppData
+--FIXES
+
+    Fixed song name text field focus issues--click anywhere other than the text field to defocus it
+
+--NEW FEATURES
+
+    Added middle-button selecting to bypass clipboard button
+    Added 4-line scrolling with Ctrl+Left or Ctrl+Right per request of seymour schlong
+    Added hotkeys for Mute button (N) and MuteInst button (M) per request of seymour schlong
+    Soundfont loading (WINDOWS, LINUX, and MAC)
+    Choose soundfont
+    Bind the soundfont to the song 
+    Load song's soundfont when loading song
+    Load soundfonts for every song in an arrangement
+    Load existing soundfonts from AppData
+    Adds Luigi (steel drum), Peach (violin), and feather (flute) as instruments.
 
 v1.1.1
-NEW FEATURES
-Replaced filter text with filter images
-Added an INST_BACKGROUND.png in sprites/ to skin the window's background
+--NEW FEATURES
+
+    Replaced filter text with filter images
+    Added an INST_BACKGROUND.png in sprites/ to skin the window's background
 
 v1.1.0
-FIXES
-Fixed crashing that occurs when mouse interacts with a densely populated staff as it scrolls
-Fixed bug where loading file or arrangement would terminate name at first ']' or '.' Now terminates at the last ']' or '.'
-Fixed bug with save / load directories not being harmonized. Now has a program-wide variable for "last-accessed" directory.
+--FIXES
 
-NEW FEATURES
-Drag click to add/remove notes
-Drag to change volume
-Volume value now appears as text when you hover over them
-Clipboard
-Click CLIP button (or Shift+R) to toggle region selection, drag mouse along the staff to draw a rectangle that will select all notes inside
-Filter instrument for selecting (On the instrument toolbar, hover over instrument & press F)
-Select all notes (Ctrl+A)
-Copy selected notes (Ctrl+C)
-Paste notes at line where mouse is (Ctrl+V)
-Cut selected notes (Ctrl+X)
-Delete selected notes (Delete)
-Toggle selected volumes in selection (Alt+V)
-Toggle selected notes in selection (Alt+N)
-Undo/redo
-Ctrl+Z to undo
-Ctrl+Y to redo
-Commands that can be undone/redone:
-Add/Remove note(s)
-Change volume
-Multiply tempo
+    Fixed crashing that occurs when mouse interacts with a densely populated staff as it scrolls
+    Fixed bug where loading file or arrangement would terminate name at first ']' or '.' Now terminates at the last ']' or '.'
+    Fixed bug with save / load directories not being harmonized. Now has a program-wide variable for "last-accessed" directory.
+
+--NEW FEATURES
+
+    Drag click to add/remove notes
+    Drag to change volume
+    Volume value now appears as text when you hover over them
+    Clipboard
+  Click CLIP button (or Shift+R) to toggle region selection, drag mouse along the staff to draw a rectangle that will select all                    notes inside
+    Filter instrument for selecting (On the instrument toolbar, hover over instrument & press F)
+    Select all notes (Ctrl+A)
+    Copy selected notes (Ctrl+C)
+    Paste notes at line where mouse is (Ctrl+V)
+    Cut selected notes (Ctrl+X)
+    Delete selected notes (Delete)
+    Toggle selected volumes in selection (Alt+V)
+    Toggle selected notes in selection (Alt+N)
+    Undo/redo
+    Ctrl+Z to undo
+    Ctrl+Y to redo
+    Commands that can be undone/redone:
+    Add/Remove note(s)
+    Change volume
+    Multiply tempo
 
 v1.0.4
-Key-press behaviour generalized to include any key-press.
-Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
-Slight update to internal data types for better readability of code.
-Major update to loading / saving songs (logic)
+--FIXES
+
+  Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
+
+--NEW FEATURES
+
+    Key-press behaviour generalized to include any key-press.
+    Slight update to internal data types for better readability of code.
+    Major update to loading / saving songs (logic)
 
 v1.0.3
-Yet more 100-line song fixes.
-Updated song-ending behaviour to gracefully play all notes, instead of just ending
-Loading songs with greater than 100 lines used to populate the array with null objects - hopefully fixed.
+--FIXES
+
+    100-line song fixed.
+    Updated song-ending behaviour to gracefully play all notes, instead of just ending
+
+--NEW FEATURES
+
+    Loading songs with greater than 100 lines used to populate the array with null objects - hopefully fixed.
 
 v1.0.2
-Bugfix - Songs above 100 lines.
+--FIXES 
+
+    Songs above 100 lines.
 
 v1.0.1
-Bugfix - Arranger now (hopefully) takes care of the different songfile loading cases properly.
+--FIXES
+
+    Arranger now (hopefully) takes care of the different songfile loading cases properly.
 
 v1.0.0
-First release.
-Fix threading issues for sound playing.
-Add in buttons for time signatures
-Add in functionality for saving human-readable files.
-Add in time signatures to save files
-Add in functionality for loading human-readable files.
+--FIXES
 
-v0.951 (Semantic version 0.12.1) [most recent release]
-Fix bugs with arranger loading/saving.
+    Threading issues for sound playing.
 
-v0.95 (Semantic version 0.12.0)
-Beta release - major functionality should be equivalent to and/or exceed that of MPC2.0.
-Added more support for external soundfonts (two instruments that used to be swapped are not swapped anymore)
-Import MPC files just by loading them.
-Import MPC arrangements just by loading them.
-Slight update to song files which allows saving the parameters for note extensions (green highlights)
-Staff ledger lines
-Note: Arrangements only work if they are in the "Prefs" folder along with all of the songs.
+--NEW FEATURES
 
-v0.942 (Semantic version 0.11.2)
-Pre-Beta - Bugfix from v0.941 - arranger / song loop point fix. Automatic song length cleanup feature.
-Also, works on Java 7 again.
+    Add in buttons for time signatures
+    Add in functionality for saving human-readable files.
+    Add in time signatures to save files
+    Add in functionality for loading human-readable files.
 
-v0.941 (Semantic version 0.11.1)
-Pre-Beta - Bugfix from v0.94 - arranger "ghost file" fix.
+v0.12.1
+--FIXES
 
-v0.94 (Semantic version 0.11.0)
-Pre-Beta - Arranger has been implemented. 
+    Fix bugs with arranger loading/saving.
 
-v0.921 (Semantic version 0.10.0)
-Alpha+ release update (Works on Mac + has new loading screen)
+v0.12.0
+--FIXES
 
-v0.92 (Semantic version 0.9.4)
-Alpha+ release - Stability updates & JavaFX 7 / 8 update
+    Major functionality should be equivalent to and/or exceed that of MPC2.0.
+    Added more support for external soundfonts (two instruments that used to be swapped are not swapped anymore)
+    Import MPC files just by loading them.
+    Import MPC arrangements just by loading them.
+    Slight update to song files which allows saving the parameters for note extensions (green highlights)
+    Staff ledger lines
+    Note: Arrangements only work if they are in the "Prefs" folder along with all of the songs.
 
-v0.917 (Semantic version 0.9.3)
-Ability to set default note volume and multiply tempo + bugfixes from v0.915  - Uploaded video to YouTube
+v0.11.2
+--FIXES
+    Java 7 fix
+    Loop now works
 
-v0.915 (Semantic version 0.9.2)
-Bugfix for v0.91 - Also added in tempo feature
+v0.11.1
+--FIXES
 
-v0.91 (Semantic version 0.9.1)
-Alpha release update - Added in options dialog
+    Arranger "ghost file" fix.
 
-v0.9 (Semantic version 0.9.0)
-Alpha release - Major functionality complete minus arranger.
+v0.11.0
+--NEW FEATURES
 
-v0.87 (Semantic version 0.8.0)
-Pre-Alpha - Uploaded video to YouTube
+    Arranger has been implemented. 
 
-v0.7-0.73 (Semantic versions 0.7.0 ~ 0.7.3)
-Ability to place notes
-Ability to play back notes
-Mute notes
-First distributed test version
+v0.10.0
+-NEW FEATURES
+    
+    Works on Mac
+    New loading screen
 
-v0.23 (Semantic version 0.6.0)
-Full window and interface
+v0.9.4
+--FIXES
 
-v0.1-0.22 (Semantic versions 0.1.0 ~ 0.5.0)
-Window appears
+    Stability updates & JavaFX 7 / 8 update
+
+v0.9.3
+--NEW FEATURES
+
+    Ability to set default note volume and multiply tempo
+
+v0.9.2
+--NEW FEATURES
+    
+    Added in tempo feature
+
+v0.9.1
+--NEW FEATURES
+    
+    Added in options dialog
+
+v0.9.0
+--NEW FEATURES
+
+    Major functionality complete minus arranger.
+
+v0.8.0
+--NEW FEATURES
+
+    Lost/Unkown
+
+v0.7.0 ~ 0.7.3
+--NEW FEATURES
+
+    Ability to place notes
+    Ability to play back notes
+    Mute notes
+
+v0.6.0
+--NEW FEATURES
+
+    Full window and interface
+
+v0.1.0 ~ v0.5.0
+--NEW FEATURES
+
+    Window appears
