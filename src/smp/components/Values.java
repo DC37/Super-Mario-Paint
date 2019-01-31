@@ -15,7 +15,7 @@ public class Values {
     public static double VERSION = 0.90;
 
     /** The number of instruments. */
-    public static int NUMINSTRUMENTS = 19;
+    public static int NUMINSTRUMENTS = 22;
 
     /** Default width */
     public static final int DEFAULT_WIDTH = 805;

@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.1.2
+* Current Version: 1.1.2.1
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
@@ -34,7 +34,7 @@ Confirmed Operating System Configurations:
 * Windows 10 + Java 8u73
 * Windows 10 + Java 8u161
 * Mac OSX 10.9.5 + Java 8u25
-* Ubuntu 14.04 + Java 8
+* Ubuntu 14.04-18.04 + Java 8
 
 Deprecated Operating System Configurations:
 -----
