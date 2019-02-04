@@ -28,7 +28,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.fx.Dialog;
@@ -37,7 +36,6 @@ import smp.models.staff.StaffArrangement;
 import smp.models.staff.StaffNote;
 import smp.models.staff.StaffNoteLine;
 import smp.models.staff.StaffSequence;
-import smp.models.stateMachine.StateMachine;
 import smp.presenters.api.load.MPCDecoder;
 
 /**

@@ -2,8 +2,6 @@ package smp;
 
 import java.io.File;
 
-import com.sun.javafx.application.LauncherImpl;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader.ProgressNotification;
