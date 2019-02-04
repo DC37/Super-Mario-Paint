@@ -1,7 +1,16 @@
+HOW TO VERSION
+
+vMajor.Minor.Bugfix
+
+Major = Non-backwards compatible changes made
+Minor = Backwards compatible *new feature* added
+Bugfix = No functionality or user-facing features added; bugfix only
+
+
 v1.3.0
 --FIXES
 
-    Shortens "Arranger" to "Arr" to accomodate for the new instruments
+    Shortens "Arranger" to "Arr" to accommodate for the new instruments
 
 --NEW FEATURES
     
@@ -26,7 +35,7 @@ v1.2.0
     Load existing soundfonts from AppData
 
 v1.1.1
---NEW FEATURES
+--FIXES
 
     Replaced filter text with filter images
     Added an INST_BACKGROUND.png in sprites/ to skin the window's background
@@ -65,21 +74,15 @@ v1.0.4
 --FIXES
 
   Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
-
---NEW FEATURES
-
-    Key-press behaviour generalized to include any key-press.
-    Slight update to internal data types for better readability of code.
-    Major update to loading / saving songs (logic)
+  Key-press behaviour generalized to include any key-press.
+  Slight update to internal data types for better readability of code.
+  Major update to loading / saving songs (logic)
 
 v1.0.3
 --FIXES
 
     100-line song fixed.
     Updated song-ending behaviour to gracefully play all notes, instead of just ending
-
---NEW FEATURES
-
     Loading songs with greater than 100 lines used to populate the array with null objects - hopefully fixed.
 
 v1.0.2
