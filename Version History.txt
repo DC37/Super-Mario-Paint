@@ -1,4 +1,4 @@
-v1.1.2.1
+v1.3.0
 --FIXES
 
     Shortens "Arranger" to "Arr" to accomodate for the new instruments
@@ -6,9 +6,9 @@ v1.1.2.1
 --NEW FEATURES
     
     Ctrl and/or shift increases scroll speed
-    Adds Luigi, Pach, and Feather as instruments
+    Adds Luigi, Peach, and Feather as instruments
 
-v1.1.2
+v1.2.0
 --FIXES
 
     Fixed song name text field focus issues--click anywhere other than the text field to defocus it
@@ -24,7 +24,6 @@ v1.1.2
     Load song's soundfont when loading song
     Load soundfonts for every song in an arrangement
     Load existing soundfonts from AppData
-    Adds Luigi (steel drum), Peach (violin), and feather (flute) as instruments.
 
 v1.1.1
 --NEW FEATURES
