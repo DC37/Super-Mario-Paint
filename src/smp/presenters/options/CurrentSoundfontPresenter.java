@@ -10,7 +10,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
-import smp.models.stateMachine.StateMachine;
 import smp.models.stateMachine.Variables;
 
 public class CurrentSoundfontPresenter {
