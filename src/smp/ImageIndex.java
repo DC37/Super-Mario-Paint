@@ -163,7 +163,7 @@ public enum ImageIndex {
     TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL,
 
     /** Digits for the ImageViews of the measure lines. */
-    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
+    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE;
 
 
     /** The alt version of this sprite. It can be null. */

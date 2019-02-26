@@ -1,21 +1,36 @@
+v1.1.2.1
+--FIXES
+
+    Shortens "Arranger" to "Arr" to accomodate for the new instruments
+
+--NEW FEATURES
+    
+    Ctrl and/or shift increases scroll speed
+    Adds Luigi, Pach, and Feather as instruments
+
 v1.1.2
-FIXES
-Fixed song name text field focus issues--click anywhere other than the text field to defocus it
-NEW FEATURES
-Added middle-button selecting to bypass clipboard button
-Added 4-line scrolling with Ctrl+Left or Ctrl+Right per request of seymour schlong
-Added hotkeys for Mute button (N) and MuteInst button (M) per request of seymour schlong
-Soundfont loading (WINDOWS, LINUX, and MAC)
-Choose soundfont
-Bind the soundfont to the song 
-Load song's soundfont when loading song
-Load soundfonts for every song in an arrangement
-Load existing soundfonts from AppData
+--FIXES
+
+    Fixed song name text field focus issues--click anywhere other than the text field to defocus it
+
+--NEW FEATURES
+
+    Added middle-button selecting to bypass clipboard button
+    Added 4-line scrolling with Ctrl+Left or Ctrl+Right per request of seymour schlong
+    Added hotkeys for Mute button (N) and MuteInst button (M) per request of seymour schlong
+    Soundfont loading (WINDOWS, LINUX, and MAC)
+    Choose soundfont
+    Bind the soundfont to the song 
+    Load song's soundfont when loading song
+    Load soundfonts for every song in an arrangement
+    Load existing soundfonts from AppData
+    Adds Luigi (steel drum), Peach (violin), and feather (flute) as instruments.
 
 v1.1.1
-NEW FEATURES
-Replaced filter text with filter images
-Added an INST_BACKGROUND.png in sprites/ to skin the window's background
+--NEW FEATURES
+
+    Replaced filter text with filter images
+    Added an INST_BACKGROUND.png in sprites/ to skin the window's background
 
 v1.1.0
 FIXES
@@ -46,15 +61,25 @@ Change volume
 Multiply tempo
 
 v1.0.4
-Key-press behaviour generalized to include any key-press.
-Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
-Slight update to internal data types for better readability of code.
-Major update to loading / saving songs (logic)
+--FIXES
+
+  Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
+
+--NEW FEATURES
+
+    Key-press behaviour generalized to include any key-press.
+    Slight update to internal data types for better readability of code.
+    Major update to loading / saving songs (logic)
 
 v1.0.3
-Yet more 100-line song fixes.
-Updated song-ending behaviour to gracefully play all notes, instead of just ending
-Loading songs with greater than 100 lines used to populate the array with null objects - hopefully fixed.
+--FIXES
+
+    100-line song fixed.
+    Updated song-ending behaviour to gracefully play all notes, instead of just ending
+
+--NEW FEATURES
+
+    Loading songs with greater than 100 lines used to populate the array with null objects - hopefully fixed.
 
 v1.0.2
 Bugfix - Songs above 100 lines.

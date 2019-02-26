@@ -65,7 +65,7 @@ public class NoteMatrix {
     public NoteMatrix(int x, int y, Staff s, ImageLoader i) {
         theStaff = s;
         il = i;
-        numberOfLines = x;
+        numberOfLines = 13;
         numberOfNotes = y;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
