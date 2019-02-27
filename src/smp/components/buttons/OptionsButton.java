@@ -235,7 +235,7 @@ public class OptionsButton extends ImagePushButton {
      *            The dialog box that we are setting up.
      */
     private void initializeDialog(Stage dialog) {
-        dialog.setHeight(280);
+        dialog.setHeight(350);
         dialog.setWidth(250);
         dialog.setResizable(false);
         dialog.setTitle("Options");
