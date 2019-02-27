@@ -543,7 +543,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @return note position based on y coord
      */
     private static int getPosition(double y){
-    	if(y < 66 || y >= 534)
+    	if(y < 66 || y >= 526)
     		return -1;
     	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
     }

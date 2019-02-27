@@ -29,7 +29,19 @@ public enum InstrumentIndex {
     PIRANHA  (17, ImageIndex.PIRANHA),
     SHYGUY   (18, ImageIndex.SHYGUY),
     BOO      (19, ImageIndex.BOO),
-    LUIGI    (20, ImageIndex.LUIGI);
+    LUIGI    (20, ImageIndex.LUIGI),
+    PEACH    (21, ImageIndex.PEACH),
+    FEATHER  (22, ImageIndex.FEATHER),
+    BULLETBILL(23, ImageIndex.BULLETBILL),
+    GOOMBA   (24, ImageIndex.GOOMBA),
+    BOBOMB   (25, ImageIndex.BOBOMB),
+    SPINY    (26, ImageIndex.SPINY),
+    FRUIT    (27, ImageIndex.FRUIT),
+    ONEUP    (28, ImageIndex.ONEUP),
+    MOON     (29, ImageIndex.MOON),
+    EGG      (30, ImageIndex.EGG),
+    GNOME    (31, ImageIndex.GNOME),
+    ;
 
     /**
      * The channel that the instrument is to be played on. For use

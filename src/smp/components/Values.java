@@ -15,7 +15,7 @@ public class Values {
     public static double VERSION = 0.90;
 
     /** The number of instruments. */
-    public static int NUMINSTRUMENTS = 19;
+    public static int NUMINSTRUMENTS = 31;
 
     /** Default width */
     public static final int DEFAULT_WIDTH = 1029;
@@ -206,5 +206,5 @@ public class Values {
 	 * 
 	 * @since v1.1.2
 	 */
-	public static final String DEFAULT_SOUNDFONT = "soundset3.sf2";
+	public static final String DEFAULT_SOUNDFONT = "default.sf2";
 }

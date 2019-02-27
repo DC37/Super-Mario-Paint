@@ -1501,7 +1501,7 @@
                 </StackPane>
               </children>
             </HBox>
-            <HBox fx:id="instLine" alignment="BASELINE_LEFT" layoutX="60.0" layoutY="20.0" prefHeight="28.0" prefWidth="531.0" spacing="2.0">
+            <HBox fx:id="instLine" alignment="BASELINE_LEFT" layoutX="60.0" layoutY="20.0" prefHeight="28.0" prefWidth="531.0" spacing="1.0">
               <children>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -1611,6 +1611,51 @@
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="570.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
                       <Image url="@sprites/FEATHER_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="598.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/BULLETBILL_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="626" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/GOOMBA_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="654.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/BOBOMB_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="682" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/SPINY_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="710.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/FRUIT_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="738.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/ONEUP_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="766" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/MOON_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="794" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/EGG_SM.PNG" />
+                   </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="822" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                      <Image url="@sprites/GNOME_SM.PNG" />
                    </image>
                 </ImageView>
               </children>
