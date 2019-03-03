@@ -75,15 +75,13 @@ public class MultiSynthesizer implements Synthesizer {
      * aggregate class.
      * @param s1 The first Synthesizer to be added.
      * @param s2 The second Synthesizer to be added.
-     * @param s3 The third Synthesizer to be added.
      * @throws MidiUnavailableException If the MultiSynthesizer is not
      * initialized.
      */
-    public void addSynths(Synthesizer s1, Synthesizer s2, Synthesizer s3)
+    public void addSynths(Synthesizer s1, Synthesizer s2)
             throws MidiUnavailableException {
         addSynths(s1);
         addSynths(s2);
-        addSynths(s3);
     }
 
     /**
@@ -91,16 +89,14 @@ public class MultiSynthesizer implements Synthesizer {
      * aggregate class.
      * @param s1 The first Synthesizer to be added.
      * @param s2 The second Synthesizer to be added.
-     * @param s3 The third Synthesizer to be added.
      * @param s As many more Synthesizer objects as needed.
      * @throws MidiUnavailableException If the MultiSynthesizer is not
      * initialized.
      */
-    public void addSynths(Synthesizer s1, Synthesizer s2, Synthesizer s3, Synthesizer... s)
+    public void addSynths(Synthesizer s1, Synthesizer s2, Synthesizer... s)
             throws MidiUnavailableException {
         addSynths(s1);
         addSynths(s2);
-        addSynths(s3);
         for (Synthesizer more : s)
             addSynths(more);
     }

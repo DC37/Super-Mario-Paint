@@ -45,7 +45,7 @@ public class ModeButton extends ImageToggleButton {
         ProgramState curr = StateMachine.getState();
         if (curr != ProgramState.ARR_PLAYING && curr != ProgramState.SONG_PLAYING) {
             if (curr == ProgramState.EDITING) {
-                modeDisp.setText("Arranger");
+                modeDisp.setText("Arr");
                 theStaff.setArrangerMode(true);
                 controller.getClipboardLabel().setVisible(false);
                 controller.getClipboardButton().setVisible(false);

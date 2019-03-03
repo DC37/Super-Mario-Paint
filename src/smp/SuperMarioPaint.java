@@ -331,11 +331,15 @@ public class SuperMarioPaint extends Application {
                     		break;
                     	// @since v1.1.2, requested by seymour schlong
                     	case LEFT:
-                    		if(ke.isControlDown())
+                    		if(ke.isControlDown() && ke.isShiftDown())
+                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
+                    		if(ke.isControlDown() || ke.isShiftDown())
                     			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
                     		break;
                     	case RIGHT:
-                    		if(ke.isControlDown())
+                    		if(ke.isControlDown() && ke.isShiftDown())
+                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
+                    		if(ke.isControlDown() || ke.isShiftDown())
                     			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
                     		break;
                     	default:
