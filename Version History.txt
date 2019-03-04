@@ -1,4 +1,4 @@
-v1.2.0
+v1.2.0 / v1.2.1
 FIXES
 Fixed song name text field focus issues--click anywhere other than the text field to defocus it
 NEW FEATURES
@@ -11,6 +11,7 @@ Bind the soundfont to the song
 Load song's soundfont when loading song
 Load soundfonts for every song in an arrangement
 Load existing soundfonts from AppData
+(v1.2.1 is a bugfix on the main window loading)
 
 v1.1.1
 NEW FEATURES
