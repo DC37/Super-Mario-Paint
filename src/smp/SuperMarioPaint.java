@@ -55,7 +55,7 @@ import smp.stateMachine.StateMachine;
  * @author j574y923
  * 
  * @since 2012.08.16
- * @version 1.1.1
+ * @version 1.2.1
  */
 public class SuperMarioPaint extends Application {
 
@@ -395,34 +395,34 @@ public class SuperMarioPaint extends Application {
      * @param args
      *            Sets debug options on or off.
      */
-//    public static void main(String[] args) {
-//        if (args.length == 0) {
-//            try {
-//                LauncherImpl.launchApplication(SuperMarioPaint.class,
-//                        SplashScreen.class, args);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        } else if (args.length > 0
-//                && (args[0].equals("--debug") || args[0].equals("--d"))) {
-//            if (args[1] != null) {
-//                try {
-//                    Settings.setDebug(Integer.parseInt(args[1]));
-//                } catch (NumberFormatException e) {
-//                    Settings.setDebug(1);
-//                }
-//            } else {
-//                Settings.setDebug(1);
-//            }
-//            try {
-//                LauncherImpl.launchApplication(SuperMarioPaint.class,
-//                        SplashScreen.class, args);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//	}
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            try {
+                LauncherImpl.launchApplication(SuperMarioPaint.class,
+                        SplashScreen.class, args);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (args.length > 0
+                && (args[0].equals("--debug") || args[0].equals("--d"))) {
+            if (args[1] != null) {
+                try {
+                    Settings.setDebug(Integer.parseInt(args[1]));
+                } catch (NumberFormatException e) {
+                    Settings.setDebug(1);
+                }
+            } else {
+                Settings.setDebug(1);
+            }
+            try {
+                LauncherImpl.launchApplication(SuperMarioPaint.class,
+                        SplashScreen.class, args);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+	}
 
 	/**
 	 * Gets the soundfont Loader. This function will probably only be temporary
