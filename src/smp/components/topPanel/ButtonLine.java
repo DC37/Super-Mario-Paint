@@ -80,7 +80,7 @@ public class ButtonLine {
         selectedInst = selected;
         theStaff = st;
         setupButtons();
-        DEFAULT_NOTE = Note.C4.getKeyNum();
+        DEFAULT_NOTE = Note.A3.getKeyNum();
         /*
          * For some reason, the piranha and coin are flipped in all soundfonts.
          * The solution here is unfortunately to just flip the images.

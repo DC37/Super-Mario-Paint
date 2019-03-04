@@ -83,7 +83,7 @@ public class Values {
      * The number of lines in the staff, by default. This number is typically
      * 400.
      */
-    public static int DEFAULT_LINES_PER_SONG = 512;
+    public static int DEFAULT_LINES_PER_SONG = 400;
 
     /** The default speed. */
     public static int DEFAULT_TEMPO = 400;
@@ -92,7 +92,7 @@ public class Values {
      * The amount of time the mouse must be held before we start repeating
      * clicks.
      */
-    public static int HOLDTIME = 300;
+    public static int HOLDTIME = 250;
 
     /** The amount of time between the repetition of two mouse click events. */
     public static int REPEATTIME = 40;
@@ -206,5 +206,5 @@ public class Values {
 	 * 
 	 * @since v1.1.2
 	 */
-	public static final String DEFAULT_SOUNDFONT = "default.sf2";
+	public static final String DEFAULT_SOUNDFONT = "soundset3.sf2";
 }
