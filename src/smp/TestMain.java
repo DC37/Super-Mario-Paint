@@ -55,7 +55,7 @@ import smp.views.MainWindowController;
  * @author j574y923
  * 
  * @since 2012.08.16
- * @version 1.1.1
+ * @version 1.2.0
  */
 public class TestMain extends Application {
 
