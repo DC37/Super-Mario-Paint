@@ -192,6 +192,8 @@ public class SuperMarioPaint extends Application {
                         @Override
                         public void run() {
                             try {
+				final Parameters params = getParameters();
+        			final List<String> parameters = params.getRaw();
                                 primaryStage.setTitle("Super Mario Paint " + Settings.version);
                                 setupCloseBehaviour(primaryStage);
                                 primaryStage.setResizable(false);
@@ -203,6 +205,7 @@ public class SuperMarioPaint extends Application {
                                 notifyPreloader(new ProgressNotification(1));
                                 notifyPreloader(new StateChangeNotification(
                                         StateChangeNotification.Type.BEFORE_START));
+				if (parameters.contains("-bl"))  { primaryStage.initStyle(StageStyle.UNDECORATED); }
                                 primaryStage.show();
                             } catch (Exception e) {
                                 e.printStackTrace();
