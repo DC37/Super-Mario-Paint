@@ -52,17 +52,29 @@ public class StaffImages {
     /** The ledger lines. */
     private HBox[] staffLLines;
 
+    /** The ledger lines at the high G of the staff. */
+    private ArrayList<Node> highG;
+
+    /** The ledger lines at the high E of the staff. */
+    private ArrayList<Node> highE;
+
     /** The ledger lines at the high C of the staff. */
     private ArrayList<Node> highC;
 
     /** The ledger lines at the high A of the staff. */
     private ArrayList<Node> highA;
-
+    
     /** The ledger lines at the low C of the staff. */
     private ArrayList<Node> lowC;
 
     /** The ledger lines at the low A of the staff. */
     private ArrayList<Node> lowA;
+
+    /** The ledger lines at the low F of the staff. */
+    private ArrayList<Node> lowF;
+
+    /** The ledger lines at the low D of the staff. */
+    private ArrayList<Node> lowD;
 
     /**
      * This is the list of lists of the ledger lines, so that we can quickly
@@ -265,18 +277,30 @@ public class StaffImages {
      *            staff.
      */
     private void initializeStaffLedgerLines() {
+        highG = new ArrayList<Node>();
+        highE = new ArrayList<Node>();
         highC = new ArrayList<Node>();
         highA = new ArrayList<Node>();
         lowC = new ArrayList<Node>();
         lowA = new ArrayList<Node>();
-        highC.addAll(staffLLines[0].getChildren());
-        highA.addAll(staffLLines[1].getChildren());
-        lowC.addAll(staffLLines[2].getChildren());
-        lowA.addAll(staffLLines[3].getChildren());
+        lowF = new ArrayList<Node>();
+        lowD = new ArrayList<Node>();
+        highG.addAll(staffLLines[0].getChildren());
+        highE.addAll(staffLLines[1].getChildren());
+        highC.addAll(staffLLines[2].getChildren());
+        highA.addAll(staffLLines[3].getChildren());
+        lowC.addAll(staffLLines[4].getChildren());
+        lowA.addAll(staffLLines[5].getChildren());
+        lowF.addAll(staffLLines[6].getChildren());
+        lowD.addAll(staffLLines[7].getChildren());
+        theLLines.add(highG);
+        theLLines.add(highE);
         theLLines.add(highC);
         theLLines.add(highA);
         theLLines.add(lowC);
         theLLines.add(lowA);
+        theLLines.add(lowF);
+        theLLines.add(lowD);
         hideAllLedgerLines();
     }
 
@@ -336,6 +360,16 @@ public class StaffImages {
         return staffLLines;
     }
 
+    /** @return The ledger lines at position high G. */
+    public ArrayList<Node> highG() {
+        return highG;
+    }
+
+    /** @return The ledger lines at position high E. */
+    public ArrayList<Node> highE() {
+        return highE;
+    }
+
     /** @return The ledger lines at position high C. */
     public ArrayList<Node> highC() {
         return highC;
@@ -351,9 +385,19 @@ public class StaffImages {
         return lowC;
     }
 
-    /** @return The ledger lines at position low C. */
+    /** @return The ledger lines at position low A. */
     public ArrayList<Node> lowA() {
         return lowA;
+    }
+
+    /** @return The ledger lines at position low F. */
+    public ArrayList<Node> lowF() {
+        return lowF;
+    }
+
+    /** @return The ledger lines at position low D. */
+    public ArrayList<Node> lowD() {
+        return lowD;
     }
 
 }

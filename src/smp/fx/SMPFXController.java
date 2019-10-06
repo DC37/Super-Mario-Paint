@@ -167,6 +167,20 @@ public class SMPFXController {
 
     /**
      * Lines that appear when a note is placed above the standard staff lines.
+     * High G lines.
+     */
+    @FXML
+    private HBox staffExtLinesHighG;
+
+    /**
+     * Lines that appear when a note is placed above the standard staff lines.
+     * High E lines.
+     */
+    @FXML
+    private HBox staffExtLinesHighE;
+
+    /**
+     * Lines that appear when a note is placed above the standard staff lines.
      * High C lines.
      */
     @FXML
@@ -192,6 +206,20 @@ public class SMPFXController {
      */
     @FXML
     private HBox staffExtLinesLowA;
+
+    /**
+     * Lines that appear when a note is placed below the standard staff liens.
+     * Low F lines.
+     */
+    @FXML
+    private HBox staffExtLinesLowF;
+
+    /**
+     * Lines that appear when a note is placed below the standard staff liens.
+     * Low D lines.
+     */
+    @FXML
+    private HBox staffExtLinesLowD;
 
     /** The staff measure lines. */
     @FXML
@@ -297,8 +325,8 @@ public class SMPFXController {
         commandManager = new ModifySongManager(staff, this);
         
         // Set up staff.
-        HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
-                staffExtLinesLowC, staffExtLinesLowA };
+        HBox[] staffLedgerLines = { staffExtLinesHighG, staffExtLinesHighE, staffExtLinesHighC, staffExtLinesHighA,
+                staffExtLinesLowC, staffExtLinesLowA, staffExtLinesLowF, staffExtLinesLowD };
         staff = new Staff(staffLedgerLines, this, il, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);

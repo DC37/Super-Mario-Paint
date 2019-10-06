@@ -209,26 +209,58 @@ public class NoteMatrix {
             if (nt <= low)
                 low = nt;
         }
-        if (high >= Values.highC) {
+        if (high >= Values.highG) {
+            theStaff.getStaffImages().highG().get(index).setVisible(true);
+            theStaff.getStaffImages().highE().get(index).setVisible(true);
+            theStaff.getStaffImages().highC().get(index).setVisible(true);
+            theStaff.getStaffImages().highA().get(index).setVisible(true);
+        } else if (high >= Values.highE) {
+            theStaff.getStaffImages().highG().get(index).setVisible(false);
+            theStaff.getStaffImages().highE().get(index).setVisible(true);
+            theStaff.getStaffImages().highC().get(index).setVisible(true);
+            theStaff.getStaffImages().highA().get(index).setVisible(true);
+        } else if (high >= Values.highC) {
+            theStaff.getStaffImages().highG().get(index).setVisible(false);
+            theStaff.getStaffImages().highE().get(index).setVisible(false);
             theStaff.getStaffImages().highC().get(index).setVisible(true);
             theStaff.getStaffImages().highA().get(index).setVisible(true);
         } else if (high >= Values.highA) {
+            theStaff.getStaffImages().highG().get(index).setVisible(false);
+            theStaff.getStaffImages().highE().get(index).setVisible(false);
             theStaff.getStaffImages().highC().get(index).setVisible(false);
             theStaff.getStaffImages().highA().get(index).setVisible(true);
         } else {
+            theStaff.getStaffImages().highG().get(index).setVisible(false);
+            theStaff.getStaffImages().highE().get(index).setVisible(false);
             theStaff.getStaffImages().highC().get(index).setVisible(false);
             theStaff.getStaffImages().highA().get(index).setVisible(false);
         }
-
-        if (low <= Values.lowA) {
+        
+        if (low <= Values.lowD) {
             theStaff.getStaffImages().lowC().get(index).setVisible(true);
             theStaff.getStaffImages().lowA().get(index).setVisible(true);
+            theStaff.getStaffImages().lowF().get(index).setVisible(true);
+            theStaff.getStaffImages().lowD().get(index).setVisible(true);
+        } else if (low <= Values.lowF) {
+            theStaff.getStaffImages().lowC().get(index).setVisible(true);
+            theStaff.getStaffImages().lowA().get(index).setVisible(true);
+            theStaff.getStaffImages().lowF().get(index).setVisible(true);
+            theStaff.getStaffImages().lowD().get(index).setVisible(false);
+        } else if (low <= Values.lowA) {
+            theStaff.getStaffImages().lowC().get(index).setVisible(true);
+            theStaff.getStaffImages().lowA().get(index).setVisible(true);
+            theStaff.getStaffImages().lowF().get(index).setVisible(false);
+            theStaff.getStaffImages().lowD().get(index).setVisible(false);
         } else if (low <= Values.lowC) {
             theStaff.getStaffImages().lowC().get(index).setVisible(true);
             theStaff.getStaffImages().lowA().get(index).setVisible(false);
+            theStaff.getStaffImages().lowF().get(index).setVisible(false);
+            theStaff.getStaffImages().lowD().get(index).setVisible(false);
         } else {
             theStaff.getStaffImages().lowC().get(index).setVisible(false);
             theStaff.getStaffImages().lowA().get(index).setVisible(false);
+            theStaff.getStaffImages().lowF().get(index).setVisible(false);
+            theStaff.getStaffImages().lowD().get(index).setVisible(false);
         }
 
     }

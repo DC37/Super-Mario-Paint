@@ -129,10 +129,10 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 	 */
 	private int getLine(double x) {
 		
-		if (x < 128 || x > 784) {
+		if (x < 160 || x > 1008) {
 			return -1;
 		}
-		return (((int) x - 128) / 64);
+		return (((int) x - 165) / 64);
 	}
 	
 	public StaffRubberBand getRubberBand() {

@@ -49,14 +49,13 @@ import smp.stateMachine.StateMachine;
  * Dev team: 
  * RehdBlob (2012 - current)
  * j574y923 (2017 - current)
- * SeymourSchlong (2018 - current)
  *
  *
  * @author RehdBlob
  * @author j574y923
  * 
  * @since 2012.08.16
- * @version 1.3.0
+ * @version 1.1.1
  */
 public class SuperMarioPaint extends Application {
 
@@ -197,7 +196,7 @@ public class SuperMarioPaint extends Application {
                                 primaryStage.setResizable(false);
                                 primaryStage.setHeight(Values.DEFAULT_HEIGHT);
                                 primaryStage.setWidth(Values.DEFAULT_WIDTH);
-                                primaryScene = new Scene(root, 800, 600);
+                                primaryScene = new Scene(root, 1024, 712);
                                 primaryStage.setScene(primaryScene);
                                 makeKeyboardListeners(primaryScene);
                                 notifyPreloader(new ProgressNotification(1));

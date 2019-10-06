@@ -140,7 +140,7 @@ public class TextUtil {
      * @return The position on the staff that an MPC note is located.
      */
     public static int parsePosition(char s) {
-        return Values.NOTES_IN_A_LINE - (s - 'a') - 2;
+        return Values.NOTES_IN_A_LINE - (s - 'a') - 5;
     }
 
     /**
