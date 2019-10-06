@@ -1,0 +1,1188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?scenebuilder-background-color 0xb4b4b4ff?>
+
+<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
+    <BorderPane id="MainLayout" fx:id="mainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="598.0" prefWidth="798.0">
+      <bottom>
+        <Pane id="BottomPane" blendMode="SRC_OVER" prefHeight="56.0" prefWidth="798.0">
+          <children>
+            <ImageView fitHeight="56.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image preserveRatio="false" smooth="false" url="@sprites/BOTTOM_BAR.png" />
+              </image>
+            </ImageView>
+            <HBox id="HBox" alignment="CENTER" prefHeight="56.0" spacing="5.0">
+              <children>
+                <HBox id="BottomLeftBox" alignment="TOP_RIGHT" prefHeight="56.0" prefWidth="267.0">
+                  <children>
+                    <Pane prefHeight="56.0" prefWidth="228.0">
+                      <children>
+                        <HBox alignment="CENTER" prefHeight="56.0" prefWidth="228.0" spacing="14.0">
+                          <children>
+                            <ImageView fx:id="saveButton" fitHeight="28.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image preserveRatio="false" smooth="false" url="@sprites/SAVE.png" />
+                              </image>
+                            </ImageView>
+                            <ImageView fx:id="loadButton" fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image preserveRatio="false" smooth="false" url="@sprites/LOAD.png" />
+                              </image>
+                            </ImageView>
+                            <ImageView fx:id="newButton" fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image preserveRatio="false" smooth="false" url="@sprites/NEW_SONG.png" />
+                              </image>
+                            </ImageView>
+                          </children>
+                        </HBox>
+                      </children>
+                    </Pane>
+                  </children>
+                </HBox>
+                <VBox id="VBox" alignment="TOP_CENTER" prefHeight="56.0" prefWidth="360.0" spacing="5.0">
+                  <children>
+                    <AnchorPane id="AnchorPane" prefHeight="48.0" prefWidth="399.0">
+                      <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8c090" height="32.0" layoutX="4.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="390.0" />
+                        <StackPane id="StackPane" layoutY="2.0">
+                          <children>
+                            <TextField fx:id="songName" focusTraversable="false" prefHeight="30.0" prefWidth="390.0" promptText="Song Name" />
+                            <Rectangle fill="#1e90ff00" height="30.0" mouseTransparent="true" stroke="#d09048" strokeType="INSIDE" strokeWidth="2.0" width="390.0" />
+                          </children>
+                        </StackPane>
+                      </children>
+                    </AnchorPane>
+                  </children>
+                  <padding>
+                    <Insets top="8.0" />
+                  </padding>
+                </VBox>
+                <HBox id="BottomRightBox" prefHeight="56.0" prefWidth="144.0">
+                  <children>
+                    <Pane prefHeight="56.0" prefWidth="116.0">
+                      <children>
+                        <HBox alignment="CENTER" prefHeight="56.0" prefWidth="100.0">
+                          <children>
+                            <ImageView fx:id="optionsButton" fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image url="@sprites/OPTIONS.png" />
+                              </image>
+                            </ImageView>
+                          </children>
+                        </HBox>
+                      </children>
+                    </Pane>
+                  </children>
+                </HBox>
+              </children>
+            </HBox>
+          </children>
+        </Pane>
+      </bottom>
+      <center>
+        <Pane id="MidPane" prefHeight="200.0" prefWidth="200.0">
+          <children>
+            <VBox id="MidHolder" blendMode="MULTIPLY" layoutY="-14.0" prefHeight="500.0" prefWidth="798.0">
+              <children>
+                <Pane id="StaffFrame" prefHeight="316.0" prefWidth="798.0">
+                  <children>
+                    <ImageView fitHeight="544.0" fitWidth="799.0" layoutX="0.0" layoutY="-52.0" pickOnBounds="true">
+                      <image>
+                        <Image url="@sprites/INST_BACKGROUND.PNG" />
+                      </image>
+                    </ImageView>
+                    <StackPane fx:id="staffPane" prefHeight="296.0" prefWidth="798.0">
+                      <children>
+                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="312.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0">
+                          <fill>
+                            <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
+                          </fill>
+                        </Rectangle>
+                        <ImageView id="" fitHeight="276.0" fitWidth="758.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@sprites/STAFF_BG_TREBLE.png" />
+                          </image>
+                          <StackPane.margin>
+                            <Insets top="14.0" />
+                          </StackPane.margin>
+                        </ImageView>
+                      </children>
+                    </StackPane>
+                    <HBox fx:id="staffMeasureNumbers" alignment="CENTER_LEFT" layoutX="20.0" layoutY="8.0" prefHeight="12.0" prefWidth="758.0" spacing="22.0">
+                      <children>
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="42.0" />
+                      </children>
+                      <padding>
+                        <Insets left="124.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffMeasureLines" alignment="CENTER_LEFT" layoutX="20.0" layoutY="24.0" prefHeight="276.0" prefWidth="758.0" spacing="62.0">
+                      <children>
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="274.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                      <padding>
+                        <Insets left="144.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffExtLinesHighC" alignment="CENTER_LEFT" layoutX="20.0" layoutY="25.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                      <children>
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                      </children>
+                      <padding>
+                        <Insets left="124.0" top="-1.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffExtLinesHighA" alignment="CENTER_LEFT" layoutX="21.0" layoutY="57.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                      <children>
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                      </children>
+                      <padding>
+                        <Insets left="124.0" />
+                      </padding>
+                    </HBox>
+                    <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowC" alignment="CENTER_LEFT" layoutX="21.0" layoutY="247.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                      <children>
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                      </children>
+                      <padding>
+                        <Insets left="124.0" />
+                      </padding>
+                    </HBox>
+                              <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowA" alignment="CENTER_LEFT" layoutX="21.0" layoutY="279.0" prefHeight="48.0" prefWidth="758.0" spacing="22.0">
+                                 <children>
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="124.0" />
+                                 </padding>
+                              </HBox>
+                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="20.0" layoutY="23.0" prefHeight="281.0" prefWidth="758.0" spacing="8.0">
+                      <children>
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="281.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                      <padding>
+                        <Insets left="117.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="20.0" layoutY="13.0" prefHeight="312.0" prefWidth="758.0" spacing="32.0">
+                      <children>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" prefHeight="300.0" prefWidth="32.0" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                            <StackPane prefHeight="36.0" prefWidth="32.0" />
+                          </children>
+                        </VBox>
+                      </children>
+                      <padding>
+                        <Insets left="105.0" />
+                      </padding>
+                    </HBox>
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="20.0" layoutY="13.0" prefHeight="312.0" prefWidth="758.0">
+                      <children>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                        <VBox id="VBox" alignment="CENTER" spacing="-20.0">
+                          <children>
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                            <StackPane prefHeight="36.0" prefWidth="64.0" />
+                          </children>
+                        </VBox>
+                      </children>
+                      <padding>
+                        <Insets left="113.0" />
+                      </padding>
+                    </HBox>
+                  </children>
+                  <padding>
+                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                  </padding>
+                </Pane>
+                <Pane id="VolPaneHolder" prefHeight="64.0" prefWidth="798.0">
+                  <children>
+                    <AnchorPane id="AnchorPane" layoutX="3.0" layoutY="-4.0">
+                      <children>
+                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="68.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" y="-2.0" />
+                        <ImageView fitHeight="24.0" fitWidth="72.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image preserveRatio="false" smooth="false" url="@sprites/VOL_LABEL.PNG" />
+                          </image>
+                        </ImageView>
+                        <HBox fx:id="volumeBars" prefHeight="64.0" prefWidth="792.0">
+                          <children>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                            <StackPane id="StackPane" alignment="BOTTOM_CENTER" prefHeight="64.0" prefWidth="64.0">
+                              <children>
+                                <ImageView fitHeight="64.0" fitWidth="4.0" pickOnBounds="true" />
+                              </children>
+                            </StackPane>
+                          </children>
+                          <padding>
+                            <Insets left="130.0" />
+                          </padding>
+                        </HBox>
+                      </children>
+                    </AnchorPane>
+                  </children>
+                </Pane>
+                <Pane id="ControlsPane" prefHeight="121.0" prefWidth="798.0">
+                  <children>
+                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="116.0" layoutX="3.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="792.0" />
+                    <StackPane id="controls" layoutX="14.0" layoutY="7.0">
+                      <children>
+                        <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">
+                          <children>
+                            <ImageView id="ConrolsLeft" fitHeight="88.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image preserveRatio="false" smooth="false" url="@sprites/CONTROLS_LEFT.png" />
+                              </image>
+                            </ImageView>
+                            <ImageView id="ControlsMid" fitHeight="88.0" fitWidth="738.0" pickOnBounds="true" HBox.hgrow="ALWAYS">
+                              <image>
+                                <Image preserveRatio="false" smooth="false" url="@sprites/CONTROLS_MID.png" />
+                              </image>
+                              <HBox.margin>
+                                <Insets />
+                              </HBox.margin>
+                            </ImageView>
+                            <ImageView id="ControlsRight" fitHeight="88.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image preserveRatio="false" smooth="false" url="@sprites/CONTROLS_RIGHT.png" />
+                              </image>
+                            </ImageView>
+                          </children>
+                        </HBox>
+                        <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0">
+                          <children>
+                            <StackPane id="StackPane">
+                              <children>
+                                <HBox prefHeight="80.0" prefWidth="250.0" spacing="8.0">
+                                  <children>
+                                    <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/STOP_PRESSED.png" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fx:id="play" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/PLAY_RELEASED.png" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fx:id="loop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/LOOP_RELEASED.png" />
+                                      </image>
+                                    </ImageView>
+                                    <Region prefHeight="16.0" prefWidth="10.0" />
+                                    <ImageView fx:id="mute" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_RELEASED.png" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView id="LowAMute" fx:id="muteA" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_A_RELEASED.png" />
+                                      </image>
+                                    </ImageView>
+                                  </children>
+                                  <padding>
+                                    <Insets left="24.0" top="32.0" />
+                                  </padding>
+                                </HBox>
+                                <HBox mouseTransparent="true" prefHeight="80.0" prefWidth="250.0" spacing="2.0">
+                                  <children>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/STOP_LABEL.png" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/PLAY_LABEL.png" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/LOOP_LABEL.png" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_LABEL.png" />
+                                      </image>
+                                    </ImageView>
+                                    <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_A_LABEL.png" />
+                                      </image>
+                                    </ImageView>
+                                  </children>
+                                  <padding>
+                                    <Insets left="14.0" top="20.0" />
+                                  </padding>
+                                </HBox>
+                              </children>
+                            </StackPane>
+                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="230.0">
+                                             <children>
+                                                <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="250.0" />
+                                             </children>
+                                             <padding>
+                                                <Insets left="4.0" />
+                                             </padding>
+                            </HBox>
+                            <HBox id="" prefHeight="100.0" prefWidth="300.0">
+                              <children>
+                                                <VBox alignment="CENTER_LEFT" prefHeight="88.0" prefWidth="128.0">
+                                                   <children>
+                                                      <ImageView id="" fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/ADD.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView id="" fx:id="deleteButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/DELETE.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView id="" fx:id="upButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/UP.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView id="" fx:id="downButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/DOWN.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="4.0" />
+                                                   </padding>
+                                                </VBox>
+                                                <VBox alignment="CENTER" prefHeight="88.0" prefWidth="128.0">
+                                                   <children>
+                                                      <ImageView fx:id="clipboardLabel" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/CLIPBOARD_LABEL.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/CLIPBOARD_RELEASED.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="4.0" />
+                                                   </padding>
+                                                </VBox>
+                                <VBox id="VBox" alignment="CENTER" prefHeight="88.0" prefWidth="104.0">
+                                  <children>
+                                                      <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@sprites/TEMPO_LABEL.png" />
+                                                         </image>
+                                                      </ImageView>
+                                    <StackPane fx:id="tempoBox" prefHeight="25.0" prefWidth="100.0">
+                                      <children>
+                                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0" />
+                                        <Text id="Tempo" fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0">
+                                          <font>
+                                            <Font name="Century Gothic" size="15.0" fx:id="x2" />
+                                          </font>
+                                        </Text>
+                                      </children>
+                                    </StackPane>
+                                  </children>
+                                  <padding>
+                                    <Insets top="-8.0" />
+                                  </padding>
+                                  <HBox.margin>
+                                    <Insets />
+                                  </HBox.margin>
+                                </VBox>
+                                <StackPane prefHeight="100.0" prefWidth="100.0">
+                                  <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                      <children>
+                                        <ImageView id="TempoPlus" fx:id="tempoPlus" fitHeight="32.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                            <Image preserveRatio="false" smooth="false" url="@sprites/TEMPO_PLUS.png" />
+                                          </image>
+                                        </ImageView>
+                                        <ImageView id="TempoMinus" fx:id="tempoMinus" fitHeight="32.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                            <Image preserveRatio="false" smooth="false" url="@sprites/TEMPO_MINUS.png" />
+                                          </image>
+                                        </ImageView>
+                                      </children>
+                                      <padding>
+                                        <Insets top="33.0" />
+                                      </padding>
+                                    </VBox>
+                                  </children>
+                                </StackPane>
+                              </children>
+                              <HBox.margin>
+                                <Insets />
+                              </HBox.margin>
+                            </HBox>
+                          </children>
+                          <padding>
+                            <Insets left="8.0" right="8.0" />
+                          </padding>
+                        </HBox>
+                      </children>
+                                 <padding>
+                                    <Insets top="-10.0" />
+                                 </padding>
+                    </StackPane>
+                    <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="24.0" prefWidth="770.0">
+                      <children>
+                        <ImageView fx:id="leftFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT2.PNG" />
+                          </image>
+                        </ImageView>
+                        <ImageView fx:id="leftArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT1.PNG" />
+                          </image>
+                        </ImageView>
+                        <StackPane id="StackPane">
+                          <children>
+                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="660.0">
+                              <rotationAxis>
+                                <Point3D />
+                              </rotationAxis>
+                            </Rectangle>
+                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="390.0" minorTickCount="1" prefWidth="660.0">
+                              <rotationAxis>
+                                <Point3D />
+                              </rotationAxis>
+                            </Slider>
+                          </children>
+                        </StackPane>
+                        <ImageView fx:id="rightArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_RIGHT1.PNG" />
+                          </image>
+                        </ImageView>
+                        <ImageView id="rightArrow" fx:id="rightFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_RIGHT2.png" />
+                          </image>
+                        </ImageView>
+                      </children>
+                    </HBox>
+                  </children>
+                </Pane>
+              </children>
+            </VBox>
+          </children>
+        </Pane>
+      </center>
+      <top>
+        <Pane fx:id="topPane" prefHeight="64.0" prefWidth="798.0">
+          <children>
+            <HBox fx:id="topBoxRight" alignment="CENTER_RIGHT" layoutX="591.0" prefHeight="64.0" prefWidth="200.0" spacing="2.0">
+              <children>
+                <ImageView id="" fx:id="modeButton" fitHeight="24.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/MODE.png" />
+                  </image>
+                </ImageView>
+                <StackPane id="StackPane">
+                  <children>
+                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#efefef" height="32.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="60.0" />
+                    <Text id="Tempo" fx:id="modeText" font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  </children>
+                </StackPane>
+              </children>
+            </HBox>
+            <HBox fx:id="instLine" alignment="BASELINE_LEFT" layoutX="60.0" layoutY="20.0" prefHeight="28.0" prefWidth="531.0" spacing="2.0">
+              <children>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/MARIO_SM.png" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/MUSHROOM_SM.png" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/YOSHI_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/STAR_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/FLOWER_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/GAMEBOY_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/DOG_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/CAT_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/PIG_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/SWAN_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/FACE_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/PLANE_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/BOAT_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/CAR_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/HEART_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/COIN_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/PIRANHA_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/SHYGUY_SM.PNG" />
+                  </image>
+                </ImageView>
+                <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/BOO_SM.PNG" />
+                  </image>
+                </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="514.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@sprites/LUIGI_SM.PNG" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="542.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@sprites/PEACH_SM.PNG" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="570.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@sprites/FEATHER_SM.PNG" />
+                           </image>
+                        </ImageView>
+              </children>
+            </HBox>
+            <StackPane layoutX="6.0" layoutY="14.0" prefHeight="38.0" prefWidth="52.0">
+              <children>
+                <ImageView fx:id="selectedInstHolder" fitHeight="32.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image preserveRatio="false" smooth="false" url="@sprites/SEL_INST_SM.png" />
+                  </image>
+                </ImageView>
+                <ImageView fx:id="selectedInst" fitHeight="36.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </StackPane>
+          </children>
+        </Pane>
+      </top>
+    </BorderPane>
+    <Pane layoutX="800.0" layoutY="2.0" prefHeight="598.0" prefWidth="100.0">
+      <children>
+        <Button fx:id="secretButton" focusTraversable="false" layoutX="4.0" layoutY="289.0" mnemonicParsing="false" text="Secret Button">
+          <font>
+            <Font size="12.0" />
+          </font>
+        </Button>
+      </children>
+    </Pane>
+  </children>
+</AnchorPane>
