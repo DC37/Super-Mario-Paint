@@ -76,7 +76,7 @@ public class SoundfontLoader implements Loader {
              * else
              */
 
-            theSynthesizer.ensureCapacity(19);
+            theSynthesizer.ensureCapacity(45);
             for (Instrument i : theSynthesizer.getLoadedInstruments()) {
                 theSynthesizer.unloadInstrument(i);
                 try {
