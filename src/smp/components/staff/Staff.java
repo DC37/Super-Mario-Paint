@@ -38,6 +38,7 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @author j574y923
  * @author Cynagen
+ * @author seymour
  * @since 2012.08.13
  */
 public class Staff {
@@ -225,6 +226,7 @@ public class Staff {
 
     /** Begins animation of the Staff. (Starts a song) */
     public synchronized void startSong() {
+    	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         highlightsOff();
         lastLine = findLastLine();
@@ -241,6 +243,7 @@ public class Staff {
 
     /** Starts an arrangement. */
     public synchronized void startArrangement() {
+    	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();

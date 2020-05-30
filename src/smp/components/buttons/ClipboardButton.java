@@ -52,6 +52,7 @@ public class ClipboardButton extends ImageToggleButton {
 
 			@Override
 			public void handle(KeyEvent event) {
+				if (controller.getNameTextField().focusedProperty().get()) return; // Disable while textfield is focused
 				if(event.isShiftDown() && event.getCode() == KeyCode.R)
 					reactPressed(null);
 			}

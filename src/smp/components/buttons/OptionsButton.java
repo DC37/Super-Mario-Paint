@@ -42,6 +42,7 @@ import smp.stateMachine.StateMachine;
  * This is the options button. It currently doesn't do anything.
  *
  * @author RehdBlob
+ * @author seymour
  * @since 2013.12.25
  */
 public class OptionsButton extends ImagePushButton {
@@ -77,9 +78,9 @@ public class OptionsButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.EDITING)
-            options();
+        //ProgramState curr = StateMachine.getState();
+        //if (curr == ProgramState.EDITING)
+        options();
     }
 
     @Override
@@ -117,10 +118,17 @@ public class OptionsButton extends ImagePushButton {
 		bindBox = makeBindCheckBox();
         VBox soundfontsOptions = new VBox(1);
         soundfontsOptions.setAlignment(Pos.CENTER);
-		soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
 
-        vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
-                tempoField, soundfontsOptions, pane);
+        // Hide some options while in arranger mode, due to them being impractical (Tempo multiplier, Soundfont binder) - seymour
+		if (StateMachine.getState() == ProgramState.ARR_EDITING) {
+			soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu);
+	        vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, pane);
+		} else {
+			soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
+	        vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
+	                tempoField, soundfontsOptions, pane);
+		}
+		
         defaultVolume.autosize();
         Scene scene1 = new Scene(vBox);
         dialog.setScene(scene1);
@@ -235,7 +243,7 @@ public class OptionsButton extends ImagePushButton {
      *            The dialog box that we are setting up.
      */
     private void initializeDialog(Stage dialog) {
-        dialog.setHeight(320);
+        dialog.setHeight(StateMachine.getState() == ProgramState.ARR_EDITING ? 220 : 300);
         dialog.setWidth(260);
         dialog.setResizable(false);
         dialog.setTitle("Options");

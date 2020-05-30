@@ -1,6 +1,8 @@
 package smp;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.EnumSet;
 
 import com.sun.javafx.application.LauncherImpl;
 
@@ -17,10 +19,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -30,9 +34,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
+import smp.components.InstrumentIndex;
 import smp.components.staff.StaffInstrumentEventHandler;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
+import smp.stateMachine.ProgramState;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
@@ -49,10 +55,12 @@ import smp.stateMachine.StateMachine;
  * Dev team: 
  * RehdBlob (2012 - current)
  * j574y923 (2017 - current)
+ * seymour (2020 - current)
  *
  *
  * @author RehdBlob
  * @author j574y923
+ * @author seymour
  * 
  * @since 2012.08.16
  * @version 1.1.1
@@ -202,6 +210,22 @@ public class SuperMarioPaint extends Application {
                                 notifyPreloader(new ProgressNotification(1));
                                 notifyPreloader(new StateChangeNotification(
                                         StateChangeNotification.Type.BEFORE_START));
+                                
+                                // @since 2020.4.28 - seymour
+                                // Changes the cursor image
+                                setCursor(0);
+                                
+                                // Changes the app icon (gives the option to use a given icon OR a random icon from all instruments)
+                                if (new File("./sprites/ICON.png").exists())
+                                	setIcon("./sprites/ICON.png");
+                                else {
+	                                int randNum = (int) Math.floor(Math.random() * Values.NUMINSTRUMENTS);
+	                                ArrayList<InstrumentIndex> instList = new ArrayList<InstrumentIndex>(
+	                                		EnumSet.allOf(InstrumentIndex.class));
+	                                String instName = instList.get(randNum).name();
+	                                setIcon("./sprites/" + instName + "_SM.png");
+                                }
+                                
                                 primaryStage.show();
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -307,6 +331,41 @@ public class SuperMarioPaint extends Application {
     	
     	primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
     	
+    	// Just a temporary thing to change mouse until i (or someone else) can find out where to put it =P -- seymour
+    	primaryScene.addEventHandler(MouseEvent.MOUSE_PRESSED,
+    			new EventHandler<MouseEvent>() {
+    				
+    				@Override
+    				public void handle(MouseEvent m) {
+    					switch(m.getButton()) {
+    						case SECONDARY:
+    	    					setCursor(3);
+    	    					break;
+    						case MIDDLE:
+    							setCursor(2);
+    							break;
+    						default:
+    							if (StateMachine.isClipboardPressed())
+    								setCursor(2);
+    							else
+    								setCursor(1);
+								break;
+    					}
+    					
+    					m.consume();
+    				}
+    	});
+    	primaryScene.addEventHandler(MouseEvent.MOUSE_RELEASED,
+    			new EventHandler<MouseEvent>() {
+    		
+		    		@Override
+					public void handle(MouseEvent m) {
+						setCursor(0);
+						
+						m.consume();
+					}
+    	});
+    	
     	// TODO: move to its own keyhandler
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
@@ -316,10 +375,10 @@ public class SuperMarioPaint extends Application {
                     	
                     	switch(ke.getCode()) {
                     	case PAGE_UP:
-                    		controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - Values.NOTELINES_IN_THE_WINDOW);
+                    		controller.getStaff().shift(-Values.NOTELINES_IN_THE_WINDOW);
                     		break;
                     	case PAGE_DOWN:
-                    		controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + Values.NOTELINES_IN_THE_WINDOW);
+                    		controller.getStaff().shift(Values.NOTELINES_IN_THE_WINDOW);
                     		break;
                     	case HOME:
                     		if(ke.isControlDown())
@@ -329,18 +388,53 @@ public class SuperMarioPaint extends Application {
                     		if(ke.isControlDown())
                     			controller.getStaff().setLocation((int)controller.getScrollbar().getMax());
                     		break;
-                    	// @since v1.1.2, requested by seymour schlong
+                    	// @since v1.4, adds A and D as controls. move to correct spot later if needed
+                    	case A:
+                    		if(!ke.isControlDown() && !ke.isShiftDown())
+                    			controller.getStaff().moveLeft();
+                    	// @since v1.1.2, requested by seymour
                     	case LEFT:
+                    		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
+                				break;
                     		if(ke.isControlDown() && ke.isShiftDown())
-                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
+                    			controller.getStaff().shift(-4);
                     		if(ke.isControlDown() || ke.isShiftDown())
-                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
+                    			controller.getStaff().shift(-4);
                     		break;
+                    	case D:
+                    		if(!ke.isControlDown() && !ke.isShiftDown())
+                    			controller.getStaff().moveRight();
                     	case RIGHT:
+                    		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
+                    			break;
                     		if(ke.isControlDown() && ke.isShiftDown())
-                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
+                    			controller.getStaff().shift(4);
                     		if(ke.isControlDown() || ke.isShiftDown())
-                    			controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
+                    			controller.getStaff().shift(4);
+                    		break;
+                    		
+                    	// @since 1.4, adds conventional spacebar functionality 
+                    	// TODO: Make this better please =)
+                    	case SPACE:
+                    		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
+                    			break;
+                    		
+                    		if (ke.isControlDown() || ke.isShiftDown())
+                    			controller.getStaff().setLocation(0);
+                    		
+                			if (StateMachine.getState() == ProgramState.SONG_PLAYING) {
+                	            StateMachine.setState(ProgramState.EDITING);
+                        		controller.getStaff().stopSong();
+                	        } else if (StateMachine.getState() == ProgramState.ARR_PLAYING) {
+                	            StateMachine.setState(ProgramState.ARR_EDITING);
+                	            controller.getStaff().stopSong();
+                	        } else if (StateMachine.getState() == ProgramState.EDITING) {
+                	            StateMachine.setState(ProgramState.SONG_PLAYING);
+                	            controller.getStaff().startSong();
+                	        } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
+                	            StateMachine.setState(ProgramState.ARR_PLAYING);
+                	            controller.getStaff().startArrangement();
+                	        }
                     		break;
                     	default:
                     	}
@@ -371,12 +465,12 @@ public class SuperMarioPaint extends Application {
 //					if (se.isControlDown())
 //						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
 //					else
-						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 1);
+						controller.getStaff().moveRight();
 				} else if (se.getDeltaY() > 0) {
 //					if (se.isControlDown())
 //						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
 //					else
-						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 1);
+						controller.getStaff().moveLeft();
 				}
 				se.consume();
 			}
@@ -427,6 +521,34 @@ public class SuperMarioPaint extends Application {
         }
 
 	}
+    
+    /**
+     * Changes the cursor image.
+     * TYPES:
+     * 0 - Default
+     * 1 - Grab
+     * 2 - Open (splayed)
+     * 3 - Eraser
+     * 
+     * @param isPressed
+     * 			Which mouse button is being pressed (if any).
+     */
+    public void setCursor(int type) {
+    	// Checking whether the cursor file exists or not. It lets people change their cursor back to default.
+    	if (new File("./sprites/CURSOR_" + type + ".png").exists())
+    		primaryScene.setCursor(new ImageCursor(new Image("file:./sprites/CURSOR_" + type + ".png"), 0, 0));
+    }
+    
+    /**
+     * Changes the icon to the given image location.
+     * 
+     * @param fileLocation
+     * 			The location of the new icon image.
+     */
+    public void setIcon(String fileLocation) {
+    	if (new File(fileLocation).exists())
+    		primaryStage.getIcons().add(new Image("file:" + fileLocation));
+    }
 
 	/**
 	 * Gets the soundfont Loader. This function will probably only be temporary

@@ -1,9 +1,12 @@
 package smp.fx;
 
 import smp.stateMachine.Settings;
+
 import javafx.application.Preloader;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -16,12 +19,16 @@ import javafx.stage.Stage;
  * http://docs.oracle.com/javafx/2/deployment/preloaders.htm
  *
  * @author RehdBlob
+ * @author seymour
  * @since 2014.12.30
  */
 public class SplashScreen extends Preloader {
 
     /** Basic progress bar. */
     ProgressBar bar;
+    
+    /** Loading image */
+    ImageView imageview;
 
     /** The stage to display on. */
     Stage stage;
@@ -36,6 +43,12 @@ public class SplashScreen extends Preloader {
         bar = new ProgressBar(0);
         BorderPane p = new BorderPane();
         p.setCenter(bar);
+        // @since 1.4, to spice up the load screen. why not? - seymour 
+        imageview = new ImageView();
+        imageview.setImage(new Image("file:./sprites/LOADING_ANIM.gif"));
+        imageview.setTranslateX(32);
+        imageview.setTranslateY(32);
+        p.setTop(imageview);
         return new Scene(p, 300, 150);
     }
 
@@ -54,6 +67,7 @@ public class SplashScreen extends Preloader {
         } else {
             stage.setTitle("Loading...");
         }
+        stage.getIcons().add(new Image("file:./sprites/ICON.png"));
         stage.show();
     }
 

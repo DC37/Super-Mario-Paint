@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import smp.ImageLoader;
@@ -41,6 +44,17 @@ public class LoadButton extends ImagePushButton {
      */
     public LoadButton(ImageView i, SMPFXController ct, ImageLoader im) {
         super(i, ct, im);
+        
+        // @since v1.4 to accomodate for those with a smaller screen that may not be able to access it.
+  		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
+  			@Override
+  			public void handle(KeyEvent event) {
+				if (controller.getNameTextField().focusedProperty().get()) return; // Disable while textfield is focused
+  				if(event.isControlDown() && event.getCode() == KeyCode.O)
+  					reactPressed(null);
+  			}
+  		});
     }
 
     @Override
@@ -73,6 +87,10 @@ public class LoadButton extends ImagePushButton {
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
+                FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
+                f.getExtensionFilters().add(filterTxt);
+                f.getExtensionFilters().add(filterAny);
                 f.setInitialDirectory(StateMachine.getCurrentDirectory());
                 inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
@@ -135,6 +153,10 @@ public class LoadButton extends ImagePushButton {
         if (cont) {
             try {
                 FileChooser f = new FileChooser();
+                FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
+                f.getExtensionFilters().add(filterTxt);
+                f.getExtensionFilters().add(filterAny);
                 f.setInitialDirectory(StateMachine.getCurrentDirectory());
                 inputFile = f.showOpenDialog(null);
                 if (inputFile == null)
