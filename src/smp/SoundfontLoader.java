@@ -29,7 +29,6 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @author j574y923
  * @since 2012.08.14
- * @version v1.1.2
  */
 public class SoundfontLoader implements Loader {
 
