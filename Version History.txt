@@ -1,14 +1,24 @@
-v1.1.2.1
+vMajor.Minor.Bugfix
+
+Major = Non-backwards compatible changes made
+Minor = Backwards compatible *new feature* added
+Bugfix = No functionality or user-facing features added; bugfix only
+
+v1.4.0
+Giant Mario Paint
+2 clefs, more instruments
+
+v1.3.0
 --FIXES
 
-    Shortens "Arranger" to "Arr" to accomodate for the new instruments
+    Shortens "Arranger" to "Arr" to accommodate for the new instruments
 
 --NEW FEATURES
     
     Ctrl and/or shift increases scroll speed
-    Adds Luigi, Pach, and Feather as instruments
+    Adds Luigi, Peach, and Feather as instruments
 
-v1.1.2
+v1.2.0/v1.2.1
 --FIXES
 
     Fixed song name text field focus issues--click anywhere other than the text field to defocus it
@@ -24,7 +34,7 @@ v1.1.2
     Load song's soundfont when loading song
     Load soundfonts for every song in an arrangement
     Load existing soundfonts from AppData
-    Adds Luigi (steel drum), Peach (violin), and feather (flute) as instruments.
+(v1.2.1 is a bugfix on the main window loading)
 
 v1.1.1
 --NEW FEATURES
