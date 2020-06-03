@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.3.0
+* Current Version: 1.4.0
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
@@ -15,6 +15,7 @@ Accepting cryptocurrency donations!
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
+* June 2, 2020 - v1.4.0 release 'Giant Mario Paint', second major functionality upgrade
 * March 9, 2019 - v1.3.0 release
 * March 4, 2019 - v1.2.1 release
 * February 4, 2018 - v1.1.1 release
@@ -35,6 +36,7 @@ Confirmed Operating System Configurations:
 * Windows 8.1 + Java 8u25
 * Windows 10 + Java 8u73
 * Windows 10 + Java 8u161
+* Windows 10 + Java 8u251
 * Mac OSX 10.9.5 + Java 8u25
 * Ubuntu 14.04-18.04 + Java 8
 
@@ -61,17 +63,19 @@ Tasklist:
 -----
 * Build user's guide... probably on this README or bundled with releases
 * Build contributor's guide... probably also on this README
-* Splash screen animation and other extras
 * Import AMS songs
 * Speedmarks
 * Bookmarks
-* More advanced Options dialog
-* Instrument replacing option
 * SoundFont creator
-* Hotkey for mute note/instrument and others
-* More aesthetic buttons and button layout
 * Fix audio desync error when returning to program after sleep
 * Mario Paint Recorder?
+* Update for JDK14? (optional)
+* Merge backend between Super Mario Paint & Giant Mario Paint (done - June 2, 2020)
+* Splash screen animation and other extras (done - May 30, 2020)
+* More aesthetic buttons and button layout (done - March 4, 2019)
+* Hotkey for mute note/instrument and others (done - March 4, 2019)
+* More advanced Options dialog (done - January 29, 2018) 
+* Instrument replacing option (done - January 29, 2018)
 * Undo/redo (done - January 19, 2018)
 * Release SMP v1.0.0 (done - March 14, 2016)
 * Aesthetic program edits, stability checks, arranger file stability check (done - March 13, 2016)
