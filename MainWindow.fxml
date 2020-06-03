@@ -115,7 +115,7 @@
                         </Rectangle>
                         <ImageView id="" fitHeight="452.0" fitWidth="983.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image url="@sprites/STAFF_BG_TREBLE.png" />
+                            <Image url="@sprites/STAFF_BG_TREBLEBASS.png" />
                           </image>
                           <StackPane.margin>
                             <Insets top="14.0" />
