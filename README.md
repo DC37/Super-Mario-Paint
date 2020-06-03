@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.1.2.1
+* Current Version: 1.3.0
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
@@ -15,6 +15,8 @@ Accepting cryptocurrency donations!
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
+* March 9, 2019 - v1.3.0 release
+* March 4, 2019 - v1.2.1 release
 * February 4, 2018 - v1.1.1 release
 * January 29, 2018 - First relatively major functionality upgrade, v1.1.0
 * June 2017 - Addition of team member j574y923 
@@ -34,7 +36,7 @@ Confirmed Operating System Configurations:
 * Windows 10 + Java 8u73
 * Windows 10 + Java 8u161
 * Mac OSX 10.9.5 + Java 8u25
-* Ubuntu 14.04 + Java 8
+* Ubuntu 14.04-18.04 + Java 8
 
 Deprecated Operating System Configurations:
 -----
