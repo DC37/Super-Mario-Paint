@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import smp.components.InstrumentIndex;
 import smp.components.Values;
+import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -183,12 +184,12 @@ public class MPCDecoder {
         StaffArrangement theArr = new StaffArrangement();
 
         for (String s : str.split("\n")) {
-            s = s.replace("/", "_");
-            String st = inputFile.getParent() + "\\" + s + "]MarioPaint.txt";
+        	String sp = Utilities.cleanName(s);
+            String st = inputFile.getParent() + "\\" + sp + "]MarioPaint.txt";
             File f = new File(st);
             StaffSequence seq = decode(f);
             theArr.add(seq, f);
-            theArr.getTheSequenceNames().add(s);
+            theArr.getTheSequenceNames().add(sp);
         }
         return theArr;
     }
