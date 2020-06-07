@@ -55,16 +55,16 @@ import smp.stateMachine.StateMachine;
  * Dev team: 
  * RehdBlob (2012 - current)
  * j574y923 (2017 - current)
+ * CyanSMP64 (2019 - current)
  * seymour (2020 - current)
- *
  *
  * @author RehdBlob
  * @author j574y923
- * @author seymour
  * @author CyanSMP64
+ * @author seymour
  * 
  * @since 2012.08.16
- * @version 1.4.0
+ * @version 1.4.1
  */
 public class SuperMarioPaint extends Application {
 

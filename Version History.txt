@@ -4,6 +4,14 @@ Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
 Bugfix = No functionality or user-facing features added; bugfix only
 
+v1.4.1
+Giant Mario Paint
+Hit stop button to stop all sounds from playing. 
+If a song or arrangement ends normally, the sounds will continue going as before.
+Bugfixes for loading songs from arrangements with adversarial filenames.
+Sprite updates for bass & treble clefs
+
+
 v1.4.0
 Giant Mario Paint
 Belated official release as v1.4.0 of Super Mario Paint.
