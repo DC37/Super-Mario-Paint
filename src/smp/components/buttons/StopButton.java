@@ -34,9 +34,13 @@ public class StopButton extends ImageRadioButton {
         pressImage();
         isPressed = true;
     }
+    
 
     @Override
     public void reactPressed(MouseEvent e) {
+        if (e != null) {
+        	theStaff.stopSounds();
+        }
         if (isPressed)
             return;
         super.reactPressed(e);
@@ -48,5 +52,6 @@ public class StopButton extends ImageRadioButton {
             theStaff.stopSong();
         }
     }
+
 
 }

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
 import javafx.application.Platform;
@@ -19,6 +20,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.SoundfontLoader;
+import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.general.Utilities;
@@ -28,6 +31,7 @@ import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
+import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -342,7 +346,21 @@ public class Staff {
         soundPlayerThread = new Thread(soundPlayer);
         soundPlayerThread.setDaemon(true);
     }
+    
 
+    /**
+     * Stop all sounds on the staff.
+     */
+	public void stopSounds() {
+		soundPlayer.stopAllInstruments();
+		MidiChannel [] chan = SoundfontLoader.getChannels();
+		for (int ind = 0; ind < InstrumentIndex.values().length; ind++) {
+	        if (chan[ind] != null) {
+	            chan[ind].allSoundOff();
+	        }
+		}
+	}
+    
     /**
      * Toggles arranger mode.
      *
@@ -906,5 +924,4 @@ public class Staff {
             }
         }
     }
-
 }
