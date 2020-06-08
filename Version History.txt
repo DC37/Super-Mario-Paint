@@ -2,7 +2,7 @@ vMajor.Minor.Bugfix
 
 Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
-Bugfix = No functionality or user-facing features added; bugfix only
+Bugfix
 
 v1.4.1
 Giant Mario Paint
