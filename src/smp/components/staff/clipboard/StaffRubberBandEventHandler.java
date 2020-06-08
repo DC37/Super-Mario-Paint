@@ -41,7 +41,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case A:
-					if (event.isControlDown()) {
+					if (event.isControlDown() && !event.isShiftDown()) {
 						theStaffClipboard.getAPI().clearSelection();
 						theStaffClipboard.getAPI().select(0, 0,
 								(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
