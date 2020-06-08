@@ -516,7 +516,7 @@ public class Utilities {
         f = f.replaceAll("\\\\", "_");
         f = f.replaceAll("/", "_");
         f = f.replaceAll(":", "_");
-        f = f.replaceAll("&", "_");
+        f = f.replaceAll("\\&", "_");
         
         return f;
     }
