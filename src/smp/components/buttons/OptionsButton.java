@@ -78,9 +78,9 @@ public class OptionsButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        //ProgramState curr = StateMachine.getState();
-        //if (curr == ProgramState.EDITING)
-        options();
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING)
+        	options();
     }
 
     @Override
