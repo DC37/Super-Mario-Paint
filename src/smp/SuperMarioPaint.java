@@ -536,9 +536,17 @@ public class SuperMarioPaint extends Application {
      * 			Which mouse button is being pressed (if any).
      */
     public void setCursor(int type) {
-    	// Checking whether the cursor file exists or not. It lets people change their cursor back to default.
-    	if (new File("./sprites/CURSOR_" + type + ".png").exists())
-    		primaryScene.setCursor(new ImageCursor(new Image("file:./sprites/CURSOR_" + type + ".png"), 0, 0));
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                ImageCursor im = ((ImageLoader) imgLoader).getCursor(type);
+                if (im != null) {
+                    primaryScene.setCursor(im);
+                }
+            }
+            
+        });
     }
     
     /**
