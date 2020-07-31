@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -45,6 +47,16 @@ public class Dialog {
                 dialog.close();
             }
 
+        });
+        
+        // @since 1.4.1, ESC/Enter to close dialog
+        dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+            	if (ke.getCode() == KeyCode.ENTER || ke.getCode() == KeyCode.ESCAPE) {
+                    dialog.close();
+            	}
+            }
         });
 
         FlowPane pane = new FlowPane(10, 10);
@@ -92,6 +104,20 @@ public class Dialog {
                 choice = false;
             }
         });
+        
+        // @since 1.4.1, ESC to close dialog, Enter to accept
+        dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+            	if (ke.getCode() == KeyCode.ESCAPE) {
+                    choice = false;
+                    dialog.close();
+            	} else if (ke.getCode() == KeyCode.ENTER) {
+                    choice = true;
+                    dialog.close();
+            	}
+            }
+        });
 
         FlowPane pane = new FlowPane(10, 10);
         pane.setAlignment(Pos.CENTER);
@@ -137,6 +163,20 @@ public class Dialog {
             public void handle(ActionEvent event) {
                 info = "";
                 dialog.close();
+            }
+        });
+        
+        // @since 1.4.1, ESC to close dialog, Enter to accept
+        dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+            	if (ke.getCode() == KeyCode.ESCAPE) {
+                    info = "";
+                    dialog.close();
+            	} else if (ke.getCode() == KeyCode.ENTER) {
+                    info = t.getText();
+                    dialog.close();
+            	}
             }
         });
 

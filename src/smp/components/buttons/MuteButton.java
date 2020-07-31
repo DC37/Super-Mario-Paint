@@ -48,9 +48,8 @@ public class MuteButton extends ImageToggleButton {
 			@Override
 			public void handle(KeyEvent event) {
 				/** alt+n is for deselecting notes @see <code>StaffRubberBandEventHandler</code> */
-				if(event.isAltDown())
-					return;
-				if(event.getCode() == KeyCode.N)
+				if (controller.getNameTextField().focusedProperty().get()) return; // Disable while textfield is focused
+				if(!event.isControlDown() && !event.isAltDown() && event.getCode() == KeyCode.N)
 					reactPressed(null);
 			}
 		});

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
 import javafx.application.Platform;
@@ -19,6 +20,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.SoundfontLoader;
+import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.general.Utilities;
@@ -28,6 +31,7 @@ import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
+import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -38,6 +42,7 @@ import smp.stateMachine.StateMachine;
  * @author RehdBlob
  * @author j574y923
  * @author Cynagen
+ * @author seymour
  * @since 2012.08.13
  */
 public class Staff {
@@ -225,6 +230,7 @@ public class Staff {
 
     /** Begins animation of the Staff. (Starts a song) */
     public synchronized void startSong() {
+    	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         highlightsOff();
         lastLine = findLastLine();
@@ -241,6 +247,7 @@ public class Staff {
 
     /** Starts an arrangement. */
     public synchronized void startArrangement() {
+    	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
@@ -342,7 +349,21 @@ public class Staff {
         soundPlayerThread = new Thread(soundPlayer);
         soundPlayerThread.setDaemon(true);
     }
+    
 
+    /**
+     * Stop all sounds on the staff.
+     */
+	public void stopSounds() {
+		soundPlayer.stopAllInstruments();
+		MidiChannel [] chan = SoundfontLoader.getChannels();
+		for (int ind = 0; ind < InstrumentIndex.values().length; ind++) {
+	        if (chan[ind] != null) {
+	            chan[ind].allSoundOff();
+	        }
+		}
+	}
+    
     /**
      * Toggles arranger mode.
      *
@@ -906,5 +927,4 @@ public class Staff {
             }
         }
     }
-
 }

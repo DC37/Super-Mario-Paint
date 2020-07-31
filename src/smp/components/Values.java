@@ -15,13 +15,13 @@ public class Values {
     public static double VERSION = 0.90;
 
     /** The number of instruments. */
-    public static int NUMINSTRUMENTS = 22;
+    public static int NUMINSTRUMENTS = 31;
 
     /** Default width */
-    public static final int DEFAULT_WIDTH = 805;
+    public static final int DEFAULT_WIDTH = 1029;
 
     /** Default height */
-    public static final int DEFAULT_HEIGHT = 635;
+    public static final int DEFAULT_HEIGHT = 803;
 
     /**
      * The largest value that a note velocity can be; a note played at this will
@@ -56,13 +56,13 @@ public class Values {
      * The number of distinct steps of notes in a note line on the staff. This
      * number is typically 18.
      */
-    public static int NOTES_IN_A_LINE = 18;
+    public static int NOTES_IN_A_LINE = 29;
 
     /** Location of the high C note. */
-    public static int highC = 16;
+    public static int highC = 28;
 
     /** Location of the high A note. */
-    public static int highA = 14;
+    public static int highA = 26;
 
     /** Location of the low C note. */
     public static int lowC = 2;
@@ -74,7 +74,7 @@ public class Values {
      * The number of distinct lines of notes that exist on the staff. This
      * number is typically 10.
      */
-    public static int NOTELINES_IN_THE_WINDOW = 10;
+    public static int NOTELINES_IN_THE_WINDOW = 13;
 
     /** The number of beats in each measure. */
     public static int TIMESIG_BEATS = 4;
@@ -95,7 +95,7 @@ public class Values {
     public static int HOLDTIME = 250;
 
     /** The amount of time between the repetition of two mouse click events. */
-    public static int REPEATTIME = 10;
+    public static int REPEATTIME = 40;
 
     /**
      * This is the default song folder that we will check for arrangement song
@@ -137,10 +137,10 @@ public class Values {
     public static final int DRUMCHANNEL = 10;
 
     /** Array of notes that we can see on the staff. */
-    public static final Note[] staffNotes = { Note.A2, Note.B2, Note.C3,
+    public static final Note[] staffNotes = { Note.C2, Note.D2, Note.E2, Note.F2, Note.G2, Note.A2, Note.B2, Note.C3,
             Note.D3, Note.E3, Note.F3, Note.G3, Note.A3, Note.B3, Note.C4,
             Note.D4, Note.E4, Note.F4, Note.G4, Note.A4, Note.B4, Note.C5,
-            Note.D5 };
+            Note.D5, Note.E5, Note.F5, Note.G5, Note.A5, Note.B5, Note.C6 };
     
 	/**
 	 * The max undo/redo stack size for recorded commands.

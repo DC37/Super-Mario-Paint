@@ -46,6 +46,7 @@ public class MuteInstButton extends ImageToggleButton {
 
 			@Override
 			public void handle(KeyEvent event) {
+				if (controller.getNameTextField().focusedProperty().get()) return; // Disable while textfield is focused
 				if(event.getCode() == KeyCode.M)
 					reactPressed(null);
 			}

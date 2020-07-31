@@ -36,7 +36,7 @@ public class PlayButton extends ImageRadioButton {
     }
 
     @Override
-    protected void reactPressed(MouseEvent e) {
+    public void reactPressed(MouseEvent e) {
         if (isPressed)
             return;
         super.reactPressed(e);

@@ -532,9 +532,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private static int getLine(double x){
 
-    	if(x < 135 || x > 775)
+    	if(x < 135 || x > 999)
     		return -1;
-    	return (((int)x - 135) / 64);
+    	return (((int)x - 165) / 64);
     }
     
     /**
@@ -543,7 +543,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @return note position based on y coord
      */
     private static int getPosition(double y){
-    	if(y < 66 || y >= 354)
+    	if(y < 66 || y >= 526)
     		return -1;
     	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
     }

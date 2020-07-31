@@ -41,7 +41,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case A:
-					if (event.isControlDown()) {
+					if (event.isControlDown() && !event.isShiftDown()) {
 						theStaffClipboard.getAPI().clearSelection();
 						theStaffClipboard.getAPI().select(0, 0,
 								(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
@@ -129,10 +129,10 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 	 */
 	private int getLine(double x) {
 		
-		if (x < 128 || x > 784) {
+		if (x < 160 || x > 1008) {
 			return -1;
 		}
-		return (((int) x - 128) / 64);
+		return (((int) x - 165) / 64);
 	}
 	
 	public StaffRubberBand getRubberBand() {

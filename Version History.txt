@@ -1,14 +1,77 @@
-v1.1.2.1
+vMajor.Minor.Bugfix
+
+Major = Non-backwards compatible changes made
+Minor = Backwards compatible *new feature* added
+Bugfix
+
+v1.4.2
+Giant Mario Paint
+Thread safety of cursor implementation improved through pre-loading images into RAM
+
+v1.4.1
+Giant Mario Paint
+Hit stop button to stop all sounds from playing. 
+If a song or arrangement ends normally, the sounds will continue going as before.
+Bugfixes for loading songs from arrangements with adversarial filenames.
+Sprite updates for bass & treble clefs
+
+
+v1.4.0
+Giant Mario Paint
+Belated official release as v1.4.0 of Super Mario Paint.
+Thanks to @CyanSMP64 & @SeymourSchlong 
+
+FIXES
+--
+
+- Window is expanded for more range and instruments and is now 1024x768
+- Range of notes increased to 29 (C2 - C6)
+- Removed stray pixels on Dog instrument sprites
+- Increased the size of the options dialog box
+- Options button is now able to be used in arranger mode, but with less features
+- Resizes the background image for the bigger window
+- Disabled all hotkeys (except saving) while typing in the name text field
+- By default, when loading a file it will only show .txt files
+- Soundfont now has higher quality samples (courtesy of Cyan)
+- Different note mapping for percussion (Mushroom/Boat) to suit the new range
+- Changed repeat time to 40 milliseconds
+
+
+NEW FEATURES
+--
+
+- Added 9 new instruments:
+    - Bullet bill (timpani)
+    - Goomba (bassoon)
+    - Bob-omb (bell)
+    - Spiny (accordion)
+    - Berry (marimba)
+    - One-up (more percussion)
+    - Moon (sawtooth wave)
+    - Egg (pizzicato strings)
+    - Gnome kid (clown horn)
+- Replaces the cursor with customizable Mario Paint styled cursors (remove the images if you don't want to use them)
+- Added program icon(s) (rename ICON.png to something else if you want a random instrument icon each time)
+- Added a loading animation on the splash screen
+- A and D are able to be used for navigation (Shift + A/D also works)
+- Spacebar can be used to play/stop songs
+- Ctrl/Shift + Spacebar plays songs from the beginning
+- Added hotkeys for files:
+    - Ctrl + S saves songs
+    - Ctrl + O opens files
+    - Ctrl + N creates a new file
+
+v1.3.0
 --FIXES
 
-    Shortens "Arranger" to "Arr" to accomodate for the new instruments
+    Shortens "Arranger" to "Arr" to accommodate for the new instruments
 
 --NEW FEATURES
     
     Ctrl and/or shift increases scroll speed
-    Adds Luigi, Pach, and Feather as instruments
+    Adds Luigi, Peach, and Feather as instruments
 
-v1.1.2
+v1.2.0/v1.2.1
 --FIXES
 
     Fixed song name text field focus issues--click anywhere other than the text field to defocus it
@@ -24,7 +87,7 @@ v1.1.2
     Load song's soundfont when loading song
     Load soundfonts for every song in an arrangement
     Load existing soundfonts from AppData
-    Adds Luigi (steel drum), Peach (violin), and feather (flute) as instruments.
+(v1.2.1 is a bugfix on the main window loading)
 
 v1.1.1
 --NEW FEATURES
