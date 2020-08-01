@@ -106,6 +106,8 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 		
 		Bounds instrumentImageBounds = instrumentImage.localToScene(instrumentImage.getBoundsInLocal());
 		// the bounds are off by 2 for some reason
+		filterImage.setFitWidth(26);
+		filterImage.setFitHeight(28);
 		filterImage.setTranslateX(instrumentImageBounds.getMinX() - 2);
 		filterImage.setTranslateY(instrumentImageBounds.getMinY() - 2);
 		filterImage.setOpacity(0.0);
