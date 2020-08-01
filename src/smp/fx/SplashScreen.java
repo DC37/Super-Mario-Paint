@@ -46,6 +46,8 @@ public class SplashScreen extends Preloader {
         // @since 1.4, to spice up the load screen. why not? - seymour 
         imageview = new ImageView();
         imageview.setImage(new Image("file:./sprites/LOADING_ANIM.gif"));
+        imageview.setFitWidth(236);
+		imageview.setFitHeight(36);
         imageview.setTranslateX(32);
         imageview.setTranslateY(32);
         p.setTop(imageview);
