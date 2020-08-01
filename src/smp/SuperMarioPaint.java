@@ -27,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.FlowPane;
@@ -333,26 +334,23 @@ public class SuperMarioPaint extends Application {
     	
     	primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
     	
+    	ArrayList<MouseButton> mouseButtons = new ArrayList<MouseButton>();
+    	
     	// Just a temporary thing to change mouse until i (or someone else) can find out where to put it =P -- seymour
     	primaryScene.addEventHandler(MouseEvent.MOUSE_PRESSED,
     			new EventHandler<MouseEvent>() {
     				
     				@Override
     				public void handle(MouseEvent m) {
-    					switch(m.getButton()) {
-    						case SECONDARY:
-    	    					setCursor(3);
-    	    					break;
-    						case MIDDLE:
-    							setCursor(2);
-    							break;
-    						default:
-    							if (StateMachine.isClipboardPressed())
-    								setCursor(2);
-    							else
-    								setCursor(1);
-								break;
-    					}
+    					if (!mouseButtons.contains(m.getButton()))
+    						mouseButtons.add(m.getButton());
+    					
+    					if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
+		    				setCursor(2);
+		    			else if (mouseButtons.contains(MouseButton.PRIMARY))
+		    				setCursor(1);
+		    			else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
+		    				setCursor(3);
     					
     					m.consume();
     				}
@@ -362,7 +360,18 @@ public class SuperMarioPaint extends Application {
     		
 		    		@Override
 					public void handle(MouseEvent m) {
-						setCursor(0);
+		    			// Added to remove the default cursor appearing while other mouse buttons are held
+		    			mouseButtons.remove(m.getButton());
+		    			
+		    			if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
+		    				setCursor(2);
+		    			else if (mouseButtons.contains(MouseButton.PRIMARY))
+		    				setCursor(1);
+		    			else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
+		    				setCursor(3);
+		    			
+		    			if (mouseButtons.isEmpty())
+							setCursor(0);
 						
 						m.consume();
 					}
