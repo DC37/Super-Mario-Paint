@@ -891,6 +891,7 @@ public class Staff {
                     @Override
                     public void run() {
                         theArrangementList.getSelectionModel().select(i);
+                        setSequenceName(theArrangementList.getSelectionModel().getSelectedItem());
                         theArrangementList.scrollTo(i);
                         queue--;
                     }
