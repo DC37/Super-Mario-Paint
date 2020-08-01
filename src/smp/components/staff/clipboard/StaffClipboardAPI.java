@@ -13,7 +13,6 @@ import smp.commandmanager.commands.AddNoteCommand;
 import smp.commandmanager.commands.AddVolumeCommand;
 import smp.commandmanager.commands.RemoveNoteCommand;
 import smp.commandmanager.commands.RemoveVolumeCommand;
-import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffVolumeEventHandler;
@@ -73,8 +72,8 @@ public class StaffClipboardAPI {
 	            new ColorInput(
 	                    0,
 	                    0,
-	                    il.getSpriteFX(InstrumentIndex.BOAT.imageIndex()).getWidth(),
-	                    il.getSpriteFX(InstrumentIndex.BOAT.imageIndex()).getHeight(),
+	                    32,
+	                    36,
 	                    StaffClipboard.HIGHLIGHT_FILL
 	            )
 	    );
