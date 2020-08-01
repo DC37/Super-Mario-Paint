@@ -70,6 +70,7 @@ public class SplashScreen extends Preloader {
             stage.setTitle("Loading...");
         }
         stage.getIcons().add(new Image("file:./sprites/ICON.png"));
+        stage.setResizable(false);
         stage.show();
     }
 
