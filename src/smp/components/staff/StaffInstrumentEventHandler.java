@@ -116,6 +116,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         theStaff = s;
         accSilhouette = new ImageView();
         
+        accSilhouette.setFitWidth(32);
+        accSilhouette.setFitHeight(32);
+        silhouette.setFitWidth(32);
+        silhouette.setFitHeight(36);
+        
         commandManager = cm;
         
         if ((Settings.debug & 0b10) == 0b10) {
@@ -282,6 +287,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         accidental = new StaffAccidental(theStaffNote);
         accidental.setImage(il.getSpriteFX(Staff.switchAcc(acc)));
+        
+        accidental.setFitWidth(32);
+        accidental.setFitHeight(32);
 
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
