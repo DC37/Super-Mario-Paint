@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -30,7 +31,7 @@ import smp.stateMachine.StateMachine;
  * @since 2013.09.28
  */
 public class LoadButton extends ImagePushButton {
-
+    
     /**
      * Default constructor.
      *
@@ -50,7 +51,9 @@ public class LoadButton extends ImagePushButton {
 
   			@Override
   			public void handle(KeyEvent event) {
-				if (controller.getNameTextField().focusedProperty().get()) return; // Disable while textfield is focused
+				if (controller.getNameTextField().focusedProperty().get()) 
+				    return; // Disable while textfield is focused
+				
   				if(event.isControlDown() && event.getCode() == KeyCode.O)
   					reactPressed(null);
   			}
@@ -70,10 +73,32 @@ public class LoadButton extends ImagePushButton {
     /** This loads the song or arrangement. */
     private void load() {
         ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.EDITING)
-            loadSong();
-        else if (curr == ProgramState.ARR_EDITING)
-            loadArrangement();
+        if (curr == ProgramState.EDITING) {
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    loadSong();
+                    StateMachine.setState(ProgramState.EDITING);
+                }
+                
+            });
+        } else if (curr == ProgramState.ARR_EDITING) {
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    loadArrangement();
+                    StateMachine.setState(ProgramState.ARR_EDITING);
+                    
+                }
+                
+            });
+        }
     }
 
     /** This loads a song. */

@@ -53,7 +53,7 @@ public class Utilities {
      * @param im
      *            An image to have its background be made transparent.
      * @param color
-     *            The color to be made transparent.
+     *            The color t o be made transparent.
      * @return A BufferedImage that now has all of <code>color</code> removed.
      */
     public static BufferedImage makeColorTransparent(BufferedImage im,
