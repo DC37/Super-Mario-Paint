@@ -15,6 +15,7 @@ Accepting cryptocurrency donations!
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
+* June 24, 2020 - v1.4.2 release with more backend upgrades
 * June 7, 2020 - v1.4.1 release with some backend upgrades carried over from v1.3.0
 * June 2, 2020 - v1.4.0 release 'Giant Mario Paint', second major functionality upgrade
 * March 2019 - Addition of team members Seymour & CyanSMP64
@@ -63,15 +64,16 @@ Contributors to Operating Systems / Tests
 
 Tasklist:
 -----
-* Build user's guide... probably on this README or bundled with releases
+* Build user's guide -- (done - September 8, 2020; thank you to the MPH Discord!) https://docs.google.com/document/d/1zLSkC-clCSxvVUnbYQAxImmJA-QSwSSyzuC62enLiLc/edit
 * Build contributor's guide... probably also on this README
-* Import AMS songs
-* Speedmarks
-* Bookmarks
-* SoundFont creator
-* Fix audio desync error when returning to program after sleep
-* Mario Paint Recorder?
-* Update for JDK14? (optional)
+* Import AMS songs (optional)
+* Speedmarks (optional)
+* Bookmarks (optional)
+* SoundFont creator (optional)
+* Fix audio desync error when returning to program after sleep (optional)
+* Mario Paint Recorder (optional)
+* Modes between smaller single-staff versions and disabling/enabling instruments (optional)
+* Update for JDK14? (critical)
 * Merge backend between Super Mario Paint & Giant Mario Paint (done - June 2, 2020)
 * Splash screen animation and other extras (done - May 30, 2020)
 * More aesthetic buttons and button layout (done - March 4, 2019)
