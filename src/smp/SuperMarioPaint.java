@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import com.sun.javafx.application.LauncherImpl;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -214,11 +213,12 @@ public class SuperMarioPaint extends Application {
                                 notifyPreloader(new StateChangeNotification(
                                         StateChangeNotification.Type.BEFORE_START));
                                 
-                                // @since 2020.4.28 - seymour
-                                // Changes the cursor image
+                                /* @since 2020.4.28 - seymour
+                                 * Changes the cursor image */
                                 setCursor(0);
                                 
-                                // Changes the app icon (gives the option to use a given icon OR a random icon from all instruments)
+                                /* Changes the app icon 
+                                 * (gives the option to use a given icon OR a random icon from all instruments) */
                                 if (new File("./sprites/ICON.png").exists())
                                 	setIcon("./sprites/ICON.png");
                                 else {
@@ -507,8 +507,8 @@ public class SuperMarioPaint extends Application {
     public static void main(String[] args) {
         if (args.length == 0) {
             try {
-                LauncherImpl.launchApplication(SuperMarioPaint.class,
-                        SplashScreen.class, args);
+                System.setProperty("javafx.preloader", SplashScreen.class.getName());
+                Application.launch(SuperMarioPaint.class, args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -524,8 +524,9 @@ public class SuperMarioPaint extends Application {
                 Settings.setDebug(1);
             }
             try {
-                LauncherImpl.launchApplication(SuperMarioPaint.class,
-                        SplashScreen.class, args);
+                System.setProperty("javafx.preloader", SplashScreen.class.getName());
+                Application.launch(SuperMarioPaint.class, args);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

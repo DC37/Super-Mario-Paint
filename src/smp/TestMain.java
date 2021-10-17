@@ -2,8 +2,6 @@ package smp;
 
 import java.io.File;
 
-import com.sun.javafx.application.LauncherImpl;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader.ProgressNotification;
@@ -297,8 +295,8 @@ public class TestMain extends Application {
     public static void main(String[] args) {
         if (args.length == 0) {
             try {
-                LauncherImpl.launchApplication(TestMain.class,
-                        SplashScreen.class, args);
+                System.setProperty("javafx.preloader", SplashScreen.class.getName());
+                Application.launch(SuperMarioPaint.class, args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -314,8 +312,8 @@ public class TestMain extends Application {
                 Settings.setDebug(1);
             }
             try {
-                LauncherImpl.launchApplication(TestMain.class,
-                        SplashScreen.class, args);
+                System.setProperty("javafx.preloader", SplashScreen.class.getName());
+                Application.launch(SuperMarioPaint.class, args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
