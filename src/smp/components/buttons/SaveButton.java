@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -35,6 +35,9 @@ import smp.stateMachine.TimeSignature;
  */
 public class SaveButton extends ImagePushButton {
 
+    /** Prevent multiple save windows from opening. */
+    private boolean saveInProgress = false;
+    
     /**
      * Default constructor.
      *
@@ -53,11 +56,32 @@ public class SaveButton extends ImagePushButton {
     @Override
     protected void reactPressed(MouseEvent event) {
         ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.EDITING || curr == ProgramState.SONG_PLAYING)
-            saveSong();
-        else if (curr == ProgramState.ARR_EDITING
-                || curr == ProgramState.ARR_PLAYING)
-            saveArrangement();
+        if (curr == ProgramState.EDITING || curr == ProgramState.SONG_PLAYING) {
+            final ProgramState saveState = curr;
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    saveSong();
+                    StateMachine.setState(saveState);
+                }
+                
+            });
+        } else if (!saveInProgress && (curr == ProgramState.ARR_EDITING
+                || curr == ProgramState.ARR_PLAYING)) {
+            final ProgramState saveState = curr;
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    saveArrangement();
+                    StateMachine.setState(saveState);
+                }
+                
+            });
+        }
     }
 
     @Override
@@ -75,7 +99,10 @@ public class SaveButton extends ImagePushButton {
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
-            File outputFile = f.showSaveDialog(null);
+            File outputFile = null;
+            saveInProgress = true;
+            outputFile = f.showSaveDialog(null);
+            saveInProgress = false;
             if (outputFile == null)
                 return;
             FileOutputStream f_out = new FileOutputStream(outputFile);
@@ -143,7 +170,10 @@ public class SaveButton extends ImagePushButton {
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
-            File outputFile = f.showSaveDialog(null);
+            File outputFile = null;
+            saveInProgress = true;
+            outputFile = f.showSaveDialog(null);
+            saveInProgress = false;
             if (outputFile == null)
                 return;
             FileOutputStream f_out = new FileOutputStream(outputFile);

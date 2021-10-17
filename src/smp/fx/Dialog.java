@@ -7,10 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  * Generates a dialog box, depending on what we do.
@@ -79,6 +82,7 @@ public class Dialog {
             public void handle(ActionEvent event) {
                 dialog.close();
                 choice = true;
+                event.consume();
             }
 
         });
@@ -90,9 +94,37 @@ public class Dialog {
             public void handle(ActionEvent event) {
                 dialog.close();
                 choice = false;
+                event.consume();
+            }
+        });
+        
+        // @since 1.4.1, ESC to close dialog, Enter to accept
+        dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+            	if (ke.getCode() == KeyCode.ESCAPE) {
+                    choice = false;
+                    dialog.close();
+                    ke.consume();
+            	} else if (ke.getCode() == KeyCode.ENTER) {
+                    choice = true;
+                    dialog.close();
+                    ke.consume();
+            	}
             }
         });
 
+        dialog.addEventHandler(WindowEvent.ANY, new EventHandler<WindowEvent>()  {
+            @Override
+            public void handle(WindowEvent we) {
+                if (we.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST
+                        || we.getEventType() == WindowEvent.WINDOW_HIDDEN
+                        || we.getEventType() == WindowEvent.WINDOW_HIDING)
+                    dialog.close();
+                    return;
+            }
+        });
+        
         FlowPane pane = new FlowPane(10, 10);
         pane.setAlignment(Pos.CENTER);
         pane.getChildren().addAll(okButton, cancelButton);
@@ -137,6 +169,23 @@ public class Dialog {
             public void handle(ActionEvent event) {
                 info = "";
                 dialog.close();
+                event.consume();
+            }
+        });
+        
+        // @since 1.4.1, ESC to close dialog, Enter to accept
+        dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+            	if (ke.getCode() == KeyCode.ESCAPE) {
+                    info = "";
+                    dialog.close();
+                    ke.consume();
+            	} else if (ke.getCode() == KeyCode.ENTER) {
+                    info = t.getText();
+                    dialog.close();
+                    ke.consume();
+            	}
             }
         });
 
