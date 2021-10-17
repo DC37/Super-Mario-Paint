@@ -15,8 +15,6 @@ import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Transmitter;
 import javax.sound.midi.VoiceStatus;
 
-import com.sun.media.sound.SoftSynthesizer;
-
 /**
  * Class for multiple synthesizers in one class.
  * Should make it simpler to call synthesizers with more than
@@ -460,7 +458,7 @@ public class MultiSynthesizer implements Synthesizer {
             throw new MidiUnavailableException();
         int repeat = (int) Math.floor((double)i / 16);
         for (int j = 0; j < repeat; j++) {
-            Synthesizer s = new SoftSynthesizer();
+            Synthesizer s = MidiSystem.getSynthesizer();
             s.open();
             for (Instrument inst : s.getLoadedInstruments())
                 s.unloadInstrument(inst);
