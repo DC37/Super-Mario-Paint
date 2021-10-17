@@ -204,8 +204,6 @@ public class SuperMarioPaint extends Application {
                                 primaryStage.setTitle("Super Mario Paint " + Settings.version);
                                 setupCloseBehaviour(primaryStage);
                                 primaryStage.setResizable(false);
-                                primaryStage.setHeight(Values.DEFAULT_HEIGHT);
-                                primaryStage.setWidth(Values.DEFAULT_WIDTH);
                                 primaryScene = new Scene(root, 1024, 768);
                                 primaryStage.setScene(primaryScene);
                                 makeKeyboardListeners(primaryScene);
