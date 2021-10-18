@@ -65,7 +65,7 @@ import smp.stateMachine.StateMachine;
  * @author seymour
  * 
  * @since 2012.08.16
- * @version 1.4.2
+ * @version 1.4.3
  */
 public class SuperMarioPaint extends Application {
 
@@ -204,7 +204,9 @@ public class SuperMarioPaint extends Application {
                                 primaryStage.setTitle("Super Mario Paint " + Settings.version);
                                 setupCloseBehaviour(primaryStage);
                                 primaryStage.setResizable(false);
-                                primaryScene = new Scene(root, 1024, 768);
+                                primaryStage.setWidth(Values.DEFAULT_WIDTH);
+                                primaryStage.setHeight(Values.DEFAULT_HEIGHT);
+                                primaryScene = new Scene(root, 1032, 768);
                                 primaryStage.setScene(primaryScene);
                                 makeKeyboardListeners(primaryScene);
                                 notifyPreloader(new ProgressNotification(1));

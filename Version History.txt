@@ -2,7 +2,14 @@ vMajor.Minor.Bugfix
 
 Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
-Bugfix
+Bugfix = No new features added, but addresses some bugs.
+
+v1.4.3
+Giant Mario Paint
+More edits to prevent random clicks while in dialogs
+Java 8 + Java 9~14 support using bat files in hopes of increasing ability to run the program on more computers / QoL improvement
+Uses jfx8 for Java 8, uses jfx11 for Java 9~14
+Mochi115, v1.3.0 soundset (close to original SF2 from MPC2.0 plus some extras), and the newest soundset with the full instrument set are all included.
 
 v1.4.2
 Giant Mario Paint

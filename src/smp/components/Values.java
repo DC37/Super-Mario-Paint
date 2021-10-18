@@ -18,10 +18,10 @@ public class Values {
     public static int NUMINSTRUMENTS = 31;
 
     /** Default width */
-    public static final int DEFAULT_WIDTH = 1124;
+    public static final int DEFAULT_WIDTH = 1032;
 
     /** Default height */
-    public static final int DEFAULT_HEIGHT = 780;
+    public static final int DEFAULT_HEIGHT = 803;
 
     /**
      * The largest value that a note velocity can be; a note played at this will
