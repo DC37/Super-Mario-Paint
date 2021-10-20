@@ -41,6 +41,7 @@ Confirmed Operating System Configurations:
 * Windows 10 + Java 8u73
 * Windows 10 + Java 8u161
 * Windows 10 + Java 8u251
+* Windows 10 + Java 14.0.1+7
 * Mac OSX 10.9.5 + Java 8u25
 * Ubuntu 14.04-18.04 + Java 8
 
