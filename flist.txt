@@ -7,4 +7,5 @@ SMP_J1_8.bat
 SMP_J9.bat
 soundset3.sf2
 mpcv2.sf2
+soundset_1_3_0.sf2
 Version History.txt
