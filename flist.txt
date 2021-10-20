@@ -1,0 +1,10 @@
+KNOWN BUGS.txt
+LICENSE.txt
+MainWindow.fxml
+OptionsWindow.fxml
+README.md
+SMP_J1_8.bat
+SMP_J9.bat
+soundset3.sf2
+mpcv2.sf2
+Version History.txt

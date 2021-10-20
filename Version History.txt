@@ -1,11 +1,73 @@
-HOW TO VERSION
-
 vMajor.Minor.Bugfix
 
 Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
-Bugfix = No functionality or user-facing features added; bugfix only
+Bugfix = No new features added, but addresses some bugs.
 
+v1.4.4
+v1.3.2
+Hotfixes to allow Linux users to run v1.3.x and v1.4.x
+
+v1.4.3
+More edits to prevent random clicks while in dialogs
+Java 8 + Java 9~14 support using bat files in hopes of increasing ability to run the program on more computers / QoL improvement
+Uses jfx8 for Java 8, uses jfx11 for Java 9~14
+Mochi115, v1.3.0 soundset (close to original SF2 from MPC2.0 plus some extras), and the newest soundset with the full instrument set are all included.
+Fix problems with outdated private API.
+
+v1.4.2
+Thread safety of cursor implementation improved through pre-loading images into RAM
+
+v1.4.1
+Hit stop button to stop all sounds from playing. 
+If a song or arrangement ends normally, the sounds will continue going as before.
+Bugfixes for loading songs from arrangements with adversarial filenames.
+Sprite updates for bass & treble clefs
+
+
+v1.4.0 "Giant Mario Paint"
+Belated official release as v1.4.0 of Super Mario Paint.
+Thanks to @CyanSMP64 & @SeymourSchlong 
+
+FIXES
+--
+
+- Window is expanded for more range and instruments and is now 1024x768
+- Range of notes increased to 29 (C2 - C6)
+- Removed stray pixels on Dog instrument sprites
+- Increased the size of the options dialog box
+- Options button is now able to be used in arranger mode, but with less features
+- Resizes the background image for the bigger window
+- Disabled all hotkeys (except saving) while typing in the name text field
+- By default, when loading a file it will only show .txt files
+- Soundfont now has higher quality samples (courtesy of Cyan)
+- Different note mapping for percussion (Mushroom/Boat) to suit the new range
+- Changed repeat time to 40 milliseconds
+
+
+NEW FEATURES
+--
+
+- Added 9 new instruments:
+    - Bullet bill (timpani)
+    - Goomba (bassoon)
+    - Bob-omb (bell)
+    - Spiny (accordion)
+    - Berry (marimba)
+    - One-up (more percussion)
+    - Moon (sawtooth wave)
+    - Egg (pizzicato strings)
+    - Gnome kid (clown horn)
+- Replaces the cursor with customizable Mario Paint styled cursors (remove the images if you don't want to use them)
+- Added program icon(s) (rename ICON.png to something else if you want a random instrument icon each time)
+- Added a loading animation on the splash screen
+- A and D are able to be used for navigation (Shift + A/D also works)
+- Spacebar can be used to play/stop songs
+- Ctrl/Shift + Spacebar plays songs from the beginning
+- Added hotkeys for files:
+    - Ctrl + S saves songs
+    - Ctrl + O opens files
+    - Ctrl + N creates a new file
 
 v1.3.0
 --FIXES
@@ -36,7 +98,7 @@ v1.2.0/v1.2.1
 (v1.2.1 is a bugfix on the main window loading)
 
 v1.1.1
---FIXES
+--NEW FEATURES
 
     Replaced filter text with filter images
     Added an INST_BACKGROUND.png in sprites/ to skin the window's background
@@ -75,15 +137,21 @@ v1.0.4
 --FIXES
 
   Note extension behaviour implemented more correctly, as compared to before. Should now load specific sets whenever a song in an arrangement is loaded.
-  Key-press behaviour generalized to include any key-press.
-  Slight update to internal data types for better readability of code.
-  Major update to loading / saving songs (logic)
+
+--NEW FEATURES
+
+    Key-press behaviour generalized to include any key-press.
+    Slight update to internal data types for better readability of code.
+    Major update to loading / saving songs (logic)
 
 v1.0.3
 --FIXES
 
     100-line song fixed.
     Updated song-ending behaviour to gracefully play all notes, instead of just ending
+
+--NEW FEATURES
+
     Loading songs with greater than 100 lines used to populate the array with null objects - hopefully fixed.
 
 v1.0.2
