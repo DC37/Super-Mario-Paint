@@ -70,11 +70,6 @@ public class SoundfontLoader implements Loader {
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();
             setLoadStatus(0.1);
-            /* if (advanced mode on)
-             *     theSynthesizer.ensureCapacity(50);
-             * else
-             */
-
             theSynthesizer.ensureCapacity(45);
             for (Instrument i : theSynthesizer.getLoadedInstruments()) {
                 theSynthesizer.unloadInstrument(i);

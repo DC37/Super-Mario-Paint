@@ -140,7 +140,7 @@ public class InstLinePresenter {
         int ind = i.getChannel() - 1;
         if (chan[ind] != null) {
             chan[ind].noteOn(DEFAULT_NOTE, Values.MAX_VELOCITY);
-            if (Settings.debug > 0)
+            if ((Settings.debug & 0b10) != 0)
                 System.out.println("Channel " + (ind + 1) + " Instrument: "
                         + i.name());
         }

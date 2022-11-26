@@ -645,7 +645,6 @@ public class Staff {
         /**
          * This class keeps track of animation and sound. Note to self: While
          * running a service or a task, crashes do not print stack traces.
-         * Therefore, debug like crazy!
          */
         class AnimationTask extends Task<Staff> {
 

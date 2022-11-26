@@ -26,12 +26,14 @@ public class Settings {
 
     /**
      * Classic debug on/off. 32-bit field
-     * 05 - Print staff value every time it changes.
-     * 04 -
-     * 03 -
-     * 02 -
-     * 01 - Print all output of loaders
-     * Set to -1 (or anything <0) for max debug.
+     * 2^05 - Print arranger actions (add, delete, move) 
+     * 2^04 - Print staff value every time it changes.
+     * 2^03 -
+     * 2^02 -
+     * 2^01 - Print sound output of instrument line
+     * 2^00 - Print all output of loaders
+     * 0    - No further verbose debug output
+     * Set to -1 (or anything < 0) for max debug.
      */
     public static int debug = 0;
 
