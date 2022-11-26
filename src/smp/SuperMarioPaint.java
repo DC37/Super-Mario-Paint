@@ -473,14 +473,14 @@ public class SuperMarioPaint extends Application {
 			@Override
 			public void handle(ScrollEvent se) {
 				if (se.getDeltaY() < 0) {
-//					if (se.isControlDown())
-//						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() + 4);
-//					else
+					if (se.isControlDown())
+						controller.getStaff().shift(4);
+					else
 						controller.getStaff().moveRight();
 				} else if (se.getDeltaY() > 0) {
-//					if (se.isControlDown())
-//						controller.getStaff().setLocation((int) controller.getScrollbar().getValue() - 4);
-//					else
+					if (se.isControlDown())
+						controller.getStaff().shift(-4);
+					else
 						controller.getStaff().moveLeft();
 				}
 				se.consume();
@@ -516,12 +516,16 @@ public class SuperMarioPaint extends Application {
                 && (args[0].equals("--debug") || args[0].equals("--d"))) {
             if (args[1] != null) {
                 try {
-                    Settings.setDebug(Integer.parseInt(args[1]));
+                    Integer i = Integer.parseInt(args[1]);
+                    if (i < 0)
+                        Settings.setDebug(-1);
+                    else
+                        Settings.setDebug(i);
                 } catch (NumberFormatException e) {
-                    Settings.setDebug(1);
+                    Settings.setDebug(0);
                 }
             } else {
-                Settings.setDebug(1);
+                Settings.setDebug(Integer.MIN_VALUE);
             }
             try {
                 System.setProperty("javafx.preloader", SplashScreen.class.getName());

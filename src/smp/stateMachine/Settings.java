@@ -25,9 +25,13 @@ public class Settings {
     public final static boolean SAVE_OBJECTS = false;
 
     /**
-     * Classic debug on/off. Level 1.
-     * 0b10000 - Print staff value every time it changes.
-     * Set to -1 for max debug.
+     * Classic debug on/off. 32-bit field
+     * 05 - Print staff value every time it changes.
+     * 04 -
+     * 03 -
+     * 02 -
+     * 01 - Print all output of loaders
+     * Set to -1 (or anything <0) for max debug.
      */
     public static int debug = 0;
 

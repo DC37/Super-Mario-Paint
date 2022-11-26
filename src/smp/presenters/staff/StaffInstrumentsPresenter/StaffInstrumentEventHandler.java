@@ -137,11 +137,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 		this.measureLineNum = StateMachine.getMeasureLineNum();
 		this.buttonsPressed = StateMachine.getButtonsPressed();
 		setupKeyListener();
-		
-        if ((Settings.debug & 0b10) == 0b10) {
-//            System.out.println("Line: " + l);
-//            System.out.println("Position: " + pos);
-        }
     }
 
 	private void setupKeyListener() {
@@ -314,15 +309,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         theStaffNote = new StaffNote(theInd, selectedPosition.get(), selectedAccidental.get());
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
 
-//ACC        accidental = new StaffAccidental(theStaffNote);
-//        accidental.setImage(il.getSpriteFX(Staff.switchAcc(acc)));
-
         theImages.remove(silhouette);
-//ACC        accList.remove(accSilhouette);
         this.accSilhouetteVisible.set(false);
-
-// ACC       if (!accList.contains(accidental))
-//            accList.add(accidental);
 
         StaffNoteLine temp = this.windowLines.get(selectedLine.get()).get();
 
@@ -358,11 +346,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private void removeNote() {
         theImages.remove(silhouette);
-//ACC        accList.remove(accSilhouette);
         this.accSilhouetteVisible.set(false);
 
-//ACC        if (!accList.isEmpty())
-//            accList.remove(0);
 
         StaffNoteLine temp = this.windowLines.get(selectedLine.get()).get();
 
@@ -391,16 +376,10 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-//        updateAccidental();
         silhouette.setImage(il.getSpriteFX(theInd.imageIndex().silhouette()));
         if (!theImages.contains(silhouette))
             theImages.add(silhouette);
-//ACC        accSilhouette.setImage(il
-//                .getSpriteFX(Staff.switchAcc(acc).silhouette()));
-//        if (!accList.contains(accSilhouette))
-//            accList.add(accSilhouette);
         silhouette.setVisible(true);
-//ACC        accSilhouette.setVisible(true);
         this.accSilhouetteVisible.set(true);
     }
 
@@ -418,8 +397,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
     	if(silhouette.getImage() != null)
     		theImages.remove(silhouette);
-//ACC    	if(accSilhouette.getImage() != null)
-//    		accList.remove(accSilhouette);
         this.accSilhouetteVisible.set(false);
 
     }
@@ -445,38 +422,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             selectedAccidental.set(-1);
         else
             selectedAccidental.set(0);
-
-//ACC        switch (acc) {
-//        case 2:
-//            accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLESHARP_SIL));
-//            break;
-//        case 1:
-//            accSilhouette.setImage(il.getSpriteFX(ImageIndex.SHARP_SIL));
-//            break;
-//        case -1:
-//            accSilhouette.setImage(il.getSpriteFX(ImageIndex.FLAT_SIL));
-//            break;
-//        case -2:
-//            accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLEFLAT_SIL));
-//            break;
-//        default:
-//            accSilhouette.setVisible(false);
-//            break;
-//        }
-//
-//        if (acc != 0)
-//            accSilhouette.setVisible(true);
-//
-//        if (acc != 0 && !accList.contains(accSilhouette))
-//            accList.add(accSilhouette);
-//DEAD        if (acc != 0 && !theImages.contains(silhouette)) {
-//            theImages.add(silhouette);
-//            silhouette.setImage(il.getSpriteFX(ButtonLine
-//                    .getSelectedInstrument().imageIndex().silhouette()));
-//            silhouette.setVisible(true);
-//        }
-//        Cannot use this in a static context... will fix this later
-        if ((Settings.debug & 0b01) == 0b01) {
+        if ((Settings.debug & 0b01) != 0) {
             System.out.println(this);
         }
 

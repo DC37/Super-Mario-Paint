@@ -88,7 +88,7 @@ public class SoundfontLoader implements Loader {
             theSynthesizer.loadAllInstruments(bank);
             setLoadStatus(0.3);
 
-            if (Settings.debug > 0){
+            if ((Settings.debug & 0b01) != 0){
                 System.out.println("Loaded Instruments: ");
                 for (Instrument j : theSynthesizer.getLoadedInstruments())
                     System.out.println(j.getName());
@@ -110,7 +110,7 @@ public class SoundfontLoader implements Loader {
                     e.printStackTrace();
                 }
             }
-            if (Settings.debug > 0)
+            if ((Settings.debug & 0b01) != 0)
                 System.out.println(
                         "Synth Latency: " + theSynthesizer.getLatency());
             setLoadStatus(1);
