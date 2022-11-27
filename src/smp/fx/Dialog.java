@@ -50,7 +50,7 @@ public class Dialog {
 
         });
         
-        // @since 1.4.1, ESC/Enter to close dialog
+        /* @since 1.4.1, ESC/Enter to close dialog */
         dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
@@ -108,7 +108,7 @@ public class Dialog {
             }
         });
         
-        // @since 1.4.1, ESC to close dialog, Enter to accept
+        /* @since 1.4.1, ESC to close dialog, Enter to accept */
         dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
@@ -183,7 +183,7 @@ public class Dialog {
             }
         });
         
-        // @since 1.4.1, ESC to close dialog, Enter to accept
+        /* @since 1.4.1, ESC to close dialog, Enter to accept */
         dialog.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {

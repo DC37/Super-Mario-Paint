@@ -43,7 +43,7 @@ public class SplashScreen extends Preloader {
         bar = new ProgressBar(0);
         BorderPane p = new BorderPane();
         p.setCenter(bar);
-        // @since 1.4, to spice up the load screen. why not? - seymour 
+        /* @since 1.4, to spice up the load screen. why not? - seymour */ 
         imageview = new ImageView();
         imageview.setImage(new Image("file:./sprites/LOADING_ANIM.gif"));
         imageview.setFitWidth(236);
@@ -76,9 +76,9 @@ public class SplashScreen extends Preloader {
 
     @Override
     public void handleProgressNotification(ProgressNotification pn) {
-        // application loading progress is rescaled to be first 50%
-        // Even if there is nothing to load 0% and 100% events can be
-        // delivered
+        /* application loading progress is rescaled to be first 50%
+           Even if there is nothing to load 0% and 100% events can be
+           delivered */
         if (pn.getProgress() != 1.0 || !noLoadingProgress) {
             bar.setProgress(pn.getProgress() / 2);
             if (pn.getProgress() > 0) {
@@ -89,18 +89,18 @@ public class SplashScreen extends Preloader {
 
     @Override
     public void handleStateChangeNotification(StateChangeNotification evt) {
-        // ignore, hide after application signals it is ready
+        /* ignore, hide after application signals it is ready */
     }
 
     @Override
     public void handleApplicationNotification(PreloaderNotification pn) {
         if (pn instanceof ProgressNotification) {
-            // expect application to send us progress notifications
-            // with progress ranging from 0 to 1.0
+            /* expect application to send us progress notifications
+               with progress ranging from 0 to 1.0 */
             double v = ((ProgressNotification) pn).getProgress();
             bar.setProgress(v);
         } else if (pn instanceof StateChangeNotification) {
-            // hide after get any state update from application
+            /* hide after get any state update from application */
             stage.hide();
         }
     }

@@ -168,18 +168,18 @@ public class Values {
 		 */
 		public PlatformDependency() {
 
-			//cross-platform solution taken from https://stackoverflow.com/a/16660314/9363442
+			/* cross-platform solution taken from https://stackoverflow.com/a/16660314/9363442 */
 			String os = (System.getProperty("os.name")).toUpperCase();
-			// if it is some version of Windows
+			/* if it is some version of Windows */
 			if (os.contains("WIN")) {
 				// it is simply the location of the "AppData" folder
 				platformFolder = System.getenv("AppData");
 			}
-			// Otherwise, we assume Linux or Mac
+            /* Otherwise, we assume Linux or Mac */
 			else {
-				// in either case, we would start in the user's home directory
-				platformFolder = System.getProperty("user.home");
-				// if we are on a Mac, we are not done, we look for "Application Support"
+                /* in either case, we would start in the user's home directory */
+			    platformFolder = System.getProperty("user.home");
+				/* if we are on a Mac, we are not done, we look for "Application Support" */
 				if (os.contains("MAC")) {
 					platformFolder += "/Library/Application Support";
 				}

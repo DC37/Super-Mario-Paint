@@ -221,8 +221,8 @@ public class OptionsButton extends ImagePushButton {
 				} 
 				
 				bindBox.setSelected(newValue.equals(theStaff.getSequence().getSoundset()));
-				// we don't want to change the state of bindBox's userData
-				// so set it back to theStaff.getSequence().getSoundset()
+                /* we don't want to change the state of bindBox's userData so set it back to
+                   theStaff.getSequence().getSoundset() */
 				bindBox.setUserData(theStaff.getSequence().getSoundset());
 			}
 		});

@@ -86,8 +86,8 @@ public class StaffClipboardAPI {
 	 * also copy volumes.
 	 */
 	public void copy() {
-		//if there's something new selected, make way for new data
-		//else just use old data
+		/* if there's something new selected, make way for new data
+		   else just use old data */
 		if(!theStaffClipboard.getSelection().isEmpty() && (selectNotesFlag || selectVolumesFlag))
 			clearCopiedData();
 

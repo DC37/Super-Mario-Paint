@@ -30,14 +30,14 @@ public class CommandManager {
 	}
 
 	public void undo() {
-		//make sure any current action is recorded before undoing
+		/* make sure any current action is recorded before undoing */
 		record();
 		
 		if (undoStack.isEmpty())
 			return;
 
 		List<CommandInterface> commands = undoStack.pop();
-		//undo needs reverse order on the commands
+		/* undo needs reverse order on the commands */
 		for(int i = commands.size() - 1; i >= 0; i--) {
 			CommandInterface command = commands.get(i);
 			command.undo();

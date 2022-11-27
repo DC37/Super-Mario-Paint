@@ -55,7 +55,7 @@ public class SaveButton extends ImagePushButton {
     public SaveButton(ImageView i, SMPFXController ct, ImageLoader im) {
         super(i, ct, im);
         
-        // @since v1.4 to accomodate for those with a smaller screen that may not be able to access it.
+        /* @since v1.4 to accomodate for those with a smaller screen that may not be able to access it. */
  		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
  			@Override
