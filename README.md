@@ -7,11 +7,6 @@ Help would be very much appreciated! If you manage to debug something, submit a 
 Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (2002), TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany, 2007-2008), and FordPrefect86's Advanced Mario Sequencer (2009). This will be a free program when completed, open to those who want to download it.  
 
 
-Accepting cryptocurrency donations!  
-* Bitcoin (BTC): 1TyycsRVPUMgW1QDgafNSUpB2emh3p4TL
-* Litecoin (LTC): LX35qPaA7NAdWNjUnWcugZqd8zbNkMvpia
-
-
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
