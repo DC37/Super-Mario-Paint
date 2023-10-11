@@ -17,5 +17,5 @@ public class Bookmark extends AbstractStaffEvent {
     public Bookmark(int num) {
         super(num);
     }
-
+    
 }

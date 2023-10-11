@@ -2,6 +2,8 @@ package smp.components.staff.sequences;
 
 import java.io.Serializable;
 
+import smp.components.staff.Staff;
+
 /**
  * Some sort of event on the Super Mario Paint staff.
  * @author RehdBlob
@@ -29,5 +31,10 @@ public interface StaffEvent extends Serializable {
      * event within a measure.
      */
     public int getMeasureLineNum();
-
+    
+    
+    /**
+     * Override to do something in the event. 
+     */
+    public void doEvent(Staff s);
 }

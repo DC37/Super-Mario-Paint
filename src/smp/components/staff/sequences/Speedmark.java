@@ -1,5 +1,7 @@
 package smp.components.staff.sequences;
 
+import smp.components.staff.Staff;
+
 /**
  * A marker that changes the speed of the Super Mario
  * Paint Sequence, much like the speedmarks in Advanced Mario
@@ -16,7 +18,7 @@ public class Speedmark extends AbstractStaffEvent {
     /**
      * The tempo that this speedmark designates.
      */
-    private int tempo;
+    private double tempo;
 
     /* private Index location; */
 
@@ -40,9 +42,13 @@ public class Speedmark extends AbstractStaffEvent {
     /**
      * @return The tempo that this speedmark is set at.
      */
-    public int getTempo() {
+    public double getTempo() {
         return tempo;
     }
-
+    
+    @Override
+    public void doEvent(Staff s) {
+        
+    }
 
 }

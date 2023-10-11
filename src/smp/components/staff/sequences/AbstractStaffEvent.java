@@ -1,4 +1,5 @@
 package smp.components.staff.sequences;
+import smp.components.staff.Staff;
 import smp.stateMachine.Settings;
 
 /**
@@ -85,6 +86,10 @@ public abstract class AbstractStaffEvent implements StaffEvent {
     public int getMeasureLineNum() {
         return measureLineNum;
     }
-
+    
+    @Override
+    public void doEvent(Staff s) { 
+        
+    }
 
 }

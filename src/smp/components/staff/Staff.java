@@ -26,6 +26,8 @@ import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
+import smp.components.staff.sequences.StaffEvent;
+import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
@@ -625,6 +627,21 @@ public class Staff {
     public void setImageLoader(ImageLoader i) {
         il = i;
     }
+    
+    
+   /**
+     * 
+     * @param index The index to do events from
+     */
+    private void doEvents(int index) {
+        StaffNoteLine s = getSequence().getLine(
+                (int) (currVal.doubleValue() + index));
+        ArrayList<StaffEvent> theEvents = s.getEvents();
+        for (StaffEvent e : theEvents) {
+            e.doEvent(this);
+        }
+    }
+    
 
     /**
      * This is a worker thread that helps run the animation on the staff.
@@ -758,11 +775,12 @@ public class Staff {
                             setLocation(loc);
                             currVal.setValue(loc);
                         }
+                        doEvents(index);
                         playSoundLine(index);
                         queue--;
                     }
                 });
-            }
+            }            
 
             /**
              * Plays a sound line at the index specified. Or rather, tells the
