@@ -395,10 +395,10 @@ public class Utilities {
      */
     public static StaffSequence loadSequenceFromArrangement(File inputFile) {
         try {
-            inputFile = new File(inputFile.getParent() + "\\"
+            inputFile = new File(inputFile.getParent() + File.separatorChar
                     + inputFile.getName());
             if (!inputFile.exists()) {
-                inputFile = new File(inputFile.getParent() + "\\"
+                inputFile = new File(inputFile.getParent() + File.separatorChar
                         + inputFile.getName());
             }
             StaffSequence loaded = null;
@@ -492,7 +492,7 @@ public class Utilities {
     public static void normalizeArrangement(StaffArrangement loaded,
             File filePath) throws FileNotFoundException, NullPointerException,
             IOException {
-        String basePath = filePath.getParent() + "\\";
+        String basePath = filePath.getParent() + File.separatorChar;
         int sz1 = loaded.getTheSequenceFiles().size();
         int sz2 = loaded.getTheSequences().size();
         if (sz2 < sz1) {
