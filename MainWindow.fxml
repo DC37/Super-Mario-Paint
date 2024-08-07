@@ -103,7 +103,7 @@
                   <children>
                     <ImageView fitHeight="720.0" fitWidth="1024.0" layoutX="0.0" layoutY="-52.0" pickOnBounds="true" translateX="-0.5" translateY="1.0">
                       <image>
-                        <Image url="@sprites/INST_BACKGROUND.PNG" />
+                        <Image url="@sprites/INST_BACKGROUND.png" />
                       </image>
                     </ImageView>
                     <StackPane fx:id="staffPane" prefHeight="479.0" prefWidth="1022.0">
@@ -1338,17 +1338,17 @@
                                                    <children>
                                                       <ImageView id="" fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/ADD.png" />
+                                                            <Image url="@sprites/ADD.PNG" />
                                                          </image>
                                                       </ImageView>
                                                       <ImageView id="" fx:id="deleteButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/DELETE.png" />
+                                                            <Image url="@sprites/DELETE.PNG" />
                                                          </image>
                                                       </ImageView>
                                                       <ImageView id="" fx:id="upButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/UP.png" />
+                                                            <Image url="@sprites/UP.PNG" />
                                                          </image>
                                                       </ImageView>
                                                       <ImageView id="" fx:id="downButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -1601,7 +1601,7 @@
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="514.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/LUIGI_SM.PNG" />
+                      <Image url="@sprites/LUIGI_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="542.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
@@ -1611,52 +1611,52 @@
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="570.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/FEATHER_SM.PNG" />
+                      <Image url="@sprites/FEATHER_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="598.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/BULLETBILL_SM.PNG" />
+                      <Image url="@sprites/BULLETBILL_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="626" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/GOOMBA_SM.PNG" />
+                      <Image url="@sprites/GOOMBA_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="654.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/BOBOMB_SM.PNG" />
+                      <Image url="@sprites/BOBOMB_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="682" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/SPINY_SM.PNG" />
+                      <Image url="@sprites/SPINY_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="710.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/FRUIT_SM.PNG" />
+                      <Image url="@sprites/FRUIT_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="738.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/ONEUP_SM.PNG" />
+                      <Image url="@sprites/ONEUP_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="766" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/MOON_SM.PNG" />
+                      <Image url="@sprites/MOON_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="794" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/EGG_SM.PNG" />
+                      <Image url="@sprites/EGG_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="822" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/GNOME_SM.PNG" />
+                      <Image url="@sprites/GNOME_SM.png" />
                    </image>
                 </ImageView>
               </children>
