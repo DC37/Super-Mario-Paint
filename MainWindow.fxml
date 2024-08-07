@@ -1146,17 +1146,17 @@
                 </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="514.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@sprites/LUIGI_SM.PNG" />
+                              <Image url="@sprites/LUIGI_SM.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="542.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@sprites/PEACH_SM.PNG" />
+                              <Image url="@sprites/PEACH_SM.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="570.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@sprites/FEATHER_SM.PNG" />
+                              <Image url="@sprites/FEATHER_SM.png" />
                            </image>
                         </ImageView>
               </children>

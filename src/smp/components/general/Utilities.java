@@ -53,23 +53,23 @@ public class Utilities {
      * @param im
      *            An image to have its background be made transparent.
      * @param color
-     *            The color to be made transparent.
+     *            The color t o be made transparent.
      * @return A BufferedImage that now has all of <code>color</code> removed.
      */
     public static BufferedImage makeColorTransparent(BufferedImage im,
             final Color color) {
         ImageFilter filter = new RGBImageFilter() {
 
-            // the color we are looking for... Alpha bits are set to opaque
+             /* the color we are looking for... Alpha bits are set to opaque */
             public int markerRGB = color.getRGB() | 0xFF000000;
 
             @Override
             public final int filterRGB(int x, int y, int rgb) {
                 if ((rgb | 0xFF000000) == markerRGB) {
-                    // Mark the alpha bits as zero - transparent
+                    /* Mark the alpha bits as zero - transparent */
                     return 0x00FFFFFF & rgb;
                 } else {
-                    // nothing to do
+                    /* nothing to do */
                     return rgb;
                 }
             }
@@ -490,13 +490,11 @@ public class Utilities {
             }
         }
         for (int i = 0; i < loaded.getTheSequenceFiles().size(); i++) {
-            File f = loaded.getTheSequenceFiles().get(i);
-            String fName = f.getName();
-            int dot = f.getName().lastIndexOf(".");
-            String newPath = basePath + fName;
+            String fName = cleanName(loaded.getTheSequenceNames().get(i));
+            String newPath = basePath + fName + ".txt";
             File f2 = new File(newPath);
-            if (!f2.exists() && dot != -1) {
-                fName = fName.substring(0, dot) + "]MarioPaint.txt";
+            if (!f2.exists()) {
+                fName = fName + "]MarioPaint.txt";
                 newPath = basePath + fName;
                 loaded.getTheSequenceFiles().set(i, new File(newPath));
                 loaded.getTheSequences().set(i, loadSong(new File(newPath)));
@@ -504,6 +502,23 @@ public class Utilities {
             }
             loaded.getTheSequenceFiles().set(i, new File(newPath));
         }
+    }
+    
+    /**
+     * Turns out a lot of file names can have bad characters in them.
+     * @param f String to clean
+     * @return String with all apostrophes, backslashes, and forward
+     * slashes replaced with underscores.
+     */
+    public static String cleanName(String f) {
+
+        f = f.replaceAll("'", "_");
+        f = f.replaceAll("\\\\", "_");
+        f = f.replaceAll("/", "_");
+        f = f.replaceAll(":", "_");
+        f = f.replaceAll("\\&", "_");
+        
+        return f;
     }
 
 	/**
