@@ -1,5 +1,7 @@
 package smp.components;
 
+import java.io.File;
+
 import smp.components.staff.sequences.Note;
 
 /**
@@ -199,7 +201,8 @@ public class Values {
 	 * 
 	 * @since v1.1.2
 	 */
-	public static final String SOUNDFONTS_FOLDER = new PlatformDependency().getPlatformFolder() + "\\Super Mario Paint\\SoundFonts\\";
+	public static final String SOUNDFONTS_FOLDER = new PlatformDependency().getPlatformFolder()
+			+ File.separatorChar + "Super Mario Paint" + File.separatorChar + "SoundFonts" + File.separatorChar;
 	
 	/**
 	 * The default Mario Paint Composer soundfont.
