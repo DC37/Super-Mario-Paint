@@ -514,7 +514,7 @@ public class SuperMarioPaint extends Application {
             }
         } else if (args.length > 0
                 && (args[0].equals("--debug") || args[0].equals("--d"))) {
-            if (args[1] != null) {
+            if (args.length > 1) {
                 try {
                     Integer i = Integer.parseInt(args[1]);
                     if (i < 0)
