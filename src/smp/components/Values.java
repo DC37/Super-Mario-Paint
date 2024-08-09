@@ -175,16 +175,19 @@ public class Values {
 			/* if it is some version of Windows */
 			if (os.contains("WIN")) {
 				// it is simply the location of the "AppData" folder
-				platformFolder = System.getenv("AppData");
+				platformFolder = System.getenv("AppData")
+				        + File.separatorChar + "Super Mario Paint";
 			}
             /* Otherwise, we assume Linux or Mac */
-			else {
-                /* in either case, we would start in the user's home directory */
-			    platformFolder = System.getProperty("user.home");
-				/* if we are on a Mac, we are not done, we look for "Application Support" */
-				if (os.contains("MAC")) {
-					platformFolder += "/Library/Application Support";
-				}
+			else if (os.contains("MAC")) {
+			    platformFolder = System.getProperty("user.home")
+			            + File.separatorChar + "Library"
+			            + File.separatorChar + "Application Support"
+			            + File.separatorChar + "Super Mario Paint";
+			} else {
+			    /* Assuming we are on Linux */
+			    platformFolder = System.getProperty("user.home")
+			            + File.separatorChar + ".supermariopaint";
 			}
 		}
 		
@@ -202,7 +205,7 @@ public class Values {
 	 * @since v1.1.2
 	 */
 	public static final String SOUNDFONTS_FOLDER = new PlatformDependency().getPlatformFolder()
-			+ File.separatorChar + "Super Mario Paint" + File.separatorChar + "SoundFonts" + File.separatorChar;
+			+ File.separatorChar + "SoundFonts" + File.separatorChar;
 	
 	/**
 	 * The default Mario Paint Composer soundfont.
