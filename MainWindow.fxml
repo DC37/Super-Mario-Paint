@@ -883,17 +883,17 @@
                                                    <children>
                                                       <ImageView id="" fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/ADD.png" />
+                                                            <Image url="@sprites/ADD.PNG" />
                                                          </image>
                                                       </ImageView>
                                                       <ImageView id="" fx:id="deleteButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/DELETE.png" />
+                                                            <Image url="@sprites/DELETE.PNG" />
                                                          </image>
                                                       </ImageView>
                                                       <ImageView id="" fx:id="upButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@sprites/UP.png" />
+                                                            <Image url="@sprites/UP.PNG" />
                                                          </image>
                                                       </ImageView>
                                                       <ImageView id="" fx:id="downButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -1151,7 +1151,7 @@
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="542.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@sprites/PEACH_SM.png" />
+                              <Image url="@sprites/PEACH_SM.PNG" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="570.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
