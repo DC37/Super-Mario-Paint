@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.4.4
+* Current Version: 1.4.4, 1.3.2
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
@@ -14,6 +14,7 @@ https://docs.google.com/document/d/1zLSkC-clCSxvVUnbYQAxImmJA-QSwSSyzuC62enLiLc/
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
+* August 12-13, 2024 - v1.4.4 and v1.3.2 release with Linux updates
 * October 17-19, 2021 - v1.4.3 release with more backend upgrades and Java9+ support with release automation scripts
 * June 24, 2020 - v1.4.2 release with more backend upgrades
 * June 7, 2020 - v1.4.1 release with some backend upgrades carried over from v1.3.0

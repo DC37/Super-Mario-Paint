@@ -7,6 +7,7 @@ Bugfix = No new features added, but addresses some bugs.
 v1.4.4
 v1.3.2
 Hotfixes to allow Linux users to run v1.3.x and v1.4.x
+Thanks to @rozlynd
 
 v1.4.3
 More edits to prevent random clicks while in dialogs
