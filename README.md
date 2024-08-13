@@ -6,6 +6,10 @@ Help would be very much appreciated! If you manage to debug something, submit a 
 
 Based off of the original Mario Paint on the SNES from 1992, MarioSequencer (2002), TrioSequencer, Mario Paint Composer 1.0 / 2.0 (Robby Mulvany, 2007-2008), and FordPrefect86's Advanced Mario Sequencer (2009). This will be a free program when completed, open to those who want to download it.  
 
+User Guide
+============
+Thank you to the MPH Discord for building this!
+https://docs.google.com/document/d/1zLSkC-clCSxvVUnbYQAxImmJA-QSwSSyzuC62enLiLc/edit
 
 Major Releases:
 -----
@@ -37,6 +41,10 @@ Confirmed Operating System Configurations:
 * Windows 10 + Java 8u161
 * Windows 10 + Java 8u251
 * Windows 10 + Java 14.0.1+7
+* Windows 11 + Java 1.8
+* Windows 11 + Java 12
+* Windows 11 + Java 17
+* Windows 11 + Java 22
 * Mac OSX 10.9.5 + Java 8u25
 * Ubuntu 14.04-18.04 + Java 8
 
@@ -61,7 +69,6 @@ Contributors to Operating Systems / Tests
 
 Tasklist:
 -----
-* Build user's guide -- (done - September 8, 2020; thank you to the MPH Discord!) https://docs.google.com/document/d/1zLSkC-clCSxvVUnbYQAxImmJA-QSwSSyzuC62enLiLc/edit
 * Build contributor's guide... probably also on this README
 * Import AMS songs (optional)
 * Speedmarks (optional)
@@ -70,7 +77,8 @@ Tasklist:
 * Fix audio desync error when returning to program after sleep (optional)
 * Mario Paint Recorder (optional)
 * Modes between smaller single-staff versions and disabling/enabling instruments (optional)
-* Update for JDK14? (critical)
+* Update for JDK14 (done - October 17-19, 2021)
+* Build user's guide -- (done - September 8, 2020; thank you to the MPH Discord!) https://docs.google.com/document/d/1zLSkC-clCSxvVUnbYQAxImmJA-QSwSSyzuC62enLiLc/edit
 * Merge backend between Super Mario Paint & Giant Mario Paint (done - June 2, 2020)
 * Splash screen animation and other extras (done - May 30, 2020)
 * More aesthetic buttons and button layout (done - March 4, 2019)
