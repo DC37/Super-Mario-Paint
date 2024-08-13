@@ -4,6 +4,10 @@ Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
 Bugfix = No new features added, but addresses some bugs.
 
+v1.4.4
+v1.3.2
+Hotfixes to allow Linux users to run v1.3.x and v1.4.x
+
 v1.4.3
 More edits to prevent random clicks while in dialogs
 Java 8 + Java 9~14 support using bat files in hopes of increasing ability to run the program on more computers / QoL improvement

@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.4.3
+* Current Version: 1.4.4
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 

@@ -65,7 +65,7 @@ import smp.stateMachine.StateMachine;
  * @author seymour
  * 
  * @since 2012.08.16
- * @version 1.4.3
+ * @version 1.4.4
  */
 public class SuperMarioPaint extends Application {
 

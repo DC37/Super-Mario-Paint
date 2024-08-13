@@ -1,5 +1,5 @@
 @echo on
-set version=1.4.3
+set version=1.4.4
 set t=Super Mario Paint
 title %t% %version% Release Script
 
