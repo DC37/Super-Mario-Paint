@@ -58,11 +58,13 @@ import smp.stateMachine.StateMachine;
  * j574y923 (2017 - current)
  * CyanSMP64 (2019 - current)
  * seymour (2020 - current)
- *
+ * rozlynd (2024 - current)
+ * 
  * @author RehdBlob
  * @author j574y923
  * @author CyanSMP64
  * @author seymour
+ * @author rozlynd
  * 
  * @since 2012.08.16
  * @version 1.3.2
