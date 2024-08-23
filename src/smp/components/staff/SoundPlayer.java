@@ -32,18 +32,18 @@ public class SoundPlayer implements Runnable {
 
     /** This is the staff that we are referencing. */
     private Staff theStaff;
-
-    /** This is the value of the scrollbar. */
-    private DoubleProperty currVal;
     
     /** Initializes this sound player and binds a staff to it. */
     public SoundPlayer(Staff s) {
         theStaff = s;
     }
+    
+    private double getCurrVal() {
+        return theStaff.getCurrVal().doubleValue();
+    }
 
     @Override
     public void run() {
-        currVal = theStaff.getCurrVal();
         
     }
 
@@ -54,7 +54,7 @@ public class SoundPlayer implements Runnable {
         if (!run)
             return;
         StaffNoteLine s = theStaff.getSequence().getLine(
-                (int) (currVal.doubleValue() + index));
+                (int) (getCurrVal() + index));
         ArrayList<StaffNote> theNotes = s.getNotes();
         tracker.stopNotes(s);
         for (StaffNote sn : theNotes) {
