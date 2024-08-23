@@ -19,7 +19,7 @@ import smp.components.staff.sequences.StaffNoteLine;
  * @since 2014.01.07
  *
  */
-public class SoundPlayer implements Runnable {
+public class SoundPlayer {
 
     /** Tells whether we want this thread to keep running. */
     private boolean run = true;
@@ -40,11 +40,6 @@ public class SoundPlayer implements Runnable {
     
     private double getCurrVal() {
         return theStaff.getCurrVal().doubleValue();
-    }
-
-    @Override
-    public void run() {
-        
     }
 
     /**
