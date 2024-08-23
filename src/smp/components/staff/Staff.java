@@ -116,12 +116,6 @@ public class Staff {
     private SoundPlayer soundPlayer;
 
     /**
-     * This is the SoundPlayer thread that we will be invoking whilst playing
-     * songs.
-     */
-    private Thread soundPlayerThread;
-
-    /**
      * This is a service that will help run the animation and sound of playing a
      * song.
      */
@@ -151,8 +145,6 @@ public class Staff {
         staffImages.initialize();
         animationService = new AnimationService();
         soundPlayer = new SoundPlayer(this);
-        soundPlayerThread = new Thread(soundPlayer);
-        soundPlayerThread.setDaemon(true);
     }
 
     /**
@@ -241,7 +233,6 @@ public class Staff {
             theControls.getStopButton().reactPressed(null);
             return;
         }
-        soundPlayerThread.start();
         songPlaying = true;
         setTempo(StateMachine.getTempo());
         animationService.restart();
@@ -272,7 +263,6 @@ public class Staff {
                 return;
             }
         }
-        soundPlayerThread.start();
         arrPlaying = true;
         animationService.restart();
     }
@@ -316,11 +306,6 @@ public class Staff {
     /** Stops the song that is currently playing. */
     public void stopSong() {
         soundPlayer.setRun(false);
-        try {
-            soundPlayerThread.join();
-        } catch (InterruptedException e) {
-
-        }
         Platform.runLater(new Runnable() {
 
             @Override
@@ -341,15 +326,6 @@ public class Staff {
                 highlightsOff();
             }
         });
-        while (soundPlayerThread.isAlive()) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                // do nothing
-            }
-        }
-        soundPlayerThread = new Thread(soundPlayer);
-        soundPlayerThread.setDaemon(true);
     }
     
 
