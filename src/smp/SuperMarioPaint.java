@@ -155,7 +155,10 @@ public class SuperMarioPaint extends Application {
     private void doStart() {
         try {
             primaryStage.setTitle("Super Mario Paint " + Settings.version);
-            setupCloseBehaviour(primaryStage);
+            primaryStage.setOnCloseRequest(event -> {
+                handleCloseRequest();
+                event.consume(); // Keep the window from closing
+            });
             primaryStage.setResizable(false);
             primaryStage.setWidth(Values.DEFAULT_WIDTH);
             primaryStage.setHeight(Values.DEFAULT_HEIGHT);
@@ -243,69 +246,60 @@ public class SuperMarioPaint extends Application {
      * appears quite useful as a 'really exit?' type thing. This dialog
      * currently needs some work, so we're not going to include it in the alpha
      * release.
-     *
-     * @param primaryStage
-     *            The main stage of interest.
      */
-    private void setupCloseBehaviour(final Stage primaryStage) {
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+    private void handleCloseRequest() {
+        if (!StateMachine.isSongModified()
+                && !StateMachine.isArrModified()) {
+            stop();
+            return;
+        }
+    
+        final Stage dialog = new Stage();
+        dialog.setHeight(100);
+        dialog.setWidth(300);
+        dialog.setResizable(false);
+        dialog.initStyle(StageStyle.UTILITY);
+        Label label = new Label();
+        label.setMaxWidth(300);
+        label.setWrapText(true);
+        if (StateMachine.isSongModified()
+                && StateMachine.isArrModified()) {
+            label.setText("The song and arrangement have\n"
+                    + "both not been saved! Really exit?");
+        } else if (StateMachine.isSongModified()) {
+            label.setText("The song has not been saved! "
+                    + "Really exit?");
+        } else if (StateMachine.isArrModified()) {
+            label.setText("The arrangement has not been saved! "
+                    + "Really exit?");
+        }
+        Button okButton = new Button("Yes");
+        okButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(WindowEvent event) {
-                if (StateMachine.isSongModified()
-                        || StateMachine.isArrModified()) {
-                    final Stage dialog = new Stage();
-                    dialog.setHeight(100);
-                    dialog.setWidth(300);
-                    dialog.setResizable(false);
-                    dialog.initStyle(StageStyle.UTILITY);
-                    Label label = new Label();
-                    label.setMaxWidth(300);
-                    label.setWrapText(true);
-                    if (StateMachine.isSongModified()
-                            && StateMachine.isArrModified()) {
-                        label.setText("The song and arrangement have\n"
-                                + "both not been saved! Really exit?");
-                    } else if (StateMachine.isSongModified()) {
-                        label.setText("The song has not been saved! "
-                                + "Really exit?");
-                    } else if (StateMachine.isArrModified()) {
-                        label.setText("The arrangement has not been saved! "
-                                + "Really exit?");
-                    }
-                    Button okButton = new Button("Yes");
-                    okButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                dialog.close();
+                stop();
 
-                        @Override
-                        public void handle(ActionEvent event) {
-                            dialog.close();
-                            stop();
-
-                        }
-                    });
-                    Button cancelButton = new Button("No");
-                    cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-
-                        @Override
-                        public void handle(ActionEvent event) {
-                            dialog.close();
-                        }
-                    });
-                    FlowPane pane = new FlowPane(10, 10);
-                    pane.setAlignment(Pos.CENTER);
-                    pane.getChildren().addAll(okButton, cancelButton);
-                    VBox vBox = new VBox(10);
-                    vBox.setAlignment(Pos.CENTER);
-                    vBox.getChildren().addAll(label, pane);
-                    Scene scene1 = new Scene(vBox);
-                    dialog.setScene(scene1);
-                    dialog.show();
-                } else {
-                    stop();
-                }
-                event.consume();
             }
         });
+        Button cancelButton = new Button("No");
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+        FlowPane pane = new FlowPane(10, 10);
+        pane.setAlignment(Pos.CENTER);
+        pane.getChildren().addAll(okButton, cancelButton);
+        VBox vBox = new VBox(10);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(label, pane);
+        Scene scene1 = new Scene(vBox);
+        dialog.setScene(scene1);
+        dialog.show();
     }
     
     /**
