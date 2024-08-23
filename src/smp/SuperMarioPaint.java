@@ -491,35 +491,24 @@ public class SuperMarioPaint extends Application {
      *            Sets debug options on or off.
      */
     public static void main(String[] args) {
-        if (args.length == 0) {
-            try {
-                System.setProperty("javafx.preloader", SplashScreen.class.getName());
-                Application.launch(SuperMarioPaint.class, args);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (args.length > 0
-                && (args[0].equals("--debug") || args[0].equals("--d"))) {
+        if (args.length > 0 && (args[0].equals("--debug") || args[0].equals("--d"))) {
             if (args.length > 1) {
                 try {
                     Integer i = Integer.parseInt(args[1]);
-                    if (i < 0)
-                        Settings.setDebug(-1);
-                    else
-                        Settings.setDebug(i);
+                    Settings.setDebug(i >= 0 ? i : -1);
                 } catch (NumberFormatException e) {
                     Settings.setDebug(0);
                 }
             } else {
                 Settings.setDebug(Integer.MIN_VALUE);
-            }
-            try {
-                System.setProperty("javafx.preloader", SplashScreen.class.getName());
-                Application.launch(SuperMarioPaint.class, args);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            }   
+        }
+            
+        try {
+            System.setProperty("javafx.preloader", SplashScreen.class.getName());
+            Application.launch(SuperMarioPaint.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 	}
