@@ -118,17 +118,14 @@ public class SuperMarioPaint extends Application {
      */
     private SMPFXController controller = new SMPFXController();
 
-    /** Whether we are done loading the application or not. */
-    private BooleanProperty ready = new SimpleBooleanProperty(false);
-
     /**
      * This should hopefully get something up on the screen quickly. This is
      * taken from http://docs.oracle.com/javafx/2/deployment/preloaders.htm
      */
-    private void longStart() {
+    private Task<Void> longStart() {
 
         // long init in background
-        Task<Void> task = new Task<Void>() {
+        return new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 sfLd.start();
@@ -150,11 +147,46 @@ public class SuperMarioPaint extends Application {
                 loader.setLocation(new File(mainFxml).toURI().toURL());
                 root = (Parent) loader.load();
                 notifyPreloader(new ProgressNotification(0.75));
-                ready.setValue(Boolean.TRUE);
                 return null;
             }
         };
-        new Thread(task).start();
+    }
+    
+    private void doStart() {
+        try {
+            primaryStage.setTitle("Super Mario Paint " + Settings.version);
+            setupCloseBehaviour(primaryStage);
+            primaryStage.setResizable(false);
+            primaryStage.setWidth(Values.DEFAULT_WIDTH);
+            primaryStage.setHeight(Values.DEFAULT_HEIGHT);
+            primaryScene = new Scene(root, 1032, 768);
+            primaryStage.setScene(primaryScene);
+            makeKeyboardListeners(primaryScene);
+            notifyPreloader(new ProgressNotification(1));
+            notifyPreloader(new StateChangeNotification(
+                    StateChangeNotification.Type.BEFORE_START));
+            
+            /* @since 2020.4.28 - seymour
+             * Changes the cursor image */
+            setCursor(0);
+            
+            /* Changes the app icon 
+             * (gives the option to use a given icon OR a random icon from all instruments) */
+            if (new File("./sprites/ICON.png").exists())
+                setIcon("./sprites/ICON.png");
+            else {
+                int randNum = (int) Math.floor(Math.random() * Values.NUMINSTRUMENTS);
+                ArrayList<InstrumentIndex> instList = new ArrayList<InstrumentIndex>(
+                        EnumSet.allOf(InstrumentIndex.class));
+                String instName = instList.get(randNum).name();
+                setIcon("./sprites/" + instName + "_SM.png");
+            }
+            
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     /** Explicitly create constructor without arguments. */
@@ -191,57 +223,9 @@ public class SuperMarioPaint extends Application {
     public void start(Stage ps) {
         primaryStage = ps;
 
-        longStart();
-        
-
-        ready.addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> ov,
-                    Boolean t, Boolean t1) {
-                if (Boolean.TRUE.equals(t1)) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                primaryStage.setTitle("Super Mario Paint " + Settings.version);
-                                setupCloseBehaviour(primaryStage);
-                                primaryStage.setResizable(false);
-                                primaryStage.setWidth(Values.DEFAULT_WIDTH);
-                                primaryStage.setHeight(Values.DEFAULT_HEIGHT);
-                                primaryScene = new Scene(root, 1032, 768);
-                                primaryStage.setScene(primaryScene);
-                                makeKeyboardListeners(primaryScene);
-                                notifyPreloader(new ProgressNotification(1));
-                                notifyPreloader(new StateChangeNotification(
-                                        StateChangeNotification.Type.BEFORE_START));
-                                
-                                /* @since 2020.4.28 - seymour
-                                 * Changes the cursor image */
-                                setCursor(0);
-                                
-                                /* Changes the app icon 
-                                 * (gives the option to use a given icon OR a random icon from all instruments) */
-                                if (new File("./sprites/ICON.png").exists())
-                                	setIcon("./sprites/ICON.png");
-                                else {
-	                                int randNum = (int) Math.floor(Math.random() * Values.NUMINSTRUMENTS);
-	                                ArrayList<InstrumentIndex> instList = new ArrayList<InstrumentIndex>(
-	                                		EnumSet.allOf(InstrumentIndex.class));
-	                                String instName = instList.get(randNum).name();
-	                                setIcon("./sprites/" + instName + "_SM.png");
-                                }
-                                
-                                primaryStage.show();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                System.exit(1);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        ;
+        Task<Void> task = longStart();
+        task.setOnSucceeded(event -> doStart());
+        new Thread(task).start();
     }
 
     /**
