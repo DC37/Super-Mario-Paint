@@ -164,7 +164,8 @@ public class SuperMarioPaint extends Application {
             primaryStage.setHeight(Values.DEFAULT_HEIGHT);
             primaryScene = new Scene(root, 1032, 768);
             primaryStage.setScene(primaryScene);
-            makeKeyboardListeners(primaryScene);
+            makeMouseEventHandlers();
+            makeKeyboardListeners();
             notifyPreloader(new ProgressNotification(1));
             notifyPreloader(new StateChangeNotification(
                     StateChangeNotification.Type.BEFORE_START));
@@ -302,61 +303,59 @@ public class SuperMarioPaint extends Application {
         dialog.show();
     }
     
+    private void makeMouseEventHandlers() {
+        primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
+        
+        ArrayList<MouseButton> mouseButtons = new ArrayList<MouseButton>();
+        
+        // Just a temporary thing to change mouse until i (or someone else) can find out where to put it =P -- seymour
+        primaryScene.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                new EventHandler<MouseEvent>() {
+                    
+                    @Override
+                    public void handle(MouseEvent m) {
+                        if (!mouseButtons.contains(m.getButton()))
+                            mouseButtons.add(m.getButton());
+                        
+                        if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
+                            setCursor(2);
+                        else if (mouseButtons.contains(MouseButton.PRIMARY))
+                            setCursor(1);
+                        else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
+                            setCursor(3);
+                        
+                        m.consume();
+                    }
+        });
+        primaryScene.addEventHandler(MouseEvent.MOUSE_RELEASED,
+                new EventHandler<MouseEvent>() {
+            
+                    @Override
+                    public void handle(MouseEvent m) {
+                        // Added to remove the default cursor appearing while other mouse buttons are held
+                        mouseButtons.remove(m.getButton());
+                        
+                        if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
+                            setCursor(2);
+                        else if (mouseButtons.contains(MouseButton.PRIMARY))
+                            setCursor(1);
+                        else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
+                            setCursor(3);
+                        
+                        if (mouseButtons.isEmpty())
+                            setCursor(0);
+                        
+                        m.consume();
+                    }
+        });
+    }
+    
     /**
      * Creates the keyboard listeners that we will be using for various other
      * portions of the program. Ctrl, alt, and shift are of interest here, but
      * the arrow keys will also be considered.
-     *
-     * @param primaryScene
-     *            The main window.
      */
-    private void makeKeyboardListeners(Scene primaryScene) {
-    	
-    	primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
-    	
-    	ArrayList<MouseButton> mouseButtons = new ArrayList<MouseButton>();
-    	
-    	// Just a temporary thing to change mouse until i (or someone else) can find out where to put it =P -- seymour
-    	primaryScene.addEventHandler(MouseEvent.MOUSE_PRESSED,
-    			new EventHandler<MouseEvent>() {
-    				
-    				@Override
-    				public void handle(MouseEvent m) {
-    					if (!mouseButtons.contains(m.getButton()))
-    						mouseButtons.add(m.getButton());
-    					
-    					if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
-		    				setCursor(2);
-		    			else if (mouseButtons.contains(MouseButton.PRIMARY))
-		    				setCursor(1);
-		    			else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
-		    				setCursor(3);
-    					
-    					m.consume();
-    				}
-    	});
-    	primaryScene.addEventHandler(MouseEvent.MOUSE_RELEASED,
-    			new EventHandler<MouseEvent>() {
-    		
-		    		@Override
-					public void handle(MouseEvent m) {
-		    			// Added to remove the default cursor appearing while other mouse buttons are held
-		    			mouseButtons.remove(m.getButton());
-		    			
-		    			if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
-		    				setCursor(2);
-		    			else if (mouseButtons.contains(MouseButton.PRIMARY))
-		    				setCursor(1);
-		    			else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
-		    				setCursor(3);
-		    			
-		    			if (mouseButtons.isEmpty())
-							setCursor(0);
-						
-						m.consume();
-					}
-    	});
-    	
+    private void makeKeyboardListeners() {
     	// TODO: move to its own keyhandler
         primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
