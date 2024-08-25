@@ -490,7 +490,7 @@ public class Utilities {
             }
         }
         for (int i = 0; i < loaded.getTheSequenceFiles().size(); i++) {
-            String fName = cleanName(loaded.getTheSequenceNames().get(i));
+            String fName = loaded.getTheSequenceNames().get(i);
             String newPath = basePath + fName + ".txt";
             File f2 = new File(newPath);
             if (!f2.exists()) {
@@ -511,6 +511,8 @@ public class Utilities {
      * slashes replaced with underscores.
      */
     public static String cleanName(String f) {
+        // unused---seems to only be causing problems
+        // TODO consider normalizing all file names for saving and loading
 
         f = f.replaceAll("'", "_");
         f = f.replaceAll("\\\\", "_");
