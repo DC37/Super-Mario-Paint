@@ -522,6 +522,34 @@ public class Utilities {
         
         return f;
     }
+    
+    /**
+     * Check if a string does not contain any illegal character.
+     */
+    public static boolean legalFileName(String s) {
+        for (char c : s.toCharArray()) {
+            if (!legalCharacter(c))
+                return false;
+        }
+        return true;
+    }
+    
+    private static boolean legalCharacter(char c) {
+        switch (c) {
+        case '<':
+        case '>':
+        case '/':
+        case '\\':
+        case ':':
+        case '?':
+        case '|':
+        case '*':
+        case '"':
+        case '^':
+            return false;
+        }
+        return true;
+    }
 
 	/**
 	 * Populates the staff with the arrangement given. Loads each soundfont

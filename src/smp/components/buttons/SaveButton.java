@@ -23,6 +23,7 @@ import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
+import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.stateMachine.ProgramState;
 import smp.stateMachine.Settings;
@@ -104,11 +105,16 @@ public class SaveButton extends ImagePushButton {
 
     /** Saves the arrangement. */
     private void saveArrangement() {
+        String songName = controller.getNameTextField().getText();
+        if (!Utilities.legalFileName(songName)) {
+            Dialog.showDialog("Illegal file name!");
+            return;
+        }
+        
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(StateMachine.getCurrentDirectory());
-            f.setInitialFileName(controller.getNameTextField().getText()
-                    + ".txt");
+            f.setInitialFileName(songName + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
@@ -175,11 +181,16 @@ public class SaveButton extends ImagePushButton {
      * Saves the current song to disk.
      */
     private void saveSong() {
+        String songName = controller.getNameTextField().getText();
+        if (!Utilities.legalFileName(songName)) {
+            Dialog.showDialog("Illegal file name!");
+            return;
+        }
+        
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(StateMachine.getCurrentDirectory());
-            f.setInitialFileName(controller.getNameTextField().getText()
-                    + ".txt");
+            f.setInitialFileName(songName + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
