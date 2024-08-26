@@ -64,8 +64,6 @@ public class SplashScreen extends Preloader {
             stage.setTitle("Loading...");
         } else if (c < 0.5) {
             stage.setTitle("SMP" + Settings.version);
-        } else if (c < 0.8) {
-            stage.setTitle("Made by: RehdBlob");
         } else {
             stage.setTitle("Loading...");
         }
