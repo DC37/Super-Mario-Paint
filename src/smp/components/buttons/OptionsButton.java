@@ -321,7 +321,7 @@ public class OptionsButton extends ImagePushButton {
             theStaff.getControlPanel().getScrollbar()
                     .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
             
-            controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num));
+            controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num, currTempo, newTempo));
             controller.getModifySongManager().record();
         }
     }
