@@ -37,6 +37,7 @@ import javafx.stage.WindowEvent;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.StaffInstrumentEventHandler;
+import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
 import smp.stateMachine.ProgramState;
@@ -249,58 +250,25 @@ public class SuperMarioPaint extends Application {
      * release.
      */
     private void handleCloseRequest() {
-        if (!StateMachine.isSongModified()
-                && !StateMachine.isArrModified()) {
+        String mssg;
+        
+        if (StateMachine.isSongModified()
+                && StateMachine.isArrModified()) {
+            mssg = "The song and arrangement have\n"
+                    + "both not been saved! Really exit?";
+        } else if (StateMachine.isSongModified()) {
+            mssg = "The song has not been saved! "
+                    + "Really exit?";
+        } else if (StateMachine.isArrModified()) {
+            mssg = "The arrangement has not been saved! "
+                    + "Really exit?";
+        } else {
             stop();
             return;
         }
     
-        final Stage dialog = new Stage();
-        dialog.setHeight(100);
-        dialog.setWidth(300);
-        dialog.setResizable(false);
-        dialog.initStyle(StageStyle.UTILITY);
-        Label label = new Label();
-        label.setMaxWidth(300);
-        label.setWrapText(true);
-        if (StateMachine.isSongModified()
-                && StateMachine.isArrModified()) {
-            label.setText("The song and arrangement have\n"
-                    + "both not been saved! Really exit?");
-        } else if (StateMachine.isSongModified()) {
-            label.setText("The song has not been saved! "
-                    + "Really exit?");
-        } else if (StateMachine.isArrModified()) {
-            label.setText("The arrangement has not been saved! "
-                    + "Really exit?");
-        }
-        Button okButton = new Button("Yes");
-        okButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.close();
-                stop();
-
-            }
-        });
-        Button cancelButton = new Button("No");
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.close();
-            }
-        });
-        FlowPane pane = new FlowPane(10, 10);
-        pane.setAlignment(Pos.CENTER);
-        pane.getChildren().addAll(okButton, cancelButton);
-        VBox vBox = new VBox(10);
-        vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(label, pane);
-        Scene scene1 = new Scene(vBox);
-        dialog.setScene(scene1);
-        dialog.show();
+        if (Dialog.showYesNoDialog(mssg))
+            stop();
     }
     
     private void makeMouseEventHandlers() {
