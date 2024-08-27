@@ -107,7 +107,7 @@ public class SaveButton extends ImagePushButton {
     private void saveArrangement() {
         String songName = controller.getNameTextField().getText();
         if (!Utilities.legalFileName(songName)) {
-            Dialog.showDialog("Illegal file name!");
+            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^");
             return;
         }
         
@@ -183,7 +183,7 @@ public class SaveButton extends ImagePushButton {
     private void saveSong() {
         String songName = controller.getNameTextField().getText();
         if (!Utilities.legalFileName(songName)) {
-            Dialog.showDialog("Illegal file name!");
+            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^");
             return;
         }
         
