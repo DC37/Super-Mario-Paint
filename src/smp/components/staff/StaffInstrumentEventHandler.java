@@ -539,8 +539,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @return line in the current window based on x coord
      */
     private static int getLine(double x){
-
-    	if(x < 135 || x > 999)
+    	if(x < 165 || x >= 997)
     		return -1;
     	return (((int)x - 165) / 64);
     }
