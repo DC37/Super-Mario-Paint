@@ -6,15 +6,20 @@ import smp.commandmanager.CommandInterface;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.stateMachine.StateMachine;
 
 public class MultiplyTempoCommand implements CommandInterface {
 
 	Staff theStaff;
 	int theMultiplyAmount;
+	double previousTempo;
+	double newTempo;
 	
-	public MultiplyTempoCommand(Staff staff, int multiplyAmount) {
+	public MultiplyTempoCommand(Staff staff, int num, double previousTempo, double newTempo) {
 		theStaff = staff;
-		theMultiplyAmount = multiplyAmount;
+		this.theMultiplyAmount = num;
+		this.previousTempo = previousTempo;
+		this.newTempo = newTempo;
 	}
 	
 	@Override
@@ -28,8 +33,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         }
         s.clear();
         s.addAll(n);
-//        StateMachine.setTempo(theStaff.getSequence().getTempo() * num);
-//        theStaff.updateCurrTempo();
+        StateMachine.setTempo(newTempo);
         theStaff.getControlPanel().getScrollbar()
                 .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
 	}
@@ -43,8 +47,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 		}
         s.clear();
         s.addAll(n);
-//      StateMachine.setTempo(theStaff.getSequence().getTempo() * num);
-//      theStaff.updateCurrTempo();
+        StateMachine.setTempo(previousTempo);
 	    theStaff.getControlPanel().getScrollbar()
 	            .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
 	}
