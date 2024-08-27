@@ -435,7 +435,6 @@ public class Utilities {
         theStaff.setSequence(loaded);
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
-        theStaff.updateCurrTempo();
         theStaff.getControlPanel()
                 .getScrollbar()
                 .setMax(loaded.getTheLines().size()

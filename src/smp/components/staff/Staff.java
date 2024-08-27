@@ -267,17 +267,6 @@ public class Staff {
         animationService.restart();
     }
 
-    /** Updates the current tempo - staff version. */
-    public synchronized void updateCurrTempo() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                theControls.getCurrTempo().setValue(
-                        String.valueOf(StateMachine.getTempo()));
-            }
-        });
-    }
-
     /**
      * Finds the last line in the sequence that we are playing.
      */
@@ -815,8 +804,6 @@ public class Staff {
                     controller.getInstBLine().updateNoteExtensions();
                     StateMachine.setTempo(theSequence.getTempo());
                     queue++;
-                    updateCurrTempo();
-                    queue++;
                     setScrollbar();
                     lastLine = findLastLine();
                     songPlaying = true;
@@ -903,18 +890,6 @@ public class Staff {
                         theControls.getScrollbar().setMax(
                                 theSequence.getTheLines().size()
                                         - Values.NOTELINES_IN_THE_WINDOW);
-                        queue--;
-                    }
-                });
-            }
-
-            /** Updates the current tempo - arranger version. */
-            private void updateCurrTempo() {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        theControls.getCurrTempo().setValue(
-                                String.valueOf(StateMachine.getTempo()));
                         queue--;
                     }
                 });
