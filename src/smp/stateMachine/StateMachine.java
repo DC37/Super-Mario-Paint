@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.input.KeyCode;
 import smp.components.Values;
 
@@ -73,7 +75,7 @@ public class StateMachine {
     /**
      * This is the current tempo that the program is running at.
      */
-    private static double tempo = Values.DEFAULT_TEMPO;
+    private static DoubleProperty tempo = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
 
 	/**
 	 * The current soundset name. This should change when a new soundfont is
@@ -142,6 +144,10 @@ public class StateMachine {
      * @return The tempo that this program is running at.
      */
     public static double getTempo() {
+        return tempo.get();
+    }
+    
+    public static DoubleProperty getTempoProperty() {
         return tempo;
     }
 
@@ -153,7 +159,7 @@ public class StateMachine {
      * @return The current tempo.
      */
     public static void setTempo(double num) {
-        tempo = num;
+        tempo.set(num);
     }
 
     /**
