@@ -92,8 +92,8 @@ public class Dialog {
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
-        Button okButton = new Button("OK");
-        Button cancelButton = new Button("Cancel");
+        Button okButton = new Button("Yes");
+        Button cancelButton = new Button("No");
 
         okButton.setOnAction(event -> {
             dialog.close();
