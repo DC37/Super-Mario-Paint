@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.util.converter.NumberStringConverter;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
@@ -21,6 +22,7 @@ import smp.components.staff.clipboard.StaffRubberBand;
 import smp.components.textfield.SongNameController;
 import smp.components.topPanel.ButtonLine;
 import smp.components.topPanel.PanelButtons;
+import smp.stateMachine.StateMachine;
 
 /**
  * The Controller class for most of the program. This will handle the events
@@ -330,6 +332,9 @@ public class SMPFXController {
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
+        
+        // Bind displayed tempo to internal value in state machine
+        tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
         
     }
     /**
