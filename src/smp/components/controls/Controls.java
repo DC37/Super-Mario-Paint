@@ -96,9 +96,6 @@ public class Controls {
 	/** This is the staff that the controls are linked to. */
 	private Staff theStaff;
 
-	/** This is the current tempo. */
-	private StringProperty currTempo = new SimpleStringProperty();
-
 	/** The ListView of songs for the arranger. */
 	private ListView<String> theList;
 
@@ -123,7 +120,6 @@ public class Controls {
 		initializeControlButtons();
 		theStaff.setCurrVal(scrollbar.valueProperty());
 		initializeTempoButtons();
-		currTempo.setValue(String.valueOf(StateMachine.getTempo()));
 		initializeLoadSaveButtons();
 		initializeNewButton();
 		initializeArrangementList();
@@ -173,10 +169,6 @@ public class Controls {
 		TempoAdjustButton minus = new TempoAdjustButton(controller.getTempoMinus(), controller, il);
 		plus.setPositive(true);
 		minus.setPositive(false);
-		StringProperty tempoDisplay = controller.getTempoIndicator().textProperty();
-		currTempo.bindBidirectional(tempoDisplay);
-		plus.setStringProperty(currTempo);
-		minus.setStringProperty(currTempo);
 		StackPane tBox = controller.getTempoBox();
 
 		tBox.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -188,7 +180,6 @@ public class Controls {
 						String tempo = Dialog.showTextDialog("Tempo");
 						StateMachine.setTempo(Double.parseDouble(tempo));
 						tempo = tempo.trim();
-						currTempo.setValue(tempo);
 					}
 				} catch (NumberFormatException e) {
 					// Do nothing.
@@ -385,13 +376,6 @@ public class Controls {
 	 */
 	public Slider getScrollbar() {
 		return scrollbar;
-	}
-
-	/**
-	 * @return The current tempo object that we want to modify.
-	 */
-	public StringProperty getCurrTempo() {
-		return currTempo;
 	}
 
 	/**

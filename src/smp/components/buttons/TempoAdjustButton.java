@@ -23,9 +23,6 @@ import smp.stateMachine.StateMachine;
  */
 public class TempoAdjustButton extends ImagePushButton {
 
-    /** This is the current tempo. */
-    private StringProperty currTempo;
-
     /** Tells us whether this is a plus or minus button. */
     private boolean isPositive;
 
@@ -64,16 +61,6 @@ public class TempoAdjustButton extends ImagePushButton {
         return isPositive;
     }
 
-    /**
-     * Sets the String property to display the tempo.
-     *
-     * @param s
-     *            This is the StringProperty that displays the tempo.
-     */
-    public void setStringProperty(StringProperty s) {
-        currTempo = s;
-    }
-
     @Override
     protected void reactPressed(MouseEvent event) {
         ProgramState curr = StateMachine.getState();
@@ -109,7 +96,6 @@ public class TempoAdjustButton extends ImagePushButton {
                     ch = -add;
                 double tempo = StateMachine.getTempo() + ch;
                 StateMachine.setTempo(tempo);
-                currTempo.setValue(String.valueOf(tempo));
             }
         });
     }
