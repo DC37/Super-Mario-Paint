@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +16,8 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
-import smp.components.Values;
 import smp.components.InstrumentIndex;
+import smp.components.Values;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sounds.SMPSynthesizer;
 import smp.stateMachine.Settings;
@@ -235,13 +236,11 @@ public class SoundfontLoader implements Loader {
 		if(sfName.isEmpty())
 			return false;
 		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
-		if(!destSf.exists()) {
-			try {
-				Files.copy(sf.toPath(), destSf.toPath());
-			} catch (IOException e) {
-				e.printStackTrace();
-				return false;
-			}
+		try {
+			Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
 		}
 		return true;
 	}
