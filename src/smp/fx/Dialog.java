@@ -30,7 +30,9 @@ public class Dialog {
         stage.setResizable(false);
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
-        stage.initStyle(StageStyle.UTILITY);
+        // setting this style seems to be blocking everything
+        // commenting out until someone finds why --rozlyn
+//        stage.initStyle(StageStyle.UTILITY);
         return stage;
     }
     
