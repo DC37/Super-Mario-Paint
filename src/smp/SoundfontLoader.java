@@ -20,6 +20,7 @@ import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sounds.SMPSynthesizer;
+import smp.fx.Dialog;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
@@ -236,6 +237,13 @@ public class SoundfontLoader implements Loader {
 		if(sfName.isEmpty())
 			return false;
 		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
+		
+		if (destSf.exists()) {
+		    String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
+		    if (!Dialog.showYesNoDialog(mssg))
+		        return false;
+		}
+		
 		try {
 			Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
