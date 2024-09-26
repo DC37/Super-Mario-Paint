@@ -267,7 +267,7 @@ public class SuperMarioPaint extends Application {
             return;
         }
     
-        if (Dialog.showYesNoDialog(mssg))
+        if (Dialog.showYesNoDialog(mssg, primaryStage))
             stop();
     }
     
