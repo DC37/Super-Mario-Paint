@@ -13,8 +13,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
+import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
@@ -24,9 +25,11 @@ import javafx.stage.WindowEvent;
  */
 public class Dialog {
     
-    private static <T> StageWithReturn<T> initDialogStage() {
+    private static <T> StageWithReturn<T> initDialogStage(Window owner) {
         StageWithReturn<T> stage = new StageWithReturn<T>();
         stage.setResizable(false);
+        stage.initOwner(owner);
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.initStyle(StageStyle.UTILITY);
         return stage;
     }
@@ -52,8 +55,8 @@ public class Dialog {
      * Shows a dialog box with the text given to this method.
      * @param txt The text to show.
      */
-    public static void showDialog(String txt) {
-        final StageWithReturn<Void> dialog = initDialogStage();
+    public static void showDialog(String txt, Window owner) {
+        final StageWithReturn<Void> dialog = initDialogStage(owner);
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -75,14 +78,18 @@ public class Dialog {
         dialog.showAndReturn();
 
     }
+    
+    public static void showDialog(String txt) {
+        showDialog(txt, null);
+    }
 
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show an ok / cancel dialog.
      * @param txt The text to show.
      */
-    public static boolean showYesNoDialog(String txt) {
-        final StageWithReturn<Boolean> dialog = initDialogStage();
+    public static boolean showYesNoDialog(String txt, Window owner) {
+        final StageWithReturn<Boolean> dialog = initDialogStage(owner);
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -125,14 +132,18 @@ public class Dialog {
         dialog.setScene(scene);
         return dialog.showAndReturn();
     }
+    
+    public static boolean showYesNoDialog(String txt) {
+        return showYesNoDialog(txt, null);
+    }
 
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show a text dialog.
      * @param txt The text to show.
      */
-    public static String showTextDialog(String txt) {
-        final StageWithReturn<String> dialog = initDialogStage();
+    public static String showTextDialog(String txt, Window owner) {
+        final StageWithReturn<String> dialog = initDialogStage(owner);
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -168,6 +179,10 @@ public class Dialog {
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
         return dialog.showAndReturn();
+    }
+    
+    public static String showTextDialog(String txt) {
+        return showTextDialog(txt, null);
     }
 
 }
