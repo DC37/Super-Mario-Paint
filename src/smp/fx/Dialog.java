@@ -23,15 +23,9 @@ import javafx.stage.WindowEvent;
  * @since 2013.12.23
  */
 public class Dialog {
-
-    /** A choice that we have made in some dialog box. */
-    private static boolean choice = false;
-
-    /** Some text that we type into a field in a text dialog. */
-    private static String info = "";
     
-    private static Stage initDialogStage() {
-        Stage stage = new Stage();
+    private static <T> StageWithReturn<T> initDialogStage() {
+        StageWithReturn<T> stage = new StageWithReturn<T>();
         stage.setResizable(false);
         stage.initStyle(StageStyle.UTILITY);
         return stage;
@@ -59,7 +53,7 @@ public class Dialog {
      * @param txt The text to show.
      */
     public static void showDialog(String txt) {
-        final Stage dialog = initDialogStage();
+        final StageWithReturn<Void> dialog = initDialogStage();
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -78,7 +72,7 @@ public class Dialog {
         
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
-        dialog.showAndWait();
+        dialog.showAndReturn();
 
     }
 
@@ -88,7 +82,7 @@ public class Dialog {
      * @param txt The text to show.
      */
     public static boolean showYesNoDialog(String txt) {
-        final Stage dialog = initDialogStage();
+        final StageWithReturn<Boolean> dialog = initDialogStage();
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -96,22 +90,22 @@ public class Dialog {
         Button cancelButton = new Button("No");
 
         okButton.setOnAction(event -> {
+            dialog.returnValue = true;
             dialog.close();
-            choice = true;
         });
 
         cancelButton.setOnAction(event -> {
+            dialog.returnValue = false;
             dialog.close();
-            choice = false;
         });
         
         /* @since 1.4.1, ESC to close dialog, Enter to accept */
         dialog.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
         	if (event.getCode() == KeyCode.ESCAPE) {
-                choice = false;
+        	    dialog.returnValue = false;
                 dialog.close();
         	} else if (event.getCode() == KeyCode.ENTER) {
-                choice = true;
+                dialog.returnValue = true;
                 dialog.close();
         	}
         });
@@ -129,8 +123,7 @@ public class Dialog {
         
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
-        dialog.showAndWait();
-        return choice;
+        return dialog.showAndReturn();
     }
 
     /**
@@ -139,7 +132,7 @@ public class Dialog {
      * @param txt The text to show.
      */
     public static String showTextDialog(String txt) {
-        final Stage dialog = initDialogStage();
+        final StageWithReturn<String> dialog = initDialogStage();
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -149,22 +142,22 @@ public class Dialog {
         Button cancelButton = new Button("Cancel");
 
         okButton.setOnAction(event -> {
-            info = textfield.getText();
+            dialog.returnValue = textfield.getText();
             dialog.close();
         });
 
         cancelButton.setOnAction(event -> {
-            info = "";
+            dialog.returnValue = "";
             dialog.close();
         });
         
         /* @since 1.4.1, ESC to close dialog, Enter to accept */
         dialog.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
         	if (event.getCode() == KeyCode.ESCAPE) {
-                info = "";
+        	    dialog.returnValue = "";
                 dialog.close();
         	} else if (event.getCode() == KeyCode.ENTER) {
-                info = textfield.getText();
+                dialog.returnValue = textfield.getText();
                 dialog.close();
         	}
         });
@@ -174,8 +167,7 @@ public class Dialog {
         
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
-        dialog.showAndWait();
-        return info;
+        return dialog.showAndReturn();
     }
 
 }
