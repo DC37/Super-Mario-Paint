@@ -8,10 +8,12 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Window;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.buttons.AddButton;
@@ -140,7 +142,8 @@ public class Controls {
 				if (x != -1) {
 					ArrayList<StaffSequence> s = theStaff.getArrangement().getTheSequences();
 					ArrayList<File> f = theStaff.getArrangement().getTheSequenceFiles();
-					Utilities.loadSequenceFromArrangement(f.get(x), theStaff, controller);
+					Window owner = theList.getScene().getWindow();
+					Utilities.loadSequenceFromArrangement(f.get(x), theStaff, controller, owner);
 					s.set(x, theStaff.getSequence());
 				}
 			}
@@ -177,7 +180,8 @@ public class Controls {
 				try {
 					ProgramState curr = StateMachine.getState();
 					if (curr == ProgramState.EDITING) {
-						String tempo = Dialog.showTextDialog("Tempo");
+					    Window owner = ((Node) event.getSource()).getScene().getWindow();
+						String tempo = Dialog.showTextDialog("Tempo", owner);
 						StateMachine.setTempo(Double.parseDouble(tempo));
 						tempo = tempo.trim();
 					}

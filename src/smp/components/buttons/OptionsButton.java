@@ -132,7 +132,7 @@ public class OptionsButton extends ImagePushButton {
         tempoField = new TextField();
 
         Label sfLabel = new Label("Current soundfont");
-		soundfontsMenu = makeSoundfontsComboBox();
+		soundfontsMenu = makeSoundfontsComboBox(dialog);
 		bindBox = makeBindCheckBox();
         VBox soundfontsOptions = new VBox(1);
         soundfontsOptions.setAlignment(Pos.CENTER);
@@ -159,7 +159,7 @@ public class OptionsButton extends ImagePushButton {
 	 * @return A ComboBox listing all soundfonts in the AppData folder and an
 	 *         additional item to "Add Soundfont"
 	 */
-	private ComboBox<String> makeSoundfontsComboBox() {
+	private ComboBox<String> makeSoundfontsComboBox(Window owner) {
 
 		controller.getSoundfontLoader().ensureSoundfontsFolderExists();
 		
@@ -194,7 +194,7 @@ public class OptionsButton extends ImagePushButton {
 								return;
 							}
 							
-							if(!controller.getSoundfontLoader().addSoundfont(sf)) {
+							if(!controller.getSoundfontLoader().addSoundfont(sf, owner)) {
 								soundfontsMenu.getSelectionModel().selectPrevious();
 								return;
 							}

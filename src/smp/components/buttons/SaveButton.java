@@ -7,15 +7,18 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Window;
 import smp.ImageLoader;
 import smp.components.general.ImagePushButton;
 import smp.components.general.Utilities;
@@ -62,13 +65,17 @@ public class SaveButton extends ImagePushButton {
  			@Override
  			public void handle(KeyEvent event) {
  				if(event.isControlDown() && event.getCode() == KeyCode.S)
- 					reactPressed(null);
+ 				    save(((Node) event.getSource()).getScene().getWindow());
  			}
  		});
     }
 
     @Override
     protected void reactPressed(MouseEvent event) {
+        save(((Node) event.getSource()).getScene().getWindow());
+    }
+    
+    private void save(Window owner) {
         ProgramState curr = StateMachine.getState();
         if (curr == ProgramState.EDITING || curr == ProgramState.SONG_PLAYING) {
             final ProgramState saveState = curr;
@@ -77,7 +84,7 @@ public class SaveButton extends ImagePushButton {
 
                 @Override
                 public void run() {
-                    saveSong();
+                    saveSong(owner);
                     StateMachine.setState(saveState);
                 }
                 
@@ -90,7 +97,7 @@ public class SaveButton extends ImagePushButton {
 
                 @Override
                 public void run() {
-                    saveArrangement();
+                    saveArrangement(owner);
                     StateMachine.setState(saveState);
                 }
                 
@@ -104,10 +111,10 @@ public class SaveButton extends ImagePushButton {
     }
 
     /** Saves the arrangement. */
-    private void saveArrangement() {
+    private void saveArrangement(Window owner) {
         String songName = controller.getNameTextField().getText();
         if (!Utilities.legalFileName(songName)) {
-            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^");
+            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^", owner);
             return;
         }
         
@@ -180,10 +187,10 @@ public class SaveButton extends ImagePushButton {
     /**
      * Saves the current song to disk.
      */
-    private void saveSong() {
+    private void saveSong(Window owner) {
         String songName = controller.getNameTextField().getText();
         if (!Utilities.legalFileName(songName)) {
-            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^");
+            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^", owner);
             return;
         }
         

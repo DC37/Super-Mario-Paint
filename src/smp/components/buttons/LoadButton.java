@@ -8,11 +8,13 @@ import java.text.ParseException;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import smp.ImageLoader;
 import smp.components.general.ImagePushButton;
 import smp.components.general.Utilities;
@@ -62,7 +64,7 @@ public class LoadButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        load();
+        load(((Node) event.getSource()).getScene().getWindow());
     }
 
     @Override
@@ -71,7 +73,7 @@ public class LoadButton extends ImagePushButton {
     }
 
     /** This loads the song or arrangement. */
-    private void load() {
+    private void load(Window owner) {
         ProgramState curr = StateMachine.getState();
         if (curr == ProgramState.EDITING) {
             StateMachine.setState(ProgramState.MENU_OPEN);
@@ -80,7 +82,7 @@ public class LoadButton extends ImagePushButton {
                 @Override
                 public void run() {
 
-                    loadSong();
+                    loadSong(owner);
                     StateMachine.setState(ProgramState.EDITING);
                 }
                 
@@ -92,7 +94,7 @@ public class LoadButton extends ImagePushButton {
                 @Override
                 public void run() {
 
-                    loadArrangement();
+                    loadArrangement(owner);
                     StateMachine.setState(ProgramState.ARR_EDITING);
                     
                 }
@@ -102,12 +104,12 @@ public class LoadButton extends ImagePushButton {
     }
 
     /** This loads a song. */
-    private void loadSong() {
+    private void loadSong(Window owner) {
         boolean cont = true;
         if (StateMachine.isSongModified())
             cont = Dialog
                     .showYesNoDialog("The current song has been modified!\n"
-                            + "Load anyway?");
+                            + "Load anyway?", owner);
         File inputFile = null;
         if (cont) {
             try {
@@ -121,15 +123,15 @@ public class LoadButton extends ImagePushButton {
                 if (inputFile == null)
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                loadSong(inputFile);
+                loadSong(inputFile, owner);
             } catch (Exception e) {
-                Dialog.showDialog("Not a valid song file.");
+                Dialog.showDialog("Not a valid song file.", owner);
             }
         }
     }
 
     /** This loads a song, given a file. */
-    private void loadSong(File inputFile) {
+    private void loadSong(File inputFile, Window owner) {
         try {
             StaffSequence loaded = null;
             try {
@@ -149,29 +151,29 @@ public class LoadButton extends ImagePushButton {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            Dialog.showDialog("Problem loading file!");
+            Dialog.showDialog("Problem loading file!", owner);
             e.printStackTrace();
         } catch (Exception e) {
-            Dialog.showDialog("Not a valid song file.");
+            Dialog.showDialog("Not a valid song file.", owner);
         }
     }
 
     /** This loads an arrangement. */
-    private void loadArrangement() {
+    private void loadArrangement(Window owner) {
         boolean cont = true;
         if (StateMachine.isSongModified() || StateMachine.isArrModified()) {
             if (StateMachine.isSongModified() && StateMachine.isArrModified()) {
                 cont = Dialog
                         .showYesNoDialog("The current song and arrangement\n"
-                                + "have both been modified!\nLoad anyway?");
+                                + "have both been modified!\nLoad anyway?", owner);
             } else if (StateMachine.isSongModified()) {
                 cont = Dialog
                         .showYesNoDialog("The current song has been modified!\n"
-                                + "Load anyway?");
+                                + "Load anyway?", owner);
             } else if (StateMachine.isArrModified()) {
                 cont = Dialog
                         .showYesNoDialog("The current arrangement has been\n"
-                                + "modified! Load anyway?");
+                                + "modified! Load anyway?", owner);
             }
         }
         File inputFile = null;
@@ -190,7 +192,7 @@ public class LoadButton extends ImagePushButton {
                 StaffArrangement loaded = Utilities.loadArrangement(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false,
-                        theStaff, controller);
+                        theStaff, controller, owner);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
             } catch (ClassNotFoundException | StreamCorruptedException
@@ -201,11 +203,11 @@ public class LoadButton extends ImagePushButton {
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                     Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true,
-                            theStaff, controller);
+                            theStaff, controller, owner);
                     StateMachine.setSongModified(false);
                 } catch (Exception e1) {
                     e1.printStackTrace();
-                    Dialog.showDialog("Not a valid arrangement file.");
+                    Dialog.showDialog("Not a valid arrangement file.", owner);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
