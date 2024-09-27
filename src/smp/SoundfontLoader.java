@@ -16,6 +16,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
+import javafx.stage.Window;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.sequences.Note;
@@ -220,8 +221,8 @@ public class SoundfontLoader implements Loader {
 	 * @return if soundfont exists in AppData now
 	 * @since v1.1.2
 	 */
-	public boolean addSoundfont(String path) {
-		return addSoundfont(new File(path));
+	public boolean addSoundfont(String path, Window owner) {
+		return addSoundfont(new File(path), owner);
 	}
 	
 	/**
@@ -232,7 +233,7 @@ public class SoundfontLoader implements Loader {
 	 * @return if soundfont exists in AppData now
 	 * @since v1.1.2
 	 */
-	public boolean addSoundfont(File sf) {
+	public boolean addSoundfont(File sf, Window owner) {
 		String sfName = sf.getName();
 		if(sfName.isEmpty())
 			return false;
@@ -240,7 +241,7 @@ public class SoundfontLoader implements Loader {
 		
 		if (destSf.exists()) {
 		    String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-		    if (!Dialog.showYesNoDialog(mssg))
+		    if (!Dialog.showYesNoDialog(mssg, owner))
 		        return false;
 		}
 		

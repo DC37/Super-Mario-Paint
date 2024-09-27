@@ -1,11 +1,13 @@
 package smp.components.buttons;
 
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Window;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
@@ -55,9 +57,9 @@ public class NewButton extends ImagePushButton {
     protected void reactPressed(MouseEvent event) {
         ProgramState curr = StateMachine.getState();
         if (curr == ProgramState.EDITING)
-            newSong();
+            newSong(((Node) event.getSource()).getScene().getWindow());
         else if (curr == ProgramState.ARR_EDITING)
-            newArrangement();
+            newArrangement(((Node) event.getSource()).getScene().getWindow());
     }
 
     @Override
@@ -69,12 +71,12 @@ public class NewButton extends ImagePushButton {
      * Creates a new song and clears the staff of all notes. Make sure you save
      * your song first! The action is ignored if the song is playing.
      */
-    private void newSong() {
+    private void newSong(Window owner) {
         boolean cont = true;
         if (StateMachine.isSongModified())
             cont = Dialog
                     .showYesNoDialog("The current song has been modified!\n"
-                            + "Create a new song anyway?");
+                            + "Create a new song anyway?", owner);
 
         if (cont) {
             theStaff.setSequence(new StaffSequence());
@@ -94,12 +96,12 @@ public class NewButton extends ImagePushButton {
      * you save your arrangement first! The action is ignored if an arrangement
      * is playing.
      */
-    private void newArrangement() {
+    private void newArrangement(Window owner) {
         boolean cont = true;
         if (StateMachine.isArrModified()) {
             cont = Dialog
                     .showYesNoDialog("The current arrangement has been\n"
-                            + "modified! Create a new arrangement\nanyway?");
+                            + "modified! Create a new arrangement\nanyway?", owner);
         }
         if (cont) {
             theStaff.setArrangement(new StaffArrangement());

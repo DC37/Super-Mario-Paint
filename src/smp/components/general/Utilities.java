@@ -27,6 +27,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.concurrent.Task;
+import javafx.stage.Window;
 import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffArrangement;
@@ -383,7 +384,7 @@ public class Utilities {
      *            This is the input filename.
      */
     public static StaffSequence loadSequenceFromArrangement(File inputFile,
-            Staff theStaff, SMPFXController controller) {
+            Staff theStaff, SMPFXController controller, Window owner) {
         try {
             inputFile = new File(inputFile.getParent() + File.separatorChar
                     + inputFile.getName());
@@ -405,15 +406,15 @@ public class Utilities {
 
         } catch (ClassCastException | EOFException | StreamCorruptedException
                 | NullPointerException e) {
-            Dialog.showDialog("Not a valid song file.");
+            Dialog.showDialog("Not a valid song file.", owner);
             return null;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Dialog.showDialog("Not a valid song file.");
+            Dialog.showDialog("Not a valid song file.", owner);
             return null;
         } catch (IOException e) {
             e.printStackTrace();
-            Dialog.showDialog("Not a valid song file.");
+            Dialog.showDialog("Not a valid song file.", owner);
             return null;
         }
     }
@@ -563,10 +564,10 @@ public class Utilities {
 	 */
     public static void populateStaffArrangement(StaffArrangement loaded,
             File inputFile, boolean mpc, Staff theStaff,
-            final SMPFXController controller) {
+            final SMPFXController controller, Window owner) {
         File firstFile = loaded.getTheSequenceFiles().get(0);
         StaffSequence first = loadSequenceFromArrangement(firstFile, theStaff,
-                controller);
+                controller, owner);
         String fname = inputFile.getName();
         boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);
