@@ -89,7 +89,6 @@ public class MPCDecoder {
     private static StaffSequence populateSequence(String timeSig,
             ArrayList<String> songData, String tempo) {
         StaffSequence song = new StaffSequence();
-        song.getTheLines().clear();
         song.setTempo(Double.parseDouble(tempo));
         int accum = 0;
         for (String s : songData) {
@@ -129,9 +128,7 @@ public class MPCDecoder {
             sl.setVolume(vol);
             song.addLine(sl);
         }
-        while (song.getTheLines().size() < Values.LINES_PER_MPC_SONG) {
-            song.getTheLines().add(new StaffNoteLine());
-        }
+        song.resize(Values.LINES_PER_MPC_SONG);
         return song;
     }
 

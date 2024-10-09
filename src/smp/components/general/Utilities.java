@@ -263,23 +263,23 @@ public class Utilities {
                         }
                     }
                 }
-                if (loaded.getTheLines().size() < lineNum + 1) {
-                    int add = lineNum - loaded.getTheLines().size();
+                if (loaded.getLength() < lineNum + 1) {
+                    int add = lineNum - loaded.getLength();
                     for (int i = 0; i < add; i++) {
                         loaded.addLine(new StaffNoteLine());
                     }
                 }
-                if (lineNum >= loaded.getTheLines().size()) {
+                if (lineNum >= loaded.getLength()) {
                     loaded.addLine(st);
                 } else {
                     loaded.setLine(lineNum, st);
                 }
             }
         }
-        if (loaded.getTheLines().size() % 10 != 0) {
+        if (loaded.getLength() % 10 != 0) {
             do {
                 loaded.addLine(new StaffNoteLine());
-            } while (loaded.getTheLines().size() % 10 != 0);
+            } while (loaded.getLength() % 10 != 0);
         }
         return loaded;
     }
@@ -438,7 +438,7 @@ public class Utilities {
         StateMachine.setTempo(loaded.getTempo());
         theStaff.getControlPanel()
                 .getScrollbar()
-                .setMax(loaded.getTheLines().size()
+                .setMax(loaded.getLength()
                         - Values.NOTELINES_IN_THE_WINDOW);
         theStaff.setLocation(0);
         theStaff.getNoteMatrix().redraw();
