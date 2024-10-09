@@ -43,6 +43,10 @@ public class StaffSequence implements Serializable {
         for (int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
             theLines.add(new StaffNoteLine());
     }
+    
+    public int getLength() {
+        return theLines.size();
+    }
 
     /**
      * @param i
