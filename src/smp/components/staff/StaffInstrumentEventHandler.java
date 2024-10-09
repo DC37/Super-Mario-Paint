@@ -300,7 +300,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (!accList.contains(accidental))
             accList.add(accidental);
 
-        StaffNoteLine temp = theStaff.getSequence().getLine(
+        StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
 
         if (temp.isEmpty()) {
@@ -346,7 +346,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if (!accList.isEmpty())
             accList.remove(0);
 
-        StaffNoteLine temp = theStaff.getSequence().getLine(
+        StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
 
         if (!temp.isEmpty()) {

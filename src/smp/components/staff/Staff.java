@@ -576,7 +576,7 @@ public class Staff {
      * @param index The index to do events from
      */
     private void doEvents(int index) {
-        StaffNoteLine s = getSequence().getLine(
+        StaffNoteLine s = getSequence().getLineSafe(
                 (int) (currVal.doubleValue() + index));
         ArrayList<StaffEvent> theEvents = s.getEvents();
         for (StaffEvent e : theEvents) {
