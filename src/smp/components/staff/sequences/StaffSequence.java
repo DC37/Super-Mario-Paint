@@ -82,6 +82,44 @@ public class StaffSequence implements Serializable {
         }
     }
     
+    /**
+     * <p>Resize the sequence so that the display won't show any lines beyond the
+     * sequence's size while the player is running.</p>
+     * 
+     * <p>The result is some <i>n</i> such that:</p>
+     * <ul>
+     * <li><i>n</i> is greater than or equal to the minimal sequence size;</li>
+     * <li><i>n</i> is greater than or equal to the result of {@link getEndlineIndex};</li>
+     * <li><i>n</i> is a multiple of this sequence's bar length;</li>
+     * <li>If <i>k</i> consecutive screens are necessary to display the whole sequence,
+     * and one screen is <i>p</i>-wide, then <i>n</i> is greater than or equal to
+     * <i>(k+1)*p</i></li>
+     * <li><i>n</i> is minimal for the conditions above.</li>
+     * </ul>
+     */
+    public void normalize() {
+        int endline = getEndlineIndex();
+        int barLength = t.top();
+        
+        int screenWidth = Values.NOTELINES_IN_THE_WINDOW;
+        int numberOfScreens = (endline / screenWidth) + 1;
+        
+        int n = endline;
+        if (n < Values.DEFAULT_LINES_PER_SONG)
+            n = Values.DEFAULT_LINES_PER_SONG;
+        
+        // "+1" in case one additional screen is necessary; this can happen if a
+        // song is played from the middle
+        if (n < (numberOfScreens + 1) * screenWidth)
+            n = (numberOfScreens + 1) * screenWidth;
+        
+        int r = n % barLength;
+        if (r != 0)
+            n = n - r + barLength;
+        
+        resize(n);
+    }
+    
     public StaffNoteLine getLine(int i) throws IndexOutOfBoundsException {
         return theLines.get(i);
     }
