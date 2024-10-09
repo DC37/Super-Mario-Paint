@@ -47,6 +47,26 @@ public class StaffSequence implements Serializable {
     public int getLength() {
         return theLines.size();
     }
+    
+    /**
+     * <p>Compute the index of the line marking the end of this sequence,
+     * <i>i.e.</i> the first line that should <b>not</b> be played.</p>
+     * 
+     * <p>Takes into account the time signature (length of a bar).</p>
+     */
+    public int getEndlineIndex() {
+        int lastNonempty = theLines.size() - 1;
+        while (lastNonempty >= 0 && theLines.get(lastNonempty).isEmpty()) {
+            lastNonempty--;
+        }
+        if (lastNonempty < 0) {
+            return 0;
+        } else {
+            int barLength = t.top();
+            // return first multiple of barLength that is > lastNonempty
+            return barLength * ((lastNonempty / barLength) + 1);
+        }
+    }
 
     /**
      * @param i

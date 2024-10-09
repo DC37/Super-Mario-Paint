@@ -27,13 +27,11 @@ import smp.components.controls.Controls;
 import smp.components.general.Utilities;
 import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffEvent;
-import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
-import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 
 /**
@@ -60,9 +58,6 @@ public class Staff {
 
     /** Whether we are playing an arrangement. */
     private boolean arrPlaying = false;
-
-    /** This is the last line of notes in the song. */
-    private int lastLine;
 
     /** This is the current line that we are at. */
     private DoubleProperty currVal;
@@ -227,9 +222,9 @@ public class Staff {
     	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         highlightsOff();
-        lastLine = findLastLine();
-        if ((lastLine == 0 && theSequence.getLine(0).isEmpty())
-                || (lastLine < StateMachine.getMeasureLineNum())) {
+        int endLine = theSequence.getEndlineIndex();
+        if ((endLine < 0 && theSequence.getLine(0).isEmpty())
+                || (endLine <= StateMachine.getMeasureLineNum())) {
             theControls.getStopButton().reactPressed(null);
             return;
         }
@@ -265,18 +260,6 @@ public class Staff {
         }
         arrPlaying = true;
         animationService.restart();
-    }
-
-    /**
-     * Finds the last line in the sequence that we are playing.
-     */
-    private int findLastLine() {
-        ArrayList<StaffNoteLine> lines = theSequence.getTheLines();
-        for (int i = lines.size() - 1; i >= 0; i--)
-            if (!lines.get(i).isEmpty()) {
-                return i;
-            }
-        return 0;
     }
 
     /**
@@ -669,6 +652,7 @@ public class Staff {
                 playBars = staffImages.getPlayBars();
                 int counter = StateMachine.getMeasureLineNum();
                 boolean zero = false;
+                int endLine = theSequence.getEndlineIndex();
                 while (songPlaying) {
                     if (zero) {
                         queue++;
@@ -680,7 +664,7 @@ public class Staff {
                     queue++;
                     playNextLine();
                     counter++;
-                    if (counter > lastLine && counter % 4 == 0) {
+                    if (counter >= endLine) {
                         if (StateMachine.isLoopPressed()) {
                             counter = 0;
                             index = 0;
@@ -787,6 +771,7 @@ public class Staff {
                 highlightsOff();
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
+                int endLine;
                 for (int i = 0; i < seq.size(); i++) {
                     while (queue > 0)
                         ;
@@ -805,7 +790,7 @@ public class Staff {
                     StateMachine.setTempo(theSequence.getTempo());
                     queue++;
                     setScrollbar();
-                    lastLine = findLastLine();
+                    endLine = seq.get(i).getEndlineIndex();
                     songPlaying = true;
                     setTempo(theSequence.getTempo());
                     playBars = staffImages.getPlayBars();
@@ -820,7 +805,7 @@ public class Staff {
                         queue++;
                         playNextLine();
                         counter++;
-                        if (counter > lastLine && counter % 4 == 0) {
+                        if (counter >= endLine) {
                             songPlaying = false;
                         }
                         try {
