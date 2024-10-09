@@ -222,12 +222,6 @@ public class Staff {
     	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         highlightsOff();
-        int endLine = theSequence.getEndlineIndex();
-        if ((endLine < 0 && theSequence.getLine(0).isEmpty())
-                || (endLine <= StateMachine.getMeasureLineNum())) {
-            theControls.getStopButton().reactPressed(null);
-            return;
-        }
         songPlaying = true;
         setTempo(StateMachine.getTempo());
         animationService.restart();
