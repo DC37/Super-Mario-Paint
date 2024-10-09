@@ -250,31 +250,30 @@ public class SaveButton extends ImagePushButton {
      *
      * @param f_out
      *            The FileOutputStream to write in.
-     * @param out
+     * @param seq
      *            The StaffSequence to write.
      * @throws IOException
      */
-    private void saveSongTxt(FileOutputStream f_out, StaffSequence out)
+    private void saveSongTxt(FileOutputStream f_out, StaffSequence seq)
             throws IOException {
         PrintStream pr = new PrintStream(f_out);
-        ArrayList<StaffNoteLine> theLines = out.getTheLines();
-        TimeSignature t = out.getTimeSignature();
+        TimeSignature t = seq.getTimeSignature();
         if (t == null) {
             t = TimeSignature.FOUR_FOUR;
         }
-        pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", out.getTempo(),
-                Utilities.longFromBool(out.getNoteExtensions()), t, out.getSoundset());
+        pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", seq.getTempo(),
+                Utilities.longFromBool(seq.getNoteExtensions()), t, seq.getSoundset());
         
-        for (int i = 0; i < theLines.size(); i++) {
-            if (theLines.get(i).isEmpty()) {
+        for (int i = 0; i < seq.getLength(); i++) {
+            if (seq.getLine(i).isEmpty()) {
                 continue;
             }
             pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
-            ArrayList<StaffNote> line = theLines.get(i).getNotes();
+            ArrayList<StaffNote> line = seq.getLine(i).getNotes();
             for (int j = 0; j < line.size(); j++) {
                 pr.print(line.get(j) + ",");
             }
-            pr.printf("VOL: %d\r\n", theLines.get(i).getVolume());
+            pr.printf("VOL: %d\r\n", seq.getLine(i).getVolume());
         }
 		pr.close();
 

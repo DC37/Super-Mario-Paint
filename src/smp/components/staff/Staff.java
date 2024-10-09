@@ -867,7 +867,7 @@ public class Staff {
                     @Override
                     public void run() {
                         theControls.getScrollbar().setMax(
-                                theSequence.getTheLines().size()
+                                theSequence.getLength()
                                         - Values.NOTELINES_IN_THE_WINDOW);
                         queue--;
                     }
