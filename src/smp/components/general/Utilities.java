@@ -141,34 +141,6 @@ public class Utilities {
     }
 
     /**
-     * Makes a sequence fit on the screen, and also trims excessive whitespace
-     * at the end of a file.
-     *
-     * @param theSeq
-     *            The sequence to normalize.
-     */
-    public static void normalize(StaffSequence theSeq) {
-        ArrayList<StaffNoteLine> theLines = theSeq.getTheLines();
-        int last = theLines.size() - 1;
-        for (int i = theLines.size() - 1; i >= 0; i--) {
-            if (i < Values.DEFAULT_LINES_PER_SONG)
-                break;
-            else if (!theLines.get(i).isEmpty()) {
-                last = i;
-                break;
-            }
-        }
-        last = theLines.size() - last;
-        for (int i = 0; i < last - 1; i++)
-            theLines.remove(theLines.size() - 1);
-        while (theLines.size() % 4 != 0
-                || theLines.size() % Values.NOTELINES_IN_THE_WINDOW != 0) {
-            theLines.add(new StaffNoteLine());
-        }
-
-    }
-
-    /**
      * Loads a song from the file specified.
      *
      * @param inputFile
@@ -432,7 +404,7 @@ public class Utilities {
 	 */
     public static String populateStaff(StaffSequence loaded, File inputFile,
             boolean mpc, Staff theStaff, SMPFXController controller) {
-        Utilities.normalize(loaded);
+        loaded.normalize();
         theStaff.setSequence(loaded);
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
