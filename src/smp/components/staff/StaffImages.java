@@ -105,7 +105,7 @@ public class StaffImages {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
             StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
                     .getVolHandler(i);
-            StaffNoteLine stl = theStaff.getSequence().getLine(i);
+            StaffNoteLine stl = theStaff.getSequence().getLineSafe(i);
             sveh.setStaffNoteLine(stl);
         }
     }

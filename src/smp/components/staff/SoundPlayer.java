@@ -48,7 +48,7 @@ public class SoundPlayer {
     public void playSoundLine(int index) {
         if (!run)
             return;
-        StaffNoteLine s = theStaff.getSequence().getLine(
+        StaffNoteLine s = theStaff.getSequence().getLineSafe(
                 (int) (getCurrVal() + index));
         ArrayList<StaffNote> theNotes = s.getNotes();
         tracker.stopNotes(s);

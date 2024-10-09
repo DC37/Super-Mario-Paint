@@ -177,7 +177,7 @@ public class NoteMatrix {
         StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
         int currentPosition = StateMachine.getMeasureLineNum();
 
-        StaffNoteLine stl = theStaff.getSequence().getLine(
+        StaffNoteLine stl = theStaff.getSequence().getLineSafe(
                 currentPosition + index);
 
         updateVolumeDisplay(sveh, stl);

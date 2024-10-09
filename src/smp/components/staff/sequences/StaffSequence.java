@@ -81,18 +81,25 @@ public class StaffSequence implements Serializable {
             return barLength * ((lastNonempty / barLength) + 1);
         }
     }
+    
+    public StaffNoteLine getLine(int i) throws IndexOutOfBoundsException {
+        return theLines.get(i);
+    }
 
     /**
-     * @param i
-     *            The index that we want to get some line from.
-     * @return Gets a <code>StaffNoteLine</code> that resides at index i.
+     * <p>Safe version of {@link getLine} that resizes the sequence if the
+     * index is out of bounds.</p>
+     * 
+     * <p>If the sequence's length is bound to UI behavior in some way, it is
+     * recommended to use {@link getLine} instead, as calling this method may
+     * have unexpected consequences on the UI side.
      */
-    public StaffNoteLine getLine(int i) {
+    public StaffNoteLine getLineSafe(int i) {
         try {
             return theLines.get(i);
         } catch (IndexOutOfBoundsException e) {
             resize(i + 1);
-            return getLine(i);
+            return getLineSafe(i);
         }
     }
 
