@@ -167,6 +167,47 @@ public class StaffSequence implements Serializable {
     public void addLine(StaffNoteLine s) {
         theLines.add(s);
     }
+    
+    /**
+     * <p>Insert empty lines to implement the "Multiply Tempo" feature.</p>
+     */
+    public void expand(int n) {
+        if (n < 2 || theLines.isEmpty())
+            return;
+        
+        int sz = theLines.size();
+        for (int i = 0; i < sz; i++) {
+            int idx = (i * n) + 1;
+            for (int j = 0; j < n - 1; j++)
+                theLines.add(idx, new StaffNoteLine());
+        }
+    }
+    
+    /**
+     * <p>Remove the empty lines resulting from {@link expand}.</p>
+     * @throws IllegalArgumentException when attempting to remove a non empty line.
+     */
+    public void retract(int n) throws IllegalArgumentException {
+        if (n < 2 || theLines.isEmpty())
+            return;
+        
+        int sz = theLines.size();
+        // Check there is no error before modifying the list
+        for (int i = 0; i < sz; i++) {
+            if (i % n == 0)
+                continue;
+            
+            if (!theLines.get(i).isEmpty())
+                throw new IllegalArgumentException("Can't undo Multiply Tempo");
+        }
+        
+        for (int i = sz - 1; i >= 0; i--) {
+            if (i % n == 0)
+                continue;
+            
+            theLines.remove(i);
+        }
+    }
 
     /**
      * Adds a line into this sequence.
