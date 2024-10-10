@@ -2,7 +2,6 @@ package smp.components.buttons;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
@@ -31,14 +30,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.commandmanager.commands.MultiplyTempoCommand;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
-import smp.components.staff.sequences.StaffNoteLine;
+import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
 import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
@@ -306,20 +304,16 @@ public class OptionsButton extends ImagePushButton {
             }
             if (num <= 1)
                 return;
-            ArrayList<StaffNoteLine> s = theStaff.getSequence().getTheLines();
-            ArrayList<StaffNoteLine> n = new ArrayList<StaffNoteLine>();
-            for (int i = 0; i < s.size(); i++) {
-                n.add(s.get(i));
-                for (int j = 0; j < num - 1; j++)
-                    n.add(new StaffNoteLine());
-            }
-            s.clear();
-            s.addAll(n);
+            
+            StaffSequence seq = theStaff.getSequence();
             double currTempo = StateMachine.getTempo();
             double newTempo = currTempo * num;
+            
+            seq.expand(num);
+            seq.setTempo(newTempo);
             StateMachine.setTempo(newTempo);
             theStaff.getControlPanel().getScrollbar()
-                    .setMax(s.size() - Values.NOTELINES_IN_THE_WINDOW);
+                    .setMax(seq.getLength() - Values.NOTELINES_IN_THE_WINDOW);
             
             controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num, currTempo, newTempo));
             controller.getModifySongManager().record();
