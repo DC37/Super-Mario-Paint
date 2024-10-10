@@ -2,6 +2,7 @@ package smp.components.staff.sequences;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import smp.components.Values;
 import smp.stateMachine.TimeSignature;
@@ -26,7 +27,7 @@ public class StaffSequence implements Serializable {
     private double tempo = Values.DEFAULT_TEMPO;
 
     /** These are all of the lines on the staff. */
-    private ArrayList<StaffNoteLine> theLines;
+    private List<StaffNoteLine> theLines;
 
     /** This tells us which notes are extended (green highlight) or not. */
     private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
@@ -139,13 +140,6 @@ public class StaffSequence implements Serializable {
             resize(i + 1);
             return getLineSafe(i);
         }
-    }
-
-    /**
-     * @return The entire list of the StaffNoteLines of this song.
-     */
-    public ArrayList<StaffNoteLine> getTheLines() {
-        return theLines;
     }
 
     /**
