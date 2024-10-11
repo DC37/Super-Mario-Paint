@@ -1,5 +1,6 @@
 package smp.fx;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -14,6 +15,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.commandmanager.ModifySongManager;
+import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffInstrumentEventHandler;
@@ -335,6 +337,13 @@ public class SMPFXController {
         
         // Bind displayed tempo to internal value in state machine
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
+        
+        // Setup scrollbar
+        scrollbar.maxProperty().bind(Bindings.createIntegerBinding(
+                () -> StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW,
+                StateMachine.getMaxLineProperty()));
+        scrollbar.valueProperty().bindBidirectional(
+                StateMachine.getCurrentLineProperty());
         
     }
     /**
