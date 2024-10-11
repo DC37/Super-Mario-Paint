@@ -596,12 +596,11 @@ public class Staff {
              * Zeros the staff to the beginning point. Use only at the beginning
              * of a new song file.
              */
-            protected void zeroEverything() {
+            protected void zeroHighlights() {
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
-                        setLocation(0);
                         playBars.get(0).setVisible(true);
                         for (int i = 1; i < playBars.size(); i++)
                             playBars.get(i).setVisible(false);
@@ -623,8 +622,9 @@ public class Staff {
                 
                 while (songPlaying) {
                     if (zero) {
+                        setLocation(0);
                         queue++;
-                        zeroEverything();
+                        zeroHighlights();
                         while (queue > 0)
                             ;
                         zero = false;
@@ -763,7 +763,7 @@ public class Staff {
                     int counter = 0;
                     setLocation(0);
                     queue++;
-                    zeroEverything();
+                    zeroHighlights();
                     while (queue > 0)
                         ;
                     /* Force operations to complete before starting a song. */
