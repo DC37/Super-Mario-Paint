@@ -619,6 +619,7 @@ public class Staff {
                 int endLine = theSequence.getEndlineIndex();
                 
                 theSequence.normalize();
+                StateMachine.setMaxLine(theSequence.getLength());
                 
                 while (songPlaying) {
                     if (zero) {
@@ -754,8 +755,7 @@ public class Staff {
                             theSequence.getNoteExtensions());
                     controller.getInstBLine().updateNoteExtensions();
                     StateMachine.setTempo(theSequence.getTempo());
-                    queue++;
-                    setScrollbar();
+                    StateMachine.setMaxLine(theSequence.getLength());
                     endLine = seq.get(i).getEndlineIndex();
                     songPlaying = true;
                     setTempo(theSequence.getTempo());
@@ -830,19 +830,6 @@ public class Staff {
                         queue--;
                     }
 
-                });
-            }
-
-            /** Sets the scrollbar max/min to the proper values. */
-            private void setScrollbar() {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        theControls.getScrollbar().setMax(
-                                theSequence.getLength()
-                                        - Values.NOTELINES_IN_THE_WINDOW);
-                        queue--;
-                    }
                 });
             }
         }

@@ -10,6 +10,7 @@ import smp.components.general.ImagePushButton;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
+import smp.stateMachine.StateMachine;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
@@ -94,8 +95,7 @@ public class ArrowButton extends ImagePushButton {
             public void run() {
                 scrollbar.adjustValue(scrollbar.getValue() + skipAmount);
                 if (scrollbar.getMax() <= scrollbar.getValue() && endOfFile) {
-                    scrollbar.setMax(scrollbar.getMax()
-                            + Values.NOTELINES_IN_THE_WINDOW * 2);
+                    StateMachine.setMaxLine(StateMachine.getMaxLine() + Values.NOTELINES_IN_THE_WINDOW * 2);
                     StaffSequence s = theStaff.getSequence();
                     int start = (int) scrollbar.getMax();
                     for (int i = start; i < start

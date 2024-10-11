@@ -312,8 +312,7 @@ public class OptionsButton extends ImagePushButton {
             seq.expand(num);
             seq.setTempo(newTempo);
             StateMachine.setTempo(newTempo);
-            theStaff.getControlPanel().getScrollbar()
-                    .setMax(seq.getLength() - Values.NOTELINES_IN_THE_WINDOW);
+            StateMachine.setMaxLine(seq.getLength());
             
             controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num, currTempo, newTempo));
             controller.getModifySongManager().record();
