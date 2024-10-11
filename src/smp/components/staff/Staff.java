@@ -14,7 +14,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
@@ -182,8 +181,9 @@ public class Staff {
      */
     public synchronized void setLocation(int num) {
         theMatrix.redraw();
-        Slider s = controller.getScrollbar();
-        s.adjustValue(num);
+        int maxVal = StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW;
+        int newLoc = (num < 0) ? 0 : (num > maxVal) ? maxVal : num;
+        StateMachine.setMeasureLineNum(newLoc);
     }
 
     /**
@@ -608,7 +608,6 @@ public class Staff {
                     @Override
                     public void run() {
                         setLocation(0);
-                        StateMachine.setMeasureLineNum(0);
                         playBars.get(0).setVisible(true);
                         for (int i = 1; i < playBars.size(); i++)
                             playBars.get(i).setVisible(false);
@@ -692,7 +691,6 @@ public class Staff {
                             int loc = StateMachine.getMeasureLineNum()
                                     + Values.NOTELINES_IN_THE_WINDOW;
                             setLocation(loc);
-                            StateMachine.setMeasureLineNum(loc);
                         }
                         doEvents(index);
                         playSoundLine(index);
@@ -769,7 +767,7 @@ public class Staff {
                     setTempo(theSequence.getTempo());
                     playBars = staffImages.getPlayBars();
                     int counter = 0;
-                    StateMachine.setMeasureLineNum(0);
+                    setLocation(0);
                     queue++;
                     zeroEverything();
                     while (queue > 0)
