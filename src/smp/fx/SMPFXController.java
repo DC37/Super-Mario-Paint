@@ -472,11 +472,6 @@ public class SMPFXController {
         return controlPanel;
     }
 
-    /** @return The slider that controls the tempo in the control panel. */
-    public Slider getTempoSlider() {
-        return controlPanel.getScrollbar();
-    }
-
     /** @return The tempo plus button. */
     public ImageView getTempoPlus() {
         return tempoPlus;
