@@ -194,8 +194,6 @@ public class Staff {
             @Override
             public void run() {
                 theMatrix.redraw();
-                Slider s = controller.getScrollbar();
-                s.adjustValue(StateMachine.getMeasureLineNum());
             }
         });
     }
