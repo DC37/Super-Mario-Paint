@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyCode;
 import smp.components.Values;
 
@@ -70,7 +72,13 @@ public class StateMachine {
      * The current measure line number that the program is on. Typically a
      * number between 0 and 383. This is zero by default.
      */
-    private static int currentLine = 0;
+    private static IntegerProperty currentLine = new SimpleIntegerProperty(0);
+    
+    /**
+     * The furthest you can reach by scrolling to the end of the sequence.
+     * Technically this is the first line that cannot be displayed.
+     */
+    private static IntegerProperty maxLine = new SimpleIntegerProperty(Values.DEFAULT_LINES_PER_SONG);
 
     /**
      * This is the current tempo that the program is running at.
@@ -161,6 +169,10 @@ public class StateMachine {
     public static void setTempo(double num) {
         tempo.set(num);
     }
+    
+    public static IntegerProperty getCurrentLineProperty() {
+        return currentLine;
+    }
 
     /**
      * Gets the current line number that we're on. Typically a value between 0
@@ -170,7 +182,7 @@ public class StateMachine {
      * @return The current line number (left justify)
      */
     public static int getMeasureLineNum() {
-        return currentLine;
+        return currentLine.get();
     }
 
     /**
@@ -181,7 +193,19 @@ public class StateMachine {
      *            to.
      */
     public static void setMeasureLineNum(int num) {
-        currentLine = num;
+        currentLine.set(num);
+    }
+    
+    public static IntegerProperty getMaxLineProperty() {
+        return maxLine;
+    }
+    
+    public static int getMaxLine() {
+        return maxLine.get();
+    }
+    
+    public static void setMaxLine(int num) {
+        maxLine.set(num);
     }
 
     /** Sets that the song is now loop-enabled. */
