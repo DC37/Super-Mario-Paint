@@ -83,7 +83,7 @@ public class NewButton extends ImagePushButton {
             theStaff.setSequenceFile(null);
             Slider sc = theStaff.getControlPanel().getScrollbar();
             sc.setValue(0);
-            sc.setMax(Values.DEFAULT_LINES_PER_SONG - 10);
+            StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
             ArrowButton.setEndOfFile(false);
             theStaff.redraw();
             controller.getNameTextField().clear();

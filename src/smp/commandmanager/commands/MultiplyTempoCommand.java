@@ -1,7 +1,6 @@
 package smp.commandmanager.commands;
 
 import smp.commandmanager.CommandInterface;
-import smp.components.Values;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
 import smp.stateMachine.StateMachine;
@@ -26,8 +25,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    seq.expand(theMultiplyAmount);
 	    seq.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
-        theStaff.getControlPanel().getScrollbar()
-                .setMax(seq.getLength() - Values.NOTELINES_IN_THE_WINDOW);
+        StateMachine.setMaxLine(seq.getLength());
 	}
 
 	@Override
@@ -36,8 +34,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    seq.retract(theMultiplyAmount);
 	    seq.setTempo(previousTempo);
         StateMachine.setTempo(previousTempo);
-	    theStaff.getControlPanel().getScrollbar()
-	            .setMax(seq.getLength() - Values.NOTELINES_IN_THE_WINDOW);
+        StateMachine.setMaxLine(seq.getLength());
 	}
 
 }

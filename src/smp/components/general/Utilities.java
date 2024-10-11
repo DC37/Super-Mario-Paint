@@ -408,10 +408,7 @@ public class Utilities {
         theStaff.setSequence(loaded);
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
-        theStaff.getControlPanel()
-                .getScrollbar()
-                .setMax(loaded.getLength()
-                        - Values.NOTELINES_IN_THE_WINDOW);
+        StateMachine.setMaxLine(loaded.getLength());
         theStaff.setLocation(0);
         theStaff.redraw();
         String fname = inputFile.getName();
