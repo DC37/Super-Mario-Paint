@@ -7,8 +7,10 @@ import java.util.Set;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.KeyCode;
 import smp.components.Values;
 
@@ -61,7 +63,7 @@ public class StateMachine {
      * The default state that the program is in is the EDITING state, in which
      * notes are being placed on the staff.
      */
-    private static ProgramState currentState = ProgramState.EDITING;
+    private static ObjectProperty<ProgramState> currentState = new SimpleObjectProperty<>(ProgramState.EDITING);
 
     /**
      * The default time signature that we start out with is 4/4 time.
@@ -101,6 +103,10 @@ public class StateMachine {
      */
     private StateMachine() {
     }
+    
+    public static ObjectProperty<ProgramState> getStateProperty() {
+        return currentState;
+    }
 
     /**
      * Get the current <code>State</code> of the <code>StateMachine</code>
@@ -108,7 +114,7 @@ public class StateMachine {
      * @return The current <code>State</code>.
      */
     public static ProgramState getState() {
-        return currentState;
+        return currentState.get();
     }
 
     /**
@@ -116,14 +122,14 @@ public class StateMachine {
      *            Set the <code>StateMachine</code> to a certain State.
      */
     public static void setState(ProgramState s) {
-        currentState = s;
+        currentState.set(s);
     }
 
     /**
      * Sets the state back to "Editing" by default.
      */
     public static void resetState() {
-        currentState = ProgramState.EDITING;
+        currentState.set(ProgramState.EDITING);
     }
 
     /**
