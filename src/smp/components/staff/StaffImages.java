@@ -40,9 +40,6 @@ public class StaffImages {
      */
     private ArrayList<Text> measureNums;
 
-    /** These are the bars that highlight notes. */
-    private ArrayList<ImageView> staffPlayBars;
-
     /** This is the FXML controller class. */
     private SMPFXController controller;
 
@@ -90,7 +87,6 @@ public class StaffImages {
     public void initialize() {
 
         initializeStaffMeasureLines(controller.getStaffMeasureLines());
-        initializeStaffPlayBars(controller.getStaffPlayBars());
         initializeStaffMeasureNums(controller.getStaffMeasureNums());
         initializeStaffLedgerLines();
         initializeStaffInstruments(controller.getStaffInstruments(),
@@ -239,22 +235,6 @@ public class StaffImages {
     }
 
     /**
-     * Sets up the note highlighting functionality.
-     *
-     * @param staffPlayBars
-     *            The bars that move to highlight different notes.
-     */
-    private void initializeStaffPlayBars(HBox playBars) {
-        staffPlayBars = new ArrayList<ImageView>();
-        for (Node n : playBars.getChildren()) {
-            ImageView i = (ImageView) n;
-            i.setImage(il.getSpriteFX(ImageIndex.PLAY_BAR1));
-            i.setVisible(false);
-            staffPlayBars.add(i);
-        }
-    }
-
-    /**
      * Sets up the staff expansion lines, which are to hold notes that are
      * higher than or lower than the regular lines of the staff.
      *
@@ -299,14 +279,6 @@ public class StaffImages {
      */
     public void setStaff(Staff s) {
         theStaff = s;
-    }
-
-    /**
-     * @return The list of <code>ImageView</code> objects that holds the bars
-     *         that will highlight the notes that we are playing on the staff.
-     */
-    public ArrayList<ImageView> getPlayBars() {
-        return staffPlayBars;
     }
 
     /**
