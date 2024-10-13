@@ -743,7 +743,6 @@ public class Staff {
                     while (queue > 0)
                         ;
                     /* Force emptying of queue before changing songs. */
-                    queue++;
                     setSoundset(seq.get(i).getSoundset());
                     index = 0;
                     advance = false;
@@ -795,22 +794,15 @@ public class Staff {
 			 *            The soundset.
 			 * @since v1.1.2
 			 */
-			private void setSoundset(final String soundset) {
-				Platform.runLater(new Runnable() {
-
-					@Override
-					public void run() {
-						if (!controller.getSoundfontLoader().loadFromCache(soundset)) {
-							try {
-								controller.getSoundfontLoader().loadFromAppData(soundset);
-							} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-								e.printStackTrace();
-							}
-							controller.getSoundfontLoader().storeInCache();
-						}
-						queue--;
-					}
-				});
+            private void setSoundset(final String soundset) {
+                if (!controller.getSoundfontLoader().loadFromCache(soundset)) {
+                    try {
+                        controller.getSoundfontLoader().loadFromAppData(soundset);
+                    } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+                        e.printStackTrace();
+                    }
+                    controller.getSoundfontLoader().storeInCache();
+                }
 			}
 
             /**
