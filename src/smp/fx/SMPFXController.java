@@ -390,13 +390,6 @@ public class SMPFXController {
     }
 
     /**
-     * @return The <code>HBox</code> that holds the staff play bars.
-     */
-    public HBox getStaffPlayBars() {
-        return staffPlayBars;
-    }
-
-    /**
      * @return The <code>HBox</code> that holds the staff measure numbers.
      */
     public HBox getStaffMeasureNums() {
