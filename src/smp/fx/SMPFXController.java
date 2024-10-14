@@ -1,5 +1,6 @@
 package smp.fx;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -379,6 +380,20 @@ public class SMPFXController {
                 int pos = StateMachine.getPlaybackPosition();
                 staffPlayBars.getChildren().get(pos).setVisible(true);
             }
+        });
+        
+        // Setup arrangement listview
+        StateMachine.getArrangementSongIndexProperty().addListener(obv -> {
+            int idx = StateMachine.getArrangementSongIndex();
+            arrangementList.getSelectionModel().select(idx);
+            if (idx != -1)
+                Platform.runLater(() -> arrangementList.scrollTo(idx));
+            staff.setSequenceName(arrangementList.getSelectionModel().getSelectedItem());
+        });
+        
+        StateMachine.getPlaybackActiveProperty().addListener(obv -> {
+            if (!StateMachine.isPlaybackActive())
+                StateMachine.setArrangementSongIndex(-1);
         });
         
     }

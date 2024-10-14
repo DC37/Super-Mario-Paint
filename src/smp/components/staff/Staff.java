@@ -673,6 +673,7 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
+                StateMachine.setArrangementSongIndex(0);
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 int endLine;
@@ -687,8 +688,7 @@ public class Staff {
                     setSoundset(seq.get(i).getSoundset());
                     index = 0;
                     advance = false;
-                    queue++;
-                    highlightSong(i);
+                    StateMachine.setArrangementSongIndex(i);
                     theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
                     StateMachine.setNoteExtensions(
@@ -743,26 +743,6 @@ public class Staff {
                     controller.getSoundfontLoader().storeInCache();
                 }
 			}
-
-            /**
-             * Highlights the currently-playing song in the arranger list.
-             *
-             * @param i
-             *            The index to highlight.
-             */
-            private void highlightSong(final int i) {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        theArrangementList.getSelectionModel().select(i);
-                        setSequenceName(theArrangementList.getSelectionModel().getSelectedItem());
-                        theArrangementList.scrollTo(i);
-                        queue--;
-                    }
-
-                });
-            }
         }
     }
 }

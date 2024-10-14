@@ -90,6 +90,11 @@ public class StateMachine {
      * Technically this is the first line that cannot be displayed.
      */
     private static IntegerProperty maxLine = new SimpleIntegerProperty(Values.DEFAULT_LINES_PER_SONG);
+    
+    /**
+     * Currently selected song in arranger mode
+     */
+    private static IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
 
     /**
      * This is the current tempo that the program is running at.
@@ -241,6 +246,18 @@ public class StateMachine {
     
     public static void setMaxLine(int num) {
         maxLine.set(num);
+    }
+    
+    public static IntegerProperty getArrangementSongIndexProperty() {
+        return arrangementSongIndex;
+    }
+    
+    public static int getArrangementSongIndex() {
+        return arrangementSongIndex.get();
+    }
+    
+    public static void setArrangementSongIndex(int i) {
+        arrangementSongIndex.set(i);
     }
 
     /** Sets that the song is now loop-enabled. */
