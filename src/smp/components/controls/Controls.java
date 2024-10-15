@@ -113,7 +113,7 @@ public class Controls {
 		il = im;
 		theStaff = st;
 		setController(ct);
-		setScrollbar(controller.getScrollbar());
+		scrollbar = controller.getScrollbar();
 		theList = controller.getArrangementList();
 		initializeArrows();
 		initializeControlButtons();
@@ -345,23 +345,6 @@ public class Controls {
 	 */
 	public OptionsButton getOptionsButton() {
 		return options;
-	}
-
-	/**
-	 * Sets the scollbar that we will be using.
-	 *
-	 * @param scroll
-	 *            The slider that we'll be using.
-	 */
-	public void setScrollbar(Slider scroll) {
-		scrollbar = scroll;
-	}
-
-	/**
-	 * @return The scrollbar of the program.
-	 */
-	public Slider getScrollbar() {
-		return scrollbar;
 	}
 
 	/**

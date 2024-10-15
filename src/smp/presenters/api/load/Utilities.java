@@ -447,10 +447,10 @@ public class Utilities {
         theStaff.setSequenceFile(inputFile);
 //        StateMachine.setTempo(loaded.getTempo());
 //        theStaff.updateCurrTempo();
-        theStaff.getControlPanel()
-                .getScrollbar()
-                .setMax(loaded.getTheLines().size()
-                        - Values.NOTELINES_IN_THE_WINDOW);
+//        theStaff.getControlPanel()
+//                .getScrollbar()
+//                .setMax(loaded.getTheLines().size()
+//                        - Values.NOTELINES_IN_THE_WINDOW);
         theStaff.setLocation(0);
         theStaff.getNoteMatrix().redraw();
         String fname = inputFile.getName();
