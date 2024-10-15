@@ -2,6 +2,7 @@ package smp.fx;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -358,6 +359,27 @@ public class SMPFXController {
                 StateMachine.getCurrentLineProperty());
         
         scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        
+        // Setup playbars visibility
+        StateMachine.getPlaybackPositionProperty().addListener((obv, oldv, newv) -> {
+            if (!StateMachine.isPlaybackActive()) {
+                return;
+            }
+            staffPlayBars.getChildren().get((int) oldv).setVisible(false);
+            staffPlayBars.getChildren().get((int) newv).setVisible(true);
+        });
+        
+        StateMachine.getPlaybackActiveProperty().addListener(obv -> {
+            if (!StateMachine.isPlaybackActive()) {
+                for (Node n : staffPlayBars.getChildren()) {
+                    n.setVisible(false);
+                }
+                
+            } else {
+                int pos = StateMachine.getPlaybackPosition();
+                staffPlayBars.getChildren().get(pos).setVisible(true);
+            }
+        });
         
     }
     /**
