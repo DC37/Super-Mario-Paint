@@ -116,7 +116,6 @@ public class Controls {
 		setScrollbar(controller.getScrollbar());
 		theList = controller.getArrangementList();
 		initializeArrows();
-		initializeScrollbar();
 		initializeControlButtons();
 		initializeTempoButtons();
 		initializeLoadSaveButtons();
@@ -245,20 +244,6 @@ public class Controls {
 		rightArrow.setStaff(theStaff);
 		rightFastArrow.setStaff(theStaff);
 		leftFastArrow.setStaff(theStaff);
-	}
-
-	/** Sets up the scollbar to affect the staff in some way. */
-	private void initializeScrollbar() {
-		scrollbar.valueProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {
-				theStaff.setLocation(newVal.intValue());
-				theStaff.redraw();
-				theStaff.getStaffImages().updateStaffMeasureLines(newVal.intValue());
-			}
-
-		});
 	}
 
 	/**
