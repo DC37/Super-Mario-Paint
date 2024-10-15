@@ -8,7 +8,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
@@ -78,9 +77,6 @@ public class Controls {
 	/** The pointer to the clipboard selection button on the staff. */
 	private ClipboardButton clipboard;
 
-	/** This is the slider at the bottom of the screen. */
-	private Slider scrollbar;
-
 	/** The arrow that you click to go left. */
 	private ArrowButton leftArrow;
 
@@ -113,7 +109,6 @@ public class Controls {
 		il = im;
 		theStaff = st;
 		setController(ct);
-		scrollbar = controller.getScrollbar();
 		theList = controller.getArrangementList();
 		initializeArrows();
 		initializeControlButtons();
@@ -226,19 +221,19 @@ public class Controls {
 	 * Sets up the slider and arrows that the controls will have.
 	 */
 	private void initializeArrows() {
-		leftArrow = new ArrowButton(controller.getLeftArrow(), scrollbar, ImageIndex.SCROLLBAR_LEFT1_PRESSED,
+		leftArrow = new ArrowButton(controller.getLeftArrow(), ImageIndex.SCROLLBAR_LEFT1_PRESSED,
 				ImageIndex.SCROLLBAR_LEFT1, controller, il);
-		rightArrow = new ArrowButton(controller.getRightArrow(), scrollbar, ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
+		rightArrow = new ArrowButton(controller.getRightArrow(), ImageIndex.SCROLLBAR_RIGHT1_PRESSED,
 				ImageIndex.SCROLLBAR_RIGHT1, controller, il);
-		leftFastArrow = new ArrowButton(controller.getLeftFastArrow(), scrollbar, ImageIndex.SCROLLBAR_LEFT2_PRESSED,
+		leftFastArrow = new ArrowButton(controller.getLeftFastArrow(), ImageIndex.SCROLLBAR_LEFT2_PRESSED,
 				ImageIndex.SCROLLBAR_LEFT2, controller, il);
-		rightFastArrow = new ArrowButton(controller.getRightFastArrow(), scrollbar, ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
+		rightFastArrow = new ArrowButton(controller.getRightFastArrow(), ImageIndex.SCROLLBAR_RIGHT2_PRESSED,
 				ImageIndex.SCROLLBAR_RIGHT2, controller, il);
 
 		leftArrow.setSkipAmount(-1);
 		rightArrow.setSkipAmount(1);
-		rightFastArrow.setSkipAmount(Double.MAX_VALUE);
-		leftFastArrow.setSkipAmount(-Double.MAX_VALUE);
+		rightFastArrow.setSkipAmount(Integer.MAX_VALUE);
+		leftFastArrow.setSkipAmount(-Integer.MAX_VALUE);
 
 		leftArrow.setStaff(theStaff);
 		rightArrow.setStaff(theStaff);

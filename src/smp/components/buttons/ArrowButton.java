@@ -3,18 +3,14 @@ package smp.components.buttons;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.general.ImagePushButton;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
-import javafx.application.Platform;
-import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 /**
  * This is a button that points left or right.
@@ -30,13 +26,7 @@ public class ArrowButton extends ImagePushButton {
      * For a regular arrow, this will be a single measure line, but that can be
      * changed. The fast arrows will generally go to the ends of the staff.
      */
-    private double skipAmount;
-
-    /** Tells us whether we're at the end of the file. */
-    private static boolean endOfFile = false;
-
-    /** This is the slider that the scrollbar will affect. */
-    private Slider scrollbar;
+    private int skipAmount;
 
     /** This is a timer object for click-and-hold. */
     private Timer t;
@@ -52,11 +42,10 @@ public class ArrowButton extends ImagePushButton {
      * @param im
      *            The Image loader object.
      */
-    public ArrowButton(ImageView i, Slider scr, ImageIndex pr,
+    public ArrowButton(ImageView i, ImageIndex pr,
             ImageIndex notPr, SMPFXController ct, ImageLoader im) {
         super(i, ct, im);
         t = new Timer();
-        scrollbar = scr;
         getImages(pr, notPr);
     }
 
@@ -66,7 +55,7 @@ public class ArrowButton extends ImagePushButton {
      *            staff. Positive values move the staff to the right while
      *            negative numbers move it to the left.
      */
-    public void setSkipAmount(double i) {
+    public void setSkipAmount(int i) {
         skipAmount = i;
     }
 
@@ -92,25 +81,20 @@ public class ArrowButton extends ImagePushButton {
         if (StateMachine.isPlaybackActive())
             return;
         
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                scrollbar.adjustValue(scrollbar.getValue() + skipAmount);
-                if (scrollbar.getMax() <= scrollbar.getValue() && endOfFile) {
-                    StateMachine.setMaxLine(StateMachine.getMaxLine() + Values.NOTELINES_IN_THE_WINDOW * 2);
-                    StaffSequence s = theStaff.getSequence();
-                    int start = (int) scrollbar.getMax();
-                    for (int i = start; i < start
-                            + Values.NOTELINES_IN_THE_WINDOW * 2; i++)
-                        s.addLine(new StaffNoteLine());
-                }
-                if (scrollbar.getMax() <= scrollbar.getValue())
-                    endOfFile = true;
-                else
-                    endOfFile = false;
-            }
-        });
+        int currLoc = StateMachine.getMeasureLineNum();
+        int newLoc = currLoc + skipAmount;
+        
+        // Deal with integer overflow
+        if (skipAmount > 0 && newLoc < 0)
+            newLoc = Integer.MAX_VALUE;
+        
+        if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == StateMachine.getMaxLine()) {
+            int newSize = StateMachine.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
+            theStaff.getSequence().resize(newSize);
+            StateMachine.setMaxLine(theStaff.getSequence().getLength());
+        }
+        
+        theStaff.setLocation(newLoc);
     }
 
     @Override
@@ -118,14 +102,6 @@ public class ArrowButton extends ImagePushButton {
         super.reactReleased(event);
         t.cancel();
         t = new Timer();
-    }
-
-    /**
-     * @param b
-     *            Whether we are at the end of the file or not.
-     */
-    public static void setEndOfFile(boolean b) {
-        endOfFile = b;
     }
 
     /**
