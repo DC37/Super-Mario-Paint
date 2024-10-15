@@ -14,7 +14,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
 import smp.ImageLoader;
@@ -192,24 +191,10 @@ public class Staff {
         Platform.runLater(() -> theMatrix.redraw());
     }
 
-    /** Turns off all highlights in the play bars in the staff. */
-    private void highlightsOff() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<ImageView> playBars = staffImages.getPlayBars();
-                for (ImageView i : playBars) {
-                    i.setVisible(false);
-                }
-            }
-        });
-    }
-
     /** Begins animation of the Staff. (Starts a song) */
     public synchronized void startSong() {
     	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
-        highlightsOff();
         songPlaying = true;
         setTempo(StateMachine.getTempo());
         animationService.restart();
@@ -277,7 +262,6 @@ public class Staff {
                 default:
                     break;
                 }
-                highlightsOff();
             }
         });
     }
@@ -589,30 +573,8 @@ public class Staff {
              */
             protected boolean advance = false;
 
-            /** These are the play bars on the staff. */
-            protected ArrayList<ImageView> playBars;
-
-            /**
-             * Zeros the staff to the beginning point. Use only at the beginning
-             * of a new song file.
-             */
-            protected void zeroHighlights() {
-                Platform.runLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        playBars.get(0).setVisible(true);
-                        for (int i = 1; i < playBars.size(); i++)
-                            playBars.get(i).setVisible(false);
-                        queue--;
-                    }
-
-                });
-            }
-
             @Override
             protected Staff call() throws Exception {
-                playBars = staffImages.getPlayBars();
                 int counter = StateMachine.getMeasureLineNum();
                 boolean zero = false;
                 int endLine = theSequence.getEndlineIndex();
@@ -621,10 +583,10 @@ public class Staff {
                 StateMachine.setMaxLine(theSequence.getLength());
                 
                 while (songPlaying) {
+                    StateMachine.setPlaybackPosition(index);
+                    
                     if (zero) {
                         setLocation(0);
-                        queue++;
-                        zeroHighlights();
                         while (queue > 0)
                             ;
                         zero = false;
@@ -648,7 +610,6 @@ public class Staff {
                         // Do nothing
                     }
                 }
-                highlightsOff();
                 hitStop();
                 return theMatrix.getStaff();
             }
@@ -659,7 +620,7 @@ public class Staff {
              * just play things as they are.
              */
             protected void playNextLine() {
-                runUI(playBars, index, advance);
+                runUI(index, advance);
                 
                 advance = index >= Values.NOTELINES_IN_THE_WINDOW - 1;
                 index = advance ? 0 : (index + 1);
@@ -675,13 +636,11 @@ public class Staff {
              * @param advance
              *            Whether we need to move the staff by some bit.
              */
-            private void runUI(final ArrayList<ImageView> playBars,
-                    final int index, final boolean advance) {
+            private void runUI(final int index, final boolean advance) {
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
-                        bumpHighlights(playBars, index);
                         if (advance) {
                             int loc = StateMachine.getMeasureLineNum()
                                     + Values.NOTELINES_IN_THE_WINDOW;
@@ -705,23 +664,6 @@ public class Staff {
                 soundPlayer.playSoundLine(index);
             }
 
-            /**
-             * Bumps the highlights on the staff by a certain amount.
-             *
-             * @param playBars
-             *            The list of playbar objects
-             * @param index
-             *            The index that we are currently at
-             */
-            private void bumpHighlights(ArrayList<ImageView> playBars,
-                    int index) {
-                playBars.get(index).setVisible(true);
-                for (int i = 0; i < playBars.size(); i++)
-                    if (i != index)
-                        playBars.get(i).setVisible(false);
-
-            }
-
         }
 
         /**
@@ -731,7 +673,6 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
-                highlightsOff();
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 int endLine;
@@ -758,15 +699,14 @@ public class Staff {
                     endLine = seq.get(i).getEndlineIndex();
                     songPlaying = true;
                     setTempo(theSequence.getTempo());
-                    playBars = staffImages.getPlayBars();
                     int counter = 0;
                     setLocation(0);
-                    queue++;
-                    zeroHighlights();
                     while (queue > 0)
                         ;
                     /* Force operations to complete before starting a song. */
                     while (songPlaying && arrPlaying) {
+                        StateMachine.setPlaybackPosition(index);
+
                         queue++;
                         playNextLine();
                         counter++;
@@ -782,7 +722,6 @@ public class Staff {
                     if (!arrPlaying)
                         break;
                 }
-                highlightsOff();
                 hitStop();
                 return theMatrix.getStaff();
             }
