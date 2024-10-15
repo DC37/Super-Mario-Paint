@@ -83,7 +83,6 @@ public class NewButton extends ImagePushButton {
             theStaff.setSequenceFile(null);
             theStaff.setLocation(0);
             StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
-            ArrowButton.setEndOfFile(false);
             theStaff.redraw();
             controller.getNameTextField().clear();
             StateMachine.setSongModified(false);
