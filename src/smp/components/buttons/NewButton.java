@@ -81,8 +81,7 @@ public class NewButton extends ImagePushButton {
         if (cont) {
             theStaff.setSequence(new StaffSequence());
             theStaff.setSequenceFile(null);
-            Slider sc = theStaff.getControlPanel().getScrollbar();
-            sc.setValue(0);
+            theStaff.setLocation(0);
             StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
             ArrowButton.setEndOfFile(false);
             theStaff.redraw();
