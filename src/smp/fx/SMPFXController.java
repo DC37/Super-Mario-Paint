@@ -357,6 +357,8 @@ public class SMPFXController {
         scrollbar.valueProperty().bindBidirectional(
                 StateMachine.getCurrentLineProperty());
         
+        scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        
     }
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
