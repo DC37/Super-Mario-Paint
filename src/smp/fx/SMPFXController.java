@@ -335,6 +335,18 @@ public class SMPFXController {
         // Fix TextField focus problems.
         new SongNameController(songName, this);
         
+        // Bind playback active property
+        StateMachine.getPlaybackActiveProperty().bind(Bindings.createBooleanBinding(
+                () -> {
+                    switch (StateMachine.getState()) {
+                    case SONG_PLAYING:
+                    case ARR_PLAYING:
+                        return true;
+                    default:
+                        return false;
+                    }
+                }, StateMachine.getStateProperty()));
+        
         // Bind displayed tempo to internal value in state machine
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
         
