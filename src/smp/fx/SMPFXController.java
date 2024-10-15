@@ -361,6 +361,15 @@ public class SMPFXController {
         
         scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
+        // Trigger redraw when the position changes, editing mode only
+        StateMachine.getCurrentLineProperty().addListener(obs -> {
+            int idx = StateMachine.getMeasureLineNum();
+            Platform.runLater(() -> {
+                staff.redraw();
+                staff.getStaffImages().updateStaffMeasureLines(idx);
+            });
+        });
+        
         // Setup playbars visibility
         StateMachine.getPlaybackPositionProperty().addListener((obv, oldv, newv) -> {
             if (!StateMachine.isPlaybackActive()) {
