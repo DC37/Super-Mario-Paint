@@ -641,6 +641,9 @@ public class Staff {
              *            Whether we need to move the staff by some bit.
              */
             private void runUI(final int index, final boolean advance) {
+                // In principle it's not necessary to send this job to the FXAT,
+                // but for some reason the program is more stable that way
+                // Leaving things as they are until someone can figure it out --rozlyn
                 Platform.runLater(new Runnable() {
 
                     @Override
