@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -64,6 +66,8 @@ public class StateMachine {
      * notes are being placed on the staff.
      */
     private static ObjectProperty<ProgramState> currentState = new SimpleObjectProperty<>(ProgramState.EDITING);
+    
+    private static BooleanProperty playbackActive = new SimpleBooleanProperty(false);
 
     /**
      * The default time signature that we start out with is 4/4 time.
@@ -130,6 +134,14 @@ public class StateMachine {
      */
     public static void resetState() {
         currentState.set(ProgramState.EDITING);
+    }
+    
+    public static BooleanProperty getPlaybackActiveProperty() {
+        return playbackActive;
+    }
+
+    public static boolean isPlaybackActive() {
+        return playbackActive.get();
     }
 
     /**
