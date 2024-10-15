@@ -333,25 +333,42 @@ public class SuperMarioPaint extends Application {
                     	
                     	switch(ke.getCode()) {
                     	case PAGE_UP:
+                    	    if (StateMachine.isPlaybackActive())
+                    	        break;
                     		controller.getStaff().shift(-Values.NOTELINES_IN_THE_WINDOW);
                     		break;
+                    		
                     	case PAGE_DOWN:
+                            if (StateMachine.isPlaybackActive())
+                                break;
                     		controller.getStaff().shift(Values.NOTELINES_IN_THE_WINDOW);
                     		break;
+                    		
                     	case HOME:
+                            if (StateMachine.isPlaybackActive())
+                                break;
                     		if(ke.isControlDown())
                     			controller.getStaff().setLocation(0);
                     		break;
+                    		
                     	case END:
+                            if (StateMachine.isPlaybackActive())
+                                break;
                     		if(ke.isControlDown())
                     			controller.getStaff().setLocation((int)controller.getScrollbar().getMax());
                     		break;
+                    		
                     	// @since v1.4, adds A and D as controls. move to correct spot later if needed
                     	case A:
+                            if (StateMachine.isPlaybackActive())
+                                break;
                     		if(!ke.isControlDown() && !ke.isShiftDown())
                     			controller.getStaff().moveLeft();
+                    		
                     	// @since v1.1.2, requested by seymour
                     	case LEFT:
+                            if (StateMachine.isPlaybackActive())
+                                break;
                     		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
                 				break;
                     		if(ke.isControlDown() && ke.isShiftDown())
@@ -359,10 +376,16 @@ public class SuperMarioPaint extends Application {
                     		if((ke.isControlDown() && ke.getCode() != KeyCode.A) || ke.isShiftDown())
                     			controller.getStaff().shift(-4);
                     		break;
+                    		
                     	case D:
+                            if (StateMachine.isPlaybackActive())
+                                break;
                     		if(!ke.isControlDown() && !ke.isShiftDown())
                     			controller.getStaff().moveRight();
+
                     	case RIGHT:
+                            if (StateMachine.isPlaybackActive())
+                                break;
                     		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
                     			break;
                     		if(ke.isControlDown() && ke.isShiftDown())
@@ -419,6 +442,9 @@ public class SuperMarioPaint extends Application {
 
 			@Override
 			public void handle(ScrollEvent se) {
+                if (StateMachine.isPlaybackActive())
+                    return;
+                
 				if (se.getDeltaY() < 0) {
 					if (se.isControlDown())
 						controller.getStaff().shift(4);

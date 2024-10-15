@@ -89,6 +89,9 @@ public class ArrowButton extends ImagePushButton {
 
     /** Bumps the staff by some amount. */
     private void bumpStaff() {
+        if (StateMachine.isPlaybackActive())
+            return;
+        
         Platform.runLater(new Runnable() {
 
             @Override
