@@ -8,6 +8,7 @@ import smp.components.InstrumentIndex;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.stateMachine.StateMachine;
 
 /**
  *
@@ -37,10 +38,6 @@ public class SoundPlayer {
     public SoundPlayer(Staff s) {
         theStaff = s;
     }
-    
-    private double getCurrVal() {
-        return theStaff.getCurrVal().doubleValue();
-    }
 
     /**
      * Plays the current line of notes.
@@ -49,7 +46,7 @@ public class SoundPlayer {
         if (!run)
             return;
         StaffNoteLine s = theStaff.getSequence().getLineSafe(
-                (int) (getCurrVal() + index));
+                StateMachine.getMeasureLineNum() + index);
         ArrayList<StaffNote> theNotes = s.getNotes();
         tracker.stopNotes(s);
         for (StaffNote sn : theNotes) {
