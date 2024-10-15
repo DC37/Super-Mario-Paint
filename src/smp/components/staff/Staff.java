@@ -11,7 +11,6 @@ import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
@@ -58,9 +57,6 @@ public class Staff {
 
     /** Whether we are playing an arrangement. */
     private boolean arrPlaying = false;
-
-    /** This is the current line that we are at. */
-    private DoubleProperty currVal;
 
     /** These are the play button, stop button, etc. */
     private Controls theControls;
@@ -539,23 +535,6 @@ public class Staff {
     }
 
     /**
-     * Sets the DoubleProperty value that we change to move the staff.
-     *
-     * @param d
-     *            The DoubleProperty that we want to set.
-     */
-    public void setCurrVal(DoubleProperty d) {
-        currVal = d;
-    }
-
-    /**
-     * @return The DoubleProperty value that we change to move the staff.
-     */
-    public DoubleProperty getCurrVal() {
-        return currVal;
-    }
-
-    /**
      * @return The Staff's Image Loader
      */
     public ImageLoader getImageLoader() {
@@ -577,7 +556,7 @@ public class Staff {
      */
     private void doEvents(int index) {
         StaffNoteLine s = getSequence().getLineSafe(
-                (int) (currVal.doubleValue() + index));
+                StateMachine.getMeasureLineNum() + index);
         ArrayList<StaffEvent> theEvents = s.getEvents();
         for (StaffEvent e : theEvents) {
             e.doEvent(this);
@@ -631,7 +610,7 @@ public class Staff {
                     @Override
                     public void run() {
                         setLocation(0);
-                        currVal.setValue(0);
+                        StateMachine.setMeasureLineNum(0);
                         playBars.get(0).setVisible(true);
                         for (int i = 1; i < playBars.size(); i++)
                             playBars.get(i).setVisible(false);
@@ -712,10 +691,10 @@ public class Staff {
                     public void run() {
                         bumpHighlights(playBars, index);
                         if (advance) {
-                            int loc = (int) currVal.getValue().doubleValue()
+                            int loc = StateMachine.getMeasureLineNum()
                                     + Values.NOTELINES_IN_THE_WINDOW;
                             setLocation(loc);
-                            currVal.setValue(loc);
+                            StateMachine.setMeasureLineNum(loc);
                         }
                         doEvents(index);
                         playSoundLine(index);

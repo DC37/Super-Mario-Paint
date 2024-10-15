@@ -118,7 +118,6 @@ public class Controls {
 		initializeArrows();
 		initializeScrollbar();
 		initializeControlButtons();
-		theStaff.setCurrVal(scrollbar.valueProperty());
 		initializeTempoButtons();
 		initializeLoadSaveButtons();
 		initializeNewButton();
