@@ -647,6 +647,9 @@ public class Staff {
                 int counter = StateMachine.getMeasureLineNum();
                 boolean zero = false;
                 int endLine = theSequence.getEndlineIndex();
+                
+                theSequence.normalize();
+                
                 while (songPlaying) {
                     if (zero) {
                         queue++;
@@ -686,13 +689,9 @@ public class Staff {
              */
             protected void playNextLine() {
                 runUI(playBars, index, advance);
-                advance = !(index < Values.NOTELINES_IN_THE_WINDOW - 1);
-                int remain = (int) (theControls.getScrollbar().getMax() - currVal.intValue());
-                if (Values.NOTELINES_IN_THE_WINDOW > remain && advance) {
-                    index -= (remain - 1);
-                } else {
-                    index = advance ? 0 : (index + 1);
-                }
+                
+                advance = index >= Values.NOTELINES_IN_THE_WINDOW - 1;
+                index = advance ? 0 : (index + 1);
             }
 
             /**
@@ -766,6 +765,10 @@ public class Staff {
                 ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
                 ArrayList<File> files = theArrangement.getTheSequenceFiles();
                 int endLine;
+                
+                for (StaffSequence s : seq)
+                    s.normalize();
+                
                 for (int i = 0; i < seq.size(); i++) {
                     while (queue > 0)
                         ;
