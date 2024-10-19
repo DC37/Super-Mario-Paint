@@ -225,6 +225,7 @@ public class Staff {
                 return;
             }
         }
+        redraw();
         arrPlaying = true;
         animationService.restart();
     }
@@ -583,7 +584,7 @@ public class Staff {
                 StateMachine.setMaxLine(theSequence.getLength());
 
                 queue = 0;
-                
+                redraw();
                 while (songPlaying) {
                     StateMachine.setPlaybackPosition(index);
                     
@@ -707,7 +708,7 @@ public class Staff {
                     setTempo(theSequence.getTempo());
                     int counter = 0;
                     setLocation(0);
-
+                    redraw();
                     while (songPlaying && arrPlaying) {
                         StateMachine.setPlaybackPosition(index);
 
