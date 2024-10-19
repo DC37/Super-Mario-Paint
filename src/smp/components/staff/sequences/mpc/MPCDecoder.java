@@ -94,10 +94,10 @@ public class MPCDecoder {
         for (String s : songData) {
             if (accum >= Values.LINES_PER_MPC_SONG)
                 break;
-            accum++;
             StaffNoteLine sl = new StaffNoteLine();
             if (s.length() <= 1) {
-                song.addLine(sl);
+                song.setLine(accum, sl);
+                accum++;
                 continue;
             }
             ArrayList<String> inst = dice(s);
@@ -126,7 +126,8 @@ public class MPCDecoder {
                 sl.add(sn);
             }
             sl.setVolume(vol);
-            song.addLine(sl);
+            song.setLine(accum, sl);
+            accum++;
         }
         song.resize(Values.LINES_PER_MPC_SONG);
         return song;
