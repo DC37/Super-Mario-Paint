@@ -235,24 +235,14 @@ public class Utilities {
                         }
                     }
                 }
-                if (loaded.getLength() < lineNum + 1) {
-                    int add = lineNum - loaded.getLength();
-                    for (int i = 0; i < add; i++) {
-                        loaded.addLine(new StaffNoteLine());
-                    }
-                }
+
                 if (lineNum >= loaded.getLength()) {
-                    loaded.addLine(st);
-                } else {
-                    loaded.setLine(lineNum, st);
+                    loaded.resize(lineNum + 1);
                 }
+                loaded.setLine(lineNum, st);
             }
         }
-        if (loaded.getLength() % 10 != 0) {
-            do {
-                loaded.addLine(new StaffNoteLine());
-            } while (loaded.getLength() % 10 != 0);
-        }
+        loaded.normalize();
         return loaded;
     }
 
