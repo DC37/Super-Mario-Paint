@@ -2,15 +2,16 @@ package smp.components.staff;
 
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.components.staff.sequences.StaffSequence;
 import smp.stateMachine.StateMachine;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 
 /**
  * This is the matrix of notes behind the staff. We can change the size of this
@@ -155,10 +156,10 @@ public class NoteMatrix {
     }
 
     /** Redraws the entire matrix. */
-    public void redraw() {
+    public void redraw(StaffSequence seq, int currentPosition) {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
             try {
-                redraw(i);
+                redraw(seq, currentPosition, i);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
                 // Otherwise, do nothing.
@@ -172,13 +173,11 @@ public class NoteMatrix {
      * @param index
      *            The index at which we want to redraw.
      */
-    private void redraw(int index) {
+    private void redraw(StaffSequence seq, int currentPosition, int index) {
 
         StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
-        int currentPosition = StateMachine.getMeasureLineNum();
 
-        StaffNoteLine stl = theStaff.getSequence().getLineSafe(
-                currentPosition + index);
+        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
 
         updateVolumeDisplay(sveh, stl);
         clearNoteDisplay(index);

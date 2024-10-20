@@ -188,7 +188,7 @@ public class Staff {
      * Force re-draws the staff.
      */
     public synchronized void redraw() {
-        Platform.runLater(() -> theMatrix.redraw());
+        Platform.runLater(() -> theMatrix.redraw(theSequence, StateMachine.getMeasureLineNum()));
     }
 
     /** Begins animation of the Staff. (Starts a song) */
@@ -321,7 +321,7 @@ public class Staff {
     }
 
     /** @return The current song that we are displaying. */
-    public StaffSequence getSequence() {
+    public synchronized StaffSequence getSequence() {
         return theSequence;
     }
 
@@ -331,7 +331,7 @@ public class Staff {
      * @param other
      *            This is the other sequence.
      */
-    public void setSequence(StaffSequence other) {
+    public synchronized void setSequence(StaffSequence other) {
         theSequence = other;
     }
 
@@ -585,6 +585,7 @@ public class Staff {
 
                 queue = 0;
                 redraw();
+                
                 while (songPlaying) {
                     StateMachine.setPlaybackPosition(index);
                     
@@ -625,7 +626,8 @@ public class Staff {
              * just play things as they are.
              */
             protected void playNextLine() {
-                runUI(index, advance);
+                int currentLoc = StateMachine.getMeasureLineNum();
+                runUI(currentLoc, index, advance);
                 
                 advance = index >= Values.NOTELINES_IN_THE_WINDOW - 1;
                 index = advance ? 0 : (index + 1);
@@ -641,7 +643,7 @@ public class Staff {
              * @param advance
              *            Whether we need to move the staff by some bit.
              */
-            private void runUI(final int index, final boolean advance) {
+            private void runUI(final int currentLoc, final int index, final boolean advance) {
                 // In principle it's not necessary to send this job to the FXAT,
                 // but for some reason the program is more stable that way
                 // Leaving things as they are until someone can figure it out --rozlyn
@@ -650,8 +652,7 @@ public class Staff {
                     @Override
                     public void run() {
                         if (advance) {
-                            int loc = StateMachine.getMeasureLineNum()
-                                    + Values.NOTELINES_IN_THE_WINDOW;
+                            int loc = currentLoc + Values.NOTELINES_IN_THE_WINDOW;
                             setLocation(loc);
                         }
                         doEvents(index);
@@ -692,23 +693,25 @@ public class Staff {
                 queue = 0;
                 
                 for (int i = 0; i < seq.size(); i++) {
-                    setSoundset(seq.get(i).getSoundset());
+                    setSequence(seq.get(i));
+                    
+                    setSoundset(theSequence.getSoundset());
                     index = 0;
                     advance = false;
                     StateMachine.setArrangementSongIndex(i);
-                    theSequence = seq.get(i);
                     theSequenceFile = files.get(i);
                     StateMachine.setNoteExtensions(
                             theSequence.getNoteExtensions());
                     controller.getInstBLine().updateNoteExtensions();
                     StateMachine.setTempo(theSequence.getTempo());
                     StateMachine.setMaxLine(theSequence.getLength());
-                    endLine = seq.get(i).getEndlineIndex();
+                    endLine = theSequence.getEndlineIndex();
                     songPlaying = true;
                     setTempo(theSequence.getTempo());
                     int counter = 0;
                     setLocation(0);
                     redraw();
+                    
                     while (songPlaying && arrPlaying) {
                         StateMachine.setPlaybackPosition(index);
 
