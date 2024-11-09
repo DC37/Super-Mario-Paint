@@ -700,33 +700,39 @@ public class Staff {
                 
                 for (int i = 0; i < seq.size(); i++) {
                     setSequence(seq.get(i));
-                    
                     setSoundset(theSequence.getSoundset());
-                    index = 0;
-                    advance = false;
+                    setTempo(theSequence.getTempo());
+                    setTimeSignature(theSequence.getTimeSignature());
+                    endLine = theSequence.getEndlineIndex();
+                    
                     StateMachine.setArrangementSongIndex(i);
-                    theSequenceFile = files.get(i);
                     StateMachine.setNoteExtensions(
                             theSequence.getNoteExtensions());
-                    controller.getInstBLine().updateNoteExtensions();
                     StateMachine.setTempo(theSequence.getTempo());
                     StateMachine.setMaxLine(theSequence.getLength());
-                    endLine = theSequence.getEndlineIndex();
+                    
+                    index = 0;
+                    advance = false;
+                    theSequenceFile = files.get(i);
+                    controller.getInstBLine().updateNoteExtensions();
                     songPlaying = true;
-                    setTempo(theSequence.getTempo());
-                    int counter = 0;
+
                     setLocation(0);
                     redraw();
+                    
+                    int counter = 0;
                     
                     while (songPlaying && arrPlaying) {
                         StateMachine.setPlaybackPosition(index);
 
                         queue++;
                         playNextLine();
+                        
                         counter++;
                         if (counter >= endLine) {
                             songPlaying = false;
                         }
+                        
                         try {
                             Thread.sleep(delayMillis, delayNanos);
                         } catch (InterruptedException e) {
@@ -740,6 +746,7 @@ public class Staff {
                     /* Force emptying of queue before changing songs. */
                     while (queue > 0);
                 }
+                
                 hitStop();
                 return theMatrix.getStaff();
             }
