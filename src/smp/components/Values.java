@@ -78,9 +78,6 @@ public class Values {
      */
     public static int NOTELINES_IN_THE_WINDOW = 13;
 
-    /** The number of beats in each measure. */
-    public static int TIMESIG_BEATS = 4;
-
     /**
      * The number of lines in the staff, by default. This number is typically
      * 400.

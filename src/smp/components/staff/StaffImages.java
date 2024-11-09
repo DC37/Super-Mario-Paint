@@ -15,6 +15,7 @@ import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
+import smp.stateMachine.StateMachine;
 
 /**
  * Wrapper class for all of the images that appear on the Staff of Super Mario
@@ -131,6 +132,7 @@ public class StaffImages {
      * These are the numbers above each successive measure.
      */
     private void initializeStaffMeasureNums(HBox mNums) {
+        int barLength = StateMachine.getTimeSignature().barLength();
         ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
         measureNums = new ArrayList<Text>();
         for (Node num : mNums.getChildren())
@@ -141,7 +143,7 @@ public class StaffImages {
             Text t = new Text();
             theBox.getChildren().add(t);
             measureNums.add(t);
-            if (i % Values.TIMESIG_BEATS == 0) {
+            if (i % barLength == 0) {
                 t.setText(String.valueOf(counter));
                 counter++;
             } else
@@ -198,11 +200,12 @@ public class StaffImages {
      *            The measure lines that divide the staff.
      */
     private void initializeStaffMeasureLines(HBox mLines) {
+        int barLength = StateMachine.getTimeSignature().barLength();
         measureLines = new ArrayList<ImageView>();
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
         for (int i = 0; i < measureLines.size(); i++) {
-            if (i % Values.TIMESIG_BEATS == 0)
+            if (i % barLength == 0)
                 measureLines.get(i).setImage(
                         il.getSpriteFX(ImageIndex.STAFF_MLINE));
             else
@@ -218,14 +221,15 @@ public class StaffImages {
      *            The current line that we are on.
      */
     public void updateStaffMeasureLines(int currLine) {
+        int barLength = StateMachine.getTimeSignature().barLength();
         int counter = 0;
         for (int i = 0; i < measureLines.size(); i++) {
             ImageView currImage = measureLines.get(i);
             Text currText = measureNums.get(i);
-            if ((currLine + i) % Values.TIMESIG_BEATS == 0) {
+            if ((currLine + i) % barLength == 0) {
                 currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_MLINE));
                 currText.setText(String.valueOf((int) (Math.ceil(currLine
-                        / (double) Values.TIMESIG_BEATS) + 1 + counter)));
+                        / (double) barLength) + 1 + counter)));
                 counter++;
             } else {
                 currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_LINE));

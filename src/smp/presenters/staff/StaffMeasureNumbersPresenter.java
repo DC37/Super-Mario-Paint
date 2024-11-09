@@ -33,6 +33,7 @@ public class StaffMeasureNumbersPresenter {
 	 * These are the numbers above each successive measure.
 	 */
 	private void initializeStaffMeasureNums(HBox mNums) {
+        int barLength = StateMachine.getTimeSignature().get().top();
 		ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
 		measureNums = new ArrayList<Text>();
         for (Node num : mNums.getChildren())
@@ -43,7 +44,7 @@ public class StaffMeasureNumbersPresenter {
             Text t = new Text();
             theBox.getChildren().add(t);
             measureNums.add(t);
-            if (i % Values.TIMESIG_BEATS == 0) {
+            if (i % barLength == 0) {
                 t.setText(String.valueOf(counter));
                 counter++;
             } else
@@ -56,6 +57,7 @@ public class StaffMeasureNumbersPresenter {
 	 * @see smp.components.staff.StaffImages.updateStaffMeasureLines(int)
 	 */
 	public void setupViewUpdater() {
+        int barLength = StateMachine.getTimeSignature().get().top();
 		this.measureLineNumber.addListener(new ChangeListener<Number>() {
 
 			@Override
@@ -64,9 +66,9 @@ public class StaffMeasureNumbersPresenter {
 		        int counter = 0;
 		        for (int i = 0; i < measureNums.size(); i++) {
 		            Text currText = measureNums.get(i);
-		            if ((currLine + i) % Values.TIMESIG_BEATS == 0) {
+		            if ((currLine + i) % barLength == 0) {
 		                currText.setText(String.valueOf((int) (Math.ceil(currLine
-		                        / (double) Values.TIMESIG_BEATS) + 1 + counter)));
+		                        / (double) barLength) + 1 + counter)));
 		                counter++;
 		            } else {
 		                currText.setText("");
