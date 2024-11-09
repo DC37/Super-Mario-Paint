@@ -221,10 +221,10 @@ public class StaffSequence implements Serializable {
         return noteExtensions;
     }
 
-    /**
-     * @param s
-     *            The time signature to set this <code>StaffSequence</code> to.
-     */
+    public void setTimeSignature(TimeSignature t) {
+        this.t = t;
+    }
+
     public void setTimeSignature(String s) {
         t = TimeSignature.valueOf(s);
     }
