@@ -30,6 +30,7 @@ import smp.components.staff.sequences.mpc.MPCDecoder;
 import smp.components.topPanel.PanelButtons;
 import smp.fx.SMPFXController;
 import smp.stateMachine.StateMachine;
+import smp.stateMachine.TimeSignature;
 
 /**
  * The staff on which notes go. The staff keeps track of notes in terms of
@@ -182,6 +183,11 @@ public class Staff {
         int maxVal = StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW;
         int newLoc = (num < 0) ? 0 : (num > maxVal) ? maxVal : num;
         StateMachine.setMeasureLineNum(newLoc);
+    }
+    
+    public synchronized void setTimeSignature(TimeSignature t) {
+        theSequence.setTimeSignature(t);
+        StateMachine.setTimeSignature(t);
     }
 
     /**
