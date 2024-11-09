@@ -396,6 +396,7 @@ public class Utilities {
             boolean mpc, Staff theStaff, SMPFXController controller) {
         loaded.normalize();
         theStaff.setSequence(loaded);
+        theStaff.setTimeSignature(loaded.getTimeSignature());
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
         StateMachine.setMaxLine(loaded.getLength());
