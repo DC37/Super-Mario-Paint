@@ -42,11 +42,12 @@ public class StaffMeasureLinesPresenter {
      *            The measure lines that divide the staff.
      */
 	private void initializeStaffMeasureLines(HBox mLines) {
+        int barLength = StateMachine.getTimeSignature().get().top();
         measureLines = new ArrayList<ImageView>();
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
         for (int i = 0; i < measureLines.size(); i++) {
-            if (i % Values.TIMESIG_BEATS == 0)
+            if (i % barLength == 0)
                 measureLines.get(i).setImage(
                         il.getSpriteFX(ImageIndex.STAFF_MLINE));
             else
@@ -56,6 +57,7 @@ public class StaffMeasureLinesPresenter {
 	}
 
 	private void setupViewUpdater() {
+        int barLength = StateMachine.getTimeSignature().get().top();
 		this.measureLineNumber.addListener(new ChangeListener<Number>() {
 
 			@Override
@@ -63,7 +65,7 @@ public class StaffMeasureLinesPresenter {
 				int currLine = newValue.intValue();
 		        for (int i = 0; i < measureLines.size(); i++) {
 		        	ImageView currImage = measureLines.get(i);
-		            if ((currLine + i) % Values.TIMESIG_BEATS == 0) {
+		            if ((currLine + i) % barLength == 0) {
 		            	currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_MLINE));
 		            } else {
 		                currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_LINE));
