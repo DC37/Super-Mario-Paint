@@ -1,49 +1,66 @@
 package smp.stateMachine;
 
 /**
- * These are the time signatures that we can select when using Super Mario
- * Paint.
+ * Time signatures determine the length of a bar and how bar lines should be counted
+ * and displayed on the staff.
  *
  * @author RehdBlob
+ * @author rozlynd
  * @since 2013.06.28
  */
-public enum TimeSignature {
+public class TimeSignature {
 
-    /**
-     * These are different time signatures that we can have for the program.
+    /** Length of a bar, determines how the endpoint of a sequence is calculated. */
+    private final int top;
+
+    /** We only use the bottom number to display time sigs as "4/4" or "12/8"
+     * for example, but it's not used for anything.
+     * Kept as a legacy feature, as some song files may use this notation.
      */
-    TWO_FOUR("2/4"), THREE_FOUR("3/4"), FOUR_FOUR("4/4"), SIX_FOUR("6/4"), THREE_EIGHT(
-            "3/8"), SIX_EIGHT("6/8"), TWELVE_EIGHT("12/8");
-
-    /** The number on the top. */
-    private int top;
-
-    /** The number on the bottom. */
-    private int bottom;
-
-    /** What happens when you try to display the time signature. */
-    private String displayName;
-
-    /** Sets up the display name of the time signature type. */
-    private TimeSignature(String disp) {
-        displayName = disp;
-        top = Integer.parseInt(disp.substring(0, disp.indexOf("/")));
-        bottom = Integer.parseInt(disp.substring(disp.indexOf("/") + 1));
+    @Deprecated
+    private final int bottom;
+    
+    public TimeSignature(int barLength) {
+        this(barLength, 0);
+    }
+    
+    public TimeSignature(int top, int bottom) {
+        this.top = top;
+        this.bottom = bottom;
+    }
+    
+    public int barLength() {
+        return top;
     }
 
-    /** @return The integer on the top. */
     public int top() {
         return top;
     }
 
-    /** @return The integer on the bottom. */
     public int bottom() {
         return bottom;
     }
 
     @Override
     public String toString() {
-        return displayName;
+        return (bottom == 0) ? top + "" : top + "/" + bottom;
     }
+
+    public static TimeSignature valueOf(String disp) {
+        int idxSlash = disp.indexOf("/");
+        
+        if (idxSlash == -1) {
+            int barLength = Integer.parseInt(disp);
+            return new TimeSignature(barLength);
+            
+        } else {
+            int top = Integer.parseInt(disp.substring(0, idxSlash));
+            int bottom = Integer.parseInt(disp.substring(idxSlash + 1));
+            return new TimeSignature(top, bottom);
+        }
+    }
+    
+    public static TimeSignature FOUR_FOUR = new TimeSignature(4, 4);
+    public static TimeSignature THREE_FOUR = new TimeSignature(3, 4);
 
 }
