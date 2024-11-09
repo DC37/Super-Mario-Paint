@@ -77,7 +77,7 @@ public class StateMachine {
     /**
      * The default time signature that we start out with is 4/4 time.
      */
-    private static TimeSignature currentTimeSignature = TimeSignature.FOUR_FOUR;
+    private static ObjectProperty<TimeSignature> currentTimeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
 
     /**
      * The current measure line number that the program is on. Typically a
@@ -165,27 +165,21 @@ public class StateMachine {
     public static void setPlaybackPosition(int n) {
         playbackPosition.set(n);
     }
-
-    /**
-     * @return The current time signature that we are running at.
-     */
-    public static TimeSignature getTimeSignature() {
+    
+    public static ObjectProperty<TimeSignature> getTimeSignatureProperty() {
         return currentTimeSignature;
     }
 
-    /**
-     * Sets the time signature to whatever that we give this method.
-     *
-     * @param t
-     *            The new time signature.
-     */
-    public static void setTimeSignature(TimeSignature t) {
-        currentTimeSignature = t;
+    public static TimeSignature getTimeSignature() {
+        return currentTimeSignature.get();
     }
 
-    /** Sets the time signature back to "4/4" by default. */
+    public static void setTimeSignature(TimeSignature t) {
+        currentTimeSignature.set(t);;
+    }
+
     public static void resetTimeSignature() {
-        currentTimeSignature = TimeSignature.FOUR_FOUR;
+        currentTimeSignature.set(TimeSignature.FOUR_FOUR);
     }
 
     /**
