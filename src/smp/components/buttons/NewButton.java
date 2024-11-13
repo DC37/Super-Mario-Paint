@@ -81,9 +81,8 @@ public class NewButton extends ImagePushButton {
         if (cont) {
             theStaff.setSequence(new StaffSequence());
             theStaff.setSequenceFile(null);
-            theStaff.setLocation(0);
+            theStaff.resetLocation();
             StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
-            theStaff.redraw();
             controller.getNameTextField().clear();
             StateMachine.setSongModified(false);
         }

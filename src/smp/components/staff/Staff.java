@@ -185,6 +185,15 @@ public class Staff {
         StateMachine.setMeasureLineNum(newLoc);
     }
     
+    /**
+     * Equivalent to calling {@link setLocation} with argument 0, except that this
+     * will force a redraw if the current line is already 0.
+     */
+    public synchronized void resetLocation() {
+        StateMachine.setMeasureLineNum(-1);
+        setLocation(0);
+    }
+    
     public synchronized void setTimeSignature(TimeSignature t) {
         theSequence.setTimeSignature(t);
         StateMachine.setTimeSignature(t);
@@ -212,7 +221,7 @@ public class Staff {
         soundPlayer.setRun(true);
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
-        setLocation(0);
+        resetLocation();
         for (int i = 0; i < seq.size(); i++) {
             File f = files.get(i);
             try {
@@ -231,7 +240,6 @@ public class Staff {
                 return;
             }
         }
-        redraw();
         arrPlaying = true;
         animationService.restart();
     }
@@ -590,13 +598,12 @@ public class Staff {
                 StateMachine.setMaxLine(theSequence.getLength());
 
                 queue = 0;
-                redraw();
                 
                 while (songPlaying) {
                     StateMachine.setPlaybackPosition(index);
                     
                     if (zero) {
-                        setLocation(0);
+                        resetLocation();
                         while (queue > 0);
                         zero = false;
                     }
@@ -717,8 +724,7 @@ public class Staff {
                     controller.getInstBLine().updateNoteExtensions();
                     songPlaying = true;
 
-                    setLocation(0);
-                    redraw();
+                    resetLocation();
                     
                     int counter = 0;
                     

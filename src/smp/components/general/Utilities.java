@@ -400,8 +400,7 @@ public class Utilities {
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
         StateMachine.setMaxLine(loaded.getLength());
-        theStaff.setLocation(0);
-        theStaff.redraw();
+        theStaff.resetLocation();
         String fname = inputFile.getName();
         try {
             if (mpc)
