@@ -205,8 +205,7 @@ public class StaffImages {
      * @param currLine
      *            The current line that we are on.
      */
-    public void updateStaffMeasureLines(int currLine) {
-        int barLength = StateMachine.getTimeSignature().barLength();
+    public void updateStaffMeasureLines(int currLine, int barLength) {
         int counter = 0;
         for (int i = 0; i < measureLines.size(); i++) {
             ImageView currImage = measureLines.get(i);
