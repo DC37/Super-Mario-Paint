@@ -72,7 +72,7 @@ public class StateMachine {
     /**
      * Index of the current position on the screen during playback
      */
-    private static IntegerProperty playbackPosition = new SimpleIntegerProperty(0);
+    private static IntegerProperty playbackPosition = new SimpleIntegerProperty(-1);
 
     /**
      * The default time signature that we start out with is 4/4 time.
