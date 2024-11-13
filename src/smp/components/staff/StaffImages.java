@@ -200,18 +200,9 @@ public class StaffImages {
      *            The measure lines that divide the staff.
      */
     private void initializeStaffMeasureLines(HBox mLines) {
-        int barLength = StateMachine.getTimeSignature().barLength();
         measureLines = new ArrayList<ImageView>();
         for (Node n : mLines.getChildren())
             measureLines.add((ImageView) n);
-        for (int i = 0; i < measureLines.size(); i++) {
-            if (i % barLength == 0)
-                measureLines.get(i).setImage(
-                        il.getSpriteFX(ImageIndex.STAFF_MLINE));
-            else
-                measureLines.get(i).setImage(
-                        il.getSpriteFX(ImageIndex.STAFF_LINE));
-        }
     }
 
     /**
