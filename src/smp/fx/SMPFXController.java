@@ -364,11 +364,16 @@ public class SMPFXController {
         // Trigger redraw when the position changes, editing mode only
         StateMachine.getCurrentLineProperty().addListener(obs -> {
             int idx = StateMachine.getMeasureLineNum();
+            if (idx == -1)
+                return;
+            
             Platform.runLater(() -> {
                 staff.redraw();
                 staff.getStaffImages().updateStaffMeasureLines(idx);
             });
         });
+        
+        StateMachine.setMeasureLineNum(0);
         
         // Setup playbars visibility
         StateMachine.getPlaybackPositionProperty().addListener((obv, oldv, newv) -> {
@@ -406,6 +411,7 @@ public class SMPFXController {
         });
         
     }
+    
     /**
      * @return The <code>HBox</code> that holds the staff measure lines.
      */
