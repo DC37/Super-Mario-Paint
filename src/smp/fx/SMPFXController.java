@@ -378,24 +378,15 @@ public class SMPFXController {
         StateMachine.setMeasureLineNum(0);
         
         // Setup playbars visibility
-        StateMachine.getPlaybackPositionProperty().addListener((obv, oldv, newv) -> {
-            if (!StateMachine.isPlaybackActive()) {
-                return;
-            }
-            staffPlayBars.getChildren().get((int) oldv).setVisible(false);
-            staffPlayBars.getChildren().get((int) newv).setVisible(true);
-        });
-        
-        StateMachine.getPlaybackActiveProperty().addListener(obv -> {
-            if (!StateMachine.isPlaybackActive()) {
-                for (Node n : staffPlayBars.getChildren()) {
-                    n.setVisible(false);
-                }
-                
-            } else {
-                int pos = StateMachine.getPlaybackPosition();
-                staffPlayBars.getChildren().get(pos).setVisible(true);
-            }
+        StateMachine.getPlaybackPositionProperty().addListener((obv, oldv_, newv_) -> {
+            int oldv = (int) oldv_;
+            int newv = (int) newv_;
+            
+            if (oldv != -1)
+                staffPlayBars.getChildren().get(oldv).setVisible(false);
+            
+            if (newv != -1)
+                staffPlayBars.getChildren().get(newv).setVisible(true);
         });
         
         // Setup arrangement listview
@@ -407,9 +398,12 @@ public class SMPFXController {
             staff.setSequenceName(arrangementList.getSelectionModel().getSelectedItem());
         });
         
+        // Cleanup after a song or arrangement had finished running
         StateMachine.getPlaybackActiveProperty().addListener(obv -> {
-            if (!StateMachine.isPlaybackActive())
+            if (!StateMachine.isPlaybackActive()) {
                 StateMachine.setArrangementSongIndex(-1);
+                StateMachine.setPlaybackPosition(-1);
+            }
         });
         
     }
