@@ -367,9 +367,11 @@ public class SMPFXController {
             if (idx == -1)
                 return;
             
+            int barLength = StateMachine.getTimeSignature().barLength();
+            
             Platform.runLater(() -> {
                 staff.redraw();
-                staff.getStaffImages().updateStaffMeasureLines(idx);
+                staff.getStaffImages().updateStaffMeasureLines(idx, barLength);
             });
         });
         
