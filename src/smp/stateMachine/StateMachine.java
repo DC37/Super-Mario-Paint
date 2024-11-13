@@ -80,10 +80,10 @@ public class StateMachine {
     private static ObjectProperty<TimeSignature> currentTimeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
 
     /**
-     * The current measure line number that the program is on. Typically a
-     * number between 0 and 383. This is zero by default.
+     * The current measure line number. Set to -1 as a special "uninitialized" value,
+     * to force the initial redraw.
      */
-    private static IntegerProperty currentLine = new SimpleIntegerProperty(0);
+    private static IntegerProperty currentLine = new SimpleIntegerProperty(-1);
     
     /**
      * The furthest you can reach by scrolling to the end of the sequence.
@@ -92,7 +92,7 @@ public class StateMachine {
     private static IntegerProperty maxLine = new SimpleIntegerProperty(Values.DEFAULT_LINES_PER_SONG);
     
     /**
-     * Currently selected song in arranger mode
+     * Currently selected song in arranger mode. Set to -1 while in song mode.
      */
     private static IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
 
