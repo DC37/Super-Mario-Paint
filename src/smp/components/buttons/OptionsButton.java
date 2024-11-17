@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -128,10 +129,12 @@ public class OptionsButton extends ImagePushButton {
         FlowPane pane = new FlowPane(10, 10);
         pane.setAlignment(Pos.CENTER);
         pane.getChildren().addAll(okButton);
+        
         VBox vBox = new VBox(10);
+        vBox.setPadding(new Insets(10, 10, 10, 10));
         vBox.setAlignment(Pos.CENTER);
         
-        Label tempoAdjustHack = new Label("Increase tempo by how many times?");
+        Label tempoAdjustHack = new Label("Multiply current tempo by:");
         tempoField = new TextField();
         
         Label timesigLabel = new Label("Enter new time signature:");
@@ -260,8 +263,6 @@ public class OptionsButton extends ImagePushButton {
      *            The dialog box that we are setting up.
      */
     private void initializeDialog(Stage dialog, Window owner) {
-        dialog.setHeight(StateMachine.getState() == ProgramState.ARR_EDITING ? 220 : 300);
-        dialog.setWidth(260);
         dialog.setResizable(false);
         dialog.setTitle("Options");
         dialog.initOwner(owner);
