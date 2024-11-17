@@ -132,22 +132,16 @@ public class StaffImages {
      * These are the numbers above each successive measure.
      */
     private void initializeStaffMeasureNums(HBox mNums) {
-        int barLength = StateMachine.getTimeSignature().barLength();
         ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
         measureNums = new ArrayList<Text>();
         for (Node num : mNums.getChildren())
             measureNumBoxes.add((HBox) num);
-        int counter = 1;
+
         for (int i = 0; i < measureNumBoxes.size(); i++) {
             HBox theBox = measureNumBoxes.get(i);
             Text t = new Text();
             theBox.getChildren().add(t);
             measureNums.add(t);
-            if (i % barLength == 0) {
-                t.setText(String.valueOf(counter));
-                counter++;
-            } else
-                continue;
         }
     }
 
