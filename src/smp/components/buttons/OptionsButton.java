@@ -295,28 +295,29 @@ public class OptionsButton extends ImagePushButton {
     /** Updates the tempo from the options dialog. */
     private void multiplyTempo() {
         String txt = tempoField.getText();
-        if (txt != null) {
-            int num = 1;
-            try {
-                num = Integer.parseInt(txt);
-            } catch (NumberFormatException e) {
-                return;
-            }
-            if (num <= 1)
-                return;
-            
-            StaffSequence seq = theStaff.getSequence();
-            double currTempo = StateMachine.getTempo();
-            double newTempo = currTempo * num;
-            
-            seq.expand(num);
-            seq.setTempo(newTempo);
-            StateMachine.setTempo(newTempo);
-            StateMachine.setMaxLine(seq.getLength());
-            
-            controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num, currTempo, newTempo));
-            controller.getModifySongManager().record();
+        if (txt == null)
+            return;
+    
+        int num = 1;
+        try {
+            num = Integer.parseInt(txt);
+        } catch (NumberFormatException e) {
+            return;
         }
+        if (num <= 1)
+            return;
+        
+        StaffSequence seq = theStaff.getSequence();
+        double currTempo = StateMachine.getTempo();
+        double newTempo = currTempo * num;
+        
+        seq.expand(num);
+        seq.setTempo(newTempo);
+        StateMachine.setTempo(newTempo);
+        StateMachine.setMaxLine(seq.getLength());
+        
+        controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num, currTempo, newTempo));
+        controller.getModifySongManager().record();
     }
     
     /** Updates the program's soundfont, bind to song if checked. */
