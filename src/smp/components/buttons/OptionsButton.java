@@ -40,6 +40,7 @@ import smp.components.staff.sequences.StaffSequence;
 import smp.fx.SMPFXController;
 import smp.stateMachine.ProgramState;
 import smp.stateMachine.StateMachine;
+import smp.stateMachine.TimeSignature;
 
 /**
  * This is the options button. It currently doesn't do anything.
@@ -64,6 +65,9 @@ public class OptionsButton extends ImagePushButton {
 	
 	/** A checkbox to set the sequence's soundset to the one selected. */
 	private CheckBox bindBox;
+	
+	/** Where the new time signature is entered. */
+	private TextField timesigField;
 
     /**
      * Default constructor.
@@ -126,8 +130,12 @@ public class OptionsButton extends ImagePushButton {
         pane.getChildren().addAll(okButton);
         VBox vBox = new VBox(10);
         vBox.setAlignment(Pos.CENTER);
+        
         Label tempoAdjustHack = new Label("Increase tempo by how many times?");
         tempoField = new TextField();
+        
+        Label timesigLabel = new Label("Enter new time signature:");
+        timesigField = new TextField();
 
         Label sfLabel = new Label("Current soundfont");
 		soundfontsMenu = makeSoundfontsComboBox(dialog);
@@ -142,7 +150,7 @@ public class OptionsButton extends ImagePushButton {
 		} else {
 			soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
 	        vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
-	                tempoField, soundfontsOptions, pane);
+	                tempoField, timesigLabel, timesigField, soundfontsOptions, pane);
 		}
 		
         defaultVolume.autosize();
@@ -284,6 +292,7 @@ public class OptionsButton extends ImagePushButton {
         changeDefaultVol();
         multiplyTempo();
         changeSoundfont();
+        changeTimeSignature();
     }
 
     /** Updates the default volume of the program notes. */
@@ -335,5 +344,26 @@ public class OptionsButton extends ImagePushButton {
 			theStaff.getSequence().setSoundset(newSoundset);
 			StateMachine.setSongModified(true);
 		}
+    }
+    
+    private void changeTimeSignature() {
+        String txt = timesigField.getText();
+        
+        if (txt == null)
+            return;
+        
+        TimeSignature t;
+        try {
+            t = TimeSignature.valueOf(txt);
+        } catch (NumberFormatException e) {
+            return;
+        }
+        
+        theStaff.setTimeSignature(t);
+        
+        // force a redraw
+        int loc = StateMachine.getMeasureLineNum();
+        StateMachine.setMeasureLineNum(-1);
+        theStaff.setLocation(loc);
     }
 }
