@@ -1,6 +1,7 @@
 package smp.components.staff;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -9,13 +10,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
 
 /**
  * Wrapper class for all of the images that appear on the Staff of Super Mario
@@ -205,16 +206,38 @@ public class StaffImages {
      * @param currLine
      *            The current line that we are on.
      */
-    public void updateStaffMeasureLines(int currLine, int barLength) {
+    public void updateStaffMeasureLines(int currLine, int[] barDivs) {
+        int barLength = Arrays.stream(barDivs).sum();
+
+        int[] cumulativeSubLengths = new int[barDivs.length];
+        cumulativeSubLengths[0] = 0;
+        for (int i = 1; i < barDivs.length; i++)
+            cumulativeSubLengths[i] = cumulativeSubLengths[i - 1] + barDivs[i - 1];
+
         for (int i = 0; i < measureLines.size(); i++) {
-            final int currentIndex = currLine + i;
-            
             ImageView currImage = measureLines.get(i);
             Text currText = measureNums.get(i);
+
+            int currentIndex = currLine + i;
+            int currentBarIndex = currentIndex / barLength;
+            int relativeIndex = currentIndex % barLength;
             
-            if (currentIndex % barLength == 0) {
+            int k = Arrays.binarySearch(cumulativeSubLengths, relativeIndex);
+            
+            if (k == 0) {
                 currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_MLINE));
-                currText.setText(String.valueOf((currentIndex / barLength) + 1));
+                String txt = String.valueOf(currentBarIndex + 1);
+                double fontSize = Font.getDefault().getSize();
+                currText.setText(txt);
+                currText.setFont(new Font(fontSize));
+
+                
+            } else if (k > 0) {
+                currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_SLINE));
+                String txt = String.valueOf(currentBarIndex + 1) + "." + String.valueOf(k);
+                double fontSize = Font.getDefault().getSize() * .75;
+                currText.setText(txt);
+                currText.setFont(new Font(fontSize));
                 
             } else {
                 currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_LINE));
