@@ -206,15 +206,16 @@ public class StaffImages {
      *            The current line that we are on.
      */
     public void updateStaffMeasureLines(int currLine, int barLength) {
-        int counter = 0;
         for (int i = 0; i < measureLines.size(); i++) {
+            final int currentIndex = currLine + i;
+            
             ImageView currImage = measureLines.get(i);
             Text currText = measureNums.get(i);
-            if ((currLine + i) % barLength == 0) {
+            
+            if (currentIndex % barLength == 0) {
                 currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_MLINE));
-                currText.setText(String.valueOf((int) (Math.ceil(currLine
-                        / (double) barLength) + 1 + counter)));
-                counter++;
+                currText.setText(String.valueOf((currentIndex / barLength) + 1));
+                
             } else {
                 currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_LINE));
                 currText.setText("");
