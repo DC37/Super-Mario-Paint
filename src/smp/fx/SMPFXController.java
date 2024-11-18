@@ -3,7 +3,6 @@ package smp.fx;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -367,11 +366,11 @@ public class SMPFXController {
             if (idx == -1)
                 return;
             
-            int barLength = StateMachine.getTimeSignature().barLength();
+            int[] barDivs = StateMachine.getTimeSignature().divs();
             
             Platform.runLater(() -> {
                 staff.redraw();
-                staff.getStaffImages().updateStaffMeasureLines(idx, barLength);
+                staff.getStaffImages().updateStaffMeasureLines(idx, barDivs);
             });
         });
         
