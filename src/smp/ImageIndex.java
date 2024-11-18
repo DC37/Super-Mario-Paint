@@ -146,6 +146,9 @@ public enum ImageIndex {
 
     /** Each one of these lines indicates a measure. */
     STAFF_MLINE,
+    
+    /** Subdivisions in a measure */
+    STAFF_SLINE,
 
     /**
      * This is the MPCv1 play bar that goes across the screen.
