@@ -152,8 +152,8 @@ public class OptionsButton extends ImagePushButton {
 	        vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, pane);
 		} else {
 			soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
-	        vBox.getChildren().addAll(label, defaultVolume, tempoAdjustHack,
-	                tempoField, timesigLabel, timesigField, soundfontsOptions, pane);
+	        vBox.getChildren().addAll(label, defaultVolume, timesigLabel, timesigField,
+	                tempoAdjustHack, tempoField, soundfontsOptions, pane);
 		}
 		
         defaultVolume.autosize();
@@ -291,9 +291,9 @@ public class OptionsButton extends ImagePushButton {
     /** Updates the different values of this program. */
     private void updateValues() {
         changeDefaultVol();
+        changeTimeSignature();
         multiplyTempo();
         changeSoundfont();
-        changeTimeSignature();
     }
 
     /** Updates the default volume of the program notes. */
@@ -321,12 +321,16 @@ public class OptionsButton extends ImagePushButton {
         double currTempo = StateMachine.getTempo();
         double newTempo = currTempo * num;
         
+        TimeSignature currTimesig = StateMachine.getTimeSignature();
+        TimeSignature newTimesig = TimeSignature.multiply(currTimesig, num);
+        
         seq.expand(num);
         seq.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
         StateMachine.setMaxLine(seq.getLength());
+        theStaff.setTimeSignature(newTimesig);
         
-        controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num, currTempo, newTempo));
+        controller.getModifySongManager().execute(new MultiplyTempoCommand(theStaff, num, currTempo, newTempo, currTimesig, newTimesig));
         controller.getModifySongManager().record();
     }
     
