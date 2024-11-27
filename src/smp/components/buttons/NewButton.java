@@ -2,7 +2,6 @@ package smp.components.buttons;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -81,6 +80,7 @@ public class NewButton extends ImagePushButton {
         if (cont) {
             theStaff.setSequence(new StaffSequence());
             theStaff.setSequenceFile(null);
+            theStaff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             theStaff.resetLocation();
             StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
             controller.getNameTextField().clear();

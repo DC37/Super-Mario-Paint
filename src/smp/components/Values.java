@@ -3,6 +3,7 @@ package smp.components;
 import java.io.File;
 
 import smp.components.staff.sequences.Note;
+import smp.stateMachine.TimeSignature;
 
 /**
  * A "constants" file for holding things like default window size, default
@@ -41,6 +42,8 @@ public class Values {
      * This is the smallest value a note velocity can be.
      */
     public static final int ZERO_VELOCITY = 0;
+    
+    public static final TimeSignature DEFAULT_TIME_SIGNATURE = TimeSignature.FOUR_FOUR;
 
     /**
      * The smallest value that a note velocity can be; a note will basically be
