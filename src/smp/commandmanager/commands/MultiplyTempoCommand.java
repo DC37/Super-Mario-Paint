@@ -4,6 +4,7 @@ import smp.commandmanager.CommandInterface;
 import smp.components.staff.Staff;
 import smp.components.staff.sequences.StaffSequence;
 import smp.stateMachine.StateMachine;
+import smp.stateMachine.TimeSignature;
 
 public class MultiplyTempoCommand implements CommandInterface {
 
@@ -11,12 +12,16 @@ public class MultiplyTempoCommand implements CommandInterface {
 	int theMultiplyAmount;
 	double previousTempo;
 	double newTempo;
+	TimeSignature previousTimesig;
+	TimeSignature newTimesig;
 	
-	public MultiplyTempoCommand(Staff staff, int num, double previousTempo, double newTempo) {
+	public MultiplyTempoCommand(Staff staff, int num, double previousTempo, double newTempo, TimeSignature previousTimesig, TimeSignature newTimesig) {
 		theStaff = staff;
 		this.theMultiplyAmount = num;
 		this.previousTempo = previousTempo;
 		this.newTempo = newTempo;
+		this.previousTimesig = previousTimesig;
+		this.newTimesig = newTimesig;
 	}
 	
 	@Override
@@ -26,6 +31,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    seq.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
         StateMachine.setMaxLine(seq.getLength());
+        theStaff.setTimeSignature(newTimesig);
 	}
 
 	@Override
@@ -35,6 +41,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    seq.setTempo(previousTempo);
         StateMachine.setTempo(previousTempo);
         StateMachine.setMaxLine(seq.getLength());
+        theStaff.setTimeSignature(previousTimesig);
 	}
 
 }

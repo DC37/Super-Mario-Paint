@@ -97,6 +97,12 @@ public class TimeSignature {
         }
     }
     
+    public static TimeSignature multiply(TimeSignature t, int multiplyBy) {
+        int[] divs = t.divs;
+        int[] newDivs = Arrays.stream(divs).map(i -> i * multiplyBy).toArray();
+        return new TimeSignature(newDivs);
+    }
+    
     public static TimeSignature FOUR_FOUR = new TimeSignature(4, 4);
     public static TimeSignature THREE_FOUR = new TimeSignature(3, 4);
 
