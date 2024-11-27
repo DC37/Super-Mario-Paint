@@ -178,10 +178,6 @@ public class StateMachine {
         currentTimeSignature.set(t);;
     }
 
-    public static void resetTimeSignature() {
-        currentTimeSignature.set(TimeSignature.FOUR_FOUR);
-    }
-
     /**
      * @return The tempo that this program is running at.
      */
