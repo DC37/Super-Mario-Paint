@@ -1,6 +1,7 @@
 package smp.fx;
 
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -360,8 +361,8 @@ public class SMPFXController {
         
         scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
-        // Trigger redraw when the position changes, editing mode only
-        StateMachine.getCurrentLineProperty().addListener(obs -> {
+        // Trigger a redraw, editing mode only
+        InvalidationListener doRedraw = (obv) -> {
             int idx = StateMachine.getMeasureLineNum();
             if (idx == -1)
                 return;
@@ -372,7 +373,10 @@ public class SMPFXController {
                 staff.redraw();
                 staff.getStaffImages().updateStaffMeasureLines(idx, barDivs);
             });
-        });
+        };
+        
+        StateMachine.getCurrentLineProperty().addListener(doRedraw);
+        StateMachine.getTimeSignatureProperty().addListener(doRedraw);
         
         StateMachine.setMeasureLineNum(0);
         

@@ -365,10 +365,5 @@ public class OptionsButton extends ImagePushButton {
         }
         
         theStaff.setTimeSignature(t);
-        
-        // force a redraw
-        int loc = StateMachine.getMeasureLineNum();
-        StateMachine.setMeasureLineNum(-1);
-        theStaff.setLocation(loc);
     }
 }
