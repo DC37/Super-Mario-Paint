@@ -360,7 +360,7 @@ public class OptionsButton extends ImagePushButton {
         TimeSignature t;
         try {
             t = TimeSignature.valueOf(txt);
-        } catch (NumberFormatException e) {
+        } catch (IllegalArgumentException e) {
             return;
         }
         

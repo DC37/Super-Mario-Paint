@@ -32,8 +32,8 @@ public class TimeSignature {
     }
     
     public TimeSignature(int top, int bottom) throws IllegalArgumentException {
-        if (top == 0)
-            throw new IllegalArgumentException("Attempted to instantiate TimeSignature with top=0");
+        if (top <= 0)
+            throw new IllegalArgumentException("TimeSignature constructor expects positive number(s)");
             
         this.top = top;
         this.divs = new int[1];
@@ -43,11 +43,14 @@ public class TimeSignature {
     
     public TimeSignature(int[] divs, int bottom) throws IllegalArgumentException {
         if (divs.length == 0)
-            throw new IllegalArgumentException("Attempted to instantiate TimeSignature with top=0");
+            throw new IllegalArgumentException("TimeSignature constructor expects positive number(s)");
         
         int top = 0;
-        for (int d : divs)
+        for (int d : divs) {
+            if (d <= 0)
+                throw new IllegalArgumentException("TimeSignature constructor expects positive number(s)");
             top += d;
+        }
         this.top = top;
         
         this.divs = Arrays.copyOf(divs, divs.length);
@@ -81,7 +84,7 @@ public class TimeSignature {
         return (bottom == 0) ? topStr : topStr + "/" + bottom;
     }
 
-    public static TimeSignature valueOf(String disp) {
+    public static TimeSignature valueOf(String disp) throws IllegalArgumentException {
         int idxSlash = disp.indexOf("/");
         
         if (idxSlash == -1) {
@@ -97,7 +100,7 @@ public class TimeSignature {
         }
     }
     
-    public static TimeSignature multiply(TimeSignature t, int multiplyBy) {
+    public static TimeSignature multiply(TimeSignature t, int multiplyBy) throws IllegalArgumentException {
         int[] divs = t.divs;
         int[] newDivs = Arrays.stream(divs).map(i -> i * multiplyBy).toArray();
         return new TimeSignature(newDivs);
