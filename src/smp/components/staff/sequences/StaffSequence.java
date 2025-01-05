@@ -137,8 +137,10 @@ public class StaffSequence implements Serializable {
         try {
             return theLines.get(i);
         } catch (IndexOutOfBoundsException e) {
-            resize(i + 1);
-            return getLineSafe(i);
+            /* Out of bounds, add one to size, then get the last element
+               Should be an empty line... */
+            resize(theLines.size() + 1);
+            return getLineSafe(theLines.size() - 1);
         }
     }
 
