@@ -135,12 +135,18 @@ public class StaffSequence implements Serializable {
      */
     public StaffNoteLine getLineSafe(int i) {
         try {
+            if (i < 0) {
+            /* Out of bounds in a bad way, add one to size, 
+               then get the last element
+               Should be an empty line... */
+                resize(theLines.size() + 1);
+                return getLineSafe(theLines.size() - 1);
+            }
             return theLines.get(i);
         } catch (IndexOutOfBoundsException e) {
-            /* Out of bounds, add one to size, then get the last element
-               Should be an empty line... */
-            resize(theLines.size() + 1);
-            return getLineSafe(theLines.size() - 1);
+            /* Otherwise recursively add lines until we have enough */
+            resize(i + 1);
+            return getLineSafe(i);
         }
     }
 
