@@ -156,7 +156,7 @@ public class NoteMatrix {
     }
 
     /** Redraws the entire matrix. */
-    public void redraw(StaffSequence seq, int currentPosition) {
+    public synchronized void redraw(StaffSequence seq, int currentPosition) {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
             try {
                 redraw(seq, currentPosition, i);
