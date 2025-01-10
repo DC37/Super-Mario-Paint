@@ -304,7 +304,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         boolean muteA = this.muteAPressed.get();
 
         if (!mute && !muteA)
-            playSound(theInd, selectedPosition.get(), selectedAccidental.get());
+            playSound(theInd, selectedPosition.get(), selectedAccidental.get(), Values.DEFAULT_VELOCITY);
 
         theStaffNote = new StaffNote(theInd, selectedPosition.get(), selectedAccidental.get());
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
@@ -453,6 +453,24 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     private static void playSound(InstrumentIndex theInd, int pos, int acc) {
         SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
                 acc);
+    }
+    
+
+    /**
+     * Plays a sound given an index and a position.
+     *
+     * @param theInd
+     *            The index at which this instrument is located at.
+     * @param pos
+     *            The position at which this note is located at.
+     * @param acc
+     *            The sharp / flat that we want to play this note at.
+     * @param vel
+     *            The velocity to play the note at
+     */
+    private static void playSound(InstrumentIndex theInd, int pos, int acc, int vel) {
+        SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
+                acc, vel);
     }
 
     /**

@@ -26,6 +26,7 @@ public class Settings {
 
     /**
      * Classic debug on/off. 32-bit field
+     * 2^06 - Print placements of notes
      * 2^05 - Print arranger actions (add, delete, move) 
      * 2^04 - Print staff value every time it changes.
      * 2^03 -

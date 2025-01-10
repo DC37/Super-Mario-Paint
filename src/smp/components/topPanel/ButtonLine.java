@@ -145,7 +145,7 @@ public class ButtonLine {
     public void playSound(InstrumentIndex i) {
         int ind = i.getChannel() - 1;
         if (chan[ind] != null) {
-            chan[ind].noteOn(DEFAULT_NOTE, Values.MAX_VELOCITY);
+            chan[ind].noteOn(DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
             if ((Settings.debug & 0b10) != 0)
                 System.out.println("Channel " + (ind + 1) + " Instrument: "
                         + i.name());

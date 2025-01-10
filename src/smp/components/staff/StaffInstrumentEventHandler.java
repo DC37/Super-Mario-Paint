@@ -160,7 +160,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         // Drag-add notes, hold e to drag-remove notes
 		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown() && newNote) {
-			leftMousePressed(theInd);
+            int lineTmp = getLine(((MouseEvent)event).getX());
+			leftMousePressed(theInd, lineTmp);
 			event.consume();
 			StateMachine.setSongModified(true);
 		}
@@ -172,8 +173,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 		}
 		else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
 			MouseButton b = ((MouseEvent) event).getButton();
+            int lineTmp = getLine(((MouseEvent)event).getX());
             if (b == MouseButton.PRIMARY)
-                leftMousePressed(theInd);
+                leftMousePressed(theInd, lineTmp);
             else if (b == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
             event.consume();
@@ -250,11 +252,13 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      *            The InstrumentIndex corresponding to what instrument is
      *            currently selected.
      */
-    private void leftMousePressed(InstrumentIndex theInd) {
+    private void leftMousePressed(InstrumentIndex theInd, int lineTmp) {
         if (StateMachine.getButtonsPressed().contains(KeyCode.E)) {
             removeNote();
-        } else {
-            placeNote(theInd);
+        } else {        
+            StaffNoteLine s = theStaff.getSequence().getLineSafe(
+                StateMachine.getMeasureLineNum() + lineTmp);
+            placeNote(theInd, s.getVolume());
         }
     }
 
@@ -265,13 +269,19 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      *            The <code>InstrumentIndex</code> that we are going to use to
      *            place this note.
      */
-    private void placeNote(InstrumentIndex theInd) {
+    private void placeNote(InstrumentIndex theInd, int vel) {
         boolean mute = StateMachine.isMutePressed();
         boolean muteA = StateMachine.isMuteAPressed();
-
+        
+        if (vel <= 0 || vel >= 128)
+            vel = Values.DEFAULT_VELOCITY;
+        
         if (!mute && !muteA)
-            playSound(theInd, position, acc);
+            playSound(theInd, position, acc, vel);
 
+        if ((Settings.debug & 0b10000) != 0)
+            System.out.println("Index: " + theInd + "\nPosition: "+ position + "\nAcc: " + acc + "\nVel: " + vel);
+        
         theStaffNote = new StaffNote(theInd, position, acc);
 
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
@@ -490,9 +500,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @param acc
      *            The sharp / flat that we want to play this note at.
      */
-    private static void playSound(InstrumentIndex theInd, int pos, int acc) {
+    private static void playSound(InstrumentIndex theInd, int pos, int acc, int vel) {
         SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
-                acc);
+                acc, vel);
     }
 
     /**
