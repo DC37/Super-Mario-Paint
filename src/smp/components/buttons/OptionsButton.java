@@ -139,6 +139,7 @@ public class OptionsButton extends ImagePushButton {
         
         Label timesigLabel = new Label("Enter new time signature:");
         timesigField = new TextField();
+        timesigField.setPromptText("4/4, 3/4, 6/8, 6+3, ...");
 
         Label sfLabel = new Label("Current soundfont");
 		soundfontsMenu = makeSoundfontsComboBox(dialog);
