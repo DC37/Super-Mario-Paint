@@ -372,9 +372,9 @@ public class SuperMarioPaint extends Application {
                     		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
                 				break;
                     		if(ke.isControlDown() && ke.isShiftDown())
-                    			controller.getStaff().shift(-4);
+                    			controller.getStaff().jumpToPrevious();
                     		if((ke.isControlDown() && ke.getCode() != KeyCode.A) || ke.isShiftDown())
-                    			controller.getStaff().shift(-4);
+                    			controller.getStaff().jumpToPrevious();
                     		break;
                     		
                     	case D:
@@ -389,9 +389,9 @@ public class SuperMarioPaint extends Application {
                     		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
                     			break;
                     		if(ke.isControlDown() && ke.isShiftDown())
-                    			controller.getStaff().shift(4);
+                    			controller.getStaff().jumpToNext();
                     		if(ke.isControlDown() || ke.isShiftDown())
-                    			controller.getStaff().shift(4);
+                    			controller.getStaff().jumpToNext();
                     		break;
                     		
                     	// @since 1.4, adds conventional spacebar functionality 

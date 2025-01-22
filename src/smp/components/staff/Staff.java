@@ -171,6 +171,46 @@ public class Staff {
     public void shift(int num) {
         setLocation(num + StateMachine.getMeasureLineNum());
     }
+    
+    /**
+     * Jump to the next colored line
+     */
+    public void jumpToNext() {
+        int barLength = theSequence.getTimeSignature().barLength();
+        int[] barDivs = theSequence.getTimeSignature().divs();
+        int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
+        
+        int subLength = 0;
+        
+        for (int i = 0; i < barDivs.length; i++) {
+            subLength += barDivs[i];
+            
+            if (relativeLoc < subLength) {
+                shift(subLength - relativeLoc);
+                return;
+            }
+        }
+    }
+    
+    public void jumpToPrevious() {
+        int barLength = theSequence.getTimeSignature().barLength();
+        int[] barDivs = theSequence.getTimeSignature().divs();
+        int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
+        
+        if (relativeLoc == 0)
+            relativeLoc = barLength;
+        
+        int subLength = barLength;
+        
+        for (int i = barDivs.length; i > 0; i--) {
+            subLength -= barDivs[i - 1];
+            
+            if (relativeLoc > subLength) {
+                shift(subLength - relativeLoc);
+                return;
+            }
+        }
+    }
 
     /**
      * Jumps to a certain position on the staff.
