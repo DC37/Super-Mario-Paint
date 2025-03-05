@@ -122,8 +122,6 @@ public class Staff {
         theMatrix = matrix;
         setController(ct);
         setArrangementList(arrList);
-        staffImages.setStaff(this);
-        staffImages.initialize();
         animationService = new AnimationService();
         soundPlayer = new SoundPlayer(this);
     }
