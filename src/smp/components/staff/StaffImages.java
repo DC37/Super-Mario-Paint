@@ -77,7 +77,8 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(ImageLoader i) {
+    public StaffImages(SMPFXController ct, ImageLoader i) {
+        this.controller = ct;
         il = i;
     }
 
@@ -291,16 +292,6 @@ public class StaffImages {
      */
     public void setStaff(Staff s) {
         theStaff = s;
-    }
-
-    /**
-     * Sets the controller class.
-     *
-     * @param ct
-     *            The FXML controller class.
-     */
-    public void setController(SMPFXController ct) {
-        controller = ct;
     }
 
     /**
