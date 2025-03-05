@@ -311,6 +311,8 @@ public class SMPFXController {
         images.setLedgerLines(staffLedgerLines);
         NoteMatrix matrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, images, il);
         staff = new Staff(this, images, matrix, arrangementList);
+        images.setStaff(staff);
+        images.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
         
