@@ -121,7 +121,7 @@ public class Staff {
         staffImages = images;
         theMatrix = matrix;
         setController(ct);
-        setArrangementList(arrList);
+        theArrangementList = arrList;
         animationService = new AnimationService();
         soundPlayer = new SoundPlayer(this);
     }
@@ -416,16 +416,6 @@ public class Staff {
     /** @return The current arrangement that we are displaying. */
     public ListView<String> getArrangementList() {
         return theArrangementList;
-    }
-
-    /**
-     * Sets the ListView object for the arrangement list.
-     *
-     * @param arrangementList
-     *            <code>ListView</code> object that we want to set.
-     */
-    public void setArrangementList(ListView<String> arrangementList) {
-        theArrangementList = arrangementList;
     }
 
     /**
