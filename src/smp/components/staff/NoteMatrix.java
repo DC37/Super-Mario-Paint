@@ -11,7 +11,6 @@ import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
-import smp.stateMachine.StateMachine;
 
 /**
  * This is the matrix of notes behind the staff. We can change the size of this
@@ -51,8 +50,8 @@ public class NoteMatrix {
     /** The number of notes that are in each note line. */
     private int numberOfNotes;
 
-    /** Pointer to the staff object with which this is linked. */
-    private transient Staff theStaff;
+    /** Pointer to the staff images with which this is linked. */
+    private transient StaffImages staffImages;
 
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
@@ -63,8 +62,8 @@ public class NoteMatrix {
      * @param y
      *            The number of addressable notes in a line.
      */
-    public NoteMatrix(int x, int y, Staff s, ImageLoader i) {
-        theStaff = s;
+    public NoteMatrix(int x, int y, StaffImages s, ImageLoader i) {
+        staffImages = s;
         il = i;
         numberOfLines = x;
         numberOfNotes = y;
@@ -209,25 +208,25 @@ public class NoteMatrix {
                 low = nt;
         }
         if (high >= Values.highC) {
-            theStaff.getStaffImages().highC().get(index).setVisible(true);
-            theStaff.getStaffImages().highA().get(index).setVisible(true);
+            staffImages.highC().get(index).setVisible(true);
+            staffImages.highA().get(index).setVisible(true);
         } else if (high >= Values.highA) {
-            theStaff.getStaffImages().highC().get(index).setVisible(false);
-            theStaff.getStaffImages().highA().get(index).setVisible(true);
+            staffImages.highC().get(index).setVisible(false);
+            staffImages.highA().get(index).setVisible(true);
         } else {
-            theStaff.getStaffImages().highC().get(index).setVisible(false);
-            theStaff.getStaffImages().highA().get(index).setVisible(false);
+            staffImages.highC().get(index).setVisible(false);
+            staffImages.highA().get(index).setVisible(false);
         }
 
         if (low <= Values.lowA) {
-            theStaff.getStaffImages().lowC().get(index).setVisible(true);
-            theStaff.getStaffImages().lowA().get(index).setVisible(true);
+            staffImages.lowC().get(index).setVisible(true);
+            staffImages.lowA().get(index).setVisible(true);
         } else if (low <= Values.lowC) {
-            theStaff.getStaffImages().lowC().get(index).setVisible(true);
-            theStaff.getStaffImages().lowA().get(index).setVisible(false);
+            staffImages.lowC().get(index).setVisible(true);
+            staffImages.lowA().get(index).setVisible(false);
         } else {
-            theStaff.getStaffImages().lowC().get(index).setVisible(false);
-            theStaff.getStaffImages().lowA().get(index).setVisible(false);
+            staffImages.lowC().get(index).setVisible(false);
+            staffImages.lowA().get(index).setVisible(false);
         }
 
     }
@@ -322,11 +321,6 @@ public class NoteMatrix {
      */
     public StaffVolumeEventHandler getVolHandler(int index) {
         return volumeBarHandlers.get(index);
-    }
-
-    /** @return The staff that this NoteMatrix is linked to. */
-    public Staff getStaff() {
-        return theStaff;
     }
 
 }

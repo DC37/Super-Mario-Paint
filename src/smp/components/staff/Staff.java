@@ -120,11 +120,11 @@ public class Staff {
      */
     public Staff(HBox[] staffLLines, SMPFXController ct, ImageLoader i,
             ListView<String> arrList) {
+        staffImages = new StaffImages(i);
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
-                Values.NOTES_IN_A_LINE, this, i);
+                Values.NOTES_IN_A_LINE, staffImages, i);
         setController(ct);
         setArrangementList(arrList);
-        staffImages = new StaffImages(i);
         staffImages.setStaff(this);
         staffImages.setController(ct);
         staffImages.setLedgerLines(staffLLines);
@@ -651,7 +651,7 @@ public class Staff {
                     }
                 }
                 hitStop();
-                return theMatrix.getStaff();
+                return Staff.this;
             }
 
             /**
@@ -775,7 +775,7 @@ public class Staff {
                 }
                 
                 hitStop();
-                return theMatrix.getStaff();
+                return Staff.this;
             }
             
             /**
