@@ -99,9 +99,6 @@ public class Staff {
     /** The FXML controller class. */
     private SMPFXController controller;
 
-    /** The image loader class. */
-    private ImageLoader il;
-
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     private SoundPlayer soundPlayer;
 
@@ -125,7 +122,6 @@ public class Staff {
             ListView<String> arrList) {
         theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
                 Values.NOTES_IN_A_LINE, this, i);
-        setImageLoader(i);
         setController(ct);
         setArrangementList(arrList);
         staffImages = new StaffImages(i);
@@ -563,21 +559,6 @@ public class Staff {
         delayMillis = (int) mill;
         double nano = (mill - delayMillis) * Math.pow(10, 6);
         delayNanos = (int) nano;
-    }
-
-    /**
-     * @return The Staff's Image Loader
-     */
-    public ImageLoader getImageLoader() {
-        return il;
-    }
-
-    /**
-     * @param i
-     *            The Image Loader to set.
-     */
-    public void setImageLoader(ImageLoader i) {
-        il = i;
     }
     
     
