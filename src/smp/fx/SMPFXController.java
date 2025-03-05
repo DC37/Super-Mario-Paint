@@ -19,7 +19,9 @@ import smp.SoundfontLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.components.Values;
 import smp.components.controls.Controls;
+import smp.components.staff.NoteMatrix;
 import smp.components.staff.Staff;
+import smp.components.staff.StaffImages;
 import smp.components.staff.StaffInstrumentEventHandler;
 import smp.components.staff.clipboard.StaffClipboard;
 import smp.components.staff.clipboard.StaffRubberBand;
@@ -305,7 +307,9 @@ public class SMPFXController {
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC, staffExtLinesLowA };
-        staff = new Staff(staffLedgerLines, this, il, arrangementList);
+        StaffImages images = new StaffImages(il);
+        NoteMatrix matrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, images, il);
+        staff = new Staff(staffLedgerLines, this, images, matrix, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
         

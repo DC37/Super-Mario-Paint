@@ -16,7 +16,6 @@ import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import smp.ImageIndex;
-import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
@@ -118,11 +117,10 @@ public class Staff {
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
      */
-    public Staff(HBox[] staffLLines, SMPFXController ct, ImageLoader i,
+    public Staff(HBox[] staffLLines, SMPFXController ct, StaffImages images, NoteMatrix matrix,
             ListView<String> arrList) {
-        staffImages = new StaffImages(i);
-        theMatrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW,
-                Values.NOTES_IN_A_LINE, staffImages, i);
+        staffImages = images;
+        theMatrix = matrix;
         setController(ct);
         setArrangementList(arrList);
         staffImages.setStaff(this);
