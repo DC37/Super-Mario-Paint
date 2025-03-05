@@ -123,7 +123,6 @@ public class Staff {
         setController(ct);
         setArrangementList(arrList);
         staffImages.setStaff(this);
-        staffImages.setController(ct);
         staffImages.initialize();
         animationService = new AnimationService();
         soundPlayer = new SoundPlayer(this);
