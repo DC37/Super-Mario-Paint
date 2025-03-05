@@ -308,8 +308,9 @@ public class SMPFXController {
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC, staffExtLinesLowA };
         StaffImages images = new StaffImages(il);
+        images.setLedgerLines(staffLedgerLines);
         NoteMatrix matrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, images, il);
-        staff = new Staff(staffLedgerLines, this, images, matrix, arrangementList);
+        staff = new Staff(this, images, matrix, arrangementList);
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
         
