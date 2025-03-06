@@ -32,6 +32,8 @@ public class StaffImages {
     
     final private HBox staffInstruments;
     final private HBox staffAccidentals;
+    final private HBox staffMeasureLines;
+    final private HBox staffMeasureNums;
 
     /**
      * The ArrayList that holds the ImageView objects that the measure lines
@@ -80,11 +82,13 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals) {
+    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums) {
         this.controller = ct;
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
+        this.staffMeasureLines = staffMeasureLines;
+        this.staffMeasureNums = staffMeasureNums;
     }
 
     /**
@@ -94,8 +98,8 @@ public class StaffImages {
      */
     public void initialize() {
 
-        initializeStaffMeasureLines(controller.getStaffMeasureLines());
-        initializeStaffMeasureNums(controller.getStaffMeasureNums());
+        initializeStaffMeasureLines();
+        initializeStaffMeasureNums();
         initializeStaffLedgerLines();
         initializeStaffInstruments();
         initializeVolumeBars(controller.getVolumeBars());
@@ -137,10 +141,10 @@ public class StaffImages {
     /**
      * These are the numbers above each successive measure.
      */
-    private void initializeStaffMeasureNums(HBox mNums) {
+    private void initializeStaffMeasureNums() {
         ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
         measureNums = new ArrayList<Text>();
-        for (Node num : mNums.getChildren())
+        for (Node num : staffMeasureNums.getChildren())
             measureNumBoxes.add((HBox) num);
 
         for (int i = 0; i < measureNumBoxes.size(); i++) {
@@ -190,13 +194,10 @@ public class StaffImages {
 
     /**
      * These are the lines that divide up the staff.
-     *
-     * @param staffMLines
-     *            The measure lines that divide the staff.
      */
-    private void initializeStaffMeasureLines(HBox mLines) {
+    private void initializeStaffMeasureLines() {
         measureLines = new ArrayList<ImageView>();
-        for (Node n : mLines.getChildren())
+        for (Node n : staffMeasureLines.getChildren())
             measureLines.add((ImageView) n);
     }
 
