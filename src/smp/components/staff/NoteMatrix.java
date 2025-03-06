@@ -157,48 +157,6 @@ public class NoteMatrix {
     }
 
     /**
-     * Re-draws the staff ledger lines based on the notes present in a
-     * StaffNoteLine at a certain index. Position 14 & 16 are the positions of
-     * the high A and high C lines, and positions 0 and 2 are the positions of
-     * the low A and low C lines.
-     */
-    public void populateStaffLedgerLines(StaffImages images, StaffSequence seq, int currentPosition, int index) {
-        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
-
-        int high = 0;
-        int low = Values.NOTES_IN_A_LINE;
-        for (StaffNote n : stl.getNotes()) {
-            int nt = n.getPosition();
-            if (nt >= high)
-                high = nt;
-            if (nt <= low)
-                low = nt;
-        }
-        if (high >= Values.highC) {
-            images.highC().get(index).setVisible(true);
-            images.highA().get(index).setVisible(true);
-        } else if (high >= Values.highA) {
-            images.highC().get(index).setVisible(false);
-            images.highA().get(index).setVisible(true);
-        } else {
-            images.highC().get(index).setVisible(false);
-            images.highA().get(index).setVisible(false);
-        }
-
-        if (low <= Values.lowA) {
-            images.lowC().get(index).setVisible(true);
-            images.lowA().get(index).setVisible(true);
-        } else if (low <= Values.lowC) {
-            images.lowC().get(index).setVisible(true);
-            images.lowA().get(index).setVisible(false);
-        } else {
-            images.lowC().get(index).setVisible(false);
-            images.lowA().get(index).setVisible(false);
-        }
-
-    }
-
-    /**
      * Updates the volume display.
      *
      * @param sveh
