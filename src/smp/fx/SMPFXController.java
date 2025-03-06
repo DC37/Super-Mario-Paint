@@ -367,18 +367,7 @@ public class SMPFXController {
         scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
         // Trigger a redraw, editing mode only
-        InvalidationListener doRedraw = (obv) -> {
-            int idx = StateMachine.getMeasureLineNum();
-            if (idx == -1)
-                return;
-            
-            int[] barDivs = StateMachine.getTimeSignature().divs();
-            
-            Platform.runLater(() -> {
-                staff.redraw();
-                staff.getStaffImages().updateStaffMeasureLines(idx, barDivs);
-            });
-        };
+        InvalidationListener doRedraw = (obv) -> staff.redraw();
         
         StateMachine.getCurrentLineProperty().addListener(doRedraw);
         StateMachine.getTimeSignatureProperty().addListener(doRedraw);
