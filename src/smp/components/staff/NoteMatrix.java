@@ -127,10 +127,10 @@ public class NoteMatrix {
     }
 
     /** Redraws the entire matrix. */
-    public synchronized void redraw(StaffImages images, StaffSequence seq, int currentPosition) {
+    public synchronized void redraw(StaffSequence seq, int currentPosition) {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
             try {
-                redraw(images, seq, currentPosition, i);
+                redraw(seq, currentPosition, i);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
                 // Otherwise, do nothing.
@@ -144,7 +144,7 @@ public class NoteMatrix {
      * @param index
      *            The index at which we want to redraw.
      */
-    private void redraw(StaffImages images, StaffSequence seq, int currentPosition, int index) {
+    private void redraw(StaffSequence seq, int currentPosition, int index) {
 
         StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
 
