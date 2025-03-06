@@ -309,7 +309,7 @@ public class SMPFXController {
                 staffExtLinesLowC, staffExtLinesLowA };
         NoteMatrix matrix = new NoteMatrix(il);
         StaffImages images = new StaffImages(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, matrix, commandManager);
-        staff = new Staff(this, images, matrix, arrangementList);
+        staff = new Staff(this, images, arrangementList);
         images.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);

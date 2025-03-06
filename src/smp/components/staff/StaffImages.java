@@ -84,6 +84,10 @@ public class StaffImages {
         this.matrix = matrix;
         this.commandManager = commandManager;
     }
+    
+    public NoteMatrix getNoteMatrix() {
+        return matrix;
+    }
 
     /**
      * Instantiates this wrapper class with the correct HBox objects such that
