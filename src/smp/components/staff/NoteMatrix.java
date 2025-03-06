@@ -44,29 +44,15 @@ public class NoteMatrix {
     /** This is the list of volume bar handlers on the staff. */
     private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
 
-    /** The number of lines in this note matrix. */
-    private int numberOfLines;
-
-    /** The number of notes that are in each note line. */
-    private int numberOfNotes;
-
     /** Pointer to the staff images with which this is linked. */
     private transient StaffImages staffImages;
 
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
 
-    /**
-     * @param x
-     *            The number of note lines on the current staff.
-     * @param y
-     *            The number of addressable notes in a line.
-     */
-    public NoteMatrix(int x, int y, StaffImages s, ImageLoader i) {
+    public NoteMatrix(StaffImages s, ImageLoader i) {
         staffImages = s;
         il = i;
-        numberOfLines = x;
-        numberOfNotes = y;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
         volumeBars = new ArrayList<StackPane>();
@@ -102,16 +88,6 @@ public class NoteMatrix {
      */
     public StackPane getVolumeBar(int x) {
         return volumeBars.get(x);
-    }
-
-    /** @return The number of lines in the note matrix. */
-    public int numberOfLines() {
-        return numberOfLines;
-    }
-
-    /** @return The number of notes in a line. */
-    public int numberOfNotes() {
-        return numberOfNotes;
     }
 
     /**
