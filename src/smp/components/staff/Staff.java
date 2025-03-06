@@ -240,6 +240,7 @@ public class Staff {
         
         Platform.runLater(() -> theMatrix.redraw(staffImages, theSequence, idx));
         Platform.runLater(() -> staffImages.updateStaffMeasureLines(idx, barDivs));
+        Platform.runLater(() -> staffImages.updateStaffLedgerLines(theSequence, idx));
     }
 
     /** Begins animation of the Staff. (Starts a song) */
