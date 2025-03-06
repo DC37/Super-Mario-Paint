@@ -16,6 +16,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.components.Values;
+import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 
@@ -239,7 +240,39 @@ public class StaffImages {
     
     public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            matrix.populateStaffLedgerLines(this, seq, currLine, i);
+            StaffNoteLine stl = seq.getLineSafe(currLine + i);
+
+            int high = 0;
+            int low = Values.NOTES_IN_A_LINE;
+            for (StaffNote n : stl.getNotes()) {
+                int nt = n.getPosition();
+                if (nt >= high)
+                    high = nt;
+                if (nt <= low)
+                    low = nt;
+            }
+            
+            if (high >= Values.highC) {
+                highC.get(i).setVisible(true);
+                highA.get(i).setVisible(true);
+            } else if (high >= Values.highA) {
+                highC.get(i).setVisible(false);
+                highA.get(i).setVisible(true);
+            } else {
+                highC.get(i).setVisible(false);
+                highA.get(i).setVisible(false);
+            }
+
+            if (low <= Values.lowA) {
+                lowC.get(i).setVisible(true);
+                lowA.get(i).setVisible(true);
+            } else if (low <= Values.lowC) {
+                lowC.get(i).setVisible(true);
+                lowA.get(i).setVisible(false);
+            } else {
+                lowC.get(i).setVisible(false);
+                lowA.get(i).setVisible(false);
+            }
         }
     }
 
