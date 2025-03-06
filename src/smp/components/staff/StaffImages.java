@@ -69,11 +69,6 @@ public class StaffImages {
     private ArrayList<Node> lowA;
 
     /**
-     * The parent staff object.
-     */
-    private Staff theStaff;
-
-    /**
      * Constructor that also sets up the staff ledger lines.
      */
     public StaffImages(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, NoteMatrix matrix, ModifySongManager commandManager) {
@@ -239,16 +234,6 @@ public class StaffImages {
         highA.addAll(staffLedgerLines[1].getChildren());
         lowC.addAll(staffLedgerLines[2].getChildren());
         lowA.addAll(staffLedgerLines[3].getChildren());
-    }
-
-    /**
-     * Sets the parent staff object to the specified object.
-     *
-     * @param s
-     *            The pointer to the parent staff object.
-     */
-    public void setStaff(Staff s) {
-        theStaff = s;
     }
 
     /** @return The ledger lines at position high C. */
