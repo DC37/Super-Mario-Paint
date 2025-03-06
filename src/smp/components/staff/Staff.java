@@ -67,9 +67,6 @@ public class Staff {
      */
     private StaffImages staffImages;
 
-    /** This holds the notes on the staff. */
-    private NoteMatrix theMatrix;
-
     /** This is the name of the song that we are currently editing. */
     private String theSequenceName = "";
 
@@ -116,10 +113,8 @@ public class Staff {
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
      */
-    public Staff(SMPFXController ct, StaffImages images, NoteMatrix matrix,
-            ListView<String> arrList) {
+    public Staff(SMPFXController ct, StaffImages images, ListView<String> arrList) {
         staffImages = images;
-        theMatrix = matrix;
         setController(ct);
         theArrangementList = arrList;
         animationService = new AnimationService();
@@ -361,7 +356,7 @@ public class Staff {
      * @return The note matrix of the staff that we are working with.
      */
     public NoteMatrix getNoteMatrix() {
-        return theMatrix;
+        return staffImages.getNoteMatrix();
     }
 
     /** @return The current song that we are displaying. */
