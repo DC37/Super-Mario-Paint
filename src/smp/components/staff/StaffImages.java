@@ -276,24 +276,4 @@ public class StaffImages {
         }
     }
 
-    /** @return The ledger lines at position high C. */
-    public ArrayList<Node> highC() {
-        return highC;
-    }
-
-    /** @return The ledger lines at position high A. */
-    public ArrayList<Node> highA() {
-        return highA;
-    }
-
-    /** @return The ledger lines at position low C. */
-    public ArrayList<Node> lowC() {
-        return lowC;
-    }
-
-    /** @return The ledger lines at position low C. */
-    public ArrayList<Node> lowA() {
-        return lowA;
-    }
-
 }
