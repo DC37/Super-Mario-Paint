@@ -65,7 +65,7 @@ public class Staff {
      * The wrapper that holds a series of ImageView objects that are meant to
      * display the staff measure lines.
      */
-    private StaffImages staffImages;
+    private StaffDisplayManager displayManager;
 
     /** This is the name of the song that we are currently editing. */
     private String theSequenceName = "";
@@ -113,8 +113,8 @@ public class Staff {
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
      */
-    public Staff(SMPFXController ct, StaffImages images, ListView<String> arrList) {
-        staffImages = images;
+    public Staff(SMPFXController ct, StaffDisplayManager display, ListView<String> arrList) {
+        displayManager = display;
         setController(ct);
         theArrangementList = arrList;
         animationService = new AnimationService();
@@ -233,10 +233,10 @@ public class Staff {
         
         int[] barDivs = StateMachine.getTimeSignature().divs();
         
-        Platform.runLater(() -> staffImages.updateNoteDisplay(theSequence, idx));
-        Platform.runLater(() -> staffImages.updateVolumeBars(theSequence, idx));
-        Platform.runLater(() -> staffImages.updateStaffMeasureLines(idx, barDivs));
-        Platform.runLater(() -> staffImages.updateStaffLedgerLines(theSequence, idx));
+        Platform.runLater(() -> displayManager.updateNoteDisplay(theSequence, idx));
+        Platform.runLater(() -> displayManager.updateVolumeBars(theSequence, idx));
+        Platform.runLater(() -> displayManager.updateStaffMeasureLines(idx, barDivs));
+        Platform.runLater(() -> displayManager.updateStaffLedgerLines(theSequence, idx));
     }
 
     /** Begins animation of the Staff. (Starts a song) */
@@ -356,7 +356,7 @@ public class Staff {
      * @return The note matrix of the staff that we are working with.
      */
     public NoteMatrix getNoteMatrix() {
-        return staffImages.getNoteMatrix();
+        return displayManager.getNoteMatrix();
     }
 
     /** @return The current song that we are displaying. */
@@ -463,8 +463,8 @@ public class Staff {
      * @return The wrapper that holds a series of ImageView objects that are
      *         meant to display the staff measure lines.
      */
-    public StaffImages getStaffImages() {
-        return staffImages;
+    public StaffDisplayManager getDisplayManager() {
+        return displayManager;
     }
 
     /**
