@@ -355,14 +355,6 @@ public class Staff {
         return theMatrix;
     }
 
-    /**
-     * @param other
-     *            The new note matrix we want to load.
-     */
-    public void setNoteMatrix(NoteMatrix other) {
-        theMatrix = other;
-    }
-
     /** @return The current song that we are displaying. */
     public synchronized StaffSequence getSequence() {
         return theSequence;
