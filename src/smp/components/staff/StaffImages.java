@@ -67,12 +67,6 @@ public class StaffImages {
     private ArrayList<Node> lowA;
 
     /**
-     * This is the list of lists of the ledger lines, so that we can quickly
-     * hide everything using a loop, if necessary.
-     */
-    private ArrayList<ArrayList<Node>> theLLines = new ArrayList<ArrayList<Node>>();
-
-    /**
      * The parent staff object.
      */
     private Staff theStaff;
@@ -244,22 +238,6 @@ public class StaffImages {
         highA.addAll(staffLedgerLines[1].getChildren());
         lowC.addAll(staffLedgerLines[2].getChildren());
         lowA.addAll(staffLedgerLines[3].getChildren());
-        theLLines.add(highC);
-        theLLines.add(highA);
-        theLLines.add(lowC);
-        theLLines.add(lowA);
-        hideAllLedgerLines();
-    }
-
-    /**
-     * Hides all of the ledger lines.
-     */
-    public void hideAllLedgerLines() {
-
-        for (ArrayList<Node> n : theLLines)
-            for (Node nd : n)
-                nd.setVisible(false);
-
     }
 
     /**
