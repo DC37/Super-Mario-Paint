@@ -37,6 +37,8 @@ public class StaffImages {
     final private HBox[] staffLedgerLines;
     final private HBox staffVolumeBars;
     
+    final private NoteMatrix matrix;
+    
     final private ModifySongManager commandManager;
 
     /**
@@ -74,7 +76,7 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, ModifySongManager commandManager) {
+    public StaffImages(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, NoteMatrix matrix, ModifySongManager commandManager) {
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
@@ -82,6 +84,7 @@ public class StaffImages {
         this.staffMeasureNums = staffMeasureNums;
         this.staffLedgerLines = staffLedgerLines;
         this.staffVolumeBars = staffVolumeBars;
+        this.matrix = matrix;
         this.commandManager = commandManager;
     }
 
@@ -110,9 +113,9 @@ public class StaffImages {
             StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il, commandManager);
             sveh.setStaffNoteLine(new StaffNoteLine());
             volBar.addEventHandler(Event.ANY, sveh);
-            theStaff.getNoteMatrix().addVolHandler(sveh);
+            matrix.addVolHandler(sveh);
         }
-        theStaff.getNoteMatrix().setVolumeBars(vol);
+        matrix.setVolumeBars(vol);
 
     }
 
@@ -138,8 +141,6 @@ public class StaffImages {
      * appear on the staff. This method also sets up sharps, flats, etc.
      */
     private void initializeStaffInstruments() {
-        NoteMatrix staffMatrix = theStaff.getNoteMatrix();
-
         ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
         for (Node n : staffAccidentals.getChildren())
             accidentalLines.add((VBox) n);
@@ -165,8 +166,8 @@ public class StaffImages {
                 accs.add(acc);
             }
 
-            staffMatrix.addLine(notes);
-            staffMatrix.addAccLine(accs);
+            matrix.addLine(notes);
+            matrix.addAccLine(accs);
         }
     }
 
