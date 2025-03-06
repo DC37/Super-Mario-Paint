@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
 import smp.ImageLoader;
+import smp.commandmanager.ModifySongManager;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.fx.SMPFXController;
@@ -35,6 +36,8 @@ public class StaffImages {
     final private HBox staffMeasureLines;
     final private HBox staffMeasureNums;
     final private HBox staffVolumeBars;
+    
+    final private ModifySongManager commandManager;
 
     /**
      * The ArrayList that holds the ImageView objects that the measure lines
@@ -83,7 +86,7 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox staffVolumeBars) {
+    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox staffVolumeBars, ModifySongManager commandManager) {
         this.controller = ct;
         il = i;
         this.staffInstruments = staffInstruments;
@@ -91,6 +94,7 @@ public class StaffImages {
         this.staffMeasureLines = staffMeasureLines;
         this.staffMeasureNums = staffMeasureNums;
         this.staffVolumeBars = staffVolumeBars;
+        this.commandManager = commandManager;
     }
 
     /**
@@ -127,8 +131,7 @@ public class StaffImages {
         for (Node v : staffVolumeBars.getChildren()) {
             StackPane volBar = (StackPane) v;
             vol.add(volBar);
-            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar,
-                    il, controller.getModifySongManager());
+            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il, commandManager);
             volBar.addEventHandler(Event.ANY, sveh);
             theStaff.getNoteMatrix().addVolHandler(sveh);
         }
