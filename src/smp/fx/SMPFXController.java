@@ -307,7 +307,7 @@ public class SMPFXController {
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC, staffExtLinesLowA };
-        StaffImages images = new StaffImages(this, il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers);
+        StaffImages images = new StaffImages(this, il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, volumeBars);
         images.setLedgerLines(staffLedgerLines);
         NoteMatrix matrix = new NoteMatrix(Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, images, il);
         staff = new Staff(this, images, matrix, arrangementList);

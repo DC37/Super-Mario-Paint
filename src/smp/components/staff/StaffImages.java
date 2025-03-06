@@ -34,6 +34,7 @@ public class StaffImages {
     final private HBox staffAccidentals;
     final private HBox staffMeasureLines;
     final private HBox staffMeasureNums;
+    final private HBox staffVolumeBars;
 
     /**
      * The ArrayList that holds the ImageView objects that the measure lines
@@ -82,13 +83,14 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums) {
+    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox staffVolumeBars) {
         this.controller = ct;
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
         this.staffMeasureLines = staffMeasureLines;
         this.staffMeasureNums = staffMeasureNums;
+        this.staffVolumeBars = staffVolumeBars;
     }
 
     /**
@@ -102,7 +104,7 @@ public class StaffImages {
         initializeStaffMeasureNums();
         initializeStaffLedgerLines();
         initializeStaffInstruments();
-        initializeVolumeBars(controller.getVolumeBars());
+        initializeVolumeBars();
         initializeVolumeBarLinks();
     }
     /**
@@ -119,14 +121,10 @@ public class StaffImages {
 
     /**
      * Initializes the volume bars in the program.
-     *
-     * @param volumeBars
-     *            This is the HBox that holds all of the volume bar
-     *            <code>StackPane</code> objects.
      */
-    private void initializeVolumeBars(HBox volumeBars) {
+    private void initializeVolumeBars() {
         ArrayList<StackPane> vol = new ArrayList<StackPane>();
-        for (Node v : volumeBars.getChildren()) {
+        for (Node v : staffVolumeBars.getChildren()) {
             StackPane volBar = (StackPane) v;
             vol.add(volBar);
             StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar,
