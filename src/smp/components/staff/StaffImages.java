@@ -17,6 +17,7 @@ import smp.ImageLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
+import smp.components.staff.sequences.StaffSequence;
 
 /**
  * Wrapper class for all of the images that appear on the Staff of Super Mario
@@ -234,6 +235,12 @@ public class StaffImages {
         highA.addAll(staffLedgerLines[1].getChildren());
         lowC.addAll(staffLedgerLines[2].getChildren());
         lowA.addAll(staffLedgerLines[3].getChildren());
+    }
+    
+    public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            matrix.populateStaffLedgerLines(this, seq, currLine, i);
+        }
     }
 
     /** @return The ledger lines at position high C. */
