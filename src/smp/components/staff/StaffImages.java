@@ -29,6 +29,9 @@ import smp.fx.SMPFXController;
  * @since 2012.09.17
  */
 public class StaffImages {
+    
+    final private HBox staffInstruments;
+    final private HBox staffAccidentals;
 
     /**
      * The ArrayList that holds the ImageView objects that the measure lines
@@ -77,9 +80,11 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(SMPFXController ct, ImageLoader i) {
+    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals) {
         this.controller = ct;
         il = i;
+        this.staffInstruments = staffInstruments;
+        this.staffAccidentals = staffAccidentals;
     }
 
     /**
@@ -92,8 +97,7 @@ public class StaffImages {
         initializeStaffMeasureLines(controller.getStaffMeasureLines());
         initializeStaffMeasureNums(controller.getStaffMeasureNums());
         initializeStaffLedgerLines();
-        initializeStaffInstruments(controller.getStaffInstruments(),
-                controller.getStaffAccidentals());
+        initializeStaffInstruments();
         initializeVolumeBars(controller.getVolumeBars());
         initializeVolumeBarLinks();
     }
@@ -150,21 +154,16 @@ public class StaffImages {
     /**
      * Sets up the various note lines of the staff. These are the notes that can
      * appear on the staff. This method also sets up sharps, flats, etc.
-     *
-     * @param accidentals
-     *            The HBox that holds the framework for the sharps / flats.
-     * @param instruments
-     *            The HBox that holds the framework for the instruments.
      */
-    private void initializeStaffInstruments(HBox instruments, HBox accidentals) {
+    private void initializeStaffInstruments() {
         NoteMatrix staffMatrix = theStaff.getNoteMatrix();
 
         ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
-        for (Node n : accidentals.getChildren())
+        for (Node n : staffAccidentals.getChildren())
             accidentalLines.add((VBox) n);
 
         ArrayList<VBox> noteLines = new ArrayList<VBox>();
-        for (Node n : instruments.getChildren())
+        for (Node n : staffInstruments.getChildren())
             noteLines.add((VBox) n);
 
         for (int line = 0; line < noteLines.size(); line++) {
