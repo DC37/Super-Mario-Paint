@@ -34,6 +34,7 @@ public class StaffImages {
     final private HBox staffAccidentals;
     final private HBox staffMeasureLines;
     final private HBox staffMeasureNums;
+    final private HBox[] staffLedgerLines;
     final private HBox staffVolumeBars;
     
     final private ModifySongManager commandManager;
@@ -52,9 +53,6 @@ public class StaffImages {
 
     /** This is the ImageLoader class. */
     private ImageLoader il;
-
-    /** The ledger lines. */
-    private HBox[] staffLLines;
 
     /** The ledger lines at the high C of the staff. */
     private ArrayList<Node> highC;
@@ -82,12 +80,13 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox staffVolumeBars, ModifySongManager commandManager) {
+    public StaffImages(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, ModifySongManager commandManager) {
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
         this.staffMeasureLines = staffMeasureLines;
         this.staffMeasureNums = staffMeasureNums;
+        this.staffLedgerLines = staffLedgerLines;
         this.staffVolumeBars = staffVolumeBars;
         this.commandManager = commandManager;
     }
@@ -246,22 +245,16 @@ public class StaffImages {
     /**
      * Sets up the staff expansion lines, which are to hold notes that are
      * higher than or lower than the regular lines of the staff.
-     *
-     * @param staffLLines
-     *            An array of ledger lines. This method expects that there will
-     *            be four of these, two of which indicate the lines above the
-     *            staff and the other of which indicating the lines below the
-     *            staff.
      */
     private void initializeStaffLedgerLines() {
         highC = new ArrayList<Node>();
         highA = new ArrayList<Node>();
         lowC = new ArrayList<Node>();
         lowA = new ArrayList<Node>();
-        highC.addAll(staffLLines[0].getChildren());
-        highA.addAll(staffLLines[1].getChildren());
-        lowC.addAll(staffLLines[2].getChildren());
-        lowA.addAll(staffLLines[3].getChildren());
+        highC.addAll(staffLedgerLines[0].getChildren());
+        highA.addAll(staffLedgerLines[1].getChildren());
+        lowC.addAll(staffLedgerLines[2].getChildren());
+        lowA.addAll(staffLedgerLines[3].getChildren());
         theLLines.add(highC);
         theLLines.add(highA);
         theLLines.add(lowC);
@@ -288,23 +281,6 @@ public class StaffImages {
      */
     public void setStaff(Staff s) {
         theStaff = s;
-    }
-
-    /**
-     * @param l
-     *            The array of <code>HBox</code>es that contains the rectangles
-     *            for the ledger lines.
-     */
-    public void setLedgerLines(HBox[] l) {
-        staffLLines = l;
-    }
-
-    /**
-     * @return The array of <code>HBox</code>es that contains the rectangles for
-     *         the ledger lines.
-     */
-    public HBox[] getLedgerLines() {
-        return staffLLines;
     }
 
     /** @return The ledger lines at position high C. */
