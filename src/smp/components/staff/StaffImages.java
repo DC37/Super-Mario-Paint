@@ -17,7 +17,6 @@ import smp.ImageLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffNoteLine;
-import smp.fx.SMPFXController;
 
 /**
  * Wrapper class for all of the images that appear on the Staff of Super Mario
@@ -51,9 +50,6 @@ public class StaffImages {
      */
     private ArrayList<Text> measureNums;
 
-    /** This is the FXML controller class. */
-    private SMPFXController controller;
-
     /** This is the ImageLoader class. */
     private ImageLoader il;
 
@@ -86,8 +82,7 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(SMPFXController ct, ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox staffVolumeBars, ModifySongManager commandManager) {
-        this.controller = ct;
+    public StaffImages(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox staffVolumeBars, ModifySongManager commandManager) {
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
