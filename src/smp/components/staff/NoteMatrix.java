@@ -126,35 +126,10 @@ public class NoteMatrix {
         return matrix.get(index);
     }
 
-    /** Redraws the entire matrix. */
-    public synchronized void redraw(StaffSequence seq, int currentPosition) {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            try {
-                redraw(seq, currentPosition, i);
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-                // Otherwise, do nothing.
-            }
-        }
-    }
-
-    /**
-     * Re-draws a certain line in this matrix.
-     *
-     * @param index
-     *            The index at which we want to redraw.
-     */
-    private void redraw(StaffSequence seq, int currentPosition, int index) {
-        updateVolumeDisplay(seq, currentPosition, index);
-        clearNoteDisplay(index);
-        populateNoteDisplay(seq, currentPosition, index);
-
-    }
-
     /**
      * Updates the volume display.
      */
-    private void updateVolumeDisplay(StaffSequence seq, int currentPosition, int index) {
+    public void updateVolumeDisplay(StaffSequence seq, int currentPosition, int index) {
         StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
         StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
         
@@ -168,7 +143,7 @@ public class NoteMatrix {
      * @param index
      *            The index that we are clearing.
      */
-    private synchronized void clearNoteDisplay(int index) {
+    public synchronized void clearNoteDisplay(int index) {
         ArrayList<StackPane> nt = matrix.get(index);
         ArrayList<StackPane> ac = accMatrix.get(index);
         for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
@@ -182,7 +157,7 @@ public class NoteMatrix {
     /**
      * Repopulates the note display on the staff.
      */
-    private void populateNoteDisplay(StaffSequence seq, int currentPosition, int index) {
+    public void populateNoteDisplay(StaffSequence seq, int currentPosition, int index) {
         StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
         ArrayList<StaffNote> st = stl.getNotes();
         

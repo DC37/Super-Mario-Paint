@@ -115,6 +115,12 @@ public class StaffImages {
         matrix.setVolumeBars(vol);
 
     }
+    
+    public void updateVolumeBars(StaffSequence seq, int currLine) {
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            matrix.updateVolumeDisplay(seq, currLine, i);
+        }
+    }
 
     /**
      * These are the numbers above each successive measure.
@@ -165,6 +171,13 @@ public class StaffImages {
 
             matrix.addLine(notes);
             matrix.addAccLine(accs);
+        }
+    }
+    
+    public void updateNoteDisplay(StaffSequence seq, int currLine) {
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            matrix.clearNoteDisplay(i);
+            matrix.populateNoteDisplay(seq, currLine, i);
         }
     }
 
