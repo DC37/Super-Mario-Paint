@@ -21,7 +21,7 @@ import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.staff.NoteMatrix;
 import smp.components.staff.Staff;
-import smp.components.staff.StaffImages;
+import smp.components.staff.StaffDisplayManager;
 import smp.components.staff.StaffInstrumentEventHandler;
 import smp.components.staff.clipboard.StaffClipboard;
 import smp.components.staff.clipboard.StaffRubberBand;
@@ -308,9 +308,9 @@ public class SMPFXController {
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC, staffExtLinesLowA };
         NoteMatrix matrix = new NoteMatrix(il);
-        StaffImages images = new StaffImages(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, matrix, commandManager);
-        staff = new Staff(this, images, arrangementList);
-        images.initialize();
+        StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, matrix, commandManager);
+        staff = new Staff(this, displayManager, arrangementList);
+        displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
         

@@ -21,16 +21,14 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
 
 /**
- * Wrapper class for all of the images that appear on the Staff of Super Mario
- * Paint. Contains the sprite holders for the images that represent notes, the
- * ImageView holders for each of the measure lines, the lines that allow one to
- * display notes higher than a G or lower than a D on the staff, and the measure
- * numbers.
+ * This class manages the nodes on the staff.  It provides methods for updating
+ * the scene graph dynamically.  Typically it will only be called (by
+ * {@link Staff}) to update the display whenever a change occurs.
  *
  * @author RehdBlob
  * @since 2012.09.17
  */
-public class StaffImages {
+public class StaffDisplayManager {
     
     final private HBox staffInstruments;
     final private HBox staffAccidentals;
@@ -73,7 +71,7 @@ public class StaffImages {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffImages(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, NoteMatrix matrix, ModifySongManager commandManager) {
+    public StaffDisplayManager(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, NoteMatrix matrix, ModifySongManager commandManager) {
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
