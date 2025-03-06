@@ -44,14 +44,10 @@ public class NoteMatrix {
     /** This is the list of volume bar handlers on the staff. */
     private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
 
-    /** Pointer to the staff images with which this is linked. */
-    private transient StaffImages staffImages;
-
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
 
-    public NoteMatrix(StaffImages s, ImageLoader i) {
-        staffImages = s;
+    public NoteMatrix(ImageLoader i) {
         il = i;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
@@ -131,10 +127,10 @@ public class NoteMatrix {
     }
 
     /** Redraws the entire matrix. */
-    public synchronized void redraw(StaffSequence seq, int currentPosition) {
+    public synchronized void redraw(StaffImages images, StaffSequence seq, int currentPosition) {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
             try {
-                redraw(seq, currentPosition, i);
+                redraw(images, seq, currentPosition, i);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
                 // Otherwise, do nothing.
@@ -148,7 +144,7 @@ public class NoteMatrix {
      * @param index
      *            The index at which we want to redraw.
      */
-    private void redraw(StaffSequence seq, int currentPosition, int index) {
+    private void redraw(StaffImages images, StaffSequence seq, int currentPosition, int index) {
 
         StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
 
@@ -157,7 +153,7 @@ public class NoteMatrix {
         updateVolumeDisplay(sveh, stl);
         clearNoteDisplay(index);
         populateNoteDisplay(stl, index);
-        populateStaffLedgerLines(stl, index);
+        populateStaffLedgerLines(images, stl, index);
 
     }
 
@@ -173,7 +169,7 @@ public class NoteMatrix {
      *            The index that we are updating.
      *
      */
-    private void populateStaffLedgerLines(StaffNoteLine stl, int index) {
+    private void populateStaffLedgerLines(StaffImages images, StaffNoteLine stl, int index) {
         int high = 0;
         int low = Values.NOTES_IN_A_LINE;
         for (StaffNote n : stl.getNotes()) {
@@ -184,25 +180,25 @@ public class NoteMatrix {
                 low = nt;
         }
         if (high >= Values.highC) {
-            staffImages.highC().get(index).setVisible(true);
-            staffImages.highA().get(index).setVisible(true);
+            images.highC().get(index).setVisible(true);
+            images.highA().get(index).setVisible(true);
         } else if (high >= Values.highA) {
-            staffImages.highC().get(index).setVisible(false);
-            staffImages.highA().get(index).setVisible(true);
+            images.highC().get(index).setVisible(false);
+            images.highA().get(index).setVisible(true);
         } else {
-            staffImages.highC().get(index).setVisible(false);
-            staffImages.highA().get(index).setVisible(false);
+            images.highC().get(index).setVisible(false);
+            images.highA().get(index).setVisible(false);
         }
 
         if (low <= Values.lowA) {
-            staffImages.lowC().get(index).setVisible(true);
-            staffImages.lowA().get(index).setVisible(true);
+            images.lowC().get(index).setVisible(true);
+            images.lowA().get(index).setVisible(true);
         } else if (low <= Values.lowC) {
-            staffImages.lowC().get(index).setVisible(true);
-            staffImages.lowA().get(index).setVisible(false);
+            images.lowC().get(index).setVisible(true);
+            images.lowA().get(index).setVisible(false);
         } else {
-            staffImages.lowC().get(index).setVisible(false);
-            staffImages.lowA().get(index).setVisible(false);
+            images.lowC().get(index).setVisible(false);
+            images.lowA().get(index).setVisible(false);
         }
 
     }

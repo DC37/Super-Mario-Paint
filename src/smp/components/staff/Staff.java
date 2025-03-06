@@ -232,7 +232,7 @@ public class Staff {
      * Force re-draws the staff.
      */
     public synchronized void redraw() {
-        Platform.runLater(() -> theMatrix.redraw(theSequence, StateMachine.getMeasureLineNum()));
+        Platform.runLater(() -> theMatrix.redraw(staffImages, theSequence, StateMachine.getMeasureLineNum()));
     }
 
     /** Begins animation of the Staff. (Starts a song) */
