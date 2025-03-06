@@ -238,7 +238,7 @@ public class Staff {
         
         int[] barDivs = StateMachine.getTimeSignature().divs();
         
-        Platform.runLater(() -> theMatrix.redraw(staffImages, theSequence, idx));
+        Platform.runLater(() -> theMatrix.redraw(theSequence, idx));
         Platform.runLater(() -> staffImages.updateStaffMeasureLines(idx, barDivs));
         Platform.runLater(() -> staffImages.updateStaffLedgerLines(theSequence, idx));
     }
