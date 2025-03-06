@@ -103,18 +103,6 @@ public class StaffImages {
         initializeStaffLedgerLines();
         initializeStaffInstruments();
         initializeVolumeBars();
-        initializeVolumeBarLinks();
-    }
-    /**
-     * Sets up the links between the volume bars display and StaffNoteLines.
-     */
-    private void initializeVolumeBarLinks() {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
-                    .getVolHandler(i);
-            StaffNoteLine stl = theStaff.getSequence().getLineSafe(i);
-            sveh.setStaffNoteLine(stl);
-        }
     }
 
     /**
@@ -126,6 +114,7 @@ public class StaffImages {
             StackPane volBar = (StackPane) v;
             vol.add(volBar);
             StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il, commandManager);
+            sveh.setStaffNoteLine(new StaffNoteLine());
             volBar.addEventHandler(Event.ANY, sveh);
             theStaff.getNoteMatrix().addVolHandler(sveh);
         }
