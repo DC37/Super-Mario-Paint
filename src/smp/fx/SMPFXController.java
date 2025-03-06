@@ -417,27 +417,6 @@ public class SMPFXController {
         });
         
     }
-    
-    /**
-     * @return The <code>HBox</code> that holds the staff measure lines.
-     */
-    public HBox getStaffMeasureLines() {
-        return staffMeasureLines;
-    }
-
-    /**
-     * @return The <code>HBox</code> that holds the staff measure numbers.
-     */
-    public HBox getStaffMeasureNums() {
-        return staffMeasureNumbers;
-    }
-
-    /**
-     * @return The <code>HBox</code> that holds the staff flats / sharps / etc.
-     */
-    public HBox getStaffAccidentals() {
-        return staffAccidentals;
-    }
 
     /**
      * @return The <code>HBox</code> that holds the staff instruments.
