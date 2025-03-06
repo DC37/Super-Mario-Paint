@@ -145,27 +145,19 @@ public class NoteMatrix {
      *            The index at which we want to redraw.
      */
     private void redraw(StaffSequence seq, int currentPosition, int index) {
-
-        StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
-
-        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
-
-        updateVolumeDisplay(sveh, stl);
+        updateVolumeDisplay(seq, currentPosition, index);
         clearNoteDisplay(index);
-        populateNoteDisplay(stl, index);
+        populateNoteDisplay(seq, currentPosition, index);
 
     }
 
     /**
      * Updates the volume display.
-     *
-     * @param sveh
-     *            The StaffVolumeEventHandler that we're dealing with.
-     * @param stl
-     *            The StaffNoteLine that we're dealing with.
      */
-    private void updateVolumeDisplay(StaffVolumeEventHandler sveh,
-            StaffNoteLine stl) {
+    private void updateVolumeDisplay(StaffSequence seq, int currentPosition, int index) {
+        StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
+        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
+        
         sveh.setStaffNoteLine(stl);
         sveh.updateVolume();
     }
@@ -189,14 +181,11 @@ public class NoteMatrix {
 
     /**
      * Repopulates the note display on the staff.
-     *
-     * @param stl
-     *            The StaffNoteLine that we are interested in.
-     * @param index
-     *            The index to repopulate.
      */
-    private void populateNoteDisplay(StaffNoteLine stl, int index) {
+    private void populateNoteDisplay(StaffSequence seq, int currentPosition, int index) {
+        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
         ArrayList<StaffNote> st = stl.getNotes();
+        
         for (StaffNote s : st) {
             StackPane[] noteAndAcc = getNote(index, s.getPosition());
             noteAndAcc[0].getChildren().add(s);
