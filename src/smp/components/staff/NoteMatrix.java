@@ -153,7 +153,7 @@ public class NoteMatrix {
         updateVolumeDisplay(sveh, stl);
         clearNoteDisplay(index);
         populateNoteDisplay(stl, index);
-        populateStaffLedgerLines(images, stl, index);
+        populateStaffLedgerLines(images, seq, currentPosition, index);
 
     }
 
@@ -162,14 +162,10 @@ public class NoteMatrix {
      * StaffNoteLine at a certain index. Position 14 & 16 are the positions of
      * the high A and high C lines, and positions 0 and 2 are the positions of
      * the low A and low C lines.
-     *
-     * @param stl
-     *            The <code>StaffNoteLine</code> that we want to check.
-     * @param index
-     *            The index that we are updating.
-     *
      */
-    private void populateStaffLedgerLines(StaffImages images, StaffNoteLine stl, int index) {
+    private void populateStaffLedgerLines(StaffImages images, StaffSequence seq, int currentPosition, int index) {
+        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
+
         int high = 0;
         int low = Values.NOTES_IN_A_LINE;
         for (StaffNote n : stl.getNotes()) {
