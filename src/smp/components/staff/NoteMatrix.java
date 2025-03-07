@@ -165,14 +165,4 @@ public class NoteMatrix {
         }
     }
 
-    /**
-     * Adds a StaffVolumeEventHandler to the list of tracked things.
-     *
-     * @param sveh
-     *            The StaffVolumeEventHandler that we want to add.
-     */
-    public void addVolHandler(ArrayList<StaffVolumeEventHandler> volumeBarHandlers, StaffVolumeEventHandler sveh) {
-        volumeBarHandlers.add(sveh);
-    }
-
 }
