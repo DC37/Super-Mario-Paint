@@ -135,8 +135,8 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 	private void disableAllStackPanes() {
 		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
 			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
-				StackPane[] noteAndAcc = theStaff.getDisplayManager().getNote(index, i);
-				noteAndAcc[0].setDisable(true);
+				StackPane notes = theStaff.getDisplayManager().getNotes(index, i);
+				notes.setDisable(true);
 			}
 		}
 	}
@@ -231,13 +231,14 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 			
 			line = lineTmp;
 			position = positionTmp;
-			StackPane[] noteAndAcc = theStaff.getDisplayManager().getNote(line, position);
+			StackPane notes = theStaff.getDisplayManager().getNotes(line, position);
+            StackPane accidentals = theStaff.getDisplayManager().getAccidentals(line, position);
 			
-			if(!noteAndAcc[0].isDisabled())
+			if(!notes.isDisabled())
 				disableAllStackPanes();
 			
-			theImages = noteAndAcc[0].getChildren();
-			accList = noteAndAcc[1].getChildren();
+			theImages = notes.getChildren();
+			accList = accidentals.getChildren();
 			
 			return true;
 		}
