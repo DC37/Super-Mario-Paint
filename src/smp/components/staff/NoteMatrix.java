@@ -38,9 +38,6 @@ public class NoteMatrix {
     /** This is the matrix of flats / sharps / etc. */
     private ArrayList<ArrayList<StackPane>> accMatrix;
 
-    /** This is the list of volume bars on the staff. */
-    private ArrayList<StackPane> volumeBars;
-
     /** This is the list of volume bar handlers on the staff. */
     private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
 
@@ -51,7 +48,6 @@ public class NoteMatrix {
         il = i;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
-        volumeBars = new ArrayList<StackPane>();
         volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
     }
 
@@ -75,15 +71,6 @@ public class NoteMatrix {
         note = matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
         acc = accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
         return new StackPane[] { note, acc };
-    }
-
-    /**
-     * @param x
-     *            The index from which to retrieve a volume bar from.
-     * @return The volume bar located at that index.
-     */
-    public StackPane getVolumeBar(int x) {
-        return volumeBars.get(x);
     }
 
     /**
@@ -180,17 +167,6 @@ public class NoteMatrix {
 
             s.setVisible(true);
         }
-    }
-
-    /**
-     * This sets up the volume bars on the main window.
-     *
-     * @param vol
-     *            This is the <code>ArrayList</code> of <code>StackPane</code>s
-     *            that should hold volume bars.
-     */
-    public void setVolumeBars(ArrayList<StackPane> vol) {
-        volumeBars = vol;
     }
 
     /**
