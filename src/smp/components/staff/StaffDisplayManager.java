@@ -118,7 +118,7 @@ public class StaffDisplayManager {
             StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il, commandManager);
             sveh.setStaffNoteLine(new StaffNoteLine());
             volBar.addEventHandler(Event.ANY, sveh);
-            matrix.addVolHandler(volumeBarHandlers, sveh);
+            volumeBarHandlers.add(sveh);
         }
     }
     
