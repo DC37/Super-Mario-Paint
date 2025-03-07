@@ -109,17 +109,13 @@ public class StaffDisplayManager {
      * Initializes the volume bars in the program.
      */
     private void initializeVolumeBars() {
-        ArrayList<StackPane> vol = new ArrayList<StackPane>();
         for (Node v : staffVolumeBars.getChildren()) {
             StackPane volBar = (StackPane) v;
-            vol.add(volBar);
             StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il, commandManager);
             sveh.setStaffNoteLine(new StaffNoteLine());
             volBar.addEventHandler(Event.ANY, sveh);
             matrix.addVolHandler(sveh);
         }
-        matrix.setVolumeBars(vol);
-
     }
     
     public void updateVolumeBars(StaffSequence seq, int currLine) {
