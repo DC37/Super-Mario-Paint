@@ -86,6 +86,14 @@ public class StaffDisplayManager {
     public NoteMatrix getNoteMatrix() {
         return matrix;
     }
+    
+    public StaffVolumeEventHandler getVolHandler(int index) {
+        return matrix.getVolHandler(index);
+    }
+    
+    public StackPane[] getNote(int x, int y) {
+        return matrix.getNote(x, y);
+    }
 
     /**
      * Instantiates this wrapper class with the correct HBox objects such that
