@@ -135,7 +135,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 	private void disableAllStackPanes() {
 		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
 			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
-				StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(index, i);
+				StackPane[] noteAndAcc = theStaff.getDisplayManager().getNote(index, i);
 				noteAndAcc[0].setDisable(true);
 			}
 		}
@@ -231,7 +231,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 			
 			line = lineTmp;
 			position = positionTmp;
-			StackPane[] noteAndAcc = theStaff.getNoteMatrix().getNote(line, position);
+			StackPane[] noteAndAcc = theStaff.getDisplayManager().getNote(line, position);
 			
 			if(!noteAndAcc[0].isDisabled())
 				disableAllStackPanes();
@@ -323,7 +323,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
             temp.add(theStaffNote);
             commandManager.execute(new AddNoteCommand(temp, theStaffNote));
         }
-        StaffVolumeEventHandler sveh = theStaff.getNoteMatrix().getVolHandler(
+        StaffVolumeEventHandler sveh = theStaff.getDisplayManager().getVolHandler(
                 line);
         sveh.updateVolume();
         theStaff.redraw();
@@ -372,7 +372,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         }
 
         if (temp.isEmpty()) {
-            StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+            StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);
             commandManager.execute(new RemoveVolumeCommand(temp, temp.getVolume()));

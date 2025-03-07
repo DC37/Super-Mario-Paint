@@ -352,13 +352,6 @@ public class Staff {
 
     }
 
-    /**
-     * @return The note matrix of the staff that we are working with.
-     */
-    public NoteMatrix getNoteMatrix() {
-        return displayManager.getNoteMatrix();
-    }
-
     /** @return The current song that we are displaying. */
     public synchronized StaffSequence getSequence() {
         return theSequence;

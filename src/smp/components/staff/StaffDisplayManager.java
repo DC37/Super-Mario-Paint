@@ -83,10 +83,6 @@ public class StaffDisplayManager {
         this.commandManager = commandManager;
     }
     
-    public NoteMatrix getNoteMatrix() {
-        return matrix;
-    }
-    
     public StaffVolumeEventHandler getVolHandler(int index) {
         return matrix.getVolHandler(index);
     }
