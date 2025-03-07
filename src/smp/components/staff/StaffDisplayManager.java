@@ -133,23 +133,6 @@ public class StaffDisplayManager {
     }
 
     /**
-     * These are the numbers above each successive measure.
-     */
-    private void initializeStaffMeasureNums() {
-        ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
-        measureNums = new ArrayList<Text>();
-        for (Node num : staffMeasureNums.getChildren())
-            measureNumBoxes.add((HBox) num);
-
-        for (int i = 0; i < measureNumBoxes.size(); i++) {
-            HBox theBox = measureNumBoxes.get(i);
-            Text t = new Text();
-            theBox.getChildren().add(t);
-            measureNums.add(t);
-        }
-    }
-
-    /**
      * Sets up the various note lines of the staff. These are the notes that can
      * appear on the staff. This method also sets up sharps, flats, etc.
      */
@@ -198,6 +181,23 @@ public class StaffDisplayManager {
         measureLines = new ArrayList<ImageView>();
         for (Node n : staffMeasureLines.getChildren())
             measureLines.add((ImageView) n);
+    }
+
+    /**
+     * These are the numbers above each successive measure.
+     */
+    private void initializeStaffMeasureNums() {
+        ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
+        measureNums = new ArrayList<Text>();
+        for (Node num : staffMeasureNums.getChildren())
+            measureNumBoxes.add((HBox) num);
+
+        for (int i = 0; i < measureNumBoxes.size(); i++) {
+            HBox theBox = measureNumBoxes.get(i);
+            Text t = new Text();
+            theBox.getChildren().add(t);
+            measureNums.add(t);
+        }
     }
 
     /**
