@@ -48,27 +48,13 @@ public class NoteMatrix {
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
     }
-
-    /**
-     * Gets you an object based on the coordinate that you give this method.
-     * This method should help a lot when working on those portions of code that
-     * ask the entire staff to update its images. Bypassing the individual
-     * StackPane object links should be a lot easier with this here.
-     *
-     * @param x
-     *            The note line number.
-     * @param y
-     *            The note number.
-     * @return Index 0 is the <code>StackPane</code> of the note that is located
-     *         at the location. Index 1 is the <code>StackPane</code> of the
-     *         flat / sharp / etc box that it is associated with.
-     */
-    public StackPane[] getNote(int x, int y) {
-        StackPane note;
-        StackPane acc;
-        note = matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
-        acc = accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
-        return new StackPane[] { note, acc };
+    
+    public StackPane getNotes(int x, int y) {
+        return matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
+    }
+    
+    public StackPane getAccidentals(int x, int y) {
+        return accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
     }
     
     public void initializeNoteDisplay(HBox staffInstruments, HBox staffAccidentals) {
@@ -127,12 +113,15 @@ public class NoteMatrix {
         ArrayList<StaffNote> st = stl.getNotes();
         
         for (StaffNote s : st) {
-            StackPane[] noteAndAcc = getNote(index, s.getPosition());
-            noteAndAcc[0].getChildren().add(s);
+            StackPane notes = getNotes(index, s.getPosition());
+            StackPane accidentals = getAccidentals(index, s.getPosition());
+            
+            notes.getChildren().add(s);
+            
             StaffAccidental accidental = new StaffAccidental(s);
             accidental.setImage(il.getSpriteFX(Staff.switchAcc(s
                     .getAccidental())));
-            noteAndAcc[1].getChildren().add(accidental);
+            accidentals.getChildren().add(accidental);
 
             if (s.muteNoteVal() == 0) {
                 s.setImage(il.getSpriteFX(s.getInstrument().imageIndex()));

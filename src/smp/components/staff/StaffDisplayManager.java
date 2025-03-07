@@ -88,8 +88,12 @@ public class StaffDisplayManager {
         return volumeBarHandlers.get(index);
     }
     
-    public StackPane[] getNote(int x, int y) {
-        return matrix.getNote(x, y);
+    public StackPane getNotes(int x, int y) {
+        return matrix.getNotes(x, y);
+    }
+    
+    public StackPane getAccidentals(int x, int y) {
+        return matrix.getAccidentals(x, y);
     }
 
     /**
