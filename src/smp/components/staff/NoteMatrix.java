@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import smp.ImageLoader;
 import smp.components.Values;
 import smp.components.staff.sequences.StaffAccidental;
@@ -87,6 +89,37 @@ public class NoteMatrix {
      */
     public void addAccLine(ArrayList<StackPane> newLine) {
         accMatrix.add(newLine);
+    }
+    
+    public void initializeNoteDisplay(HBox staffInstruments, HBox staffAccidentals) {
+        ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
+        for (Node n : staffAccidentals.getChildren())
+            accidentalLines.add((VBox) n);
+
+        ArrayList<VBox> noteLines = new ArrayList<VBox>();
+        for (Node n : staffInstruments.getChildren())
+            noteLines.add((VBox) n);
+
+        for (int line = 0; line < noteLines.size(); line++) {
+            VBox verticalHolder = noteLines.get(line);
+            VBox accVerticalHolder = accidentalLines.get(line);
+
+            ObservableList<Node> lineOfNotes = verticalHolder.getChildren();
+            ObservableList<Node> lineOfAcc = accVerticalHolder.getChildren();
+
+            ArrayList<StackPane> notes = new ArrayList<StackPane>();
+            ArrayList<StackPane> accs = new ArrayList<StackPane>();
+
+            for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
+                StackPane note = (StackPane) lineOfNotes.get(pos - 1);
+                StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
+                notes.add(note);
+                accs.add(acc);
+            }
+
+            addLine(notes);
+            addAccLine(accs);
+        }
     }
 
     /**

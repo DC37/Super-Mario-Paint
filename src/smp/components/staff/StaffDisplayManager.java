@@ -3,13 +3,11 @@ package smp.components.staff;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import smp.ImageIndex;
@@ -137,34 +135,7 @@ public class StaffDisplayManager {
      * appear on the staff. This method also sets up sharps, flats, etc.
      */
     private void initializeStaffInstruments() {
-        ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
-        for (Node n : staffAccidentals.getChildren())
-            accidentalLines.add((VBox) n);
-
-        ArrayList<VBox> noteLines = new ArrayList<VBox>();
-        for (Node n : staffInstruments.getChildren())
-            noteLines.add((VBox) n);
-
-        for (int line = 0; line < noteLines.size(); line++) {
-            VBox verticalHolder = noteLines.get(line);
-            VBox accVerticalHolder = accidentalLines.get(line);
-
-            ObservableList<Node> lineOfNotes = verticalHolder.getChildren();
-            ObservableList<Node> lineOfAcc = accVerticalHolder.getChildren();
-
-            ArrayList<StackPane> notes = new ArrayList<StackPane>();
-            ArrayList<StackPane> accs = new ArrayList<StackPane>();
-
-            for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
-                StackPane note = (StackPane) lineOfNotes.get(pos - 1);
-                StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
-                notes.add(note);
-                accs.add(acc);
-            }
-
-            matrix.addLine(notes);
-            matrix.addAccLine(accs);
-        }
+        matrix.initializeNoteDisplay(staffInstruments, staffAccidentals);
     }
     
     public void updateNoteDisplay(StaffSequence seq, int currLine) {
