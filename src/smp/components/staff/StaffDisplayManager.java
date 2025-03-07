@@ -87,7 +87,7 @@ public class StaffDisplayManager {
     }
     
     public StaffVolumeEventHandler getVolHandler(int index) {
-        return matrix.getVolHandler(volumeBarHandlers, index);
+        return volumeBarHandlers.get(index);
     }
     
     public StackPane[] getNote(int x, int y) {
