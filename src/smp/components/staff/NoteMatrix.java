@@ -110,17 +110,6 @@ public class NoteMatrix {
     }
 
     /**
-     * Updates the volume display.
-     */
-    public void updateVolumeDisplay(ArrayList<StaffVolumeEventHandler> volumeBarHandlers, StaffSequence seq, int currentPosition, int index) {
-        StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
-        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
-        
-        sveh.setStaffNoteLine(stl);
-        sveh.updateVolume();
-    }
-
-    /**
      * Clears the note display on the staff.
      *
      * @param index
