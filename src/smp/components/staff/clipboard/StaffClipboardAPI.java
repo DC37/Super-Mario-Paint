@@ -133,7 +133,7 @@ public class StaffClipboardAPI {
 
 				if (lineDest.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
 						&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
-					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+					StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
 							.getVolHandler(line - StateMachine.getMeasureLineNum());
 					sveh.setVolumeVisible(false);
 					commandManager.execute(new RemoveVolumeCommand(lineDest, lineDest.getVolume()));
@@ -180,7 +180,7 @@ public class StaffClipboardAPI {
 					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
 					
 					if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
-						StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+						StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
 								.getVolHandler(line - StateMachine.getMeasureLineNum());
 						sveh.updateVolume();
 					}
@@ -202,7 +202,7 @@ public class StaffClipboardAPI {
 	            commandManager.execute(new AddVolumeCommand(lineDest, lineDest.getVolume()));
 				
 				if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
-					StaffVolumeEventHandler sveh = theStaff.getNoteMatrix()
+					StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
 							.getVolHandler(line - StateMachine.getMeasureLineNum());
 					sveh.updateVolume();
 				}
