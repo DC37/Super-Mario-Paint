@@ -175,13 +175,4 @@ public class NoteMatrix {
         volumeBarHandlers.add(sveh);
     }
 
-    /**
-     * @param index
-     *            The index that we want to query.
-     * @return Some StaffVolumeEventHandler hopefully.
-     */
-    public StaffVolumeEventHandler getVolHandler(ArrayList<StaffVolumeEventHandler> volumeBarHandlers, int index) {
-        return volumeBarHandlers.get(index);
-    }
-
 }
