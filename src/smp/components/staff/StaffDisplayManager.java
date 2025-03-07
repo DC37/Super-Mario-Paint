@@ -124,7 +124,11 @@ public class StaffDisplayManager {
     
     public void updateVolumeBars(StaffSequence seq, int currLine) {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            matrix.updateVolumeDisplay(volumeBarHandlers, seq, currLine, i);
+            StaffVolumeEventHandler sveh = volumeBarHandlers.get(i);
+            StaffNoteLine stl = seq.getLineSafe(currLine + i);
+            
+            sveh.setStaffNoteLine(stl);
+            sveh.updateVolume();
         }
     }
 
