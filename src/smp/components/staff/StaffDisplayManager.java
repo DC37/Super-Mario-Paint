@@ -68,6 +68,9 @@ public class StaffDisplayManager {
     /** The ledger lines at the low A of the staff. */
     private ArrayList<Node> lowA;
 
+    /** This is the list of volume bar handlers on the staff. */
+    private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
+
     /**
      * Constructor that also sets up the staff ledger lines.
      */
@@ -84,7 +87,7 @@ public class StaffDisplayManager {
     }
     
     public StaffVolumeEventHandler getVolHandler(int index) {
-        return matrix.getVolHandler(index);
+        return matrix.getVolHandler(volumeBarHandlers, index);
     }
     
     public StackPane[] getNote(int x, int y) {
@@ -109,18 +112,19 @@ public class StaffDisplayManager {
      * Initializes the volume bars in the program.
      */
     private void initializeVolumeBars() {
+        volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
         for (Node v : staffVolumeBars.getChildren()) {
             StackPane volBar = (StackPane) v;
             StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il, commandManager);
             sveh.setStaffNoteLine(new StaffNoteLine());
             volBar.addEventHandler(Event.ANY, sveh);
-            matrix.addVolHandler(sveh);
+            matrix.addVolHandler(volumeBarHandlers, sveh);
         }
     }
     
     public void updateVolumeBars(StaffSequence seq, int currLine) {
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            matrix.updateVolumeDisplay(seq, currLine, i);
+            matrix.updateVolumeDisplay(volumeBarHandlers, seq, currLine, i);
         }
     }
 

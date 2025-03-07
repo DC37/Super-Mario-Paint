@@ -38,9 +38,6 @@ public class NoteMatrix {
     /** This is the matrix of flats / sharps / etc. */
     private ArrayList<ArrayList<StackPane>> accMatrix;
 
-    /** This is the list of volume bar handlers on the staff. */
-    private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
-
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
 
@@ -48,7 +45,6 @@ public class NoteMatrix {
         il = i;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
-        volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
     }
 
     /**
@@ -116,7 +112,7 @@ public class NoteMatrix {
     /**
      * Updates the volume display.
      */
-    public void updateVolumeDisplay(StaffSequence seq, int currentPosition, int index) {
+    public void updateVolumeDisplay(ArrayList<StaffVolumeEventHandler> volumeBarHandlers, StaffSequence seq, int currentPosition, int index) {
         StaffVolumeEventHandler sveh = volumeBarHandlers.get(index);
         StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
         
@@ -175,7 +171,7 @@ public class NoteMatrix {
      * @param sveh
      *            The StaffVolumeEventHandler that we want to add.
      */
-    public void addVolHandler(StaffVolumeEventHandler sveh) {
+    public void addVolHandler(ArrayList<StaffVolumeEventHandler> volumeBarHandlers, StaffVolumeEventHandler sveh) {
         volumeBarHandlers.add(sveh);
     }
 
@@ -184,7 +180,7 @@ public class NoteMatrix {
      *            The index that we want to query.
      * @return Some StaffVolumeEventHandler hopefully.
      */
-    public StaffVolumeEventHandler getVolHandler(int index) {
+    public StaffVolumeEventHandler getVolHandler(ArrayList<StaffVolumeEventHandler> volumeBarHandlers, int index) {
         return volumeBarHandlers.get(index);
     }
 
