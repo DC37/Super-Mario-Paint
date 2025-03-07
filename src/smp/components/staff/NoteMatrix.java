@@ -70,26 +70,6 @@ public class NoteMatrix {
         acc = accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
         return new StackPane[] { note, acc };
     }
-
-    /**
-     * Adds a new line of notes into the note matrix.
-     *
-     * @param newLine
-     *            The line that we want to add into the note matrix.
-     */
-    public void addLine(ArrayList<StackPane> newLine) {
-        matrix.add(newLine);
-    }
-
-    /**
-     * Adds a new line of accidentals into the note matrix.
-     *
-     * @param newLine
-     *            The line that we want to add into the accidental matrix.
-     */
-    public void addAccLine(ArrayList<StackPane> newLine) {
-        accMatrix.add(newLine);
-    }
     
     public void initializeNoteDisplay(HBox staffInstruments, HBox staffAccidentals) {
         ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
@@ -117,8 +97,8 @@ public class NoteMatrix {
                 accs.add(acc);
             }
 
-            addLine(notes);
-            addAccLine(accs);
+            matrix.add(notes);
+            accMatrix.add(accs);
         }
     }
 
