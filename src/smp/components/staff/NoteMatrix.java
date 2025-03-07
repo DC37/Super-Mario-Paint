@@ -90,17 +90,6 @@ public class NoteMatrix {
     }
 
     /**
-     * Removes the line of notes at index <code>index</code>.
-     *
-     * @param index
-     *            The index of the line of notes that we want to remove.
-     */
-    public void removeLine(int index) {
-        matrix.remove(index);
-        accMatrix.remove(index);
-    }
-
-    /**
      * @param index
      *            The index from which we want to retrieve a line from.
      * @return A list of <code>StackPane</code>s that exists at that line.
