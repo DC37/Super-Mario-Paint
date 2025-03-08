@@ -472,17 +472,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     }
 
     /**
-     * Called whenever we request a redraw of the staff.
-     */
-    public void redraw() {
-        if (!focus)
-            return;
-        InstrumentIndex ind = ButtonLine.getSelectedInstrument();
-        mouseExited(ind);
-        mouseEntered(ind);
-    }
-
-    /**
      * Plays a sound given an index and a position.
      *
      * @param theInd
