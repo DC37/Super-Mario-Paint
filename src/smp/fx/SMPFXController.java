@@ -19,7 +19,6 @@ import smp.SoundfontLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.components.Values;
 import smp.components.controls.Controls;
-import smp.components.staff.NoteMatrix;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffDisplayManager;
 import smp.components.staff.StaffInstrumentEventHandler;
@@ -307,8 +306,7 @@ public class SMPFXController {
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
                 staffExtLinesLowC, staffExtLinesLowA };
-        NoteMatrix matrix = new NoteMatrix(il);
-        StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, matrix, commandManager);
+        StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, commandManager);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
