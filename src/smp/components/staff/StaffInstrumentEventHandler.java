@@ -80,14 +80,6 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * the staff.
      */
     private static ImageView accSilhouette;
-
-    /** The topmost image of the instrument. */
-    private StaffNote theStaffNote;
-
-    /**
-     * This is the image that holds the different types of sharps/flats etc.
-     */
-    private StaffAccidental accidental;
     
     /** This is the ImageLoader class. */
     private static ImageLoader il;
@@ -283,8 +275,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
         if ((Settings.debug & 0b10000) != 0)
             System.out.println("Index: " + theInd + "\nPosition: "+ position + "\nAcc: " + acc + "\nVel: " + vel);
         
-        theStaffNote = new StaffNote(theInd, position, acc);
-
+        StaffNote theStaffNote = new StaffNote(theInd, position, acc);
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
 
         if (!mute && !muteA) {
@@ -296,7 +287,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
                     .silhouette()));
         }
 
-        accidental = new StaffAccidental(theStaffNote);
+        StaffAccidental accidental = new StaffAccidental(theStaffNote);
         accidental.setImage(il.getSpriteFX(Staff.switchAcc(acc)));
 
         theImages.remove(silhouette);
