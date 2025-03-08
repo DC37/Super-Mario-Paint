@@ -3,9 +3,11 @@ package smp.components.staff.sequences;
 import java.io.Serializable;
 import java.text.ParseException;
 
+import javafx.scene.effect.Effect;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import smp.components.Values;
 import smp.components.InstrumentIndex;
+import smp.components.Values;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.
@@ -13,7 +15,7 @@ import smp.components.InstrumentIndex;
  * @author RehdBlob
  * @since 2012.08.31
  */
-public class StaffNote extends ImageView implements Serializable {
+public class StaffNote implements Serializable {
 
     /**
      * Generated serial ID.
@@ -43,6 +45,10 @@ public class StaffNote extends ImageView implements Serializable {
      * The Instrument that the note on the staff is to use.
      */
     private InstrumentIndex theInstrument;
+    
+    private Image image;
+    private boolean visible;
+    private Effect effect;
 
     /**
      * Default constructor that makes the note by default at half volume.
@@ -75,8 +81,27 @@ public class StaffNote extends ImageView implements Serializable {
         accidental = acc;
         position = pos;
         volume = vol;
-        this.setFitWidth(32);
-        this.setFitHeight(36);
+    }
+    
+    public ImageView toImageView() {
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(32);
+        imageView.setFitHeight(36);
+        imageView.setVisible(visible);
+        imageView.setEffect(effect);
+        return imageView;
+    }
+    
+    public void setImage(Image image) {
+        this.image = image;
+    }
+    
+    public void setVisible(boolean b) {
+        this.visible = b;
+    }
+    
+    public void setEffect(Effect e) {
+        this.effect = e;
     }
 
     /**
@@ -123,8 +148,6 @@ public class StaffNote extends ImageView implements Serializable {
             muteNote = 0;
             break;
         }
-        this.setFitWidth(32);
-        this.setFitHeight(36);
     }
 
     /**

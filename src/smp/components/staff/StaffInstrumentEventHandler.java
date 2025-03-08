@@ -304,9 +304,11 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
+        
+        ImageView staffNoteImageView = theStaffNote.toImageView();
 
-        if (!theImages.contains(theStaffNote))
-            theImages.add(theStaffNote);
+        if (!theImages.contains(staffNoteImageView))
+            theImages.add(staffNoteImageView);
 
         if (!accList.contains(accidental))
             accList.add(accidental);
