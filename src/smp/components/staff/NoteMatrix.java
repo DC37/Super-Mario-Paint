@@ -116,12 +116,9 @@ public class NoteMatrix {
             StackPane notes = getNotes(index, s.getPosition());
             StackPane accidentals = getAccidentals(index, s.getPosition());
             
-            notes.getChildren().add(s);
-            
             StaffAccidental accidental = new StaffAccidental(s);
             accidental.setImage(il.getSpriteFX(Staff.switchAcc(s
                     .getAccidental())));
-            accidentals.getChildren().add(accidental);
 
             if (s.muteNoteVal() == 0) {
                 s.setImage(il.getSpriteFX(s.getInstrument().imageIndex()));
@@ -133,6 +130,9 @@ public class NoteMatrix {
             }
 
             s.setVisible(true);
+            
+            notes.getChildren().add(s);
+            accidentals.getChildren().add(accidental);
         }
     }
 
