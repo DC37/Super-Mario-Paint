@@ -57,8 +57,6 @@ public class StaffNote extends ImageView implements Serializable {
      */
     public StaffNote(InstrumentIndex theInd, int pos, int acc) {
         this(theInd, pos, acc, Values.HALF_VELOCITY);
-        this.setFitWidth(32);
-        this.setFitHeight(36);
     }
 
     /**
