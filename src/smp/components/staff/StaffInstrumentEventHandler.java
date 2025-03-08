@@ -298,20 +298,18 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
         accidental = new StaffAccidental(theStaffNote);
         accidental.setImage(il.getSpriteFX(Staff.switchAcc(acc)));
-        
-        accidental.setFitWidth(32);
-        accidental.setFitHeight(32);
 
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
         
         ImageView staffNoteImageView = theStaffNote.toImageView();
+        ImageView staffAccidentalImageView = accidental.toImageView();
 
         if (!theImages.contains(staffNoteImageView))
             theImages.add(staffNoteImageView);
 
-        if (!accList.contains(accidental))
-            accList.add(accidental);
+        if (!accList.contains(staffAccidentalImageView))
+            accList.add(staffAccidentalImageView);
 
         StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
