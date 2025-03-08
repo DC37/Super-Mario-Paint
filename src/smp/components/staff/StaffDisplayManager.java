@@ -72,7 +72,7 @@ public class StaffDisplayManager {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffDisplayManager(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, NoteMatrix matrix, ModifySongManager commandManager) {
+    public StaffDisplayManager(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, ModifySongManager commandManager) {
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
@@ -80,7 +80,7 @@ public class StaffDisplayManager {
         this.staffMeasureNums = staffMeasureNums;
         this.staffLedgerLines = staffLedgerLines;
         this.staffVolumeBars = staffVolumeBars;
-        this.matrix = matrix;
+        this.matrix = new NoteMatrix(i);
         this.commandManager = commandManager;
     }
     
