@@ -246,6 +246,8 @@ public class StaffClipboardAPI {
 				}
 			}
 		}
+		
+		theStaff.redraw(); // display visual effect
     }
 	
 	public void clearCopiedData() {

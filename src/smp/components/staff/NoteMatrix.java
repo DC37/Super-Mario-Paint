@@ -131,7 +131,7 @@ public class NoteMatrix {
 
             s.setVisible(true);
             
-            notes.getChildren().add(s);
+            notes.getChildren().add(s.toImageView());
             accidentals.getChildren().add(accidental);
         }
     }
