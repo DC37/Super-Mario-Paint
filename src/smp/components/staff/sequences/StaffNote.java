@@ -29,8 +29,7 @@ public class StaffNote implements Serializable {
      */
     private int position;
 
-    /** The offset that this note will have. */
-    private int accidental = 0;
+    private Accidental accidental = Accidental.NATURAL;
 
     /** This is the volume of the note. */
     private int volume = Values.DEFAULT_VELOCITY;
@@ -60,7 +59,7 @@ public class StaffNote implements Serializable {
      *            The sharp / flat / whatever that we are offsetting this note
      *            by.
      */
-    public StaffNote(InstrumentIndex theInd, int pos, int acc) {
+    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc) {
         this(theInd, pos, acc, Values.HALF_VELOCITY);
     }
 
@@ -75,7 +74,7 @@ public class StaffNote implements Serializable {
      * @param vol
      *            The volume that we want this note to play at.
      */
-    public StaffNote(InstrumentIndex theInd, int pos, int acc, int vol) {
+    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, int vol) {
         theInstrument = theInd;
         accidental = acc;
         position = pos;
@@ -122,7 +121,7 @@ public class StaffNote implements Serializable {
         volume = Values.HALF_VELOCITY;
         switch (sp[1].length()) {
         case 2:
-            accidental = 0;
+            accidental = Accidental.NATURAL;
             muteNote = 0;
             break;
         case 3:
@@ -130,7 +129,7 @@ public class StaffNote implements Serializable {
             muteNote = 0;
             break;
         case 4:
-            accidental = 0;
+            accidental = Accidental.NATURAL;
             muteNote = Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1));
             break;
         case 5:
@@ -138,7 +137,7 @@ public class StaffNote implements Serializable {
             muteNote = Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1));
             break;
         default:
-            accidental = 0;
+            accidental = Accidental.NATURAL;
             muteNote = 0;
             break;
         }
@@ -152,18 +151,18 @@ public class StaffNote implements Serializable {
      *            The character to decode.
      * @return The accidental to set.
      */
-    private int decodeAccidental(char c) {
+    private Accidental decodeAccidental(char c) {
         switch (c) {
         case 'X':
-            return 2;
+            return Accidental.DOUBLE_SHARP;
         case '#':
-            return 1;
+            return Accidental.SHARP;
         case 'b':
-            return -1;
+            return Accidental.FLAT;
         case 'B':
-            return -2;
+            return Accidental.DOUBLE_FLAT;
         default:
-            return 0;
+            return Accidental.NATURAL;
         }
     }
 
@@ -173,7 +172,7 @@ public class StaffNote implements Serializable {
      * @param a
      *            The accidental that we're trying to set this note to.
      */
-    public void setAccidental(int a) {
+    public void setAccidental(Accidental a) {
         accidental = a;
     }
 
@@ -191,7 +190,7 @@ public class StaffNote implements Serializable {
     }
 
     /** @return The offset from the actual note that we have here. */
-    public int getAccidental() {
+    public Accidental getAccidental() {
         return accidental;
     }
 
@@ -245,16 +244,16 @@ public class StaffNote implements Serializable {
         String noteName = Values.staffNotes[position].name();
         String noteAcc = "";
         switch (accidental) {
-        case 2:
+        case DOUBLE_SHARP:
             noteAcc = "X";
             break;
-        case 1:
+        case SHARP:
             noteAcc = "#";
             break;
-        case -1:
+        case FLAT:
             noteAcc = "b";
             break;
-        case -2:
+        case DOUBLE_FLAT:
             noteAcc = "B";
             break;
         default:

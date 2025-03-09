@@ -121,8 +121,7 @@ public class NoteMatrix {
             StackPane accidentals = getAccidentals(index, s.getPosition());
             
             StaffAccidental accidental = new StaffAccidental(s);
-            accidental.setImage(il.getSpriteFX(Staff.switchAcc(s
-                    .getAccidental())));
+            accidental.setImage(il.getSpriteFX(s.getAccidental().imageIndex()));
 
             if (s.muteNoteVal() == 0) {
                 s.setImage(il.getSpriteFX(s.getInstrument().imageIndex()));

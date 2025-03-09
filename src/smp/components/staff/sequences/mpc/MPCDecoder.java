@@ -1,5 +1,12 @@
 package smp.components.staff.sequences.mpc;
 
+import static smp.components.staff.sequences.mpc.TextUtil.chop;
+import static smp.components.staff.sequences.mpc.TextUtil.clean;
+import static smp.components.staff.sequences.mpc.TextUtil.dice;
+import static smp.components.staff.sequences.mpc.TextUtil.parseAccidental;
+import static smp.components.staff.sequences.mpc.TextUtil.parsePosition;
+import static smp.components.staff.sequences.mpc.TextUtil.parseVolume;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,12 +16,11 @@ import java.util.ArrayList;
 
 import smp.components.InstrumentIndex;
 import smp.components.Values;
-import smp.components.general.Utilities;
+import smp.components.staff.sequences.Accidental;
 import smp.components.staff.sequences.StaffArrangement;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
-import static smp.components.staff.sequences.mpc.TextUtil.*;
 
 /**
  * Decodes Mario Paint Composer songs into Super Mario Paint- readable songs.
@@ -107,7 +113,7 @@ public class MPCDecoder {
                     continue;
                 InstrumentIndex in = MPCInstrumentIndex.valueOf(note.charAt(0));
                 int pos = 0;
-                int acc = 0;
+                Accidental acc = Accidental.NATURAL;
                 if (note.length() == 3) {
                     if (note.substring(1).equals("17")) {
                         StaffNote mn = new StaffNote(in, pos, acc);
@@ -120,7 +126,7 @@ public class MPCDecoder {
                     }
                 } else if (note.length() == 2) {
                     pos = parsePosition(note.charAt(1));
-                    acc = 0;
+                    acc = Accidental.NATURAL;
                 }
                 StaffNote sn = new StaffNote(in, pos, acc);
                 sl.add(sn);

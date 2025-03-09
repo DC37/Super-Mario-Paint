@@ -19,6 +19,7 @@ import javax.sound.midi.Synthesizer;
 import javafx.stage.Window;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
+import smp.components.staff.sequences.Accidental;
 import smp.components.staff.sequences.Note;
 import smp.components.staff.sounds.SMPSynthesizer;
 import smp.fx.Dialog;
@@ -373,7 +374,7 @@ public class SoundfontLoader implements Loader {
      * @param i The Instrument to play it with.
      */
     public static void playSound(Note n, InstrumentIndex i) {
-        playSound(n.getKeyNum(), i, 0);
+        playSound(n.getKeyNum(), i, Accidental.NATURAL);
     }
 
     /**
@@ -383,7 +384,7 @@ public class SoundfontLoader implements Loader {
      * @param theInd The InstrumentIndex.
      * @param acc The accidental that we are given.
      */
-    public static void playSound(int i, InstrumentIndex theInd, int acc) {
+    public static void playSound(int i, InstrumentIndex theInd, Accidental acc) {
         playSound(i, theInd, acc, Values.MAX_VELOCITY);
     }
 
@@ -396,9 +397,9 @@ public class SoundfontLoader implements Loader {
      * @param acc The accidental that we are given.
      * @param vel The velocity of the note that we are given.
      */
-    public static void playSound(int i, InstrumentIndex theInd, int acc, int vel) {
+    public static void playSound(int i, InstrumentIndex theInd, Accidental acc, int vel) {
         int ind = theInd.getChannel() - 1;
-        chan[ind].noteOn(i + acc, vel);
+        chan[ind].noteOn(i + acc.getOffset(), vel);
     }
 
     /**
@@ -409,9 +410,9 @@ public class SoundfontLoader implements Loader {
      * @param theInd The InstrumentIndex.
      * @param acc The accidental that we are given.
      */
-    public static void stopSound(int i, InstrumentIndex theInd, int acc) {
+    public static void stopSound(int i, InstrumentIndex theInd, Accidental acc) {
         int ind = theInd.getChannel() - 1;
-        chan[ind].noteOff(i + acc);
+        chan[ind].noteOff(i + acc.getOffset());
     }
 
     /**
@@ -423,9 +424,9 @@ public class SoundfontLoader implements Loader {
      * @param acc The accidental that we are given.
      * @param vel The note-off velocity.
      */
-    public static void stopSound(int i, InstrumentIndex theInd, int acc, int vel) {
+    public static void stopSound(int i, InstrumentIndex theInd, Accidental acc, int vel) {
         int ind = theInd.getChannel() - 1;
-        chan[ind].noteOff(i + acc, vel);
+        chan[ind].noteOff(i + acc.getOffset(), vel);
     }
 
 }

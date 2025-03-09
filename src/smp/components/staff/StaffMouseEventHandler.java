@@ -13,6 +13,7 @@ import smp.commandmanager.commands.RemoveNoteCommand;
 import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
+import smp.components.staff.sequences.Accidental;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -84,7 +85,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private static ImageLoader il;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
-    private static int acc = 0;
+    private static Accidental acc = Accidental.NATURAL;
     
     private ModifySongManager commandManager;
     
@@ -273,7 +274,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         }
 
         StaffAccidental accidental = new StaffAccidental(theStaffNote);
-        accidental.setImage(il.getSpriteFX(Staff.switchAcc(acc)));
+        accidental.setImage(il.getSpriteFX(acc.imageIndex()));
 
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
@@ -372,7 +373,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (!theImages.contains(silhouette))
             theImages.add(silhouette);
         accSilhouette.setImage(il
-                .getSpriteFX(Staff.switchAcc(acc).silhouette()));
+                .getSpriteFX(acc.imageIndex().silhouette()));
         if (!accList.contains(accSilhouette))
             accList.add(accSilhouette);
         silhouette.setVisible(true);
@@ -410,27 +411,27 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         boolean alt = bp.contains(KeyCode.ALT) || bp.contains(KeyCode.ALT_GRAPH);
 
         if (alt && ctrl)
-            acc = -2;
+            acc = Accidental.DOUBLE_FLAT;
         else if (ctrl && shift)
-            acc = 2;
+            acc = Accidental.DOUBLE_SHARP;
         else if (shift)
-            acc = 1;
+            acc = Accidental.SHARP;
         else if (alt || ctrl)
-            acc = -1;
+            acc = Accidental.FLAT;
         else
-            acc = 0;
+            acc = Accidental.NATURAL;
 
         switch (acc) {
-        case 2:
+        case DOUBLE_SHARP:
             accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLESHARP_SIL));
             break;
-        case 1:
+        case SHARP:
             accSilhouette.setImage(il.getSpriteFX(ImageIndex.SHARP_SIL));
             break;
-        case -1:
+        case FLAT:
             accSilhouette.setImage(il.getSpriteFX(ImageIndex.FLAT_SIL));
             break;
-        case -2:
+        case DOUBLE_FLAT:
             accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLEFLAT_SIL));
             break;
         default:
@@ -438,12 +439,13 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             break;
         }
 
-        if (acc != 0)
+        if (acc != Accidental.NATURAL)
             accSilhouette.setVisible(true);
 
-        if (acc != 0 && !accList.contains(accSilhouette))
+        if (acc != Accidental.NATURAL && !accList.contains(accSilhouette))
             accList.add(accSilhouette);
-        if (acc != 0 && !theImages.contains(silhouette)) {
+        
+        if (acc != Accidental.NATURAL && !theImages.contains(silhouette)) {
             theImages.add(silhouette);
             silhouette.setImage(il.getSpriteFX(ButtonLine
                     .getSelectedInstrument().imageIndex().silhouette()));
@@ -466,7 +468,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      * @param acc
      *            The sharp / flat that we want to play this note at.
      */
-    private static void playSound(InstrumentIndex theInd, int pos, int acc, int vel) {
+    private static void playSound(InstrumentIndex theInd, int pos, Accidental acc, int vel) {
         SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
                 acc, vel);
     }
@@ -477,14 +479,14 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      * @param accidental
      *            Any integer between -2 and 2.
      */
-    public void setAcc(int accidental) {
+    public void setAcc(Accidental accidental) {
         acc = accidental;
     }
 
     /**
      * @return The amount that a note is to be offset from its usual position.
      */
-    public int getAcc() {
+    public Accidental getAcc() {
         return acc;
     }
 

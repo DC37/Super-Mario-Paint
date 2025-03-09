@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import smp.SoundfontLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
+import smp.components.staff.sequences.Accidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
@@ -90,7 +91,7 @@ public class NoteTracker {
      * @param accidental The accidental of the note that is playing.
      */
     public void addNotePlaying(int keyNum, InstrumentIndex instrument,
-            int accidental) {
+            Accidental accidental) {
         notesOn.get(instrument.getChannel() - 1).add(
                 new PlayingNote(keyNum, instrument, accidental));
         setChannelOn(instrument.getChannel() - 1);
@@ -155,7 +156,7 @@ public class NoteTracker {
         private InstrumentIndex instrument;
 
         /** The accidental of the note that is playing. */
-        private int accidental;
+        private Accidental accidental;
 
         /**
          * Makes a PlayingNote object, which keeps track of which notes
@@ -164,7 +165,7 @@ public class NoteTracker {
          * @param ins The InstrumentIndex.
          * @param acc The accidental.
          */
-        public PlayingNote(int k, InstrumentIndex ins, int acc) {
+        public PlayingNote(int k, InstrumentIndex ins, Accidental acc) {
             keyNum = k;
             instrument = ins;
             accidental = acc;
@@ -187,7 +188,7 @@ public class NoteTracker {
         /**
          * @return The accidental of the note that is playing.
          */
-        public int accidental() {
+        public Accidental accidental() {
             return accidental;
         }
     }

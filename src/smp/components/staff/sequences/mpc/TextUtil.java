@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import smp.components.Values;
+import smp.components.staff.sequences.Accidental;
 
 /**
  * Pulled from MPCTxtTools; this should be useful in decoding Mario Paint
@@ -148,14 +149,14 @@ public class TextUtil {
      *            The character denoting whether this is a sharp or a flat.
      * @return The offset that this note will receive.
      */
-    public static int parseAccidental(char s) {
+    public static Accidental parseAccidental(char s) {
         switch(s) {
         case ';':
-            return -1;
+            return Accidental.FLAT;
         case '#':
-            return 1;
+            return Accidental.SHARP;
         default:
-            return 0;
+            return Accidental.NATURAL;
         }
     }
 
