@@ -163,11 +163,9 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             event.consume();
             StateMachine.setSongModified(true);
         } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
-            focus = true;
             mouseEntered(theInd);
             event.consume();
         } else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            focus = false;
             mouseExited(theInd);
             event.consume();
         } 
@@ -368,6 +366,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             accList.add(accSilhouette);
         silhouette.setVisible(true);
         accSilhouette.setVisible(true);
+        focus = true;
     }
 
     /**
@@ -386,6 +385,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     		theImages.remove(silhouette);
     	if(accSilhouette.getImage() != null)
     		accList.remove(accSilhouette);
+    	
+    	focus = false;
 
     }
 
