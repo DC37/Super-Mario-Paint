@@ -132,8 +132,6 @@ public class NoteMatrix {
                 s.setImage(il.getSpriteFX(s.getInstrument().imageIndex()
                         .silhouette()));
             }
-
-            s.setVisible(true);
             
             notes.getChildren().add(s.toImageView());
             accidentals.getChildren().add(accidental.toImageView());

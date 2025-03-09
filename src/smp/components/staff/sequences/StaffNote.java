@@ -47,7 +47,6 @@ public class StaffNote implements Serializable {
     private InstrumentIndex theInstrument;
     
     private Image image;
-    private boolean visible;
     private Effect effect;
 
     /**
@@ -87,17 +86,12 @@ public class StaffNote implements Serializable {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(32);
         imageView.setFitHeight(36);
-        imageView.setVisible(visible);
         imageView.setEffect(effect);
         return imageView;
     }
     
     public void setImage(Image image) {
         this.image = image;
-    }
-    
-    public void setVisible(boolean b) {
-        this.visible = b;
     }
     
     public void setEffect(Effect e) {
