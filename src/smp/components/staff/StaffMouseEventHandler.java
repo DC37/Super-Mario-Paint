@@ -14,7 +14,6 @@ import smp.commandmanager.commands.RemoveVolumeCommand;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
 import smp.components.staff.sequences.Accidental;
-import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.topPanel.ButtonLine;
@@ -262,19 +261,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         StaffNote theStaffNote = new StaffNote(theInd, position, acc);
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
 
-        StaffAccidental accidental = new StaffAccidental(theStaffNote);
-
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
-        
-        ImageView staffNoteImageView = theStaffNote.toImageView(il);
-        ImageView staffAccidentalImageView = accidental.toImageView(il);
-
-        if (!theImages.contains(staffNoteImageView))
-            theImages.add(staffNoteImageView);
-
-        if (!accList.contains(staffAccidentalImageView))
-            accList.add(staffAccidentalImageView);
 
         StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
@@ -316,11 +304,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private void removeNote() {
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
-
-        if (!theImages.isEmpty())
-            theImages.remove(theImages.size() - 1);
-        if (!accList.isEmpty())
-            accList.remove(0);
 
         StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
