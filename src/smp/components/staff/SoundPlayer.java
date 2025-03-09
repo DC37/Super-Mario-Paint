@@ -6,6 +6,7 @@ import javafx.beans.property.DoubleProperty;
 import smp.SoundfontLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
+import smp.components.staff.sequences.Accidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.stateMachine.StateMachine;
@@ -105,7 +106,7 @@ public class SoundPlayer {
      */
     public void stopAllInstruments() {
     	for (InstrumentIndex in : InstrumentIndex.values()) {
-    		tracker.stopInstrument(new StaffNote(in, 0, 0));
+    		tracker.stopInstrument(new StaffNote(in, 0, Accidental.NATURAL));
     	}
     	
     }

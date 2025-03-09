@@ -7,6 +7,7 @@ import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.TestMain;
 import smp.components.Values;
+import smp.components.staff.sequences.Accidental;
 import smp.components.InstrumentIndex;
 import smp.models.staff.StaffNote;
 import smp.models.staff.StaffNoteLine;
@@ -452,7 +453,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private static void playSound(InstrumentIndex theInd, int pos, int acc) {
         SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
-                acc);
+                Accidental.valueOf(acc));
     }
     
 
@@ -470,7 +471,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      */
     private static void playSound(InstrumentIndex theInd, int pos, int acc, int vel) {
         SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
-                acc, vel);
+                Accidental.valueOf(acc), vel);
     }
 
     /**
