@@ -121,10 +121,9 @@ public class NoteMatrix {
             StackPane accidentals = getAccidentals(index, s.getPosition());
             
             StaffAccidental accidental = new StaffAccidental(s);
-            accidental.setImage(il.getSpriteFX(s.getAccidental().imageIndex()));
             
             notes.getChildren().add(s.toImageView(il));
-            accidentals.getChildren().add(accidental.toImageView());
+            accidentals.getChildren().add(accidental.toImageView(il));
         }
     }
 
