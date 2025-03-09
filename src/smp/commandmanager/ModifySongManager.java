@@ -2,17 +2,16 @@ package smp.commandmanager;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import smp.components.staff.Staff;
 import smp.fx.SMPFXController;
 
 public class ModifySongManager extends CommandManager {
 
-	private Staff theStaff;
+	private Runnable refreshDisplay;
 	private SMPFXController controller;
 	
-	public ModifySongManager(Staff st, SMPFXController ct) {
+	public ModifySongManager(Runnable refreshDisplay, SMPFXController ct) {
 		super();
-		theStaff = st;
+		this.refreshDisplay = refreshDisplay;
 		controller = ct;
 		
 		controller.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>(){
@@ -36,18 +35,11 @@ public class ModifySongManager extends CommandManager {
 	
 	public void redo() {
 		super.redo();
-		theStaff.redraw();
+		refreshDisplay.run();
 	}
 	
 	public void undo() {
 		super.undo();
-		theStaff.redraw();
-	}
-	
-	/**
-	 * temporary until circular dependency is fixed
-	 */
-	public void setStaff(Staff st) {
-		theStaff = st;
+        refreshDisplay.run();
 	}
 }
