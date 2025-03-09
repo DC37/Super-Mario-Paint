@@ -58,37 +58,54 @@ public class NoteMatrix {
     }
     
     public void initializeNoteDisplay(HBox staffInstruments, HBox staffAccidentals) {
-        ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
-        for (Node n : staffAccidentals.getChildren())
-            accidentalLines.add((VBox) n);
-
+        initializeNotesMatrix(staffInstruments);
+        initializeAccidentalsMatrix(staffAccidentals);
+    }
+    
+    private void initializeNotesMatrix(HBox staffInstruments) {
         ArrayList<VBox> noteLines = new ArrayList<VBox>();
         for (Node n : staffInstruments.getChildren())
             noteLines.add((VBox) n);
 
         for (int line = 0; line < noteLines.size(); line++) {
             VBox verticalHolder = noteLines.get(line);
-            VBox accVerticalHolder = accidentalLines.get(line);
 
             ObservableList<Node> lineOfNotes = verticalHolder.getChildren();
-            ObservableList<Node> lineOfAcc = accVerticalHolder.getChildren();
 
             ArrayList<StackPane> notes = new ArrayList<StackPane>();
-            ArrayList<StackPane> accs = new ArrayList<StackPane>();
 
             for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
                 StackPane note = (StackPane) lineOfNotes.get(pos - 1);
-                StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
                 
                 // Don't register events for stability
                 note.setDisable(true);
-                acc.setDisable(true);
-                
                 notes.add(note);
-                accs.add(acc);
             }
 
             matrix.add(notes);
+        }
+    }
+    
+    private void initializeAccidentalsMatrix(HBox staffAccidentals) {
+        ArrayList<VBox> accidentalLines = new ArrayList<VBox>();
+        for (Node n : staffAccidentals.getChildren())
+            accidentalLines.add((VBox) n);
+
+        for (int line = 0; line < accidentalLines.size(); line++) {
+            VBox accVerticalHolder = accidentalLines.get(line);
+
+            ObservableList<Node> lineOfAcc = accVerticalHolder.getChildren();
+
+            ArrayList<StackPane> accs = new ArrayList<StackPane>();
+
+            for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
+                StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
+                
+                // Don't register events for stability
+                acc.setDisable(true);
+                accs.add(acc);
+            }
+
             accMatrix.add(accs);
         }
     }
