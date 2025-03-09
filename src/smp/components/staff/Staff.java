@@ -14,7 +14,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
-import smp.ImageIndex;
 import smp.SoundfontLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
@@ -490,29 +489,6 @@ public class Staff {
      */
     public PanelButtons getTopPanel() {
         return topPanel;
-    }
-
-    /**
-     * @param acc
-     *            The offset that we are deciding upon.
-     * @return An <code>ImageIndex</code> based on the amount of sharp or flat
-     *         we want to implement.
-     */
-    public static ImageIndex switchAcc(int acc) {
-        switch (acc) {
-        case 2:
-            return ImageIndex.DOUBLESHARP;
-        case 1:
-            return ImageIndex.SHARP;
-        case 0:
-            return ImageIndex.BLANK;
-        case -1:
-            return ImageIndex.FLAT;
-        case -2:
-            return ImageIndex.DOUBLEFLAT;
-        default:
-            return ImageIndex.BLANK;
-        }
     }
 
     /**
