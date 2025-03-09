@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -301,7 +302,21 @@ public class SMPFXController {
             }
 
         // Set up command manager (undo and redo)
-        commandManager = new ModifySongManager(() -> staff.redraw(), this);
+        commandManager = new ModifySongManager(() -> staff.redraw());
+        
+        basePane.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+            if (event.isControlDown())
+                switch (event.getCode()) {
+                case Y:
+                    commandManager.redo();
+                    break;
+                case Z:
+                    commandManager.undo();
+                    break;
+                default:
+                    break;
+                }
+        });
         
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
