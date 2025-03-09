@@ -135,6 +135,9 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 
 	@Override
     public void handle(Event event) {
+	    
+	    if (StateMachine.isSelectionModeOn())
+	        return;
     	
 		boolean newNote = false;
     	if(event instanceof MouseEvent){
