@@ -464,37 +464,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
                 acc, vel);
     }
 
-    /**
-     * Sets the amount that we want to sharp / flat a note.
-     *
-     * @param accidental
-     *            Any integer between -2 and 2.
-     */
-    public void setAcc(Accidental accidental) {
-        acc = accidental;
-    }
-
-    /**
-     * @return The amount that a note is to be offset from its usual position.
-     */
-    public Accidental getAcc() {
-        return acc;
-    }
-
-    /**
-     * @return The line that this handler is located on.
-     */
-    public int getLine() {
-        return line;
-    }
-
-    /**
-     * @return Whether the mouse is currently in the frame.
-     */
-    public boolean hasMouse() {
-        return focus;
-    }
-
     @Override
     public String toString() {
         String out = "Line: " + (StateMachine.getMeasureLineNum() + line)
