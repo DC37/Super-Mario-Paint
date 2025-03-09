@@ -265,13 +265,12 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
 
         StaffAccidental accidental = new StaffAccidental(theStaffNote);
-        accidental.setImage(il.getSpriteFX(acc.imageIndex()));
 
         theImages.remove(silhouette);
         accList.remove(accSilhouette);
         
         ImageView staffNoteImageView = theStaffNote.toImageView(il);
-        ImageView staffAccidentalImageView = accidental.toImageView();
+        ImageView staffAccidentalImageView = accidental.toImageView(il);
 
         if (!theImages.contains(staffNoteImageView))
             theImages.add(staffNoteImageView);

@@ -2,6 +2,7 @@ package smp.components.staff.sequences;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import smp.ImageLoader;
 
 
 /**
@@ -17,8 +18,6 @@ public class StaffAccidental {
      */
     private StaffNote theNote;
 
-    private Image image;
-
     /**
      * Creates a StaffAccidental object which is really just
      * an ImageView with special properties that allow it to
@@ -30,15 +29,24 @@ public class StaffAccidental {
         theNote = note;
     }
     
-    public ImageView toImageView() {
+    public ImageView toImageView(ImageLoader il) {
+        Image image;
+        switch (theNote.muteNoteVal()) {
+        case 1:
+            image = il.getSpriteFX(theNote.getAccidental().imageIndex().alt());
+            break;
+        case 2:
+            image = il.getSpriteFX(theNote.getAccidental().imageIndex().silhouette());
+            break;
+        case 0:
+        default:
+            image = il.getSpriteFX(theNote.getAccidental().imageIndex());
+            break;
+        }
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(32);
         imageView.setFitHeight(32);
         return imageView;
-    }
-    
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     @Override
