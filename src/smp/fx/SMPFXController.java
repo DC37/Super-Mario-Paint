@@ -301,7 +301,7 @@ public class SMPFXController {
             }
 
         // Set up command manager (undo and redo)
-        commandManager = new ModifySongManager(staff, this);
+        commandManager = new ModifySongManager(() -> staff.redraw(), this);
         
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
@@ -314,8 +314,6 @@ public class SMPFXController {
         
         // HACK
         staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
-       
-        commandManager.setStaff(staff);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
