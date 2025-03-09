@@ -79,6 +79,11 @@ public class NoteMatrix {
             for (int pos = 1; pos <= Values.NOTES_IN_A_LINE; pos++) {
                 StackPane note = (StackPane) lineOfNotes.get(pos - 1);
                 StackPane acc = (StackPane) lineOfAcc.get(pos - 1);
+                
+                // Don't register events for stability
+                note.setDisable(true);
+                acc.setDisable(true);
+                
                 notes.add(note);
                 accs.add(acc);
             }

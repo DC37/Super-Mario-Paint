@@ -120,18 +120,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         }
     }
 
-	/**
-	 * Disables all the stack panes. 
-	 */
-	private void disableAllStackPanes() {
-		for (int index = 0; index < Values.NOTELINES_IN_THE_WINDOW; index++) {
-			for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
-				StackPane notes = theStaff.getDisplayManager().getNotes(index, i);
-				notes.setDisable(true);
-			}
-		}
-	}
-
 	@Override
 	public void handle(MouseEvent event) {
 	    if (StateMachine.isSelectionModeOn())
@@ -210,8 +198,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 	}
 	
 	/**
-	 * Updates member variables to new note values. Detects if stackpanes are
-	 * disabled and if they aren't this will disable them.
+	 * Updates member variables to new note values.
 	 * 
 	 * @param lineTmp
 	 *            the note's line
@@ -226,9 +213,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 			position = positionTmp;
 			StackPane notes = theStaff.getDisplayManager().getNotes(line, position);
             StackPane accidentals = theStaff.getDisplayManager().getAccidentals(line, position);
-			
-			if(!notes.isDisabled())
-				disableAllStackPanes();
 			
 			theImages = notes.getChildren();
 			accList = accidentals.getChildren();
