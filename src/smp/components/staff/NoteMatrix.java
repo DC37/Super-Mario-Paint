@@ -122,17 +122,8 @@ public class NoteMatrix {
             
             StaffAccidental accidental = new StaffAccidental(s);
             accidental.setImage(il.getSpriteFX(s.getAccidental().imageIndex()));
-
-            if (s.muteNoteVal() == 0) {
-                s.setImage(il.getSpriteFX(s.getInstrument().imageIndex()));
-            } else if (s.muteNoteVal() == 1) {
-                s.setImage(il.getSpriteFX(s.getInstrument().imageIndex().alt()));
-            } else {
-                s.setImage(il.getSpriteFX(s.getInstrument().imageIndex()
-                        .silhouette()));
-            }
             
-            notes.getChildren().add(s.toImageView());
+            notes.getChildren().add(s.toImageView(il));
             accidentals.getChildren().add(accidental.toImageView());
         }
     }

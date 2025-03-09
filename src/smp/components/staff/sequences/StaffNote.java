@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import smp.ImageLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
 
@@ -45,7 +46,6 @@ public class StaffNote implements Serializable {
      */
     private InstrumentIndex theInstrument;
     
-    private Image image;
     private Effect effect;
 
     /**
@@ -81,16 +81,24 @@ public class StaffNote implements Serializable {
         volume = vol;
     }
     
-    public ImageView toImageView() {
+    public ImageView toImageView(ImageLoader il) {
+        Image image;
+        switch (muteNote) {
+        case 1:
+            image = il.getSpriteFX(theInstrument.imageIndex().alt());
+            break;
+        case 2:
+            image = il.getSpriteFX(theInstrument.imageIndex().silhouette());
+            break;
+        case 0:
+        default:
+            image = il.getSpriteFX(theInstrument.imageIndex());
+        }
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(32);
         imageView.setFitHeight(36);
         imageView.setEffect(effect);
         return imageView;
-    }
-    
-    public void setImage(Image image) {
-        this.image = image;
     }
     
     public void setEffect(Effect e) {

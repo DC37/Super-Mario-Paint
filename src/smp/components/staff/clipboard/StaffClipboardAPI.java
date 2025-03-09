@@ -167,14 +167,6 @@ public class StaffClipboardAPI {
 				// see StaffInstrumentEventHandler's placeNote function
 				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
 				theStaffNote.setMuteNote(note.muteNoteVal());
-		        if (theStaffNote.muteNoteVal() == 0) {
-		            theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex()));
-		        } else if (theStaffNote.muteNoteVal() == 1) {
-		            theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex().alt()));
-		        } else if (theStaffNote.muteNoteVal() == 2) {
-		            theStaffNote.setImage(il.getSpriteFX(note.getInstrument().imageIndex()
-		                    .silhouette()));
-		        }
 
 				if (lineDest.isEmpty()) {
 					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
