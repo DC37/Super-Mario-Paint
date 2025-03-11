@@ -136,10 +136,8 @@ public class StaffDisplayManager {
     }
     
     public void updateNoteDisplay(StaffSequence seq, int currLine) {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            matrix.clearNoteDisplay(i);
-            matrix.populateNoteDisplay(seq, currLine, i);
-        }
+        matrix.clearNoteDisplay();
+        matrix.populateNoteDisplay(seq, currLine);
     }
 
     /**
