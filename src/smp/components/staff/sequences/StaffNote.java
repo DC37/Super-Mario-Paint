@@ -81,6 +81,10 @@ public class StaffNote implements Serializable {
         volume = vol;
     }
     
+    public StaffNote(StaffNote note) {
+        this(note.theInstrument, note.position, note.accidental, note.volume);
+    }
+    
     public ImageView toImageView(ImageLoader il) {
         Image image;
         switch (muteNote) {

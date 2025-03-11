@@ -29,6 +29,10 @@ public class StaffAccidental {
         theNote = note;
     }
     
+    public StaffAccidental(StaffAccidental acc) {
+        this(new StaffNote(acc.theNote));
+    }
+    
     public ImageView toImageView(ImageLoader il) {
         Image image;
         switch (theNote.muteNoteVal()) {
