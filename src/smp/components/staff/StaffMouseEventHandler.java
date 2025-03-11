@@ -46,9 +46,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     /** The position of this note. */
     private int position;
 
-    /** Whether the mouse is in the frame or not. */
-    private static boolean focus = false;
-
     /** The pointer to the staff object that this handler is linked to. */
     private Staff theStaff;
 
@@ -288,8 +285,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         acc = computeAccidental();
         StaffNote sil = new StaffNote(theInd, position, acc);
         theStaff.getDisplayManager().updateSilhouette(line, sil);
-
-        focus = true;
+        StateMachine.setCursorOnStaff(true);
     }
 
     /**
@@ -303,11 +299,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected.
      */
     private void mouseExited(InstrumentIndex theInd) {
-
     	theStaff.getDisplayManager().resetSilhouette();
-    	
-    	focus = false;
-
+    	StateMachine.setCursorOnStaff(false);
     }
 
     /**

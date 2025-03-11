@@ -108,6 +108,8 @@ public class StateMachine {
 	 * loaded.
 	 */
 	private static String currentSoundset = Values.DEFAULT_SOUNDFONT;
+	
+	private static BooleanProperty cursorOnStaff = new SimpleBooleanProperty();
 
     /**
      * Do not make an instance of this class! The implementation is such that
@@ -409,5 +411,17 @@ public class StateMachine {
 	public static void setCurrentSoundset(String soundset) {
 		StateMachine.currentSoundset = soundset;
     }
+	
+	public static BooleanProperty getCursorOnStaffProperty() {
+	    return cursorOnStaff;
+	}
+	
+	public static boolean isCursorOnStaff() {
+	    return cursorOnStaff.get();
+	}
+	
+	public static void setCursorOnStaff(boolean b) {
+	    cursorOnStaff.set(b);
+	}
 
 }
