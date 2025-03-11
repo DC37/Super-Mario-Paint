@@ -84,7 +84,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private static ImageLoader il;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
-    private static Accidental acc = Accidental.NATURAL;
+    private Accidental acc = Accidental.NATURAL;
     
     private ModifySongManager commandManager;
     
@@ -337,9 +337,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-//        StateMachine.setFocusPane(this);
-//        theStaff.getNoteMatrix().setFocusPane(this);
-        updateAccidental();
+        acc = computeAccidental();
         silhouette.setImage(il.getSpriteFX(theInd.imageIndex().silhouette()));
         if (!theImages.contains(silhouette))
             theImages.add(silhouette);
@@ -376,60 +374,22 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     /**
      * Updates how much we want to sharp / flat a note.
      */
-    public static void updateAccidental() {
-        if (!focus)
-            return;
+    public static Accidental computeAccidental() {        
         Set<KeyCode> bp = StateMachine.getButtonsPressed();
         boolean ctrl = bp.contains(KeyCode.CONTROL);
         boolean shift = bp.contains(KeyCode.SHIFT);
         boolean alt = bp.contains(KeyCode.ALT) || bp.contains(KeyCode.ALT_GRAPH);
 
         if (alt && ctrl)
-            acc = Accidental.DOUBLE_FLAT;
+            return Accidental.DOUBLE_FLAT;
         else if (ctrl && shift)
-            acc = Accidental.DOUBLE_SHARP;
+            return Accidental.DOUBLE_SHARP;
         else if (shift)
-            acc = Accidental.SHARP;
+            return Accidental.SHARP;
         else if (alt || ctrl)
-            acc = Accidental.FLAT;
+            return Accidental.FLAT;
         else
-            acc = Accidental.NATURAL;
-
-        switch (acc) {
-        case DOUBLE_SHARP:
-            accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLESHARP_SIL));
-            break;
-        case SHARP:
-            accSilhouette.setImage(il.getSpriteFX(ImageIndex.SHARP_SIL));
-            break;
-        case FLAT:
-            accSilhouette.setImage(il.getSpriteFX(ImageIndex.FLAT_SIL));
-            break;
-        case DOUBLE_FLAT:
-            accSilhouette.setImage(il.getSpriteFX(ImageIndex.DOUBLEFLAT_SIL));
-            break;
-        default:
-            accSilhouette.setVisible(false);
-            break;
-        }
-
-        if (acc != Accidental.NATURAL)
-            accSilhouette.setVisible(true);
-
-        if (acc != Accidental.NATURAL && !accList.contains(accSilhouette))
-            accList.add(accSilhouette);
-        
-        if (acc != Accidental.NATURAL && !theImages.contains(silhouette)) {
-            theImages.add(silhouette);
-            silhouette.setImage(il.getSpriteFX(ButtonLine
-                    .getSelectedInstrument().imageIndex().silhouette()));
-            silhouette.setVisible(true);
-        }
-        //Cannot use this in a static context... will fix this later
-//        if ((Settings.debug & 0b01) == 0b01) {
-//            System.out.println(this);
-//        }
-
+            return Accidental.NATURAL;
     }
 
     /**
