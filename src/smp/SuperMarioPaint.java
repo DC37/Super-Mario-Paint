@@ -411,7 +411,12 @@ public class SuperMarioPaint extends Application {
                     	}
                     	
                         StateMachine.getButtonsPressed().add(ke.getCode());
-                        Accidental acc = StaffMouseEventHandler.computeAccidental();
+                        
+                        if (StateMachine.isCursorOnStaff()) {
+                            Accidental acc = StaffMouseEventHandler.computeAccidental();
+                            controller.getStaff().getDisplayManager().refreshSilhouette(acc);
+                        }
+                        
                         ke.consume();
                     }
                 });
@@ -422,7 +427,12 @@ public class SuperMarioPaint extends Application {
                     @Override
                     public void handle(KeyEvent ke) {
                         StateMachine.getButtonsPressed().remove(ke.getCode());
-                        Accidental acc = StaffMouseEventHandler.computeAccidental();
+                        
+                        if (StateMachine.isCursorOnStaff()) {
+                            Accidental acc = StaffMouseEventHandler.computeAccidental();
+                            controller.getStaff().getDisplayManager().refreshSilhouette(acc);
+                        }
+                        
                         ke.consume();
                     }
                 });

@@ -194,5 +194,16 @@ public class NoteMatrix {
         if (currentSilhouette == null && cacheSilhouette != null)
             updateSilhouette(currentSilhouetteLine, cacheSilhouette);
     }
+    
+    public void refreshSilhouette(Accidental acc) {
+        if (currentSilhouette != null && currentSilhouette.getAccidental() != acc) {
+            StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getPosition(), acc);
+            updateSilhouette(currentSilhouetteLine, sil);
+            
+        } else if (currentSilhouette == null && cacheSilhouette != null) {
+            StaffNote sil = new StaffNote(cacheSilhouette.getInstrument(), cacheSilhouette.getPosition(), acc);
+            updateSilhouette(currentSilhouetteLine, sil);
+        }
+    }
 
 }
