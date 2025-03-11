@@ -328,7 +328,7 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         
         // HACK
-        staffMouseEventHandler = new StaffMouseEventHandler(staff, il, commandManager);
+        staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);

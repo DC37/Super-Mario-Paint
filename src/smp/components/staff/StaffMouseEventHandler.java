@@ -3,8 +3,6 @@ package smp.components.staff;
 import java.util.ArrayList;
 import java.util.Set;
 
-import smp.ImageIndex;
-import smp.ImageLoader;
 import smp.SoundfontLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.commandmanager.commands.AddNoteCommand;
@@ -19,14 +17,10 @@ import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 
 /**
  * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
@@ -55,33 +49,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     /** Whether the mouse is in the frame or not. */
     private static boolean focus = false;
 
-    /**
-     * This is the list of image notes that we have. These should all be
-     * ImageView-type objects.
-     */
-    private static ObservableList<Node> theImages;
-
-    /** The StackPane that will display sharps, flats, etc. */
-    private static ObservableList<Node> accList;
-
-    /**
-     * This is the <code>ImageView</code> object responsible for displaying the
-     * silhouette of the note that we are about to place on the staff.
-     */
-    private static ImageView silhouette = new ImageView();
-
     /** The pointer to the staff object that this handler is linked to. */
     private Staff theStaff;
-
-    /**
-     * This is the <code>ImageView</code> object responsible for displaying the
-     * silhouette of the sharp / flat of the note that we are about to place on
-     * the staff.
-     */
-    private static ImageView accSilhouette;
-    
-    /** This is the ImageLoader class. */
-    private static ImageLoader il;
 
     /** This is the amount that we want to sharp / flat / etc. a note. */
     private Accidental acc = Accidental.NATURAL;
@@ -101,23 +70,9 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      * @param cm
      * 			  The undo/redo manager.
      */
-    public StaffMouseEventHandler(Staff s, ImageLoader i, ModifySongManager cm) {
-    	
-        il = i;
-        theStaff = s;
-        accSilhouette = new ImageView();
-        
-        accSilhouette.setFitWidth(32);
-        accSilhouette.setFitHeight(32);
-        silhouette.setFitWidth(32);
-        silhouette.setFitHeight(36);
-        
+    public StaffMouseEventHandler(Staff s, ModifySongManager cm) {
+        theStaff = s;        
         commandManager = cm;
-        
-        if ((Settings.debug & 0b10) == 0b10) {
-//            System.out.println("Line: " + l);
-//            System.out.println("Position: " + pos);
-        }
     }
 
 	@Override
@@ -209,11 +164,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 			
 			line = lineTmp;
 			position = positionTmp;
-			StackPane notes = theStaff.getDisplayManager().getNotes(line, position);
-            StackPane accidentals = theStaff.getDisplayManager().getAccidentals(line, position);
-			
-			theImages = notes.getChildren();
-			accList = accidentals.getChildren();
 			
 			return true;
 		}
