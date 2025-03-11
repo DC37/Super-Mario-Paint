@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorInput;
-import smp.ImageLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.commandmanager.commands.AddNoteCommand;
 import smp.commandmanager.commands.AddVolumeCommand;
@@ -33,13 +29,10 @@ public class StaffClipboardAPI {
 
 	private Staff theStaff;
 	private StaffClipboard theStaffClipboard;
-	private ImageLoader il;
 	private ModifySongManager commandManager;
 	
 	/* Corresponds with the first selection line */
 	private int selectionLineBegin = Integer.MAX_VALUE;
-	
-	private Blend highlightBlend;
 
 	/*
 	 * If false, the selected notes remain in selection but are unhighlighted
@@ -60,23 +53,10 @@ public class StaffClipboardAPI {
 	 */
 	private boolean ignoreVolumesFlag = false;
 	
-	public StaffClipboardAPI(StaffClipboard sc, Staff st, ImageLoader i, ModifySongManager cm) {
+	public StaffClipboardAPI(StaffClipboard sc, Staff st, ModifySongManager cm) {
 		theStaffClipboard = sc;
 		theStaff = st;
-		il = i;
 		commandManager = cm;
-		
-		highlightBlend = new Blend(
-	            BlendMode.SRC_OVER,
-	            null,
-	            new ColorInput(
-	                    0,
-	                    0,
-	                    32,
-	                    36,
-	                    StaffClipboard.HIGHLIGHT_FILL
-	            )
-	    );
 	}
 
 	/**
@@ -325,9 +305,9 @@ public class StaffClipboardAPI {
 	
 	public void highlightNote(StaffNote note, boolean highlight) {
 		if(highlight)
-			note.setEffect(highlightBlend);
+			note.setSelected(true);
 		else
-			note.setEffect(null);
+			note.setSelected(false);
 	}
 	
 	public void copyVolume(int line, int volume) {

@@ -67,7 +67,7 @@ public class StaffClipboard {
 		copiedData = new HashMap<>();
 		
 		//TODO: merge staffclipboard and staffclipboardapi together
-		theAPI = new StaffClipboardAPI(this, theStaff, im, ct.getModifySongManager());
+		theAPI = new StaffClipboardAPI(this, theStaff, ct.getModifySongManager());
 
 		redrawUI(ct);
 		
