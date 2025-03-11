@@ -1,8 +1,8 @@
 package smp.components.staff;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -110,14 +110,17 @@ public class NoteMatrix {
     /**
      * Clears the note display on the staff, including the silhouette.
      */
-    public synchronized void clearNoteDisplay(int index) {
-        ArrayList<StackPane> nt = matrix.get(index);
-        ArrayList<StackPane> ac = accMatrix.get(index);
-        for (int i = 0; i < Values.NOTES_IN_A_LINE; i++) {
-            ObservableList<Node> ntList = nt.get(i).getChildren();
-            ObservableList<Node> acList = ac.get(i).getChildren();
-            ntList.clear();
-            acList.clear();
+    public synchronized void clearNoteDisplay() {
+        for (List<StackPane> arr : matrix) {
+            for (StackPane st : arr) {
+                st.getChildren().clear();
+            }
+        }
+
+        for (List<StackPane> arr : accMatrix) {
+            for (StackPane st : arr) {
+                st.getChildren().clear();
+            }
         }
         
         cacheSilhouette = currentSilhouette;
@@ -127,19 +130,21 @@ public class NoteMatrix {
     /**
      * Repopulates the note display on the staff.
      */
-    public void populateNoteDisplay(StaffSequence seq, int currentPosition, int index) {
-        StaffNoteLine stl = seq.getLineSafe(currentPosition + index);
-        ArrayList<StaffNote> st = stl.getNotes();
-        
-        for (StaffNote s : st) {
-            StackPane notes = getNotes(index, s.getPosition());
-            StackPane accidentals = getAccidentals(index, s.getPosition());
+    public void populateNoteDisplay(StaffSequence seq, int currentPosition) {
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            StaffNoteLine stl = seq.getLineSafe(currentPosition + i);
+            ArrayList<StaffNote> st = stl.getNotes();
             
-            StaffAccidental accidental = new StaffAccidental(s);
-            
-            notes.getChildren().add(s.toImageView(il));
-            accidentals.getChildren().add(accidental.toImageView(il));
-        }        
+            for (StaffNote s : st) {
+                StackPane notes = getNotes(i, s.getPosition());
+                StackPane accidentals = getAccidentals(i, s.getPosition());
+                
+                StaffAccidental accidental = new StaffAccidental(s);
+                
+                notes.getChildren().add(s.toImageView(il));
+                accidentals.getChildren().add(accidental.toImageView(il));
+            }            
+        }
     }
     
     public void resetSilhouette() {
