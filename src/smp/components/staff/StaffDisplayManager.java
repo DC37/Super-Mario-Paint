@@ -14,6 +14,7 @@ import smp.ImageIndex;
 import smp.ImageLoader;
 import smp.commandmanager.ModifySongManager;
 import smp.components.Values;
+import smp.components.staff.sequences.Accidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
 import smp.components.staff.sequences.StaffSequence;
@@ -276,6 +277,10 @@ public class StaffDisplayManager {
     
     public void refreshSilhouette() {
         matrix.refreshSilhouette();
+    }
+    
+    public void refreshSilhouette(Accidental acc) {
+        matrix.refreshSilhouette(acc);
     }
 
 }
