@@ -260,9 +260,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         
         StaffNote theStaffNote = new StaffNote(theInd, position, acc);
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
-
-        theImages.remove(silhouette);
-        accList.remove(accSilhouette);
+        
+        theStaff.getDisplayManager().resetSilhouette();
 
         StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
@@ -302,8 +301,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      * This removes a note.
      */
     private void removeNote() {
-        theImages.remove(silhouette);
-        accList.remove(accSilhouette);
+        theStaff.getDisplayManager().resetSilhouette();
 
         StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
@@ -338,15 +336,9 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      */
     private void mouseEntered(InstrumentIndex theInd) {
         acc = computeAccidental();
-        silhouette.setImage(il.getSpriteFX(theInd.imageIndex().silhouette()));
-        if (!theImages.contains(silhouette))
-            theImages.add(silhouette);
-        accSilhouette.setImage(il
-                .getSpriteFX(acc.imageIndex().silhouette()));
-        if (!accList.contains(accSilhouette))
-            accList.add(accSilhouette);
-        silhouette.setVisible(true);
-        accSilhouette.setVisible(true);
+        StaffNote sil = new StaffNote(theInd, position, acc);
+        theStaff.getDisplayManager().updateSilhouette(line, sil);
+
         focus = true;
     }
 
@@ -362,10 +354,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      */
     private void mouseExited(InstrumentIndex theInd) {
 
-    	if(silhouette.getImage() != null)
-    		theImages.remove(silhouette);
-    	if(accSilhouette.getImage() != null)
-    		accList.remove(accSilhouette);
+    	theStaff.getDisplayManager().resetSilhouette();
     	
     	focus = false;
 
