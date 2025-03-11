@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import smp.ImageLoader;
 import smp.components.Values;
+import smp.components.staff.sequences.Accidental;
 import smp.components.staff.sequences.StaffAccidental;
 import smp.components.staff.sequences.StaffNote;
 import smp.components.staff.sequences.StaffNoteLine;
@@ -42,11 +43,25 @@ public class NoteMatrix {
 
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
+    
+    /**
+     * A silhouette note to display where the cursor is.
+     * Set to {@code null} if no silhouette is displayed.
+     */
+    private StaffNote currentSilhouette;
+    private int currentSilhouetteLine;
+    
+    /**
+     * Used to refresh the silhouette after the entire matrix has been cleared.
+     */
+    private StaffNote cacheSilhouette;
 
     public NoteMatrix(ImageLoader i) {
         il = i;
         matrix = new ArrayList<ArrayList<StackPane>>();
         accMatrix = new ArrayList<ArrayList<StackPane>>();
+        currentSilhouette = null;
+        cacheSilhouette = null;
     }
     
     public StackPane getNotes(int x, int y) {
@@ -93,10 +108,7 @@ public class NoteMatrix {
     }
 
     /**
-     * Clears the note display on the staff.
-     *
-     * @param index
-     *            The index that we are clearing.
+     * Clears the note display on the staff, including the silhouette.
      */
     public synchronized void clearNoteDisplay(int index) {
         ArrayList<StackPane> nt = matrix.get(index);
@@ -107,6 +119,9 @@ public class NoteMatrix {
             ntList.clear();
             acList.clear();
         }
+        
+        cacheSilhouette = currentSilhouette;
+        currentSilhouette = null;
     }
 
     /**
@@ -124,6 +139,66 @@ public class NoteMatrix {
             
             notes.getChildren().add(s.toImageView(il));
             accidentals.getChildren().add(accidental.toImageView(il));
+        }        
+    }
+    
+    public void resetSilhouette() {
+        if (currentSilhouette == null)
+            return;
+        
+        int line = currentSilhouetteLine;
+        int pos = currentSilhouette.getPosition();
+        
+        StackPane notes = getNotes(line, pos);
+        notes.getChildren().remove(notes.getChildren().size() - 1);
+        
+        if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
+            StackPane accs = getAccidentals(line, pos);
+            accs.getChildren().remove(accs.getChildren().size() - 1);
+        }
+        
+        currentSilhouette = null;
+    }
+    
+    /**
+     * The silhouette is processing separately from regular notes because it
+     * needs to be refreshed more often.
+     */
+    public void updateSilhouette(int line, StaffNote note) {
+        if (note == null)
+            return;
+        
+        resetSilhouette();
+        
+        int pos = note.getPosition();
+        StaffNote silhouette = new StaffNote(note);
+        silhouette.setMuteNote(2);
+        
+        currentSilhouetteLine = line;
+        currentSilhouette = silhouette;
+        
+        StackPane notes = getNotes(line, pos);
+        notes.getChildren().add(notes.getChildren().size(), silhouette.toImageView(il));
+        
+        if (silhouette.getAccidental() != Accidental.NATURAL) {
+            StackPane accs = getAccidentals(line, pos);
+            StaffAccidental acc = new StaffAccidental(silhouette);
+            accs.getChildren().add(accs.getChildren().size(), acc.toImageView(il));
+        }
+    }
+    
+    /**
+     * Restore silhouette after the note display has been cleared.
+     */
+    public void refreshSilhouette() {
+        if (currentSilhouette == null && cacheSilhouette != null)
+            updateSilhouette(currentSilhouetteLine, cacheSilhouette);
+    }
+    
+    public void refreshSilhouette(Accidental acc) {
+        if (currentSilhouette == null && cacheSilhouette != null) {
+            StaffNote sil = new StaffNote(cacheSilhouette.getInstrument(), cacheSilhouette.getPosition(), acc);
+            updateSilhouette(currentSilhouetteLine, sil);
         }
     }
 

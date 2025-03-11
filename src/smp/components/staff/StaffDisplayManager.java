@@ -273,5 +273,17 @@ public class StaffDisplayManager {
             }
         }
     }
+    
+    public void resetSilhouette() {
+        matrix.resetSilhouette();
+    }
+    
+    public void updateSilhouette(int line, StaffNote sil) {
+        matrix.updateSilhouette(line, sil);
+    }
+    
+    public void refreshSilhouette() {
+        matrix.refreshSilhouette();
+    }
 
 }
