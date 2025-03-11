@@ -78,24 +78,21 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 	        return;
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
-		boolean newNote = false;
-    	{
-    		int lineTmp = getLine(event.getX());
-    		int positionTmp = getPosition(event.getY());
-    		
-    		//invalid
-    		if (!validNote(lineTmp, positionTmp)) {
-                mouseExited(theInd);
-    			return;
-    		}
-    		
-    		//new note
-    		newNote = updateNote(lineTmp, positionTmp);
-    	}
+        boolean newNote = false;
+        int lineTmp = getLine(event.getX());
+        int positionTmp = getPosition(event.getY());
+
+        //invalid
+        if (!validNote(lineTmp, positionTmp)) {
+            mouseExited(theInd);
+            return;
+        }
+
+        //new note
+        newNote = updateNote(lineTmp, positionTmp);
     	
         // Drag-add notes, hold e to drag-remove notes
 		if (event.isPrimaryButtonDown() && newNote) {
-            int lineTmp = getLine(event.getX());
 			leftMousePressed(theInd, lineTmp);
 			event.consume();
 			StateMachine.setSongModified(true);
@@ -108,7 +105,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 		}
 		else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
 			MouseButton b = event.getButton();
-            int lineTmp = getLine(event.getX());
             if (b == MouseButton.PRIMARY)
                 leftMousePressed(theInd, lineTmp);
             else if (b == MouseButton.SECONDARY)
