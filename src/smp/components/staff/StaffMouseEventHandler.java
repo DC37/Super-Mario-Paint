@@ -77,20 +77,22 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 	    if (StateMachine.isSelectionModeOn())
 	        return;
     	
+        InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
 		boolean newNote = false;
     	{
     		int lineTmp = getLine(event.getX());
     		int positionTmp = getPosition(event.getY());
     		
     		//invalid
-    		if(!validNote(lineTmp, positionTmp))
+    		if (!validNote(lineTmp, positionTmp)) {
+                mouseExited(theInd);
     			return;
+    		}
     		
     		//new note
     		newNote = updateNote(lineTmp, positionTmp);
     	}
     	
-        InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         // Drag-add notes, hold e to drag-remove notes
 		if (event.isPrimaryButtonDown() && newNote) {
             int lineTmp = getLine(event.getX());
@@ -130,21 +132,10 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 	}
 
 	/**
-	 * Takes in a line and position and check if they are valid. If the note is
-	 * not valid then it will call mouseExited().
-	 * 
-	 * @param lineTmp
-	 * @param positionTmp
-	 * @return if the given line and position are at a valid note.
+	 * Takes in a line and position and check if they are valid.
 	 */
 	private boolean validNote(int lineTmp, int positionTmp) {
-		// MOUSE_EXITED
-		if (lineTmp < 0 || positionTmp < 0) {
-			InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
-			mouseExited(theInd);
-			return false;
-		}
-		return true;
+		return (lineTmp >= 0 && positionTmp >= 0);
 	}
 	
 	/**
