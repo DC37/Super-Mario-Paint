@@ -90,6 +90,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
         //new note
         newNote = updateNote(lineTmp, positionTmp);
+        acc = computeAccidental();
     	
         // Drag-add notes, hold e to drag-remove notes
 		if (event.isPrimaryButtonDown() && newNote) {
@@ -269,7 +270,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-        acc = computeAccidental();
         StaffNote sil = new StaffNote(theInd, position, acc);
         theStaff.getDisplayManager().updateSilhouette(line, sil);
         StateMachine.setCursorOnStaff(true);
