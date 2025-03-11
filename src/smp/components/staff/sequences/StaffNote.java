@@ -3,12 +3,15 @@ package smp.components.staff.sequences;
 import java.io.Serializable;
 import java.text.ParseException;
 
-import javafx.scene.effect.Effect;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import smp.ImageLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
+import smp.presenters.api.clipboard.StaffClipboard;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.
@@ -40,13 +43,28 @@ public class StaffNote implements Serializable {
      * mute type. 2 indicates an instrument mute type.
      */
     private int muteNote;
+    
+    private static Blend highlightBlend = new Blend(
+            BlendMode.SRC_OVER,
+            null,
+            new ColorInput(
+                    0,
+                    0,
+                    32,
+                    36,
+                    StaffClipboard.HIGHLIGHT_FILL
+                    )
+            );
 
     /**
      * The Instrument that the note on the staff is to use.
      */
     private InstrumentIndex theInstrument;
     
-    private Effect effect;
+    /**
+     * True if this note is currently selected with the clipboard.
+     */
+    private boolean selected = false;
 
     /**
      * Default constructor that makes the note by default at half volume.
@@ -101,12 +119,17 @@ public class StaffNote implements Serializable {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(32);
         imageView.setFitHeight(36);
-        imageView.setEffect(effect);
+        if (selected)
+            imageView.setEffect(highlightBlend);
         return imageView;
     }
     
-    public void setEffect(Effect e) {
-        this.effect = e;
+    public void setSelected(boolean b) {
+        this.selected = b;
+    }
+    
+    public boolean isSelected() {
+        return selected;
     }
 
     /**
