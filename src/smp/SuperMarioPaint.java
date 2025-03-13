@@ -36,7 +36,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import smp.components.Values;
 import smp.components.InstrumentIndex;
-import smp.components.staff.StaffInstrumentEventHandler;
+import smp.components.staff.StaffMouseEventHandler;
 import smp.fx.Dialog;
 import smp.fx.SMPFXController;
 import smp.fx.SplashScreen;
@@ -272,7 +272,7 @@ public class SuperMarioPaint extends Application {
     }
     
     private void makeMouseEventHandlers() {
-        primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffInstrumentEventHandler());
+        primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffMouseEventHandler());
         
         ArrayList<MouseButton> mouseButtons = new ArrayList<MouseButton>();
         
@@ -421,7 +421,7 @@ public class SuperMarioPaint extends Application {
                     	}
                     	
                         StateMachine.getButtonsPressed().add(ke.getCode());
-                        StaffInstrumentEventHandler.updateAccidental();
+                        StaffMouseEventHandler.updateAccidental();
                         ke.consume();
                     }
                 });
@@ -432,7 +432,7 @@ public class SuperMarioPaint extends Application {
                     @Override
                     public void handle(KeyEvent ke) {
                         StateMachine.getButtonsPressed().remove(ke.getCode());
-                        StaffInstrumentEventHandler.updateAccidental();
+                        StaffMouseEventHandler.updateAccidental();
                         ke.consume();
                     }
                 });
