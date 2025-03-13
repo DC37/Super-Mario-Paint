@@ -22,7 +22,7 @@ import smp.components.Values;
 import smp.components.controls.Controls;
 import smp.components.staff.Staff;
 import smp.components.staff.StaffDisplayManager;
-import smp.components.staff.StaffInstrumentEventHandler;
+import smp.components.staff.StaffMouseEventHandler;
 import smp.components.staff.clipboard.StaffClipboard;
 import smp.components.staff.clipboard.StaffRubberBand;
 import smp.components.textfield.SongNameController;
@@ -271,7 +271,7 @@ public class SMPFXController {
     @FXML
     private AnchorPane basePane;
     
-    private StaffInstrumentEventHandler staffInstrumentEventHandler;
+    private StaffMouseEventHandler staffMouseEventHandler;
     private StaffClipboard clipboard;
     private StaffRubberBand rubberBand;
     
@@ -328,7 +328,7 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         
         // HACK
-        staffInstrumentEventHandler = new StaffInstrumentEventHandler(staff, il, commandManager);
+        staffMouseEventHandler = new StaffMouseEventHandler(staff, il, commandManager);
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
@@ -638,8 +638,8 @@ public class SMPFXController {
     	return instLine;
     }
     
-    public StaffInstrumentEventHandler getStaffInstrumentEventHandler() {
-        return staffInstrumentEventHandler;
+    public StaffMouseEventHandler getStaffMouseEventHandler() {
+        return staffMouseEventHandler;
     }
     
     public ModifySongManager getModifySongManager() {

@@ -20,7 +20,6 @@ import smp.components.topPanel.ButtonLine;
 import smp.stateMachine.Settings;
 import smp.stateMachine.StateMachine;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -45,7 +44,7 @@ import javafx.scene.layout.StackPane;
  * @author j574y923
  * @since 2013.07.27 (2017.06.22)
  */
-public class StaffInstrumentEventHandler implements EventHandler<Event> {
+public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
     /** The line number of this note, on the screen. */
     private int line;
@@ -102,7 +101,7 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
      * @param cm
      * 			  The undo/redo manager.
      */
-    public StaffInstrumentEventHandler(Staff s, ImageLoader i, ModifySongManager cm) {
+    public StaffMouseEventHandler(Staff s, ImageLoader i, ModifySongManager cm) {
     	
         il = i;
         theStaff = s;
@@ -134,15 +133,14 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
 	}
 
 	@Override
-    public void handle(Event event) {
-	    
+	public void handle(MouseEvent event) {
 	    if (StateMachine.isSelectionModeOn())
 	        return;
     	
 		boolean newNote = false;
-    	if(event instanceof MouseEvent){
-    		int lineTmp = getLine(((MouseEvent)event).getX());
-    		int positionTmp = getPosition(((MouseEvent)event).getY());
+    	{
+    		int lineTmp = getLine(event.getX());
+    		int positionTmp = getPosition(event.getY());
     		
     		//invalid
     		if(!validNote(lineTmp, positionTmp))
@@ -154,21 +152,21 @@ public class StaffInstrumentEventHandler implements EventHandler<Event> {
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
         // Drag-add notes, hold e to drag-remove notes
-		if (event instanceof MouseEvent && ((MouseEvent) event).isPrimaryButtonDown() && newNote) {
-            int lineTmp = getLine(((MouseEvent)event).getX());
+		if (event.isPrimaryButtonDown() && newNote) {
+            int lineTmp = getLine(event.getX());
 			leftMousePressed(theInd, lineTmp);
 			event.consume();
 			StateMachine.setSongModified(true);
 		}
 		// Drag-remove notes
-		else if (event instanceof MouseEvent && ((MouseEvent) event).isSecondaryButtonDown() && newNote) {
+		else if (event.isSecondaryButtonDown() && newNote) {
 			rightMousePressed(theInd);
 			event.consume();
 			StateMachine.setSongModified(true);
 		}
 		else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			MouseButton b = ((MouseEvent) event).getButton();
-            int lineTmp = getLine(((MouseEvent)event).getX());
+			MouseButton b = event.getButton();
+            int lineTmp = getLine(event.getX());
             if (b == MouseButton.PRIMARY)
                 leftMousePressed(theInd, lineTmp);
             else if (b == MouseButton.SECONDARY)
