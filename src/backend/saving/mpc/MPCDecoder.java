@@ -1,11 +1,11 @@
-package smp.components.staff.sequences.mpc;
+package backend.saving.mpc;
 
-import static smp.components.staff.sequences.mpc.TextUtil.chop;
-import static smp.components.staff.sequences.mpc.TextUtil.clean;
-import static smp.components.staff.sequences.mpc.TextUtil.dice;
-import static smp.components.staff.sequences.mpc.TextUtil.parseAccidental;
-import static smp.components.staff.sequences.mpc.TextUtil.parsePosition;
-import static smp.components.staff.sequences.mpc.TextUtil.parseVolume;
+import static backend.saving.mpc.TextUtil.chop;
+import static backend.saving.mpc.TextUtil.clean;
+import static backend.saving.mpc.TextUtil.dice;
+import static backend.saving.mpc.TextUtil.parseAccidental;
+import static backend.saving.mpc.TextUtil.parsePosition;
+import static backend.saving.mpc.TextUtil.parseVolume;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import smp.components.InstrumentIndex;
-import smp.components.Values;
-import smp.components.staff.sequences.Accidental;
-import smp.components.staff.sequences.StaffArrangement;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
+import backend.songs.Accidental;
+import backend.songs.StaffArrangement;
+import backend.songs.StaffNote;
+import backend.songs.StaffNoteLine;
+import backend.songs.StaffSequence;
+import gui.InstrumentIndex;
+import gui.Values;
 
 /**
  * Decodes Mario Paint Composer songs into Super Mario Paint- readable songs.

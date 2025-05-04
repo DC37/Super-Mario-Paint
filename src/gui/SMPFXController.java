@@ -1,5 +1,17 @@
-package smp.fx;
+package gui;
 
+import backend.editing.ModifySongManager;
+import gui.clipboard.StaffClipboard;
+import gui.clipboard.StaffRubberBand;
+import gui.components.Controls;
+import gui.components.SongNameController;
+import gui.components.staff.StaffDisplayManager;
+import gui.components.staff.StaffMouseEventHandler;
+import gui.components.toppanel.ButtonLine;
+import gui.components.toppanel.PanelButtons;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
+import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
@@ -14,21 +26,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.SoundfontLoader;
-import smp.commandmanager.ModifySongManager;
-import smp.components.Values;
-import smp.components.controls.Controls;
-import smp.components.staff.Staff;
-import smp.components.staff.StaffDisplayManager;
-import smp.components.staff.StaffMouseEventHandler;
-import smp.components.staff.clipboard.StaffClipboard;
-import smp.components.staff.clipboard.StaffRubberBand;
-import smp.components.textfield.SongNameController;
-import smp.components.topPanel.ButtonLine;
-import smp.components.topPanel.PanelButtons;
-import smp.stateMachine.StateMachine;
 
 /**
  * The Controller class for most of the program. This will handle the events

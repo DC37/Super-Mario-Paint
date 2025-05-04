@@ -1,4 +1,4 @@
-package smp.components.buttons;
+package gui.components.buttons.elements;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,16 @@ import java.io.IOException;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
+import backend.editing.commands.MultiplyTempoCommand;
+import backend.songs.StaffSequence;
+import backend.songs.TimeSignature;
+import gui.ProgramState;
+import gui.SMPFXController;
+import gui.StateMachine;
+import gui.Values;
+import gui.components.buttons.ImagePushButton;
+import gui.loaders.ImageLoader;
+import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,16 +42,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import smp.ImageLoader;
-import smp.SoundfontLoader;
-import smp.commandmanager.commands.MultiplyTempoCommand;
-import smp.components.Values;
-import smp.components.general.ImagePushButton;
-import smp.components.staff.sequences.StaffSequence;
-import smp.fx.SMPFXController;
-import smp.stateMachine.ProgramState;
-import smp.stateMachine.StateMachine;
-import smp.stateMachine.TimeSignature;
 
 /**
  * This is the options button. It currently doesn't do anything.

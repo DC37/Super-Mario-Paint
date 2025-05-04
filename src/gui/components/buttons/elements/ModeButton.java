@@ -1,13 +1,13 @@
-package smp.components.buttons;
+package gui.components.buttons.elements;
 
+import gui.ProgramState;
+import gui.SMPFXController;
+import gui.StateMachine;
+import gui.components.buttons.ImageToggleButton;
+import gui.loaders.ImageLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import smp.ImageLoader;
-import smp.components.general.ImageToggleButton;
-import smp.fx.SMPFXController;
-import smp.stateMachine.ProgramState;
-import smp.stateMachine.StateMachine;
 
 /**
  * The button that changes the mode of Super Mario Paint between arranger and

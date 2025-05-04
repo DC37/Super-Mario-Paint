@@ -1,17 +1,17 @@
-package smp.components.buttons;
+package gui.components.buttons.elements;
 
 import java.io.File;
 
+import backend.songs.StaffSequence;
+import gui.ProgramState;
+import gui.SMPFXController;
+import gui.Settings;
+import gui.StateMachine;
+import gui.components.buttons.ImagePushButton;
+import gui.loaders.ImageLoader;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import smp.ImageLoader;
-import smp.components.general.ImagePushButton;
-import smp.components.staff.sequences.StaffSequence;
-import smp.fx.SMPFXController;
-import smp.stateMachine.ProgramState;
-import smp.stateMachine.Settings;
-import smp.stateMachine.StateMachine;
 
 /**
  * This is a button that moves a song on an arrangement.

@@ -1,8 +1,8 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 import java.io.Serializable;
 
-import smp.components.staff.Staff;
+import gui.Staff;
 
 /**
  * Some sort of event on the Super Mario Paint staff.

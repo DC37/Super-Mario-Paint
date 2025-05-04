@@ -1,9 +1,9 @@
-package smp.components;
+package gui;
 
 import java.io.File;
 
-import smp.components.staff.sequences.Note;
-import smp.stateMachine.TimeSignature;
+import backend.songs.Note;
+import backend.songs.TimeSignature;
 
 /**
  * A "constants" file for holding things like default window size, default

@@ -1,9 +1,9 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import smp.components.Values;
+import gui.Values;
 
 /**
  * A line of notes on the staff. This can include

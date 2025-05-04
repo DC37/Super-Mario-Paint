@@ -1,5 +1,14 @@
-package smp.components.buttons;
+package gui.components.buttons.elements;
 
+import backend.songs.StaffArrangement;
+import backend.songs.StaffSequence;
+import gui.Dialog;
+import gui.ProgramState;
+import gui.SMPFXController;
+import gui.StateMachine;
+import gui.Values;
+import gui.components.buttons.ImagePushButton;
+import gui.loaders.ImageLoader;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -7,15 +16,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
-import smp.ImageLoader;
-import smp.components.Values;
-import smp.components.general.ImagePushButton;
-import smp.components.staff.sequences.StaffArrangement;
-import smp.components.staff.sequences.StaffSequence;
-import smp.fx.Dialog;
-import smp.fx.SMPFXController;
-import smp.stateMachine.ProgramState;
-import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that creates a new song.

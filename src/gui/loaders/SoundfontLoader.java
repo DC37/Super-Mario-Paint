@@ -1,4 +1,4 @@
-package smp;
+package gui.loaders;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -16,15 +16,15 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
+import backend.songs.Accidental;
+import backend.songs.Note;
+import backend.sound.SMPSynthesizer;
+import gui.Dialog;
+import gui.InstrumentIndex;
+import gui.Settings;
+import gui.StateMachine;
+import gui.Values;
 import javafx.stage.Window;
-import smp.components.InstrumentIndex;
-import smp.components.Values;
-import smp.components.staff.sequences.Accidental;
-import smp.components.staff.sequences.Note;
-import smp.components.staff.sounds.SMPSynthesizer;
-import smp.fx.Dialog;
-import smp.stateMachine.Settings;
-import smp.stateMachine.StateMachine;
 
 /**
  * Loads the soundfonts that will be used to play sounds.

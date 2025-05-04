@@ -1,11 +1,11 @@
-package smp.commandmanager;
+package backend.editing;
 
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import smp.components.Values;
+import gui.Values;
 
 /**
  * A command manager responsible for recording commands, undoing, and redoing

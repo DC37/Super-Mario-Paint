@@ -1,4 +1,4 @@
-package smp.commandmanager;
+package backend.editing;
 
 public class ModifySongManager extends CommandManager {
 

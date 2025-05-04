@@ -1,4 +1,4 @@
-package smp.components.topPanel;
+package gui.components.toppanel;
 
 import java.util.ArrayList;
 
@@ -11,15 +11,15 @@ import javafx.scene.layout.HBox;
 
 import javax.sound.midi.MidiChannel;
 
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.SoundfontLoader;
-import smp.components.Values;
-import smp.components.InstrumentIndex;
-import smp.components.staff.Staff;
-import smp.components.staff.sequences.Note;
-import smp.stateMachine.Settings;
-import smp.stateMachine.StateMachine;
+import backend.songs.Note;
+import gui.InstrumentIndex;
+import gui.Settings;
+import gui.Staff;
+import gui.StateMachine;
+import gui.Values;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
+import gui.loaders.SoundfontLoader;
 
 /**
  * The line of buttons that appear for the Instrument Line at the top of the

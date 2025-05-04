@@ -1,6 +1,6 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
-import smp.ImageIndex;
+import gui.loaders.ImageIndex;
 
 /**
  * Every note alteration that we allow.

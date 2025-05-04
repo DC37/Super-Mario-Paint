@@ -1,11 +1,11 @@
-package smp.components.textfield;
+package gui.components;
 
+import gui.SMPFXController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import smp.fx.SMPFXController;
 
 /**
  * Use this to add several eventhandlers and a focus listener to the song name

@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 /**
  * This gives some note names to values that are used in

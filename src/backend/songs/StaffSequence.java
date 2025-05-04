@@ -1,11 +1,10 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import smp.components.Values;
-import smp.stateMachine.TimeSignature;
+import gui.Values;
 
 /**
  * We might not even need MIDI to do this sequencing stuff. This class keeps

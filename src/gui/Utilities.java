@@ -1,4 +1,4 @@
-package smp.components.general;
+package gui;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -26,18 +26,13 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import backend.saving.mpc.MPCDecoder;
+import backend.songs.StaffArrangement;
+import backend.songs.StaffNote;
+import backend.songs.StaffNoteLine;
+import backend.songs.StaffSequence;
 import javafx.concurrent.Task;
 import javafx.stage.Window;
-import smp.components.Values;
-import smp.components.staff.Staff;
-import smp.components.staff.sequences.StaffArrangement;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
-import smp.components.staff.sequences.mpc.MPCDecoder;
-import smp.fx.Dialog;
-import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
 
 /**
  * A somewhat useful utilities class for images and such. Not so much use right

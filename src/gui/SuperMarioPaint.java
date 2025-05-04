@@ -1,9 +1,14 @@
-package smp;
+package gui;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
+import backend.songs.Accidental;
+import gui.components.staff.StaffMouseEventHandler;
+import gui.loaders.ImageLoader;
+import gui.loaders.Loader;
+import gui.loaders.SoundfontLoader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader.ProgressNotification;
@@ -23,16 +28,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
-import smp.components.InstrumentIndex;
-import smp.components.Values;
-import smp.components.staff.StaffMouseEventHandler;
-import smp.components.staff.sequences.Accidental;
-import smp.fx.Dialog;
-import smp.fx.SMPFXController;
-import smp.fx.SplashScreen;
-import smp.stateMachine.ProgramState;
-import smp.stateMachine.Settings;
-import smp.stateMachine.StateMachine;
 
 /**
  * Super Mario Paint <br>

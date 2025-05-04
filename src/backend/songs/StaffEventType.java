@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 /**
  * Keeps track of the different types of staff events.

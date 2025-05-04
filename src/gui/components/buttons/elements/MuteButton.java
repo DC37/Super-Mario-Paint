@@ -1,15 +1,15 @@
-package smp.components.buttons;
+package gui.components.buttons.elements;
 
+import gui.SMPFXController;
+import gui.StateMachine;
+import gui.components.buttons.ImageToggleButton;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.components.general.ImageToggleButton;
-import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
 
 /**
  * This is the button that, when pressed, toggles whether you are placing a mute

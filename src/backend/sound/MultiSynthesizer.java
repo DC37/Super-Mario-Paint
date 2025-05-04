@@ -1,4 +1,4 @@
-package smp.components.staff.sounds;
+package backend.sound;
 
 import java.util.ArrayList;
 import java.util.Collections;

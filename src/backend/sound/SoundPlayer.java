@@ -1,15 +1,16 @@
-package smp.components.staff;
+package backend.sound;
 
 import java.util.ArrayList;
 
+import backend.songs.Accidental;
+import backend.songs.StaffNote;
+import backend.songs.StaffNoteLine;
+import gui.InstrumentIndex;
+import gui.Staff;
+import gui.StateMachine;
+import gui.Values;
+import gui.loaders.SoundfontLoader;
 import javafx.beans.property.DoubleProperty;
-import smp.SoundfontLoader;
-import smp.components.InstrumentIndex;
-import smp.components.Values;
-import smp.components.staff.sequences.Accidental;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.stateMachine.StateMachine;
 
 /**
  *

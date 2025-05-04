@@ -1,4 +1,4 @@
-package smp;
+package gui.loaders;
 
 /**
  * Index values for the Hashtable in the ImageLoader class.

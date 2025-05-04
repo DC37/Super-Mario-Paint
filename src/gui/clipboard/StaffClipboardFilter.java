@@ -1,9 +1,12 @@
-package smp.components.staff.clipboard;
+package gui.clipboard;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import gui.InstrumentIndex;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,9 +24,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.components.InstrumentIndex;
 
 public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 

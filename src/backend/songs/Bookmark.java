@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 /**
  * A Bookmark that is placed at some location on the staff, like in

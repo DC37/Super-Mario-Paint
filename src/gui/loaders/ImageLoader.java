@@ -1,10 +1,10 @@
-package smp;
+package gui.loaders;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import smp.stateMachine.Settings;
+import gui.Settings;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 

@@ -1,13 +1,13 @@
-package smp.components.staff.sequences.ams;
+package backend.saving.ams;
 
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import smp.components.staff.sequences.Bookmark;
-import smp.components.staff.sequences.Speedmark;
-import smp.components.staff.sequences.StaffSequence;
-import smp.components.staff.sounds.SMPSoundfont;
+import backend.songs.Bookmark;
+import backend.songs.Speedmark;
+import backend.songs.StaffSequence;
+import backend.sound.SMPSoundfont;
 
 /**
  * A class for decoding Advanced Mario Sequencer songs.

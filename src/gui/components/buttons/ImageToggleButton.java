@@ -1,7 +1,7 @@
-package smp.components.general;
+package gui.components.buttons;
 
-import smp.ImageLoader;
-import smp.fx.SMPFXController;
+import gui.SMPFXController;
+import gui.loaders.ImageLoader;
 import javafx.scene.image.ImageView;
 
 /**

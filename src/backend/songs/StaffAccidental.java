@@ -1,8 +1,8 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
+import gui.loaders.ImageLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import smp.ImageLoader;
 
 
 /**

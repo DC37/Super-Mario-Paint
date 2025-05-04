@@ -1,11 +1,11 @@
-package smp.fx;
+package gui;
 
 import javafx.stage.Stage;
 
 /**
  * A stage that returns a value when closed.
  * 
- * Used for the different implementations of {@link smp.fx.Dialog}.
+ * Used for the different implementations of {@link gui.Dialog}.
  * 
  * @author rozlynd
  * @since 2024.09.26

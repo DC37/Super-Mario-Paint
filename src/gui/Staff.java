@@ -1,4 +1,4 @@
-package smp.components.staff;
+package gui;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,24 +10,21 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
+import backend.saving.mpc.MPCDecoder;
+import backend.songs.StaffArrangement;
+import backend.songs.StaffEvent;
+import backend.songs.StaffNoteLine;
+import backend.songs.StaffSequence;
+import backend.songs.TimeSignature;
+import backend.sound.SoundPlayer;
+import gui.components.Controls;
+import gui.components.staff.StaffDisplayManager;
+import gui.components.toppanel.PanelButtons;
+import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
-import smp.SoundfontLoader;
-import smp.components.InstrumentIndex;
-import smp.components.Values;
-import smp.components.controls.Controls;
-import smp.components.general.Utilities;
-import smp.components.staff.sequences.StaffArrangement;
-import smp.components.staff.sequences.StaffEvent;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
-import smp.components.staff.sequences.mpc.MPCDecoder;
-import smp.components.topPanel.PanelButtons;
-import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
-import smp.stateMachine.TimeSignature;
 
 /**
  * The staff on which notes go. The staff keeps track of notes in terms of

@@ -1,8 +1,13 @@
-package smp.components.staff.clipboard;
+package gui.clipboard;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
+import backend.songs.StaffNoteLine;
+import gui.SMPFXController;
+import gui.Staff;
+import gui.Values;
+import gui.loaders.ImageLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -19,11 +24,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import smp.ImageLoader;
-import smp.components.Values;
-import smp.components.staff.Staff;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.fx.SMPFXController;
 
 public class StaffClipboard {
 

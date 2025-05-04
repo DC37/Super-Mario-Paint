@@ -1,7 +1,7 @@
-package smp.commandmanager.commands;
+package backend.editing.commands;
 
-import smp.commandmanager.CommandInterface;
-import smp.components.staff.sequences.StaffNoteLine;
+import backend.editing.CommandInterface;
+import backend.songs.StaffNoteLine;
 
 public class RemoveVolumeCommand implements CommandInterface {
 

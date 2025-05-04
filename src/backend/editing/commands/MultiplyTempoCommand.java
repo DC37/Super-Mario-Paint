@@ -1,10 +1,10 @@
-package smp.commandmanager.commands;
+package backend.editing.commands;
 
-import smp.commandmanager.CommandInterface;
-import smp.components.staff.Staff;
-import smp.components.staff.sequences.StaffSequence;
-import smp.stateMachine.StateMachine;
-import smp.stateMachine.TimeSignature;
+import backend.editing.CommandInterface;
+import backend.songs.StaffSequence;
+import backend.songs.TimeSignature;
+import gui.Staff;
+import gui.StateMachine;
 
 public class MultiplyTempoCommand implements CommandInterface {
 

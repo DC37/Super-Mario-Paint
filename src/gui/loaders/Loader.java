@@ -1,4 +1,4 @@
-package smp;
+package gui.loaders;
 
 /**
  * A Thread loader that loads some component of

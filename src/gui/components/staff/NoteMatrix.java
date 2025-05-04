@@ -1,19 +1,19 @@
-package smp.components.staff;
+package gui.components.staff;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import backend.songs.Accidental;
+import backend.songs.StaffAccidental;
+import backend.songs.StaffNote;
+import backend.songs.StaffNoteLine;
+import backend.songs.StaffSequence;
+import gui.Values;
+import gui.loaders.ImageLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import smp.ImageLoader;
-import smp.components.Values;
-import smp.components.staff.sequences.Accidental;
-import smp.components.staff.sequences.StaffAccidental;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
 
 /**
  * This is the matrix of notes behind the staff. We can change the size of this

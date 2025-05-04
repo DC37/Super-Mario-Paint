@@ -1,14 +1,14 @@
-package smp.components.staff.clipboard;
+package gui.clipboard;
 
+import backend.songs.StaffNoteLine;
+import gui.SMPFXController;
+import gui.StateMachine;
+import gui.Values;
 import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import smp.components.Values;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
 
 /**
  * Event Handler for rubber band which follows mouse movements. Mouse moves and

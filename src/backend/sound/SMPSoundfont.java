@@ -1,4 +1,4 @@
-package smp.components.staff.sounds;
+package backend.sound;
 
 /**
  * A Super Mario Paint Soundfont.

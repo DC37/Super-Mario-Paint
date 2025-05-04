@@ -1,16 +1,16 @@
-package smp.components.buttons;
+package gui.components.buttons.elements;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import gui.SMPFXController;
+import gui.StateMachine;
+import gui.Values;
+import gui.components.buttons.ImagePushButton;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.components.Values;
-import smp.components.general.ImagePushButton;
-import smp.fx.SMPFXController;
-import smp.stateMachine.StateMachine;
 
 /**
  * This is a button that points left or right.

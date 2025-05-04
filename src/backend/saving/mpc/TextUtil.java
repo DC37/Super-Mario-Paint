@@ -1,11 +1,11 @@
-package smp.components.staff.sequences.mpc;
+package backend.saving.mpc;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import smp.components.Values;
-import smp.components.staff.sequences.Accidental;
+import backend.songs.Accidental;
+import gui.Values;
 
 /**
  * Pulled from MPCTxtTools; this should be useful in decoding Mario Paint

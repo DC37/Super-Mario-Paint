@@ -1,20 +1,20 @@
-package smp.components.staff.clipboard;
+package gui.clipboard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import smp.commandmanager.ModifySongManager;
-import smp.commandmanager.commands.AddNoteCommand;
-import smp.commandmanager.commands.AddVolumeCommand;
-import smp.commandmanager.commands.RemoveNoteCommand;
-import smp.commandmanager.commands.RemoveVolumeCommand;
-import smp.components.Values;
-import smp.components.staff.Staff;
-import smp.components.staff.StaffVolumeEventHandler;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.stateMachine.StateMachine;
+import backend.editing.ModifySongManager;
+import backend.editing.commands.AddNoteCommand;
+import backend.editing.commands.AddVolumeCommand;
+import backend.editing.commands.RemoveNoteCommand;
+import backend.editing.commands.RemoveVolumeCommand;
+import backend.songs.StaffNote;
+import backend.songs.StaffNoteLine;
+import gui.Staff;
+import gui.StateMachine;
+import gui.Values;
+import gui.components.staff.StaffVolumeEventHandler;
 
 /**
  * The API will contain functions for <code>StaffClipboard</code>. These include

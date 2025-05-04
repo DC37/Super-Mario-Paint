@@ -1,11 +1,11 @@
-package smp.components.staff.sounds;
+package backend.sound;
 
 import java.util.ArrayList;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
-import smp.components.Values;
+import gui.Values;
 
 /**
  * The Mario Paint Synthesizer class. Holds multiple SoftSynthesizers

@@ -1,12 +1,12 @@
-package smp.components.staff;
+package gui.components.staff;
 
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.commandmanager.ModifySongManager;
-import smp.commandmanager.commands.AddVolumeCommand;
-import smp.commandmanager.commands.RemoveVolumeCommand;
-import smp.components.Values;
-import smp.components.staff.sequences.StaffNoteLine;
+import backend.editing.ModifySongManager;
+import backend.editing.commands.AddVolumeCommand;
+import backend.editing.commands.RemoveVolumeCommand;
+import backend.songs.StaffNoteLine;
+import gui.Values;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;

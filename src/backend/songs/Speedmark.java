@@ -1,6 +1,6 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
-import smp.components.staff.Staff;
+import gui.Staff;
 
 /**
  * A marker that changes the speed of the Super Mario

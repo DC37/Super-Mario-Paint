@@ -1,13 +1,13 @@
-package smp.components.buttons;
+package gui.components.buttons.elements;
 
+import gui.ProgramState;
+import gui.SMPFXController;
+import gui.StateMachine;
+import gui.components.buttons.ImageRadioButton;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.components.general.ImageRadioButton;
-import smp.fx.SMPFXController;
-import smp.stateMachine.ProgramState;
-import smp.stateMachine.StateMachine;
 
 /**
  * Wrapper class for an ImageView that holds the stop button image. Pressing the

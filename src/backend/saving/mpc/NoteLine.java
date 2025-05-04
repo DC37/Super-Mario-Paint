@@ -1,4 +1,4 @@
-package smp.components.staff.sequences.mpc;
+package backend.saving.mpc;
 
 import java.text.ParseException;
 import java.util.ArrayList;

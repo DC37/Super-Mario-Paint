@@ -1,9 +1,9 @@
-package smp.components.topPanel;
+package gui.components.toppanel;
 
-import smp.ImageLoader;
-import smp.components.buttons.ModeButton;
-import smp.components.staff.Staff;
-import smp.fx.SMPFXController;
+import gui.SMPFXController;
+import gui.Staff;
+import gui.components.buttons.elements.ModeButton;
+import gui.loaders.ImageLoader;
 
 /**
  * Panel buttons that are on the top panel.

@@ -1,5 +1,7 @@
-package smp.components.staff.clipboard;
+package gui.clipboard;
 
+import gui.StateMachine;
+import gui.Values;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
@@ -7,8 +9,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import smp.components.Values;
-import smp.stateMachine.StateMachine;
 
 /**
  * The rubber band is just a rectangle that gets resized by the mouse. It is a

@@ -1,4 +1,4 @@
-package smp.stateMachine;
+package backend.songs;
 
 import java.util.Arrays;
 

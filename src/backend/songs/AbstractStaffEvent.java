@@ -1,6 +1,6 @@
-package smp.components.staff.sequences;
-import smp.components.staff.Staff;
-import smp.stateMachine.Settings;
+package backend.songs;
+import gui.Settings;
+import gui.Staff;
 
 /**
  * An event on the Super Mario Paint staff.

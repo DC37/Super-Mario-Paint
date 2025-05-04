@@ -1,10 +1,11 @@
-package smp.stateMachine;
+package gui;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import backend.songs.TimeSignature;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -14,7 +15,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.KeyCode;
-import smp.components.Values;
 
 /**
  * This is the state machine that keeps track of what state the main window is

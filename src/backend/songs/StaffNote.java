@@ -1,17 +1,17 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 import java.io.Serializable;
 import java.text.ParseException;
 
+import gui.InstrumentIndex;
+import gui.Values;
+import gui.clipboard.StaffClipboard;
+import gui.loaders.ImageLoader;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import smp.ImageLoader;
-import smp.components.InstrumentIndex;
-import smp.components.Values;
-import smp.components.staff.clipboard.StaffClipboard;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.

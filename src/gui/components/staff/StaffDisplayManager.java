@@ -1,8 +1,17 @@
-package smp.components.staff;
+package gui.components.staff;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import backend.editing.ModifySongManager;
+import backend.songs.Accidental;
+import backend.songs.StaffNote;
+import backend.songs.StaffNoteLine;
+import backend.songs.StaffSequence;
+import gui.Staff;
+import gui.Values;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -10,14 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.commandmanager.ModifySongManager;
-import smp.components.Values;
-import smp.components.staff.sequences.Accidental;
-import smp.components.staff.sequences.StaffNote;
-import smp.components.staff.sequences.StaffNoteLine;
-import smp.components.staff.sequences.StaffSequence;
 
 /**
  * This class manages the nodes on the staff.  It provides methods for updating

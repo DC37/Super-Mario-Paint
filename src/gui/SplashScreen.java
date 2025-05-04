@@ -1,6 +1,4 @@
-package smp.fx;
-
-import smp.stateMachine.Settings;
+package gui;
 
 import javafx.application.Preloader;
 import javafx.scene.Scene;

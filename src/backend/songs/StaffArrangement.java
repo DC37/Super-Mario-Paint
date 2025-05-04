@@ -1,4 +1,4 @@
-package smp.components.staff.sequences;
+package backend.songs;
 
 import java.io.File;
 import java.io.Serializable;

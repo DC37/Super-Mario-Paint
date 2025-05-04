@@ -1,8 +1,8 @@
-package smp.components.general;
+package gui.components.buttons;
 
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.fx.SMPFXController;
+import gui.SMPFXController;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 

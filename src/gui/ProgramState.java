@@ -1,4 +1,4 @@
-package smp.stateMachine;
+package gui;
 
 /**
  * This class defines the states that the

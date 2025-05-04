@@ -1,6 +1,6 @@
-package smp.components.staff.sequences.mpc;
+package backend.saving.mpc;
 
-import smp.components.InstrumentIndex;
+import gui.InstrumentIndex;
 
 /**
  * Links an <code>InstrumentIndex</code> to a character that

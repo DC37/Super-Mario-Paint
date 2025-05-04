@@ -1,8 +1,32 @@
-package smp.components.controls;
+package gui.components;
 
 import java.io.File;
 import java.util.ArrayList;
 
+import backend.songs.StaffSequence;
+import gui.Dialog;
+import gui.ProgramState;
+import gui.SMPFXController;
+import gui.Staff;
+import gui.StateMachine;
+import gui.Utilities;
+import gui.components.buttons.elements.AddButton;
+import gui.components.buttons.elements.ArrowButton;
+import gui.components.buttons.elements.ClipboardButton;
+import gui.components.buttons.elements.DeleteButton;
+import gui.components.buttons.elements.LoadButton;
+import gui.components.buttons.elements.LoopButton;
+import gui.components.buttons.elements.MoveButton;
+import gui.components.buttons.elements.MuteButton;
+import gui.components.buttons.elements.MuteInstButton;
+import gui.components.buttons.elements.NewButton;
+import gui.components.buttons.elements.OptionsButton;
+import gui.components.buttons.elements.PlayButton;
+import gui.components.buttons.elements.SaveButton;
+import gui.components.buttons.elements.StopButton;
+import gui.components.buttons.elements.TempoAdjustButton;
+import gui.loaders.ImageIndex;
+import gui.loaders.ImageLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -11,30 +35,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
-import smp.ImageIndex;
-import smp.ImageLoader;
-import smp.components.buttons.AddButton;
-import smp.components.buttons.ArrowButton;
-import smp.components.buttons.ClipboardButton;
-import smp.components.buttons.DeleteButton;
-import smp.components.buttons.LoadButton;
-import smp.components.buttons.LoopButton;
-import smp.components.buttons.MoveButton;
-import smp.components.buttons.MuteButton;
-import smp.components.buttons.MuteInstButton;
-import smp.components.buttons.NewButton;
-import smp.components.buttons.OptionsButton;
-import smp.components.buttons.PlayButton;
-import smp.components.buttons.SaveButton;
-import smp.components.buttons.StopButton;
-import smp.components.buttons.TempoAdjustButton;
-import smp.components.general.Utilities;
-import smp.components.staff.Staff;
-import smp.components.staff.sequences.StaffSequence;
-import smp.fx.Dialog;
-import smp.fx.SMPFXController;
-import smp.stateMachine.ProgramState;
-import smp.stateMachine.StateMachine;
 
 /**
  * These are the control buttons for the program.

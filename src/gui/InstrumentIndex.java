@@ -1,6 +1,6 @@
-package smp.components;
+package gui;
 
-import smp.ImageIndex;
+import gui.loaders.ImageIndex;
 
 /**
  * An enum that keeps track of the different instrument types that one can

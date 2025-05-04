@@ -1,4 +1,4 @@
-package smp.stateMachine;
+package gui;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
