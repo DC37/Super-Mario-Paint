@@ -77,7 +77,6 @@ public class ImageLoader implements Loader {
             if (f2.exists()) {
                 cursors.add(new ImageCursor(
                         new Image(f2.toURI().toString()), 0, 0));
-                int j = Settings.debug & 0b01;
                 if ((Settings.debug & 0b01) != 0)
                     System.out.println(
                             "Loaded Cursor: " + s);

@@ -10,7 +10,6 @@ import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
 import gui.loaders.SoundfontLoader;
-import javafx.beans.property.DoubleProperty;
 
 /**
  *

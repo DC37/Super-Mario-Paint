@@ -10,7 +10,6 @@ import gui.Values;
 import gui.components.buttons.ImagePushButton;
 import gui.loaders.ImageLoader;
 import javafx.application.Platform;
-import javafx.beans.property.StringProperty;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 

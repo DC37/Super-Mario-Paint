@@ -135,11 +135,13 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     }
     
     /** Called whenever the mouse is dragged. */
+    @SuppressWarnings({ "unused" })
     private void mouseDragStart() {
     	
     }
 
     /** Called whenever we finish dragging the mouse. */
+    @SuppressWarnings({ "unused" })
     private void mouseDragEnd() {
 
     }

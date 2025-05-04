@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.Dialog;
