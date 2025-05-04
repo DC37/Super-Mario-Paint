@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import smp.ImageLoader;
 import smp.components.InstrumentIndex;
 import smp.components.Values;
-import smp.presenters.api.clipboard.StaffClipboard;
+import smp.components.staff.clipboard.StaffClipboard;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.
