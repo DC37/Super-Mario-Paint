@@ -102,39 +102,34 @@ public class SuperMarioPaint extends Application {
      * The controller class for the FXML.
      */
     private SMPFXController controller = new SMPFXController();
+    
+    private Task<Void> preloaderTask;
 
     /**
      * This should hopefully get something up on the screen quickly. This is
      * taken from http://docs.oracle.com/javafx/2/deployment/preloaders.htm
      */
-    private Task<Void> longStart() {
-
+    private void longStart() throws Exception {
         // long init in background
-        return new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                sfLd.start();
-                imgLd.start();
-                do {
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    double imgStatus = imgLoader.getLoadStatus();
-                    double sfStatus = sfLoader.getLoadStatus();
-                    double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS
-                            * 0.5;
-                    notifyPreloader(new ProgressNotification(ld));
-                } while (imgLd.isAlive() || sfLd.isAlive());
-                FXMLLoader loader = new FXMLLoader();
-                loader.setController(controller);
-                loader.setLocation(new File(mainFxml).toURI().toURL());
-                root = (Parent) loader.load();
-                notifyPreloader(new ProgressNotification(0.75));
-                return null;
+        sfLd.start();
+        imgLd.start();
+        do {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
+            double imgStatus = imgLoader.getLoadStatus();
+            double sfStatus = sfLoader.getLoadStatus();
+            double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS
+                    * 0.5;
+            notifyPreloader(new ProgressNotification(ld));
+        } while (imgLd.isAlive() || sfLd.isAlive());
+        FXMLLoader loader = new FXMLLoader();
+        loader.setController(controller);
+        loader.setLocation(new File(mainFxml).toURI().toURL());
+        root = (Parent) loader.load();
+        notifyPreloader(new ProgressNotification(0.75));
     }
     
     private void doStart() {
@@ -209,12 +204,33 @@ public class SuperMarioPaint extends Application {
      *            Super Mario Paint.
      */
     @Override
-    public void start(Stage ps) {
+    public void start(@SuppressWarnings("exports") Stage ps) {
         primaryStage = ps;
 
-        Task<Void> task = longStart();
-        task.setOnSucceeded(event -> doStart());
-        new Thread(task).start();
+        preloaderTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                longStart();
+                return null;
+            }
+        };
+        
+        preloaderTask.setOnSucceeded(event -> doStart());
+        preloaderTask.setOnFailed(event -> manageLoadFailure());
+        new Thread(preloaderTask).start();
+    }
+
+    private void manageLoadFailure() {
+        System.err.println("An error has occured while loading the program");
+        
+        if (preloaderTask == null) {
+            return;
+        }
+        
+        Throwable e = preloaderTask.getException();
+        if (e != null) {
+            e.printStackTrace();
+        }
     }
 
     /**
