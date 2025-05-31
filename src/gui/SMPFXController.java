@@ -102,6 +102,18 @@ public class SMPFXController {
     @FXML
     private ImageView muteA;
     
+    /** The "4/4" timesig button. */
+    @FXML
+    private ImageView timesig_4_4;
+
+    /** The "3/4" timesig button. */
+    @FXML
+    private ImageView timesig_3_4;
+
+    /** The custom timesig button. */
+    @FXML
+    private ImageView timesig_custom;
+    
     /** The clipboard selection button. */
     @FXML
     private ImageView clipboardButton;

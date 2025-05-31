@@ -1413,7 +1413,7 @@
                                                       <Insets left="4.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox alignment="CENTER" prefHeight="88.0" prefWidth="128.0">
+                                                <HBox alignment="CENTER" prefHeight="88.0" prefWidth="128.0" spacing="8">
                                                    <children>
                                                       <ImageView fx:id="clipboardLabel" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -1425,11 +1425,26 @@
                                                             <Image url="@sprites/CLIPBOARD_RELEASED.png" />
                                                          </image>
                                                       </ImageView>
+                                                      <ImageView fx:id="timesig_4_4" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image preserveRatio="false" smooth="false" url="@sprites/TIMESIG_4_4_RELEASED.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView fx:id="timesig_3_4" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image preserveRatio="false" smooth="false" url="@sprites/TIMESIG_3_4_RELEASED.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <ImageView fx:id="timesig_custom" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image preserveRatio="false" smooth="false" url="@sprites/TIMESIG_CUSTOM_RELEASED.png" />
+                                                         </image>
+                                                      </ImageView>
                                                    </children>
                                                    <padding>
-                                                      <Insets left="4.0" />
+                                                      <Insets left="4.0" right="4.0"/>
                                                    </padding>
-                                                </VBox>
+                                                </HBox>
                                 <VBox id="VBox" alignment="CENTER" prefHeight="88.0" prefWidth="104.0">
                                   <children>
                                                       <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
