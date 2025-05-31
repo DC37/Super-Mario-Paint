@@ -1,10 +1,12 @@
 package gui;
 
 import backend.editing.ModifySongManager;
+import backend.songs.TimeSignature;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.Controls;
 import gui.components.SongNameController;
+import gui.components.buttons.ImageRadioButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.components.toppanel.ButtonLine;
@@ -16,15 +18,18 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -335,6 +340,74 @@ public class SMPFXController {
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
+        
+        // Set up time signature buttons
+        ImageRadioButton timesig_4_4_button = new ImageRadioButton(timesig_4_4, this, il) {
+        	{
+        		getImages(ImageIndex.TIMESIG_4_4_PRESSED, ImageIndex.TIMESIG_4_4_RELEASED);
+        	}
+        	
+        	@Override
+        	public void reactPressed(MouseEvent e) {
+        		if (isPressed) {
+        			isPressed = false;
+        			releaseImage();
+        			return;
+        		}
+        		
+        		super.reactPressed(e);
+        		staff.setTimeSignature(TimeSignature.FOUR_FOUR);
+        	}
+        };
+        
+        ImageRadioButton timesig_3_4_button = new ImageRadioButton(timesig_3_4, this, il) {
+        	{
+        		getImages(ImageIndex.TIMESIG_3_4_PRESSED, ImageIndex.TIMESIG_3_4_RELEASED);
+        	}
+        	
+        	@Override
+        	public void reactPressed(MouseEvent e) {
+        		if (isPressed) {
+        			isPressed = false;
+        			releaseImage();
+        			return;
+        		}
+        		
+        		super.reactPressed(e);
+        		staff.setTimeSignature(TimeSignature.THREE_FOUR);
+        	}
+        };
+        
+        ImageRadioButton timesig_custom_button = new ImageRadioButton(timesig_custom, this, il) {
+        	{
+        		getImages(ImageIndex.TIMESIG_CUSTOM_PRESSED, ImageIndex.TIMESIG_CUSTOM_RELEASED);
+        	}
+        	
+        	@Override
+        	public void reactPressed(MouseEvent e) {
+        		if (isPressed) {
+        			isPressed = false;
+        			releaseImage();
+        			return;
+        		}
+        		
+        		super.reactPressed(e);
+        		Window owner = ((Node) e.getSource()).getScene().getWindow();
+        		String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
+        		try {
+        			staff.setTimeSignature(TimeSignature.valueOf(str));
+        		} catch (IllegalArgumentException ee) {
+        			return;
+        		}
+        	}
+        };
+        
+        timesig_4_4_button.link(timesig_3_4_button);
+        timesig_4_4_button.link(timesig_custom_button);
+        timesig_3_4_button.link(timesig_4_4_button);
+        timesig_3_4_button.link(timesig_custom_button);
+        timesig_custom_button.link(timesig_4_4_button);
+        timesig_custom_button.link(timesig_3_4_button);
         
         // HACK
         staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);

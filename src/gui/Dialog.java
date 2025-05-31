@@ -137,19 +137,26 @@ public class Dialog {
     public static boolean showYesNoDialog(String txt) {
         return showYesNoDialog(txt, null);
     }
+    
+    public static String showTextDialog(String txt, Window owner) {
+    	return showTextDialog(txt, null, owner);
+    }
 
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show a text dialog.
      * @param txt The text to show.
      */
-    public static String showTextDialog(String txt, Window owner) {
+    public static String showTextDialog(String txt, String prompt, Window owner) {
         final StageWithReturn<String> dialog = initDialogStage(owner);
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
         final TextField textfield = new TextField();
-        textfield.setPrefColumnCount(8); // rather small; this is only for tempo afaik
+        textfield.setPrefColumnCount(12); // rather small; this is only for tempo afaik
+        if (prompt != null) {
+        	textfield.setPromptText(prompt);
+        }
         Button okButton = new Button("OK");
         Button cancelButton = new Button("Cancel");
 
@@ -179,6 +186,7 @@ public class Dialog {
         
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
+        okButton.requestFocus(); // little trick to always display prompt
         return dialog.showAndReturn();
     }
     
