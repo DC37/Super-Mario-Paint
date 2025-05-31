@@ -22,7 +22,6 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -356,9 +355,7 @@ public class SuperMarioPaint extends Application {
                                 break;
                     		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
                 				break;
-                    		if(ke.isControlDown() && ke.isShiftDown())
-                    			controller.getStaff().jumpToPrevious();
-                    		if((ke.isControlDown() && ke.getCode() != KeyCode.A) || ke.isShiftDown())
+                    		if(ke.isControlDown() || ke.isShiftDown())
                     			controller.getStaff().jumpToPrevious();
                     		break;
                     		
@@ -373,8 +370,6 @@ public class SuperMarioPaint extends Application {
                                 break;
                     		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
                     			break;
-                    		if(ke.isControlDown() && ke.isShiftDown())
-                    			controller.getStaff().jumpToNext();
                     		if(ke.isControlDown() || ke.isShiftDown())
                     			controller.getStaff().jumpToNext();
                     		break;
