@@ -11,6 +11,7 @@ import gui.loaders.Loader;
 import gui.loaders.SoundfontLoader;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.application.Preloader.ErrorNotification;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
 import javafx.beans.value.ChangeListener;
@@ -54,7 +55,7 @@ import javafx.stage.Stage;
  * @since 2012.08.16
  * @version 1.4.4
  */
-public class SuperMarioPaint extends Application {
+public class SuperMarioPaint extends Application  {
 
     /**
      * Location of the Main Window fxml file.
@@ -110,24 +111,27 @@ public class SuperMarioPaint extends Application {
      * taken from http://docs.oracle.com/javafx/2/deployment/preloaders.htm
      */
     private void longStart() throws Exception {
-        // long init in background
         sfLd.start();
         imgLd.start();
+        
         do {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();
             double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS
                     * 0.5;
             notifyPreloader(new ProgressNotification(ld));
         } while (imgLd.isAlive() || sfLd.isAlive());
+        
         FXMLLoader loader = new FXMLLoader();
         loader.setController(controller);
         loader.setLocation(new File(mainFxml).toURI().toURL());
+        
         root = (Parent) loader.load();
         notifyPreloader(new ProgressNotification(0.75));
     }
@@ -190,7 +194,7 @@ public class SuperMarioPaint extends Application {
     @Override
     public void init() {
         imgLd = new Thread(imgLoader);
-        sfLd = new Thread(sfLoader);
+        sfLd = new Thread(sfLoader);        
         controller.setImageLoader((ImageLoader) imgLoader);
         controller.setSoundfontLoader((SoundfontLoader) sfLoader);
     }
@@ -220,17 +224,12 @@ public class SuperMarioPaint extends Application {
         new Thread(preloaderTask).start();
     }
 
-    private void manageLoadFailure() {
-        System.err.println("An error has occured while loading the program");
-        
+    private void manageLoadFailure() {        
         if (preloaderTask == null) {
             return;
         }
         
-        Throwable e = preloaderTask.getException();
-        if (e != null) {
-            e.printStackTrace();
-        }
+        notifyPreloader(new ErrorNotification("Unknown", "Unknown", preloaderTask.getException()));
     }
 
     /**

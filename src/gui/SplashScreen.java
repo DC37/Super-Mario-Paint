@@ -95,9 +95,22 @@ public class SplashScreen extends Preloader {
                with progress ranging from 0 to 1.0 */
             double v = ((ProgressNotification) pn).getProgress();
             bar.setProgress(v);
+            
         } else if (pn instanceof StateChangeNotification) {
             /* hide after get any state update from application */
             stage.hide();
+            
+        } else if (pn instanceof ErrorNotification) {
+        	if (!handleErrorNotification((ErrorNotification)pn)) {
+        		stage.close();
+        	}
         }
+    }
+    
+    @Override
+    public boolean handleErrorNotification(ErrorNotification en) {
+    	Dialog.showDialog("Super Mario Paint has encountered the following error:\n" + en.getCause().getMessage());
+    	en.getCause().printStackTrace();
+    	return false;
     }
 }
