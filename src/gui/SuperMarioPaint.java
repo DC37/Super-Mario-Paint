@@ -208,7 +208,7 @@ public class SuperMarioPaint extends Application  {
      *            Super Mario Paint.
      */
     @Override
-    public void start(@SuppressWarnings("exports") Stage ps) {
+    public void start(Stage ps) {
         primaryStage = ps;
 
         preloaderTask = new Task<Void>() {
