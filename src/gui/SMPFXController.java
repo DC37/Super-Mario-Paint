@@ -107,24 +107,21 @@ public class SMPFXController {
     @FXML
     private ImageView muteA;
     
-    /** The "4/4" timesig button. */
-    @FXML
-    private ImageView timesig_4_4;
-
-    /** The "3/4" timesig button. */
-    @FXML
-    private ImageView timesig_3_4;
-
-    /** The custom timesig button. */
-    @FXML
-    private ImageView timesig_custom;
-    
     /** The clipboard selection button. */
     @FXML
     private ImageView clipboardButton;
     
     @FXML
     private ImageView clipboardLabel;
+    
+    @FXML
+    private ImageView timesig_4_4;
+    
+    @FXML
+    private ImageView timesig_3_4;
+    
+    @FXML
+    private ImageView timesig_custom;
 
     /** The arranger view piece that holds the list of songs. */
     @FXML
