@@ -361,8 +361,11 @@ public class SuperMarioPaint extends Application  {
                     	case A:
                             if (StateMachine.isPlaybackActive())
                                 break;
-                    		if(!ke.isControlDown() && !ke.isShiftDown())
+                    		if (!ke.isControlDown() && !ke.isShiftDown())
                     			controller.getStaff().moveLeft();
+                    		if (ke.isShiftDown())
+                    			controller.getStaff().jumpToNext();
+                    		break;
                     		
                     	// @since v1.1.2, requested by seymour
                     	case LEFT:
@@ -370,15 +373,18 @@ public class SuperMarioPaint extends Application  {
                                 break;
                     		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
                 				break;
-                    		if(ke.isControlDown() || ke.isShiftDown())
+                    		if (ke.isControlDown() || ke.isShiftDown())
                     			controller.getStaff().jumpToPrevious();
                     		break;
                     		
                     	case D:
                             if (StateMachine.isPlaybackActive())
                                 break;
-                    		if(!ke.isControlDown() && !ke.isShiftDown())
+                    		if (!ke.isControlDown() && !ke.isShiftDown())
                     			controller.getStaff().moveRight();
+                    		if (ke.isControlDown() || ke.isShiftDown())
+                    			controller.getStaff().jumpToNext();
+                    		break;
 
                     	case RIGHT:
                             if (StateMachine.isPlaybackActive())
@@ -502,7 +508,6 @@ public class SuperMarioPaint extends Application  {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 	}
     
     /**
