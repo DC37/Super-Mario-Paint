@@ -144,9 +144,7 @@ public class SuperMarioPaint extends Application  {
                 event.consume(); // Keep the window from closing
             });
             primaryStage.setResizable(false);
-            primaryStage.setWidth(Values.DEFAULT_WIDTH);
-            primaryStage.setHeight(Values.DEFAULT_HEIGHT);
-            primaryScene = new Scene(root, 1032, 768);
+            primaryScene = new Scene(root);
             primaryStage.setScene(primaryScene);
             makeMouseEventHandlers();
             makeKeyboardListeners();

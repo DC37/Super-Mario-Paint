@@ -13,7 +13,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
-<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1124.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b4b4b4" height="774.0" stroke="BLACK" strokeType="INSIDE" width="1026.0" />
     <BorderPane id="MainLayout" fx:id="mainLayout" blendMode="SRC_OVER" layoutX="2.0" layoutY="2.0" prefHeight="766.0" prefWidth="1022.0">
@@ -1759,14 +1759,5 @@
         </Pane>
       </top>
     </BorderPane>
-    <Pane layoutX="1024.0" layoutY="2.0" prefHeight="598.0" prefWidth="100.0">
-      <children>
-        <Button fx:id="secretButton" focusTraversable="false" layoutX="4.0" layoutY="289.0" mnemonicParsing="false" text="Secret Button">
-          <font>
-            <Font size="12.0" />
-          </font>
-        </Button>
-      </children>
-    </Pane>
   </children>
 </AnchorPane>

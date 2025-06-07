@@ -20,12 +20,6 @@ public class Values {
     /** The number of instruments. */
     public static int NUMINSTRUMENTS = 31;
 
-    /** Default width */
-    public static final int DEFAULT_WIDTH = 1032;
-
-    /** Default height */
-    public static final int DEFAULT_HEIGHT = 803;
-
     /**
      * The largest value that a note velocity can be; a note played at this will
      * be played as loudly as possible.
