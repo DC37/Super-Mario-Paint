@@ -63,6 +63,9 @@ public class Values {
     /** Location of the high A note. */
     public static int highA = 26;
 
+    /** Location of the middle C note. */
+    public static int middleC = 14;
+
     /** Location of the low C note. */
     public static int lowC = 2;
 
