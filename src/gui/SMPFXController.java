@@ -200,6 +200,13 @@ public class SMPFXController {
 
     /**
      * Lines that appear when a note is placed below the standard staff lines.
+     * Middle C lines.
+     */
+    @FXML
+    private HBox staffExtLinesMiddleC;
+
+    /**
+     * Lines that appear when a note is placed below the standard staff lines.
      * Low C lines.
      */
     @FXML
@@ -330,7 +337,7 @@ public class SMPFXController {
         });
         
         // Set up staff.
-        HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA,
+        HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA, staffExtLinesMiddleC,
                 staffExtLinesLowC, staffExtLinesLowA };
         StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, commandManager);
         staff = new Staff(this, displayManager, arrangementList);

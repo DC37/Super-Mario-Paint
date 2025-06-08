@@ -62,6 +62,9 @@ public class StaffDisplayManager {
     /** The ledger lines at the high A of the staff. */
     private ArrayList<Node> highA;
 
+    /** The ledger lines at the middle C of the staff. */
+    private ArrayList<Node> middleC;
+
     /** The ledger lines at the low C of the staff. */
     private ArrayList<Node> lowC;
 
@@ -221,12 +224,14 @@ public class StaffDisplayManager {
     private void initializeStaffLedgerLines() {
         highC = new ArrayList<Node>();
         highA = new ArrayList<Node>();
+        middleC = new ArrayList<Node>();
         lowC = new ArrayList<Node>();
         lowA = new ArrayList<Node>();
         highC.addAll(staffLedgerLines[0].getChildren());
         highA.addAll(staffLedgerLines[1].getChildren());
-        lowC.addAll(staffLedgerLines[2].getChildren());
-        lowA.addAll(staffLedgerLines[3].getChildren());
+        middleC.addAll(staffLedgerLines[2].getChildren());
+        lowC.addAll(staffLedgerLines[3].getChildren());
+        lowA.addAll(staffLedgerLines[4].getChildren());
     }
     
     public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
@@ -235,12 +240,16 @@ public class StaffDisplayManager {
 
             int high = 0;
             int low = Values.NOTES_IN_A_LINE;
+            boolean middleCPresent = false;
             for (StaffNote n : stl.getNotes()) {
                 int nt = n.getPosition();
                 if (nt >= high)
                     high = nt;
                 if (nt <= low)
                     low = nt;
+                if (nt == Values.middleC) {
+                    middleCPresent = true;
+                }
             }
             
             if (high >= Values.highC) {
@@ -263,6 +272,12 @@ public class StaffDisplayManager {
             } else {
                 lowC.get(i).setVisible(false);
                 lowA.get(i).setVisible(false);
+            }
+
+            if (middleCPresent) {
+                middleC.get(i).setVisible(true);
+            } else{
+                middleC.get(i).setVisible(false);
             }
         }
     }
