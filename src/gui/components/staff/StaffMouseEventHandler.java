@@ -259,6 +259,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);
             commandManager.execute(new RemoveVolumeCommand(temp, temp.getVolume()));
+            temp.setVolume(Values.DEFAULT_VELOCITY);
         }
         theStaff.redraw();
     }
