@@ -9,7 +9,6 @@ import gui.StateMachine;
 import gui.Values;
 import gui.components.buttons.ImagePushButton;
 import gui.loaders.ImageLoader;
-import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -41,8 +40,6 @@ public class TempoAdjustButton extends ImagePushButton {
      */
     public TempoAdjustButton(ImageView i, SMPFXController ct, ImageLoader im) {
         super(i, ct, im);
-        t = new Timer();
-
     }
 
     /**
@@ -65,38 +62,18 @@ public class TempoAdjustButton extends ImagePushButton {
         ProgramState curr = StateMachine.getState();
         if (curr == ProgramState.EDITING) {
             setPressed();
-            addTempo(1);
+            theStaff.addTempo(1, isPositive);
             TimerTask tt = new clickHold();
+            t = new Timer();
             t.schedule(tt, Values.HOLDTIME, Values.REPEATTIME);
         }
     }
 
     @Override
     protected void reactReleased(MouseEvent event) {
-        t.cancel();
-        t = new Timer();
+        if (t != null)
+            t.cancel();
         resetPressed();
-    }
-
-    /**
-     * Makes it such that the application thread changes the tempo of the song.
-     *
-     * @param add
-     *            The amount of tempo that you want to add. Usually an integer.
-     */
-    private void addTempo(final double add) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                double ch = 0;
-                if (isPositive)
-                    ch = add;
-                else
-                    ch = -add;
-                double tempo = StateMachine.getTempo() + ch;
-                StateMachine.setTempo(tempo);
-            }
-        });
     }
 
     /**
@@ -109,7 +86,7 @@ public class TempoAdjustButton extends ImagePushButton {
 
         @Override
         public void run() {
-            addTempo(1);
+            theStaff.addTempo(1, isPositive);
         }
 
     }

@@ -161,6 +161,8 @@ public class Controls {
 	private void initializeTempoButtons() {
 		TempoAdjustButton plus = new TempoAdjustButton(controller.getTempoPlus(), controller, il);
 		TempoAdjustButton minus = new TempoAdjustButton(controller.getTempoMinus(), controller, il);
+		plus.setStaff(theStaff);
+		minus.setStaff(theStaff);
 		plus.setPositive(true);
 		minus.setPositive(false);
 		StackPane tBox = controller.getTempoBox();
