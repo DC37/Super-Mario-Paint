@@ -1,8 +1,6 @@
 package gui.components.buttons.elements;
 
-import gui.ProgramState;
 import gui.SMPFXController;
-import gui.StateMachine;
 import gui.components.buttons.ImageRadioButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
@@ -40,13 +38,7 @@ public class PlayButton extends ImageRadioButton {
         if (isPressed)
             return;
         super.reactPressed(e);
-        if (StateMachine.getState() == ProgramState.EDITING) {
-            StateMachine.setState(ProgramState.SONG_PLAYING);
-            theStaff.startSong();
-        } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
-            StateMachine.setState(ProgramState.ARR_PLAYING);
-            theStaff.startArrangement();
-        }
+        theStaff.play();
     }
 
 }

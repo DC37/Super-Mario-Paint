@@ -566,6 +566,16 @@ public class Staff {
         }
     }
     
+    public void play() {
+        if (StateMachine.getState() == ProgramState.EDITING) {
+            StateMachine.setState(ProgramState.SONG_PLAYING);
+            startSong();
+        } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
+            StateMachine.setState(ProgramState.ARR_PLAYING);
+            startArrangement();
+        }
+    }
+    
 
     /**
      * This is a worker thread that helps run the animation on the staff.
