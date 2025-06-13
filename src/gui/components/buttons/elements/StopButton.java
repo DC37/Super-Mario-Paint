@@ -1,8 +1,6 @@
 package gui.components.buttons.elements;
 
-import gui.ProgramState;
 import gui.SMPFXController;
-import gui.StateMachine;
 import gui.components.buttons.ImageRadioButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
@@ -44,13 +42,7 @@ public class StopButton extends ImageRadioButton {
         if (isPressed)
             return;
         super.reactPressed(e);
-        if (StateMachine.getState() == ProgramState.SONG_PLAYING) {
-            StateMachine.setState(ProgramState.EDITING);
-            theStaff.stopSong();
-        } else if (StateMachine.getState() == ProgramState.ARR_PLAYING) {
-            StateMachine.setState(ProgramState.ARR_EDITING);
-            theStaff.stopSong();
-        }
+        theStaff.stop();
     }
 
 
