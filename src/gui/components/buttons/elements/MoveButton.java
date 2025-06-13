@@ -1,15 +1,8 @@
 package gui.components.buttons.elements;
 
-import java.io.File;
-
-import backend.songs.StaffSequence;
-import gui.ProgramState;
 import gui.SMPFXController;
-import gui.Settings;
-import gui.StateMachine;
 import gui.components.buttons.ImagePushButton;
 import gui.loaders.ImageLoader;
-import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -42,30 +35,7 @@ public class MoveButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        ProgramState curr = StateMachine.getState();
-        if (curr != ProgramState.ARR_PLAYING) {
-            if ((Settings.debug & 0b100000) != 0)
-                System.out.println("Move song " + moveAmt);
-            ObservableList<String> l = theStaff.getArrangementList().getItems();
-            int x = theStaff.getArrangementList().getSelectionModel()
-                    .getSelectedIndex();
-            if (x != -1) {
-                StateMachine.setArrModified(true);
-                Object[] o = theStaff.getArrangement().remove(x);
-                String s = l.remove(x);
-                StaffSequence ss = (StaffSequence) o[0];
-                File f = (File) o[1];
-                int moveTo = x - moveAmt;
-                if (moveTo > l.size())
-                    moveTo = l.size();
-                if (moveTo < 0)
-                    moveTo = 0;
-                l.add(moveTo, s);
-                theStaff.getArrangement().add(moveTo, ss, f);
-                theStaff.getArrangementList().getSelectionModel()
-                        .select(moveTo);
-            }
-        }
+        theStaff.moveSongInArrangement(moveAmt);
     }
 
     @Override

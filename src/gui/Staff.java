@@ -537,6 +537,35 @@ public class Staff {
         }
     }
     
+    public void moveSongInArrangement(int moveAmt) {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.ARR_PLAYING)
+            return;
+
+        if ((Settings.debug & 0b100000) != 0)
+            System.out.println("Move song " + moveAmt);
+        
+        ObservableList<String> l = theArrangementList.getItems();
+        int x = theArrangementList.getSelectionModel()
+                .getSelectedIndex();
+        if (x != -1) {
+            StateMachine.setArrModified(true);
+            Object[] o = theArrangement.remove(x);
+            String s = l.remove(x);
+            StaffSequence ss = (StaffSequence) o[0];
+            File f = (File) o[1];
+            int moveTo = x - moveAmt;
+            if (moveTo > l.size())
+                moveTo = l.size();
+            if (moveTo < 0)
+                moveTo = 0;
+            l.add(moveTo, s);
+            theArrangement.add(moveTo, ss, f);
+            theArrangementList.getSelectionModel()
+            .select(moveTo);
+        }
+    }
+    
 
     /**
      * This is a worker thread that helps run the animation on the staff.
