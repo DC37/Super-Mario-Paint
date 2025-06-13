@@ -444,6 +444,21 @@ public class SMPFXController {
         });
         
     }
+    
+    public void switchMode() {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.ARR_PLAYING || curr == ProgramState.SONG_PLAYING)
+            return;
+
+        if (curr == ProgramState.EDITING) {
+            modeText.setText("Arr");
+            staff.setArrangerMode(true);
+
+        } else if (curr == ProgramState.ARR_EDITING) {
+            modeText.setText("Song");
+            staff.setArrangerMode(false);
+        }
+    }
 
     /**
      * @return The <code>Slider</code> that we will use to navigate the staff.

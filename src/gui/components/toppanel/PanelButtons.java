@@ -32,8 +32,7 @@ public class PanelButtons {
         il = im;
         theStaff = s;
         setController(ct);
-        mButton = new ModeButton(controller.getModeButton(),
-                controller.getModeText(), controller, il);
+        mButton = new ModeButton(controller.getModeButton(), controller, il);
         mButton.setStaff(theStaff);
         bl = b;
     }

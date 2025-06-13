@@ -348,7 +348,7 @@
                 <StackPane id="StackPane">
                   <children>
                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#efefef" height="32.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="60.0" />
-                    <Text id="Tempo" fx:id="modeText" font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" />
+                    <Text id="Tempo" fx:id="modeText" font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Song"/>
                   </children>
                 </StackPane>
               </children>
