@@ -1,9 +1,6 @@
 package gui.components.buttons.elements;
 
-import gui.ProgramState;
 import gui.SMPFXController;
-import gui.Settings;
-import gui.StateMachine;
 import gui.components.buttons.ImagePushButton;
 import gui.loaders.ImageLoader;
 import javafx.scene.image.ImageView;
@@ -34,20 +31,7 @@ public class AddButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        ProgramState curr = StateMachine.getState();
-        if (curr != ProgramState.ARR_PLAYING) {
-            if ((Settings.debug & 0b100000) != 0)
-                System.out.println("Add song");
-
-            if (theStaff.getSequenceFile() != null) {
-                StateMachine.setArrModified(true);
-                theStaff.getArrangementList().getItems()
-                        .add(theStaff.getSequenceName());
-                theStaff.getArrangement().add(theStaff.getSequence(),
-                        theStaff.getSequenceFile());
-                controller.getSoundfontLoader().storeInCache();
-            }
-        }
+        theStaff.addSongToArrangement();
     }
 
     @Override

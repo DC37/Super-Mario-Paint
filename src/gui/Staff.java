@@ -501,6 +501,23 @@ public class Staff {
         }
     }
     
+    public void addSongToArrangement() {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.ARR_PLAYING)
+            return;
+    
+        if ((Settings.debug & 0b100000) != 0)
+            System.out.println("Add song");
+
+        if (theSequenceFile == null)
+            return;
+    
+        StateMachine.setArrModified(true);
+        theArrangementList.getItems().add(theSequenceName);
+        theArrangement.add(theSequence, theSequenceFile);
+        controller.getSoundfontLoader().storeInCache();
+    }
+    
 
     /**
      * This is a worker thread that helps run the animation on the staff.
