@@ -21,6 +21,7 @@ import gui.components.Controls;
 import gui.components.staff.StaffDisplayManager;
 import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
@@ -516,6 +517,24 @@ public class Staff {
         theArrangementList.getItems().add(theSequenceName);
         theArrangement.add(theSequence, theSequenceFile);
         controller.getSoundfontLoader().storeInCache();
+    }
+    
+    public void deleteSongFromArrangement() {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.ARR_PLAYING)
+            return;
+        
+        if ((Settings.debug & 0b100000) != 0)
+            System.out.println("Delete song");
+        
+        ObservableList<String> l = theArrangementList.getItems();
+        int x = theArrangementList.getSelectionModel()
+                .getSelectedIndex();
+        if (x != -1) {
+            StateMachine.setArrModified(true);
+            theArrangement.remove(x);
+            l.remove(x);
+        }
     }
     
 
