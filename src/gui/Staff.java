@@ -211,6 +211,26 @@ public class Staff {
         setLocation(0);
     }
     
+    public void bumpStaff(int skipAmount) {
+        if (StateMachine.isPlaybackActive())
+            return;
+        
+        int currLoc = StateMachine.getMeasureLineNum();
+        int newLoc = currLoc + skipAmount;
+        
+        // Deal with integer overflow
+        if (skipAmount > 0 && newLoc < 0)
+            newLoc = Integer.MAX_VALUE;
+        
+        if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == StateMachine.getMaxLine()) {
+            int newSize = StateMachine.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
+            theSequence.resize(newSize);
+            StateMachine.setMaxLine(theSequence.getLength());
+        }
+        
+        setLocation(newLoc);
+    }
+    
     public synchronized void setTimeSignature(TimeSignature t) {
         theSequence.setTimeSignature(t);
         StateMachine.setTimeSignature(t);

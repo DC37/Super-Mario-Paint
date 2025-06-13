@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import gui.SMPFXController;
-import gui.StateMachine;
 import gui.Values;
 import gui.components.buttons.ImagePushButton;
 import gui.loaders.ImageIndex;
@@ -45,7 +44,6 @@ public class ArrowButton extends ImagePushButton {
     public ArrowButton(ImageView i, ImageIndex pr,
             ImageIndex notPr, SMPFXController ct, ImageLoader im) {
         super(i, ct, im);
-        t = new Timer();
         getImages(pr, notPr);
     }
 
@@ -71,37 +69,17 @@ public class ArrowButton extends ImagePushButton {
     @Override
     protected void reactPressed(MouseEvent event) {
         super.reactPressed(event);
-        bumpStaff();
+        theStaff.bumpStaff(skipAmount);
         TimerTask tt = new clickHold();
+        t = new Timer();
         t.schedule(tt, Values.HOLDTIME, Values.REPEATTIME);
-    }
-
-    /** Bumps the staff by some amount. */
-    private void bumpStaff() {
-        if (StateMachine.isPlaybackActive())
-            return;
-        
-        int currLoc = StateMachine.getMeasureLineNum();
-        int newLoc = currLoc + skipAmount;
-        
-        // Deal with integer overflow
-        if (skipAmount > 0 && newLoc < 0)
-            newLoc = Integer.MAX_VALUE;
-        
-        if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == StateMachine.getMaxLine()) {
-            int newSize = StateMachine.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
-            theStaff.getSequence().resize(newSize);
-            StateMachine.setMaxLine(theStaff.getSequence().getLength());
-        }
-        
-        theStaff.setLocation(newLoc);
     }
 
     @Override
     protected void reactReleased(MouseEvent event) {
         super.reactReleased(event);
-        t.cancel();
-        t = new Timer();
+        if (t != null)
+            t.cancel();
     }
 
     /**
@@ -114,7 +92,7 @@ public class ArrowButton extends ImagePushButton {
 
         @Override
         public void run() {
-            bumpStaff();
+            theStaff.bumpStaff(skipAmount);
         }
 
     }
