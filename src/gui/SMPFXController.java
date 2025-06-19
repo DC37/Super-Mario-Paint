@@ -390,7 +390,9 @@ public class SMPFXController {
         		String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
         		try {
         			staff.setTimeSignature(TimeSignature.valueOf(str));
+        			
         		} catch (IllegalArgumentException ee) {
+        			Dialog.showDialog(ee.getMessage());
         			return;
         		}
         		
