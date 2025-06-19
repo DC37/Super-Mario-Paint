@@ -106,7 +106,20 @@ public class TimeSignature {
             		return THREE_FOUR;
             	} else if (top == 4) {
             		return FOUR_FOUR;
-            	}	
+            	}
+            	
+            } else if (bottom == 8 && divs.length == 1) {
+            	int top = divs[0];
+            	if (top == 6) {
+            		return SIX_EIGHT;
+            	}
+            	
+            } else if (bottom == 8 && divs.length == 2) {
+            	int top1 = divs[0];
+            	int top2 = divs[1];
+            	if (top1 == 3 && top2 == 3) {
+            		return SIX_EIGHT;
+            	}
             }
             
             throw new IllegalArgumentException("Unrecognized Time Signature Specification: " + disp);
@@ -121,5 +134,6 @@ public class TimeSignature {
     
     public static TimeSignature FOUR_FOUR = new TimeSignature(4, 4);
     public static TimeSignature THREE_FOUR = new TimeSignature(3, 4);
+    public static TimeSignature SIX_EIGHT = new TimeSignature(new int[] { 3, 3 }, 8);
 
 }
