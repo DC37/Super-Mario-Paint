@@ -93,10 +93,23 @@ public class TimeSignature {
             return new TimeSignature(divs);
             
         } else {
+        	// We support time signatures with a bottom number for some cases:
+        	// 4/4, 3/4, 6/8... possibly more later
+        	
             String[] divsStrs = disp.substring(0, idxSlash).split("\\+");
             int[] divs = Arrays.stream(divsStrs).mapToInt(Integer::parseInt).toArray();
             int bottom = Integer.parseInt(disp.substring(idxSlash + 1));
-            return new TimeSignature(divs, bottom);
+            
+            if (bottom == 4 && divs.length == 1) {
+            	int top = divs[0];
+            	if (top == 3) {
+            		return THREE_FOUR;
+            	} else if (top == 4) {
+            		return FOUR_FOUR;
+            	}	
+            }
+            
+            throw new IllegalArgumentException("Unrecognized Time Signature Specification: " + disp);
         }
     }
     
