@@ -349,13 +349,12 @@ public class SMPFXController {
         ImageRadioButton timesig_4_4_button = new ImageRadioButton(timesig_4_4, this, il) {
         	{
         		getImages(ImageIndex.TIMESIG_4_4_PRESSED, ImageIndex.TIMESIG_4_4_RELEASED);
+        		pressImage();
         	}
         	
         	@Override
         	public void reactPressed(MouseEvent e) {
         		if (isPressed) {
-        			isPressed = false;
-        			releaseImage();
         			return;
         		}
         		
@@ -372,8 +371,6 @@ public class SMPFXController {
         	@Override
         	public void reactPressed(MouseEvent e) {
         		if (isPressed) {
-        			isPressed = false;
-        			releaseImage();
         			return;
         		}
         		
@@ -389,13 +386,6 @@ public class SMPFXController {
         	
         	@Override
         	public void reactPressed(MouseEvent e) {
-        		if (isPressed) {
-        			isPressed = false;
-        			releaseImage();
-        			return;
-        		}
-        		
-        		super.reactPressed(e);
         		Window owner = ((Node) e.getSource()).getScene().getWindow();
         		String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
         		try {
@@ -403,6 +393,8 @@ public class SMPFXController {
         		} catch (IllegalArgumentException ee) {
         			return;
         		}
+        		
+        		super.reactPressed(e); // only if the input timesig is correct
         	}
         };
         
