@@ -404,6 +404,9 @@ public class SMPFXController {
         	public void reactPressed(MouseEvent e) {
         		Window owner = ((Node) e.getSource()).getScene().getWindow();
         		String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
+        		if (str.isEmpty())
+        			return;
+        		
         		try {
         			staff.setTimeSignature(TimeSignature.valueOf(str));
         			
