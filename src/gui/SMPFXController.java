@@ -112,13 +112,13 @@ public class SMPFXController {
     private ImageView clipboardButton;
     
     @FXML
-    private ImageView clipboardLabel;
-    
-    @FXML
     private ImageView timesig_4_4;
     
     @FXML
     private ImageView timesig_3_4;
+    
+    @FXML
+    private ImageView timesig_6_8;
     
     @FXML
     private ImageView timesig_custom;
@@ -379,6 +379,22 @@ public class SMPFXController {
         	}
         };
         
+        ImageRadioButton timesig_6_8_button = new ImageRadioButton(timesig_6_8, this, il) {
+        	{
+        		getImages(ImageIndex.TIMESIG_6_8_PRESSED, ImageIndex.TIMESIG_6_8_RELEASED);
+        	}
+        	
+        	@Override
+        	public void reactPressed(MouseEvent e) {
+        		if (isPressed) {
+        			return;
+        		}
+        		
+        		super.reactPressed(e);
+        		staff.setTimeSignature(TimeSignature.SIX_EIGHT);
+        	}
+        };
+        
         ImageRadioButton timesig_custom_button = new ImageRadioButton(timesig_custom, this, il) {
         	{
         		getImages(ImageIndex.TIMESIG_CUSTOM_PRESSED, ImageIndex.TIMESIG_CUSTOM_RELEASED);
@@ -401,11 +417,17 @@ public class SMPFXController {
         };
         
         timesig_4_4_button.link(timesig_3_4_button);
+        timesig_4_4_button.link(timesig_6_8_button);
         timesig_4_4_button.link(timesig_custom_button);
         timesig_3_4_button.link(timesig_4_4_button);
+        timesig_3_4_button.link(timesig_6_8_button);
         timesig_3_4_button.link(timesig_custom_button);
+        timesig_6_8_button.link(timesig_4_4_button);
+        timesig_6_8_button.link(timesig_3_4_button);
+        timesig_6_8_button.link(timesig_custom_button);
         timesig_custom_button.link(timesig_4_4_button);
         timesig_custom_button.link(timesig_3_4_button);
+        timesig_custom_button.link(timesig_6_8_button);
         
         // HACK
         staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
@@ -592,10 +614,6 @@ public class SMPFXController {
 	 */
     public ImageView getClipboardButton() {
     	return clipboardButton;
-    }
-    
-    public ImageView getClipboardLabel() {
-    	return clipboardLabel;
     }
 
     /** @return The control panel of the program. */

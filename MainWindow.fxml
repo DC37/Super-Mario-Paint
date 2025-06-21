@@ -1325,174 +1325,112 @@
                             </ImageView>
                           </children>
                         </HBox>
-                        <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0">
+                        <HBox fx:id="controls" prefHeight="80.0" prefWidth="474.0" spacing="12.0">
                           <children>
-                            <StackPane id="StackPane">
-                              <children>
-                                <HBox prefHeight="80.0" prefWidth="250.0" spacing="8.0">
-                                  <children>
-                                    <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/STOP_PRESSED.png" />
-                                      </image>
-                                    </ImageView>
-                                    <ImageView fx:id="play" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/PLAY_RELEASED.png" />
-                                      </image>
-                                    </ImageView>
-                                    <ImageView fx:id="loop" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/LOOP_RELEASED.png" />
-                                      </image>
-                                    </ImageView>
-                                    <Region prefHeight="16.0" prefWidth="10.0" />
-                                    <ImageView fx:id="mute" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_RELEASED.png" />
-                                      </image>
-                                    </ImageView>
-                                    <ImageView id="LowAMute" fx:id="muteA" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_A_RELEASED.png" />
-                                      </image>
-                                    </ImageView>
-                                  </children>
-                                  <padding>
-                                    <Insets left="24.0" top="32.0" />
-                                  </padding>
+                            <HBox id="controlButtons" spacing="2.0">
+                              <padding>
+                                <Insets left="18.0"/>
+                              </padding>
+                              <VBox alignment="CENTER" spacing="2.0">
+                                <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/STOP_LABEL.png"/>
+                                </ImageView>
+                                <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/STOP_PRESSED.png"/>
+                                </ImageView>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="2.0">
+                                <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/PLAY_LABEL.png"/>
+                                </ImageView>
+                                <ImageView fx:id="play" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/PLAY_RELEASED.png"/>
+                                </ImageView>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="2.0">
+                                <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/LOOP_LABEL.png"/>
+                                </ImageView>
+                                <ImageView fx:id="loop" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/LOOP_RELEASED.png"/>
+                                </ImageView>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="2.0">
+                                <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/MUTE_LABEL.png"/>
+                                </ImageView>
+                                <ImageView fx:id="mute" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/MUTE_RELEASED.png"/>
+                                </ImageView>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="2.0">
+                                <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/MUTE_A_LABEL.png"/>
+                                </ImageView>
+                                <ImageView fx:id="muteA" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/MUTE_A_RELEASED.png"/>
+                                </ImageView>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="2.0">
+                                <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/CLIPBOARD_LABEL.png"/>
+                                </ImageView>
+                                <ImageView fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/CLIPBOARD_RELEASED.png"/>
+                                </ImageView>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="2.0">
+                                <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                  <Image url="@sprites/TIMESIG_LABEL.png"/>
+                                </ImageView>
+                                <HBox alignment="CENTER" spacing="2.0">
+	                              <ImageView fx:id="timesig_4_4" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+	                                <Image url="@sprites/TIMESIG_4_4_RELEASED.png"/>
+	                              </ImageView>
+	                              <ImageView fx:id="timesig_3_4" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+	                                <Image url="@sprites/TIMESIG_3_4_RELEASED.png"/>
+	                              </ImageView>
+	                              <ImageView fx:id="timesig_6_8" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+	                                <Image url="@sprites/TIMESIG_6_8_RELEASED.png"/>
+	                              </ImageView>
+	                              <ImageView fx:id="timesig_custom" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
+	                                <Image url="@sprites/TIMESIG_CUSTOM_RELEASED.png"/>
+	                              </ImageView>
                                 </HBox>
-                                <HBox mouseTransparent="true" prefHeight="80.0" prefWidth="250.0" spacing="2.0">
-                                  <children>
-                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/STOP_LABEL.png" />
-                                      </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/PLAY_LABEL.png" />
-                                      </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/LOOP_LABEL.png" />
-                                      </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_LABEL.png" />
-                                      </image>
-                                    </ImageView>
-                                    <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image preserveRatio="false" smooth="false" url="@sprites/MUTE_A_LABEL.png" />
-                                      </image>
-                                    </ImageView>
-                                  </children>
-                                  <padding>
-                                    <Insets left="14.0" top="20.0" />
-                                  </padding>
-                                </HBox>
-                              </children>
-                            </StackPane>
-                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="454.0">
-                                             <children>
-                                                <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="530.0" />
-                                             </children>
-                                             <padding>
-                                                <Insets left="4.0" />
-                                             </padding>
+                              </VBox>
                             </HBox>
-                            <HBox id="" prefHeight="100.0" prefWidth="300.0">
+                            <HBox id="controlArrangementList" alignment="CENTER" prefHeight="100.0" prefWidth="454.0">
+                              <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="320.0" />
+                            </HBox>
+                            <HBox id="controlArrangementListButtons" prefHeight="100.0" prefWidth="300.0" spacing="4.0">
                               <children>
-                                                <VBox alignment="CENTER_LEFT" prefHeight="88.0" prefWidth="128.0">
-                                                   <children>
-                                                      <ImageView id="" fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@sprites/ADD.PNG" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <ImageView id="" fx:id="deleteButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@sprites/DELETE.PNG" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <ImageView id="" fx:id="upButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@sprites/UP.PNG" />
-                                                         </image>
-                                                      </ImageView>
-                                                      <ImageView id="" fx:id="downButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@sprites/DOWN.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </children>
-                                                   <padding>
-                                                      <Insets left="4.0" />
-                                                   </padding>
-                                                </VBox>
-                                                <HBox alignment="CENTER" spacing="8.0">
-                                                  <children>
-	                                                <VBox alignment="CENTER" prefHeight="88.0" prefWidth="128.0">
-	                                                   <children>
-	                                                      <ImageView fx:id="clipboardLabel" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-	                                                         <image>
-	                                                            <Image url="@sprites/CLIPBOARD_LABEL.png" />
-	                                                         </image>
-	                                                      </ImageView>
-	                                                      <ImageView fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-	                                                         <image>
-	                                                            <Image url="@sprites/CLIPBOARD_RELEASED.png" />
-	                                                         </image>
-	                                                      </ImageView>
-	                                                   </children>
-	                                                   <padding>
-	                                                      <Insets left="4.0" />
-	                                                   </padding>
-	                                                </VBox>
-	                                                <VBox alignment="CENTER">
-	                                                  <children>
-	                                                    <ImageView id="timesigLabel" preserveRatio="true">
-	                                                      <image>
-	                                                        <Image url="@sprites/TIMESIG_LABEL.png"/>
-	                                                      </image>
-	                                                    </ImageView>
-	                                                    <HBox alignment="CENTER" spacing="4.0">
-	                                                      <children>
-	                                                        <ImageView fx:id="timesig_4_4" preserveRatio="true">
-	                                                          <image>
-	                                                            <Image url="@sprites/TIMESIG_4_4_RELEASED.png"/>
-	                                                          </image>
-	                                                        </ImageView>
-	                                                        <ImageView fx:id="timesig_3_4" preserveRatio="true">
-	                                                          <image>
-	                                                            <Image url="@sprites/TIMESIG_3_4_RELEASED.png"/>
-	                                                          </image>
-	                                                        </ImageView>
-	                                                        <ImageView fx:id="timesig_custom" preserveRatio="true">
-	                                                          <image>
-	                                                            <Image url="@sprites/TIMESIG_CUSTOM_RELEASED.png"/>
-	                                                          </image>
-	                                                        </ImageView>
-	                                                      </children>
-	                                                    </HBox>
-	                                                  </children>
-	                                                </VBox>
-	                                              </children>
-	                                            </HBox>
-                                <VBox id="VBox" alignment="CENTER" prefHeight="88.0" prefWidth="104.0">
+                                <VBox alignment="CENTER_LEFT" prefHeight="88.0" prefWidth="128.0">
+                                   <children>
+                                      <ImageView fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                        <Image url="@sprites/ADD.PNG"/>
+                                      </ImageView>
+                                      <ImageView fx:id="deleteButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                        <Image url="@sprites/DELETE.PNG"/>
+                                      </ImageView>
+                                      <ImageView fx:id="upButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                        <Image url="@sprites/UP.PNG"/>
+                                      </ImageView>
+                                      <ImageView fx:id="downButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                        <Image url="@sprites/DOWN.png"/>
+                                      </ImageView>
+                                   </children>
+                                </VBox>
+                                <VBox alignment="CENTER" prefHeight="88.0" prefWidth="104.0">
                                   <children>
-                                                      <ImageView id="" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@sprites/TEMPO_LABEL.png" />
-                                                         </image>
-                                                      </ImageView>
+                                    <ImageView fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@sprites/TEMPO_LABEL.png" />
+                                      </image>
+                                    </ImageView>
                                     <StackPane fx:id="tempoBox" prefHeight="25.0" prefWidth="100.0">
                                       <children>
                                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0" />
-                                        <Text id="Tempo" fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0">
+                                        <Text fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0">
                                           <font>
                                             <Font name="Century Gothic" size="15.0" fx:id="x2" />
                                           </font>
@@ -1500,12 +1438,6 @@
                                       </children>
                                     </StackPane>
                                   </children>
-                                  <padding>
-                                    <Insets top="-8.0" />
-                                  </padding>
-                                  <HBox.margin>
-                                    <Insets />
-                                  </HBox.margin>
                                 </VBox>
                                 <StackPane prefHeight="100.0" prefWidth="100.0">
                                   <children>
@@ -1523,15 +1455,12 @@
                                         </ImageView>
                                       </children>
                                       <padding>
-                                        <Insets top="33.0" />
+                                        <Insets top="37.0" />
                                       </padding>
                                     </VBox>
                                   </children>
                                 </StackPane>
                               </children>
-                              <HBox.margin>
-                                <Insets />
-                              </HBox.margin>
                             </HBox>
                           </children>
                           <padding>
@@ -1539,9 +1468,6 @@
                           </padding>
                         </HBox>
                       </children>
-                                 <padding>
-                                    <Insets top="-10.0" />
-                                 </padding>
                     </StackPane>
                     <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="24.0" prefWidth="994.0">
                       <children>
