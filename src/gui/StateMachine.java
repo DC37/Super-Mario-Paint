@@ -33,7 +33,7 @@ public class StateMachine {
     private static boolean modifiedArr = false;
 
     /** This keeps track of whether we have pressed the loop button or not. */
-    private static boolean loopPressed = false;
+    private static BooleanProperty loopPressed = new SimpleBooleanProperty(false);
 
 	/** This keeps track of whether we have pressed the mute button or not. */
 	private static boolean mutePressed = false;
@@ -234,20 +234,17 @@ public class StateMachine {
     public static void setArrangementSongIndex(int i) {
         arrangementSongIndex.set(i);
     }
-
-    /** Sets that the song is now loop-enabled. */
-    public static void setLoopPressed() {
-        loopPressed = true;
-    }
-
-    /** Sets that the song is now *not* loop-enabled. */
-    public static void resetLoopPressed() {
-        loopPressed = false;
-    }
-
-    /** @return Whether the loop button is pressed or not. */
-    public static boolean isLoopPressed() {
+    
+    public static BooleanProperty getLoopPressedProperty() {
         return loopPressed;
+    }
+
+    public static void setLoopPressed(boolean b) {
+        loopPressed.set(b);
+    }
+
+    public static boolean isLoopPressed() {
+        return loopPressed.get();
     }
 
     /** Sets the fact that mute notes are now enabled. */

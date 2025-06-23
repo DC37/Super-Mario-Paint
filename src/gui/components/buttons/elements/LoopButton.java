@@ -49,11 +49,11 @@ public class LoopButton extends ImageToggleButton {
             if (isPressed) {
                 isPressed = false;
                 releaseImage();
-                StateMachine.resetLoopPressed();
+                StateMachine.setLoopPressed(false);
             } else {
                 isPressed = true;
                 pressImage();
-                StateMachine.setLoopPressed();
+                StateMachine.setLoopPressed(true);
             }
         }
     }
