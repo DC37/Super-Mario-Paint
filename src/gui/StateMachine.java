@@ -38,10 +38,8 @@ public class StateMachine {
 	/** This keeps track of whether we have pressed the mute button or not. */
 	private static BooleanProperty mutePressed = new SimpleBooleanProperty(false);
 
-    /**
-     * This keeps track of whether we have pressed the low A mute button or not.
-     */
-    private static boolean muteAPressed = false;
+    /** This keeps track of whether we have pressed the low A mute button or not. */
+    private static BooleanProperty muteAPressed = new SimpleBooleanProperty(false);
 
 	/**
 	 * This keeps track of whether we have pressed the clipboard button or not.
@@ -259,6 +257,18 @@ public class StateMachine {
         return mutePressed.get();
     }
 
+    public static BooleanProperty muteAPressedProperty() {
+        return muteAPressed;
+    }
+    
+    public static void setMuteAPressed(boolean b) {
+        muteAPressed.set(b);
+    }
+
+    public static boolean isMuteAPressed() {
+        return muteAPressed.get();
+    }
+
     /**
      * Sets the modified flag to true or false.
      *
@@ -289,21 +299,6 @@ public class StateMachine {
      */
     public static boolean isArrModified() {
         return modifiedArr;
-    }
-
-    /**
-     * @param b
-     *            Whether we have pressed the low A mute button.
-     */
-    public static void setMuteAPressed(boolean b) {
-        muteAPressed = b;
-    }
-
-    /**
-     * @return Whether our mute-all button is pressed or not.
-     */
-    public static boolean isMuteAPressed() {
-        return muteAPressed;
     }
     
     public static BooleanProperty clipboardPressedProperty() {
