@@ -66,13 +66,13 @@ public class MuteButton extends ImageToggleButton {
         if (isPressed) {
             isPressed = false;
             releaseImage();
-            StateMachine.resetMutePressed();
+            StateMachine.setMutePressed(false);
         } else {
             if (mt.isPressed())
                 mt.reactPressed(null);
             isPressed = true;
             pressImage();
-            StateMachine.setMutePressed();
+            StateMachine.setMutePressed(true);
 
         }
 

@@ -36,7 +36,7 @@ public class StateMachine {
     private static BooleanProperty loopPressed = new SimpleBooleanProperty(false);
 
 	/** This keeps track of whether we have pressed the mute button or not. */
-	private static boolean mutePressed = false;
+	private static BooleanProperty mutePressed = new SimpleBooleanProperty(false);
 
     /**
      * This keeps track of whether we have pressed the low A mute button or not.
@@ -235,7 +235,7 @@ public class StateMachine {
         arrangementSongIndex.set(i);
     }
     
-    public static BooleanProperty getLoopPressedProperty() {
+    public static BooleanProperty loopPressedProperty() {
         return loopPressed;
     }
 
@@ -246,20 +246,17 @@ public class StateMachine {
     public static boolean isLoopPressed() {
         return loopPressed.get();
     }
-
-    /** Sets the fact that mute notes are now enabled. */
-    public static void setMutePressed() {
-        mutePressed = true;
-    }
-
-    /** Turns off the fact that we have pressed the mute button. */
-    public static void resetMutePressed() {
-        mutePressed = false;
-    }
-
-    /** @return Whether the mute button is pressed or not. */
-    public static boolean isMutePressed() {
+    
+    public static BooleanProperty mutePressedProperty() {
         return mutePressed;
+    }
+
+    public static void setMutePressed(boolean b) {
+        mutePressed.set(b);
+    }
+
+    public static boolean isMutePressed() {
+        return mutePressed.get();
     }
 
     /**
