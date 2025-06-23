@@ -1,7 +1,16 @@
 package gui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+
 import backend.editing.ModifySongManager;
 import backend.songs.StaffArrangement;
+import backend.songs.StaffNote;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.clipboard.StaffClipboard;
@@ -19,6 +28,7 @@ import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -32,7 +42,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -237,6 +249,9 @@ public class SMPFXController {
     /** This is the soundfont loader. */
     private SoundfontLoader sf;
 
+    /** Prevent multiple save windows from opening. */
+    private boolean saveInProgress = false;
+    
     /**
      * Zero-argument constructor (explicitly declared).
      */
@@ -504,6 +519,201 @@ public class SMPFXController {
         }
     }
     
+    public void save(Window owner) {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING || curr == ProgramState.SONG_PLAYING) {
+            final ProgramState saveState = curr;
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    saveSong(owner);
+                    StateMachine.setState(saveState);
+                }
+                
+            });
+        } else if (!saveInProgress && (curr == ProgramState.ARR_EDITING
+                || curr == ProgramState.ARR_PLAYING)) {
+            final ProgramState saveState = curr;
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    saveArrangement(owner);
+                    StateMachine.setState(saveState);
+                }
+                
+            });
+        }
+    }
+
+    private void saveArrangement(Window owner) {
+        String songName = getNameTextField().getText();
+        if (!Utilities.legalFileName(songName)) {
+            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^", owner);
+            return;
+        }
+        
+        try {
+            FileChooser f = new FileChooser();
+            f.setInitialDirectory(StateMachine.getCurrentDirectory());
+            f.setInitialFileName(songName + ".txt");
+            f.getExtensionFilters().addAll(
+                    new ExtensionFilter("Text file", "*.txt"),
+                    new ExtensionFilter("All files", "*"));
+            File outputFile = null;
+            saveInProgress = true;
+            outputFile = f.showSaveDialog(null);
+            saveInProgress = false;
+            if (outputFile == null)
+                return;
+            FileOutputStream f_out = new FileOutputStream(outputFile);
+            StaffArrangement out = staff.getArrangement();
+            out.getTheSequenceNames().clear();
+            out.setTheSequenceNames(staff.getArrangementList().getItems());
+            if (Settings.SAVE_OBJECTS) {
+                saveArrObject(f_out, out);
+            } else {
+                saveArrTxt(f_out, out);
+            }
+            f_out.close();
+            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
+            staff.setArrangementFile(outputFile);
+            StateMachine.setArrModified(false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveArrTxt(FileOutputStream f_out, StaffArrangement out) {
+        PrintStream pr = new PrintStream(f_out);
+        for (String s : out.getTheSequenceNames()) {
+            pr.println(s);
+        }
+        pr.close();
+    }
+
+    /**
+     * Saves arrangement in object format.
+     *
+     * @param f_out
+     *            FileOutputStream to write in.
+     * @param out
+     *            The output arrangement file
+     * @throws IOException
+     * @deprecated
+     */
+    public void saveArrObject(FileOutputStream f_out, StaffArrangement out)
+            throws IOException {
+        ObjectOutputStream o_out = new ObjectOutputStream(f_out);
+        o_out.writeObject(out);
+        o_out.close();
+    }
+
+    public void saveSong(Window owner) {
+        String songName = getNameTextField().getText();
+        if (!Utilities.legalFileName(songName)) {
+            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^", owner);
+            return;
+        }
+        
+        try {
+            FileChooser f = new FileChooser();
+            f.setInitialDirectory(StateMachine.getCurrentDirectory());
+            f.setInitialFileName(songName + ".txt");
+            f.getExtensionFilters().addAll(
+                    new ExtensionFilter("Text file", "*.txt"),
+                    new ExtensionFilter("All files", "*"));
+            File outputFile = null;
+            saveInProgress = true;
+            outputFile = f.showSaveDialog(null);
+            saveInProgress = false;
+            if (outputFile == null)
+                return;
+            FileOutputStream f_out = new FileOutputStream(outputFile);
+            StaffSequence out = staff.getSequence();
+            out.setTempo(StateMachine.getTempo());
+            if (Settings.SAVE_OBJECTS) {
+                saveSongObject(f_out, out);
+            } else {
+                saveSongTxt(f_out, out);
+            }
+            f_out.close();
+            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
+            staff.setSequenceFile(outputFile);
+            StateMachine.setSongModified(false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves in object file format. Makes decent use of serialization. There are
+     * some issues with this because if one changes the staff sequence class,
+     * there are going to be issues loading the file.
+     *
+     * @param f_out
+     *            FileOutputStream for saving into a file.
+     * @param out
+     *            The StaffSequence to write.
+     * @throws IOException
+     * @deprecated
+     */
+    public void saveSongObject(FileOutputStream f_out, StaffSequence out)
+            throws IOException {
+        ObjectOutputStream o_out = new ObjectOutputStream(f_out);
+        o_out.writeObject(out);
+        o_out.close();
+    }
+
+    public void saveSongTxt(FileOutputStream f_out, StaffSequence seq)
+            throws IOException {
+        PrintStream pr = new PrintStream(f_out);
+        TimeSignature t = seq.getTimeSignature();
+        if (t == null) {
+            t = TimeSignature.FOUR_FOUR;
+        }
+        pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", seq.getTempo(),
+                Utilities.longFromBool(seq.getNoteExtensions()), t, seq.getSoundset());
+        
+        for (int i = 0; i < seq.getLength(); i++) {
+            if (seq.getLine(i).isEmpty()) {
+                continue;
+            }
+            pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
+            ArrayList<StaffNote> line = seq.getLine(i).getNotes();
+            for (int j = 0; j < line.size(); j++) {
+                pr.print(line.get(j) + ",");
+            }
+            pr.printf("VOL: %d\r\n", seq.getLine(i).getVolume());
+        }
+        pr.close();
+
+        // when we change the soundfont for a song in the arr, we should store
+        // the new soundfont in cache
+        Task<Void> soundsetsTaskSave = new Task<Void>() {
+            @Override
+            public Void call() {
+                ArrayList<String> seqNames = staff.getArrangement().getTheSequenceNames();
+                String currSeqName = getNameTextField().getText();
+                for (String seqName : seqNames) 
+                    if (seqName.equals(currSeqName)) {
+                        getSoundfontLoader().storeInCache();
+                        break;
+                    }
+                return null;
+            }
+        };
+        
+        new Thread(soundsetsTaskSave).start();
+    }
+
     public void switchClipMode(boolean on) {
         if (on) {
             StateMachine.setClipboardPressed(false);
