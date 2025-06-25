@@ -101,7 +101,7 @@ public class NoteTracker {
      * @param channel The channel we want to get playing notes from.
      * @return A list of notes that are currently playing from that channel.
      */
-    public ArrayList<PlayingNote> getNotesPlaying(int channel) {
+    private ArrayList<PlayingNote> getNotesPlaying(int channel) {
         return notesOn.get(channel);
     }
 
