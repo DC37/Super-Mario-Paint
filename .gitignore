@@ -1,9 +1,6 @@
-/bin/
-/Prefs/
-/sprites_PSD/
-/P/
-/Release/
-
+bin/
+.classpath
+.project
 
 *.txt
 *.sf2
@@ -11,5 +8,3 @@
 *.rar
 *.jar
 *.bat
-
-/target/
