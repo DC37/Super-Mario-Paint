@@ -1300,8 +1300,8 @@
                 </Pane>
                 <Pane id="ControlsPane" prefHeight="121.0" prefWidth="1022.0">
                   <children>
-                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="116.0" layoutX="3.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0" />
-                    <StackPane id="controls" layoutX="14.0" layoutY="7.0">
+                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="120.0" layoutX="3.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0" />
+                    <StackPane id="controls" layoutX="14.0" layoutY="0.0">
                       <children>
                         <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">
                           <children>
@@ -1469,7 +1469,7 @@
                         </HBox>
                       </children>
                     </StackPane>
-                    <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="87.0" prefHeight="24.0" prefWidth="994.0">
+                    <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="88.0" prefHeight="24.0" prefWidth="994.0">
                       <children>
                         <ImageView fx:id="leftFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
