@@ -196,18 +196,20 @@ public class Values {
 		}
 	}
 	
-	/**
-	 * This is where we store soundfonts.
-	 * 
-	 * @since v1.1.2
-	 */
-	public static final String SOUNDFONTS_FOLDER = new PlatformDependency().getPlatformFolder()
-			+ File.separatorChar + "SoundFonts" + File.separatorChar;
+	public static final String SMP_FOLDER = new PlatformDependency().getPlatformFolder();
 	
 	/**
-	 * The default Mario Paint Composer soundfont.
-	 * 
-	 * @since v1.1.2
+	 * This is where we store soundfonts.
 	 */
+	public static final String SOUNDFONTS_FOLDER =
+	        SMP_FOLDER + File.separatorChar + "SoundFonts" + File.separatorChar;
+	
 	public static final String DEFAULT_SOUNDFONT = "soundset3.sf2";
+	
+	/**
+	 * Sprites for the default theme are stored here. Replacing them will change the default
+	 * appearance of the program.
+	 */
+	public static final String SPRITES_FOLDER =
+	        SMP_FOLDER + File.separatorChar + "SpritePacks" + File.separatorChar + "default";
 }
