@@ -23,6 +23,7 @@ import gui.Dialog;
 import gui.InstrumentIndex;
 import gui.Settings;
 import gui.StateMachine;
+import gui.Utilities;
 import gui.Values;
 import javafx.stage.Window;
 
@@ -69,8 +70,8 @@ public class SoundfontLoader implements Loader {
     @Override
     public void run() {
         try {
-    		File f = new File("./" + Values.DEFAULT_SOUNDFONT);
-            bank = MidiSystem.getSoundbank(f);
+    		File defaultSoundfontFile = Utilities.getResourceFile(Values.DEFAULT_SOUNDFONT, Values.SOUNDFONTS_FOLDER);
+            bank = MidiSystem.getSoundbank(defaultSoundfontFile);
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();
             setLoadStatus(0.1);
@@ -125,46 +126,28 @@ public class SoundfontLoader implements Loader {
             // Can't recover.
             e.printStackTrace();
             System.exit(0);
+        } catch (NullPointerException e) {
+            // Can't recover.
+            e.printStackTrace();
+            System.exit(0);
         }
 	}
-
+	
 	/**
-	 * Creates soundfonts folder in AppData if it doesn't already exist. Next,
-	 * copies over the default soundfont soundset3.sf2 if it isn't already in
-	 * the folder.
-	 * 
-	 * @since v1.1.2
+	 * Creates the soundfont folder if it does not already exists.
 	 */
-	public void ensureSoundfontsFolderExists() {
-		// windows only for now, TODO: linux and mac
-		// 1. Let's make sure the folder exists
-		File soundfontsFolder = new File(Values.SOUNDFONTS_FOLDER);
-		if(!soundfontsFolder.exists()) {
-			if(!soundfontsFolder.mkdirs())
-				System.out.println("Error: failed to create " + Values.SOUNDFONTS_FOLDER);
-		}
-		
-		// 2. Let's copy soundset3.sf2 if it's not already in there
-		File soundfontsFolderSoundset = new File(Values.SOUNDFONTS_FOLDER + Values.DEFAULT_SOUNDFONT);
-		if (!soundfontsFolderSoundset.exists()) {
-			try {
-				Files.copy(new File("./" + Values.DEFAULT_SOUNDFONT).toPath(), soundfontsFolderSoundset.toPath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-    }
+	public File getSoundfontFolder() throws IOException {
+	    File dir = new File(Values.SOUNDFONTS_FOLDER);
+	    Files.createDirectories(dir.toPath());
+	    return dir;
+	}
     
 	/**
 	 * @return The list of filenames *.sf2 in the soundfonts folder.
 	 * @since v1.1.2
 	 */
-	public String[] getSoundfontsList() {
-		File soundfontsFolder = new File(Values.SOUNDFONTS_FOLDER);
-		if(!soundfontsFolder.exists()) {
-			System.out.println("Error: no such directory " + Values.SOUNDFONTS_FOLDER);
-			return null;
-		}
+	public String[] getSoundfontsList() throws IOException {
+		File soundfontsFolder = getSoundfontFolder();
 		
 		return soundfontsFolder.list(new FilenameFilter() {
 		    @Override

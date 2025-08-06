@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.net.URL;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,6 +36,31 @@ import javafx.stage.Window;
  * @since 2012.08.20
  */
 public class Utilities {
+    
+    /**
+     * <p>Get a file that's also a resource of the program (typically a default sprite or soundfont).</p>
+     * 
+     * <p>This method will attempt to load the file from its expected location. If the file is not found
+     * there, it is loaded as a resource and then copied onto the expected location for future calls.</p>
+     * 
+     * @param filename name of the file or resource
+     * @param dir expected location for the file
+     */
+    public static File getResourceFile(String filename, String dir) throws NullPointerException, IOException {
+        File ret = new File(dir, filename);
+        
+        if (ret.exists())
+            return ret;
+        
+        URL url = Utilities.class.getResource("/resources/" + filename);
+        if (url == null)
+            throw new NullPointerException("Cannot load resource: " + filename);
+        
+        Files.createDirectories(ret.getParentFile().toPath());
+        Files.copy(url.openStream(), ret.toPath());
+        
+        return ret;
+    }
 
     /**
      * Opens a file dialog that people can choose a file from. This is a Java

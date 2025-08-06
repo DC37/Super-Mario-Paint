@@ -170,12 +170,17 @@ public class OptionsButton extends ImagePushButton {
 	 *         additional item to "Add Soundfont"
 	 */
 	private ComboBox<String> makeSoundfontsComboBox(Window owner) {
-
-		controller.getSoundfontLoader().ensureSoundfontsFolderExists();
 		
 		// Populate combobox list with soundfonts in AppData
 		final ComboBox<String> soundfontsMenu = new ComboBox<>();
-		String[] listOfFiles = controller.getSoundfontLoader().getSoundfontsList();
+		String[] listOfFiles;
+        try {
+            listOfFiles = controller.getSoundfontLoader().getSoundfontsList();
+        } catch (IOException e) {
+            e.printStackTrace();
+            listOfFiles = new String[0];
+        }
+        
 		for (String filename : listOfFiles) {
 			soundfontsMenu.getItems().add(filename);
 
