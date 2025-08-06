@@ -1219,7 +1219,7 @@
                         <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="68.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0" y="-2.0" />
                         <ImageView fitHeight="24.0" fitWidth="72.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/VOL_LABEL.PNG" />
+                            <Image preserveRatio="false" smooth="false" url="@sprites/VOL_LABEL.png" />
                           </image>
                         </ImageView>
                         <HBox fx:id="volumeBars" layoutX="34" prefHeight="64.0" prefWidth="1016.0">
@@ -1407,13 +1407,13 @@
                                 <VBox alignment="CENTER_LEFT" prefHeight="88.0" prefWidth="128.0">
                                    <children>
                                       <ImageView fx:id="addButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                        <Image url="@sprites/ADD.PNG"/>
+                                        <Image url="@sprites/ADD.png"/>
                                       </ImageView>
                                       <ImageView fx:id="deleteButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                        <Image url="@sprites/DELETE.PNG"/>
+                                        <Image url="@sprites/DELETE.png"/>
                                       </ImageView>
                                       <ImageView fx:id="upButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                        <Image url="@sprites/UP.PNG"/>
+                                        <Image url="@sprites/UP.png"/>
                                       </ImageView>
                                       <ImageView fx:id="downButton" fitHeight="14.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                         <Image url="@sprites/DOWN.png"/>
@@ -1473,12 +1473,12 @@
                       <children>
                         <ImageView fx:id="leftFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT2.PNG" />
+                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT2.png" />
                           </image>
                         </ImageView>
                         <ImageView fx:id="leftArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT1.PNG" />
+                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT1.png" />
                           </image>
                         </ImageView>
                         <StackPane id="StackPane">
@@ -1497,7 +1497,7 @@
                         </StackPane>
                         <ImageView fx:id="rightArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_RIGHT1.PNG" />
+                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_RIGHT1.png" />
                           </image>
                         </ImageView>
                         <ImageView id="rightArrow" fx:id="rightFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -1546,87 +1546,87 @@
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/YOSHI_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/YOSHI_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/STAR_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/STAR_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/FLOWER_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/FLOWER_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/GAMEBOY_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/GAMEBOY_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/DOG_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/DOG_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/CAT_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/CAT_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/PIG_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/PIG_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/SWAN_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/SWAN_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/FACE_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/FACE_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/PLANE_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/PLANE_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/BOAT_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/BOAT_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/CAR_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/CAR_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/HEART_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/HEART_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/COIN_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/COIN_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/PIRANHA_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/PIRANHA_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/SHYGUY_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/SHYGUY_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/BOO_SM.PNG" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/BOO_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="514.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
@@ -1636,7 +1636,7 @@
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="542.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                    <image>
-                      <Image url="@sprites/PEACH_SM.PNG" />
+                      <Image url="@sprites/PEACH_SM.png" />
                    </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" layoutX="570.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">

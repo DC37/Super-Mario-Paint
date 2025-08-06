@@ -41,12 +41,6 @@ public class ImageLoader implements Loader {
     private String extension = ".png";
 
     /**
-     * If a file with the extension .png is not found, the file with .PNG is
-     * loaded instead.
-     */
-    private String extension_caps = ".PNG";
-
-    /**
      * The path where the sprites are located.
      */
     private String path = "./sprites/";
@@ -84,19 +78,14 @@ public class ImageLoader implements Loader {
         }
         for (ImageIndex i : ind) {
             setLoadStatus((i.ordinal() + 1.0) / ind.length);
-            String actual_extension = extension;
             f = new File(path + i.toString() + extension);
-            if (!f.exists()) {
-            	f = new File(path + i.toString() + extension_caps);
-            	actual_extension = extension_caps;
-            }
             try {
                 Image temp2 =
                         new Image(f.toURI().toString());
                 spritesFX.put(i, temp2);
                 if ((Settings.debug & 0b01) != 0)
                     System.out.println(
-                            "Loaded Image: " + i.toString() + actual_extension);
+                            "Loaded Image: " + i.toString() + extension);
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
