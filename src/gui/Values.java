@@ -213,5 +213,5 @@ public class Values {
 	 * appearance of the program.
 	 */
 	public static final String SPRITES_FOLDER =
-	        SMP_FOLDER + File.separatorChar + "SpritePacks" + File.separatorChar + "default";
+	        SMP_FOLDER + File.separatorChar + "sprites";
 }
