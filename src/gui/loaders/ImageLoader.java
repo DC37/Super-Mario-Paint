@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import gui.Settings;
+import gui.Utilities;
+import gui.Values;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 
@@ -41,11 +43,6 @@ public class ImageLoader implements Loader {
     private String extension = ".png";
 
     /**
-     * The path where the sprites are located.
-     */
-    private String path = "./sprites/";
-
-    /**
      * Initializes the sprites hashtables. Will eventually figure out which Image
      * class is better: java.awt.Image, or javafx.scene.image.Image.
      */
@@ -61,27 +58,35 @@ public class ImageLoader implements Loader {
      */
     @Override
     public void run() {
-        File f;
         ImageIndex [] ind = ImageIndex.values();
+        
         /** Change this if for some reason we want more cursors. */
         int NUM_CURSORS = 4;
         for (int i = 0; i < NUM_CURSORS; i++) {
-            String s = path + "CURSOR_" + i + extension;
-            File f2 = new File(s);
-            if (f2.exists()) {
-                cursors.add(new ImageCursor(
-                        new Image(f2.toURI().toString()), 0, 0));
-                if ((Settings.debug & 0b01) != 0)
-                    System.out.println(
-                            "Loaded Cursor: " + s);
+            String path = "CURSOR_" + i + extension;
+            try {
+                File f = Utilities.getResourceFile(path, Values.SPRITES_FOLDER);
+                if (f.exists()) {
+                    cursors.add(new ImageCursor(
+                            new Image(f.toURI().toString()), 0, 0));
+                    if ((Settings.debug & 0b01) != 0)
+                        System.out.println(
+                                "Loaded Cursor: " + path);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
+        
         for (ImageIndex i : ind) {
+            if (i == ImageIndex.NONE || i == ImageIndex.BLANK)
+                continue;
+            
             setLoadStatus((i.ordinal() + 1.0) / ind.length);
-            f = new File(path + i.toString() + extension);
+            String path = i.toString() + extension;
             try {
-                Image temp2 =
-                        new Image(f.toURI().toString());
+                File f = Utilities.getResourceFile(path, Values.SPRITES_FOLDER);
+                Image temp2 = new Image(f.toURI().toString());
                 spritesFX.put(i, temp2);
                 if ((Settings.debug & 0b01) != 0)
                     System.out.println(
@@ -91,8 +96,8 @@ public class ImageLoader implements Loader {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                } catch (Exception e) {
-                    e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         setLoadStatus(1);

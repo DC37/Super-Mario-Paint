@@ -132,12 +132,12 @@ public enum ImageIndex {
     /**
      * The frame that encloses the staff.
      */
-    STAFF_FRAME,
+    STAFF_FRAME, INST_BACKGROUND,
 
     /**
      * The background of the staff, which contains a treble clef.
      */
-    STAFF_BG,
+    STAFF_BG, STAFF_BG_TREBLEBASS,
 
     /**
      * Each one of these lines indicates a "beat"
@@ -168,11 +168,20 @@ public enum ImageIndex {
      * above or below the middle five lines of the staff.
      */
     STAFF_HLINE,
+    
+    /**
+     * The image that is displayed behind the currently selected intrument.
+     */
+    SEL_INST_SM,
 
     /**
      * Controls elements
      */
     CONTROLS_LEFT, CONTROLS_MID, CONTROLS_RIGHT,
+    SAVE, LOAD, NEW_SONG, OPTIONS,
+    VOL_LABEL,
+    ADD, DELETE, UP, DOWN,
+    BOTTOM_BAR, MODE,
 
     /**
      * Button elements
@@ -193,10 +202,7 @@ public enum ImageIndex {
     /*
      * Tempo stuff.
      */
-    TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL,
-
-    /** Digits for the ImageViews of the measure lines. */
-    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE;
+    TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL;
 
 
     /** The alt version of this sprite. It can be null. */
