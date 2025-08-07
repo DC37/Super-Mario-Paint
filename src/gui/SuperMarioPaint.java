@@ -58,17 +58,6 @@ import javafx.stage.Stage;
 public class SuperMarioPaint extends Application  {
 
     /**
-     * Location of the Main Window fxml file.
-     */
-    private String mainFxml = "./MainWindow.fxml";
-
-    /**
-     * Location of the Advanced Mode (super secret!!) fxml file.
-     */
-    @SuppressWarnings("unused")
-    private String advFxml = "./AdvWindow.fxml";
-
-    /**
      * The number of threads that are running to load things for Super Mario
      * Paint.
      */
@@ -130,7 +119,8 @@ public class SuperMarioPaint extends Application  {
         
         FXMLLoader loader = new FXMLLoader();
         loader.setController(controller);
-        loader.setLocation(new File(mainFxml).toURI().toURL());
+        File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER);
+        loader.setLocation(fxml.toURI().toURL());
         
         root = (Parent) loader.load();
         notifyPreloader(new ProgressNotification(0.75));
