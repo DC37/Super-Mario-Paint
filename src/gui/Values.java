@@ -198,6 +198,8 @@ public class Values {
 	
 	public static final String SMP_FOLDER = new PlatformDependency().getPlatformFolder();
 	
+	public static final String FXML = "MainWindow.fxml";
+	
 	/**
 	 * This is where we store soundfonts.
 	 */
