@@ -1,7 +1,5 @@
 name: Build MacOS runtime
-on:
-  workflow_dispatch:
-
+on: [push]
 env:
   JAVA_VERSION: '24'
   FX_VERSION: '24.0.2'
