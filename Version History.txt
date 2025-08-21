@@ -4,6 +4,17 @@ Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
 Bugfix = No new features added, but addresses some bugs.
 
+v1.5.0
+Time signatures
+Deployment as runtime image---users don't need Java anymore
+Apostrophes in song names are now allowed
+The program no longer "freezes"
+Playback now disables all movement
+A ledger line for the middle C was added
+Some erratic behavior of the note shadow was corrected
+It now is possible to update a soundfont without deleting the previous file beforehand
+And some more minor stuff
+
 v1.4.4
 v1.3.2
 Hotfixes to allow Linux users to run v1.3.x and v1.4.x
