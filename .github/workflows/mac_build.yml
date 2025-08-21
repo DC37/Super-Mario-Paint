@@ -20,9 +20,9 @@ jobs:
 
     - name: Download JavaFX ${{ env.FX_VERSION }} jmods
       run: |
-        curl -L -o jfx-mods.zip \
+        curl -L -o jfx-jmods.zip \
            "https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_osx-aarch64_bin-jmods.zip"
-        unzip -q jfx-mods.zip -d jfx-mods
+        unzip -q jfx-jmods.zip -d jfx-jmods
 
     - name: Build MacOS runtime
       run: |
