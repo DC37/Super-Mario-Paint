@@ -22,13 +22,13 @@ jobs:
 
     - name: Download JavaFX ${{ env.FX_VERSION }} jmods
       run: |
-        curl -L -o jfx-sdk.zip \
+        curl -L -o jfx-mods.zip \
            "https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_osx-aarch64_bin-jmods.zip"
-        unzip -q jfx-sdk.zip -d jfx-sdk
+        unzip -q jfx-mods.zip -d jfx-mods
 
     - name: Build MacOS runtime
       run: |
-        MODS_DIR="{JAVA_HOME}/jmods"
+        MODS_DIR="${JAVA_HOME}/jmods"
         FX_JMODS_DIR="$GITHUB_WORKSPACE"/jfx-jmods/javafx-jmods-*
         "$JAVA_HOME/bin/jlink" \
          --module-path "$JMODS_DIR:$FX_JMODS_DIR" \
