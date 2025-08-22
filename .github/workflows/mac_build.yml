@@ -1,12 +1,30 @@
-name: Build MacOS runtime
+name: Build runtimes
 on: [push]
 env:
   JAVA_VERSION: '24'
   FX_VERSION: '24.0.2'
 
 jobs:
-  macos_build:
-    runs-on: macos-latest
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macos aarch64
+          - os: macos-latest
+            arch: aarch64
+            fx_jmods_url: https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_osx-aarch64_bin-jmods.zip
+            path_sep: ':'
+            dist: macOS_aarch64
+
+          # macos x64
+          - os: macos-13
+            arch: x64
+            fx_jmods_url: https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_osx-x64_bin-jmods.zip
+            path_sep: ':'
+            dist: macOS_x64
+            
+    runs-on: ${{ matrix.os }}
 
     steps:
     - name: Check out repository code
@@ -21,30 +39,31 @@ jobs:
     - name: Download JavaFX ${{ env.FX_VERSION }} jmods
       run: |
         curl -L -o jfx-jmods.zip \
-           "https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_osx-aarch64_bin-jmods.zip"
+           "${{ matrix.fx_jmods_url }}"
         unzip -q jfx-jmods.zip -d jfx-jmods
 
-    - name: Build MacOS runtime
+    - name: Build runtime
       run: |
         JMODS_DIR="${JAVA_HOME}/jmods"
         FX_JMODS_DIR="$GITHUB_WORKSPACE/jfx-jmods/javafx-jmods-${{ env.FX_VERSION }}"
+        MODULE_PATH="$JMODS_DIR${{ matrix.path_sep }}$FX_JMODS_DIR"
         "$JAVA_HOME/bin/jlink" \
-         --module-path "$JMODS_DIR:$FX_JMODS_DIR" \
+         --module-path "$MP" \
          --add-modules java.base,java.logging,java.desktop,java.xml,javafx.base,javafx.controls,javafx.fxml,javafx.graphics \
          --strip-debug --no-header-files --no-man-pages --compress=2 \
-         --output runtime-mac
+         --output runtime
 
-    - name: Package runtime
+    - name: Package artifacts
       run: |
         set -euo pipefail
-        DIST="dist_macOS"
+        DIST="${{ matrix.dist}}"
         mkdir -p "$DIST"
-        mv runtime-mac "$DIST/runtime"
+        mv runtime "$DIST/"
         cat > "$DIST/run.sh" << 'SH'
         #!/usr/bin/env bash
         set -euo pipefail
         DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-        exec "$DIR/runtime/bin/java" -jar "$DIR/smptest.jar" "$@"
+        exec "$DIR/bin/java" -jar "$DIR/smp.jar" "$@"
         SH
         chmod +x "$DIST/run.sh"
         tar -czf "${DIST}.tar.gz" "$DIST"
@@ -52,8 +71,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: test_mac
+        name: test_${{ matrix.os }}_${{ matrix.arch }}
         path: |
-          dist_macOS/**
-          dist_macOS.tar.gz
+          ${{ matrix.dist }}/**
     
