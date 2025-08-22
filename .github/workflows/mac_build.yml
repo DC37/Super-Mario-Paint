@@ -12,15 +12,15 @@ jobs:
         include:
           # macos aarch64
           - os: macos-latest
+            osheader: osx
             arch: aarch64
-            fx_jmods_url: https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_osx-aarch64_bin-jmods.zip
             path_sep: ':'
             dist: macOS_aarch64
 
           # macos x64
           - os: macos-13
             arch: x64
-            fx_jmods_url: https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_osx-x64_bin-jmods.zip
+            osheader: osx
             path_sep: ':'
             dist: macOS_x64
             
@@ -38,6 +38,7 @@ jobs:
 
     - name: Download JavaFX ${{ env.FX_VERSION }} jmods
       run: |
+        fx_jmods_url: https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_${{ matrix.osheader }}-${{ matrix.arch }}_bin-jmods.zip
         curl -L -o jfx-jmods.zip \
            "${{ matrix.fx_jmods_url }}"
         unzip -q jfx-jmods.zip -d jfx-jmods
