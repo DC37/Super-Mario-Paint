@@ -57,16 +57,16 @@ jobs:
     - name: Package artifacts
       run: |
         set -euo pipefail
-        DIST="${{ matrix.dist}}"
+        DIST="${{ matrix.dist }}"
         mkdir -p "$DIST"
-        mv runtime "$DIST/"
-        cat > "$DIST/run.sh" << 'SH'
+        mv ./runtime/ "$DIST/"
+        cat > "$DIST/smptest.sh" << 'SH'
         #!/usr/bin/env bash
         set -euo pipefail
         DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
         exec "$DIR/bin/java" -jar "$DIR/smp.jar" "$@"
         SH
-        chmod +x "$DIST/run.sh"
+        chmod +x "$DIST/smptest.sh"
         tar -czf "${DIST}.tar.gz" "$DIST"
 
     - name: Upload artifact
