@@ -4,6 +4,10 @@ env:
   JAVA_VERSION: '24'
   FX_VERSION: '24.0.2'
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     strategy:
