@@ -82,7 +82,7 @@ jobs:
         mkdir -p "$DIST"
         mv ./runtime/* "$DIST/"
 
-        if [ "${{ matrix.osheader }}" = "windows"]' then
+        if [ "${{ matrix.osheader }}" = "windows" ]; then
           cat > "$DIST/smptest.bat" << 'BAT'
           "./bin/java.exe" -jar "./smp.jar"
           BAT
