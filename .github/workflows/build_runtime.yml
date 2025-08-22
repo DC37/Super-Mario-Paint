@@ -24,6 +24,27 @@ jobs:
             path_sep: ':'
             dist: macOS_x64
             
+          # linux ubuntu
+          - os: ubuntu-latest
+            arch: x64
+            osheader: linux
+            path_sep: ':'
+            dist: linux_x64
+            
+          # linux aarch64
+          - os: ubuntu-latest
+            arch: aarch64
+            osheader: linux
+            path_sep: ':'
+            dist: linux_aarch64
+
+          # windows
+          - os: windows-latest
+            arch: x64
+            osheader: windows
+            path_sep: ';'
+            dist: windows_x64
+            
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -59,15 +80,22 @@ jobs:
         set -euo pipefail
         DIST="${{ matrix.dist }}"
         mkdir -p "$DIST"
-        mv ./runtime/ "$DIST/"
-        cat > "$DIST/smptest.sh" << 'SH'
-        #!/usr/bin/env bash
-        set -euo pipefail
-        DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-        exec "$DIR/bin/java" -jar "$DIR/smp.jar" "$@"
-        SH
-        chmod +x "$DIST/smptest.sh"
-        tar -czf "${DIST}.tar.gz" "$DIST"
+        mv ./runtime/* "$DIST/"
+
+        if [ "${{ matrix.osheader }}" = "windows"]' then
+          cat > "$DIST/smptest.bat" << 'BAT'
+          "./bin/java.exe" -jar "./smp.jar"
+          BAT
+        else
+          cat > "$DIST/smptest.sh" << 'SH'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+          exec "$DIR/bin/java" -jar "$DIR/smp.jar" "$@"
+          SH
+          chmod +x "$DIST/smptest.sh"
+        fi
+        # tar -czf "${DIST}.tar.gz" "$DIST"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
