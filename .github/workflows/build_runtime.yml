@@ -82,21 +82,6 @@ jobs:
         mkdir -p "$DIST"
         mv ./runtime/* "$DIST/"
 
-        if [ "${{ matrix.osheader }}" = "windows" ]; then
-          cat > "$DIST/smptest.bat" << 'BAT'
-          "./bin/java.exe" -jar "./smp.jar"
-          BAT
-        else
-          cat > "$DIST/smptest.sh" << 'SH'
-          #!/usr/bin/env bash
-          set -euo pipefail
-          DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-          exec "$DIR/bin/java" -jar "$DIR/smp.jar" "$@"
-          SH
-          chmod +x "$DIST/smptest.sh"
-        fi
-        # tar -czf "${DIST}.tar.gz" "$DIST"
-
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
