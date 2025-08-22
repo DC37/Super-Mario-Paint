@@ -38,9 +38,9 @@ jobs:
 
     - name: Download JavaFX ${{ env.FX_VERSION }} jmods
       run: |
-        fx_jmods_url: https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_${{ matrix.osheader }}-${{ matrix.arch }}_bin-jmods.zip
+        fx_jmods_url=https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_${{ matrix.osheader }}-${{ matrix.arch }}_bin-jmods.zip
         curl -L -o jfx-jmods.zip \
-           "${{ matrix.fx_jmods_url }}"
+           "${{ fx_jmods_url }}"
         unzip -q jfx-jmods.zip -d jfx-jmods
 
     - name: Build runtime
