@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class Settings {
 
     /** The current version number of this program. */
-    public final static String version = "v1.4.4";
+    public final static String version = "v1.5.0";
 
     /** The name of the file that we write to. */
     private final static String settingsFile = "settings.data";

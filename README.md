@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.4.4, 1.3.2
+* Current Version: 1.5.0 (current), 1.3.2 (legacy smaller staff, requires J1.8u441 runtime)
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
@@ -14,6 +14,7 @@ https://docs.google.com/document/d/1zLSkC-clCSxvVUnbYQAxImmJA-QSwSSyzuC62enLiLc/
 Major Releases:
 -----
 See "Version History.txt" for semantic versioning and more release notes.
+* August 22, 2025 - v1.5.0 release with major java runtime fixes
 * August 12-13, 2024 - v1.4.4 and v1.3.2 release with Linux updates
 * October 17-19, 2021 - v1.4.3 release with more backend upgrades and Java9+ support with release automation scripts
 * June 24, 2020 - v1.4.2 release with more backend upgrades
@@ -35,6 +36,17 @@ See "Version History.txt" for semantic versioning and more release notes.
 * August 7, 2012 - Project started
 
 Confirmed Operating System Configurations:
+Standalone Java Runtime
+Ubuntu-22.04 x64
+Windows 11 x64
+
+Unconfirmed Operating System Configurations:
+MacOS aarch64
+MacOS x64
+Linux aarch64
+
+Deprecated Operating System Configurations:
+Java runtime no longer has JavaFX
 * Windows 7 + Java 8u25
 * Windows 7 + Java 8u73
 * Windows 8.1 + Java 8u25
@@ -42,14 +54,13 @@ Confirmed Operating System Configurations:
 * Windows 10 + Java 8u161
 * Windows 10 + Java 8u251
 * Windows 10 + Java 14.0.1+7
-* Windows 11 + Java 1.8
+* Windows 11 + Java 1.8 u441
 * Windows 11 + Java 12
 * Windows 11 + Java 17
 * Windows 11 + Java 22
 * Mac OSX 10.9.5 + Java 8u25
 * Ubuntu 14.04-18.04 + Java 8
 
-Deprecated Operating System Configurations:
 -----
 Java 7 is no longer supported as of v1.1.0
 * Windows 7 + Java 7u71
