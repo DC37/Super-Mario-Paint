@@ -64,7 +64,8 @@ public class LoadButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        load(((Node) event.getSource()).getScene().getWindow());
+    	Window owner = (event == null) ? null : ((Node) event.getSource()).getScene().getWindow();
+        load(owner);
     }
 
     @Override

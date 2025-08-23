@@ -55,10 +55,11 @@ public class NewButton extends ImagePushButton {
     @Override
     protected void reactPressed(MouseEvent event) {
         ProgramState curr = StateMachine.getState();
+    	Window owner = (event == null) ? null : ((Node) event.getSource()).getScene().getWindow();
         if (curr == ProgramState.EDITING)
-            newSong(((Node) event.getSource()).getScene().getWindow());
+            newSong(owner);
         else if (curr == ProgramState.ARR_EDITING)
-            newArrangement(((Node) event.getSource()).getScene().getWindow());
+            newArrangement(owner);
     }
 
     @Override
