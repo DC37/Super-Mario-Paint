@@ -1,5 +1,7 @@
 name: Build runtimes
-on: [push]
+on: 
+  workflow_dispatch:
+
 env:
   JAVA_VERSION: '24'
   FX_VERSION: '24.0.2'
