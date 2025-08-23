@@ -19,7 +19,6 @@ import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
 import gui.components.Controls;
 import gui.components.staff.StaffDisplayManager;
-import gui.components.toppanel.PanelButtons;
 import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -53,9 +52,6 @@ public class Staff {
 
     /** These are the play button, stop button, etc. */
     private Controls theControls;
-
-    /** This is the top panel of buttons. */
-    private PanelButtons topPanel;
 
     /**
      * The wrapper that holds a series of ImageView objects that are meant to
@@ -471,21 +467,6 @@ public class Staff {
      */
     public Controls getControlPanel() {
         return theControls;
-    }
-
-    /**
-     * @param topPanel
-     *            The top panel we want to set.
-     */
-    public void setTopPanel(PanelButtons t) {
-        topPanel = t;
-    }
-
-    /**
-     * @return The top panel.
-     */
-    public PanelButtons getTopPanel() {
-        return topPanel;
     }
 
     /**

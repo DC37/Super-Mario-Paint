@@ -64,9 +64,6 @@ public class SMPFXController {
      */
     private Staff staff;
 
-    /** The top panel buttons that are not the instrument button line. */
-    private PanelButtons topPanel;
-
     /**
      * The button that changes the mode of the staff between song and arranger
      * mode.
@@ -439,8 +436,7 @@ public class SMPFXController {
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
         selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
 
-        topPanel = new PanelButtons(staff, this, il, instBLine);
-        staff.setTopPanel(topPanel);
+        new PanelButtons(staff, this, il, instBLine);
 
         arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
