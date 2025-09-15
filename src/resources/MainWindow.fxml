@@ -129,21 +129,6 @@
                       </padding>
                     </HBox>
                     <HBox fx:id="staffMeasureLines" alignment="CENTER_LEFT" layoutX="54.0" layoutY="24.0" prefHeight="276.0" prefWidth="982.0" spacing="62.0">
-                      <children>
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="448.0" fitWidth="2.0" pickOnBounds="true" preserveRatio="true" />
-                      </children>
                       <padding>
                         <Insets left="144.0" />
                       </padding>

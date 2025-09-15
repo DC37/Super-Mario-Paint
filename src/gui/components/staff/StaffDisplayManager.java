@@ -151,8 +151,17 @@ public class StaffDisplayManager {
      */
     private void initializeStaffMeasureLines() {
         measureLines = new ArrayList<ImageView>();
-        for (Node n : staffMeasureLines.getChildren())
-            measureLines.add((ImageView) n);
+        
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            ImageView iv = new ImageView();
+            iv.setFitHeight(448.0);
+            iv.setFitWidth(2.0);
+            iv.setPickOnBounds(true);
+            iv.setPreserveRatio(true);
+            
+            staffMeasureLines.getChildren().add(iv);
+            measureLines.add(iv);
+        }
     }
     
     private void initializeStaffMeasureNums() {
