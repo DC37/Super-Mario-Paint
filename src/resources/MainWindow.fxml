@@ -124,21 +124,6 @@
                       </children>
                     </StackPane>
                     <HBox fx:id="staffMeasureNumbers" alignment="CENTER_LEFT" layoutX="54.0" layoutY="5.0" prefHeight="12.0" prefWidth="982.0" spacing="22.0">
-                      <children>
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                        <HBox alignment="CENTER" prefHeight="9.0" prefWidth="42.0" />
-                      </children>
                       <padding>
                         <Insets left="124.0" />
                       </padding>

@@ -13,6 +13,7 @@ import gui.Values;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import javafx.event.Event;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -153,20 +154,19 @@ public class StaffDisplayManager {
         for (Node n : staffMeasureLines.getChildren())
             measureLines.add((ImageView) n);
     }
-
-    /**
-     * These are the numbers above each successive measure.
-     */
+    
     private void initializeStaffMeasureNums() {
-        ArrayList<HBox> measureNumBoxes = new ArrayList<HBox>();
         measureNums = new ArrayList<Text>();
-        for (Node num : staffMeasureNums.getChildren())
-            measureNumBoxes.add((HBox) num);
-
-        for (int i = 0; i < measureNumBoxes.size(); i++) {
-            HBox theBox = measureNumBoxes.get(i);
+        
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            HBox box = new HBox();
+            box.setAlignment(Pos.CENTER);
+            box.setPrefHeight(9.0);
+            box.setPrefWidth(42.0);
+            
+            staffMeasureNums.getChildren().add(box);
             Text t = new Text();
-            theBox.getChildren().add(t);
+            box.getChildren().add(t);
             measureNums.add(t);
         }
     }
