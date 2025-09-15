@@ -64,11 +64,11 @@ public class NoteMatrix {
         cacheSilhouette = null;
     }
     
-    public StackPane getNotes(int x, int y) {
+    private StackPane getNotes(int x, int y) {
         return matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
     }
     
-    public StackPane getAccidentals(int x, int y) {
+    private StackPane getAccidentals(int x, int y) {
         return accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
     }
     
