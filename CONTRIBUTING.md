@@ -21,12 +21,12 @@ There are a few quirks of Git that will very quickly mess up your Git history if
 
 ### Features
 The general requested flow is:
-- Fork the repository (optional -- recommended)
+- Fork the repository (this is necessary, unless you were granted write permissions for the repository)
 - Branch off of *main* and implement your feature
-    - Make sure to test your feature against at least Java 1.8 and Java 9 if possible
+    - Make sure to test it before proceeding to the next step
 - Make a pull request that encapsulates the feature
-- The pull request will be reviewed and tested against at least Java 1.8 and Java 9 to ensure functionality
-- If it passes the above functionality tests it will be rebased and merged into *main*.
+- The pull request will be reviewed and tested to ensure functionality
+- If it passes the above functionality tests it will be rebased and merged into *main*
 - Once the feature has been merged you can delete the branch
 	- If you want to make another feature it's recommended you branch off of the most updated *main* again
 
