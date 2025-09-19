@@ -13,21 +13,27 @@ This step will make it more convenient to link the project with your version of 
 
 Click on `New` to declare a library. You can choose an appropriate name for your installation---this guide will use the name "JavaFX 21" for examples. When the library is defined, you can add modules to it by clicking on `Adding External JARs`. You will have to select every module from the location of JavaFX on your computer. Typically these will be under a `lib/` folder and have names like `javafx.base.jar`, `javafx.controls.jar`, etc.
 
-Here is what the result should look like in the end: ![image](images/eclipse-javafx-user-library.png)
+Here is what the result should look like in the end:
+
+![image](images/eclipse-javafx-user-library.png)
 
 Optionnally, you can _add sources_ to each module, if they are included in your distribution of JavaFX. Doing so will allow you to inspect the JavaFX source code while working on the project. For each module, expand by clicking on the arrow, then double-click on `Source attachment: (None)`. In the window that opens, you need to select `External Location`, then `External Folder` and select the sources folder whose names matches the module (like "javafx.base" for the _base_ module). This must be done for every module with sources available.
 
 
 ## Project Setup
 
-Get a copy of the [sources](https://github.com/DC37/Super-Mario-Paint) from Github. You can either clone it, or just download a ZIP if you don't wish to use Git. From Eclipse, go to `File > New > Java Project`. The window that opens will let you configure the project according to your preferences. You can fill in as in the following picture: ![image](images/eclipse-project-setup)
+Get a copy of the [sources](https://github.com/DC37/Super-Mario-Paint) from Github. You can either clone it, or just download a ZIP if you don't wish to use Git. From Eclipse, go to `File > New > Java Project`. The window that opens will let you configure the project according to your preferences. You can fill in as in the following picture:
+
+![image](images/eclipse-project-setup.png)
 
 - You can choose the project's name as you like;
 - If "default location" is checked, you need to uncheck it and then browse to select the location of Super Mario Paint's sources on your computer;
 - Please uncheck "Create module-info.java file" as the project is already configured with such a file;
 - If you want to use a Java Runtime Environment (JRE) that's not the default one in Eclipse, you can select one from this window.
 
-Click `Next`. The next window will give you the opportunity to link the project with JavaFX. Go to the `Libraries` tab. Click to highlight `Modulepath` and then click on `Add Library`. Follow the step to add the _user library_ you set up earlier ("JavaFX 21" in our case). The result should be this: ![image](images/eclipse-build-path.png)
+Click `Next`. The next window will give you the opportunity to link the project with JavaFX. Go to the `Libraries` tab. Click to highlight `Modulepath` and then click on `Add Library`. Follow the step to add the _user library_ you set up earlier ("JavaFX 21" in our case). The result should be this:
+
+![image](images/eclipse-build-path.png)
 
 When you click `Finish` the project should be set up! You can test by finding the file `src/gui/SuperMarioPaint.java` in the Package Explorer. Right-click on it and select `Run As > Java Application`.
 
