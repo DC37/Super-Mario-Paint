@@ -116,12 +116,26 @@ public class StaffDisplayManager {
      */
     private void initializeVolumeBars() {
         volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
-        for (Node v : staffVolumeBars.getChildren()) {
-            StackPane volBar = (StackPane) v;
-            StaffVolumeEventHandler sveh = new StaffVolumeEventHandler(volBar, il, commandManager);
-            sveh.setStaffNoteLine(new StaffNoteLine());
-            volBar.addEventHandler(Event.ANY, sveh);
-            volumeBarHandlers.add(sveh);
+        
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            StackPane stack = new StackPane();
+            stack.setAlignment(Pos.BOTTOM_CENTER);
+            stack.setPrefHeight(64.0);
+            stack.setPrefWidth(64.0);
+            
+            ImageView iv = new ImageView();
+            iv.setFitHeight(64.0);
+            iv.setFitWidth(4.0);
+            iv.setPickOnBounds(true);
+            
+            stack.getChildren().add(iv);
+            
+            StaffVolumeEventHandler handler = new StaffVolumeEventHandler(stack, il, commandManager);
+            handler.setStaffNoteLine(new StaffNoteLine());
+            stack.addEventHandler(Event.ANY, handler);
+            
+            staffVolumeBars.getChildren().add(stack);
+            volumeBarHandlers.add(handler);
         }
     }
     
