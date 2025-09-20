@@ -108,8 +108,8 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 		// the bounds are off by 2 for some reason
 		filterImage.setFitWidth(26);
 		filterImage.setFitHeight(28);
-		filterImage.setTranslateX(instrumentImageBounds.getMinX() - 2);
-		filterImage.setTranslateY(instrumentImageBounds.getMinY() - 2);
+		filterImage.setLayoutX(instrumentImageBounds.getMinX() - 2);
+		filterImage.setLayoutY(instrumentImageBounds.getMinY() - 2);
 		filterImage.setOpacity(0.0);
 		
 		FadeTransition ft = new FadeTransition(Duration.millis(2000), filterImage);
