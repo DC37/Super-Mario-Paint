@@ -134,101 +134,26 @@
                       </padding>
                     </HBox>
                     <HBox fx:id="staffExtLinesHighC" alignment="CENTER_LEFT" layoutX="54.0" layoutY="-1.0" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <children>
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                      </children>
                       <padding>
                         <Insets left="124.0" top="-1.0" />
                       </padding>
                     </HBox>
                     <HBox fx:id="staffExtLinesHighA" alignment="CENTER_LEFT" layoutX="54.0" layoutY="31.0" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <children>
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                      </children>
                       <padding>
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
                     <HBox id="staffExtLinesLowA" fx:id="staffExtLinesMiddleC" alignment="CENTER_LEFT" layoutX="54.0" layoutY="223" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <children>
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                      </children>
                       <padding>
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
                     <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowC" alignment="CENTER_LEFT" layoutX="54.0" layoutY="415" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <children>
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                        <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                      </children>
                       <padding>
                         <Insets left="124.0" />
                       </padding>
                     </HBox>
                               <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowA" alignment="CENTER_LEFT" layoutX="54.0" layoutY="447" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                                 <children>
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                    <Rectangle height="4.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="42.0" />
-                                 </children>
                                  <padding>
                                     <Insets left="124.0" />
                                  </padding>

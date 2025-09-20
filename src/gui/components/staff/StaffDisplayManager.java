@@ -18,6 +18,9 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -236,11 +239,25 @@ public class StaffDisplayManager {
         middleC = new ArrayList<Node>();
         lowC = new ArrayList<Node>();
         lowA = new ArrayList<Node>();
-        highC.addAll(staffLedgerLines[0].getChildren());
-        highA.addAll(staffLedgerLines[1].getChildren());
-        middleC.addAll(staffLedgerLines[2].getChildren());
-        lowC.addAll(staffLedgerLines[3].getChildren());
-        lowA.addAll(staffLedgerLines[4].getChildren());
+        
+        ArrayList<?>[] all = { highC, highA, middleC, lowC, lowA };
+        
+        for (int k = 0; k < 5; k++) {
+            @SuppressWarnings("unchecked")
+            ArrayList<Node> arr = (ArrayList<Node>) all[k];
+            
+            for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+                Rectangle ledger = new Rectangle(42.0, 4.0);
+                ledger.setStroke(Paint.valueOf("BLACK"));
+                ledger.setStrokeType(StrokeType.INSIDE);
+                ledger.setStrokeWidth(0.0);
+                ledger.setSmooth(false);
+                ledger.setVisible(false);
+                
+                staffLedgerLines[k].getChildren().add(ledger);
+                arr.add(ledger);
+            }
+        }
     }
     
     public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
