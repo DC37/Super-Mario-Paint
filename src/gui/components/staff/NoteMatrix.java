@@ -10,7 +10,7 @@ import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import gui.Values;
 import gui.loaders.ImageLoader;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -77,34 +77,56 @@ public class NoteMatrix {
         initializeAccidentalsMatrix(staffAccidentals);
     }
     
-    /**
-     * Initialize some matrix in the standard way
-     * @param vBoxes a HBox of VBoxes of StackPanes
-     * @param matrix the matrix to fill
-     */
-    private void initializeMatrix(HBox vBoxes, ArrayList<ArrayList<StackPane>> matrix) {
+    private void initializeNotesMatrix(HBox staffInstruments) {
         matrix.clear();
         
-        for (Node nl : vBoxes.getChildren()) {
-            ArrayList<StackPane> line = new ArrayList<>();
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            VBox vBox = new VBox();
+            vBox.setSpacing(-20.0);
+            vBox.setAlignment(Pos.CENTER);
             
-            for (Node n : ((VBox) nl).getChildren()) {
-                StackPane st = (StackPane) n;
+            ArrayList<StackPane> column = new ArrayList<>();
+            
+            for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
+                StackPane stack = new StackPane();
+                stack.setDisable(true);
+                stack.setPrefHeight(36.0);
+                stack.setPrefWidth(64.0);
                 
-                st.setDisable(true);
-                line.add(st);
+                vBox.getChildren().add(stack);
+                column.add(stack);
             }
             
-            matrix.add(line);
-        }
-    }
-    
-    private void initializeNotesMatrix(HBox staffInstruments) {
-        initializeMatrix(staffInstruments, this.matrix);
+            staffInstruments.getChildren().add(vBox);
+            matrix.add(column);
+        }  
     }
     
     private void initializeAccidentalsMatrix(HBox staffAccidentals) {
-        initializeMatrix(staffAccidentals, this.accMatrix);
+        accMatrix.clear();
+        
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            VBox vBox = new VBox();
+            vBox.setSpacing(-20.0);
+            vBox.setAlignment(Pos.CENTER);
+            vBox.setPrefHeight(472.0);
+            vBox.setPrefWidth(32.0);
+            
+            ArrayList<StackPane> column = new ArrayList<>();
+            
+            for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
+                StackPane stack = new StackPane();
+                stack.setDisable(true);
+                stack.setPrefHeight(36.0);
+                stack.setPrefWidth(32.0);
+                
+                vBox.getChildren().add(stack);
+                column.add(stack);
+            }
+            
+            staffAccidentals.getChildren().add(vBox);
+            accMatrix.add(column);
+        }     
     }
 
     /**
