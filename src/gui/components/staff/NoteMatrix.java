@@ -74,14 +74,6 @@ public class NoteMatrix {
         cacheSilhouette = null;
     }
     
-    private ArrayList<ImageView> getNotes(int x, int y) {
-        return matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
-    }
-    
-    private ArrayList<ImageView> getAccidentals(int x, int y) {
-        return accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
-    }
-    
     public void initializeNoteDisplay(HBox staffInstruments, HBox staffAccidentals) {
         initializeNotesMatrix(staffInstruments);
         initializeAccidentalsMatrix(staffAccidentals);
@@ -116,7 +108,7 @@ public class NoteMatrix {
                     notes.add(iv);
                 }
                 
-                vBox.getChildren().add(stack);
+                vBox.getChildren().add(0, stack);
                 column.add(notes);
             }
             
@@ -156,7 +148,7 @@ public class NoteMatrix {
                     accs.add(iv);
                 }
                 
-                vBox.getChildren().add(stack);
+                vBox.getChildren().add(0, stack);
                 column.add(accs);
             }
             
@@ -192,8 +184,8 @@ public class NoteMatrix {
             
             for (StaffNote s : st) {
                 int j = s.getPosition();
-                ArrayList<ImageView> notes = getNotes(i, j);
-                ArrayList<ImageView> accidentals = getAccidentals(i, j);
+                ArrayList<ImageView> notes = matrix.get(i).get(j);
+                ArrayList<ImageView> accidentals = accMatrix.get(i).get(j);
                 
                 StaffAccidental accidental = new StaffAccidental(s);
                 
@@ -224,11 +216,11 @@ public class NoteMatrix {
         int line = currentSilhouetteLine;
         int pos = currentSilhouette.getPosition();
         
-        ArrayList<ImageView> notes = getNotes(line, pos);
+        ArrayList<ImageView> notes = matrix.get(line).get(pos);
         notes.get(Values.MAX_STACKABLE_NOTES).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
-            ArrayList<ImageView> accs = getAccidentals(line, pos);
+            ArrayList<ImageView> accs = accMatrix.get(line).get(pos);
             accs.get(Values.MAX_STACKABLE_NOTES).setVisible(false);
         }
         
@@ -252,12 +244,12 @@ public class NoteMatrix {
         currentSilhouetteLine = line;
         currentSilhouette = silhouette;
         
-        ArrayList<ImageView> notes = getNotes(line, pos);
+        ArrayList<ImageView> notes = matrix.get(line).get(pos);
         notes.get(Values.MAX_STACKABLE_NOTES).setImage(silhouette.getImage(il));
         notes.get(Values.MAX_STACKABLE_NOTES).setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
-            ArrayList<ImageView> accs = getAccidentals(line, pos);
+            ArrayList<ImageView> accs = accMatrix.get(line).get(pos);
             StaffAccidental acc = new StaffAccidental(silhouette);
             accs.get(Values.MAX_STACKABLE_NOTES).setImage(acc.getImage(il));
             accs.get(Values.MAX_STACKABLE_NOTES).setVisible(true);
