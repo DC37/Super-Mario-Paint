@@ -1,7 +1,6 @@
 package gui.components.staff;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import backend.songs.Accidental;
 import backend.songs.StaffAccidental;
@@ -9,8 +8,13 @@ import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import gui.Values;
+import gui.clipboard.StaffClipboard;
 import gui.loaders.ImageLoader;
 import javafx.geometry.Pos;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -32,14 +36,8 @@ import javafx.scene.layout.VBox;
  */
 public class NoteMatrix {
 
-    /**
-     * The list of lists that holds the different <code>StackPane</code>
-     * objects.
-     */
-    private ArrayList<ArrayList<StackPane>> matrix;
-
-    /** This is the matrix of flats / sharps / etc. */
-    private ArrayList<ArrayList<StackPane>> accMatrix;
+    private ArrayList<ArrayList<ArrayList<ImageView>>> matrix;
+    private ArrayList<ArrayList<ArrayList<ImageView>>> accMatrix;
 
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
@@ -55,20 +53,32 @@ public class NoteMatrix {
      * Used to refresh the silhouette after the entire matrix has been cleared.
      */
     private StaffNote cacheSilhouette;
+    
+    private static Blend highlightBlend = new Blend(
+            BlendMode.SRC_OVER,
+            null,
+            new ColorInput(
+                    0,
+                    0,
+                    32,
+                    36,
+                    StaffClipboard.HIGHLIGHT_FILL
+                    )
+            );
 
     public NoteMatrix(ImageLoader i) {
         il = i;
-        matrix = new ArrayList<ArrayList<StackPane>>();
-        accMatrix = new ArrayList<ArrayList<StackPane>>();
+        matrix = new ArrayList<ArrayList<ArrayList<ImageView>>>();
+        accMatrix = new ArrayList<ArrayList<ArrayList<ImageView>>>();
         currentSilhouette = null;
         cacheSilhouette = null;
     }
     
-    private StackPane getNotes(int x, int y) {
+    private ArrayList<ImageView> getNotes(int x, int y) {
         return matrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
     }
     
-    private StackPane getAccidentals(int x, int y) {
+    private ArrayList<ImageView> getAccidentals(int x, int y) {
         return accMatrix.get(x).get(Values.NOTES_IN_A_LINE - y - 1);
     }
     
@@ -85,7 +95,7 @@ public class NoteMatrix {
             vBox.setSpacing(-20.0);
             vBox.setAlignment(Pos.CENTER);
             
-            ArrayList<StackPane> column = new ArrayList<>();
+            ArrayList<ArrayList<ImageView>> column = new ArrayList<>();
             
             for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
                 StackPane stack = new StackPane();
@@ -93,8 +103,21 @@ public class NoteMatrix {
                 stack.setPrefHeight(36.0);
                 stack.setPrefWidth(64.0);
                 
+                ArrayList<ImageView> notes = new ArrayList<>();
+                
+                // +1 for silhouette
+                for (int k = 0; k < Values.MAX_STACKABLE_NOTES + 1; k++) {
+                    ImageView iv = new ImageView();
+                    iv.setVisible(false);
+                    iv.setFitWidth(32);
+                    iv.setFitHeight(36);
+                    
+                    stack.getChildren().add(iv);
+                    notes.add(iv);
+                }
+                
                 vBox.getChildren().add(stack);
-                column.add(stack);
+                column.add(notes);
             }
             
             staffInstruments.getChildren().add(vBox);
@@ -112,7 +135,7 @@ public class NoteMatrix {
             vBox.setPrefHeight(472.0);
             vBox.setPrefWidth(32.0);
             
-            ArrayList<StackPane> column = new ArrayList<>();
+            ArrayList<ArrayList<ImageView>> column = new ArrayList<>();
             
             for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
                 StackPane stack = new StackPane();
@@ -120,8 +143,21 @@ public class NoteMatrix {
                 stack.setPrefHeight(36.0);
                 stack.setPrefWidth(32.0);
                 
+                ArrayList<ImageView> accs = new ArrayList<>();
+                
+                // +1 for silhouette
+                for (int k = 0; k < Values.MAX_STACKABLE_NOTES + 1; k++) {
+                    ImageView iv = new ImageView();
+                    iv.setVisible(false);
+                    iv.setFitWidth(32);
+                    iv.setFitHeight(32);
+                    
+                    stack.getChildren().add(iv);
+                    accs.add(iv);
+                }
+                
                 vBox.getChildren().add(stack);
-                column.add(stack);
+                column.add(accs);
             }
             
             staffAccidentals.getChildren().add(vBox);
@@ -133,15 +169,12 @@ public class NoteMatrix {
      * Clears the note display on the staff, including the silhouette.
      */
     public synchronized void clearNoteDisplay() {
-        for (List<StackPane> arr : matrix) {
-            for (StackPane st : arr) {
-                st.getChildren().clear();
-            }
-        }
-
-        for (List<StackPane> arr : accMatrix) {
-            for (StackPane st : arr) {
-                st.getChildren().clear();
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
+                for (int k = 0; k < Values.MAX_STACKABLE_NOTES + 1; k++) {
+                    matrix.get(i).get(j).get(k).setVisible(false);
+                    accMatrix.get(i).get(j).get(k).setVisible(false);
+                }
             }
         }
         
@@ -158,13 +191,28 @@ public class NoteMatrix {
             ArrayList<StaffNote> st = stl.getNotes();
             
             for (StaffNote s : st) {
-                StackPane notes = getNotes(i, s.getPosition());
-                StackPane accidentals = getAccidentals(i, s.getPosition());
+                int j = s.getPosition();
+                ArrayList<ImageView> notes = getNotes(i, j);
+                ArrayList<ImageView> accidentals = getAccidentals(i, j);
                 
                 StaffAccidental accidental = new StaffAccidental(s);
                 
-                notes.getChildren().add(s.toImageView(il));
-                accidentals.getChildren().add(accidental.toImageView(il));
+                int k = 0;
+                while (notes.get(k).isVisible() && k < Values.MAX_STACKABLE_NOTES)
+                    k++;
+                if (k < Values.MAX_STACKABLE_NOTES) {
+                    notes.get(k).setImage(s.getImage(il));
+                    notes.get(k).setEffect(s.isSelected() ? highlightBlend : null);
+                    notes.get(k).setVisible(true);
+                }
+                
+                k = 0;
+                while (accidentals.get(k).isVisible() && k < Values.MAX_STACKABLE_NOTES)
+                    k++;
+                if (k < Values.MAX_STACKABLE_NOTES) {
+                    accidentals.get(k).setImage(accidental.getImage(il));
+                    accidentals.get(k).setVisible(true);
+                }
             }            
         }
     }
@@ -176,12 +224,12 @@ public class NoteMatrix {
         int line = currentSilhouetteLine;
         int pos = currentSilhouette.getPosition();
         
-        StackPane notes = getNotes(line, pos);
-        notes.getChildren().remove(notes.getChildren().size() - 1);
+        ArrayList<ImageView> notes = getNotes(line, pos);
+        notes.get(Values.MAX_STACKABLE_NOTES).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
-            StackPane accs = getAccidentals(line, pos);
-            accs.getChildren().remove(accs.getChildren().size() - 1);
+            ArrayList<ImageView> accs = getAccidentals(line, pos);
+            accs.get(Values.MAX_STACKABLE_NOTES).setVisible(false);
         }
         
         currentSilhouette = null;
@@ -204,13 +252,15 @@ public class NoteMatrix {
         currentSilhouetteLine = line;
         currentSilhouette = silhouette;
         
-        StackPane notes = getNotes(line, pos);
-        notes.getChildren().add(notes.getChildren().size(), silhouette.toImageView(il));
+        ArrayList<ImageView> notes = getNotes(line, pos);
+        notes.get(Values.MAX_STACKABLE_NOTES).setImage(silhouette.getImage(il));
+        notes.get(Values.MAX_STACKABLE_NOTES).setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
-            StackPane accs = getAccidentals(line, pos);
+            ArrayList<ImageView> accs = getAccidentals(line, pos);
             StaffAccidental acc = new StaffAccidental(silhouette);
-            accs.getChildren().add(accs.getChildren().size(), acc.toImageView(il));
+            accs.get(Values.MAX_STACKABLE_NOTES).setImage(acc.getImage(il));
+            accs.get(Values.MAX_STACKABLE_NOTES).setVisible(true);
         }
     }
     

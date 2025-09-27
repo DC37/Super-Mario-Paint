@@ -5,13 +5,8 @@ import java.text.ParseException;
 
 import gui.InstrumentIndex;
 import gui.Values;
-import gui.clipboard.StaffClipboard;
 import gui.loaders.ImageLoader;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.
@@ -43,18 +38,6 @@ public class StaffNote implements Serializable {
      * mute type. 2 indicates an instrument mute type.
      */
     private int muteNote;
-    
-    private static Blend highlightBlend = new Blend(
-            BlendMode.SRC_OVER,
-            null,
-            new ColorInput(
-                    0,
-                    0,
-                    32,
-                    36,
-                    StaffClipboard.HIGHLIGHT_FILL
-                    )
-            );
 
     /**
      * The Instrument that the note on the staff is to use.
@@ -113,15 +96,6 @@ public class StaffNote implements Serializable {
         default:
             return il.getSpriteFX(theInstrument.imageIndex());
         }
-    }
-    
-    public ImageView toImageView(ImageLoader il) {
-        ImageView imageView = new ImageView(getImage(il));
-        imageView.setFitWidth(32);
-        imageView.setFitHeight(36);
-        if (selected)
-            imageView.setEffect(highlightBlend);
-        return imageView;
     }
     
     public void setSelected(boolean b) {
