@@ -225,10 +225,10 @@ public class Staff {
         
         int[] barDivs = StateMachine.getTimeSignature().divs();
         
-        Platform.runLater(() -> displayManager.updateNoteDisplay(theSequence, idx));
-        Platform.runLater(() -> displayManager.updateVolumeBars(theSequence, idx));
-        Platform.runLater(() -> displayManager.updateStaffMeasureLines(idx, barDivs));
-        Platform.runLater(() -> displayManager.updateStaffLedgerLines(theSequence, idx));
+        displayManager.updateNoteDisplay(theSequence, idx);
+        displayManager.updateVolumeBars(theSequence, idx);
+        displayManager.updateStaffMeasureLines(idx, barDivs);
+        displayManager.updateStaffLedgerLines(theSequence, idx);
     }
 
     /** Begins animation of the Staff. (Starts a song) */
