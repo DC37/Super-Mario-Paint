@@ -119,7 +119,7 @@ public class SuperMarioPaint extends Application  {
         
         FXMLLoader loader = new FXMLLoader();
         loader.setController(controller);
-        File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER);
+        File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
         loader.setLocation(fxml.toURI().toURL());
         
         root = (Parent) loader.load();

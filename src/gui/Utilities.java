@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -46,20 +47,30 @@ public class Utilities {
      * @param filename name of the file or resource
      * @param dir expected location for the file
      */
-    public static File getResourceFile(String filename, String dir) throws NullPointerException, IOException {
+    public static File getResourceFile(String filename, String dir, boolean forceCopy) throws NullPointerException, IOException {
         File ret = new File(dir, filename);
         
-        if (ret.exists())
+        if (!forceCopy && ret.exists())
             return ret;
         
+        URL url = Utilities.getResourceURL(filename);
+        
+        Files.createDirectories(ret.getParentFile().toPath());
+        Files.copy(url.openStream(), ret.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        
+        return ret;
+    }
+    
+    public static File getResourceFile(String filename, String dir) throws NullPointerException, IOException {
+        return getResourceFile(filename, dir, false);
+    }
+    
+    public static URL getResourceURL(String filename) throws NullPointerException {
         URL url = Utilities.class.getResource("/resources/" + filename);
         if (url == null)
             throw new NullPointerException("Cannot load resource: " + filename);
         
-        Files.createDirectories(ret.getParentFile().toPath());
-        Files.copy(url.openStream(), ret.toPath());
-        
-        return ret;
+        return url;
     }
 
     /**
