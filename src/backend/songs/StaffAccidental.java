@@ -33,21 +33,20 @@ public class StaffAccidental {
         this(new StaffNote(acc.theNote));
     }
     
-    public ImageView toImageView(ImageLoader il) {
-        Image image;
+    public Image getImage(ImageLoader il) {
         switch (theNote.muteNoteVal()) {
         case 1:
-            image = il.getSpriteFX(theNote.getAccidental().imageIndex().alt());
-            break;
+            return il.getSpriteFX(theNote.getAccidental().imageIndex().alt());
         case 2:
-            image = il.getSpriteFX(theNote.getAccidental().imageIndex().silhouette());
-            break;
+            return il.getSpriteFX(theNote.getAccidental().imageIndex().silhouette());
         case 0:
         default:
-            image = il.getSpriteFX(theNote.getAccidental().imageIndex());
-            break;
+            return il.getSpriteFX(theNote.getAccidental().imageIndex());
         }
-        ImageView imageView = new ImageView(image);
+    }
+    
+    public ImageView toImageView(ImageLoader il) {
+        ImageView imageView = new ImageView(getImage(il));
         imageView.setFitWidth(32);
         imageView.setFitHeight(32);
         return imageView;

@@ -103,20 +103,20 @@ public class StaffNote implements Serializable {
         this(note.theInstrument, note.position, note.accidental, note.volume);
     }
     
-    public ImageView toImageView(ImageLoader il) {
-        Image image;
+    public Image getImage(ImageLoader il) {
         switch (muteNote) {
         case 1:
-            image = il.getSpriteFX(theInstrument.imageIndex().alt());
-            break;
+            return il.getSpriteFX(theInstrument.imageIndex().alt());
         case 2:
-            image = il.getSpriteFX(theInstrument.imageIndex().silhouette());
-            break;
+            return il.getSpriteFX(theInstrument.imageIndex().silhouette());
         case 0:
         default:
-            image = il.getSpriteFX(theInstrument.imageIndex());
+            return il.getSpriteFX(theInstrument.imageIndex());
         }
-        ImageView imageView = new ImageView(image);
+    }
+    
+    public ImageView toImageView(ImageLoader il) {
+        ImageView imageView = new ImageView(getImage(il));
         imageView.setFitWidth(32);
         imageView.setFitHeight(36);
         if (selected)
