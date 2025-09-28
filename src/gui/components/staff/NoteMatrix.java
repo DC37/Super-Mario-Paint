@@ -39,8 +39,12 @@ public class NoteMatrix {
     final private int height;
     final private int depth;
 
-    private ArrayList<ArrayList<ArrayList<ImageView>>> matrix;
-    private ArrayList<ArrayList<ArrayList<ImageView>>> accMatrix;
+    private ArrayList<ImageView> matrix;
+    private ArrayList<ImageView> accMatrix;
+    
+    private int map(int col, int row, int d) {
+        return ((depth + 1) * ((height * col) + row)) + d;
+    }
     
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
@@ -50,7 +54,7 @@ public class NoteMatrix {
      * Set to {@code null} if no silhouette is displayed.
      */
     private StaffNote currentSilhouette;
-    private int currentSilhouetteLine;
+    private int currentSilhouetteColumn;
     
     /**
      * Used to refresh the silhouette after the entire matrix has been cleared.
@@ -74,8 +78,8 @@ public class NoteMatrix {
         this.width = width;
         this.height = height;
         this.depth = depth;
-        matrix = new ArrayList<ArrayList<ArrayList<ImageView>>>();
-        accMatrix = new ArrayList<ArrayList<ArrayList<ImageView>>>();
+        matrix = new ArrayList<ImageView>();
+        accMatrix = new ArrayList<ImageView>();
         currentSilhouette = null;
         cacheSilhouette = null;
     }
@@ -88,78 +92,66 @@ public class NoteMatrix {
     private void initializeNotesMatrix(HBox staffInstruments) {
         matrix.clear();
         
-        for (int i = 0; i < width; i++) {
+        for (int col = 0; col < width; col++) {
             VBox vBox = new VBox();
             vBox.setSpacing(-20.0);
             vBox.setAlignment(Pos.CENTER);
-            
-            ArrayList<ArrayList<ImageView>> column = new ArrayList<>();
-            
-            for (int j = 0; j < height; j++) {
+                        
+            for (int row = 0; row < height; row++) {
                 StackPane stack = new StackPane();
                 stack.setDisable(true);
                 stack.setPrefHeight(36.0);
                 stack.setPrefWidth(64.0);
-                
-                ArrayList<ImageView> notes = new ArrayList<>();
-                
+                                
                 // +1 for silhouette
-                for (int k = 0; k < depth + 1; k++) {
+                for (int d = 0; d < depth + 1; d++) {
                     ImageView iv = new ImageView();
                     iv.setVisible(false);
                     iv.setFitWidth(32);
                     iv.setFitHeight(36);
                     
                     stack.getChildren().add(iv);
-                    notes.add(iv);
+                    matrix.add(iv);
                 }
                 
                 vBox.getChildren().add(0, stack);
-                column.add(notes);
             }
             
             staffInstruments.getChildren().add(vBox);
-            matrix.add(column);
         }  
     }
     
     private void initializeAccidentalsMatrix(HBox staffAccidentals) {
         accMatrix.clear();
         
-        for (int i = 0; i < width; i++) {
+        for (int col = 0; col < width; col++) {
             VBox vBox = new VBox();
             vBox.setSpacing(-20.0);
             vBox.setAlignment(Pos.CENTER);
             vBox.setPrefHeight(472.0);
             vBox.setPrefWidth(32.0);
-            
-            ArrayList<ArrayList<ImageView>> column = new ArrayList<>();
-            
-            for (int j = 0; j < height; j++) {
+                        
+            for (int row = 0; row < height; row++) {
                 StackPane stack = new StackPane();
                 stack.setDisable(true);
                 stack.setPrefHeight(36.0);
                 stack.setPrefWidth(32.0);
-                
-                ArrayList<ImageView> accs = new ArrayList<>();
-                
+                                
                 // +1 for silhouette
-                for (int k = 0; k < depth + 1; k++) {
+                for (int d = 0; d < depth + 1; d++) {
                     ImageView iv = new ImageView();
                     iv.setVisible(false);
                     iv.setFitWidth(32);
                     iv.setFitHeight(32);
                     
                     stack.getChildren().add(iv);
-                    accs.add(iv);
+                    accMatrix.add(iv);
                 }
                 
                 vBox.getChildren().add(0, stack);
-                column.add(accs);
             }
             
             staffAccidentals.getChildren().add(vBox);
-            accMatrix.add(column);
         }     
     }
 
@@ -167,14 +159,11 @@ public class NoteMatrix {
      * Clears the note display on the staff, including the silhouette.
      */
     public synchronized void clearNoteDisplay() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                for (int k = 0; k < depth + 1; k++) {
-                    matrix.get(i).get(j).get(k).setVisible(false);
-                    accMatrix.get(i).get(j).get(k).setVisible(false);
-                }
-            }
-        }
+        for (ImageView iv : matrix)
+            iv.setVisible(false);
+        
+        for (ImageView iv : accMatrix)
+            iv.setVisible(false);
         
         cacheSilhouette = currentSilhouette;
         currentSilhouette = null;
@@ -184,32 +173,31 @@ public class NoteMatrix {
      * Repopulates the note display on the staff.
      */
     public void populateNoteDisplay(StaffSequence seq, int currentPosition) {
-        for (int i = 0; i < width; i++) {
-            StaffNoteLine stl = seq.getLineSafe(currentPosition + i);
+        for (int col = 0; col < width; col++) {
+            StaffNoteLine stl = seq.getLineSafe(currentPosition + col);
             ArrayList<StaffNote> st = stl.getNotes();
             
             for (StaffNote s : st) {
-                int j = s.getPosition();
-                ArrayList<ImageView> notes = matrix.get(i).get(j);
-                ArrayList<ImageView> accidentals = accMatrix.get(i).get(j);
-                
+                int row = s.getPosition();                
                 StaffAccidental accidental = new StaffAccidental(s);
                 
-                int k = 0;
-                while (notes.get(k).isVisible() && k < depth)
-                    k++;
-                if (k < depth) {
-                    notes.get(k).setImage(s.getImage(il));
-                    notes.get(k).setEffect(s.isSelected() ? highlightBlend : null);
-                    notes.get(k).setVisible(true);
+                int d = 0;
+                while (matrix.get(map(col, row, d)).isVisible() && d < depth)
+                    d++;
+                if (d < depth) {
+                    ImageView iv = matrix.get(map(col, row, d));
+                    iv.setImage(s.getImage(il));
+                    iv.setEffect(s.isSelected() ? highlightBlend : null);
+                    iv.setVisible(true);
                 }
                 
-                k = 0;
-                while (accidentals.get(k).isVisible() && k < depth)
-                    k++;
-                if (k < depth) {
-                    accidentals.get(k).setImage(accidental.getImage(il));
-                    accidentals.get(k).setVisible(true);
+                d = 0;
+                while (accMatrix.get(map(col, row, d)).isVisible() && d < depth)
+                    d++;
+                if (d < depth) {
+                    ImageView iv = accMatrix.get(map(col, row, d));
+                    iv.setImage(accidental.getImage(il));
+                    iv.setVisible(true);
                 }
             }            
         }
@@ -219,15 +207,13 @@ public class NoteMatrix {
         if (currentSilhouette == null)
             return;
         
-        int line = currentSilhouetteLine;
-        int pos = currentSilhouette.getPosition();
+        int col = currentSilhouetteColumn;
+        int row = currentSilhouette.getPosition();
         
-        ArrayList<ImageView> notes = matrix.get(line).get(pos);
-        notes.get(depth).setVisible(false);
+        matrix.get(map(col, row, depth)).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
-            ArrayList<ImageView> accs = accMatrix.get(line).get(pos);
-            accs.get(depth).setVisible(false);
+            accMatrix.get(map(col, row, depth)).setVisible(false);
         }
         
         currentSilhouette = null;
@@ -237,28 +223,28 @@ public class NoteMatrix {
      * The silhouette is processing separately from regular notes because it
      * needs to be refreshed more often.
      */
-    public void updateSilhouette(int line, StaffNote note) {
+    public void updateSilhouette(int col, StaffNote note) {
         if (note == null)
             return;
         
         resetSilhouette();
         
-        int pos = note.getPosition();
+        int row = note.getPosition();
         StaffNote silhouette = new StaffNote(note);
         silhouette.setMuteNote(2);
         
-        currentSilhouetteLine = line;
+        currentSilhouetteColumn = col;
         currentSilhouette = silhouette;
         
-        ArrayList<ImageView> notes = matrix.get(line).get(pos);
-        notes.get(depth).setImage(silhouette.getImage(il));
-        notes.get(depth).setVisible(true);
+        ImageView iv = matrix.get(map(col, row, depth));
+        iv.setImage(silhouette.getImage(il));
+        iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
-            ArrayList<ImageView> accs = accMatrix.get(line).get(pos);
+            ImageView acciv = accMatrix.get(map(col, row, depth));
             StaffAccidental acc = new StaffAccidental(silhouette);
-            accs.get(depth).setImage(acc.getImage(il));
-            accs.get(depth).setVisible(true);
+            acciv.setImage(acc.getImage(il));
+            acciv.setVisible(true);
         }
     }
     
@@ -267,17 +253,17 @@ public class NoteMatrix {
      */
     public void refreshSilhouette() {
         if (currentSilhouette == null && cacheSilhouette != null)
-            updateSilhouette(currentSilhouetteLine, cacheSilhouette);
+            updateSilhouette(currentSilhouetteColumn, cacheSilhouette);
     }
     
     public void refreshSilhouette(Accidental acc) {
         if (currentSilhouette != null && currentSilhouette.getAccidental() != acc) {
             StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getPosition(), acc);
-            updateSilhouette(currentSilhouetteLine, sil);
+            updateSilhouette(currentSilhouetteColumn, sil);
             
         } else if (currentSilhouette == null && cacheSilhouette != null) {
             StaffNote sil = new StaffNote(cacheSilhouette.getInstrument(), cacheSilhouette.getPosition(), acc);
-            updateSilhouette(currentSilhouetteLine, sil);
+            updateSilhouette(currentSilhouetteColumn, sil);
         }
     }
 
