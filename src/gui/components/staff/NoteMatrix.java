@@ -63,11 +63,6 @@ public class NoteMatrix {
     private StaffNote currentSilhouette;
     private int currentSilhouetteColumn;
     
-    /**
-     * Used to refresh the silhouette after the entire matrix has been cleared.
-     */
-    private StaffNote cacheSilhouette;
-    
     private static Blend highlightBlend = new Blend(
             BlendMode.SRC_OVER,
             null,
@@ -90,7 +85,6 @@ public class NoteMatrix {
         silMatrix = new ArrayList<ImageView>();
         accSilMatrix = new ArrayList<ImageView>();
         currentSilhouette = null;
-        cacheSilhouette = null;
     }
     
     public void initializeNoteDisplay(HBox staffInstruments, HBox staffAccidentals) {
@@ -181,7 +175,7 @@ public class NoteMatrix {
     }
 
     /**
-     * Clears the note display on the staff, including the silhouette.
+     * Clears the note display on the staff, excluding silhouettes.
      */
     public synchronized void clearNoteDisplay() {
         for (ImageView iv : matrix)
@@ -189,15 +183,6 @@ public class NoteMatrix {
         
         for (ImageView iv : accMatrix)
             iv.setVisible(false);
-        
-        for (ImageView iv : silMatrix)
-            iv.setVisible(false);
-        
-        for (ImageView iv : accSilMatrix)
-            iv.setVisible(false);
-        
-        cacheSilhouette = currentSilhouette;
-        currentSilhouette = null;
     }
 
     /**
@@ -287,21 +272,9 @@ public class NoteMatrix {
         }
     }
     
-    /**
-     * Restore silhouette after the note display has been cleared.
-     */
-    public void refreshSilhouette() {
-        if (currentSilhouette == null && cacheSilhouette != null)
-            updateSilhouette(currentSilhouetteColumn, cacheSilhouette);
-    }
-    
     public void refreshSilhouette(Accidental acc) {
         if (currentSilhouette != null && currentSilhouette.getAccidental() != acc) {
             StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getPosition(), acc);
-            updateSilhouette(currentSilhouetteColumn, sil);
-            
-        } else if (currentSilhouette == null && cacheSilhouette != null) {
-            StaffNote sil = new StaffNote(cacheSilhouette.getInstrument(), cacheSilhouette.getPosition(), acc);
             updateSilhouette(currentSilhouetteColumn, sil);
         }
     }

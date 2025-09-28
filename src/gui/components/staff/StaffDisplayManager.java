@@ -160,7 +160,6 @@ public class StaffDisplayManager {
     public void updateNoteDisplay(StaffSequence seq, int currLine) {
         matrix.clearNoteDisplay();
         matrix.populateNoteDisplay(seq, currLine);
-        matrix.refreshSilhouette();
     }
 
     /**
@@ -328,10 +327,6 @@ public class StaffDisplayManager {
     
     public void updateSilhouette(int line, StaffNote sil) {
         matrix.updateSilhouette(line, sil);
-    }
-    
-    public void refreshSilhouette() {
-        matrix.refreshSilhouette();
     }
     
     public void refreshSilhouette(Accidental acc) {
