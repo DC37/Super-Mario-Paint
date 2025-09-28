@@ -173,7 +173,17 @@ public class NoteMatrix {
      * Repopulates the note display on the staff.
      */
     public void populateNoteDisplay(StaffSequence seq, int currentPosition) {
+        // No order is assumed in StaffNoteLine so we keep track of how many
+        // stacked notes we already treated for each row
+        int[] stackedAmounts = new int[height];
+        int[] accStackedAmounts = new int[height];
+        
         for (int col = 0; col < width; col++) {
+            for (int row = 0; row < height; row++) {
+                stackedAmounts[row] = 0;
+                accStackedAmounts[row] = 0;
+            }
+            
             StaffNoteLine stl = seq.getLineSafe(currentPosition + col);
             ArrayList<StaffNote> st = stl.getNotes();
             
@@ -181,25 +191,23 @@ public class NoteMatrix {
                 int row = s.getPosition();                
                 StaffAccidental accidental = new StaffAccidental(s);
                 
-                int d = 0;
-                while (matrix.get(map(col, row, d)).isVisible() && d < depth)
-                    d++;
+                int d = stackedAmounts[row];
                 if (d < depth) {
+                    stackedAmounts[row] = d + 1;
                     ImageView iv = matrix.get(map(col, row, d));
                     iv.setImage(s.getImage(il));
                     iv.setEffect(s.isSelected() ? highlightBlend : null);
                     iv.setVisible(true);
                 }
                 
-                d = 0;
-                while (accMatrix.get(map(col, row, d)).isVisible() && d < depth)
-                    d++;
+                d = accStackedAmounts[row];
                 if (d < depth) {
+                    accStackedAmounts[row] = d + 1;
                     ImageView iv = accMatrix.get(map(col, row, d));
                     iv.setImage(accidental.getImage(il));
                     iv.setVisible(true);
                 }
-            }            
+            }
         }
     }
     
