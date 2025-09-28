@@ -95,6 +95,7 @@ public class NoteMatrix {
     private ImageView makeNoteImageView() {
         ImageView iv = new ImageView();
         iv.setVisible(false);
+        iv.setManaged(false);
         iv.setFitHeight(36);
         iv.setFitWidth(32);
         return iv;
@@ -135,6 +136,7 @@ public class NoteMatrix {
     private ImageView makeAccidentalImageView() {
         ImageView iv = new ImageView();
         iv.setVisible(false);
+        iv.setManaged(false);
         iv.setFitHeight(32);
         iv.setFitWidth(32);
         return iv;

@@ -230,12 +230,12 @@
                         <Insets left="117.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="54.0" layoutY="-5.0" prefHeight="504" prefWidth="982.0" spacing="32.0">
+                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="70.0" layoutY="-5.0" prefHeight="504" prefWidth="982.0" spacing="32.0">
                       <padding>
                         <Insets left="105.0" />
                       </padding>
                     </HBox>
-                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="54.0" layoutY="-5.0" prefHeight="504" prefWidth="982">
+                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="70.0" layoutY="-5.0" prefHeight="504" prefWidth="982">
                       <padding>
                         <Insets left="113.0" />
                       </padding>
