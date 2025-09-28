@@ -89,7 +89,7 @@ public class StaffDisplayManager {
         this.staffMeasureNums = staffMeasureNums;
         this.staffLedgerLines = staffLedgerLines;
         this.staffVolumeBars = staffVolumeBars;
-        this.matrix = new NoteMatrix(i);
+        this.matrix = new NoteMatrix(i, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         this.commandManager = commandManager;
     }
     

@@ -7,7 +7,6 @@ import backend.songs.StaffAccidental;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
-import gui.Values;
 import gui.clipboard.StaffClipboard;
 import gui.loaders.ImageLoader;
 import javafx.geometry.Pos;
@@ -35,10 +34,14 @@ import javafx.scene.layout.VBox;
  *
  */
 public class NoteMatrix {
+    
+    final private int width;
+    final private int height;
+    final private int depth;
 
     private ArrayList<ArrayList<ArrayList<ImageView>>> matrix;
     private ArrayList<ArrayList<ArrayList<ImageView>>> accMatrix;
-
+    
     /** Pointer to the image loader object. */
     private transient ImageLoader il;
     
@@ -66,8 +69,11 @@ public class NoteMatrix {
                     )
             );
 
-    public NoteMatrix(ImageLoader i) {
+    public NoteMatrix(ImageLoader i, int width, int height, int depth) {
         il = i;
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
         matrix = new ArrayList<ArrayList<ArrayList<ImageView>>>();
         accMatrix = new ArrayList<ArrayList<ArrayList<ImageView>>>();
         currentSilhouette = null;
@@ -82,14 +88,14 @@ public class NoteMatrix {
     private void initializeNotesMatrix(HBox staffInstruments) {
         matrix.clear();
         
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             VBox vBox = new VBox();
             vBox.setSpacing(-20.0);
             vBox.setAlignment(Pos.CENTER);
             
             ArrayList<ArrayList<ImageView>> column = new ArrayList<>();
             
-            for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
+            for (int j = 0; j < height; j++) {
                 StackPane stack = new StackPane();
                 stack.setDisable(true);
                 stack.setPrefHeight(36.0);
@@ -98,7 +104,7 @@ public class NoteMatrix {
                 ArrayList<ImageView> notes = new ArrayList<>();
                 
                 // +1 for silhouette
-                for (int k = 0; k < Values.MAX_STACKABLE_NOTES + 1; k++) {
+                for (int k = 0; k < depth + 1; k++) {
                     ImageView iv = new ImageView();
                     iv.setVisible(false);
                     iv.setFitWidth(32);
@@ -120,7 +126,7 @@ public class NoteMatrix {
     private void initializeAccidentalsMatrix(HBox staffAccidentals) {
         accMatrix.clear();
         
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             VBox vBox = new VBox();
             vBox.setSpacing(-20.0);
             vBox.setAlignment(Pos.CENTER);
@@ -129,7 +135,7 @@ public class NoteMatrix {
             
             ArrayList<ArrayList<ImageView>> column = new ArrayList<>();
             
-            for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
+            for (int j = 0; j < height; j++) {
                 StackPane stack = new StackPane();
                 stack.setDisable(true);
                 stack.setPrefHeight(36.0);
@@ -138,7 +144,7 @@ public class NoteMatrix {
                 ArrayList<ImageView> accs = new ArrayList<>();
                 
                 // +1 for silhouette
-                for (int k = 0; k < Values.MAX_STACKABLE_NOTES + 1; k++) {
+                for (int k = 0; k < depth + 1; k++) {
                     ImageView iv = new ImageView();
                     iv.setVisible(false);
                     iv.setFitWidth(32);
@@ -161,9 +167,9 @@ public class NoteMatrix {
      * Clears the note display on the staff, including the silhouette.
      */
     public synchronized void clearNoteDisplay() {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
-            for (int j = 0; j < Values.NOTES_IN_A_LINE; j++) {
-                for (int k = 0; k < Values.MAX_STACKABLE_NOTES + 1; k++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                for (int k = 0; k < depth + 1; k++) {
                     matrix.get(i).get(j).get(k).setVisible(false);
                     accMatrix.get(i).get(j).get(k).setVisible(false);
                 }
@@ -178,7 +184,7 @@ public class NoteMatrix {
      * Repopulates the note display on the staff.
      */
     public void populateNoteDisplay(StaffSequence seq, int currentPosition) {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             StaffNoteLine stl = seq.getLineSafe(currentPosition + i);
             ArrayList<StaffNote> st = stl.getNotes();
             
@@ -190,18 +196,18 @@ public class NoteMatrix {
                 StaffAccidental accidental = new StaffAccidental(s);
                 
                 int k = 0;
-                while (notes.get(k).isVisible() && k < Values.MAX_STACKABLE_NOTES)
+                while (notes.get(k).isVisible() && k < depth)
                     k++;
-                if (k < Values.MAX_STACKABLE_NOTES) {
+                if (k < depth) {
                     notes.get(k).setImage(s.getImage(il));
                     notes.get(k).setEffect(s.isSelected() ? highlightBlend : null);
                     notes.get(k).setVisible(true);
                 }
                 
                 k = 0;
-                while (accidentals.get(k).isVisible() && k < Values.MAX_STACKABLE_NOTES)
+                while (accidentals.get(k).isVisible() && k < depth)
                     k++;
-                if (k < Values.MAX_STACKABLE_NOTES) {
+                if (k < depth) {
                     accidentals.get(k).setImage(accidental.getImage(il));
                     accidentals.get(k).setVisible(true);
                 }
@@ -217,11 +223,11 @@ public class NoteMatrix {
         int pos = currentSilhouette.getPosition();
         
         ArrayList<ImageView> notes = matrix.get(line).get(pos);
-        notes.get(Values.MAX_STACKABLE_NOTES).setVisible(false);
+        notes.get(depth).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
             ArrayList<ImageView> accs = accMatrix.get(line).get(pos);
-            accs.get(Values.MAX_STACKABLE_NOTES).setVisible(false);
+            accs.get(depth).setVisible(false);
         }
         
         currentSilhouette = null;
@@ -245,14 +251,14 @@ public class NoteMatrix {
         currentSilhouette = silhouette;
         
         ArrayList<ImageView> notes = matrix.get(line).get(pos);
-        notes.get(Values.MAX_STACKABLE_NOTES).setImage(silhouette.getImage(il));
-        notes.get(Values.MAX_STACKABLE_NOTES).setVisible(true);
+        notes.get(depth).setImage(silhouette.getImage(il));
+        notes.get(depth).setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
             ArrayList<ImageView> accs = accMatrix.get(line).get(pos);
             StaffAccidental acc = new StaffAccidental(silhouette);
-            accs.get(Values.MAX_STACKABLE_NOTES).setImage(acc.getImage(il));
-            accs.get(Values.MAX_STACKABLE_NOTES).setVisible(true);
+            accs.get(depth).setImage(acc.getImage(il));
+            accs.get(depth).setVisible(true);
         }
     }
     
