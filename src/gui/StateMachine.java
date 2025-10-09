@@ -70,11 +70,6 @@ public class StateMachine {
     private static ObjectProperty<ProgramState> currentState = new SimpleObjectProperty<>(ProgramState.EDITING);
     
     private static BooleanProperty playbackActive = new SimpleBooleanProperty(false);
-    
-    /**
-     * Index of the current position on the screen during playback
-     */
-    private static IntegerProperty playbackPosition = new SimpleIntegerProperty(-1);
 
     /**
      * The default time signature that we start out with is 4/4 time.
@@ -156,18 +151,6 @@ public class StateMachine {
 
     public static boolean isPlaybackActive() {
         return playbackActive.get();
-    }
-    
-    public static IntegerProperty getPlaybackPositionProperty() {
-        return playbackPosition;
-    }
-    
-    public static int getPlaybackPosition() {
-        return playbackPosition.get();
-    }
-    
-    public static void setPlaybackPosition(int n) {
-        playbackPosition.set(n);
     }
     
     public static ObjectProperty<TimeSignature> getTimeSignatureProperty() {

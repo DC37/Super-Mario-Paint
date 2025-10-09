@@ -547,7 +547,7 @@ public class Staff {
                 queue = 0;
                 
                 while (songPlaying) {
-                    StateMachine.setPlaybackPosition(index);
+                    displayManager.updatePlayBars(index);
                     
                     if (zero) {
                         resetLocation();
@@ -676,7 +676,7 @@ public class Staff {
                     int counter = 0;
                     
                     while (songPlaying && arrPlaying) {
-                        StateMachine.setPlaybackPosition(index);
+                        displayManager.updatePlayBars(index);
 
                         queue++;
                         playNextLine();

@@ -486,15 +486,6 @@ public class SMPFXController {
         
         StateMachine.setMeasureLineNum(0);
         
-        // Setup playbars visibility
-        StateMachine.getPlaybackPositionProperty().addListener((obv, oldv_, newv_) -> {
-            int newv = (int) newv_;
-            if (newv == -1)
-                displayManager.resetPlayBars();
-            else
-                displayManager.updatePlayBars(newv);
-        });
-        
         // Setup arrangement listview
         StateMachine.getArrangementSongIndexProperty().addListener(obv -> {
             int idx = StateMachine.getArrangementSongIndex();
@@ -508,7 +499,7 @@ public class SMPFXController {
         StateMachine.getPlaybackActiveProperty().addListener(obv -> {
             if (!StateMachine.isPlaybackActive()) {
                 StateMachine.setArrangementSongIndex(-1);
-                StateMachine.setPlaybackPosition(-1);
+                displayManager.resetPlayBars();
             }
         });
         
