@@ -40,6 +40,7 @@ public class StaffDisplayManager {
     final private HBox staffMeasureNums;
     final private HBox[] staffLedgerLines;
     final private HBox staffVolumeBars;
+    final private HBox staffPlayBars;
     
     final private NoteMatrix matrix;
     
@@ -81,7 +82,7 @@ public class StaffDisplayManager {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffDisplayManager(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, ModifySongManager commandManager) {
+    public StaffDisplayManager(ImageLoader i, HBox staffInstruments, HBox staffAccidentals, HBox staffMeasureLines, HBox staffMeasureNums, HBox[] staffLedgerLines, HBox staffVolumeBars, HBox staffPlayBars, ModifySongManager commandManager) {
         il = i;
         this.staffInstruments = staffInstruments;
         this.staffAccidentals = staffAccidentals;
@@ -89,6 +90,7 @@ public class StaffDisplayManager {
         this.staffMeasureNums = staffMeasureNums;
         this.staffLedgerLines = staffLedgerLines;
         this.staffVolumeBars = staffVolumeBars;
+        this.staffPlayBars = staffPlayBars;
         this.matrix = new NoteMatrix(i, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         this.commandManager = commandManager;
     }
@@ -109,6 +111,7 @@ public class StaffDisplayManager {
         initializeStaffLedgerLines();
         initializeStaffInstruments();
         initializeVolumeBars();
+        initializeStaffPlayBars();
     }
 
     /**
@@ -331,6 +334,20 @@ public class StaffDisplayManager {
     
     public void refreshSilhouette(Accidental acc) {
         matrix.refreshSilhouette(acc);
+    }
+    
+    public void initializeStaffPlayBars() {
+        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            ImageView iv = new ImageView(il.getSpriteFX(ImageIndex.PLAY_BAR1));
+            iv.setFitHeight(448);
+            iv.setFitWidth(56);
+            iv.setVisible(false);
+            iv.setPickOnBounds(true);
+            iv.setPreserveRatio(true);
+            iv.setSmooth(false);
+            
+            staffPlayBars.getChildren().add(iv);
+        }
     }
 
 }

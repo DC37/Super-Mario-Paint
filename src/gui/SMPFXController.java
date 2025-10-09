@@ -336,7 +336,7 @@ public class SMPFXController {
         // Set up staff.
         HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA, staffExtLinesMiddleC,
                 staffExtLinesLowC, staffExtLinesLowA };
-        StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, commandManager);
+        StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, staffPlayBars, commandManager);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
