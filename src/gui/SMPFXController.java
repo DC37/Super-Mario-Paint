@@ -488,14 +488,11 @@ public class SMPFXController {
         
         // Setup playbars visibility
         StateMachine.getPlaybackPositionProperty().addListener((obv, oldv_, newv_) -> {
-            int oldv = (int) oldv_;
             int newv = (int) newv_;
-            
-            if (oldv != -1)
-                staffPlayBars.getChildren().get(oldv).setVisible(false);
-            
-            if (newv != -1)
-                staffPlayBars.getChildren().get(newv).setVisible(true);
+            if (newv == -1)
+                displayManager.resetPlayBars();
+            else
+                displayManager.updatePlayBars(newv);
         });
         
         // Setup arrangement listview

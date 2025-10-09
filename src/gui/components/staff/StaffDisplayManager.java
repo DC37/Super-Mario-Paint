@@ -78,6 +78,9 @@ public class StaffDisplayManager {
 
     /** This is the list of volume bar handlers on the staff. */
     private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
+    
+    private Node[] playbars = new Node[Values.NOTELINES_IN_THE_WINDOW];
+    private int activePlaybar = -1;
 
     /**
      * Constructor that also sets up the staff ledger lines.
@@ -347,7 +350,28 @@ public class StaffDisplayManager {
             iv.setSmooth(false);
             
             staffPlayBars.getChildren().add(iv);
+            playbars[i] = iv;
         }
+    }
+    
+    private void doResetPlayBars() {
+        if (activePlaybar >= 0 && activePlaybar < Values.NOTELINES_IN_THE_WINDOW)
+            playbars[activePlaybar].setVisible(false);
+    }
+    
+    public void resetPlayBars() {
+        doResetPlayBars();
+        activePlaybar = -1;
+    }
+    
+    public void updatePlayBars(int position) {
+        doResetPlayBars();
+        
+        if (position < 0 || position >= Values.NOTELINES_IN_THE_WINDOW)
+            return;
+        
+        playbars[position].setVisible(true);
+        activePlaybar = position;
     }
 
 }
