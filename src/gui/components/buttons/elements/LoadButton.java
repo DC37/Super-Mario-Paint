@@ -49,22 +49,31 @@ public class LoadButton extends ImagePushButton {
         super(i, ct, im);
         
         // @since v1.4 to accomodate for those with a smaller screen that may not be able to access it.
-  		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+        ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
-  			@Override
-  			public void handle(KeyEvent event) {
-				if (controller.getNameTextField().focusedProperty().get()) 
-				    return; // Disable while textfield is focused
-				
-  				if(event.isControlDown() && event.getCode() == KeyCode.O)
-  					reactPressed(null);
-  			}
-  		});
+            @Override
+            public void handle(KeyEvent event) {
+                if (controller.getNameTextField().focusedProperty().get()) 
+                    return; // Disable while textfield is focused
+                
+                if(event.isControlDown() && event.getCode() == KeyCode.O)
+                    reactPressed(null);
+            }
+        });
     }
 
     @Override
     protected void reactPressed(MouseEvent event) {
-    	Window owner = (event == null) ? null : ((Node) event.getSource()).getScene().getWindow();
+        Window owner = null;
+
+        // Só tenta acessar o source se o evento não for nulo
+        if (event != null) {
+            Object source = event.getSource();
+            if (source instanceof Node) {
+                owner = ((Node) source).getScene().getWindow();
+            }
+        }
+
         load(owner);
     }
 
