@@ -235,7 +235,6 @@ public class SMPFXController {
     private AnchorPane basePane;
     
     private StaffMouseEventHandler staffMouseEventHandler;
-    private StaffClipboard clipboard;
     private StaffRubberBand rubberBand;
     
     private ModifySongManager commandManager;
@@ -482,7 +481,7 @@ public class SMPFXController {
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
-        clipboard = new StaffClipboard(rubberBand, staff, this, il);
+        new StaffClipboard(rubberBand, staff, this, il);
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
@@ -582,14 +581,6 @@ public class SMPFXController {
      */
     public ImageView getLeftArrow() {
         return leftArrow;
-    }
-
-    /**
-     * @return The <code>HBox</code> that is supposed to hold the control panel
-     *         objects of the interface.
-     */
-    public HBox getControlPanel() {
-        return controls;
     }
 
     /**
@@ -770,21 +761,5 @@ public class SMPFXController {
      */
     public SoundfontLoader getSoundfontLoader() {
     	return sf;
-    }
-    
-    /**
-     * @return the staff's clipboard
-     * @since v1.1.2
-     */
-    public StaffClipboard getStaffClipboard() {
-    	return clipboard;
-    }
-    
-    /**
-     * @return the staff's rubberband used with the clipboard
-     * @since v1.1.2
-     */
-    public StaffRubberBand getStaffRubberBand() {
-    	return rubberBand;
     }
 }
