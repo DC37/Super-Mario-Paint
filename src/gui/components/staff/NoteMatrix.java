@@ -139,6 +139,7 @@ public class NoteMatrix {
         iv.setManaged(false);
         iv.setFitHeight(32);
         iv.setFitWidth(32);
+        iv.setTranslateX(-18);
         return iv;
     }
     

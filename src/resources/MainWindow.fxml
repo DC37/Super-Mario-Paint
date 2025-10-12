@@ -99,90 +99,12 @@
           <children>
             <VBox id="MidHolder" blendMode="MULTIPLY" layoutY="-14.0" prefHeight="680.0" prefWidth="1022.0">
               <children>
-                <Pane id="StaffFrame" prefHeight="479.0" prefWidth="1022.0">
-                  <children>
-                    <ImageView fitHeight="720.0" fitWidth="1024.0" layoutX="0.0" layoutY="-52.0" pickOnBounds="true" translateX="-0.5" translateY="1.0">
-                      <image>
-                        <Image url="@sprites/INST_BACKGROUND.png" />
-                      </image>
-                    </ImageView>
-                    <StackPane fx:id="staffPane" prefHeight="479.0" prefWidth="1022.0">
-                      <children>
-                        <Rectangle id="StaffRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" height="472.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0">
-                          <fill>
-                            <Color blue="0.933" green="0.933" red="0.933" fx:id="x1" />
-                          </fill>
-                        </Rectangle>
-                        <ImageView id="" fitHeight="452.0" fitWidth="983.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                            <Image url="@sprites/STAFF_BG_TREBLEBASS.png" />
-                          </image>
-                          <StackPane.margin>
-                            <Insets top="14.0" />
-                          </StackPane.margin>
-                        </ImageView>
-                      </children>
-                    </StackPane>
-                    <HBox fx:id="staffMeasureNumbers" alignment="CENTER_LEFT" layoutX="54.0" layoutY="5.0" prefHeight="12.0" prefWidth="982.0" spacing="22.0">
-                      <padding>
-                        <Insets left="124.0" />
-                      </padding>
-                    </HBox>
-                    <HBox fx:id="staffMeasureLines" alignment="CENTER_LEFT" layoutX="54.0" layoutY="24.0" prefHeight="276.0" prefWidth="982.0" spacing="62.0">
-                      <padding>
-                        <Insets left="144.0" />
-                      </padding>
-                    </HBox>
-                    <HBox fx:id="staffExtLinesHighC" alignment="CENTER_LEFT" layoutX="54.0" layoutY="-1.0" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <padding>
-                        <Insets left="124.0" top="-1.0" />
-                      </padding>
-                    </HBox>
-                    <HBox fx:id="staffExtLinesHighA" alignment="CENTER_LEFT" layoutX="54.0" layoutY="31.0" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <padding>
-                        <Insets left="124.0" />
-                      </padding>
-                    </HBox>
-                    <HBox id="staffExtLinesLowA" fx:id="staffExtLinesMiddleC" alignment="CENTER_LEFT" layoutX="54.0" layoutY="223" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <padding>
-                        <Insets left="124.0" />
-                      </padding>
-                    </HBox>
-                    <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowC" alignment="CENTER_LEFT" layoutX="54.0" layoutY="415" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                      <padding>
-                        <Insets left="124.0" />
-                      </padding>
-                    </HBox>
-                              <HBox id="staffExtLinesLowA" fx:id="staffExtLinesLowA" alignment="CENTER_LEFT" layoutX="54.0" layoutY="447" prefHeight="48.0" prefWidth="982.0" spacing="22.0">
-                                 <padding>
-                                    <Insets left="124.0" />
-                                 </padding>
-                              </HBox>
-                    <HBox fx:id="staffPlayBars" alignment="CENTER_LEFT" layoutX="54.0" layoutY="23.0" prefHeight="448.0" prefWidth="982.0" spacing="8.0">
-                      <padding>
-                        <Insets left="117.0" />
-                      </padding>
-                    </HBox>
-                    <HBox fx:id="staffAccidentals" alignment="CENTER_LEFT" layoutX="70.0" layoutY="-5.0" prefHeight="504" prefWidth="982.0" spacing="32.0">
-                      <padding>
-                        <Insets left="105.0" />
-                      </padding>
-                    </HBox>
-                    <HBox fx:id="staffInstruments" alignment="CENTER_LEFT" layoutX="70.0" layoutY="-5.0" prefHeight="504" prefWidth="982">
-                      <padding>
-                        <Insets left="113.0" />
-                      </padding>
-                    </HBox>
-                  </children>
-                  <padding>
-                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                  </padding>
-                </Pane>
+                <Pane fx:id="staffFrame" id="StaffFrame" prefHeight="479.0" prefWidth="1022.0"/>
                 <Pane id="VolPaneHolder" prefHeight="64.0" prefWidth="1022.0">
                   <children>
                     <AnchorPane id="AnchorPane" layoutX="3.0" layoutY="-4.0">
                       <children>
-                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="68.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0" y="-2.0" />
+                        <Rectangle id="VolRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="rgb(93.3%, 93.3%, 93.3%)" height="68.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0" y="-2.0" />
                         <ImageView fitHeight="24.0" fitWidth="72.0" layoutX="14.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                           <image>
                             <Image preserveRatio="false" smooth="false" url="@sprites/VOL_LABEL.png" />
@@ -199,7 +121,7 @@
                 </Pane>
                 <Pane id="ControlsPane" prefHeight="121.0" prefWidth="1022.0">
                   <children>
-                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="$x1" height="120.0" layoutX="3.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0" />
+                    <Rectangle id="ControlsRect" arcHeight="5.0" arcWidth="5.0" blendMode="SRC_OVER" fill="rgb(93.3%, 93.3%, 93.3%)" height="120.0" layoutX="3.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="1016.0" />
                     <StackPane id="controls" layoutX="14.0" layoutY="0.0">
                       <children>
                         <HBox id="ControlsHolder" prefHeight="76.0" prefWidth="474.0">

@@ -18,16 +18,23 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
@@ -180,69 +187,11 @@ public class SMPFXController {
      * The controls line object that holds the FXML controls object.
      */
     private Controls controlPanel;
-
-    /**
-     * Lines that appear when a note is placed above the standard staff lines.
-     * High C lines.
-     */
+    
     @FXML
-    private HBox staffExtLinesHighC;
+    private Pane staffFrame;
 
-    /**
-     * Lines that appear when a note is placed above the standard staff lines.
-     * High A lines.
-     */
-    @FXML
-    private HBox staffExtLinesHighA;
-
-    /**
-     * Lines that appear when a note is placed below the standard staff lines.
-     * Middle C lines.
-     */
-    @FXML
-    private HBox staffExtLinesMiddleC;
-
-    /**
-     * Lines that appear when a note is placed below the standard staff lines.
-     * Low C lines.
-     */
-    @FXML
-    private HBox staffExtLinesLowC;
-
-    /**
-     * Lines that appear when a note is placed below the standard staff liens.
-     * Low A lines.
-     */
-    @FXML
-    private HBox staffExtLinesLowA;
-
-    /** The staff measure lines. */
-    @FXML
-    private HBox staffMeasureLines;
-
-    /** The staff measure numbers. */
-    @FXML
-    private HBox staffMeasureNumbers;
-
-    /**
-     * The staff layer that displays the bar that plays notes.
-     */
-    @FXML
-    private HBox staffPlayBars;
-
-    /**
-     * The staff layer that displays the instruments that have been placed on
-     * the staff. Note: Images should be spaced 16 px.
-     */
-    @FXML
     private HBox staffInstruments;
-
-    /**
-     * The staff layer that displays the instrument accidentals that have been
-     * placed on the staff.
-     */
-    @FXML
-    private HBox staffAccidentals;
 
     /**
      * This holds the volume bars in the program.
@@ -280,7 +229,6 @@ public class SMPFXController {
     @FXML
     private ImageView rightFastArrow;
 
-    @FXML
     private StackPane staffPane;
     
     @FXML
@@ -315,6 +263,93 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
+        
+        // Initialize StaffPane
+        ImageView instBackground = new ImageView(il.getSpriteFX(ImageIndex.INST_BACKGROUND));
+        instBackground.setFitHeight(720);
+        instBackground.setFitWidth(1024);
+        instBackground.setLayoutY(-52);
+        instBackground.setTranslateX(-0.5);
+        instBackground.setTranslateY(1);
+        instBackground.setPickOnBounds(true);
+        
+        staffPane = new StackPane();
+        staffPane.setPrefHeight(479);
+        staffPane.setPrefWidth(1022);
+        Paint staffBgFill = Paint.valueOf("rgb(93.3%, 93.3%, 93.3%)");
+        Rectangle staffRect = new Rectangle(1016, 472, staffBgFill);
+        staffRect.setArcHeight(5);
+        staffRect.setArcWidth(5);
+        staffRect.setBlendMode(BlendMode.SRC_OVER);
+        staffRect.setStroke(Paint.valueOf("BLACK"));
+        staffRect.setStrokeType(StrokeType.INSIDE);
+        staffRect.setStrokeWidth(2);
+        ImageView staffImageView = new ImageView(il.getSpriteFX(ImageIndex.STAFF_BG_TREBLEBASS));
+        staffImageView.setFitHeight(452);
+        staffImageView.setFitWidth(983);
+        staffImageView.setMouseTransparent(true);
+        staffImageView.setPickOnBounds(true);
+        staffImageView.setPreserveRatio(true);
+        StackPane.setMargin(staffImageView, new Insets(14, 0, 0, 0));
+        staffPane.getChildren().addAll(staffRect, staffImageView);
+        
+        HBox staffMeasureNumbers = new HBox(22);
+        staffMeasureNumbers.setPrefHeight(12);
+        staffMeasureNumbers.setPrefWidth(982);
+        staffMeasureNumbers.setAlignment(Pos.CENTER_LEFT);
+        staffMeasureNumbers.setLayoutX(54);
+        staffMeasureNumbers.setLayoutY(5);
+        staffMeasureNumbers.setPadding(new Insets(0, 0, 0, 124));
+        
+        HBox staffMeasureLines = new HBox(62);
+        staffMeasureLines.setPrefHeight(276);
+        staffMeasureLines.setPrefWidth(982);
+        staffMeasureLines.setAlignment(Pos.CENTER_LEFT);
+        staffMeasureLines.setLayoutX(54);
+        staffMeasureLines.setLayoutY(24);
+        staffMeasureLines.setPadding(new Insets(0, 0, 0, 144));
+        
+        HBox[] staffLedgerLines = new HBox[5];
+        int[] layoutY = {-2, 31, 223, 415, 447};
+        
+        for (int i = 0; i < 5; i++) {
+            HBox staffLedgerLine = new HBox(22);
+            staffLedgerLine.setPrefHeight(48);
+            staffLedgerLine.setPrefWidth(982);
+            staffLedgerLine.setAlignment(Pos.CENTER_LEFT);
+            staffLedgerLine.setLayoutX(54);
+            staffLedgerLine.setLayoutY(layoutY[i]);
+            staffLedgerLine.setPadding(new Insets(0, 0, 0, 124));
+            
+            staffLedgerLines[i] = staffLedgerLine;
+        }
+        
+        HBox staffPlayBars = new HBox(8);
+        staffPlayBars.setPrefHeight(448);
+        staffPlayBars.setPrefWidth(982);
+        staffPlayBars.setAlignment(Pos.CENTER_LEFT);
+        staffPlayBars.setLayoutX(54);
+        staffPlayBars.setLayoutY(23);
+        staffPlayBars.setPadding(new Insets(0, 0, 0, 117));
+        
+        HBox staffAccidentals = new HBox(32);
+        staffAccidentals.setPrefHeight(504);
+        staffAccidentals.setPrefWidth(982);
+        staffAccidentals.setAlignment(Pos.CENTER_LEFT);
+        staffAccidentals.setLayoutX(70);
+        staffAccidentals.setLayoutY(-5);
+        staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
+        
+        staffInstruments = new HBox();
+        staffInstruments.setPrefHeight(504);
+        staffInstruments.setPrefWidth(982);
+        staffInstruments.setAlignment(Pos.CENTER_LEFT);
+        staffInstruments.setLayoutX(70);
+        staffInstruments.setLayoutY(-5);
+        staffInstruments.setPadding(new Insets(0, 0, 0, 113));
+        
+        staffFrame.getChildren().addAll(instBackground, staffPane, staffMeasureNumbers, staffMeasureLines, staffLedgerLines[0], staffLedgerLines[1], staffLedgerLines[2], staffLedgerLines[3], staffLedgerLines[4], staffPlayBars, staffAccidentals, staffInstruments);
+        staffFrame.setPadding(new Insets(2));
 
         // Set up command manager (undo and redo)
         commandManager = new ModifySongManager(() -> staff.redraw());
@@ -334,8 +369,6 @@ public class SMPFXController {
         });
         
         // Set up staff.
-        HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA, staffExtLinesMiddleC,
-                staffExtLinesLowC, staffExtLinesLowA };
         StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, staffPlayBars, commandManager);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
@@ -449,7 +482,7 @@ public class SMPFXController {
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
-        clipboard = new StaffClipboard(rubberBand, staff, this, il);	
+        clipboard = new StaffClipboard(rubberBand, staff, this, il);
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
