@@ -66,16 +66,12 @@ public class ClipboardButton extends ImageToggleButton {
             releaseImage();
     		StateMachine.setClipboardPressed(false);
             StateMachine.setSelectionModeOn(false);
-    		this.controller.getStaffInstruments().setMouseTransparent(false);
-    		this.controller.getVolumeBars().setMouseTransparent(false);
     		
         } else {
             isPressed = true;
             pressImage();
     		StateMachine.setClipboardPressed(true);
     		StateMachine.setSelectionModeOn(true);
-    		this.controller.getStaffInstruments().setMouseTransparent(true);
-    		this.controller.getVolumeBars().setMouseTransparent(true);
         }
     }
 }

@@ -483,6 +483,12 @@ public class SMPFXController {
         rubberBand = new StaffRubberBand();
         new StaffClipboard(rubberBand, staff, this, il);
         
+        StateMachine.getClipboardPressedProperty().addListener(obs -> {
+            boolean v = StateMachine.isClipboardPressed();
+            staffInstruments.setMouseTransparent(v);
+            volumeBars.setMouseTransparent(v);
+        });
+        
         // Fix TextField focus problems.
         new SongNameController(songName, this);
         
