@@ -18,13 +18,10 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,9 +29,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
@@ -258,93 +252,6 @@ public class SMPFXController {
             } catch (InterruptedException e) {
                 continue;
             }
-        
-        // Initialize StaffPane
-        ImageView instBackground = new ImageView(il.getSpriteFX(ImageIndex.INST_BACKGROUND));
-        instBackground.setFitHeight(720);
-        instBackground.setFitWidth(1024);
-        instBackground.setLayoutY(-52);
-        instBackground.setTranslateX(-0.5);
-        instBackground.setTranslateY(1);
-        instBackground.setPickOnBounds(true);
-        
-        StackPane staffPane = new StackPane();
-        staffPane.setPrefHeight(479);
-        staffPane.setPrefWidth(1022);
-        Paint staffBgFill = Paint.valueOf("rgb(93.3%, 93.3%, 93.3%)");
-        Rectangle staffRect = new Rectangle(1016, 472, staffBgFill);
-        staffRect.setArcHeight(5);
-        staffRect.setArcWidth(5);
-        staffRect.setBlendMode(BlendMode.SRC_OVER);
-        staffRect.setStroke(Paint.valueOf("BLACK"));
-        staffRect.setStrokeType(StrokeType.INSIDE);
-        staffRect.setStrokeWidth(2);
-        ImageView staffImageView = new ImageView(il.getSpriteFX(ImageIndex.STAFF_BG_TREBLEBASS));
-        staffImageView.setFitHeight(452);
-        staffImageView.setFitWidth(983);
-        staffImageView.setMouseTransparent(true);
-        staffImageView.setPickOnBounds(true);
-        staffImageView.setPreserveRatio(true);
-        StackPane.setMargin(staffImageView, new Insets(14, 0, 0, 0));
-        staffPane.getChildren().addAll(staffRect, staffImageView);
-        
-        HBox staffMeasureNumbers = new HBox(22);
-        staffMeasureNumbers.setPrefHeight(12);
-        staffMeasureNumbers.setPrefWidth(982);
-        staffMeasureNumbers.setAlignment(Pos.CENTER_LEFT);
-        staffMeasureNumbers.setLayoutX(54);
-        staffMeasureNumbers.setLayoutY(5);
-        staffMeasureNumbers.setPadding(new Insets(0, 0, 0, 124));
-        
-        HBox staffMeasureLines = new HBox(62);
-        staffMeasureLines.setPrefHeight(276);
-        staffMeasureLines.setPrefWidth(982);
-        staffMeasureLines.setAlignment(Pos.CENTER_LEFT);
-        staffMeasureLines.setLayoutX(54);
-        staffMeasureLines.setLayoutY(24);
-        staffMeasureLines.setPadding(new Insets(0, 0, 0, 144));
-        
-        HBox[] staffLedgerLines = new HBox[5];
-        int[] layoutY = {-2, 31, 223, 415, 447};
-        
-        for (int i = 0; i < 5; i++) {
-            HBox staffLedgerLine = new HBox(22);
-            staffLedgerLine.setPrefHeight(48);
-            staffLedgerLine.setPrefWidth(982);
-            staffLedgerLine.setAlignment(Pos.CENTER_LEFT);
-            staffLedgerLine.setLayoutX(54);
-            staffLedgerLine.setLayoutY(layoutY[i]);
-            staffLedgerLine.setPadding(new Insets(0, 0, 0, 124));
-            
-            staffLedgerLines[i] = staffLedgerLine;
-        }
-        
-        HBox staffPlayBars = new HBox(8);
-        staffPlayBars.setPrefHeight(448);
-        staffPlayBars.setPrefWidth(982);
-        staffPlayBars.setAlignment(Pos.CENTER_LEFT);
-        staffPlayBars.setLayoutX(54);
-        staffPlayBars.setLayoutY(23);
-        staffPlayBars.setPadding(new Insets(0, 0, 0, 117));
-        
-        HBox staffAccidentals = new HBox(32);
-        staffAccidentals.setPrefHeight(504);
-        staffAccidentals.setPrefWidth(982);
-        staffAccidentals.setAlignment(Pos.CENTER_LEFT);
-        staffAccidentals.setLayoutX(70);
-        staffAccidentals.setLayoutY(-5);
-        staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
-        
-        HBox staffInstruments = new HBox();
-        staffInstruments.setPrefHeight(504);
-        staffInstruments.setPrefWidth(982);
-        staffInstruments.setAlignment(Pos.CENTER_LEFT);
-        staffInstruments.setLayoutX(70);
-        staffInstruments.setLayoutY(-5);
-        staffInstruments.setPadding(new Insets(0, 0, 0, 113));
-        
-        staffFrame.getChildren().addAll(instBackground, staffPane, staffMeasureNumbers, staffMeasureLines, staffLedgerLines[0], staffLedgerLines[1], staffLedgerLines[2], staffLedgerLines[3], staffLedgerLines[4], staffPlayBars, staffAccidentals, staffInstruments);
-        staffFrame.setPadding(new Insets(2));
 
         // Set up command manager (undo and redo)
         commandManager = new ModifySongManager(() -> staff.redraw());
@@ -364,7 +271,7 @@ public class SMPFXController {
         });
         
         // Set up staff.
-        StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, staffPlayBars, commandManager);
+        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
