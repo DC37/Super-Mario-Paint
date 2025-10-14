@@ -481,7 +481,6 @@ public class SMPFXController {
         
         StateMachine.getClipboardPressedProperty().addListener(obs -> {
             boolean v = StateMachine.isClipboardPressed();
-            staffInstruments.setMouseTransparent(v);
             volumeBars.setMouseTransparent(v);
         });
         
