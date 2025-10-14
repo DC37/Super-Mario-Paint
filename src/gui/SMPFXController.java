@@ -191,8 +191,6 @@ public class SMPFXController {
     @FXML
     private Pane staffFrame;
 
-    private HBox staffInstruments;
-
     /**
      * This holds the volume bars in the program.
      */
@@ -228,8 +226,6 @@ public class SMPFXController {
      */
     @FXML
     private ImageView rightFastArrow;
-
-    private StackPane staffPane;
     
     @FXML
     private AnchorPane basePane;
@@ -272,7 +268,7 @@ public class SMPFXController {
         instBackground.setTranslateY(1);
         instBackground.setPickOnBounds(true);
         
-        staffPane = new StackPane();
+        StackPane staffPane = new StackPane();
         staffPane.setPrefHeight(479);
         staffPane.setPrefWidth(1022);
         Paint staffBgFill = Paint.valueOf("rgb(93.3%, 93.3%, 93.3%)");
@@ -339,7 +335,7 @@ public class SMPFXController {
         staffAccidentals.setLayoutY(-5);
         staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
         
-        staffInstruments = new HBox();
+        HBox staffInstruments = new HBox();
         staffInstruments.setPrefHeight(504);
         staffInstruments.setPrefWidth(982);
         staffInstruments.setAlignment(Pos.CENTER_LEFT);
@@ -544,13 +540,6 @@ public class SMPFXController {
     }
 
     /**
-     * @return The <code>HBox</code> that holds the staff instruments.
-     */
-    public HBox getStaffInstruments() {
-        return staffInstruments;
-    }
-
-    /**
      * @return The <code>Slider</code> that we will use to navigate the staff.
      */
     public Slider getScrollbar() {
@@ -736,10 +725,6 @@ public class SMPFXController {
 	public void setSoundfontLoader(SoundfontLoader sfLoader) {
 		sf = sfLoader;
 	}
-    
-    public StackPane getStaffPane() {
-    	return staffPane;
-    }
     
     public Staff getStaff(){
     	return staff;
