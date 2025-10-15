@@ -56,6 +56,12 @@ public class Values {
      * number is typically 18.
      */
     public static int NOTES_IN_A_LINE = 29;
+    
+    /**
+     * If there are more notes than this number at the same location on the screen,
+     * excess notes will not be displayed.
+     */
+    public static int MAX_STACKABLE_NOTES = 32;
 
     /** Location of the high C note. */
     public static int highC = 28;

@@ -25,6 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+@SuppressWarnings("unused")
 public class StaffClipboard {
 
 	public static Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
@@ -138,50 +139,63 @@ public class StaffClipboard {
 	 * @param ct
 	 */
 	private void initializeRBEH(StaffRubberBandEventHandler rbeh, SMPFXController ct) {
+	    // The original code would compute the following values by inspecting certain nodes
+	    // in the scene. Since I want to encapsulate the staff code, and since those values
+	    // are always the same (until we make the staff resizable), I'm hardcoding the values
+	    // until a better solution can be implemented. -rozlyn
+        rbeh.initializeLineMinBound(185);
+        rbeh.initializeLineMaxBound(1017);
+        rbeh.initializeLineSpacing(64);
+        rbeh.initializePositionMinBound(47);
+        rbeh.initializePositionMaxBound(541);
+        rbeh.initializePositionSpacing(32);
+        rbeh.initializeVolumeYMaxCoord(591);
+        rbeh.setMarginVertical(5);
+        rbeh.setMarginHorizontal(183);
 		
-		//initialize lineMinBound
-		HBox staffInstruments = ct.getStaffInstruments();
-		ObservableList<Node> instrumentLines = staffInstruments.getChildren();
-		VBox firstLine = (VBox) instrumentLines.get(0);
-		Bounds firstLineBounds = firstLine.localToScene(firstLine.getBoundsInLocal()); 
-		rbeh.initializeLineMinBound(firstLineBounds.getMinX());
-
-		//initialize lineMaxBound
-		VBox lastLine = (VBox) instrumentLines.get(instrumentLines.size() - 1);
-		Bounds lastLineBounds = lastLine.localToScene(lastLine.getBoundsInLocal()); 
-		rbeh.initializeLineMaxBound(lastLineBounds.getMaxX());
-		
-		//initialize lineSpacing
-		rbeh.initializeLineSpacing(firstLineBounds.getWidth());
-		
-		//initialize positionMinBound
-		ObservableList<Node> positions = firstLine.getChildren();
-		StackPane firstPosition = (StackPane) positions.get(0);
-		Bounds firstPositionBounds = firstPosition.localToScene(firstPosition.getBoundsInLocal()); 
-		rbeh.initializePositionMinBound(firstPositionBounds.getMinY());		
-		
-		//initialize positionMaxBound
-		StackPane lastPosition = (StackPane) positions.get(positions.size() - 1);
-		Bounds lastPositionBounds = lastPosition.localToScene(lastPosition.getBoundsInLocal());
-		rbeh.initializePositionMaxBound(lastPositionBounds.getMaxY());
-	
-		//initialize positionSpacing
-		StackPane secondPosition = (StackPane) positions.get(1);
-		Bounds secondPositionBounds = secondPosition.localToScene(secondPosition.getBoundsInLocal());
-		rbeh.initializePositionSpacing((secondPositionBounds.getMinY() - firstPositionBounds.getMinY()) * 2);
-		
-		//initialize volume YMax coordinate
-		HBox volumeBars = ct.getVolumeBars();
-		Bounds volumeBarsBounds = volumeBars.localToScene(volumeBars.getBoundsInLocal());
-		rbeh.initializeVolumeYMaxCoord(volumeBarsBounds.getMaxY());
-		
-		//set margins
-		StackPane staffPane = ct.getStaffPane();
-		Bounds staffPaneBounds = staffPane.localToScene(staffPane.getBoundsInLocal());
-		double marginDeltaX = firstLineBounds.getMinX() - staffPaneBounds.getMinX();
-		double marginDeltaY = firstPositionBounds.getMinY() - staffPaneBounds.getMinY();
-		rbeh.setMarginVertical(marginDeltaY);
-		rbeh.setMarginHorizontal(marginDeltaX);
+//		//initialize lineMinBound
+//		HBox staffInstruments = ct.getStaffInstruments();
+//		ObservableList<Node> instrumentLines = staffInstruments.getChildren();
+//		VBox firstLine = (VBox) instrumentLines.get(0);
+//		Bounds firstLineBounds = firstLine.localToScene(firstLine.getBoundsInLocal()); 
+//		rbeh.initializeLineMinBound(firstLineBounds.getMinX());
+//
+//		//initialize lineMaxBound
+//		VBox lastLine = (VBox) instrumentLines.get(instrumentLines.size() - 1);
+//		Bounds lastLineBounds = lastLine.localToScene(lastLine.getBoundsInLocal()); 
+//		rbeh.initializeLineMaxBound(lastLineBounds.getMaxX());
+//		
+//		//initialize lineSpacing
+//		rbeh.initializeLineSpacing(firstLineBounds.getWidth());
+//		
+//		//initialize positionMinBound
+//		ObservableList<Node> positions = firstLine.getChildren();
+//		StackPane firstPosition = (StackPane) positions.get(0);
+//		Bounds firstPositionBounds = firstPosition.localToScene(firstPosition.getBoundsInLocal()); 
+//		rbeh.initializePositionMinBound(firstPositionBounds.getMinY());		
+//		
+//		//initialize positionMaxBound
+//		StackPane lastPosition = (StackPane) positions.get(positions.size() - 1);
+//		Bounds lastPositionBounds = lastPosition.localToScene(lastPosition.getBoundsInLocal());
+//		rbeh.initializePositionMaxBound(lastPositionBounds.getMaxY());
+//	
+//		//initialize positionSpacing
+//		StackPane secondPosition = (StackPane) positions.get(1);
+//		Bounds secondPositionBounds = secondPosition.localToScene(secondPosition.getBoundsInLocal());
+//		rbeh.initializePositionSpacing((secondPositionBounds.getMinY() - firstPositionBounds.getMinY()) * 2);
+//		
+//		//initialize volume YMax coordinate
+//		HBox volumeBars = ct.getVolumeBars();
+//		Bounds volumeBarsBounds = volumeBars.localToScene(volumeBars.getBoundsInLocal());
+//		rbeh.initializeVolumeYMaxCoord(volumeBarsBounds.getMaxY());
+//		
+//		//set margins
+//		StackPane staffPane = ct.getStaffPane();
+//		Bounds staffPaneBounds = staffPane.localToScene(staffPane.getBoundsInLocal());
+//		double marginDeltaX = firstLineBounds.getMinX() - staffPaneBounds.getMinX();
+//		double marginDeltaY = firstPositionBounds.getMinY() - staffPaneBounds.getMinY();
+//		rbeh.setMarginVertical(marginDeltaY);
+//		rbeh.setMarginHorizontal(marginDeltaX);
 		
 		//set scrollbar resizing
 		rbeh.setScrollBarResizable(controller.getScrollbar());

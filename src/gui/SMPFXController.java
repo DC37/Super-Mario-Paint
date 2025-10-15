@@ -27,6 +27,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
@@ -180,69 +181,9 @@ public class SMPFXController {
      * The controls line object that holds the FXML controls object.
      */
     private Controls controlPanel;
-
-    /**
-     * Lines that appear when a note is placed above the standard staff lines.
-     * High C lines.
-     */
+    
     @FXML
-    private HBox staffExtLinesHighC;
-
-    /**
-     * Lines that appear when a note is placed above the standard staff lines.
-     * High A lines.
-     */
-    @FXML
-    private HBox staffExtLinesHighA;
-
-    /**
-     * Lines that appear when a note is placed below the standard staff lines.
-     * Middle C lines.
-     */
-    @FXML
-    private HBox staffExtLinesMiddleC;
-
-    /**
-     * Lines that appear when a note is placed below the standard staff lines.
-     * Low C lines.
-     */
-    @FXML
-    private HBox staffExtLinesLowC;
-
-    /**
-     * Lines that appear when a note is placed below the standard staff liens.
-     * Low A lines.
-     */
-    @FXML
-    private HBox staffExtLinesLowA;
-
-    /** The staff measure lines. */
-    @FXML
-    private HBox staffMeasureLines;
-
-    /** The staff measure numbers. */
-    @FXML
-    private HBox staffMeasureNumbers;
-
-    /**
-     * The staff layer that displays the bar that plays notes.
-     */
-    @FXML
-    private HBox staffPlayBars;
-
-    /**
-     * The staff layer that displays the instruments that have been placed on
-     * the staff. Note: Images should be spaced 16 px.
-     */
-    @FXML
-    private HBox staffInstruments;
-
-    /**
-     * The staff layer that displays the instrument accidentals that have been
-     * placed on the staff.
-     */
-    @FXML
-    private HBox staffAccidentals;
+    private Pane staffFrame;
 
     /**
      * This holds the volume bars in the program.
@@ -279,15 +220,11 @@ public class SMPFXController {
      */
     @FXML
     private ImageView rightFastArrow;
-
-    @FXML
-    private StackPane staffPane;
     
     @FXML
     private AnchorPane basePane;
     
     private StaffMouseEventHandler staffMouseEventHandler;
-    private StaffClipboard clipboard;
     private StaffRubberBand rubberBand;
     
     private ModifySongManager commandManager;
@@ -334,9 +271,7 @@ public class SMPFXController {
         });
         
         // Set up staff.
-        HBox[] staffLedgerLines = { staffExtLinesHighC, staffExtLinesHighA, staffExtLinesMiddleC,
-                staffExtLinesLowC, staffExtLinesLowA };
-        StaffDisplayManager displayManager = new StaffDisplayManager(il, staffInstruments, staffAccidentals, staffMeasureLines, staffMeasureNumbers, staffLedgerLines, volumeBars, commandManager);
+        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
@@ -449,7 +384,12 @@ public class SMPFXController {
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
-        clipboard = new StaffClipboard(rubberBand, staff, this, il);	
+        new StaffClipboard(rubberBand, staff, this, il);
+        
+        StateMachine.getClipboardPressedProperty().addListener(obs -> {
+            boolean v = StateMachine.isClipboardPressed();
+            volumeBars.setMouseTransparent(v);
+        });
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
@@ -486,18 +426,6 @@ public class SMPFXController {
         
         StateMachine.setMeasureLineNum(0);
         
-        // Setup playbars visibility
-        StateMachine.getPlaybackPositionProperty().addListener((obv, oldv_, newv_) -> {
-            int oldv = (int) oldv_;
-            int newv = (int) newv_;
-            
-            if (oldv != -1)
-                staffPlayBars.getChildren().get(oldv).setVisible(false);
-            
-            if (newv != -1)
-                staffPlayBars.getChildren().get(newv).setVisible(true);
-        });
-        
         // Setup arrangement listview
         StateMachine.getArrangementSongIndexProperty().addListener(obv -> {
             int idx = StateMachine.getArrangementSongIndex();
@@ -511,17 +439,10 @@ public class SMPFXController {
         StateMachine.getPlaybackActiveProperty().addListener(obv -> {
             if (!StateMachine.isPlaybackActive()) {
                 StateMachine.setArrangementSongIndex(-1);
-                StateMachine.setPlaybackPosition(-1);
+                displayManager.resetPlayBars();
             }
         });
         
-    }
-
-    /**
-     * @return The <code>HBox</code> that holds the staff instruments.
-     */
-    public HBox getStaffInstruments() {
-        return staffInstruments;
     }
 
     /**
@@ -561,14 +482,6 @@ public class SMPFXController {
      */
     public ImageView getLeftArrow() {
         return leftArrow;
-    }
-
-    /**
-     * @return The <code>HBox</code> that is supposed to hold the control panel
-     *         objects of the interface.
-     */
-    public HBox getControlPanel() {
-        return controls;
     }
 
     /**
@@ -719,10 +632,6 @@ public class SMPFXController {
 		sf = sfLoader;
 	}
     
-    public StackPane getStaffPane() {
-    	return staffPane;
-    }
-    
     public Staff getStaff(){
     	return staff;
     }
@@ -749,21 +658,5 @@ public class SMPFXController {
      */
     public SoundfontLoader getSoundfontLoader() {
     	return sf;
-    }
-    
-    /**
-     * @return the staff's clipboard
-     * @since v1.1.2
-     */
-    public StaffClipboard getStaffClipboard() {
-    	return clipboard;
-    }
-    
-    /**
-     * @return the staff's rubberband used with the clipboard
-     * @since v1.1.2
-     */
-    public StaffRubberBand getStaffRubberBand() {
-    	return rubberBand;
     }
 }
