@@ -37,13 +37,7 @@ import javafx.scene.text.Text;
  */
 public class StaffDisplayManager {
     
-    final private HBox staffInstruments;
-    final private HBox staffAccidentals;
-    final private HBox staffMeasureLines;
-    final private HBox staffMeasureNums;
-    final private HBox[] staffLedgerLines;
     final private HBox staffVolumeBars;
-    final private HBox staffPlayBars;
     final private Pane staffFrame;
     
     final private NoteMatrix matrix;
@@ -90,13 +84,7 @@ public class StaffDisplayManager {
      * Constructor that also sets up the staff ledger lines.
      */
     public StaffDisplayManager(Pane staffFrame, ImageLoader il, HBox staffVolumeBars, ModifySongManager commandManager) {
-        this.staffInstruments = new HBox();
-        this.staffAccidentals = new HBox(32);
-        this.staffMeasureLines = new HBox(62);
-        this.staffMeasureNums = new HBox(22);
-        this.staffLedgerLines = new HBox[5];
         this.staffVolumeBars = staffVolumeBars;
-        this.staffPlayBars = new HBox(8);
         this.staffFrame = staffFrame;
 
         this.il = il;
@@ -142,14 +130,14 @@ public class StaffDisplayManager {
         StackPane.setMargin(staffImageView, new Insets(14, 0, 0, 0));
         staffPane.getChildren().addAll(staffRect, staffImageView);
         
-        initializeStaffMeasureLines();
-        initializeStaffMeasureNums();
-        initializeStaffLedgerLines();
-        initializeStaffInstruments();
+        Node staffMeasureLines = initializeStaffMeasureLines();
+        Node staffMeasureNums = initializeStaffMeasureNums();
+        Node[] staffLedgerLines = initializeStaffLedgerLines();
+        Node[] staffInstrumentsAccidentals = initializeStaffInstruments();
         initializeVolumeBars();
-        initializeStaffPlayBars();
+        Node staffPlayBars = initializeStaffPlayBars();
         
-        staffFrame.getChildren().addAll(instBackground, staffPane, staffMeasureNums, staffMeasureLines, staffLedgerLines[0], staffLedgerLines[1], staffLedgerLines[2], staffLedgerLines[3], staffLedgerLines[4], staffPlayBars, staffAccidentals, staffInstruments);
+        staffFrame.getChildren().addAll(instBackground, staffPane, staffMeasureNums, staffMeasureLines, staffLedgerLines[0], staffLedgerLines[1], staffLedgerLines[2], staffLedgerLines[3], staffLedgerLines[4], staffPlayBars, staffInstrumentsAccidentals[0], staffInstrumentsAccidentals[1]);
         staffFrame.setPadding(new Insets(2));
     }
 
@@ -195,7 +183,8 @@ public class StaffDisplayManager {
      * Sets up the various note lines of the staff. These are the notes that can
      * appear on the staff. This method also sets up sharps, flats, etc.
      */
-    private void initializeStaffInstruments() {
+    private Node[] initializeStaffInstruments() {
+        HBox staffInstruments = new HBox();
         staffInstruments.setPrefHeight(504);
         staffInstruments.setPrefWidth(982);
         staffInstruments.setAlignment(Pos.CENTER_LEFT);
@@ -203,6 +192,7 @@ public class StaffDisplayManager {
         staffInstruments.setLayoutY(-5);
         staffInstruments.setPadding(new Insets(0, 0, 0, 113));
         
+        HBox staffAccidentals = new HBox(32);
         staffAccidentals.setPrefHeight(504);
         staffAccidentals.setPrefWidth(982);
         staffAccidentals.setAlignment(Pos.CENTER_LEFT);
@@ -211,6 +201,9 @@ public class StaffDisplayManager {
         staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
         
         matrix.initializeNoteDisplay(staffInstruments, staffAccidentals);
+        
+        Node[] ret = { staffInstruments, staffAccidentals };
+        return ret;
     }
     
     public void updateNoteDisplay(StaffSequence seq, int currLine) {
@@ -221,7 +214,8 @@ public class StaffDisplayManager {
     /**
      * These are the lines that divide up the staff.
      */
-    private void initializeStaffMeasureLines() {
+    private Node initializeStaffMeasureLines() {
+        HBox staffMeasureLines = new HBox(62);
         staffMeasureLines.setPrefHeight(276);
         staffMeasureLines.setPrefWidth(982);
         staffMeasureLines.setAlignment(Pos.CENTER_LEFT);
@@ -241,9 +235,12 @@ public class StaffDisplayManager {
             staffMeasureLines.getChildren().add(iv);
             measureLines.add(iv);
         }
+        
+        return staffMeasureLines;
     }
     
-    private void initializeStaffMeasureNums() {
+    private Node initializeStaffMeasureNums() {
+        HBox staffMeasureNums = new HBox(22);
         staffMeasureNums.setPrefHeight(12);
         staffMeasureNums.setPrefWidth(982);
         staffMeasureNums.setAlignment(Pos.CENTER_LEFT);
@@ -264,6 +261,8 @@ public class StaffDisplayManager {
             box.getChildren().add(t);
             measureNums.add(t);
         }
+        
+        return staffMeasureNums;
     }
 
     /**
@@ -316,7 +315,9 @@ public class StaffDisplayManager {
      * Sets up the staff expansion lines, which are to hold notes that are
      * higher than or lower than the regular lines of the staff.
      */
-    private void initializeStaffLedgerLines() {
+    private Node[] initializeStaffLedgerLines() {
+        HBox[] staffLedgerLines = new HBox[5];
+
         highC = new ArrayList<Node>();
         highA = new ArrayList<Node>();
         middleC = new ArrayList<Node>();
@@ -352,6 +353,8 @@ public class StaffDisplayManager {
                 arr.add(ledger);
             }
         }
+        
+        return staffLedgerLines;
     }
     
     public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
@@ -414,7 +417,8 @@ public class StaffDisplayManager {
         matrix.refreshSilhouette(acc);
     }
     
-    public void initializeStaffPlayBars() {
+    public Node initializeStaffPlayBars() {
+        HBox staffPlayBars = new HBox(8);
         staffPlayBars.setPrefHeight(448);
         staffPlayBars.setPrefWidth(982);
         staffPlayBars.setAlignment(Pos.CENTER_LEFT);
@@ -434,6 +438,8 @@ public class StaffDisplayManager {
             staffPlayBars.getChildren().add(iv);
             playbars[i] = iv;
         }
+        
+        return staffPlayBars;
     }
     
     private void doResetPlayBars() {
