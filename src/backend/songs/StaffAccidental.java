@@ -1,7 +1,6 @@
 package backend.songs;
 
-import gui.loaders.ImageLoader;
-import javafx.scene.image.Image;
+import gui.loaders.ImageIndex;
 
 
 /**
@@ -32,15 +31,15 @@ public class StaffAccidental {
         this(new StaffNote(acc.theNote));
     }
     
-    public Image getImage(ImageLoader il) {
+    public ImageIndex getImageIndex() {
         switch (theNote.muteNoteVal()) {
         case 1:
-            return il.getSpriteFX(theNote.getAccidental().imageIndex().alt());
+            return theNote.getAccidental().imageIndex().alt();
         case 2:
-            return il.getSpriteFX(theNote.getAccidental().imageIndex().silhouette());
+            return theNote.getAccidental().imageIndex().silhouette();
         case 0:
         default:
-            return il.getSpriteFX(theNote.getAccidental().imageIndex());
+            return theNote.getAccidental().imageIndex();
         }
     }
 

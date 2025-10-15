@@ -214,7 +214,7 @@ public class NoteMatrix {
                 if (d < depth) {
                     stackedAmounts[row] = d + 1;
                     ImageView iv = matrix.get(map(col, row, d));
-                    iv.setImage(s.getImage(il));
+                    iv.setImage(il.getSpriteFX(s.getImageIndex()));
                     iv.setEffect(s.isSelected() ? highlightBlend : null);
                     iv.setVisible(true);
                 }
@@ -223,7 +223,7 @@ public class NoteMatrix {
                 if (d < depth) {
                     accStackedAmounts[row] = d + 1;
                     ImageView iv = accMatrix.get(map(col, row, d));
-                    iv.setImage(accidental.getImage(il));
+                    iv.setImage(il.getSpriteFX(accidental.getImageIndex()));
                     iv.setVisible(true);
                 }
             }
@@ -264,13 +264,13 @@ public class NoteMatrix {
         currentSilhouette = silhouette;
         
         ImageView iv = silMatrix.get(silMap(col, row));
-        iv.setImage(silhouette.getImage(il));
+        iv.setImage(il.getSpriteFX(silhouette.getImageIndex()));
         iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
             ImageView acciv = accSilMatrix.get(silMap(col, row));
             StaffAccidental acc = new StaffAccidental(silhouette);
-            acciv.setImage(acc.getImage(il));
+            acciv.setImage(il.getSpriteFX(acc.getImageIndex()));
             acciv.setVisible(true);
         }
     }

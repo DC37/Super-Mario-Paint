@@ -5,8 +5,7 @@ import java.text.ParseException;
 
 import gui.InstrumentIndex;
 import gui.Values;
-import gui.loaders.ImageLoader;
-import javafx.scene.image.Image;
+import gui.loaders.ImageIndex;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.
@@ -86,15 +85,15 @@ public class StaffNote implements Serializable {
         this(note.theInstrument, note.position, note.accidental, note.volume);
     }
     
-    public Image getImage(ImageLoader il) {
+    public ImageIndex getImageIndex() {
         switch (muteNote) {
         case 1:
-            return il.getSpriteFX(theInstrument.imageIndex().alt());
+            return theInstrument.imageIndex().alt();
         case 2:
-            return il.getSpriteFX(theInstrument.imageIndex().silhouette());
+            return theInstrument.imageIndex().silhouette();
         case 0:
         default:
-            return il.getSpriteFX(theInstrument.imageIndex());
+            return theInstrument.imageIndex();
         }
     }
     
