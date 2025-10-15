@@ -2,7 +2,6 @@ package backend.songs;
 
 import gui.loaders.ImageLoader;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 
 /**
@@ -43,13 +42,6 @@ public class StaffAccidental {
         default:
             return il.getSpriteFX(theNote.getAccidental().imageIndex());
         }
-    }
-    
-    public ImageView toImageView(ImageLoader il) {
-        ImageView imageView = new ImageView(getImage(il));
-        imageView.setFitWidth(32);
-        imageView.setFitHeight(32);
-        return imageView;
     }
 
     @Override
