@@ -44,6 +44,7 @@ public class StaffDisplayManager {
     final private HBox[] staffLedgerLines;
     final private HBox staffVolumeBars;
     final private HBox staffPlayBars;
+    final private Pane staffFrame;
     
     final private NoteMatrix matrix;
     
@@ -89,6 +90,30 @@ public class StaffDisplayManager {
      * Constructor that also sets up the staff ledger lines.
      */
     public StaffDisplayManager(Pane staffFrame, ImageLoader il, HBox staffVolumeBars, ModifySongManager commandManager) {
+        this.staffInstruments = new HBox();
+        this.staffAccidentals = new HBox(32);
+        this.staffMeasureLines = new HBox(62);
+        this.staffMeasureNums = new HBox(22);
+        this.staffLedgerLines = new HBox[5];
+        this.staffVolumeBars = staffVolumeBars;
+        this.staffPlayBars = new HBox(8);
+        this.staffFrame = staffFrame;
+
+        this.il = il;
+        this.matrix = new NoteMatrix(il, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
+        this.commandManager = commandManager;
+    }
+    
+    public StaffVolumeEventHandler getVolHandler(int index) {
+        return volumeBarHandlers.get(index);
+    }
+
+    /**
+     * Instantiates this wrapper class with the correct HBox objects such that
+     * it can begin keeping track of whatever's happening on the staff, at least
+     * on the measure lines side.
+     */
+    public void initialize() {
         ImageView instBackground = new ImageView(il.getSpriteFX(ImageIndex.INST_BACKGROUND));
         instBackground.setFitHeight(720);
         instBackground.setFitWidth(1024);
@@ -117,93 +142,15 @@ public class StaffDisplayManager {
         StackPane.setMargin(staffImageView, new Insets(14, 0, 0, 0));
         staffPane.getChildren().addAll(staffRect, staffImageView);
         
-        HBox staffMeasureNumbers = new HBox(22);
-        staffMeasureNumbers.setPrefHeight(12);
-        staffMeasureNumbers.setPrefWidth(982);
-        staffMeasureNumbers.setAlignment(Pos.CENTER_LEFT);
-        staffMeasureNumbers.setLayoutX(54);
-        staffMeasureNumbers.setLayoutY(5);
-        staffMeasureNumbers.setPadding(new Insets(0, 0, 0, 124));
-        
-        HBox staffMeasureLines = new HBox(62);
-        staffMeasureLines.setPrefHeight(276);
-        staffMeasureLines.setPrefWidth(982);
-        staffMeasureLines.setAlignment(Pos.CENTER_LEFT);
-        staffMeasureLines.setLayoutX(54);
-        staffMeasureLines.setLayoutY(24);
-        staffMeasureLines.setPadding(new Insets(0, 0, 0, 144));
-        
-        HBox[] staffLedgerLines = new HBox[5];
-        int[] layoutY = {-2, 31, 223, 415, 447};
-        
-        for (int i = 0; i < 5; i++) {
-            HBox staffLedgerLine = new HBox(22);
-            staffLedgerLine.setPrefHeight(48);
-            staffLedgerLine.setPrefWidth(982);
-            staffLedgerLine.setAlignment(Pos.CENTER_LEFT);
-            staffLedgerLine.setLayoutX(54);
-            staffLedgerLine.setLayoutY(layoutY[i]);
-            staffLedgerLine.setPadding(new Insets(0, 0, 0, 124));
-            
-            staffLedgerLines[i] = staffLedgerLine;
-        }
-        
-        HBox staffPlayBars = new HBox(8);
-        staffPlayBars.setPrefHeight(448);
-        staffPlayBars.setPrefWidth(982);
-        staffPlayBars.setAlignment(Pos.CENTER_LEFT);
-        staffPlayBars.setLayoutX(54);
-        staffPlayBars.setLayoutY(23);
-        staffPlayBars.setPadding(new Insets(0, 0, 0, 117));
-        
-        HBox staffAccidentals = new HBox(32);
-        staffAccidentals.setPrefHeight(504);
-        staffAccidentals.setPrefWidth(982);
-        staffAccidentals.setAlignment(Pos.CENTER_LEFT);
-        staffAccidentals.setLayoutX(70);
-        staffAccidentals.setLayoutY(-5);
-        staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
-        
-        HBox staffInstruments = new HBox();
-        staffInstruments.setPrefHeight(504);
-        staffInstruments.setPrefWidth(982);
-        staffInstruments.setAlignment(Pos.CENTER_LEFT);
-        staffInstruments.setLayoutX(70);
-        staffInstruments.setLayoutY(-5);
-        staffInstruments.setPadding(new Insets(0, 0, 0, 113));
-        
-        staffFrame.getChildren().addAll(instBackground, staffPane, staffMeasureNumbers, staffMeasureLines, staffLedgerLines[0], staffLedgerLines[1], staffLedgerLines[2], staffLedgerLines[3], staffLedgerLines[4], staffPlayBars, staffAccidentals, staffInstruments);
-        staffFrame.setPadding(new Insets(2));
-        
-        this.il = il;
-        this.staffInstruments = staffInstruments;
-        this.staffAccidentals = staffAccidentals;
-        this.staffMeasureLines = staffMeasureLines;
-        this.staffMeasureNums = staffMeasureNumbers;
-        this.staffLedgerLines = staffLedgerLines;
-        this.staffVolumeBars = staffVolumeBars;
-        this.staffPlayBars = staffPlayBars;
-        this.matrix = new NoteMatrix(il, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
-        this.commandManager = commandManager;
-    }
-    
-    public StaffVolumeEventHandler getVolHandler(int index) {
-        return volumeBarHandlers.get(index);
-    }
-
-    /**
-     * Instantiates this wrapper class with the correct HBox objects such that
-     * it can begin keeping track of whatever's happening on the staff, at least
-     * on the measure lines side.
-     */
-    public void initialize() {
-
         initializeStaffMeasureLines();
         initializeStaffMeasureNums();
         initializeStaffLedgerLines();
         initializeStaffInstruments();
         initializeVolumeBars();
         initializeStaffPlayBars();
+        
+        staffFrame.getChildren().addAll(instBackground, staffPane, staffMeasureNums, staffMeasureLines, staffLedgerLines[0], staffLedgerLines[1], staffLedgerLines[2], staffLedgerLines[3], staffLedgerLines[4], staffPlayBars, staffAccidentals, staffInstruments);
+        staffFrame.setPadding(new Insets(2));
     }
 
     /**
@@ -249,6 +196,20 @@ public class StaffDisplayManager {
      * appear on the staff. This method also sets up sharps, flats, etc.
      */
     private void initializeStaffInstruments() {
+        staffInstruments.setPrefHeight(504);
+        staffInstruments.setPrefWidth(982);
+        staffInstruments.setAlignment(Pos.CENTER_LEFT);
+        staffInstruments.setLayoutX(70);
+        staffInstruments.setLayoutY(-5);
+        staffInstruments.setPadding(new Insets(0, 0, 0, 113));
+        
+        staffAccidentals.setPrefHeight(504);
+        staffAccidentals.setPrefWidth(982);
+        staffAccidentals.setAlignment(Pos.CENTER_LEFT);
+        staffAccidentals.setLayoutX(70);
+        staffAccidentals.setLayoutY(-5);
+        staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
+        
         matrix.initializeNoteDisplay(staffInstruments, staffAccidentals);
     }
     
@@ -261,6 +222,13 @@ public class StaffDisplayManager {
      * These are the lines that divide up the staff.
      */
     private void initializeStaffMeasureLines() {
+        staffMeasureLines.setPrefHeight(276);
+        staffMeasureLines.setPrefWidth(982);
+        staffMeasureLines.setAlignment(Pos.CENTER_LEFT);
+        staffMeasureLines.setLayoutX(54);
+        staffMeasureLines.setLayoutY(24);
+        staffMeasureLines.setPadding(new Insets(0, 0, 0, 144));
+        
         measureLines = new ArrayList<ImageView>();
         
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
@@ -276,6 +244,13 @@ public class StaffDisplayManager {
     }
     
     private void initializeStaffMeasureNums() {
+        staffMeasureNums.setPrefHeight(12);
+        staffMeasureNums.setPrefWidth(982);
+        staffMeasureNums.setAlignment(Pos.CENTER_LEFT);
+        staffMeasureNums.setLayoutX(54);
+        staffMeasureNums.setLayoutY(5);
+        staffMeasureNums.setPadding(new Insets(0, 0, 0, 124));
+        
         measureNums = new ArrayList<Text>();
         
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
@@ -347,10 +322,21 @@ public class StaffDisplayManager {
         middleC = new ArrayList<Node>();
         lowC = new ArrayList<Node>();
         lowA = new ArrayList<Node>();
-        
+
+        int[] layoutY = {-2, 31, 223, 415, 447};
         ArrayList<?>[] all = { highC, highA, middleC, lowC, lowA };
         
         for (int k = 0; k < 5; k++) {
+            HBox staffLedgerLine = new HBox(22);
+            staffLedgerLine.setPrefHeight(48);
+            staffLedgerLine.setPrefWidth(982);
+            staffLedgerLine.setAlignment(Pos.CENTER_LEFT);
+            staffLedgerLine.setLayoutX(54);
+            staffLedgerLine.setLayoutY(layoutY[k]);
+            staffLedgerLine.setPadding(new Insets(0, 0, 0, 124));
+            
+            staffLedgerLines[k] = staffLedgerLine;
+
             @SuppressWarnings("unchecked")
             ArrayList<Node> arr = (ArrayList<Node>) all[k];
             
@@ -429,6 +415,13 @@ public class StaffDisplayManager {
     }
     
     public void initializeStaffPlayBars() {
+        staffPlayBars.setPrefHeight(448);
+        staffPlayBars.setPrefWidth(982);
+        staffPlayBars.setAlignment(Pos.CENTER_LEFT);
+        staffPlayBars.setLayoutX(54);
+        staffPlayBars.setLayoutY(23);
+        staffPlayBars.setPadding(new Insets(0, 0, 0, 117));
+        
         for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
             ImageView iv = new ImageView(il.getSpriteFX(ImageIndex.PLAY_BAR1));
             iv.setFitHeight(448);
