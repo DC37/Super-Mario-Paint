@@ -27,6 +27,8 @@ import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import javafx.concurrent.Task;
+import javafx.event.Event;
+import javafx.scene.Node;
 import javafx.stage.Window;
 
 /**
@@ -71,6 +73,21 @@ public class Utilities {
             throw new NullPointerException("Cannot load resource: " + filename);
         
         return url;
+    }
+    
+    /**
+     * Find the window owning an event. Useful for events that trigger a popup window.
+     * Returns {@code null} if the owner cannot be found.
+     */
+    public static Window getOwner(Event evt) {
+        if (evt == null)
+            return null;
+        
+        Object src = evt.getSource();
+        if (!(src instanceof Node))
+            return null;
+        
+        return ((Node) src).getScene().getWindow();
     }
 
     /**
