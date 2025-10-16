@@ -6,9 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.io.StreamCorruptedException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import backend.editing.ModifySongManager;
+import backend.saving.mpc.MPCDecoder;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
 import backend.songs.StaffSequence;
@@ -714,6 +717,142 @@ public class SMPFXController {
         new Thread(soundsetsTaskSave).start();
     }
 
+    public void load(Window owner) {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING) {
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    loadSong(owner);
+                    StateMachine.setState(ProgramState.EDITING);
+                }
+                
+            });
+        } else if (curr == ProgramState.ARR_EDITING) {
+            StateMachine.setState(ProgramState.MENU_OPEN);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    loadArrangement(owner);
+                    StateMachine.setState(ProgramState.ARR_EDITING);
+                    
+                }
+                
+            });
+        }
+    }
+
+    private void loadSong(Window owner) {
+        boolean cont = true;
+        if (StateMachine.isSongModified())
+            cont = Dialog
+                    .showYesNoDialog("The current song has been modified!\n"
+                            + "Load anyway?", owner);
+        File inputFile = null;
+        if (cont) {
+            try {
+                FileChooser f = new FileChooser();
+                FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
+                f.getExtensionFilters().add(filterTxt);
+                f.getExtensionFilters().add(filterAny);
+                f.setInitialDirectory(StateMachine.getCurrentDirectory());
+                inputFile = f.showOpenDialog(null);
+                if (inputFile == null)
+                    return;
+                StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+                loadSong(inputFile, owner);
+            } catch (Exception e) {
+                Dialog.showDialog("Not a valid song file.", owner);
+            }
+        }
+    }
+
+    private void loadSong(File inputFile, Window owner) {
+        try {
+            StaffSequence loaded = null;
+            try {
+                loaded = MPCDecoder.decode(inputFile);
+            } catch (ParseException e1) {
+                loaded = Utilities.loadSong(inputFile);
+            }
+            if (loaded == null) {
+                throw new IOException();
+            }
+            String fname = Utilities.populateStaff(loaded, inputFile, false, staff, this);
+            getNameTextField().setText(fname);
+            StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+            getInstBLine().updateNoteExtensions();
+            StateMachine.setSongModified(false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            Dialog.showDialog("Problem loading file!", owner);
+            e.printStackTrace();
+        } catch (Exception e) {
+            Dialog.showDialog("Not a valid song file.", owner);
+        }
+    }
+
+    private void loadArrangement(Window owner) {
+        boolean cont = true;
+        if (StateMachine.isSongModified() || StateMachine.isArrModified()) {
+            if (StateMachine.isSongModified() && StateMachine.isArrModified()) {
+                cont = Dialog
+                        .showYesNoDialog("The current song and arrangement\n"
+                                + "have both been modified!\nLoad anyway?", owner);
+            } else if (StateMachine.isSongModified()) {
+                cont = Dialog
+                        .showYesNoDialog("The current song has been modified!\n"
+                                + "Load anyway?", owner);
+            } else if (StateMachine.isArrModified()) {
+                cont = Dialog
+                        .showYesNoDialog("The current arrangement has been\n"
+                                + "modified! Load anyway?", owner);
+            }
+        }
+        File inputFile = null;
+        if (cont) {
+            try {
+                FileChooser f = new FileChooser();
+                FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
+                f.getExtensionFilters().add(filterTxt);
+                f.getExtensionFilters().add(filterAny);
+                f.setInitialDirectory(StateMachine.getCurrentDirectory());
+                inputFile = f.showOpenDialog(null);
+                if (inputFile == null)
+                    return;
+                StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+                StaffArrangement loaded = Utilities.loadArrangement(inputFile);
+                Utilities.normalizeArrangement(loaded, inputFile);
+                Utilities.populateStaffArrangement(loaded, inputFile, false, staff, this, owner);
+                StateMachine.setSongModified(false);
+                StateMachine.setArrModified(false);
+            } catch (ClassNotFoundException | StreamCorruptedException
+                    | NullPointerException e) {
+                try {
+                    StaffArrangement loaded = MPCDecoder
+                            .decodeArrangement(inputFile);
+                    StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+                    Utilities.normalizeArrangement(loaded, inputFile);
+                    Utilities.populateStaffArrangement(loaded, inputFile, true, staff, this, owner);
+                    StateMachine.setSongModified(false);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    Dialog.showDialog("Not a valid arrangement file.", owner);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     public void switchClipMode(boolean on) {
         if (on) {
             StateMachine.setClipboardPressed(false);
