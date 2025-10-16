@@ -1,6 +1,8 @@
 package gui;
 
 import backend.editing.ModifySongManager;
+import backend.songs.StaffArrangement;
+import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
@@ -457,6 +459,48 @@ public class SMPFXController {
         } else if (curr == ProgramState.ARR_EDITING) {
             modeText.setText("Song");
             staff.setArrangerMode(false);
+        }
+    }
+    
+    public void newSongOrArrangement(Window owner) {
+        ProgramState curr = StateMachine.getState();
+        if (curr == ProgramState.EDITING)
+            newSong(owner);
+        else if (curr == ProgramState.ARR_EDITING)
+            newArrangement(owner);
+    }
+    
+    public void newSong(Window owner) {
+        boolean cont = true;
+        if (StateMachine.isSongModified())
+            cont = Dialog
+                    .showYesNoDialog("The current song has been modified!\n"
+                            + "Create a new song anyway?", owner);
+
+        if (cont) {
+            staff.setSequence(new StaffSequence());
+            staff.setSequenceFile(null);
+            staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
+            staff.resetLocation();
+            StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
+            getNameTextField().clear();
+            StateMachine.setSongModified(false);
+        }
+    }
+    
+    public void newArrangement(Window owner) {
+        boolean cont = true;
+        if (StateMachine.isArrModified()) {
+            cont = Dialog
+                    .showYesNoDialog("The current arrangement has been\n"
+                            + "modified! Create a new arrangement\nanyway?", owner);
+        }
+        if (cont) {
+            staff.setArrangement(new StaffArrangement());
+            staff.setArrangementFile(null);
+            getNameTextField().clear();
+            staff.getArrangementList().getItems().clear();
+            StateMachine.setArrModified(false);
         }
     }
     
