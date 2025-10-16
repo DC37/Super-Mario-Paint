@@ -866,12 +866,10 @@ public class SMPFXController {
     public void switchClipMode(boolean on) {
         if (on) {
             StateMachine.setClipboardPressed(false);
-            StateMachine.setSelectionModeOn(false);
             volumeBars.setMouseTransparent(false);
             
         } else {
             StateMachine.setClipboardPressed(true);
-            StateMachine.setSelectionModeOn(true);
             volumeBars.setMouseTransparent(true);
         }
     }

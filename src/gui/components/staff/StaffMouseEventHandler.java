@@ -75,7 +75,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
 	@Override
 	public void handle(MouseEvent event) {
-	    if (StateMachine.isPlaybackActive() || StateMachine.isSelectionModeOn())
+	    if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
 	        return;
     	
         InstrumentIndex theInd = ButtonLine.getSelectedInstrument();

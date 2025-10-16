@@ -47,8 +47,6 @@ public class StateMachine {
 	 * This keeps track of whether we have pressed the clipboard button or not.
 	 */
 	private static BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
-	
-	private static BooleanProperty selectionModeOn = new SimpleBooleanProperty(false);
 
     /** The list of values denoting which notes should be extended. */
     private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
@@ -324,18 +322,6 @@ public class StateMachine {
     
     public static boolean isClipboardPressed() {
     	return clipboardPressed.get();
-    }
-    
-    public static BooleanProperty getSelectionModeOnProperty() {
-        return selectionModeOn;
-    }
-    
-    public static boolean isSelectionModeOn() {
-        return selectionModeOn.get();
-    }
-    
-    public static void setSelectionModeOn(boolean b) {
-        selectionModeOn.set(b);
     }
 
     /**
