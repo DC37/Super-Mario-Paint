@@ -46,7 +46,7 @@ public class StateMachine {
 	/**
 	 * This keeps track of whether we have pressed the clipboard button or not.
 	 */
-	private static BooleanProperty clipboardPressedProperty = new SimpleBooleanProperty(false);
+	private static BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
 	
 	private static BooleanProperty selectionModeOn = new SimpleBooleanProperty(false);
 
@@ -314,16 +314,16 @@ public class StateMachine {
         return muteAPressed;
     }
     
-    public static BooleanProperty getClipboardPressedProperty() {
-        return clipboardPressedProperty;
+    public static BooleanProperty clipboardPressedProperty() {
+        return clipboardPressed;
     }
     
     public static void setClipboardPressed(boolean b) {
-    	clipboardPressedProperty.set(b);
+    	clipboardPressed.set(b);
     }
     
     public static boolean isClipboardPressed() {
-    	return clipboardPressedProperty.get();
+    	return clipboardPressed.get();
     }
     
     public static BooleanProperty getSelectionModeOnProperty() {

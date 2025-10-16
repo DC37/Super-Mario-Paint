@@ -1,7 +1,6 @@
 package gui.components.buttons.elements;
 
 import gui.SMPFXController;
-import gui.StateMachine;
 import gui.components.buttons.ImageToggleButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
@@ -64,14 +63,12 @@ public class ClipboardButton extends ImageToggleButton {
         if (isPressed) {
             isPressed = false;
             releaseImage();
-    		StateMachine.setClipboardPressed(false);
-            StateMachine.setSelectionModeOn(false);
+            controller.switchClipMode(true);
     		
         } else {
             isPressed = true;
             pressImage();
-    		StateMachine.setClipboardPressed(true);
-    		StateMachine.setSelectionModeOn(true);
+            controller.switchClipMode(false);
         }
     }
 }

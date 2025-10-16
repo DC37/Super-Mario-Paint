@@ -386,7 +386,7 @@ public class SMPFXController {
         rubberBand = new StaffRubberBand();
         new StaffClipboard(rubberBand, staff, this, il);
         
-        StateMachine.getClipboardPressedProperty().addListener(obs -> {
+        StateMachine.clipboardPressedProperty().addListener(obs -> {
             boolean v = StateMachine.isClipboardPressed();
             volumeBars.setMouseTransparent(v);
         });
@@ -457,6 +457,19 @@ public class SMPFXController {
         } else if (curr == ProgramState.ARR_EDITING) {
             modeText.setText("Song");
             staff.setArrangerMode(false);
+        }
+    }
+    
+    public void switchClipMode(boolean on) {
+        if (on) {
+            StateMachine.setClipboardPressed(false);
+            StateMachine.setSelectionModeOn(false);
+            volumeBars.setMouseTransparent(false);
+            
+        } else {
+            StateMachine.setClipboardPressed(true);
+            StateMachine.setSelectionModeOn(true);
+            volumeBars.setMouseTransparent(true);
         }
     }
 
