@@ -251,6 +251,9 @@ public class SMPFXController {
     
     /** This is the soundfont loader. */
     private SoundfontLoader sf;
+    
+    /** Handles the options menu */
+    private OptionsMenu optionsMenu;
 
     /** Prevent multiple save windows from opening. */
     private boolean saveInProgress = false;
@@ -296,6 +299,9 @@ public class SMPFXController {
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
+        
+        // Set up options menu
+        optionsMenu = new OptionsMenu(this, staff);
         
         // Set up time signature buttons
         ImageRadioButton timesig_4_4_button = new ImageRadioButton(timesig_4_4, this, il) {
@@ -851,6 +857,10 @@ public class SMPFXController {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public void options(Window owner) {
+        optionsMenu.options(owner);
     }
     
     public void switchClipMode(boolean on) {
