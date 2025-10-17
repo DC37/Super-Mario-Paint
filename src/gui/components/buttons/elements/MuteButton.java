@@ -5,10 +5,7 @@ import gui.StateMachine;
 import gui.components.buttons.ImageToggleButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
-import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -40,19 +37,6 @@ public class MuteButton extends ImageToggleButton {
         getImages(ImageIndex.MUTE_PRESSED, ImageIndex.MUTE_RELEASED);
         releaseImage();
         isPressed = false;
-        
-		// TODO: create getMuteButton() somewhere so adding a hotkey can be done elsewhere
-        // @since v1.1.2 per request of seymour schlong
-		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				/** alt+n is for deselecting notes @see <code>StaffRubberBandEventHandler</code> */
-				if (controller.getNameTextField().focusedProperty().get()) return; // Disable while textfield is focused
-				if(!event.isControlDown() && !event.isAltDown() && event.getCode() == KeyCode.N)
-					reactPressed(null);
-			}
-		});
     }
 
     @Override

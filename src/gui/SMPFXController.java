@@ -308,76 +308,76 @@ public class SMPFXController {
         
         // Set up time signature buttons
         ImageRadioButton timesig_4_4_button = new ImageRadioButton(timesig_4_4, this, il) {
-        	{
-        		getImages(ImageIndex.TIMESIG_4_4_PRESSED, ImageIndex.TIMESIG_4_4_RELEASED);
-        		pressImage();
-        	}
-        	
-        	@Override
-        	public void reactPressed(MouseEvent e) {
-        		if (isPressed) {
-        			return;
-        		}
-        		
-        		super.reactPressed(e);
-        		staff.setTimeSignature(TimeSignature.FOUR_FOUR);
-        	}
+            {
+                getImages(ImageIndex.TIMESIG_4_4_PRESSED, ImageIndex.TIMESIG_4_4_RELEASED);
+                pressImage();
+            }
+            
+            @Override
+            public void reactPressed(MouseEvent e) {
+                if (isPressed) {
+                    return;
+                }
+                
+                super.reactPressed(e);
+                staff.setTimeSignature(TimeSignature.FOUR_FOUR);
+            }
         };
         
         ImageRadioButton timesig_3_4_button = new ImageRadioButton(timesig_3_4, this, il) {
-        	{
-        		getImages(ImageIndex.TIMESIG_3_4_PRESSED, ImageIndex.TIMESIG_3_4_RELEASED);
-        	}
-        	
-        	@Override
-        	public void reactPressed(MouseEvent e) {
-        		if (isPressed) {
-        			return;
-        		}
-        		
-        		super.reactPressed(e);
-        		staff.setTimeSignature(TimeSignature.THREE_FOUR);
-        	}
+            {
+                getImages(ImageIndex.TIMESIG_3_4_PRESSED, ImageIndex.TIMESIG_3_4_RELEASED);
+            }
+            
+            @Override
+            public void reactPressed(MouseEvent e) {
+                if (isPressed) {
+                    return;
+                }
+                
+                super.reactPressed(e);
+                staff.setTimeSignature(TimeSignature.THREE_FOUR);
+            }
         };
         
         ImageRadioButton timesig_6_8_button = new ImageRadioButton(timesig_6_8, this, il) {
-        	{
-        		getImages(ImageIndex.TIMESIG_6_8_PRESSED, ImageIndex.TIMESIG_6_8_RELEASED);
-        	}
-        	
-        	@Override
-        	public void reactPressed(MouseEvent e) {
-        		if (isPressed) {
-        			return;
-        		}
-        		
-        		super.reactPressed(e);
-        		staff.setTimeSignature(TimeSignature.SIX_EIGHT);
-        	}
+            {
+                getImages(ImageIndex.TIMESIG_6_8_PRESSED, ImageIndex.TIMESIG_6_8_RELEASED);
+            }
+            
+            @Override
+            public void reactPressed(MouseEvent e) {
+                if (isPressed) {
+                    return;
+                }
+                
+                super.reactPressed(e);
+                staff.setTimeSignature(TimeSignature.SIX_EIGHT);
+            }
         };
         
         ImageRadioButton timesig_custom_button = new ImageRadioButton(timesig_custom, this, il) {
-        	{
-        		getImages(ImageIndex.TIMESIG_CUSTOM_PRESSED, ImageIndex.TIMESIG_CUSTOM_RELEASED);
-        	}
-        	
-        	@Override
-        	public void reactPressed(MouseEvent e) {
-        		Window owner = ((Node) e.getSource()).getScene().getWindow();
-        		String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
-        		if (str.isEmpty())
-        			return;
-        		
-        		try {
-        			staff.setTimeSignature(TimeSignature.valueOf(str));
-        			
-        		} catch (IllegalArgumentException ee) {
-        			Dialog.showDialog(ee.getMessage());
-        			return;
-        		}
-        		
-        		super.reactPressed(e); // only if the input timesig is correct
-        	}
+            {
+                getImages(ImageIndex.TIMESIG_CUSTOM_PRESSED, ImageIndex.TIMESIG_CUSTOM_RELEASED);
+            }
+            
+            @Override
+            public void reactPressed(MouseEvent e) {
+                Window owner = ((Node) e.getSource()).getScene().getWindow();
+                String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
+                if (str.isEmpty())
+                    return;
+                
+                try {
+                    staff.setTimeSignature(TimeSignature.valueOf(str));
+                    
+                } catch (IllegalArgumentException ee) {
+                    Dialog.showDialog(ee.getMessage());
+                    return;
+                }
+                
+                super.reactPressed(e); // only if the input timesig is correct
+            }
         };
         
         timesig_4_4_button.link(timesig_3_4_button);
@@ -988,6 +988,14 @@ public class SMPFXController {
                     controlPanel.getClipboardButton().reactPressed(null);
                 break;
                 
+            case N:
+                if (songName.focusedProperty().get())
+                    break;
+                
+                if (!ke.isControlDown() && !ke.isAltDown())
+                    controlPanel.getMuteButton().reactPressed(null);
+                break;
+                
             case O:
                 if (songName.focusedProperty().get())
                     break;
@@ -1119,12 +1127,12 @@ public class SMPFXController {
         return muteA;
     }
 
-	/**
-	 * @return The <code>ImageView</code> object that contains the clipboard
-	 *         selection button.
-	 */
+    /**
+     * @return The <code>ImageView</code> object that contains the clipboard
+     *         selection button.
+     */
     public ImageView getClipboardButton() {
-    	return clipboardButton;
+        return clipboardButton;
     }
 
     /** @return The control panel of the program. */
@@ -1227,20 +1235,20 @@ public class SMPFXController {
     }
 
     /** @since v1.1.2 */
-	public void setSoundfontLoader(SoundfontLoader sfLoader) {
-		sf = sfLoader;
-	}
+    public void setSoundfontLoader(SoundfontLoader sfLoader) {
+        sf = sfLoader;
+    }
     
     public Staff getStaff(){
-    	return staff;
+        return staff;
     }
     
     public AnchorPane getBasePane() {
-    	return basePane;
+        return basePane;
     }
     
     public HBox getInstLine() {
-    	return instLine;
+        return instLine;
     }
     
     public StaffMouseEventHandler getStaffMouseEventHandler() {
@@ -1248,7 +1256,7 @@ public class SMPFXController {
     }
     
     public ModifySongManager getModifySongManager() {
-    	return commandManager;
+        return commandManager;
     }
     
     /**
@@ -1256,6 +1264,6 @@ public class SMPFXController {
      * @since v1.1.2
      */
     public SoundfontLoader getSoundfontLoader() {
-    	return sf;
+        return sf;
     }
 }
