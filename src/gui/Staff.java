@@ -532,8 +532,7 @@ public class Staff {
     }
     
     public void addSongToArrangement() {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.ARR_PLAYING)
+        if (StateMachine.isPlaybackActive())
             return;
     
         if ((Settings.debug & 0b100000) != 0)
@@ -549,8 +548,7 @@ public class Staff {
     }
     
     public void deleteSongFromArrangement() {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.ARR_PLAYING)
+        if (StateMachine.isPlaybackActive())
             return;
         
         if ((Settings.debug & 0b100000) != 0)
@@ -567,8 +565,7 @@ public class Staff {
     }
     
     public void moveSongInArrangement(int moveAmt) {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.ARR_PLAYING)
+        if (StateMachine.isPlaybackActive())
             return;
 
         if ((Settings.debug & 0b100000) != 0)
@@ -596,23 +593,22 @@ public class Staff {
     }
     
     public void play() {
-        if (StateMachine.getState() == ProgramState.EDITING) {
-            StateMachine.setState(ProgramState.SONG_PLAYING);
+        switch (StateMachine.getMode()) {
+        case SONG:
             startSong();
-        } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
-            StateMachine.setState(ProgramState.ARR_PLAYING);
+            break;
+            
+        case ARRANGEMENT:
             startArrangement();
+            break;
         }
+        
+        StateMachine.setPlaybackActive(true);
     }
     
     public void stop() {
-        if (StateMachine.getState() == ProgramState.SONG_PLAYING) {
-            StateMachine.setState(ProgramState.EDITING);
-            stopSong();
-        } else if (StateMachine.getState() == ProgramState.ARR_PLAYING) {
-            StateMachine.setState(ProgramState.ARR_EDITING);
-            stopSong();
-        }
+        stopSong();
+        StateMachine.setPlaybackActive(false);
     }
     
 

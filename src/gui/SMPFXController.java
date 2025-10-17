@@ -238,9 +238,6 @@ public class SMPFXController {
     
     /** Handles the options menu */
     private OptionsMenu optionsMenu;
-
-    /** Prevent multiple save windows from opening. */
-    private boolean saveInProgress = false;
     
     /**
      * Zero-argument constructor (explicitly declared).
@@ -405,18 +402,6 @@ public class SMPFXController {
         // Fix TextField focus problems.
         new SongNameController(songName, this);
         
-        // Bind playback active property
-        StateMachine.getPlaybackActiveProperty().bind(Bindings.createBooleanBinding(
-                () -> {
-                    switch (StateMachine.getState()) {
-                    case SONG_PLAYING:
-                    case ARR_PLAYING:
-                        return true;
-                    default:
-                        return false;
-                    }
-                }, StateMachine.getStateProperty()));
-        
         // Bind displayed tempo to internal value in state machine
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
         
@@ -457,17 +442,19 @@ public class SMPFXController {
     }
     
     public void switchMode() {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.ARR_PLAYING || curr == ProgramState.SONG_PLAYING)
+        if (StateMachine.isPlaybackActive())
             return;
 
-        if (curr == ProgramState.EDITING) {
+        switch (StateMachine.getMode()) {
+        case SONG:
             modeText.setText("Arr");
             staff.setArrangerMode(true);
+            break;
 
-        } else if (curr == ProgramState.ARR_EDITING) {
+        case ARRANGEMENT:
             modeText.setText("Song");
             staff.setArrangerMode(false);
+            break;
         }
     }
     
@@ -497,11 +484,15 @@ public class SMPFXController {
     }
     
     public void newSongOrArrangement(Window owner) {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.EDITING)
+        switch (StateMachine.getMode()) {
+        case SONG:
             newSong(owner);
-        else if (curr == ProgramState.ARR_EDITING)
+            break;
+            
+        case ARRANGEMENT:
             newArrangement(owner);
+            break;
+        }
     }
     
     public void newSong(Window owner) {
@@ -544,32 +535,14 @@ public class SMPFXController {
     }
     
     public void save(Window owner) {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.EDITING || curr == ProgramState.SONG_PLAYING) {
-            final ProgramState saveState = curr;
-            StateMachine.setState(ProgramState.MENU_OPEN);
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    saveSong(owner);
-                    StateMachine.setState(saveState);
-                }
-                
-            });
-        } else if (!saveInProgress && (curr == ProgramState.ARR_EDITING
-                || curr == ProgramState.ARR_PLAYING)) {
-            final ProgramState saveState = curr;
-            StateMachine.setState(ProgramState.MENU_OPEN);
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    saveArrangement(owner);
-                    StateMachine.setState(saveState);
-                }
-                
-            });
+        switch (StateMachine.getMode()) {
+        case SONG:
+            Platform.runLater(() -> saveSong(owner));
+            break;
+            
+        case ARRANGEMENT:
+            Platform.runLater(() -> saveArrangement(owner));
+            break;
         }
     }
 
@@ -588,9 +561,7 @@ public class SMPFXController {
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
             File outputFile = null;
-            saveInProgress = true;
-            outputFile = f.showSaveDialog(null);
-            saveInProgress = false;
+            outputFile = f.showSaveDialog(owner);
             if (outputFile == null)
                 return;
             FileOutputStream f_out = new FileOutputStream(outputFile);
@@ -653,9 +624,7 @@ public class SMPFXController {
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
             File outputFile = null;
-            saveInProgress = true;
             outputFile = f.showSaveDialog(owner);
-            saveInProgress = false;
             if (outputFile == null)
                 return;
             FileOutputStream f_out = new FileOutputStream(outputFile);
@@ -744,32 +713,14 @@ public class SMPFXController {
     }
 
     public void load(Window owner) {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.EDITING) {
-            StateMachine.setState(ProgramState.MENU_OPEN);
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    loadSong(owner);
-                    StateMachine.setState(ProgramState.EDITING);
-                }
-                
-            });
-        } else if (curr == ProgramState.ARR_EDITING) {
-            StateMachine.setState(ProgramState.MENU_OPEN);
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    loadArrangement(owner);
-                    StateMachine.setState(ProgramState.ARR_EDITING);
-                    
-                }
-                
-            });
+        switch (StateMachine.getMode()) {
+        case SONG:
+            Platform.runLater(() -> loadSong(owner));
+            break;
+            
+        case ARRANGEMENT:
+            Platform.runLater(() -> loadArrangement(owner));
+            break;
         }
     }
 
@@ -982,22 +933,12 @@ public class SMPFXController {
 
                 if (ke.isControlDown() || ke.isShiftDown())
                     staff.setLocation(0);
-
-                if (StateMachine.getState() == ProgramState.SONG_PLAYING) {
-                    StateMachine.setState(ProgramState.EDITING);
-                    staff.stopSong();
-
-                } else if (StateMachine.getState() == ProgramState.ARR_PLAYING) {
-                    StateMachine.setState(ProgramState.ARR_EDITING);
-                    staff.stopSong();
-
-                } else if (StateMachine.getState() == ProgramState.EDITING) {
-                    StateMachine.setState(ProgramState.SONG_PLAYING);
-                    staff.startSong();
-
-                } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
-                    StateMachine.setState(ProgramState.ARR_PLAYING);
-                    staff.startArrangement();
+                
+                if (StateMachine.isPlaybackActive()) {
+                    staff.stop();
+                    
+                } else {
+                    staff.play();
                 }
 
                 break;

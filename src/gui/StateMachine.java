@@ -59,11 +59,7 @@ public class StateMachine {
     private static Set<KeyCode> buttonsPressed =
             Collections.synchronizedSet(new HashSet<KeyCode>());
 
-    /**
-     * The default state that the program is in is the EDITING state, in which
-     * notes are being placed on the staff.
-     */
-    private static ObjectProperty<ProgramState> currentState = new SimpleObjectProperty<>(ProgramState.EDITING);
+    private static ObjectProperty<SMPMode> mode = new SimpleObjectProperty<>(SMPMode.SONG);
     
     private static BooleanProperty playbackActive = new SimpleBooleanProperty(false);
 
@@ -113,32 +109,16 @@ public class StateMachine {
     private StateMachine() {
     }
     
-    public static ObjectProperty<ProgramState> getStateProperty() {
-        return currentState;
+    public static ObjectProperty<SMPMode> modeProperty() {
+        return mode;
     }
 
-    /**
-     * Get the current <code>State</code> of the <code>StateMachine</code>
-     *
-     * @return The current <code>State</code>.
-     */
-    public static ProgramState getState() {
-        return currentState.get();
+    public static SMPMode getMode() {
+        return mode.get();
     }
 
-    /**
-     * @param s
-     *            Set the <code>StateMachine</code> to a certain State.
-     */
-    public static void setState(ProgramState s) {
-        currentState.set(s);
-    }
-
-    /**
-     * Sets the state back to "Editing" by default.
-     */
-    public static void resetState() {
-        currentState.set(ProgramState.EDITING);
+    public static void setMode(SMPMode m) {
+        mode.set(m);
     }
     
     public static BooleanProperty getPlaybackActiveProperty() {
@@ -147,6 +127,10 @@ public class StateMachine {
 
     public static boolean isPlaybackActive() {
         return playbackActive.get();
+    }
+    
+    public static void setPlaybackActive(boolean b) {
+        playbackActive.set(b);
     }
     
     public static ObjectProperty<TimeSignature> getTimeSignatureProperty() {

@@ -1,7 +1,7 @@
 package gui.components.buttons.elements;
 
-import gui.ProgramState;
 import gui.SMPFXController;
+import gui.SMPMode;
 import gui.StateMachine;
 import gui.components.buttons.ImageToggleButton;
 import gui.loaders.ImageIndex;
@@ -44,17 +44,17 @@ public class LoopButton extends ImageToggleButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        ProgramState curr = StateMachine.getState();
-        if (curr != ProgramState.ARR_EDITING && curr != ProgramState.ARR_PLAYING) {
-            if (isPressed) {
-                isPressed = false;
-                releaseImage();
-                StateMachine.setLoopPressed(false);
-            } else {
-                isPressed = true;
-                pressImage();
-                StateMachine.setLoopPressed(true);
-            }
+        if (StateMachine.getMode() == SMPMode.ARRANGEMENT)
+            return;
+        
+        if (isPressed) {
+            isPressed = false;
+            releaseImage();
+            StateMachine.setLoopPressed(false);
+        } else {
+            isPressed = true;
+            pressImage();
+            StateMachine.setLoopPressed(true);
         }
     }
 

@@ -3,8 +3,8 @@ package gui.components.buttons.elements;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import gui.ProgramState;
 import gui.SMPFXController;
+import gui.SMPMode;
 import gui.StateMachine;
 import gui.Values;
 import gui.components.buttons.ImagePushButton;
@@ -59,8 +59,7 @@ public class TempoAdjustButton extends ImagePushButton {
 
     @Override
     protected void reactPressed(MouseEvent event) {
-        ProgramState curr = StateMachine.getState();
-        if (curr == ProgramState.EDITING) {
+        if (StateMachine.getMode() == SMPMode.SONG && !StateMachine.isPlaybackActive()) {
             setPressed();
             theStaff.addTempo(1, isPositive);
             TimerTask tt = new clickHold();

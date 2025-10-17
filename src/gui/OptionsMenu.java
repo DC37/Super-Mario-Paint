@@ -99,13 +99,17 @@ public class OptionsMenu {
         soundfontsOptions.setAlignment(Pos.CENTER);
 
         // Hide some options while in arranger mode, due to them being impractical (Tempo multiplier, Soundfont binder) - seymour
-        if (StateMachine.getState() == ProgramState.ARR_EDITING) {
-            soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu);
-            vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, pane);
-        } else {
+        switch (StateMachine.getMode()) {
+        case SONG:
             soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
             vBox.getChildren().addAll(label, defaultVolume, timesigLabel, timesigField,
                     tempoAdjustHack, tempoField, soundfontsOptions, pane);
+            break;
+            
+        case ARRANGEMENT:
+            soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu);
+            vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, pane);
+            break;
         }
         
         defaultVolume.autosize();

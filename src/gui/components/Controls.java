@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import backend.songs.StaffSequence;
 import gui.Dialog;
-import gui.ProgramState;
 import gui.SMPFXController;
+import gui.SMPMode;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Utilities;
@@ -103,7 +103,7 @@ public class Controls {
 		theList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (StateMachine.getState() == ProgramState.ARR_PLAYING)
+				if (StateMachine.getMode() == SMPMode.ARRANGEMENT && StateMachine.isPlaybackActive())
 					return;
 				int x = theList.getSelectionModel().getSelectedIndex();
 				if (x != -1) {
@@ -131,8 +131,7 @@ public class Controls {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					ProgramState curr = StateMachine.getState();
-					if (curr == ProgramState.EDITING) {
+					if (StateMachine.getMode() == SMPMode.SONG) {
 					    Window owner = ((Node) event.getSource()).getScene().getWindow();
 						String tempo = Dialog.showTextDialog("Tempo", owner);
 						StateMachine.setTempo(Double.parseDouble(tempo));
@@ -206,7 +205,7 @@ public class Controls {
 	private void setArrangerMode() {
 		changeCenterList();
 		loop.release();
-		StateMachine.setState(ProgramState.ARR_EDITING);
+		StateMachine.setMode(SMPMode.ARRANGEMENT);
 
 	}
 
@@ -227,7 +226,7 @@ public class Controls {
 	/** Changes the current interface to the normal song editing mode. */
 	private void setEditingMode() {
 		revertCenterList();
-		StateMachine.setState(ProgramState.EDITING);
+		StateMachine.setMode(SMPMode.SONG);
 	}
 
 	/**
