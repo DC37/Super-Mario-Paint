@@ -422,6 +422,20 @@ public class SMPFXController {
             }
         }, StateMachine.modeProperty()));
         
+        // Changing mode binds the bottom text to a different name property
+        StateMachine.modeProperty().addListener(obs -> {
+            switch (StateMachine.getMode()) {
+            case SONG:
+                songName.textProperty().unbindBidirectional(StateMachine.currentArrangementNameProperty());
+                songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
+                break;
+            case ARRANGEMENT:
+                songName.textProperty().unbindBidirectional(StateMachine.currentSongNameProperty());
+                songName.textProperty().bindBidirectional(StateMachine.currentArrangementNameProperty());
+                break;
+            }
+        });
+        
         // Bind displayed tempo to internal value in state machine
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
         

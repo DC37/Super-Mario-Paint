@@ -167,32 +167,14 @@ public class Controls {
 
 	/** Changes the current interface to the arranger mode. */
 	private void setArrangerMode() {
-		changeCenterList();
 		loop.release();
 		StateMachine.setMode(SMPMode.ARRANGEMENT);
 
 	}
 
-	/**
-	 * Adds the list of songs characteristic of the arranger mode.
-	 */
-	private void changeCenterList() {
-		StateMachine.setCurrentSongName(controller.getNameTextField().getText());
-		controller.getNameTextField().setText(StateMachine.getCurrentArrangementName());
-	}
-
 	/** Changes the current interface to the normal song editing mode. */
 	private void setEditingMode() {
-		revertCenterList();
 		StateMachine.setMode(SMPMode.SONG);
-	}
-
-	/**
-	 * Reverts the center list into just the middle panel.
-	 */
-	private void revertCenterList() {
-		StateMachine.setCurrentArrangementName(controller.getNameTextField().getText());
-		controller.getNameTextField().setText(StateMachine.getCurrentSongName());
 	}
 
 	/**
