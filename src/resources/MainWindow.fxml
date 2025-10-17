@@ -224,31 +224,31 @@
                               </VBox>
                             </HBox>
                             
-                            <HBox id="controlArrangementList" alignment="CENTER" prefHeight="100.0" prefWidth="454.0" spacing="5.0">
+                            <HBox fx:id="arrangerView" alignment="CENTER" prefHeight="100.0" prefWidth="454.0" spacing="5.0">
                               <children>
                                 <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="320.0"/>
                                 
-                                <VBox id="controlArrangementListButtons" alignment="CENTER_LEFT" spacing="-2.0">
+                                <VBox alignment="CENTER_LEFT" spacing="-2.0">
                                    <children>
-                                     <SMPButton id="addButton" fx:id="addButton" onAction="#addSongtoArrangement" focusTraversable="false" styleClass="smp-arranger-button">
+                                     <SMPButton id="addButton" onAction="#addSongtoArrangement" focusTraversable="false" styleClass="smp-arranger-button">
                                        <imageReleased>
                                          <Image url="@sprites/ADD.png"/>
                                        </imageReleased>
                                      </SMPButton>
                                      
-                                     <SMPButton id="deleteButton" fx:id="deleteButton" onAction="#deleteSongFromArrangement" focusTraversable="false" styleClass="smp-arranger-button">
+                                     <SMPButton id="deleteButton" onAction="#deleteSongFromArrangement" focusTraversable="false" styleClass="smp-arranger-button">
                                        <imageReleased>
                                          <Image url="@sprites/DELETE.png"/>
                                        </imageReleased>
                                      </SMPButton>
                                      
-                                     <SMPButton id="upButton" fx:id="upButton" onAction="#moveSongUpInArrangement" focusTraversable="false" styleClass="smp-arranger-button">
+                                     <SMPButton id="upButton" onAction="#moveSongUpInArrangement" focusTraversable="false" styleClass="smp-arranger-button">
                                        <imageReleased>
                                          <Image url="@sprites/UP.png"/>
                                        </imageReleased>
                                      </SMPButton>
                                      
-                                     <SMPButton id="downButton" fx:id="downButton" onAction="#moveSongDownInArrangement" focusTraversable="false" styleClass="smp-arranger-button">
+                                     <SMPButton id="downButton" onAction="#moveSongDownInArrangement" focusTraversable="false" styleClass="smp-arranger-button">
                                        <imageReleased>
                                          <Image url="@sprites/DOWN.png"/>
                                        </imageReleased>

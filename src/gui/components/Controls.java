@@ -216,11 +216,7 @@ public class Controls {
 		theStaff.setSequenceName(controller.getNameTextField().getText());
 		controller.getNameTextField().setPromptText("Arrangement Name");
 		controller.getNameTextField().setText(theStaff.getArrangementName());
-		controller.getArrangementList().setVisible(true);
-		controller.getDeleteButton().setVisible(true);
-		controller.getAddButton().setVisible(true);
-		controller.getUpButton().setVisible(true);
-		controller.getDownButton().setVisible(true);
+        controller.getArrangerView().setVisible(true);
 	}
 
 	/** Changes the current interface to the normal song editing mode. */
@@ -236,11 +232,7 @@ public class Controls {
 		theStaff.setArrangementName(controller.getNameTextField().getText());
 		controller.getNameTextField().setPromptText("Song Name");
 		controller.getNameTextField().setText(theStaff.getSequenceName());
-		controller.getArrangementList().setVisible(false);
-		controller.getDeleteButton().setVisible(false);
-		controller.getAddButton().setVisible(false);
-		controller.getUpButton().setVisible(false);
-		controller.getDownButton().setVisible(false);
+		controller.getArrangerView().setVisible(false);
 	}
 
 	/**

@@ -22,7 +22,6 @@ import gui.clipboard.StaffRubberBand;
 import gui.components.Controls;
 import gui.components.SongNameController;
 import gui.components.buttons.ImageRadioButton;
-import gui.components.buttons.SMPButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.components.toppanel.ButtonLine;
@@ -37,6 +36,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -142,21 +142,11 @@ public class SMPFXController {
     @FXML
     private ImageView timesig_custom;
 
-    /** The arranger view piece that holds the list of songs. */
+    @FXML
+    private Parent arrangerView;
+    
     @FXML
     private ListView<String> arrangementList;
-
-    @FXML
-    private SMPButton addButton;
-
-    @FXML
-    private SMPButton deleteButton;
-
-    @FXML
-    private SMPButton upButton;
-
-    @FXML
-    private SMPButton downButton;
 
     /** This is the plus sign that increases the tempo of the song. */
     @FXML
@@ -383,12 +373,7 @@ public class SMPFXController {
 
         arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
-        // Hide all arranger features for now.
-        arrangementList.setVisible(false);
-        addButton.setVisible(false);
-        deleteButton.setVisible(false);
-        upButton.setVisible(false);
-        downButton.setVisible(false);
+        arrangerView.setVisible(false);
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
@@ -1123,6 +1108,10 @@ public class SMPFXController {
     public ImageView getClipboardButton() {
         return clipboardButton;
     }
+    
+    public Parent getArrangerView() {
+        return arrangerView;
+    }
 
     /** @return The control panel of the program. */
     public Controls getControls() {
@@ -1177,26 +1166,6 @@ public class SMPFXController {
     /** @return The list of songs in the arrangement. */
     public ListView<String> getArrangementList() {
         return arrangementList;
-    }
-
-    /** @return The delete button image. */
-    public SMPButton getDeleteButton() {
-        return deleteButton;
-    }
-
-    /** @return The add button image. */
-    public SMPButton getAddButton() {
-        return addButton;
-    }
-
-    /** @return The move up button image. */
-    public SMPButton getUpButton() {
-        return upButton;
-    }
-
-    /** @return The move down button image. */
-    public SMPButton getDownButton() {
-        return downButton;
     }
 
     public void setImageLoader(ImageLoader imgLoader) {
