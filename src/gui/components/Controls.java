@@ -178,7 +178,6 @@ public class Controls {
 	 */
 	private void changeCenterList() {
 		theStaff.setSequenceName(controller.getNameTextField().getText());
-		controller.getNameTextField().setPromptText("Arrangement Name");
 		controller.getNameTextField().setText(theStaff.getArrangementName());
 	}
 
@@ -193,7 +192,6 @@ public class Controls {
 	 */
 	private void revertCenterList() {
 		theStaff.setArrangementName(controller.getNameTextField().getText());
-		controller.getNameTextField().setPromptText("Song Name");
 		controller.getNameTextField().setText(theStaff.getSequenceName());
 	}
 
