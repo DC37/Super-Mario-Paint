@@ -1011,7 +1011,7 @@ public class SMPFXController {
                     controlPanel.getMuteButton().reactPressed(null);
                 
                 else if (ke.isControlDown())
-                    newSongOrArrangement(null);
+                    newSongOrArrangement(Utilities.getOwner(ke));
                 break;
                 
             case O:
@@ -1019,7 +1019,7 @@ public class SMPFXController {
                     break;
                 
                 if (ke.isControlDown())
-                    load(null);
+                    load(Utilities.getOwner(ke));
                 break;
                 
             case COMMA:
@@ -1027,7 +1027,7 @@ public class SMPFXController {
                     break;
                 
                 if (ke.isControlDown())
-                    options(null);
+                    options(Utilities.getOwner(ke));
                 break;
                 
             default:
