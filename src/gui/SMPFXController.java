@@ -1188,11 +1188,6 @@ public class SMPFXController {
         return instBLine;
     }
 
-    /** @return The mode text. */
-    public Text getModeText() {
-        return modeText;
-    }
-
     /** @return The mode button image. */
     public ImageView getModeButton() {
         return modeButton;
