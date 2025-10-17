@@ -6,10 +6,7 @@ import gui.StateMachine;
 import gui.Utilities;
 import gui.components.buttons.ImagePushButton;
 import gui.loaders.ImageLoader;
-import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 
@@ -34,19 +31,6 @@ public class OptionsButton extends ImagePushButton {
      */
     public OptionsButton(ImageView i, SMPFXController ct, ImageLoader im) {
         super(i, ct, im);
-        
-        ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent event) {
-                if (controller.getNameTextField().focusedProperty().get()) 
-                    return; // Disable while textfield is focused
-                
-                if(event.isControlDown() && event.getCode() == KeyCode.COMMA)
-                    reactPressed(null);
-            }
-        });
-        
     }
 
     @Override

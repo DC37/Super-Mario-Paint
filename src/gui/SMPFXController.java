@@ -1022,6 +1022,14 @@ public class SMPFXController {
                     load(null);
                 break;
                 
+            case COMMA:
+                if (songName.focusedProperty().get())
+                    break;
+                
+                if (ke.isControlDown())
+                    options(null);
+                break;
+                
             default:
             }
 
