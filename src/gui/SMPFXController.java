@@ -988,6 +988,14 @@ public class SMPFXController {
                     controlPanel.getClipboardButton().reactPressed(null);
                 break;
                 
+            case S:
+                if (songName.focusedProperty().get())
+                    break;
+                
+                if (ke.isControlDown())
+                    save(Utilities.getOwner(ke));
+                break;
+                
             case M:
                 if (songName.focusedProperty().get())
                     break;
