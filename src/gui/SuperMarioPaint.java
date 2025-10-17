@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import backend.songs.Accidental;
-import gui.components.staff.StaffMouseEventHandler;
 import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
 import gui.loaders.SoundfontLoader;
@@ -23,10 +21,8 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
 
 /**
@@ -136,8 +132,18 @@ public class SuperMarioPaint extends Application  {
             primaryStage.setResizable(false);
             primaryScene = new Scene(root);
             primaryStage.setScene(primaryScene);
+            
+            primaryStage.focusedProperty().addListener(
+                    new ChangeListener<Boolean>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Boolean> ov,
+                                Boolean t, Boolean t1) {
+                            StateMachine.clearKeyPresses();
+                        }
+                    });
+            
             makeMouseEventHandlers();
-            makeKeyboardListeners();
+            
             notifyPreloader(new ProgressNotification(1));
             notifyPreloader(new StateChangeNotification(
                     StateChangeNotification.Type.BEFORE_START));
@@ -303,171 +309,6 @@ public class SuperMarioPaint extends Application  {
                         m.consume();
                     }
         });
-    }
-    
-    /**
-     * Creates the keyboard listeners that we will be using for various other
-     * portions of the program. Ctrl, alt, and shift are of interest here, but
-     * the arrow keys will also be considered.
-     */
-    private void makeKeyboardListeners() {
-    	// TODO: move to its own keyhandler
-        primaryScene.addEventHandler(KeyEvent.KEY_PRESSED,
-                new EventHandler<KeyEvent>() {
-
-                    @Override
-                    public void handle(KeyEvent ke) {
-                    	
-                    	switch(ke.getCode()) {
-                    	case PAGE_UP:
-                    	    if (StateMachine.isPlaybackActive())
-                    	        break;
-                    		controller.getStaff().shift(-Values.NOTELINES_IN_THE_WINDOW);
-                    		break;
-                    		
-                    	case PAGE_DOWN:
-                            if (StateMachine.isPlaybackActive())
-                                break;
-                    		controller.getStaff().shift(Values.NOTELINES_IN_THE_WINDOW);
-                    		break;
-                    		
-                    	case HOME:
-                            if (StateMachine.isPlaybackActive())
-                                break;
-                    		if(ke.isControlDown())
-                    			controller.getStaff().setLocation(0);
-                    		break;
-                    		
-                    	case END:
-                            if (StateMachine.isPlaybackActive())
-                                break;
-                    		if(ke.isControlDown())
-                    			controller.getStaff().setLocation((int)controller.getScrollbar().getMax());
-                    		break;
-                    		
-                    	// @since v1.4, adds A and D as controls. move to correct spot later if needed
-                    	case A:
-                            if (StateMachine.isPlaybackActive())
-                                break;
-                    		if (!ke.isControlDown() && !ke.isShiftDown())
-                    			controller.getStaff().moveLeft();
-                    		if (ke.isShiftDown())
-                    			controller.getStaff().jumpToNext();
-                    		break;
-                    		
-                    	// @since v1.1.2, requested by seymour
-                    	case LEFT:
-                            if (StateMachine.isPlaybackActive())
-                                break;
-                    		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
-                				break;
-                    		if (ke.isControlDown() || ke.isShiftDown())
-                    			controller.getStaff().jumpToPrevious();
-                    		break;
-                    		
-                    	case D:
-                            if (StateMachine.isPlaybackActive())
-                                break;
-                    		if (!ke.isControlDown() && !ke.isShiftDown())
-                    			controller.getStaff().moveRight();
-                    		if (ke.isControlDown() || ke.isShiftDown())
-                    			controller.getStaff().jumpToNext();
-                    		break;
-
-                    	case RIGHT:
-                            if (StateMachine.isPlaybackActive())
-                                break;
-                    		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
-                    			break;
-                    		if(ke.isControlDown() || ke.isShiftDown())
-                    			controller.getStaff().jumpToNext();
-                    		break;
-                    		
-                    	// @since 1.4, adds conventional spacebar functionality 
-                    	// TODO: Make this better please =)
-                    	case SPACE:
-                    		if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
-                    			break;
-                    		
-                    		if (ke.isControlDown() || ke.isShiftDown())
-                    			controller.getStaff().setLocation(0);
-                    		
-                			if (StateMachine.getState() == ProgramState.SONG_PLAYING) {
-                	            StateMachine.setState(ProgramState.EDITING);
-                        		controller.getStaff().stopSong();
-                	        } else if (StateMachine.getState() == ProgramState.ARR_PLAYING) {
-                	            StateMachine.setState(ProgramState.ARR_EDITING);
-                	            controller.getStaff().stopSong();
-                	        } else if (StateMachine.getState() == ProgramState.EDITING) {
-                	            StateMachine.setState(ProgramState.SONG_PLAYING);
-                	            controller.getStaff().startSong();
-                	        } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
-                	            StateMachine.setState(ProgramState.ARR_PLAYING);
-                	            controller.getStaff().startArrangement();
-                	        }
-                    		break;
-                    	default:
-                    	}
-                    	
-                        StateMachine.getButtonsPressed().add(ke.getCode());
-                        
-                        if (StateMachine.isCursorOnStaff()) {
-                            Accidental acc = StaffMouseEventHandler.computeAccidental();
-                            controller.getStaff().getDisplayManager().refreshSilhouette(acc);
-                        }
-                        
-                        ke.consume();
-                    }
-                });
-
-        primaryScene.addEventHandler(KeyEvent.KEY_RELEASED,
-                new EventHandler<KeyEvent>() {
-
-                    @Override
-                    public void handle(KeyEvent ke) {
-                        StateMachine.getButtonsPressed().remove(ke.getCode());
-                        
-                        if (StateMachine.isCursorOnStaff()) {
-                            Accidental acc = StaffMouseEventHandler.computeAccidental();
-                            controller.getStaff().getDisplayManager().refreshSilhouette(acc);
-                        }
-                        
-                        ke.consume();
-                    }
-                });
-
-        //put this into StateMachine?
-		primaryScene.addEventHandler(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-
-			@Override
-			public void handle(ScrollEvent se) {
-                if (StateMachine.isPlaybackActive())
-                    return;
-                
-				if (se.getDeltaY() < 0) {
-					if (se.isControlDown())
-						controller.getStaff().shift(4);
-					else
-						controller.getStaff().moveRight();
-				} else if (se.getDeltaY() > 0) {
-					if (se.isControlDown())
-						controller.getStaff().shift(-4);
-					else
-						controller.getStaff().moveLeft();
-				}
-				se.consume();
-			}
-		});
-        
-        primaryStage.focusedProperty().addListener(
-                new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> ov,
-                            Boolean t, Boolean t1) {
-                        StateMachine.clearKeyPresses();
-                    }
-                });
-
     }
 
     /**

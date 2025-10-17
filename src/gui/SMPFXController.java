@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import backend.editing.ModifySongManager;
 import backend.saving.mpc.MPCDecoder;
+import backend.songs.Accidental;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
 import backend.songs.StaffSequence;
@@ -40,14 +41,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Window;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -299,6 +301,7 @@ public class SMPFXController {
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);
         staff.setControlPanel(controlPanel);
+        makeKeyboardHandlers(basePane);
         
         // Set up options menu
         optionsMenu = new OptionsMenu(this, staff);
@@ -872,6 +875,157 @@ public class SMPFXController {
             StateMachine.setClipboardPressed(true);
             volumeBars.setMouseTransparent(true);
         }
+    }
+    
+    private void makeKeyboardHandlers(Node n) {
+        n.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+            switch(ke.getCode()) {
+            case PAGE_UP:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                staff.shift(-Values.NOTELINES_IN_THE_WINDOW);
+                break;
+
+            case PAGE_DOWN:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                staff.shift(Values.NOTELINES_IN_THE_WINDOW);
+                break;
+
+            case HOME:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                if (ke.isControlDown())
+                    staff.setLocation(0);
+                break;
+
+            case END:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                if (ke.isControlDown())
+                    staff.setLocation((int) scrollbar.getMax());
+                break;
+
+            case A:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                if (!ke.isControlDown() && !ke.isShiftDown())
+                    staff.moveLeft();
+                
+                if (ke.isShiftDown())
+                    staff.jumpToNext();
+                break;
+
+            case LEFT:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                if (songName.focusedProperty().get()) // Don't trigger while typing name
+                    break;
+                
+                if (ke.isControlDown() || ke.isShiftDown())
+                    staff.jumpToPrevious();
+                break;
+
+            case D:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                if (!ke.isControlDown() && !ke.isShiftDown())
+                    staff.moveRight();
+                
+                if (ke.isControlDown() || ke.isShiftDown())
+                    staff.jumpToNext();
+                break;
+
+            case RIGHT:
+                if (StateMachine.isPlaybackActive())
+                    break;
+                
+                if (songName.focusedProperty().get()) // Don't trigger while typing name
+                    break;
+                
+                if (ke.isControlDown() || ke.isShiftDown())
+                    staff.jumpToNext();
+                break;
+
+            case SPACE:
+                if (songName.focusedProperty().get()) // Don't trigger while typing name
+                    break;
+
+                if (ke.isControlDown() || ke.isShiftDown())
+                    staff.setLocation(0);
+
+                if (StateMachine.getState() == ProgramState.SONG_PLAYING) {
+                    StateMachine.setState(ProgramState.EDITING);
+                    staff.stopSong();
+
+                } else if (StateMachine.getState() == ProgramState.ARR_PLAYING) {
+                    StateMachine.setState(ProgramState.ARR_EDITING);
+                    staff.stopSong();
+
+                } else if (StateMachine.getState() == ProgramState.EDITING) {
+                    StateMachine.setState(ProgramState.SONG_PLAYING);
+                    staff.startSong();
+
+                } else if (StateMachine.getState() == ProgramState.ARR_EDITING) {
+                    StateMachine.setState(ProgramState.ARR_PLAYING);
+                    staff.startArrangement();
+                }
+
+                break;
+                
+            default:
+            }
+
+            StateMachine.getButtonsPressed().add(ke.getCode());
+
+            if (StateMachine.isCursorOnStaff()) {
+                Accidental acc = StaffMouseEventHandler.computeAccidental();
+                staff.getDisplayManager().refreshSilhouette(acc);
+            }
+
+            ke.consume();
+        }
+                );
+
+        n.addEventHandler(KeyEvent.KEY_RELEASED, ke -> {
+            StateMachine.getButtonsPressed().remove(ke.getCode());
+
+            if (StateMachine.isCursorOnStaff()) {
+                Accidental acc = StaffMouseEventHandler.computeAccidental();
+                staff.getDisplayManager().refreshSilhouette(acc);
+            }
+
+            ke.consume();
+        });
+
+        n.addEventHandler(ScrollEvent.ANY, se -> {
+            if (StateMachine.isPlaybackActive())
+                return;
+
+            if (se.getDeltaY() < 0) {
+                if (se.isControlDown())
+                    staff.shift(4);
+                
+                else
+                    staff.moveRight();
+                
+            } else if (se.getDeltaY() > 0) {
+                if (se.isControlDown())
+                    staff.shift(-4);
+                
+                else
+                    staff.moveLeft();
+            }
+
+            se.consume();
+        });
     }
 
     /**
