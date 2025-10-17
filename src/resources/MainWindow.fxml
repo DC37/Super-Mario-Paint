@@ -175,9 +175,15 @@
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/LOOP_LABEL.png"/>
                                 </ImageView>
-                                <ImageView fx:id="loop" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-                                  <Image url="@sprites/LOOP_RELEASED.png"/>
-                                </ImageView>
+                                
+                                <SMPToggleButton fx:id="loopButton" focusTraversable="false">
+                                  <imagePressed>
+                                    <Image url="@sprites/LOOP_PRESSED.png"/>
+                                  </imagePressed>
+                                  <imageReleased>
+                                    <Image url="@sprites/LOOP_RELEASED.png"/>
+                                  </imageReleased>
+                                </SMPToggleButton>
                               </VBox>
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">

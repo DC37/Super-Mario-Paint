@@ -7,7 +7,6 @@ import gui.Staff;
 import gui.StateMachine;
 import gui.components.buttons.elements.ArrowButton;
 import gui.components.buttons.elements.ClipboardButton;
-import gui.components.buttons.elements.LoopButton;
 import gui.components.buttons.elements.MuteButton;
 import gui.components.buttons.elements.MuteInstButton;
 import gui.components.buttons.elements.PlayButton;
@@ -110,7 +109,6 @@ public class Controls {
 	private void initializeControlButtons() {
 		play = new PlayButton(controller.getPlayButton(), controller, il);
 		stop = new StopButton(controller.getStopButton(), controller, il);
-		new LoopButton(controller.getLoopButton(), controller, il);
 		mute = new MuteButton(controller.getMuteButton(), controller, il);
 		muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
 		clipboard = new ClipboardButton(controller.getClipboardButton(), controller, il);

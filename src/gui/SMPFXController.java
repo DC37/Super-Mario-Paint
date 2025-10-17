@@ -22,6 +22,7 @@ import gui.clipboard.StaffRubberBand;
 import gui.components.Controls;
 import gui.components.SongNameController;
 import gui.components.buttons.ImageRadioButton;
+import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.components.toppanel.ButtonLine;
@@ -114,9 +115,8 @@ public class SMPFXController {
     @FXML
     private ImageView stop;
 
-    /** The loop button. */
     @FXML
-    private ImageView loop;
+    private SMPToggleButton loopButton;
 
     /** The mute button. */
     @FXML
@@ -271,6 +271,8 @@ public class SMPFXController {
         controlPanel = new Controls(staff, this, il);
         staff.setControlPanel(controlPanel);
         makeKeyboardHandlers(basePane);
+        
+        loopButton.selectedProperty().bindBidirectional(StateMachine.loopPressedProperty());
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -1135,13 +1137,6 @@ public class SMPFXController {
      */
     public ImageView getStopButton() {
         return stop;
-    }
-
-    /**
-     * @return The <code>ImageView</code> object that contains the loop button.
-     */
-    public ImageView getLoopButton() {
-        return loop;
     }
 
     /**
