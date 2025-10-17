@@ -492,7 +492,6 @@ public class SMPFXController {
 
         switch (StateMachine.getMode()) {
         case SONG:
-            controlPanel.getLoopButton().release();
             StateMachine.setMode(SMPMode.ARRANGEMENT);
             break;
 

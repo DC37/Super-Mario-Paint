@@ -35,9 +35,6 @@ public class Controls {
 	/** The pointer to the stop button on the staff. */
 	private StopButton stop;
 
-	/** The pointer to the loop button on the staff. */
-	private LoopButton loop;
-
 	/** The pointer to the mute button on the staff. */
 	private MuteButton mute;
 
@@ -113,7 +110,7 @@ public class Controls {
 	private void initializeControlButtons() {
 		play = new PlayButton(controller.getPlayButton(), controller, il);
 		stop = new StopButton(controller.getStopButton(), controller, il);
-		loop = new LoopButton(controller.getLoopButton(), controller, il);
+		new LoopButton(controller.getLoopButton(), controller, il);
 		mute = new MuteButton(controller.getMuteButton(), controller, il);
 		muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
 		clipboard = new ClipboardButton(controller.getClipboardButton(), controller, il);
@@ -166,13 +163,6 @@ public class Controls {
 	 */
 	public StopButton getStopButton() {
 		return stop;
-	}
-
-	/**
-	 * @return The loop button of the controls set.
-	 */
-	public LoopButton getLoopButton() {
-		return loop;
 	}
 
 	/**
