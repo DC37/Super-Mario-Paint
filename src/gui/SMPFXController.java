@@ -1001,6 +1001,9 @@ public class SMPFXController {
                 
                 if (!ke.isControlDown() && !ke.isAltDown())
                     controlPanel.getMuteButton().reactPressed(null);
+                
+                else if (ke.isControlDown())
+                    newSongOrArrangement(null);
                 break;
                 
             case O:
