@@ -33,6 +33,7 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -175,22 +176,6 @@ public class SMPFXController {
     /** This holds the tempo indicator. */
     @FXML
     private StackPane tempoBox;
-
-    /** The button that loads the song. */
-    @FXML
-    private ImageView loadButton;
-
-    /** The button that saves the song. */
-    @FXML
-    private ImageView saveButton;
-
-    /** The button that makes a new song. */
-    @FXML
-    private ImageView newButton;
-
-    /** The button that opens the options dialog. */
-    @FXML
-    private ImageView optionsButton;
 
     /** This is the text area that houses the song name. */
     @FXML
@@ -489,6 +474,11 @@ public class SMPFXController {
         }
     }
     
+    @FXML
+    public void newSongOrArrangement(ActionEvent e) {
+        newSongOrArrangement(Utilities.getOwner(e));
+    }
+    
     public void newSongOrArrangement(Window owner) {
         ProgramState curr = StateMachine.getState();
         if (curr == ProgramState.EDITING)
@@ -529,6 +519,11 @@ public class SMPFXController {
             staff.getArrangementList().getItems().clear();
             StateMachine.setArrModified(false);
         }
+    }
+    
+    @FXML
+    public void save(ActionEvent e) {
+        save(Utilities.getOwner(e));
     }
     
     public void save(Window owner) {
@@ -642,7 +637,7 @@ public class SMPFXController {
                     new ExtensionFilter("All files", "*"));
             File outputFile = null;
             saveInProgress = true;
-            outputFile = f.showSaveDialog(null);
+            outputFile = f.showSaveDialog(owner);
             saveInProgress = false;
             if (outputFile == null)
                 return;
@@ -724,6 +719,11 @@ public class SMPFXController {
         };
         
         new Thread(soundsetsTaskSave).start();
+    }
+    
+    @FXML
+    public void load(ActionEvent e) {
+        load(Utilities.getOwner(e));
     }
 
     public void load(Window owner) {
@@ -860,6 +860,11 @@ public class SMPFXController {
                 e.printStackTrace();
             }
         }
+    }
+    
+    @FXML
+    public void options(ActionEvent e) {
+        options(Utilities.getOwner(e));
     }
     
     public void options(Window owner) {
@@ -1184,26 +1189,6 @@ public class SMPFXController {
     /** @return The tempo indicator box. */
     public StackPane getTempoBox() {
         return tempoBox;
-    }
-
-    /** @return The load button. */
-    public ImageView getLoadButton() {
-        return loadButton;
-    }
-
-    /** @return The save button. */
-    public ImageView getSaveButton() {
-        return saveButton;
-    }
-
-    /** @return The new song button. */
-    public ImageView getNewButton() {
-        return newButton;
-    }
-
-    /** @return The options button. */
-    public ImageView getOptionsButton() {
-        return optionsButton;
     }
 
     /** @return The text area that contains the song name. */

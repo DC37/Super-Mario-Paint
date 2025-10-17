@@ -14,15 +14,11 @@ import gui.components.buttons.elements.AddButton;
 import gui.components.buttons.elements.ArrowButton;
 import gui.components.buttons.elements.ClipboardButton;
 import gui.components.buttons.elements.DeleteButton;
-import gui.components.buttons.elements.LoadButton;
 import gui.components.buttons.elements.LoopButton;
 import gui.components.buttons.elements.MoveButton;
 import gui.components.buttons.elements.MuteButton;
 import gui.components.buttons.elements.MuteInstButton;
-import gui.components.buttons.elements.NewButton;
-import gui.components.buttons.elements.OptionsButton;
 import gui.components.buttons.elements.PlayButton;
-import gui.components.buttons.elements.SaveButton;
 import gui.components.buttons.elements.StopButton;
 import gui.components.buttons.elements.TempoAdjustButton;
 import gui.loaders.ImageIndex;
@@ -64,9 +60,6 @@ public class Controls {
 
 	/** The pointer to the button that moves a song down. */
 	private MoveButton moveDown;
-
-	/** The pointer to the options button on the staff. */
-	private OptionsButton options;
 
 	/** The pointer to the mute button on the staff. */
 	private MuteButton mute;
@@ -113,8 +106,6 @@ public class Controls {
 		initializeArrows();
 		initializeControlButtons();
 		initializeTempoButtons();
-		initializeLoadSaveButtons();
-		initializeNewButton();
 		initializeArrangementList();
 
 	}
@@ -139,22 +130,6 @@ public class Controls {
 				}
 			}
 		});
-	}
-
-	/**
-	 * Initializes the new song button.
-	 */
-	private void initializeNewButton() {
-		NewButton n = new NewButton(controller.getNewButton(), controller, il);
-		n.setStaff(theStaff);
-	}
-
-	/** Initializes the load and save buttons which allow one to keep songs. */
-	private void initializeLoadSaveButtons() {
-		SaveButton s = new SaveButton(controller.getSaveButton(), controller, il);
-		s.setStaff(theStaff);
-		LoadButton l = new LoadButton(controller.getLoadButton(), controller, il);
-		l.setStaff(theStaff);
 	}
 
 	/** Initializes the plus and minus buttons that can change the tempo. */
@@ -194,7 +169,6 @@ public class Controls {
 		mute = new MuteButton(controller.getMuteButton(), controller, il);
 		muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
 		clipboard = new ClipboardButton(controller.getClipboardButton(), controller, il);
-		options = new OptionsButton(controller.getOptionsButton(), controller, il);
 		add = new AddButton(controller.getAddButton(), controller, il);
 		delete = new DeleteButton(controller.getDeleteButton(), controller, il);
 		moveUp = new MoveButton(controller.getUpButton(), 1, controller, il);
@@ -210,7 +184,6 @@ public class Controls {
 
 		play.setStaff(theStaff);
 		stop.setStaff(theStaff);
-		options.setStaff(theStaff);
 
 		add.setStaff(theStaff);
 		delete.setStaff(theStaff);
@@ -336,12 +309,6 @@ public class Controls {
 	 */
 	public ClipboardButton getClipboardButton() {
 		return clipboard;
-	}
-	/**
-	 * @return The options button.
-	 */
-	public OptionsButton getOptionsButton() {
-		return options;
 	}
 
 	/**

@@ -11,6 +11,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
+<?import gui.components.buttons.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
 <AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -33,21 +34,23 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="228.0" spacing="14.0">
                           <children>
-                            <ImageView fx:id="saveButton" fitHeight="28.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                              <image>
-                                <Image preserveRatio="false" smooth="false" url="@sprites/SAVE.png" />
-                              </image>
-                            </ImageView>
-                            <ImageView fx:id="loadButton" fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                              <image>
-                                <Image preserveRatio="false" smooth="false" url="@sprites/LOAD.png" />
-                              </image>
-                            </ImageView>
-                            <ImageView fx:id="newButton" fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                              <image>
-                                <Image preserveRatio="false" smooth="false" url="@sprites/NEW_SONG.png" />
-                              </image>
-                            </ImageView>
+                            <SMPButton id="saveButton" onAction="#save" focusTraversable="false">
+                              <imageReleased>
+                                <Image url="@sprites/SAVE.png"/>
+                              </imageReleased>
+                            </SMPButton>
+                            
+                            <SMPButton id="loadButton" onAction="#load" focusTraversable="false">
+                              <imageReleased>
+                                <Image url="@sprites/LOAD.png"/>
+                              </imageReleased>
+                            </SMPButton>
+                            
+                            <SMPButton id="newButton" onAction="#newSongOrArrangement" focusTraversable="false">
+                              <imageReleased>
+                                <Image url="@sprites/NEW_SONG.png"/>
+                              </imageReleased>
+                            </SMPButton>
                           </children>
                         </HBox>
                       </children>
@@ -78,11 +81,11 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="100.0">
                           <children>
-                            <ImageView fx:id="optionsButton" fitHeight="28.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                              <image>
-                                <Image url="@sprites/OPTIONS.png" />
-                              </image>
-                            </ImageView>
+                            <SMPButton id="optionsButton" onAction="#options" focusTraversable="false">
+                              <imageReleased>
+                                <Image url="@sprites/OPTIONS.png"/>
+                              </imageReleased>
+                            </SMPButton>
                           </children>
                         </HBox>
                       </children>
