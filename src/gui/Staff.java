@@ -334,16 +334,6 @@ public class Staff {
 	        }
 		}
 	}
-    
-    /**
-     * Toggles arranger mode.
-     *
-     * @param b
-     *            True or false.
-     */
-    public void setArrangerMode(boolean b) {
-        theControls.setArrangerMode(b);
-    }
 
     /**
      * Imports a Mario Paint Composer song.

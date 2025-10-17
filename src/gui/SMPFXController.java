@@ -422,6 +422,17 @@ public class SMPFXController {
             }
         }, StateMachine.modeProperty()));
         
+        modeText.textProperty().bind(Bindings.createStringBinding(() -> {
+            switch (StateMachine.getMode() ) {
+            case SONG:
+                return "Song";
+            case ARRANGEMENT:
+                return "Arr";
+            default:
+                return "";
+            }
+        }, StateMachine.modeProperty()));
+        
         // Changing mode binds the bottom text to a different name property
         StateMachine.modeProperty().addListener(obs -> {
             switch (StateMachine.getMode()) {
@@ -481,13 +492,12 @@ public class SMPFXController {
 
         switch (StateMachine.getMode()) {
         case SONG:
-            modeText.setText("Arr");
-            staff.setArrangerMode(true);
+            controlPanel.getLoopButton().release();
+            StateMachine.setMode(SMPMode.ARRANGEMENT);
             break;
 
         case ARRANGEMENT:
-            modeText.setText("Song");
-            staff.setArrangerMode(false);
+            StateMachine.setMode(SMPMode.SONG);
             break;
         }
     }

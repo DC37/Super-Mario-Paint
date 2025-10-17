@@ -155,29 +155,6 @@ public class Controls {
 	}
 
 	/**
-	 * @param b
-	 *            Whether we want to turn on arranger mode or not.
-	 */
-	public void setArrangerMode(boolean b) {
-		if (b)
-			setArrangerMode();
-		else
-			setEditingMode();
-	}
-
-	/** Changes the current interface to the arranger mode. */
-	private void setArrangerMode() {
-		loop.release();
-		StateMachine.setMode(SMPMode.ARRANGEMENT);
-
-	}
-
-	/** Changes the current interface to the normal song editing mode. */
-	private void setEditingMode() {
-		StateMachine.setMode(SMPMode.SONG);
-	}
-
-	/**
 	 * @return The play button of the controls set.
 	 */
 	public PlayButton getPlayButton() {
