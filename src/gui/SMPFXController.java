@@ -988,6 +988,13 @@ public class SMPFXController {
                     controlPanel.getClipboardButton().reactPressed(null);
                 break;
                 
+            case M:
+                if (songName.focusedProperty().get())
+                    break;
+                
+                controlPanel.getMuteAButton().reactPressed(null);
+                break;
+                
             case N:
                 if (songName.focusedProperty().get())
                     break;
