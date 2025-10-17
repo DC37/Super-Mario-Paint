@@ -10,12 +10,9 @@ import gui.SMPFXController;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Utilities;
-import gui.components.buttons.elements.AddButton;
 import gui.components.buttons.elements.ArrowButton;
 import gui.components.buttons.elements.ClipboardButton;
-import gui.components.buttons.elements.DeleteButton;
 import gui.components.buttons.elements.LoopButton;
-import gui.components.buttons.elements.MoveButton;
 import gui.components.buttons.elements.MuteButton;
 import gui.components.buttons.elements.MuteInstButton;
 import gui.components.buttons.elements.PlayButton;
@@ -48,18 +45,6 @@ public class Controls {
 
 	/** The pointer to the loop button on the staff. */
 	private LoopButton loop;
-
-	/** The pointer to the button that adds a new song on the arranger. */
-	private AddButton add;
-
-	/** The pointer to the button that deletes a song from a list. */
-	private DeleteButton delete;
-
-	/** The pointer to the button that moves a song up. */
-	private MoveButton moveUp;
-
-	/** The pointer to the button that moves a song down. */
-	private MoveButton moveDown;
 
 	/** The pointer to the mute button on the staff. */
 	private MuteButton mute;
@@ -169,10 +154,6 @@ public class Controls {
 		mute = new MuteButton(controller.getMuteButton(), controller, il);
 		muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
 		clipboard = new ClipboardButton(controller.getClipboardButton(), controller, il);
-		add = new AddButton(controller.getAddButton(), controller, il);
-		delete = new DeleteButton(controller.getDeleteButton(), controller, il);
-		moveUp = new MoveButton(controller.getUpButton(), 1, controller, il);
-		moveDown = new MoveButton(controller.getDownButton(), -1, controller, il);
 
 		mute.setMuteButton(muteA);
 		muteA.setMuteButton(mute);
@@ -184,12 +165,6 @@ public class Controls {
 
 		play.setStaff(theStaff);
 		stop.setStaff(theStaff);
-
-		add.setStaff(theStaff);
-		delete.setStaff(theStaff);
-		moveUp.setStaff(theStaff);
-		moveDown.setStaff(theStaff);
-
 	}
 
 	/**

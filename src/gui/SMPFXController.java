@@ -22,6 +22,7 @@ import gui.clipboard.StaffRubberBand;
 import gui.components.Controls;
 import gui.components.SongNameController;
 import gui.components.buttons.ImageRadioButton;
+import gui.components.buttons.SMPButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.components.toppanel.ButtonLine;
@@ -145,21 +146,17 @@ public class SMPFXController {
     @FXML
     private ListView<String> arrangementList;
 
-    /** The button that adds a song to the arranger list. */
     @FXML
-    private ImageView addButton;
+    private SMPButton addButton;
 
-    /** The button that deletes a song from the arranger list. */
     @FXML
-    private ImageView deleteButton;
+    private SMPButton deleteButton;
 
-    /** The button that moves a song up on the arranger list. */
     @FXML
-    private ImageView upButton;
+    private SMPButton upButton;
 
-    /** The button that moves a song down on the arranger list. */
     @FXML
-    private ImageView downButton;
+    private SMPButton downButton;
 
     /** This is the plus sign that increases the tempo of the song. */
     @FXML
@@ -472,6 +469,26 @@ public class SMPFXController {
             modeText.setText("Song");
             staff.setArrangerMode(false);
         }
+    }
+    
+    @FXML
+    public void addSongtoArrangement(ActionEvent e) {
+        staff.addSongToArrangement();
+    }
+    
+    @FXML
+    public void deleteSongFromArrangement(ActionEvent e) {
+        staff.deleteSongFromArrangement();
+    }
+    
+    @FXML
+    public void moveSongUpInArrangement(ActionEvent e) {
+        staff.moveSongInArrangement(1);
+    }
+
+    @FXML
+    public void moveSongDownInArrangement(ActionEvent e) {
+        staff.moveSongInArrangement(-1);
     }
     
     @FXML
@@ -1222,22 +1239,22 @@ public class SMPFXController {
     }
 
     /** @return The delete button image. */
-    public ImageView getDeleteButton() {
+    public SMPButton getDeleteButton() {
         return deleteButton;
     }
 
     /** @return The add button image. */
-    public ImageView getAddButton() {
+    public SMPButton getAddButton() {
         return addButton;
     }
 
     /** @return The move up button image. */
-    public ImageView getUpButton() {
+    public SMPButton getUpButton() {
         return upButton;
     }
 
     /** @return The move down button image. */
-    public ImageView getDownButton() {
+    public SMPButton getDownButton() {
         return downButton;
     }
 

@@ -76,6 +76,7 @@ public interface SMPButtonInterface {
             ObjectProperty<Node> imageViewProperty)
     {
         ImageView imageView = new ImageView();
+        imageView.setPreserveRatio(true);
         imageViewProperty.bind(new SimpleObjectProperty<>(imageView));
         ObjectProperty<Image> imageProperty = imageView.imageProperty();
         

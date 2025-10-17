@@ -7,3 +7,7 @@
 	-fx-background-radius: 0;
 	-fx-padding: 2px;
 }
+
+.button.smp-arranger-button {
+	-fx-padding: 0px;
+}
