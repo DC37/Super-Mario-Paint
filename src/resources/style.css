@@ -1,0 +1,9 @@
+.button.smp-button,
+.toggle-button.smp-button,
+.radio-button.smp-button {
+	-fx-content-display: graphic-only;
+	-fx-background-color: transparent;
+	-fx-background-insets: 0;
+	-fx-background-radius: 0;
+	-fx-padding: 2px;
+}

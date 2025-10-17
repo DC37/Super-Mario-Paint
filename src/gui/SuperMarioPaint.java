@@ -131,6 +131,8 @@ public class SuperMarioPaint extends Application  {
             });
             primaryStage.setResizable(false);
             primaryScene = new Scene(root);
+            primaryScene.getStylesheets().add(SuperMarioPaint.class.getResource("/resources/style.css").toString());
+            
             primaryStage.setScene(primaryScene);
             
             primaryStage.focusedProperty().addListener(
