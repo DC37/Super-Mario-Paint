@@ -980,6 +980,14 @@ public class SMPFXController {
 
                 break;
                 
+            case R:
+                if (songName.focusedProperty().get())
+                    break;
+                
+                if (ke.isShiftDown())
+                    controlPanel.getClipboardButton().reactPressed(null);
+                break;
+                
             default:
             }
 

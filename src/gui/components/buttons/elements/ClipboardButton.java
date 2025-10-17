@@ -4,11 +4,8 @@ import gui.SMPFXController;
 import gui.components.buttons.ImageToggleButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
-import javafx.event.EventHandler;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -45,17 +42,6 @@ public class ClipboardButton extends ImageToggleButton {
 				+ "Delete to delete notes\n"
 				+ "Alt+N to toggle notes selection\n"
 				+ "Alt+V to toggle volumes selection"));
-		
-		// TODO: create getClipboardButton() somewhere so adding a hotkey can be done elsewhere
-		ct.getBasePane().addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				if (controller.getNameTextField().focusedProperty().get()) return; // Disable while textfield is focused
-				if(event.isShiftDown() && event.getCode() == KeyCode.R)
-					reactPressed(null);
-			}
-		});
 	}
 
     @Override
