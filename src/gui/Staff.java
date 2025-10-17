@@ -60,17 +60,11 @@ public class Staff {
      */
     private StaffDisplayManager displayManager;
 
-    /** This is the name of the song that we are currently editing. */
-    private String theSequenceName = "";
-
     /** This is the current sequence that we have displaying on the staff. */
     private StaffSequence theSequence = new StaffSequence();
 
     /** This is the location of the sequence that is currently displaying. */
     private File theSequenceFile = null;
-
-    /** This is the name of the arrangement that we are currently editing. */
-    private String theArrangementName = "";
 
     /** This is the current arrangement that we currently have active. */
     private StaffArrangement theArrangement = new StaffArrangement();
@@ -400,21 +394,6 @@ public class Staff {
         return theSequenceFile;
     }
 
-    /**
-     * @return The name of the sequence that we are currently editing.
-     */
-    public String getSequenceName() {
-        return theSequenceName;
-    }
-
-    /**
-     * @param s
-     *            The name we want to set.
-     */
-    public void setSequenceName(String s) {
-        theSequenceName = s;
-    }
-
     /** @return The current arrangement that we are displaying. */
     public ListView<String> getArrangementList() {
         return theArrangementList;
@@ -448,21 +427,6 @@ public class Staff {
      */
     public void setArrangementFile(File tAF) {
         theArrangementFile = tAF;
-    }
-
-    /**
-     * @return The name of the arrangement that we are currently editing.
-     */
-    public String getArrangementName() {
-        return theArrangementName;
-    }
-
-    /**
-     * @param s
-     *            The arrangement name that we want to set.
-     */
-    public void setArrangementName(String s) {
-        theArrangementName = s;
     }
 
     /**
@@ -542,7 +506,7 @@ public class Staff {
             return;
     
         StateMachine.setArrModified(true);
-        theArrangementList.getItems().add(theSequenceName);
+        theArrangementList.getItems().add(StateMachine.getCurrentSongName());
         theArrangement.add(theSequence, theSequenceFile);
         controller.getSoundfontLoader().storeInCache();
     }

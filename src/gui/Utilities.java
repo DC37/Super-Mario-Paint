@@ -400,7 +400,7 @@ public class Utilities {
         } catch (IndexOutOfBoundsException e) {
             // Do nothing
         }
-        theStaff.setSequenceName(fname);
+        StateMachine.setCurrentSongName(fname);
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         controller.getInstBLine().updateNoteExtensions();
         
@@ -532,7 +532,7 @@ public class Utilities {
             // Do nothing
         }
         theStaff.setArrangement(loaded);
-        theStaff.setArrangementName(fname);
+        StateMachine.setCurrentArrangementName(fname);
         theStaff.getArrangementList().getItems().clear();
         theStaff.getArrangementList().getItems()
                 .addAll(loaded.getTheSequenceNames());

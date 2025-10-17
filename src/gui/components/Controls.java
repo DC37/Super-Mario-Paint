@@ -177,8 +177,8 @@ public class Controls {
 	 * Adds the list of songs characteristic of the arranger mode.
 	 */
 	private void changeCenterList() {
-		theStaff.setSequenceName(controller.getNameTextField().getText());
-		controller.getNameTextField().setText(theStaff.getArrangementName());
+		StateMachine.setCurrentSongName(controller.getNameTextField().getText());
+		controller.getNameTextField().setText(StateMachine.getCurrentArrangementName());
 	}
 
 	/** Changes the current interface to the normal song editing mode. */
@@ -191,8 +191,8 @@ public class Controls {
 	 * Reverts the center list into just the middle panel.
 	 */
 	private void revertCenterList() {
-		theStaff.setArrangementName(controller.getNameTextField().getText());
-		controller.getNameTextField().setText(theStaff.getSequenceName());
+		StateMachine.setCurrentArrangementName(controller.getNameTextField().getText());
+		controller.getNameTextField().setText(StateMachine.getCurrentSongName());
 	}
 
 	/**

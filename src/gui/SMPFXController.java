@@ -448,7 +448,7 @@ public class SMPFXController {
             arrangementList.getSelectionModel().select(idx);
             if (idx != -1)
                 Platform.runLater(() -> arrangementList.scrollTo(idx));
-            staff.setSequenceName(arrangementList.getSelectionModel().getSelectedItem());
+            StateMachine.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem());
         });
         
         // Cleanup after a song or arrangement had finished running
