@@ -1,15 +1,10 @@
 package gui.components;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import backend.songs.StaffSequence;
 import gui.Dialog;
 import gui.SMPFXController;
 import gui.SMPMode;
 import gui.Staff;
 import gui.StateMachine;
-import gui.Utilities;
 import gui.components.buttons.elements.ArrowButton;
 import gui.components.buttons.elements.ClipboardButton;
 import gui.components.buttons.elements.LoopButton;
@@ -20,11 +15,8 @@ import gui.components.buttons.elements.StopButton;
 import gui.components.buttons.elements.TempoAdjustButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
@@ -70,9 +62,6 @@ public class Controls {
 	/** This is the staff that the controls are linked to. */
 	private Staff theStaff;
 
-	/** The ListView of songs for the arranger. */
-	private ListView<String> theList;
-
 	/** The controller object. */
 	private SMPFXController controller;
 
@@ -82,39 +71,14 @@ public class Controls {
 	/**
 	 * Initializes the set of controls that will be used in Super Mario Paint.
 	 */
-	public Controls(Staff st, SMPFXController ct, ImageLoader im, ListView<String> l) {
-		theList = l;
+	public Controls(Staff st, SMPFXController ct, ImageLoader im) {
 		il = im;
 		theStaff = st;
 		setController(ct);
-		theList = controller.getArrangementList();
 		initializeArrows();
 		initializeControlButtons();
 		initializeTempoButtons();
-		initializeArrangementList();
 
-	}
-
-	/**
-	 * Adds in the listener behaviour for the arrangement list.
-	 */
-	private void initializeArrangementList() {
-		// theList.setFixedCellSize(20);
-		theList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (StateMachine.getMode() == SMPMode.ARRANGEMENT && StateMachine.isPlaybackActive())
-					return;
-				int x = theList.getSelectionModel().getSelectedIndex();
-				if (x != -1) {
-					ArrayList<StaffSequence> s = theStaff.getArrangement().getTheSequences();
-					ArrayList<File> f = theStaff.getArrangement().getTheSequenceFiles();
-					Window owner = theList.getScene().getWindow();
-					Utilities.loadSequenceFromArrangement(f.get(x), theStaff, controller, owner);
-					s.set(x, theStaff.getSequence());
-				}
-			}
-		});
 	}
 
 	/** Initializes the plus and minus buttons that can change the tempo. */

@@ -268,10 +268,24 @@ public class SMPFXController {
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
-        controlPanel = new Controls(staff, this, il, arrangementList);
+        controlPanel = new Controls(staff, this, il);
         staff.setControlPanel(controlPanel);
         makeKeyboardHandlers(basePane);
-        
+
+        arrangementList.getSelectionModel().selectedItemProperty().addListener(obs -> {
+            if (StateMachine.isPlaybackActive())
+                return;
+            
+            int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
+            if (songIndex != -1) {
+                ArrayList<StaffSequence> seq = staff.getArrangement().getTheSequences();
+                ArrayList<File> files = staff.getArrangement().getTheSequenceFiles();
+                Window owner = arrangementList.getScene().getWindow();
+                Utilities.loadSequenceFromArrangement(files.get(songIndex), staff, SMPFXController.this, owner);
+                seq.set(songIndex, staff.getSequence());
+            }
+        });
+
         // Set up options menu
         optionsMenu = new OptionsMenu(this, staff);
         
@@ -1161,11 +1175,6 @@ public class SMPFXController {
     /** @return The mode button image. */
     public ImageView getModeButton() {
         return modeButton;
-    }
-
-    /** @return The list of songs in the arrangement. */
-    public ListView<String> getArrangementList() {
-        return arrangementList;
     }
 
     public void setImageLoader(ImageLoader imgLoader) {
