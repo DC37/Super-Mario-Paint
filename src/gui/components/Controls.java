@@ -180,7 +180,6 @@ public class Controls {
 		theStaff.setSequenceName(controller.getNameTextField().getText());
 		controller.getNameTextField().setPromptText("Arrangement Name");
 		controller.getNameTextField().setText(theStaff.getArrangementName());
-        controller.getArrangerView().setVisible(true);
 	}
 
 	/** Changes the current interface to the normal song editing mode. */
@@ -196,7 +195,6 @@ public class Controls {
 		theStaff.setArrangementName(controller.getNameTextField().getText());
 		controller.getNameTextField().setPromptText("Song Name");
 		controller.getNameTextField().setText(theStaff.getSequenceName());
-		controller.getArrangerView().setVisible(false);
 	}
 
 	/**

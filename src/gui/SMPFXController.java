@@ -272,6 +272,18 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         makeKeyboardHandlers(basePane);
 
+        // Set up arranger view
+        arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
+            switch (StateMachine.getMode()) {
+            case SONG:
+                return false;
+            case ARRANGEMENT:
+                return true;
+            default:
+                return false;
+            }
+        }, StateMachine.modeProperty()));
+        
         arrangementList.getSelectionModel().selectedItemProperty().addListener(obs -> {
             if (StateMachine.isPlaybackActive())
                 return;
@@ -387,7 +399,6 @@ public class SMPFXController {
 
         arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
-        arrangerView.setVisible(false);
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
