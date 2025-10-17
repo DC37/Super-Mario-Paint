@@ -223,12 +223,12 @@
                                 </HBox>
                               </VBox>
                             </HBox>
-                            <HBox id="controlArrangementList" alignment="CENTER" prefHeight="100.0" prefWidth="454.0">
-                              <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="320.0" />
-                            </HBox>
-                            <HBox id="controlArrangementListButtons" prefHeight="100.0" prefWidth="300.0" spacing="4.0">
+                            
+                            <HBox id="controlArrangementList" alignment="CENTER" prefHeight="100.0" prefWidth="454.0" spacing="5.0">
                               <children>
-                                <VBox alignment="CENTER_LEFT" spacing="-2.0">
+                                <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="320.0"/>
+                                
+                                <VBox id="controlArrangementListButtons" alignment="CENTER_LEFT" spacing="-2.0">
                                    <children>
                                      <SMPButton id="addButton" fx:id="addButton" onAction="#addSongtoArrangement" focusTraversable="false" styleClass="smp-arranger-button">
                                        <imageReleased>
@@ -255,6 +255,11 @@
                                      </SMPButton>
                                    </children>
                                 </VBox>
+                              </children>
+                            </HBox>
+                            
+                            <HBox prefHeight="100.0" prefWidth="300.0" spacing="0.0">
+                              <children>
                                 <VBox alignment="CENTER" prefHeight="88.0" prefWidth="104.0">
                                   <children>
                                     <ImageView fitHeight="14" fitWidth="56" pickOnBounds="true" preserveRatio="true">
