@@ -108,13 +108,11 @@ public class SMPFXController {
     @FXML
     private HBox controls;
 
-    /** The play button. */
     @FXML
-    private ImageView play;
+    private SMPRadioButton playButton;
 
-    /** The stop button. */
     @FXML
-    private ImageView stop;
+    private SMPRadioButton stopButton;
 
     @FXML
     private SMPToggleButton loopButton;
@@ -275,6 +273,10 @@ public class SMPFXController {
         muteInstButton.selectedProperty().bindBidirectional(StateMachine.muteAPressedProperty());
         clipboardButton.selectedProperty().bindBidirectional(StateMachine.clipboardPressedProperty());
         
+        ToggleGroup mainRadioToggleGroup = new ToggleGroup();
+        stopButton.setToggleGroup(mainRadioToggleGroup);
+        playButton.setToggleGroup(mainRadioToggleGroup);
+        
         ToggleGroup muteToggleGroup = new ToggleGroup();
         muteButton.setToggleGroup(muteToggleGroup);
         muteInstButton.setToggleGroup(muteToggleGroup);
@@ -285,6 +287,7 @@ public class SMPFXController {
         timesigButton_6_8.setToggleGroup(timesigToggleGroup);
         timesigButtonCustom.setToggleGroup(timesigToggleGroup);
         
+        stopButton.setSelected(true);
         timesigButton_4_4.setSelected(true);
         
         Tooltip.install(clipboardButton, new Tooltip("Click (or Shift+R) to toggle region selection\n"
@@ -420,10 +423,19 @@ public class SMPFXController {
         StateMachine.getPlaybackActiveProperty().addListener(obv -> {
             if (!StateMachine.isPlaybackActive()) {
                 StateMachine.setArrangementSongIndex(-1);
+                stopButton.setSelected(true);
                 displayManager.resetPlayBars();
             }
         });
         
+    }
+    
+    public void play(ActionEvent e) {
+        staff.play();
+    }
+    
+    public void stop(ActionEvent e) {
+        staff.stop();
     }
     
     public void setTimesig_4_4(ActionEvent e) {
@@ -1086,20 +1098,6 @@ public class SMPFXController {
      */
     public ImageView getLeftArrow() {
         return leftArrow;
-    }
-
-    /**
-     * @return The <code>ImageView</code> object that contains the play button.
-     */
-    public ImageView getPlayButton() {
-        return play;
-    }
-
-    /**
-     * @return The <code>ImageView</code> object that contains the stop button.
-     */
-    public ImageView getStopButton() {
-        return stop;
     }
     
     public Parent getArrangerView() {

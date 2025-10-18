@@ -248,7 +248,6 @@ public class Staff {
 
     /** Begins animation of the Staff. (Starts a song) */
     public synchronized void startSong() {
-    	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         songPlaying = true;
         setTempo(StateMachine.getTempo());
@@ -257,7 +256,6 @@ public class Staff {
 
     /** Starts an arrangement. */
     public synchronized void startArrangement() {
-    	theControls.getPlayButton().reactPressed(null); // Presses the play button when starting the song. - seymour
         soundPlayer.setRun(true);
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
@@ -282,19 +280,6 @@ public class Staff {
         }
         arrPlaying = true;
         animationService.restart();
-    }
-
-    /**
-     * Hits the stop button.
-     */
-    public void hitStop() {
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                theControls.getStopButton().reactPressed(null);
-            }
-        });
     }
 
     /** Stops the song that is currently playing. */
@@ -640,7 +625,8 @@ public class Staff {
                         // Do nothing
                     }
                 }
-                hitStop();
+                
+                StateMachine.setPlaybackActive(false);
                 return Staff.this;
             }
 
@@ -764,7 +750,7 @@ public class Staff {
                     while (queue > 0);
                 }
                 
-                hitStop();
+                StateMachine.setPlaybackActive(false);
                 return Staff.this;
             }
             

@@ -155,22 +155,36 @@
                               <padding>
                                 <Insets left="18.0"/>
                               </padding>
+                              
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/STOP_LABEL.png"/>
                                 </ImageView>
-                                <ImageView fx:id="stop" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-                                  <Image url="@sprites/STOP_PRESSED.png"/>
-                                </ImageView>
+                                
+                                <SMPRadioButton fx:id="stopButton" onAction="#stop" focusTraversable="false">
+                                  <imagePressed>
+                                    <Image url="@sprites/STOP_PRESSED.png"/>
+                                  </imagePressed>
+                                  <imageReleased>
+                                    <Image url="@sprites/STOP_RELEASED.png"/>
+                                  </imageReleased>
+                                </SMPRadioButton>
                               </VBox>
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/PLAY_LABEL.png"/>
                                 </ImageView>
-                                <ImageView fx:id="play" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-                                  <Image url="@sprites/PLAY_RELEASED.png"/>
-                                </ImageView>
+                                
+                                <SMPRadioButton fx:id="playButton" onAction="#play" focusTraversable="false">
+                                  <imagePressed>
+                                    <Image url="@sprites/PLAY_PRESSED.png"/>
+                                  </imagePressed>
+                                  <imageReleased>
+                                    <Image url="@sprites/PLAY_RELEASED.png"/>
+                                  </imageReleased>
+                                </SMPRadioButton>
                               </VBox>
+                              
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/LOOP_LABEL.png"/>

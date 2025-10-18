@@ -6,8 +6,6 @@ import gui.SMPMode;
 import gui.Staff;
 import gui.StateMachine;
 import gui.components.buttons.elements.ArrowButton;
-import gui.components.buttons.elements.PlayButton;
-import gui.components.buttons.elements.StopButton;
 import gui.components.buttons.elements.TempoAdjustButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
@@ -24,12 +22,6 @@ import javafx.stage.Window;
  * @since 2012.09.04
  */
 public class Controls {
-
-	/** The pointer to the play button on the staff. */
-	private PlayButton play;
-
-	/** The pointer to the stop button on the staff. */
-	private StopButton stop;
 
 	/** The arrow that you click to go left. */
 	private ArrowButton leftArrow;
@@ -60,7 +52,6 @@ public class Controls {
 		theStaff = st;
 		setController(ct);
 		initializeArrows();
-		initializeControlButtons();
 		initializeTempoButtons();
 
 	}
@@ -93,18 +84,6 @@ public class Controls {
 		});
 	}
 
-	/** Initializes the play button and the stop button. */
-	private void initializeControlButtons() {
-		play = new PlayButton(controller.getPlayButton(), controller, il);
-		stop = new StopButton(controller.getStopButton(), controller, il);
-
-		play.link(stop);
-		stop.link(play);
-
-		play.setStaff(theStaff);
-		stop.setStaff(theStaff);
-	}
-
 	/**
 	 * Sets up the slider and arrows that the controls will have.
 	 */
@@ -127,20 +106,6 @@ public class Controls {
 		rightArrow.setStaff(theStaff);
 		rightFastArrow.setStaff(theStaff);
 		leftFastArrow.setStaff(theStaff);
-	}
-
-	/**
-	 * @return The play button of the controls set.
-	 */
-	public PlayButton getPlayButton() {
-		return play;
-	}
-
-	/**
-	 * @return The stop button of the controls set.
-	 */
-	public StopButton getStopButton() {
-		return stop;
 	}
 
 	/**
