@@ -7,8 +7,6 @@ import gui.Staff;
 import gui.StateMachine;
 import gui.components.buttons.elements.ArrowButton;
 import gui.components.buttons.elements.ClipboardButton;
-import gui.components.buttons.elements.MuteButton;
-import gui.components.buttons.elements.MuteInstButton;
 import gui.components.buttons.elements.PlayButton;
 import gui.components.buttons.elements.StopButton;
 import gui.components.buttons.elements.TempoAdjustButton;
@@ -33,12 +31,6 @@ public class Controls {
 
 	/** The pointer to the stop button on the staff. */
 	private StopButton stop;
-
-	/** The pointer to the mute button on the staff. */
-	private MuteButton mute;
-
-	/** The pointer to the mute-all button ont he staff. */
-	private MuteInstButton muteA;
 	
 	/** The pointer to the clipboard selection button on the staff. */
 	private ClipboardButton clipboard;
@@ -109,14 +101,7 @@ public class Controls {
 	private void initializeControlButtons() {
 		play = new PlayButton(controller.getPlayButton(), controller, il);
 		stop = new StopButton(controller.getStopButton(), controller, il);
-		mute = new MuteButton(controller.getMuteButton(), controller, il);
-		muteA = new MuteInstButton(controller.getMuteAButton(), controller, il);
 		clipboard = new ClipboardButton(controller.getClipboardButton(), controller, il);
-
-		mute.setMuteButton(muteA);
-		muteA.setMuteButton(mute);
-		mute.setStaff(theStaff);
-		muteA.setStaff(theStaff);
 
 		play.link(stop);
 		stop.link(play);
@@ -161,20 +146,6 @@ public class Controls {
 	 */
 	public StopButton getStopButton() {
 		return stop;
-	}
-
-	/**
-	 * @return The mute button of the controls set.
-	 */
-	public MuteButton getMuteButton() {
-		return mute;
-	}
-
-	/**
-	 * @return The 'mute-all' button of the controls set.
-	 */
-	public MuteInstButton getMuteAButton() {
-		return muteA;
 	}
 
 	/**

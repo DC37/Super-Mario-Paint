@@ -185,22 +185,37 @@
                                   </imageReleased>
                                 </SMPToggleButton>
                               </VBox>
+                              
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/MUTE_LABEL.png"/>
                                 </ImageView>
-                                <ImageView fx:id="mute" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-                                  <Image url="@sprites/MUTE_RELEASED.png"/>
-                                </ImageView>
+                                
+                                <SMPToggleButton fx:id="muteButton" focusTraversable="false">
+                                  <imagePressed>
+                                    <Image url="@sprites/MUTE_PRESSED.png"/>
+                                  </imagePressed>
+                                  <imageReleased>
+                                    <Image url="@sprites/MUTE_RELEASED.png"/>
+                                  </imageReleased>
+                                </SMPToggleButton>
                               </VBox>
+                              
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/MUTE_A_LABEL.png"/>
                                 </ImageView>
-                                <ImageView fx:id="muteA" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-                                  <Image url="@sprites/MUTE_A_RELEASED.png"/>
-                                </ImageView>
+                                
+                                <SMPToggleButton fx:id="muteInstButton" focusTraversable="false">
+                                  <imagePressed>
+                                    <Image url="@sprites/MUTE_A_PRESSED.png"/>
+                                  </imagePressed>
+                                  <imageReleased>
+                                    <Image url="@sprites/MUTE_A_RELEASED.png"/>
+                                  </imageReleased>
+                                </SMPToggleButton>
                               </VBox>
+                              
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/CLIPBOARD_LABEL.png"/>

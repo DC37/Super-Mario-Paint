@@ -41,6 +41,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -118,13 +119,11 @@ public class SMPFXController {
     @FXML
     private SMPToggleButton loopButton;
 
-    /** The mute button. */
     @FXML
-    private ImageView mute;
+    private SMPToggleButton muteButton;
 
-    /** The 'mute-all' button. */
     @FXML
-    private ImageView muteA;
+    private SMPToggleButton muteInstButton;
     
     /** The clipboard selection button. */
     @FXML
@@ -273,6 +272,12 @@ public class SMPFXController {
         makeKeyboardHandlers(basePane);
         
         loopButton.selectedProperty().bindBidirectional(StateMachine.loopPressedProperty());
+        muteButton.selectedProperty().bindBidirectional(StateMachine.mutePressedProperty());
+        muteInstButton.selectedProperty().bindBidirectional(StateMachine.muteAPressedProperty());
+        
+        ToggleGroup muteToggleGroup = new ToggleGroup();
+        muteButton.setToggleGroup(muteToggleGroup);
+        muteInstButton.setToggleGroup(muteToggleGroup);
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -1008,7 +1013,7 @@ public class SMPFXController {
                 if (songName.focusedProperty().get())
                     break;
                 
-                controlPanel.getMuteAButton().reactPressed(null);
+                StateMachine.setMuteAPressed(!StateMachine.isMuteAPressed());
                 break;
                 
             case N:
@@ -1016,7 +1021,7 @@ public class SMPFXController {
                     break;
                 
                 if (!ke.isControlDown() && !ke.isAltDown())
-                    controlPanel.getMuteButton().reactPressed(null);
+                    StateMachine.setMutePressed(!StateMachine.isMutePressed());
                 
                 else if (ke.isControlDown())
                     newSongOrArrangement(Utilities.getOwner(ke));
@@ -1137,21 +1142,6 @@ public class SMPFXController {
      */
     public ImageView getStopButton() {
         return stop;
-    }
-
-    /**
-     * @return The <code>ImageView</code> object that contains the mute button.
-     */
-    public ImageView getMuteButton() {
-        return mute;
-    }
-
-    /**
-     * @return The <code>ImageView</code> object that contains the 'mute-all'
-     *         button.
-     */
-    public ImageView getMuteAButton() {
-        return muteA;
     }
 
     /**
