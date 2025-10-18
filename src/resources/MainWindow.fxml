@@ -220,10 +220,17 @@
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/CLIPBOARD_LABEL.png"/>
                                 </ImageView>
-                                <ImageView fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-                                  <Image url="@sprites/CLIPBOARD_RELEASED.png"/>
-                                </ImageView>
+                                
+                                <SMPToggleButton fx:id="clipboardButton" focusTraversable="false">
+                                  <imagePressed>
+                                    <Image url="@sprites/CLIPBOARD_PRESSED.png"/>
+                                  </imagePressed>
+                                  <imageReleased>
+                                    <Image url="@sprites/CLIPBOARD_RELEASED.png"/>
+                                  </imageReleased>
+                                </SMPToggleButton>
                               </VBox>
+                              
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="46">
                                   <Image url="@sprites/TIMESIG_LABEL.png"/>

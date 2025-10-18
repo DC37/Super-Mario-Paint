@@ -42,6 +42,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -125,9 +126,8 @@ public class SMPFXController {
     @FXML
     private SMPToggleButton muteInstButton;
     
-    /** The clipboard selection button. */
     @FXML
-    private ImageView clipboardButton;
+    private SMPToggleButton clipboardButton;
     
     @FXML
     private ImageView timesig_4_4;
@@ -274,10 +274,21 @@ public class SMPFXController {
         loopButton.selectedProperty().bindBidirectional(StateMachine.loopPressedProperty());
         muteButton.selectedProperty().bindBidirectional(StateMachine.mutePressedProperty());
         muteInstButton.selectedProperty().bindBidirectional(StateMachine.muteAPressedProperty());
+        clipboardButton.selectedProperty().bindBidirectional(StateMachine.clipboardPressedProperty());
         
         ToggleGroup muteToggleGroup = new ToggleGroup();
         muteButton.setToggleGroup(muteToggleGroup);
         muteInstButton.setToggleGroup(muteToggleGroup);
+        
+        Tooltip.install(clipboardButton, new Tooltip("Click (or Shift+R) to toggle region selection\n"
+                + "Hover over instrument & press F to filter instrument\n"
+                + "Ctrl+A to select all\n"
+                + "Ctrl+C to copy notes\n"
+                + "Ctrl+V to paste notes\n"
+                + "Ctrl+X to cut notes\n"
+                + "Delete to delete notes\n"
+                + "Alt+N to toggle notes selection\n"
+                + "Alt+V to toggle volumes selection"));
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -886,15 +897,6 @@ public class SMPFXController {
         optionsMenu.options(owner);
     }
     
-    public void switchClipMode(boolean on) {
-        if (on) {
-            StateMachine.setClipboardPressed(false);
-            
-        } else {
-            StateMachine.setClipboardPressed(true);
-        }
-    }
-    
     private void makeKeyboardHandlers(Node n) {
         n.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
             switch(ke.getCode()) {
@@ -993,7 +995,7 @@ public class SMPFXController {
                     break;
                 
                 if (ke.isShiftDown())
-                    controlPanel.getClipboardButton().reactPressed(null);
+                    StateMachine.setClipboardPressed(!StateMachine.isClipboardPressed());
                 break;
                 
             case S:
@@ -1137,14 +1139,6 @@ public class SMPFXController {
      */
     public ImageView getStopButton() {
         return stop;
-    }
-
-    /**
-     * @return The <code>ImageView</code> object that contains the clipboard
-     *         selection button.
-     */
-    public ImageView getClipboardButton() {
-        return clipboardButton;
     }
     
     public Parent getArrangerView() {

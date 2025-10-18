@@ -6,7 +6,6 @@ import gui.SMPMode;
 import gui.Staff;
 import gui.StateMachine;
 import gui.components.buttons.elements.ArrowButton;
-import gui.components.buttons.elements.ClipboardButton;
 import gui.components.buttons.elements.PlayButton;
 import gui.components.buttons.elements.StopButton;
 import gui.components.buttons.elements.TempoAdjustButton;
@@ -31,9 +30,6 @@ public class Controls {
 
 	/** The pointer to the stop button on the staff. */
 	private StopButton stop;
-	
-	/** The pointer to the clipboard selection button on the staff. */
-	private ClipboardButton clipboard;
 
 	/** The arrow that you click to go left. */
 	private ArrowButton leftArrow;
@@ -101,7 +97,6 @@ public class Controls {
 	private void initializeControlButtons() {
 		play = new PlayButton(controller.getPlayButton(), controller, il);
 		stop = new StopButton(controller.getStopButton(), controller, il);
-		clipboard = new ClipboardButton(controller.getClipboardButton(), controller, il);
 
 		play.link(stop);
 		stop.link(play);
@@ -146,13 +141,6 @@ public class Controls {
 	 */
 	public StopButton getStopButton() {
 		return stop;
-	}
-
-	/**
-	 * @return The clipboard button.
-	 */
-	public ClipboardButton getClipboardButton() {
-		return clipboard;
 	}
 
 	/**
