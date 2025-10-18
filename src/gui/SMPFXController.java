@@ -289,6 +289,11 @@ public class SMPFXController {
                 + "Delete to delete notes\n"
                 + "Alt+N to toggle notes selection\n"
                 + "Alt+V to toggle volumes selection"));
+        
+        StateMachine.clipboardPressedProperty().addListener(obs -> {
+            if (StateMachine.isClipboardPressed())
+                displayManager.resetSilhouette();
+        });
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
