@@ -411,10 +411,7 @@ public class SMPFXController {
         rubberBand = new StaffRubberBand();
         new StaffClipboard(rubberBand, staff, this, il);
         
-        StateMachine.clipboardPressedProperty().addListener(obs -> {
-            boolean v = StateMachine.isClipboardPressed();
-            volumeBars.setMouseTransparent(v);
-        });
+        volumeBars.mouseTransparentProperty().bind(StateMachine.clipboardPressedProperty());
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
@@ -892,11 +889,9 @@ public class SMPFXController {
     public void switchClipMode(boolean on) {
         if (on) {
             StateMachine.setClipboardPressed(false);
-            volumeBars.setMouseTransparent(false);
             
         } else {
             StateMachine.setClipboardPressed(true);
-            volumeBars.setMouseTransparent(true);
         }
     }
     
