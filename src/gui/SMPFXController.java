@@ -21,7 +21,7 @@ import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.Controls;
 import gui.components.SongNameController;
-import gui.components.buttons.ImageRadioButton;
+import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
@@ -45,7 +45,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -130,16 +129,16 @@ public class SMPFXController {
     private SMPToggleButton clipboardButton;
     
     @FXML
-    private ImageView timesig_4_4;
+    private SMPRadioButton timesigButton_4_4;
     
     @FXML
-    private ImageView timesig_3_4;
+    private SMPRadioButton timesigButton_3_4;
     
     @FXML
-    private ImageView timesig_6_8;
+    private SMPRadioButton timesigButton_6_8;
     
     @FXML
-    private ImageView timesig_custom;
+    private SMPRadioButton timesigButtonCustom;
 
     @FXML
     private Parent arrangerView;
@@ -280,6 +279,14 @@ public class SMPFXController {
         muteButton.setToggleGroup(muteToggleGroup);
         muteInstButton.setToggleGroup(muteToggleGroup);
         
+        ToggleGroup timesigToggleGroup = new ToggleGroup();
+        timesigButton_4_4.setToggleGroup(timesigToggleGroup);
+        timesigButton_3_4.setToggleGroup(timesigToggleGroup);
+        timesigButton_6_8.setToggleGroup(timesigToggleGroup);
+        timesigButtonCustom.setToggleGroup(timesigToggleGroup);
+        
+        timesigButton_4_4.setSelected(true);
+        
         Tooltip.install(clipboardButton, new Tooltip("Click (or Shift+R) to toggle region selection\n"
                 + "Hover over instrument & press F to filter instrument\n"
                 + "Ctrl+A to select all\n"
@@ -323,93 +330,6 @@ public class SMPFXController {
 
         // Set up options menu
         optionsMenu = new OptionsMenu(this, staff);
-        
-        // Set up time signature buttons
-        ImageRadioButton timesig_4_4_button = new ImageRadioButton(timesig_4_4, this, il) {
-            {
-                getImages(ImageIndex.TIMESIG_4_4_PRESSED, ImageIndex.TIMESIG_4_4_RELEASED);
-                pressImage();
-            }
-            
-            @Override
-            public void reactPressed(MouseEvent e) {
-                if (isPressed) {
-                    return;
-                }
-                
-                super.reactPressed(e);
-                staff.setTimeSignature(TimeSignature.FOUR_FOUR);
-            }
-        };
-        
-        ImageRadioButton timesig_3_4_button = new ImageRadioButton(timesig_3_4, this, il) {
-            {
-                getImages(ImageIndex.TIMESIG_3_4_PRESSED, ImageIndex.TIMESIG_3_4_RELEASED);
-            }
-            
-            @Override
-            public void reactPressed(MouseEvent e) {
-                if (isPressed) {
-                    return;
-                }
-                
-                super.reactPressed(e);
-                staff.setTimeSignature(TimeSignature.THREE_FOUR);
-            }
-        };
-        
-        ImageRadioButton timesig_6_8_button = new ImageRadioButton(timesig_6_8, this, il) {
-            {
-                getImages(ImageIndex.TIMESIG_6_8_PRESSED, ImageIndex.TIMESIG_6_8_RELEASED);
-            }
-            
-            @Override
-            public void reactPressed(MouseEvent e) {
-                if (isPressed) {
-                    return;
-                }
-                
-                super.reactPressed(e);
-                staff.setTimeSignature(TimeSignature.SIX_EIGHT);
-            }
-        };
-        
-        ImageRadioButton timesig_custom_button = new ImageRadioButton(timesig_custom, this, il) {
-            {
-                getImages(ImageIndex.TIMESIG_CUSTOM_PRESSED, ImageIndex.TIMESIG_CUSTOM_RELEASED);
-            }
-            
-            @Override
-            public void reactPressed(MouseEvent e) {
-                Window owner = ((Node) e.getSource()).getScene().getWindow();
-                String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
-                if (str.isEmpty())
-                    return;
-                
-                try {
-                    staff.setTimeSignature(TimeSignature.valueOf(str));
-                    
-                } catch (IllegalArgumentException ee) {
-                    Dialog.showDialog(ee.getMessage());
-                    return;
-                }
-                
-                super.reactPressed(e); // only if the input timesig is correct
-            }
-        };
-        
-        timesig_4_4_button.link(timesig_3_4_button);
-        timesig_4_4_button.link(timesig_6_8_button);
-        timesig_4_4_button.link(timesig_custom_button);
-        timesig_3_4_button.link(timesig_4_4_button);
-        timesig_3_4_button.link(timesig_6_8_button);
-        timesig_3_4_button.link(timesig_custom_button);
-        timesig_6_8_button.link(timesig_4_4_button);
-        timesig_6_8_button.link(timesig_3_4_button);
-        timesig_6_8_button.link(timesig_custom_button);
-        timesig_custom_button.link(timesig_4_4_button);
-        timesig_custom_button.link(timesig_3_4_button);
-        timesig_custom_button.link(timesig_6_8_button);
         
         // HACK
         staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
@@ -504,6 +424,42 @@ public class SMPFXController {
             }
         });
         
+    }
+    
+    public void setTimesig_4_4(ActionEvent e) {
+        staff.setTimeSignature(TimeSignature.FOUR_FOUR);
+    }
+    
+    public void setTimesig_3_4(ActionEvent e) {
+        staff.setTimeSignature(TimeSignature.THREE_FOUR);
+    }
+    
+    public void setTimesig_6_8(ActionEvent e) {
+        staff.setTimeSignature(TimeSignature.SIX_EIGHT);
+    }
+    
+    public void setTimesig_custom(ActionEvent e) {
+        Window owner = ((Node) e.getSource()).getScene().getWindow();
+        String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
+        if (str.isEmpty())
+            return;
+        
+        try {
+            TimeSignature t = TimeSignature.valueOf(str);
+            staff.setTimeSignature(t);
+            
+            if (t.equals(TimeSignature.FOUR_FOUR)) {
+                timesigButton_4_4.setSelected(true);
+            } else if (t.equals(TimeSignature.THREE_FOUR)) {
+                timesigButton_3_4.setSelected(true);
+            } else if (t.equals(TimeSignature.SIX_EIGHT)) {
+                timesigButton_6_8.setSelected(true);
+            }
+            
+        } catch (IllegalArgumentException ee) {
+            Dialog.showDialog(ee.getMessage());
+            return;
+        }
     }
     
     public void switchMode() {

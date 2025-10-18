@@ -235,19 +235,43 @@
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="46">
                                   <Image url="@sprites/TIMESIG_LABEL.png"/>
                                 </ImageView>
+                                
                                 <HBox alignment="CENTER" spacing="2.0">
-	                              <ImageView fx:id="timesig_4_4" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-	                                <Image url="@sprites/TIMESIG_4_4_RELEASED.png"/>
-	                              </ImageView>
-	                              <ImageView fx:id="timesig_3_4" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-	                                <Image url="@sprites/TIMESIG_3_4_RELEASED.png"/>
-	                              </ImageView>
-	                              <ImageView fx:id="timesig_6_8" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-	                                <Image url="@sprites/TIMESIG_6_8_RELEASED.png"/>
-	                              </ImageView>
-	                              <ImageView fx:id="timesig_custom" fitHeight="32.0" fitWidth="32.0" preserveRatio="true" smooth="false">
-	                                <Image url="@sprites/TIMESIG_CUSTOM_RELEASED.png"/>
-	                              </ImageView>
+                                  <SMPRadioButton fx:id="timesigButton_4_4" onAction="#setTimesig_4_4" focusTraversable="false">
+                                    <imagePressed>
+                                      <Image url="@sprites/TIMESIG_4_4_PRESSED.png"/>
+                                    </imagePressed>
+                                    <imageReleased>
+                                      <Image url="@sprites/TIMESIG_4_4_RELEASED.png"/>
+                                    </imageReleased>
+                                  </SMPRadioButton>
+                                  
+                                  <SMPRadioButton fx:id="timesigButton_3_4" onAction="#setTimesig_3_4" focusTraversable="false">
+                                    <imagePressed>
+                                      <Image url="@sprites/TIMESIG_3_4_PRESSED.png"/>
+                                    </imagePressed>
+                                    <imageReleased>
+                                      <Image url="@sprites/TIMESIG_3_4_RELEASED.png"/>
+                                    </imageReleased>
+                                  </SMPRadioButton>
+                                  
+                                  <SMPRadioButton fx:id="timesigButton_6_8" onAction="#setTimesig_6_8" focusTraversable="false">
+                                    <imagePressed>
+                                      <Image url="@sprites/TIMESIG_6_8_PRESSED.png"/>
+                                    </imagePressed>
+                                    <imageReleased>
+                                      <Image url="@sprites/TIMESIG_6_8_RELEASED.png"/>
+                                    </imageReleased>
+                                  </SMPRadioButton>
+                                  
+                                  <SMPRadioButton fx:id="timesigButtonCustom" onAction="#setTimesig_custom" focusTraversable="false">
+                                    <imagePressed>
+                                      <Image url="@sprites/TIMESIG_CUSTOM_PRESSED.png"/>
+                                    </imagePressed>
+                                    <imageReleased>
+                                      <Image url="@sprites/TIMESIG_CUSTOM_RELEASED.png"/>
+                                    </imageReleased>
+                                  </SMPRadioButton>
                                 </HBox>
                               </VBox>
                             </HBox>

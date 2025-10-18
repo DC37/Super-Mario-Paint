@@ -83,6 +83,23 @@ public class TimeSignature {
         String topStr = String.join("+", Arrays.stream(divs).mapToObj(i -> i + "").toArray(String[]::new));
         return (bottom == 0) ? topStr : topStr + "/" + bottom;
     }
+    
+    @Override
+    public boolean equals(Object oth) {
+        if (!(oth instanceof TimeSignature))
+            return false;
+        
+        TimeSignature t = (TimeSignature) oth;
+        
+        if (this.divs.length != t.divs.length)
+            return false;
+        
+        for (int i = 0; i < this.divs.length; i++)
+            if (this.divs[i] != t.divs[i])
+                return false;
+        
+        return true;
+    }
 
     public static TimeSignature valueOf(String disp) throws IllegalArgumentException {
         int idxSlash = disp.indexOf("/");
