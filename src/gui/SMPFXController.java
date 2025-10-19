@@ -375,8 +375,22 @@ public class SMPFXController {
             }
         });
         
-        // Bind displayed tempo to internal value in state machine
+        // Set up tempo box
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
+
+        tempoBox.setOnMousePressed(evt -> {
+            try {
+                if (StateMachine.getMode() == SMPMode.SONG) {
+                    Window owner = Utilities.getOwner(evt);
+                    String tempo = Dialog.showTextDialog("Tempo", owner);
+                    StateMachine.setTempo(Double.parseDouble(tempo));
+                    tempo = tempo.trim();
+                }
+            } catch (NumberFormatException e) {
+                // Do nothing.
+            }
+            evt.consume();
+        });
         
         // Setup scrollbar
         scrollbar.maxProperty().bind(Bindings.createIntegerBinding(
@@ -1102,16 +1116,6 @@ public class SMPFXController {
     /** @return The control panel of the program. */
     public Controls getControls() {
         return controlPanel;
-    }
-
-    /** @return The tempo indicator text. */
-    public Text getTempoIndicator() {
-        return tempoIndicator;
-    }
-
-    /** @return The tempo indicator box. */
-    public StackPane getTempoBox() {
-        return tempoBox;
     }
 
     /** @return The text area that contains the song name. */

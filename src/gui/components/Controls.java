@@ -1,18 +1,10 @@
 package gui.components;
 
-import gui.Dialog;
 import gui.SMPFXController;
-import gui.SMPMode;
 import gui.Staff;
-import gui.StateMachine;
 import gui.components.buttons.elements.ArrowButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Window;
 
 /**
  * These are the control buttons for the program.
@@ -51,30 +43,7 @@ public class Controls {
 		theStaff = st;
 		setController(ct);
 		initializeArrows();
-		initializeTempoButtons();
 
-	}
-
-	/** Initializes the plus and minus buttons that can change the tempo. */
-	private void initializeTempoButtons() {
-		StackPane tBox = controller.getTempoBox();
-
-		tBox.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				try {
-					if (StateMachine.getMode() == SMPMode.SONG) {
-					    Window owner = ((Node) event.getSource()).getScene().getWindow();
-						String tempo = Dialog.showTextDialog("Tempo", owner);
-						StateMachine.setTempo(Double.parseDouble(tempo));
-						tempo = tempo.trim();
-					}
-				} catch (NumberFormatException e) {
-					// Do nothing.
-				}
-				event.consume();
-			}
-		});
 	}
 
 	/**

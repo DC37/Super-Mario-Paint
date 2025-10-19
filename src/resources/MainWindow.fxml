@@ -324,56 +324,44 @@
                               </children>
                             </HBox>
                             
-                            <HBox prefHeight="100.0" prefWidth="300.0" spacing="0.0">
-                              <children>
-                                <VBox alignment="CENTER" prefHeight="88.0" prefWidth="104.0">
-                                  <children>
-                                    <ImageView fitHeight="14" fitWidth="56" pickOnBounds="true" preserveRatio="true">
-                                      <image>
-                                        <Image url="@sprites/TEMPO_LABEL.png" />
-                                      </image>
-                                    </ImageView>
-                                    <StackPane fx:id="tempoBox" prefHeight="25.0" prefWidth="100.0">
-                                      <children>
-                                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0" />
-                                        <Text fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0">
-                                          <font>
-                                            <Font name="Century Gothic" size="15.0" fx:id="x2" />
-                                          </font>
-                                        </Text>
-                                      </children>
-                                    </StackPane>
-                                  </children>
-                                </VBox>
-                                <StackPane prefHeight="100.0" prefWidth="100.0">
-                                  <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" spacing="0">
-                                      <children>
-                                        <SMPButton id="tempoPlusButton" onAction="#tempoUp" styleClass="smp-tempo-box-button">
-                                          <imageReleased>
-                                            <Image url="@sprites/TEMPO_PLUS.png"/>
-                                          </imageReleased>
-                                        </SMPButton>
-                                        
-                                        <SMPButton id="tempoMinusButton" onAction="#tempoDown" styleClass="smp-tempo-box-button">
-                                          <imageReleased>
-                                            <Image url="@sprites/TEMPO_MINUS.png"/>
-                                          </imageReleased>
-                                        </SMPButton>
-                                      </children>
+                            <VBox alignment="CENTER" spacing="2.0">
+                              <ImageView mouseTransparent="true" preserveRatio="true" smooth="false">
+                                <Image url="@sprites/TEMPO_LABEL.png"/>
+                              </ImageView>
+                              
+                              <HBox>
+                                <children>
+                                  <StackPane fx:id="tempoBox" prefHeight="25.0" prefWidth="100.0">
+                                    <children>
+                                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="100.0"/>
                                       
-                                      <padding>
-                                        <Insets top="37.0" />
-                                      </padding>
-                                    </VBox>
-                                  </children>
-                                </StackPane>
-                              </children>
-                            </HBox>
+                                      <Text fx:id="tempoIndicator" strokeType="OUTSIDE" strokeWidth="0.0">
+                                        <font>
+                                          <Font name="Century Gothic" size="15.0"/>
+                                        </font>
+                                      </Text>
+                                    </children>
+                                  </StackPane>
+                                  
+                                  <VBox spacing="0">
+                                    <children>
+                                      <SMPButton id="tempoPlusButton" onAction="#tempoUp" styleClass="smp-tempo-box-button">
+                                        <imageReleased>
+                                          <Image url="@sprites/TEMPO_PLUS.png"/>
+                                        </imageReleased>
+                                      </SMPButton>
+                                        
+                                      <SMPButton id="tempoMinusButton" onAction="#tempoDown" styleClass="smp-tempo-box-button">
+                                        <imageReleased>
+                                          <Image url="@sprites/TEMPO_MINUS.png"/>
+                                        </imageReleased>
+                                      </SMPButton>
+                                    </children>
+                                  </VBox>
+                                </children>
+                              </HBox>
+                            </VBox>
                           </children>
-                          <padding>
-                            <Insets left="8.0" right="8.0" />
-                          </padding>
                         </HBox>
                       </children>
                     </StackPane>
