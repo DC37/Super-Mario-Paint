@@ -26,7 +26,6 @@ import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.components.toppanel.ButtonLine;
-import gui.components.toppanel.PanelButtons;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
@@ -347,8 +346,6 @@ public class SMPFXController {
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
         selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
-
-        new PanelButtons(staff, this, il, instBLine);
 
         arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
