@@ -19,7 +19,6 @@ import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
-import gui.components.Controls;
 import gui.components.SongNameController;
 import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPRadioButton;
@@ -150,11 +149,6 @@ public class SMPFXController {
     /** This is the text area that houses the song name. */
     @FXML
     private TextField songName;
-
-    /**
-     * The controls line object that holds the FXML controls object.
-     */
-    private Controls controlPanel;
     
     @FXML
     private Pane staffFrame;
@@ -237,8 +231,6 @@ public class SMPFXController {
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
-        controlPanel = new Controls(staff, this, il);
-        staff.setControlPanel(controlPanel);
         makeKeyboardHandlers(basePane);
         
         // We leverage the StringProperty modeText to bind the properties of the button and the mode in both direction
@@ -1099,11 +1091,6 @@ public class SMPFXController {
     
     public Parent getArrangerView() {
         return arrangerView;
-    }
-
-    /** @return The control panel of the program. */
-    public Controls getControls() {
-        return controlPanel;
     }
 
     /** @return The text area that contains the song name. */

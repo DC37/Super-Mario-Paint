@@ -17,7 +17,6 @@ import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
-import gui.components.Controls;
 import gui.components.staff.StaffDisplayManager;
 import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
@@ -50,9 +49,6 @@ public class Staff {
 
     /** Whether we are playing an arrangement. */
     private boolean arrPlaying = false;
-
-    /** These are the play button, stop button, etc. */
-    private Controls theControls;
 
     /**
      * The wrapper that holds a series of ImageView objects that are meant to
@@ -410,23 +406,6 @@ public class Staff {
      */
     public StaffDisplayManager getDisplayManager() {
         return displayManager;
-    }
-
-    /**
-     * Sets the control panel for this staff.
-     *
-     * @param s
-     *            The control panel we want to set.
-     */
-    public void setControlPanel(Controls s) {
-        theControls = s;
-    }
-
-    /**
-     * @return The control panel.
-     */
-    public Controls getControlPanel() {
-        return theControls;
     }
 
     /**
