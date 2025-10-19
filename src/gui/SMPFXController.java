@@ -138,14 +138,6 @@ public class SMPFXController {
     @FXML
     private ListView<String> arrangementList;
 
-    /** This is the plus sign that increases the tempo of the song. */
-    @FXML
-    private ImageView tempoPlus;
-
-    /** This is the minus sign that decreases the tempo of the song. */
-    @FXML
-    private ImageView tempoMinus;
-
     /** This is the text that displays the current tempo of the song. */
     @FXML
     private Text tempoIndicator;
@@ -465,6 +457,16 @@ public class SMPFXController {
             Dialog.showDialog(ee.getMessage());
             return;
         }
+    }
+    
+    @FXML
+    public void tempoUp(ActionEvent e) {
+        StateMachine.setTempo(StateMachine.getTempo() + 1);
+    }
+    
+    @FXML
+    public void tempoDown(ActionEvent e) {
+        StateMachine.setTempo(StateMachine.getTempo() - 1);
     }
     
     public void switchMode() {
@@ -1100,16 +1102,6 @@ public class SMPFXController {
     /** @return The control panel of the program. */
     public Controls getControls() {
         return controlPanel;
-    }
-
-    /** @return The tempo plus button. */
-    public ImageView getTempoPlus() {
-        return tempoPlus;
-    }
-
-    /** @return The tempo minus button. */
-    public ImageView getTempoMinus() {
-        return tempoMinus;
     }
 
     /** @return The tempo indicator text. */

@@ -8,6 +8,7 @@
 	-fx-padding: 2px;
 }
 
-.button.smp-arranger-button {
+.button.smp-arranger-button,
+.button.smp-tempo-box-button {
 	-fx-padding: 0px;
 }

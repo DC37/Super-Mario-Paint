@@ -6,7 +6,6 @@ import gui.SMPMode;
 import gui.Staff;
 import gui.StateMachine;
 import gui.components.buttons.elements.ArrowButton;
-import gui.components.buttons.elements.TempoAdjustButton;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import javafx.event.EventHandler;
@@ -58,12 +57,6 @@ public class Controls {
 
 	/** Initializes the plus and minus buttons that can change the tempo. */
 	private void initializeTempoButtons() {
-		TempoAdjustButton plus = new TempoAdjustButton(controller.getTempoPlus(), controller, il);
-		TempoAdjustButton minus = new TempoAdjustButton(controller.getTempoMinus(), controller, il);
-		plus.setStaff(theStaff);
-		minus.setStaff(theStaff);
-		plus.setPositive(true);
-		minus.setPositive(false);
 		StackPane tBox = controller.getTempoBox();
 
 		tBox.setOnMousePressed(new EventHandler<MouseEvent>() {

@@ -347,19 +347,21 @@
                                 </VBox>
                                 <StackPane prefHeight="100.0" prefWidth="100.0">
                                   <children>
-                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                    <VBox prefHeight="200.0" prefWidth="100.0" spacing="0">
                                       <children>
-                                        <ImageView id="TempoPlus" fx:id="tempoPlus" fitHeight="32.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                            <Image preserveRatio="false" smooth="false" url="@sprites/TEMPO_PLUS.png" />
-                                          </image>
-                                        </ImageView>
-                                        <ImageView id="TempoMinus" fx:id="tempoMinus" fitHeight="32.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                            <Image preserveRatio="false" smooth="false" url="@sprites/TEMPO_MINUS.png" />
-                                          </image>
-                                        </ImageView>
+                                        <SMPButton id="tempoPlusButton" onAction="#tempoUp" styleClass="smp-tempo-box-button">
+                                          <imageReleased>
+                                            <Image url="@sprites/TEMPO_PLUS.png"/>
+                                          </imageReleased>
+                                        </SMPButton>
+                                        
+                                        <SMPButton id="tempoMinusButton" onAction="#tempoDown" styleClass="smp-tempo-box-button">
+                                          <imageReleased>
+                                            <Image url="@sprites/TEMPO_MINUS.png"/>
+                                          </imageReleased>
+                                        </SMPButton>
                                       </children>
+                                      
                                       <padding>
                                         <Insets top="37.0" />
                                       </padding>

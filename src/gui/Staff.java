@@ -446,16 +446,6 @@ public class Staff {
         double nano = (mill - delayMillis) * Math.pow(10, 6);
         delayNanos = (int) nano;
     }
-
-    public void addTempo(double add, boolean isPositive) {
-        double ch = 0;
-        if (isPositive)
-            ch = add;
-        else
-            ch = -add;
-        double tempo = StateMachine.getTempo() + ch;
-        StateMachine.setTempo(tempo);
-    }
     
    /**
      * 
