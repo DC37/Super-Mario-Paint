@@ -290,7 +290,7 @@
                               </VBox>
                             </HBox>
                             
-                            <HBox fx:id="arrangerView" alignment="CENTER" prefHeight="100.0" prefWidth="454.0" spacing="5.0">
+                            <HBox fx:id="arrangerView" alignment="CENTER" spacing="5.0">
                               <children>
                                 <ListView fx:id="arrangementList" editable="true" focusTraversable="false" maxHeight="62.0" prefHeight="62.0" prefWidth="320.0"/>
                                 
