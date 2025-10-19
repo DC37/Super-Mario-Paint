@@ -425,11 +425,12 @@
           <children>
             <HBox fx:id="topBoxRight" alignment="CENTER_RIGHT" layoutX="815.0" prefHeight="64.0" prefWidth="200.0" spacing="2.0">
               <children>
-                <ImageView id="" fx:id="modeButton" fitHeight="24.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/MODE.png" />
-                  </image>
-                </ImageView>
+                <SMPToggleButton fx:id="modeButton" focusTraversable="false">
+                  <imageReleased>
+                    <Image url="@sprites/MODE.png" />
+                  </imageReleased>
+                </SMPToggleButton>
+                
                 <StackPane id="StackPane">
                   <children>
                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#efefef" height="32.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="60.0" />

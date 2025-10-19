@@ -2,7 +2,6 @@ package gui.components.toppanel;
 
 import gui.SMPFXController;
 import gui.Staff;
-import gui.components.buttons.elements.ModeButton;
 import gui.loaders.ImageLoader;
 
 /**
@@ -14,9 +13,6 @@ public class PanelButtons {
 
     /** The Staff that this is linked to. */
     private Staff theStaff;
-
-    /** Mode button. */
-    private ModeButton mButton;
 
     /** The FXML controller class. */
     private SMPFXController controller;
@@ -32,8 +28,6 @@ public class PanelButtons {
         il = im;
         theStaff = s;
         setController(ct);
-        mButton = new ModeButton(controller.getModeButton(), controller, il);
-        mButton.setStaff(theStaff);
         bl = b;
     }
 

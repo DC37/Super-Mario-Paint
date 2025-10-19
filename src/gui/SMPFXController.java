@@ -54,6 +54,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
+import javafx.util.StringConverter;
+import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -88,16 +90,9 @@ public class SMPFXController {
      */
     private Staff staff;
 
-    /**
-     * The button that changes the mode of the staff between song and arranger
-     * mode.
-     */
     @FXML
-    private ImageView modeButton;
+    private SMPToggleButton modeButton;
 
-    /**
-     * The text that displays the mode of the staff.
-     */
     @FXML
     private Text modeText;
 
@@ -268,6 +263,18 @@ public class SMPFXController {
         staff.setControlPanel(controlPanel);
         makeKeyboardHandlers(basePane);
         
+        // We leverage the StringProperty modeText to bind the properties of the button and the mode in both direction
+        // Bidirectional bindings between different types can only be done if one type is String afaik
+        Bindings.bindBidirectional(modeText.textProperty(), modeButton.selectedProperty(), new BooleanStringConverter () {
+            @Override public String toString(Boolean b) { return b ? "Arr" : "Song"; }
+            @Override public Boolean fromString(String string) { return string.equals("Arr") ? true : false; }
+        });
+        
+        Bindings.bindBidirectional(modeText.textProperty(), StateMachine.modeProperty(), new StringConverter<SMPMode>() {
+            @Override public String toString(SMPMode mode) { return mode.equals(SMPMode.ARRANGEMENT) ? "Arr" : "Song"; }
+            @Override public SMPMode fromString(String string) { return string.equals("Arr") ? SMPMode.ARRANGEMENT : SMPMode.SONG; }
+        });
+        
         loopButton.selectedProperty().bindBidirectional(StateMachine.loopPressedProperty());
         muteButton.selectedProperty().bindBidirectional(StateMachine.mutePressedProperty());
         muteInstButton.selectedProperty().bindBidirectional(StateMachine.muteAPressedProperty());
@@ -360,17 +367,6 @@ public class SMPFXController {
                 return "Song Name:";
             case ARRANGEMENT:
                 return "Arrangement Name:";
-            default:
-                return "";
-            }
-        }, StateMachine.modeProperty()));
-        
-        modeText.textProperty().bind(Bindings.createStringBinding(() -> {
-            switch (StateMachine.getMode() ) {
-            case SONG:
-                return "Song";
-            case ARRANGEMENT:
-                return "Arr";
             default:
                 return "";
             }
@@ -1142,11 +1138,6 @@ public class SMPFXController {
     /** @return The instrument button line. */
     public ButtonLine getInstBLine() {
         return instBLine;
-    }
-
-    /** @return The mode button image. */
-    public ImageView getModeButton() {
-        return modeButton;
     }
 
     public void setImageLoader(ImageLoader imgLoader) {
