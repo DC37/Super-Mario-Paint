@@ -21,6 +21,7 @@ import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.Controls;
 import gui.components.SongNameController;
+import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
@@ -168,31 +169,17 @@ public class SMPFXController {
     @FXML
     private Slider scrollbar;
 
-    /**
-     * The left arrow that you can click to make the staff go to the left.
-     */
     @FXML
-    private ImageView leftArrow;
+    private SMPButton leftArrow;
 
-    /**
-     * The right arrow that you can click to make the staff go to the right.
-     */
     @FXML
-    private ImageView rightArrow;
+    private SMPButton rightArrow;
 
-    /**
-     * The left arrow that you can click to make the staff go to the left
-     * quickly.
-     */
     @FXML
-    private ImageView leftFastArrow;
+    private SMPButton leftFastArrow;
 
-    /**
-     * The left arrow that you can click to make the staff go to the right
-     * quickly.
-     */
     @FXML
-    private ImageView rightFastArrow;
+    private SMPButton rightFastArrow;
     
     @FXML
     private AnchorPane basePane;
@@ -302,6 +289,19 @@ public class SMPFXController {
             if (StateMachine.isClipboardPressed())
                 displayManager.resetSilhouette();
         });
+        
+        // dirty hack to correct arrow buttons' sizes
+        SMPButton[] arrowButtons = { leftArrow, rightArrow, leftFastArrow, rightFastArrow };
+        for (SMPButton btn : arrowButtons) {
+            btn.graphicProperty().addListener(obs -> {
+                Node graphic = btn.getGraphic();
+                if (graphic != null && graphic instanceof ImageView) {
+                    ImageView iv = (ImageView) graphic;
+                    iv.setFitHeight(24);
+                    iv.setFitWidth(24);
+                }
+            });
+        }
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -496,6 +496,26 @@ public class SMPFXController {
             StateMachine.setMode(SMPMode.SONG);
             break;
         }
+    }
+    
+    @FXML
+    public void moveLeft(ActionEvent e) {
+        staff.bumpStaff(-1);
+    }
+    
+    @FXML
+    public void moveLeftEdge(ActionEvent e) {
+        staff.bumpStaff(Integer.MIN_VALUE);
+    }
+    
+    @FXML
+    public void moveRight(ActionEvent e) {
+        staff.bumpStaff(1);
+    }
+    
+    @FXML
+    public void moveRightEdge(ActionEvent e) {
+        staff.bumpStaff(Integer.MAX_VALUE);
     }
     
     @FXML
@@ -1075,38 +1095,6 @@ public class SMPFXController {
      */
     public Slider getScrollbar() {
         return scrollbar;
-    }
-
-    /**
-     * @return The <code>ImageView</code> that holds the fast left navigation
-     *         arrow of the staff.
-     */
-    public ImageView getLeftFastArrow() {
-        return leftFastArrow;
-    }
-
-    /**
-     * @return The <code>ImageView</code> that holds the right navigation arrow
-     *         of the staff.
-     */
-    public ImageView getRightArrow() {
-        return rightArrow;
-    }
-
-    /**
-     * @return The <code>ImageView</code> that holds the left navigation arrow
-     *         of the staff.
-     */
-    public ImageView getRightFastArrow() {
-        return rightFastArrow;
-    }
-
-    /**
-     * @return The <code>ImageView</code> that holds the fast right navigation
-     *         arrow of the staff.
-     */
-    public ImageView getLeftArrow() {
-        return leftArrow;
     }
     
     public Parent getArrangerView() {

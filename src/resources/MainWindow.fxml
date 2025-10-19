@@ -367,16 +367,24 @@
                     </StackPane>
                     <HBox fx:id="scrollbarHolder" alignment="CENTER" layoutX="14.0" layoutY="88.0" prefHeight="24.0" prefWidth="994.0">
                       <children>
-                        <ImageView fx:id="leftFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT2.png" />
-                          </image>
-                        </ImageView>
-                        <ImageView fx:id="leftArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_LEFT1.png" />
-                          </image>
-                        </ImageView>
+                        <SMPButton fx:id="leftFastArrow" onAction="#moveLeftEdge" styleClass="smp-scroll-arrow-button">
+                          <imagePressed>
+                            <Image url="@sprites/SCROLLBAR_LEFT2_PRESSED.png" />
+                          </imagePressed>
+                          <imageReleased>
+                            <Image url="@sprites/SCROLLBAR_LEFT2.png" />
+                          </imageReleased>
+                        </SMPButton>
+                        
+                        <SMPButton fx:id="leftArrow" onAction="#moveLeft" styleClass="smp-scroll-arrow-button">
+                          <imagePressed>
+                            <Image url="@sprites/SCROLLBAR_LEFT1_PRESSED.png" />
+                          </imagePressed>
+                          <imageReleased>
+                            <Image url="@sprites/SCROLLBAR_LEFT1.png" />
+                          </imageReleased>
+                        </SMPButton>
+                        
                         <StackPane id="StackPane">
                           <children>
                             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="884.0">
@@ -391,16 +399,24 @@
                             </Slider>
                           </children>
                         </StackPane>
-                        <ImageView fx:id="rightArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_RIGHT1.png" />
-                          </image>
-                        </ImageView>
-                        <ImageView id="rightArrow" fx:id="rightFastArrow" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                            <Image preserveRatio="false" smooth="false" url="@sprites/SCROLLBAR_RIGHT2.png" />
-                          </image>
-                        </ImageView>
+                        
+                        <SMPButton fx:id="rightArrow" onAction="#moveRight" styleClass="smp-scroll-arrow-button">
+                          <imagePressed>
+                            <Image url="@sprites/SCROLLBAR_RIGHT1_PRESSED.png" />
+                          </imagePressed>
+                          <imageReleased>
+                            <Image url="@sprites/SCROLLBAR_RIGHT1.png" />
+                          </imageReleased>
+                        </SMPButton>
+                        
+                        <SMPButton fx:id="rightFastArrow" onAction="#moveRightEdge" styleClass="smp-scroll-arrow-button">
+                          <imagePressed>
+                            <Image url="@sprites/SCROLLBAR_RIGHT2_PRESSED.png" />
+                          </imagePressed>
+                          <imageReleased>
+                            <Image url="@sprites/SCROLLBAR_RIGHT2.png" />
+                          </imageReleased>
+                        </SMPButton>
                       </children>
                     </HBox>
                   </children>

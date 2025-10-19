@@ -11,7 +11,6 @@ module smp {
     exports gui.clipboard;
     exports gui.components;
     exports gui.components.buttons;
-    exports gui.components.buttons.elements;
     exports gui.components.staff;
     exports gui.components.toppanel;
     exports gui.loaders;
