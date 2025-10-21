@@ -345,13 +345,13 @@
                                   
                                   <VBox spacing="0">
                                     <children>
-                                      <SMPButton id="tempoPlusButton" onAction="#tempoUp" styleClass="smp-tempo-box-button">
+                                      <SMPButton id="tempoPlusButton" onHold="#tempoUp" styleClass="smp-tempo-box-button">
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_PLUS.png"/>
                                         </imageReleased>
                                       </SMPButton>
                                         
-                                      <SMPButton id="tempoMinusButton" onAction="#tempoDown" styleClass="smp-tempo-box-button">
+                                      <SMPButton id="tempoMinusButton" onHold="#tempoDown" styleClass="smp-tempo-box-button">
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_MINUS.png"/>
                                         </imageReleased>
@@ -376,7 +376,7 @@
                           </imageReleased>
                         </SMPButton>
                         
-                        <SMPButton fx:id="leftArrow" onAction="#moveLeft" styleClass="smp-scroll-arrow-button">
+                        <SMPButton fx:id="leftArrow" onHold="#moveLeft" styleClass="smp-scroll-arrow-button">
                           <imagePressed>
                             <Image url="@sprites/SCROLLBAR_LEFT1_PRESSED.png" />
                           </imagePressed>
@@ -400,7 +400,7 @@
                           </children>
                         </StackPane>
                         
-                        <SMPButton fx:id="rightArrow" onAction="#moveRight" styleClass="smp-scroll-arrow-button">
+                        <SMPButton fx:id="rightArrow" onHold="#moveRight" styleClass="smp-scroll-arrow-button">
                           <imagePressed>
                             <Image url="@sprites/SCROLLBAR_RIGHT1_PRESSED.png" />
                           </imagePressed>
