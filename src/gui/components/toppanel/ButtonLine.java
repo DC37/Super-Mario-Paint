@@ -74,7 +74,7 @@ public class ButtonLine {
      */
     public void setupButtons() {
         for (final InstrumentIndex inst : InstrumentIndex.values()) {
-            buttons.get(inst.getChannel() - 1).setOnMousePressed(
+            buttons.get(inst.ordinal()).setOnMousePressed(
                     new EventHandler<MouseEvent>() {
 
                         @Override
@@ -128,7 +128,7 @@ public class ButtonLine {
     public void updateNoteExtensions() {
         boolean[] ext = StateMachine.getNoteExtensions();
         for (InstrumentIndex inst : InstrumentIndex.values()) {
-        	changePortrait(inst, ext[inst.getChannel() - 1]);
+        	changePortrait(inst, ext[inst.ordinal()]);
         }
     }
 
@@ -140,16 +140,16 @@ public class ButtonLine {
      */
     private void toggleNoteExtension(InstrumentIndex i) {
         boolean[] ext = StateMachine.getNoteExtensions();
-        ext[i.getChannel() - 1] = !ext[i.getChannel() - 1];
+        ext[i.ordinal()] = !ext[i.ordinal()];
         StateMachine.setNoteExtensions(ext);
-        changePortrait(i, ext[i.getChannel() - 1]);
+        changePortrait(i, ext[i.ordinal()]);
         boolean[] ext2 = theStaff.getSequence().getNoteExtensions();
         ext2 = ext;
         theStaff.getSequence().setNoteExtensions(ext2);
     }
 
     private void changePortrait(InstrumentIndex inst, boolean b) {
-    	int i = inst.getChannel() - 1;
+    	int i = inst.ordinal();
         if (!b) {
         	buttons.get(i).setImage(il.getSpriteFX(inst.smImageIndex()));
         } else {
