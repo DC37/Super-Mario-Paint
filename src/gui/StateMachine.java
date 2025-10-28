@@ -27,6 +27,8 @@ import javafx.scene.input.KeyCode;
  * @since 2012.08.07
  */
 public class StateMachine {
+	
+	private static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>(InstrumentIndex.MARIO);
 
     /** This tells us whether we have modified the song or not. */
     private static boolean modifiedSong = false;
@@ -112,6 +114,18 @@ public class StateMachine {
      * @deprecated
      */
     private StateMachine() {
+    }
+    
+    public static ObjectProperty<InstrumentIndex> selectedInstrumentProperty() {
+    	return selectedInstrument;
+    }
+    
+    public static InstrumentIndex getSelectedInstrument() {
+    	return selectedInstrument.get();
+    }
+    
+    public static void setSelectedInstrument(InstrumentIndex i) {
+    	selectedInstrument.set(i);
     }
     
     public static ObjectProperty<SMPMode> modeProperty() {
