@@ -18,6 +18,7 @@ import backend.songs.StaffNote;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.clipboard.StaffClipboard;
+import gui.clipboard.StaffClipboardFilter;
 import gui.clipboard.StaffRubberBand;
 import gui.components.SongNameController;
 import gui.components.buttons.SMPButton;
@@ -180,6 +181,7 @@ public class SMPFXController {
     
     private StaffMouseEventHandler staffMouseEventHandler;
     private StaffRubberBand rubberBand;
+    private StaffClipboardFilter clipboardFilter;
     
     private ModifySongManager commandManager;
     
@@ -336,7 +338,8 @@ public class SMPFXController {
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
-        new StaffClipboard(rubberBand, staff, this, il);
+        StaffClipboard clipboard = new StaffClipboard(rubberBand, staff, this, il);
+        clipboardFilter = clipboard.getInstrumentFilter();
         
         volumeBars.mouseTransparentProperty().bind(StateMachine.clipboardPressedProperty());
         
@@ -983,6 +986,13 @@ public class SMPFXController {
                 }
 
                 break;
+                
+            case F:
+            	if (songName.focusedProperty().get())
+            		break;
+            	
+            	clipboardFilter.toggleInstrumentNoImage();
+            	break;
                 
             case R:
                 if (songName.focusedProperty().get())

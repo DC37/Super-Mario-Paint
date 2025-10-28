@@ -8,18 +8,13 @@ import gui.InstrumentIndex;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -44,30 +39,6 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 		super();
 		instrumentLine = instLine;
 		il = im;
-
-		/*
-		 * wait for the scene to get initialized then add a keyevent handler
-		 * that listens for pressing 'f' to filter. this way we can avoid coding
-		 * requestfocus logic
-		 */
-		instLine.sceneProperty().addListener(new ChangeListener<Scene>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Scene> observable, Scene oldScene, Scene newScene) {
-				if (oldScene == null && newScene != null) {
-					newScene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-						@Override
-						public void handle(KeyEvent event) {
-							if (event.getCode() == KeyCode.F) {
-								if(instInFocus != null)
-									toggleInstrumentNoImage(instInFocus);
-							}
-						}
-					});
-				}
-
-			}
-		});
 		
 		ObservableList<Node> instrumentImages = instLine.getChildren();
 		for (int i = 0; i < instrumentImages.size(); i++) {
@@ -179,6 +150,12 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 			this.remove(ind);
 			filterImages.get(index).setImage(null);
 			return false;
+		}
+	}
+	
+	public void toggleInstrumentNoImage() {
+		if (instInFocus != null) {
+			toggleInstrumentNoImage(instInFocus);
 		}
 	}
 	
