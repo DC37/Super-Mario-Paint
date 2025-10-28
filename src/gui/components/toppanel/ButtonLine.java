@@ -73,23 +73,19 @@ public class ButtonLine {
      * Initializes the buttons with event handlers.
      */
     public void setupButtons() {
-        int ind = 0;
-        for (final InstrumentIndex i : InstrumentIndex.values()) {
-            if (ind > Values.NUMINSTRUMENTS - 1) {
-                break;
-            }
-            buttons.get(i.getChannel() - 1).setOnMousePressed(
+        for (final InstrumentIndex inst : InstrumentIndex.values()) {
+            buttons.get(inst.getChannel() - 1).setOnMousePressed(
                     new EventHandler<MouseEvent>() {
 
                         @Override
                         public void handle(MouseEvent event) {
                             if (event.isShiftDown()) {
-                                toggleNoteExtension(i);
+                                toggleNoteExtension(inst);
                                 event.consume();
                             } else {
-                                playSound(i);
+                                playSound(inst);
                                 try {
-                                	StateMachine.setSelectedInstrument(i);
+                                	StateMachine.setSelectedInstrument(inst);
                                 } catch (IllegalArgumentException e) {
                                     e.printStackTrace();
                                 } catch (NullPointerException e) {
@@ -101,7 +97,6 @@ public class ButtonLine {
                         }
 
                     });
-            ind++;
         }
         try {
             chan = SoundfontLoader.getChannels();
