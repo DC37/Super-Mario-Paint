@@ -16,7 +16,6 @@ import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
-import gui.components.toppanel.ButtonLine;
 import gui.loaders.SoundfontLoader;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
@@ -78,7 +77,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 	    if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
 	        return;
     	
-        InstrumentIndex theInd = ButtonLine.getSelectedInstrument();
+        InstrumentIndex theInd = StateMachine.getSelectedInstrument();
         boolean newNote = false;
         int lineTmp = getLine(event.getX());
         int positionTmp = getPosition(event.getY());

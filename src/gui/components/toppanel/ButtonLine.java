@@ -2,13 +2,6 @@ package gui.components.toppanel;
 
 import java.util.ArrayList;
 
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-
 import javax.sound.midi.MidiChannel;
 
 import backend.songs.Note;
@@ -20,6 +13,12 @@ import gui.Values;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 
 /**
  * The line of buttons that appear for the Instrument Line at the top of the
@@ -42,16 +41,8 @@ public class ButtonLine {
      */
     private ArrayList<ImageView> buttons = new ArrayList<ImageView>();
 
-    /**
-     * The InstrumentIndex of the selected instrument. Default is Mario.
-     */
-    private static InstrumentIndex selectedInstrument = InstrumentIndex.MARIO;
-
     /** This is a list of names for the different instrument line instruments. */
     private ArrayList<String> instrumentLineImages = new ArrayList<String>();
-
-    /** The picture of the currently-selected instrument. */
-    private ImageView selectedInst;
 
     /** This is the image loader class. */
     private ImageLoader il;
@@ -72,12 +63,11 @@ public class ButtonLine {
      *            An ArrayList of ImageView references intended to be displayed
      *            as an instrument line.
      */
-    public ButtonLine(HBox instLine, ImageView selected, ImageLoader im,
+    public ButtonLine(HBox instLine, ImageLoader im,
             Staff st) {
         il = im;
         for (Node i : instLine.getChildren())
             buttons.add((ImageView) i);
-        selectedInst = selected;
         theStaff = st;
         setupButtons();
         DEFAULT_NOTE = Note.A3.getKeyNum();
@@ -112,7 +102,6 @@ public class ButtonLine {
                                 playSound(i);
                                 try {
                                 	StateMachine.setSelectedInstrument(i);
-                                    setSelectedInstrument(i);
                                 } catch (IllegalArgumentException e) {
                                     e.printStackTrace();
                                 } catch (NullPointerException e) {
@@ -195,22 +184,6 @@ public class ButtonLine {
                     il.getSpriteFX(ImageIndex.valueOf(
                             instrumentLineImages.get(i) + "_SM").alt()));
         }
-    }
-
-    /**
-     * Sets the currently selected instrument.
-     *
-     * @param i
-     *            The <code>InstrumentIndex</code> that one wants to set the
-     *            currently selected instrument by.
-     */
-    private void setSelectedInstrument(InstrumentIndex i) {
-        selectedInstrument = i;
-    }
-
-    /** @return The current selected instrument. */
-    public static InstrumentIndex getSelectedInstrument() {
-        return selectedInstrument;
     }
 
     /**

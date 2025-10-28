@@ -330,7 +330,7 @@ public class SMPFXController {
         staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
         
         // Set up top line.
-        instBLine = new ButtonLine(instLine, selectedInst, il, staff);
+        instBLine = new ButtonLine(instLine, il, staff);
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
         	InstrumentIndex i = StateMachine.getSelectedInstrument();
