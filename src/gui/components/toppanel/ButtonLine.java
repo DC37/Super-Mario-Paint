@@ -5,17 +5,14 @@ import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 
 import gui.InstrumentIndex;
-import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 /**
@@ -38,103 +35,50 @@ public class ButtonLine {
     private ImageLoader il;
 
     /**
-     * The MidiChannel array objects that will be holding references for
-     * sound-playing capabilities.
-     */
-    private MidiChannel[] chan;
-
-    /** This is the staff that we are editing. */
-    private Staff theStaff;
-
-    /**
      * Initializes the ImageView ArrayList.
      *
      * @param i
      *            An ArrayList of ImageView references intended to be displayed
      *            as an instrument line.
      */
-    public ButtonLine(HBox instLine, ImageLoader im,
-            Staff st) {
+    public ButtonLine(HBox instLine, ImageLoader im, Staff st) {
         il = im;
         for (Node i : instLine.getChildren())
             buttons.add((ImageView) i);
-        theStaff = st;
-        setupButtons();
-    }
-
-    /**
-     * Initializes the buttons with event handlers.
-     */
-    public void setupButtons() {
+        
+        // /!\ Assuming the order of instruments in fxml matches the order in InstrumentIndex
         for (final InstrumentIndex inst : InstrumentIndex.values()) {
-            buttons.get(inst.ordinal()).setOnMousePressed(
-                    new EventHandler<MouseEvent>() {
-
-                        @Override
-                        public void handle(MouseEvent event) {
-                            if (event.isShiftDown()) {
-                                toggleNoteExtension(inst);
-                                event.consume();
-                            } else {
-                                playSound(inst);
-                                try {
-                                	StateMachine.setSelectedInstrument(inst);
-                                } catch (IllegalArgumentException e) {
-                                    e.printStackTrace();
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    event.consume();
-                                }
-                            }
-                        }
-
-                    });
-        }
-        try {
-            chan = SoundfontLoader.getChannels();
-        } catch (NullPointerException e) {
-            System.err.println("Unable to load soundfont channels.");
-            System.exit(1);
+            buttons.get(inst.ordinal()).setOnMousePressed(event -> {
+                if (event.isShiftDown()) {
+                    toggleNoteExtension(inst);
+                    st.getSequence().setNoteExtensions(StateMachine.getNoteExtensions());
+                    
+                } else {
+                    playSound(inst);
+                    StateMachine.setSelectedInstrument(inst);
+                }
+            });
         }
     }
 
-    /**
-     * Plays the default "A" sound when selecting an instrument.
-     *
-     * @param i
-     *            The InstrumentIndex for the instrument
-     */
     public void playSound(InstrumentIndex i) {
         int ind = i.getChannel() - 1;
+        MidiChannel[] chan = SoundfontLoader.getChannels();
         if (chan[ind] != null) {
             chan[ind].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
-            if ((Settings.debug & 0b10) != 0)
-                System.out.println("Channel " + (ind + 1) + " Instrument: "
-                        + i.name());
         }
     }
 
-    /**
-     * Updates the note extensions display at the instrument selection line.
-     */
     public void updateNoteExtensions() {
         for (InstrumentIndex inst : InstrumentIndex.values()) {
         	changePortrait(inst);
         }
     }
 
-    /**
-     * Sets the selected instrument to extend mode.
-     *
-     * @param i
-     *            The instrument that we are trying to set to extend.
-     */
     private void toggleNoteExtension(InstrumentIndex i) {
         boolean b = StateMachine.getNoteExtension(i.ordinal());
         StateMachine.setNoteExtension(i.ordinal(), !b);
         changePortrait(i);
-        theStaff.getSequence().setNoteExtensions(StateMachine.getNoteExtensions());
     }
 
     private void changePortrait(InstrumentIndex inst) {
