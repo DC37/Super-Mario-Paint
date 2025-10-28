@@ -10,7 +10,6 @@ import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
-import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
 import javafx.collections.ObservableList;
@@ -40,9 +39,6 @@ public class ButtonLine {
      * An ArrayList of ImageView objects being used as buttons.
      */
     private ArrayList<ImageView> buttons = new ArrayList<ImageView>();
-
-    /** This is a list of names for the different instrument line instruments. */
-    private ArrayList<String> instrumentLineImages = new ArrayList<String>();
 
     /** This is the image loader class. */
     private ImageLoader il;
@@ -89,7 +85,6 @@ public class ButtonLine {
             if (ind > Values.NUMINSTRUMENTS - 1) {
                 break;
             }
-            instrumentLineImages.add(i.toString());
             buttons.get(i.getChannel() - 1).setOnMousePressed(
                     new EventHandler<MouseEvent>() {
 
@@ -144,8 +139,8 @@ public class ButtonLine {
      */
     public void updateNoteExtensions() {
         boolean[] ext = StateMachine.getNoteExtensions();
-        for (int j = 0; j < Values.NUMINSTRUMENTS; j++) {
-                changePortrait(j, ext[j]);
+        for (InstrumentIndex inst : InstrumentIndex.values()) {
+        	changePortrait(inst, ext[inst.getChannel() - 1]);
         }
     }
 
@@ -159,30 +154,18 @@ public class ButtonLine {
         boolean[] ext = StateMachine.getNoteExtensions();
         ext[i.getChannel() - 1] = !ext[i.getChannel() - 1];
         StateMachine.setNoteExtensions(ext);
-        changePortrait(i.getChannel() - 1, ext[i.getChannel() - 1]);
+        changePortrait(i, ext[i.getChannel() - 1]);
         boolean[] ext2 = theStaff.getSequence().getNoteExtensions();
         ext2 = ext;
         theStaff.getSequence().setNoteExtensions(ext2);
     }
 
-    /**
-     * Toggles the portrait display of the instrument index.
-     *
-     * @param i
-     *            The index at which we want to modify.
-     * @param b
-     *            If we want note extensions, the box will be of a different
-     *            color.
-     */
-    private void changePortrait(int i, boolean b) {
+    private void changePortrait(InstrumentIndex inst, boolean b) {
+    	int i = inst.getChannel() - 1;
         if (!b) {
-            buttons.get(i).setImage(
-                    il.getSpriteFX(ImageIndex.valueOf(instrumentLineImages
-                            .get(i) + "_SM")));
+        	buttons.get(i).setImage(il.getSpriteFX(inst.smImageIndex()));
         } else {
-            buttons.get(i).setImage(
-                    il.getSpriteFX(ImageIndex.valueOf(
-                            instrumentLineImages.get(i) + "_SM").alt()));
+        	buttons.get(i).setImage(il.getSpriteFX(inst.smaImageIndex()));
         }
     }
 
