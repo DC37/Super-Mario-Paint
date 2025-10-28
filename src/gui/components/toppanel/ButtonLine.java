@@ -111,9 +111,7 @@ public class ButtonLine {
                             } else {
                                 playSound(i);
                                 try {
-                                    selectedInst.setImage(il
-                                            .getSpriteFX(ImageIndex.valueOf(i
-                                                    .toString())));
+                                	StateMachine.setSelectedInstrument(i);
                                     setSelectedInstrument(i);
                                 } catch (IllegalArgumentException e) {
                                     e.printStackTrace();

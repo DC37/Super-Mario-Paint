@@ -331,7 +331,11 @@ public class SMPFXController {
         
         // Set up top line.
         instBLine = new ButtonLine(instLine, selectedInst, il, staff);
-        selectedInst.setImage(il.getSpriteFX(ImageIndex.MARIO));
+        
+        selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
+        	InstrumentIndex i = StateMachine.getSelectedInstrument();
+        	return il.getSpriteFX(ImageIndex.valueOf(i.toString()));
+        }, StateMachine.selectedInstrumentProperty()));
 
         arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
