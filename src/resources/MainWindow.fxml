@@ -524,12 +524,12 @@
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/COIN_SM.png" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/PIRANHA_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image preserveRatio="false" smooth="false" url="@sprites/PIRANHA_SM.png" />
+                    <Image preserveRatio="false" smooth="false" url="@sprites/COIN_SM.png" />
                   </image>
                 </ImageView>
                 <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">

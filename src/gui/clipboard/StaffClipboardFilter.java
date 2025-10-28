@@ -140,7 +140,7 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 	 * @return true if it now contains ind, false if it doesn't
 	 */
 	public boolean toggleInstrumentNoImage(InstrumentIndex ind) {
-		int index = instToIndex(ind);
+		int index = ind.ordinal();
 		if(!this.contains(ind)){
 			this.add(ind);
 			filterImages.get(index).setImage(il.getSpriteFX(ImageIndex.FILTER));
@@ -158,33 +158,8 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 			toggleInstrumentNoImage(instInFocus);
 		}
 	}
-	
-	/**
-	 * switch COIN and PIRANHA
-	 * @param ind
-	 * @return
-	 */
-	private int instToIndex(InstrumentIndex ind) {
-		switch(ind.imageIndex()) {
-		case COIN:
-			return (ind.getChannel() - 1) + 1;
-		case PIRANHA:
-			return (ind.getChannel() - 1) - 1;
-		default:
-			return (ind.getChannel() - 1);
-		}
-	}
 
-	/**
-	 * switch COIN AND PIRANHA
-	 * @param index
-	 * @return
-	 */
 	private InstrumentIndex indexToInst(int index) {
-		if(index == InstrumentIndex.COIN.ordinal())
-			return InstrumentIndex.PIRANHA;
-		if(index == InstrumentIndex.PIRANHA.ordinal())
-			return InstrumentIndex.COIN;
 		return InstrumentIndex.values()[index];
 	}
 }

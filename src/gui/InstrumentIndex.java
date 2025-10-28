@@ -9,6 +9,8 @@ import gui.loaders.ImageIndex;
  * @since 2012.08.20
  */
 public enum InstrumentIndex {
+	
+	// COIN and PIRANHA channel identifiers are swapped to match soundfont conventions
 
     MARIO       (1,  ImageIndex.MARIO,		ImageIndex.MARIO_SM, 		ImageIndex.MARIO_SMA),
     MUSHROOM    (2,  ImageIndex.MUSHROOM,	ImageIndex.MUSHROOM_SM, 	ImageIndex.MUSHROOM_SMA),
@@ -25,8 +27,8 @@ public enum InstrumentIndex {
     BOAT        (13, ImageIndex.BOAT,		ImageIndex.BOAT_SM,			ImageIndex.BOAT_SMA),
     CAR         (14, ImageIndex.CAR,		ImageIndex.CAR_SM,			ImageIndex.CAR_SMA),
     HEART       (15, ImageIndex.HEART,		ImageIndex.HEART_SM,		ImageIndex.HEART_SMA),
-    COIN        (16, ImageIndex.COIN,		ImageIndex.COIN_SM,			ImageIndex.COIN_SMA),
     PIRANHA     (17, ImageIndex.PIRANHA,	ImageIndex.PIRANHA_SM,		ImageIndex.PIRANHA_SMA),
+    COIN        (16, ImageIndex.COIN,		ImageIndex.COIN_SM,			ImageIndex.COIN_SMA),
     SHYGUY      (18, ImageIndex.SHYGUY,		ImageIndex.SHYGUY_SM,		ImageIndex.SHYGUY_SMA),
     BOO         (19, ImageIndex.BOO,		ImageIndex.BOO_SM,			ImageIndex.BOO_SMA),
     LUIGI       (20, ImageIndex.LUIGI,		ImageIndex.LUIGI_SM,		ImageIndex.LUIGI_SMA),

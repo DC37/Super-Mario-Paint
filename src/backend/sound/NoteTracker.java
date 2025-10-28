@@ -53,7 +53,8 @@ public class NoteTracker {
         boolean[] ext = StateMachine.getNoteExtensions();
 
         for (int i = 0; i < turnOff.length; i++) {
-            if (turnOff[i] && isChannelOn(i) && !ext[i]) {
+        	int j = (i == 15) ? 16 : (i == 16) ? 15 : i; // swap coin and piranha
+            if (turnOff[i] && isChannelOn(i) && !ext[j]) {
                 ArrayList<PlayingNote> pna = getNotesPlaying(i);
                 for (PlayingNote pn : pna)
                     stopSound(pn);

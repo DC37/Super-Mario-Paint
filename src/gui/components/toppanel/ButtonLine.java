@@ -12,7 +12,6 @@ import gui.Values;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -61,13 +60,6 @@ public class ButtonLine {
             buttons.add((ImageView) i);
         theStaff = st;
         setupButtons();
-        /*
-         * For some reason, the piranha and coin are flipped in all soundfonts.
-         * The solution here is unfortunately to just flip the images.
-         */
-        ObservableList<Node> n = instLine.getChildren();
-        Node nd = n.remove(15);
-        n.add(16, nd);
     }
 
     /**
