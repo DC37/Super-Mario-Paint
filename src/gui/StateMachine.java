@@ -51,7 +51,7 @@ public class StateMachine {
 	private static BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
 
     /** The list of values denoting which notes should be extended. */
-    private static boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+    private static IntegerProperty noteExtensions = new SimpleIntegerProperty(0);
     
     /**
      * The file directory that we are currently located in. We'll start in the
@@ -315,19 +315,45 @@ public class StateMachine {
     public static boolean isClipboardPressed() {
     	return clipboardPressed.get();
     }
-
+    
+    public static IntegerProperty noteExtensionsProperty() {
+    	return noteExtensions;
+    }
+    
     /**
-     * @param set The note extensions that we want to set.
+     * Set specific bit
+     * @param idx index of the bit to modify, is in interval [0, 31]
+     * @param b value to set
      */
-    public static void setNoteExtensions(boolean[] set) {
-        noteExtensions = set;
+    public static void setNoteExtension(int idx, boolean b) {
+    	int v = noteExtensions.get();
+    	int m = 1 << idx;
+    	v = b ? v | m : v & (~m);
+    	noteExtensions.set(v);
     }
 
+    public static void setNoteExtensions(boolean[] set) {
+    	for (int i = 0; i < set.length; i++) {
+    		setNoteExtension(i, set[i]);
+    	}
+    }
+    
     /**
-     * @return A list of notes that we want to act like the coin.
+     * Get specific bit
+     * @param idx index of the bit to read, is in interval [0, 31]
      */
+    public static boolean getNoteExtension(int idx) {
+    	int m = 1 << idx;
+    	int v = noteExtensions.get();
+    	return (v & m) != 0;
+    }
+
     public static boolean[] getNoteExtensions() {
-        return noteExtensions;
+    	boolean[] ret = new boolean[32];
+    	for (int i = 0; i < 32; i++) {
+    		ret[i] = getNoteExtension(i);
+    	}
+    	return ret;
     }
 
     /**
