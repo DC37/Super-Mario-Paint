@@ -9,6 +9,7 @@ import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
+import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
 import javafx.collections.ObservableList;
@@ -126,9 +127,8 @@ public class ButtonLine {
      * Updates the note extensions display at the instrument selection line.
      */
     public void updateNoteExtensions() {
-        boolean[] ext = StateMachine.getNoteExtensions();
         for (InstrumentIndex inst : InstrumentIndex.values()) {
-        	changePortrait(inst, ext[inst.ordinal()]);
+        	changePortrait(inst);
         }
     }
 
@@ -139,22 +139,16 @@ public class ButtonLine {
      *            The instrument that we are trying to set to extend.
      */
     private void toggleNoteExtension(InstrumentIndex i) {
-        boolean[] ext = StateMachine.getNoteExtensions();
-        ext[i.ordinal()] = !ext[i.ordinal()];
-        StateMachine.setNoteExtensions(ext);
-        changePortrait(i, ext[i.ordinal()]);
-        boolean[] ext2 = theStaff.getSequence().getNoteExtensions();
-        ext2 = ext;
-        theStaff.getSequence().setNoteExtensions(ext2);
+        boolean b = StateMachine.getNoteExtension(i.ordinal());
+        StateMachine.setNoteExtension(i.ordinal(), !b);
+        changePortrait(i);
+        theStaff.getSequence().setNoteExtensions(StateMachine.getNoteExtensions());
     }
 
-    private void changePortrait(InstrumentIndex inst, boolean b) {
+    private void changePortrait(InstrumentIndex inst) {
     	int i = inst.ordinal();
-        if (!b) {
-        	buttons.get(i).setImage(il.getSpriteFX(inst.smImageIndex()));
-        } else {
-        	buttons.get(i).setImage(il.getSpriteFX(inst.smaImageIndex()));
-        }
+    	ImageIndex image = (StateMachine.getNoteExtension(i)) ? inst.smaImageIndex() : inst.smImageIndex();
+    	buttons.get(i).setImage(il.getSpriteFX(image));
     }
 
 }
