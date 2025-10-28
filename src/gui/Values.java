@@ -92,6 +92,9 @@ public class Values {
 
     /** The default speed. */
     public static int DEFAULT_TEMPO = 400;
+    
+    /** Pitch to play when an instrument is selected */
+    public static int DEFAULT_NOTE = Note.A3.getKeyNum();
 
     /**
      * The amount of time the mouse must be held before we start repeating

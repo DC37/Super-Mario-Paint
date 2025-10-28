@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.sound.midi.MidiChannel;
 
-import backend.songs.Note;
 import gui.InstrumentIndex;
 import gui.Settings;
 import gui.Staff;
@@ -29,11 +28,6 @@ import javafx.scene.layout.HBox;
  * @since 2012.08.21
  */
 public class ButtonLine {
-
-    /**
-     * The default note number.
-     */
-    private static int DEFAULT_NOTE;
 
     /**
      * An ArrayList of ImageView objects being used as buttons.
@@ -66,7 +60,6 @@ public class ButtonLine {
             buttons.add((ImageView) i);
         theStaff = st;
         setupButtons();
-        DEFAULT_NOTE = Note.A3.getKeyNum();
         /*
          * For some reason, the piranha and coin are flipped in all soundfonts.
          * The solution here is unfortunately to just flip the images.
@@ -127,7 +120,7 @@ public class ButtonLine {
     public void playSound(InstrumentIndex i) {
         int ind = i.getChannel() - 1;
         if (chan[ind] != null) {
-            chan[ind].noteOn(DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
+            chan[ind].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
             if ((Settings.debug & 0b10) != 0)
                 System.out.println("Channel " + (ind + 1) + " Instrument: "
                         + i.name());
@@ -167,15 +160,6 @@ public class ButtonLine {
         } else {
         	buttons.get(i).setImage(il.getSpriteFX(inst.smaImageIndex()));
         }
-    }
-
-    /**
-     * @param n
-     *            The Note that all of the InstrumentLine instruments will play
-     *            when clicked on.
-     */
-    public void setDefaultNote(Note n) {
-        DEFAULT_NOTE = n.getKeyNum();
     }
 
 }
