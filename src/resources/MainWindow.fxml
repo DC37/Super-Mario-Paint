@@ -345,17 +345,17 @@
                                   
                                   <VBox spacing="0">
                                     <children>
-                                      <SMPButton id="tempoPlusButton" onHold="#tempoUp" styleClass="smp-tempo-box-button">
+                                      <SMPHoldButton id="tempoPlusButton" onHold="#tempoUp" styleClass="smp-tempo-box-button">
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_PLUS.png"/>
                                         </imageReleased>
-                                      </SMPButton>
+                                      </SMPHoldButton>
                                         
-                                      <SMPButton id="tempoMinusButton" onHold="#tempoDown" styleClass="smp-tempo-box-button">
+                                      <SMPHoldButton id="tempoMinusButton" onHold="#tempoDown" styleClass="smp-tempo-box-button">
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_MINUS.png"/>
                                         </imageReleased>
-                                      </SMPButton>
+                                      </SMPHoldButton>
                                     </children>
                                   </VBox>
                                 </children>
@@ -376,14 +376,14 @@
                           </imageReleased>
                         </SMPButton>
                         
-                        <SMPButton fx:id="leftArrow" onHold="#moveLeft" styleClass="smp-scroll-arrow-button">
+                        <SMPHoldButton fx:id="leftArrow" onHold="#moveLeft" styleClass="smp-scroll-arrow-button">
                           <imagePressed>
                             <Image url="@sprites/SCROLLBAR_LEFT1_PRESSED.png" />
                           </imagePressed>
                           <imageReleased>
                             <Image url="@sprites/SCROLLBAR_LEFT1.png" />
                           </imageReleased>
-                        </SMPButton>
+                        </SMPHoldButton>
                         
                         <StackPane id="StackPane">
                           <children>
@@ -400,14 +400,14 @@
                           </children>
                         </StackPane>
                         
-                        <SMPButton fx:id="rightArrow" onHold="#moveRight" styleClass="smp-scroll-arrow-button">
+                        <SMPHoldButton fx:id="rightArrow" onHold="#moveRight" styleClass="smp-scroll-arrow-button">
                           <imagePressed>
                             <Image url="@sprites/SCROLLBAR_RIGHT1_PRESSED.png" />
                           </imagePressed>
                           <imageReleased>
                             <Image url="@sprites/SCROLLBAR_RIGHT1.png" />
                           </imageReleased>
-                        </SMPButton>
+                        </SMPHoldButton>
                         
                         <SMPButton fx:id="rightFastArrow" onAction="#moveRightEdge" styleClass="smp-scroll-arrow-button">
                           <imagePressed>
