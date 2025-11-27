@@ -112,5 +112,6 @@ public interface SMPButtonInterface {
     public static Image DEFAULT_IMAGE_PRESSED = new Image(SMPButtonInterface.class.getResourceAsStream("/resources/GENERIC_BUTTON_PRESSED.png"));
     
     public static String STYLE_CLASS_IMAGE_BUTTON = "smp-button";
+    public static String STYLE_CLASS_IMAGE_INSTRUMENT_BUTTON = "smp-instrument-button";
 
 }
