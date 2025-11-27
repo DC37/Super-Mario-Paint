@@ -333,11 +333,6 @@ public class SMPFXController {
         populateInstrumentButtons(instLine);
         instBLine = new ButtonLine(instLine, staff);
         
-        StateMachine.noteExtensionsProperty().addListener(obs -> {
-        	for (InstrumentIndex inst : InstrumentIndex.values())
-        		instBLine.updatePortraitSustain(inst, il);
-        });
-        
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
         	InstrumentIndex i = StateMachine.getSelectedInstrument();
         	return il.getSpriteFX(ImageIndex.valueOf(i.toString()));
@@ -435,6 +430,9 @@ public class SMPFXController {
     }
     
     private void populateInstrumentButtons(Pane n) {
+    	ImageView[] vs = new ImageView[InstrumentIndex.values().length];
+    	n.getChildren().clear();
+    	
     	for (InstrumentIndex inst : InstrumentIndex.values()) {
     		ImageView b = new ImageView(il.getSpriteFX(inst.smImageIndex()));
     		b.setFitHeight(28);
@@ -442,8 +440,16 @@ public class SMPFXController {
     		b.setPreserveRatio(true);
     		b.setSmooth(false);
     		
+    		vs[inst.ordinal()] = b;
         	n.getChildren().add(b);
     	}
+        
+        StateMachine.noteExtensionsProperty().addListener(obs -> {
+        	for (InstrumentIndex inst : InstrumentIndex.values()) {
+        		ImageIndex image = StateMachine.getNoteExtension(inst.ordinal()) ? inst.smaImageIndex() : inst.smImageIndex();
+        		vs[inst.ordinal()].setImage(il.getSpriteFX(image));
+        	}
+        });
     }
     
     public void play(ActionEvent e) {

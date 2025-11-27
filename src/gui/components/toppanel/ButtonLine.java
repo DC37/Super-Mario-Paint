@@ -8,8 +8,6 @@ import gui.InstrumentIndex;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
-import gui.loaders.ImageIndex;
-import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -68,12 +66,6 @@ public class ButtonLine {
     private void toggleNoteExtension(InstrumentIndex i) {
         boolean b = StateMachine.getNoteExtension(i.ordinal());
         StateMachine.setNoteExtension(i.ordinal(), !b);
-    }
-
-    public void updatePortraitSustain(InstrumentIndex inst, ImageLoader il) {
-    	int i = inst.ordinal();
-    	ImageIndex image = (StateMachine.getNoteExtension(i)) ? inst.smaImageIndex() : inst.smImageIndex();
-    	buttons.get(i).setImage(il.getSpriteFX(image));
     }
 
 }
