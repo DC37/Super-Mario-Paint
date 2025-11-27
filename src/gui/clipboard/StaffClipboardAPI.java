@@ -350,6 +350,7 @@ public class StaffClipboardAPI {
 				for(StaffNote note : line.getNotes())
 					highlightNote(note, false);
 		}
+		theStaff.redraw();
 	}
 	
 	public void selectVolumesToggle(boolean selectVolumes) {
