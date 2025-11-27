@@ -330,6 +330,7 @@ public class SMPFXController {
         staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
         
         // Set up top line.
+        populateInstrumentButtons(instLine);
         instBLine = new ButtonLine(instLine, staff);
         
         StateMachine.noteExtensionsProperty().addListener(obs -> {
@@ -431,6 +432,18 @@ public class SMPFXController {
             }
         });
         
+    }
+    
+    private void populateInstrumentButtons(Pane n) {
+    	for (InstrumentIndex inst : InstrumentIndex.values()) {
+    		ImageView b = new ImageView(il.getSpriteFX(inst.smImageIndex()));
+    		b.setFitHeight(28);
+    		b.setFitWidth(26);
+    		b.setPreserveRatio(true);
+    		b.setSmooth(false);
+    		
+        	n.getChildren().add(b);
+    	}
     }
     
     public void play(ActionEvent e) {
