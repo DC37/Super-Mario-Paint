@@ -10,6 +10,8 @@ import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.sound.midi.MidiChannel;
+
 import backend.editing.ModifySongManager;
 import backend.saving.mpc.MPCDecoder;
 import backend.songs.Accidental;
@@ -26,7 +28,6 @@ import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
-import gui.components.toppanel.ButtonLine;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SoundfontLoader;
@@ -78,12 +79,6 @@ public class SMPFXController {
      */
     @FXML
     private HBox instLine;
-
-    /**
-     * The line of buttons that corresponds with the line of images at the top
-     * of the frame.
-     */
-    private ButtonLine instBLine;
 
     /**
      * The staff that notes, measure lines, and sprites will be placed on.
@@ -331,7 +326,6 @@ public class SMPFXController {
         
         // Set up top line.
         populateInstrumentButtons(instLine);
-        instBLine = new ButtonLine(instLine, staff);
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
         	InstrumentIndex i = StateMachine.getSelectedInstrument();
@@ -439,6 +433,21 @@ public class SMPFXController {
     		b.setFitWidth(26);
     		b.setPreserveRatio(true);
     		b.setSmooth(false);
+    		
+    		b.setOnMousePressed(e -> {
+    			if (e.isShiftDown()) {
+    		        boolean ex = StateMachine.getNoteExtension(inst.ordinal());
+    		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
+    		        
+    			} else {
+    		        MidiChannel[] chan = SoundfontLoader.getChannels();
+    		        if (chan[inst.getChannel() - 1] != null) {
+    		            chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
+    		        }
+    		        
+    		        StateMachine.setSelectedInstrument(inst);
+    			}
+    		});
     		
     		vs[inst.ordinal()] = b;
         	n.getChildren().add(b);
@@ -1138,11 +1147,6 @@ public class SMPFXController {
     /** @return The HBox that holds the volume bars. */
     public HBox getVolumeBars() {
         return volumeBars;
-    }
-
-    /** @return The instrument button line. */
-    public ButtonLine getInstBLine() {
-        return instBLine;
     }
 
     public void setImageLoader(ImageLoader imgLoader) {
