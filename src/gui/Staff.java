@@ -687,7 +687,6 @@ public class Staff {
                     index = 0;
                     advance = false;
                     theSequenceFile = files.get(i);
-                    controller.getInstBLine().updateNoteExtensions();
                     songPlaying = true;
 
                     resetLocation();

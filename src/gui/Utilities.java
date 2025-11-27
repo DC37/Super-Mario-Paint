@@ -402,7 +402,6 @@ public class Utilities {
         }
         StateMachine.setCurrentSongName(fname);
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
-        controller.getInstBLine().updateNoteExtensions();
         
         try {
 			controller.getSoundfontLoader().loadFromAppData(theStaff.getSequence().getSoundset());
@@ -521,7 +520,6 @@ public class Utilities {
         boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);
         StateMachine.setNoteExtensions(j);
-        controller.getInstBLine().updateNoteExtensions();
 
         try {
             if (mpc)

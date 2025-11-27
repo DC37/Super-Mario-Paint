@@ -330,7 +330,12 @@ public class SMPFXController {
         staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
         
         // Set up top line.
-        instBLine = new ButtonLine(instLine, il, staff);
+        instBLine = new ButtonLine(instLine, staff);
+        
+        StateMachine.noteExtensionsProperty().addListener(obs -> {
+        	for (InstrumentIndex inst : InstrumentIndex.values())
+        		instBLine.updatePortraitSustain(inst, il);
+        });
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
         	InstrumentIndex i = StateMachine.getSelectedInstrument();
@@ -823,7 +828,6 @@ public class SMPFXController {
             String fname = Utilities.populateStaff(loaded, inputFile, false, staff, this);
             getNameTextField().setText(fname);
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
-            getInstBLine().updateNoteExtensions();
             StateMachine.setSongModified(false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

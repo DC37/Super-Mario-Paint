@@ -31,9 +31,6 @@ public class ButtonLine {
      */
     private ArrayList<ImageView> buttons = new ArrayList<ImageView>();
 
-    /** This is the image loader class. */
-    private ImageLoader il;
-
     /**
      * Initializes the ImageView ArrayList.
      *
@@ -41,8 +38,7 @@ public class ButtonLine {
      *            An ArrayList of ImageView references intended to be displayed
      *            as an instrument line.
      */
-    public ButtonLine(HBox instLine, ImageLoader im, Staff st) {
-        il = im;
+    public ButtonLine(HBox instLine, Staff st) {
         for (Node i : instLine.getChildren())
             buttons.add((ImageView) i);
         
@@ -69,19 +65,12 @@ public class ButtonLine {
         }
     }
 
-    public void updateNoteExtensions() {
-        for (InstrumentIndex inst : InstrumentIndex.values()) {
-        	changePortrait(inst);
-        }
-    }
-
     private void toggleNoteExtension(InstrumentIndex i) {
         boolean b = StateMachine.getNoteExtension(i.ordinal());
         StateMachine.setNoteExtension(i.ordinal(), !b);
-        changePortrait(i);
     }
 
-    private void changePortrait(InstrumentIndex inst) {
+    public void updatePortraitSustain(InstrumentIndex inst, ImageLoader il) {
     	int i = inst.ordinal();
     	ImageIndex image = (StateMachine.getNoteExtension(i)) ? inst.smaImageIndex() : inst.smImageIndex();
     	buttons.get(i).setImage(il.getSpriteFX(image));
