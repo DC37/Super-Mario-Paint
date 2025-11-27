@@ -61,7 +61,7 @@ public class ButtonLine {
         }
     }
 
-    public void playSound(InstrumentIndex i) {
+    private void playSound(InstrumentIndex i) {
         int ind = i.getChannel() - 1;
         MidiChannel[] chan = SoundfontLoader.getChannels();
         if (chan[ind] != null) {
