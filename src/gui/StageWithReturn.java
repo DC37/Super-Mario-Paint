@@ -14,9 +14,9 @@ public class StageWithReturn<T> extends Stage {
     
     protected T returnValue;
     
-    public T showAndReturn() {
+    public T showAndReturn(T def) {
         super.showAndWait();
-        return returnValue;
+        return (returnValue == null) ? def : returnValue;
     }
 
 }

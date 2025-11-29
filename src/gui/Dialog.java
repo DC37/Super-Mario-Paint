@@ -76,7 +76,7 @@ public class Dialog {
         
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
-        dialog.showAndReturn();
+        dialog.showAndReturn(null);
 
     }
     
@@ -131,7 +131,7 @@ public class Dialog {
         
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
-        return dialog.showAndReturn();
+        return dialog.showAndReturn(false);
     }
     
     public static boolean showYesNoDialog(String txt) {
@@ -187,7 +187,7 @@ public class Dialog {
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
         okButton.requestFocus(); // little trick to always display prompt
-        return dialog.showAndReturn();
+        return dialog.showAndReturn("");
     }
     
     public static String showTextDialog(String txt) {
