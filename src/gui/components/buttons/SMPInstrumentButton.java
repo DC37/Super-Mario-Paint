@@ -1,9 +1,19 @@
 package gui.components.buttons;
 
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
+import javafx.scene.Node;
+import javafx.scene.control.Skin;
+import javafx.scene.control.skin.ButtonSkin;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
+import javafx.util.Subscription;
 
 public class SMPInstrumentButton extends SMPButton {
 	
@@ -32,6 +42,32 @@ public class SMPInstrumentButton extends SMPButton {
 	}
 	public boolean isSustainOn() { return sustainOn().getValue(); }
 	public void setSustainOn(boolean b) { sustainOn().setValue(b); }
+
+    /**
+     * The image for the regular (released) state
+     */
+    private ObjectProperty<Image> imageSustainOff;
+    public ObjectProperty<Image> imageSustainOff() {
+        if (imageSustainOff == null) {
+            imageSustainOff = new SimpleObjectProperty<Image>(this, "imageSustainOff", null);
+        }
+        return imageSustainOff;
+    }
+    public Image getImageSustainOff() { return imageSustainOff().getValue(); }
+    public void setImageSustainOff(Image imageSustainOff) { imageSustainOff().setValue(imageSustainOff); }
+
+    /**
+     * The image for the <i>sustain</i> (released) state
+     */
+    private ObjectProperty<Image> imageSustainOn;
+    public ObjectProperty<Image> imageSustainOn() {
+        if (imageSustainOn == null) {
+            imageSustainOn = new SimpleObjectProperty<Image>(this, "imageSustainOn", null);
+        }
+        return imageSustainOn;
+    }
+    public Image getImageSustainOn() { return imagePressed().getValue(); }
+    public void setImageSustainOn(Image imageSustainOn) { imagePressed().setValue(imageSustainOn); }
 	
 	public SMPInstrumentButton() {
 		super();
@@ -43,8 +79,10 @@ public class SMPInstrumentButton extends SMPButton {
 		initialize();
 	}
     
-    public SMPInstrumentButton(String text, Image imageReleased) {
-        super(text, imageReleased);
+    public SMPInstrumentButton(String text, Image imageSustainOff, Image imageSustainOn) {
+        super(text);
+        setImageSustainOff(imageSustainOff);
+        setImageSustainOn(imageSustainOn);
         initialize();
     }
     
@@ -57,5 +95,51 @@ public class SMPInstrumentButton extends SMPButton {
     
     private static final PseudoClass SUSTAINED_PSEUDO_CLASS = PseudoClass.getPseudoClass("sustained");
     private static final PseudoClass FILTERED_PSEUDO_CLASS = PseudoClass.getPseudoClass("filtered");
+    
+    @Override
+    protected Skin<?> createDefaultSkin() {
+        return new ButtonSkin(this) {
+            Subscription graphicSubscription;
+            
+            private Binding<Node> buildGraphic(ObservableValue<Node> button) {
+            	return Bindings.createObjectBinding(() -> {
+            		if (button == null || button.getValue() == null)
+            			return null;
+            		
+            		StackPane stack = new StackPane();
+            		stack.getChildren().add(button.getValue());
+            		return stack;
+            	}, button);
+            }
+            
+            private Subscription imageSustainSubscription() {
+            	imageReleased().bind(imageSustainBinding());
+            	return (() -> imageReleased().unbind());
+            }
+            
+            private Binding<Image> imageSustainBinding() {
+            	return Bindings.createObjectBinding(() -> {
+            		return (isSustainOn()) ? getImageSustainOn() : getImageSustainOff();
+            	}, sustainOn(), imageSustainOff(), imageSustainOn());
+            }
+            
+            @Override
+            public void install() {
+            	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
+            	ObservableValue<Node> graphic = buildGraphic(buttonImageView);
+            	graphicProperty().bind(graphic);
+            	
+                graphicSubscription =
+                		SMPButtonInterface.subscribeNodeProperty(SMPInstrumentButton.this, armedProperty(), buttonImageView)
+                		.and(imageSustainSubscription())
+                		.and(() -> graphicProperty().unbind());
+            }
+            
+            @Override
+            public void dispose() {
+                graphicSubscription.unsubscribe();
+            }
+        };
+    }
 
 }
