@@ -15,6 +15,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.util.Subscription;
 
+/**
+ * <p>A version of {@link SMPButton} used specifically for instrument buttons in the top panel.</p>
+ * 
+ * <p>This defines properties that record the state of the instrument (filtered, sustain on/off) and sets up
+ * a custom skin.</p>
+ */
 public class SMPInstrumentButton extends SMPButton {
 	
 	/**
