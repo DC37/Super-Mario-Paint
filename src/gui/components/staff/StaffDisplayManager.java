@@ -2,6 +2,8 @@ package gui.components.staff;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import backend.editing.ModifySongManager;
 import backend.songs.Accidental;
@@ -21,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
@@ -184,6 +187,9 @@ public class StaffDisplayManager {
      * appear on the staff. This method also sets up sharps, flats, etc.
      */
     private Node[] initializeStaffInstruments() {
+    	Map<StaffNoteCoordinate, ImageView> map = new HashMap<>();
+    	Map<StaffNoteCoordinate, ImageView> mapAcc = new HashMap<>();
+    	
         HBox staffInstruments = new HBox();
         staffInstruments.setPrefHeight(504);
         staffInstruments.setPrefWidth(982);
@@ -191,6 +197,35 @@ public class StaffDisplayManager {
         staffInstruments.setLayoutX(70);
         staffInstruments.setLayoutY(-5);
         staffInstruments.setPadding(new Insets(0, 0, 0, 113));
+        
+        for (int col = 0; col < Values.NOTELINES_IN_THE_WINDOW; col++) {
+            VBox vBox = new VBox();
+            vBox.setSpacing(-20.0);
+            vBox.setAlignment(Pos.CENTER);
+                        
+            for (int row = 0; row < Values.NOTES_IN_A_LINE; row++) {
+                StackPane stack = new StackPane();
+                stack.setDisable(true);
+                stack.setPrefHeight(36.0);
+                stack.setPrefWidth(64.0);
+                
+                for (int d = 0; d < Values.MAX_STACKABLE_NOTES; d++) {
+                    ImageView iv = makeNoteImageView();
+                    stack.getChildren().add(iv);
+                    StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, d);
+                    map.put(coord, iv);
+                }
+                
+                ImageView silIv = makeNoteImageView();
+                stack.getChildren().add(silIv);
+                StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, -1);
+                map.put(coord, silIv);
+                
+                vBox.getChildren().add(0, stack);
+            }
+            
+            staffInstruments.getChildren().add(vBox);
+        }
         
         HBox staffAccidentals = new HBox(32);
         staffAccidentals.setPrefHeight(504);
@@ -200,10 +235,60 @@ public class StaffDisplayManager {
         staffAccidentals.setLayoutY(-5);
         staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
         
-        matrix.initializeNoteDisplay(staffInstruments, staffAccidentals);
+        for (int col = 0; col < Values.NOTELINES_IN_THE_WINDOW; col++) {
+            VBox vBox = new VBox();
+            vBox.setSpacing(-20.0);
+            vBox.setAlignment(Pos.CENTER);
+            vBox.setPrefHeight(472.0);
+            vBox.setPrefWidth(32.0);
+                        
+            for (int row = 0; row < Values.NOTES_IN_A_LINE; row++) {
+                StackPane stack = new StackPane();
+                stack.setDisable(true);
+                stack.setPrefHeight(36.0);
+                stack.setPrefWidth(32.0);
+                
+                for (int d = 0; d < Values.MAX_STACKABLE_NOTES; d++) {
+                    ImageView iv = makeAccidentalImageView();
+                    stack.getChildren().add(iv);
+                    StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, d);
+                    mapAcc.put(coord, iv);
+                }
+                
+                ImageView silIv = makeAccidentalImageView();
+                stack.getChildren().add(silIv);
+                StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, -1);
+                mapAcc.put(coord, silIv);
+                
+                vBox.getChildren().add(0, stack);
+            }
+            
+            staffAccidentals.getChildren().add(vBox);
+        }
+        
+        matrix.initializeNoteDisplay(map, mapAcc);
         
         Node[] ret = { staffInstruments, staffAccidentals };
         return ret;
+    }
+    
+    private static ImageView makeNoteImageView() {
+        ImageView iv = new ImageView();
+        iv.setVisible(false);
+        iv.setManaged(false);
+        iv.setFitHeight(36);
+        iv.setFitWidth(32);
+        return iv;
+    }
+    
+    private static ImageView makeAccidentalImageView() {
+        ImageView iv = new ImageView();
+        iv.setVisible(false);
+        iv.setManaged(false);
+        iv.setFitHeight(32);
+        iv.setFitWidth(32);
+        iv.setTranslateX(-18);
+        return iv;
     }
     
     public void updateNoteDisplay(StaffSequence seq, int currLine) {
@@ -460,6 +545,38 @@ public class StaffDisplayManager {
         
         playbars[position].setVisible(true);
         activePlaybar = position;
+    }
+    
+    /**
+     * Immutable object providing the representation for a coordinate on the staff: column, row, and depth
+     * For given maximum values of row and depth, we provide converters to and from int.
+     */
+    protected static class StaffNoteCoordinate {
+    	
+    	final public int col;
+    	final public int row;
+    	final public int dep; // special value -1 refers to the layer for silhouettes (dep is irrelevant)
+    	
+    	public StaffNoteCoordinate(int col, int row, int dep) {
+    		this.col = col;
+    		this.row = row;
+    		this.dep = dep;
+    	}
+    	
+    	public StaffNoteCoordinate(StaffNoteCoordinate oth) {
+    		this.col = oth.col;
+    		this.row = oth.row;
+    		this.dep = oth.dep;
+    	}
+    	
+    	public boolean equals(StaffNoteCoordinate oth) {
+    		return this.col == oth.col && this.row == oth.row && this.dep == oth.dep;
+    	}
+    	
+    	public int lin(int maxRow, int maxDep) {
+    		return (dep == -1) ? (maxRow * col) + row : (maxDep * ((maxRow * col) + row)) + dep;
+    	}
+    	
     }
 
 }

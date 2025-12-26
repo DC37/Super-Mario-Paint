@@ -1,6 +1,8 @@
 package gui.components.staff;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import backend.songs.Accidental;
 import backend.songs.StaffAccidental;
@@ -8,15 +10,12 @@ import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import gui.clipboard.StaffClipboard;
+import gui.components.staff.StaffDisplayManager.StaffNoteCoordinate;
 import gui.loaders.ImageLoader;
-import javafx.geometry.Pos;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 /**
  * This is the matrix of notes behind the staff. We can change the size of this
@@ -39,19 +38,11 @@ public class NoteMatrix {
     final private int height;
     final private int depth;
 
-    final private ArrayList<ImageView> matrix;
-    final private ArrayList<ImageView> accMatrix;
+    final private List<ImageView> matrix;
+    final private List<ImageView> accMatrix;
     
-    private int map(int col, int row, int d) {
-        return (depth * ((height * col) + row)) + d;
-    }
-    
-    final private ArrayList<ImageView> silMatrix;
-    final private ArrayList<ImageView> accSilMatrix;
-    
-    private int silMap(int col, int row) {
-        return (height * col) + row;
-    }
+    final private List<ImageView> silMatrix;
+    final private List<ImageView> accSilMatrix;
     
     /** Pointer to the image loader object. */
     final private transient ImageLoader il;
@@ -80,101 +71,45 @@ public class NoteMatrix {
         this.width = width;
         this.height = height;
         this.depth = depth;
-        matrix = new ArrayList<ImageView>();
-        accMatrix = new ArrayList<ImageView>();
-        silMatrix = new ArrayList<ImageView>();
-        accSilMatrix = new ArrayList<ImageView>();
+        
+        int notesCapacity = width * height * depth;
+        int silCapacity = width * height;
+        
+        matrix = new Vector<ImageView>(notesCapacity);
+        accMatrix = new Vector<ImageView>(notesCapacity);
+        silMatrix = new Vector<ImageView>(silCapacity);
+        accSilMatrix = new Vector<ImageView>(silCapacity);
+        
+        ((Vector<?>) matrix).setSize(notesCapacity);
+        ((Vector<?>) accMatrix).setSize(notesCapacity);
+        ((Vector<?>) silMatrix).setSize(silCapacity);
+        ((Vector<?>) accSilMatrix).setSize(silCapacity);
+        
         currentSilhouette = null;
     }
     
-    public void initializeNoteDisplay(HBox staffInstruments, HBox staffAccidentals) {
-        initializeNotesMatrix(staffInstruments);
-        initializeAccidentalsMatrix(staffAccidentals);
-    }
-    
-    private ImageView makeNoteImageView() {
-        ImageView iv = new ImageView();
-        iv.setVisible(false);
-        iv.setManaged(false);
-        iv.setFitHeight(36);
-        iv.setFitWidth(32);
-        return iv;
-    }
-    
-    private void initializeNotesMatrix(HBox staffInstruments) {
-        matrix.clear();
-        silMatrix.clear();
+    public void initializeNoteDisplay(Map<StaffNoteCoordinate, ImageView> map, Map<StaffNoteCoordinate, ImageView> mapAcc) {        
+        for (Map.Entry<StaffNoteCoordinate, ImageView> entry : map.entrySet()) {
+        	StaffNoteCoordinate k = entry.getKey();
+        	ImageView iv = entry.getValue();
+        	
+        	if (k.dep == -1) {
+        		silMatrix.set(k.lin(height, depth), iv);
+        	} else {
+        		matrix.set(k.lin(height, depth), iv);
+        	}
+        }
         
-        for (int col = 0; col < width; col++) {
-            VBox vBox = new VBox();
-            vBox.setSpacing(-20.0);
-            vBox.setAlignment(Pos.CENTER);
-                        
-            for (int row = 0; row < height; row++) {
-                StackPane stack = new StackPane();
-                stack.setDisable(true);
-                stack.setPrefHeight(36.0);
-                stack.setPrefWidth(64.0);
-                                
-                for (int d = 0; d < depth; d++) {
-                    ImageView iv = makeNoteImageView();
-                    stack.getChildren().add(iv);
-                    matrix.add(iv);
-                }
-                
-                ImageView silIv = makeNoteImageView();
-                stack.getChildren().add(silIv);
-                silMatrix.add(silIv);
-                
-                vBox.getChildren().add(0, stack);
-            }
-            
-            staffInstruments.getChildren().add(vBox);
-        }  
-    }
-    
-    private ImageView makeAccidentalImageView() {
-        ImageView iv = new ImageView();
-        iv.setVisible(false);
-        iv.setManaged(false);
-        iv.setFitHeight(32);
-        iv.setFitWidth(32);
-        iv.setTranslateX(-18);
-        return iv;
-    }
-    
-    private void initializeAccidentalsMatrix(HBox staffAccidentals) {
-        accMatrix.clear();
-        accSilMatrix.clear();
-        
-        for (int col = 0; col < width; col++) {
-            VBox vBox = new VBox();
-            vBox.setSpacing(-20.0);
-            vBox.setAlignment(Pos.CENTER);
-            vBox.setPrefHeight(472.0);
-            vBox.setPrefWidth(32.0);
-                        
-            for (int row = 0; row < height; row++) {
-                StackPane stack = new StackPane();
-                stack.setDisable(true);
-                stack.setPrefHeight(36.0);
-                stack.setPrefWidth(32.0);
-                                
-                for (int d = 0; d < depth; d++) {
-                    ImageView iv = makeAccidentalImageView();
-                    stack.getChildren().add(iv);
-                    accMatrix.add(iv);
-                }
-                
-                ImageView silIv = makeAccidentalImageView();
-                stack.getChildren().add(silIv);
-                accSilMatrix.add(silIv);
-                
-                vBox.getChildren().add(0, stack);
-            }
-            
-            staffAccidentals.getChildren().add(vBox);
-        }     
+        for (Map.Entry<StaffNoteCoordinate, ImageView> entry : mapAcc.entrySet()) {
+        	StaffNoteCoordinate k = entry.getKey();
+        	ImageView iv = entry.getValue();
+        	
+        	if (k.dep == -1) {
+        		accSilMatrix.set(k.lin(height, depth), iv);
+        	} else {
+        		accMatrix.set(k.lin(height, depth), iv);
+        	}
+        }
     }
 
     /**
@@ -204,7 +139,7 @@ public class NoteMatrix {
             }
             
             StaffNoteLine stl = seq.getLineSafe(currentPosition + col);
-            ArrayList<StaffNote> st = stl.getNotes();
+            List<StaffNote> st = stl.getNotes();
             
             for (StaffNote s : st) {
                 int row = s.getPosition();                
@@ -213,7 +148,7 @@ public class NoteMatrix {
                 int d = stackedAmounts[row];
                 if (d < depth) {
                     stackedAmounts[row] = d + 1;
-                    ImageView iv = matrix.get(map(col, row, d));
+                    ImageView iv = matrix.get(new StaffNoteCoordinate(col, row, d).lin(height, depth));
                     iv.setImage(il.getSpriteFX(s.getImageIndex()));
                     iv.setEffect(s.isSelected() ? highlightBlend : null);
                     iv.setVisible(true);
@@ -222,7 +157,7 @@ public class NoteMatrix {
                 d = accStackedAmounts[row];
                 if (d < depth) {
                     accStackedAmounts[row] = d + 1;
-                    ImageView iv = accMatrix.get(map(col, row, d));
+                    ImageView iv = accMatrix.get(new StaffNoteCoordinate(col, row, d).lin(height, depth));
                     iv.setImage(il.getSpriteFX(accidental.getImageIndex()));
                     iv.setVisible(true);
                 }
@@ -237,10 +172,10 @@ public class NoteMatrix {
         int col = currentSilhouetteColumn;
         int row = currentSilhouette.getPosition();
         
-        silMatrix.get(silMap(col, row)).setVisible(false);
+        silMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth)).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
-            accSilMatrix.get(silMap(col, row)).setVisible(false);
+            accSilMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth)).setVisible(false);
         }
         
         currentSilhouette = null;
@@ -263,12 +198,12 @@ public class NoteMatrix {
         currentSilhouetteColumn = col;
         currentSilhouette = silhouette;
         
-        ImageView iv = silMatrix.get(silMap(col, row));
+        ImageView iv = silMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth));
         iv.setImage(il.getSpriteFX(silhouette.getImageIndex()));
         iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
-            ImageView acciv = accSilMatrix.get(silMap(col, row));
+            ImageView acciv = accSilMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth));
             StaffAccidental acc = new StaffAccidental(silhouette);
             acciv.setImage(il.getSpriteFX(acc.getImageIndex()));
             acciv.setVisible(true);
