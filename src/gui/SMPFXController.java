@@ -271,7 +271,7 @@ public class SMPFXController {
         });
         
         // Set up staff.
-        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager);
+        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         staff = new Staff(this, displayManager, arrangementList);
         displayManager.initialize();
         controlPanel = new Controls(staff, this, il, arrangementList);

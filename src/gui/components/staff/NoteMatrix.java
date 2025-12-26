@@ -34,9 +34,7 @@ import javafx.scene.image.ImageView;
  */
 public class NoteMatrix {
     
-    final private int width;
-    final private int height;
-    final private int depth;
+    final private StaffDisplayManager disp;
 
     final private List<ImageView> matrix;
     final private List<ImageView> accMatrix;
@@ -66,14 +64,12 @@ public class NoteMatrix {
                     )
             );
 
-    public NoteMatrix(ImageLoader il, int width, int height, int depth) {
+    public NoteMatrix(ImageLoader il, StaffDisplayManager disp) {
         this.il = il;
-        this.width = width;
-        this.height = height;
-        this.depth = depth;
+        this.disp = disp;
         
-        int notesCapacity = width * height * depth;
-        int silCapacity = width * height;
+        int notesCapacity = disp.width * disp.height * disp.depth;
+        int silCapacity = disp.width * disp.height;
         
         matrix = new Vector<ImageView>(notesCapacity);
         accMatrix = new Vector<ImageView>(notesCapacity);
@@ -94,9 +90,9 @@ public class NoteMatrix {
         	ImageView iv = entry.getValue();
         	
         	if (k.dep == -1) {
-        		silMatrix.set(k.lin(height, depth), iv);
+        		silMatrix.set(k.lin(), iv);
         	} else {
-        		matrix.set(k.lin(height, depth), iv);
+        		matrix.set(k.lin(), iv);
         	}
         }
         
@@ -105,9 +101,9 @@ public class NoteMatrix {
         	ImageView iv = entry.getValue();
         	
         	if (k.dep == -1) {
-        		accSilMatrix.set(k.lin(height, depth), iv);
+        		accSilMatrix.set(k.lin(), iv);
         	} else {
-        		accMatrix.set(k.lin(height, depth), iv);
+        		accMatrix.set(k.lin(), iv);
         	}
         }
     }
@@ -129,11 +125,11 @@ public class NoteMatrix {
     public void populateNoteDisplay(StaffSequence seq, int currentPosition) {
         // No order is assumed in StaffNoteLine so we keep track of how many
         // stacked notes we already treated for each row
-        int[] stackedAmounts = new int[height];
-        int[] accStackedAmounts = new int[height];
+        int[] stackedAmounts = new int[disp.height];
+        int[] accStackedAmounts = new int[disp.height];
         
-        for (int col = 0; col < width; col++) {
-            for (int row = 0; row < height; row++) {
+        for (int col = 0; col < disp.width; col++) {
+            for (int row = 0; row < disp.height; row++) {
                 stackedAmounts[row] = 0;
                 accStackedAmounts[row] = 0;
             }
@@ -146,18 +142,18 @@ public class NoteMatrix {
                 StaffAccidental accidental = new StaffAccidental(s);
                 
                 int d = stackedAmounts[row];
-                if (d < depth) {
+                if (d < disp.depth) {
                     stackedAmounts[row] = d + 1;
-                    ImageView iv = matrix.get(new StaffNoteCoordinate(col, row, d).lin(height, depth));
+                    ImageView iv = matrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
                     iv.setImage(il.getSpriteFX(s.getImageIndex()));
                     iv.setEffect(s.isSelected() ? highlightBlend : null);
                     iv.setVisible(true);
                 }
                 
                 d = accStackedAmounts[row];
-                if (d < depth) {
+                if (d < disp.depth) {
                     accStackedAmounts[row] = d + 1;
-                    ImageView iv = accMatrix.get(new StaffNoteCoordinate(col, row, d).lin(height, depth));
+                    ImageView iv = accMatrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
                     iv.setImage(il.getSpriteFX(accidental.getImageIndex()));
                     iv.setVisible(true);
                 }
@@ -172,10 +168,10 @@ public class NoteMatrix {
         int col = currentSilhouetteColumn;
         int row = currentSilhouette.getPosition();
         
-        silMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth)).setVisible(false);
+        silMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin()).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
-            accSilMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth)).setVisible(false);
+            accSilMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin()).setVisible(false);
         }
         
         currentSilhouette = null;
@@ -198,12 +194,12 @@ public class NoteMatrix {
         currentSilhouetteColumn = col;
         currentSilhouette = silhouette;
         
-        ImageView iv = silMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth));
+        ImageView iv = silMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
         iv.setImage(il.getSpriteFX(silhouette.getImageIndex()));
         iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
-            ImageView acciv = accSilMatrix.get(new StaffNoteCoordinate(col, row, -1).lin(height, depth));
+            ImageView acciv = accSilMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
             StaffAccidental acc = new StaffAccidental(silhouette);
             acciv.setImage(il.getSpriteFX(acc.getImageIndex()));
             acciv.setVisible(true);

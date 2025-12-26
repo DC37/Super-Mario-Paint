@@ -46,7 +46,11 @@ public class StaffDisplayManager {
     final private NoteMatrix matrix;
     
     final private ModifySongManager commandManager;
-
+    
+    final protected int width;
+    final protected int height;
+    final protected int depth;
+    
     /**
      * The ArrayList that holds the ImageView objects that the measure lines
      * object holds.
@@ -80,19 +84,26 @@ public class StaffDisplayManager {
     /** This is the list of volume bar handlers on the staff. */
     private ArrayList<StaffVolumeEventHandler> volumeBarHandlers;
     
-    private Node[] playbars = new Node[Values.NOTELINES_IN_THE_WINDOW];
-    private int activePlaybar = -1;
+    private Node[] playbars;
+    private int activePlaybar;
 
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffDisplayManager(Pane staffFrame, ImageLoader il, HBox staffVolumeBars, ModifySongManager commandManager) {
+    public StaffDisplayManager(Pane staffFrame, ImageLoader il, HBox staffVolumeBars, ModifySongManager commandManager, int width, int height, int depth) {
         this.staffVolumeBars = staffVolumeBars;
         this.staffFrame = staffFrame;
 
         this.il = il;
-        this.matrix = new NoteMatrix(il, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
+        
+        this.matrix = new NoteMatrix(il, this);
         this.commandManager = commandManager;
+        
+        this.playbars = new Node[width];
+        this.activePlaybar = -1;
     }
     
     public StaffVolumeEventHandler getVolHandler(int index) {
@@ -150,7 +161,7 @@ public class StaffDisplayManager {
     private void initializeVolumeBars() {
         volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
         
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             StackPane stack = new StackPane();
             stack.setAlignment(Pos.BOTTOM_CENTER);
             stack.setPrefHeight(64.0);
@@ -173,7 +184,7 @@ public class StaffDisplayManager {
     }
     
     public void updateVolumeBars(StaffSequence seq, int currLine) {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             StaffVolumeEventHandler sveh = volumeBarHandlers.get(i);
             StaffNoteLine stl = seq.getLineSafe(currLine + i);
             
@@ -198,18 +209,18 @@ public class StaffDisplayManager {
         staffInstruments.setLayoutY(-5);
         staffInstruments.setPadding(new Insets(0, 0, 0, 113));
         
-        for (int col = 0; col < Values.NOTELINES_IN_THE_WINDOW; col++) {
+        for (int col = 0; col < width; col++) {
             VBox vBox = new VBox();
             vBox.setSpacing(-20.0);
             vBox.setAlignment(Pos.CENTER);
                         
-            for (int row = 0; row < Values.NOTES_IN_A_LINE; row++) {
+            for (int row = 0; row < height; row++) {
                 StackPane stack = new StackPane();
                 stack.setDisable(true);
                 stack.setPrefHeight(36.0);
                 stack.setPrefWidth(64.0);
                 
-                for (int d = 0; d < Values.MAX_STACKABLE_NOTES; d++) {
+                for (int d = 0; d < depth; d++) {
                     ImageView iv = makeNoteImageView();
                     stack.getChildren().add(iv);
                     StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, d);
@@ -235,20 +246,20 @@ public class StaffDisplayManager {
         staffAccidentals.setLayoutY(-5);
         staffAccidentals.setPadding(new Insets(0, 0, 0, 105));
         
-        for (int col = 0; col < Values.NOTELINES_IN_THE_WINDOW; col++) {
+        for (int col = 0; col < width; col++) {
             VBox vBox = new VBox();
             vBox.setSpacing(-20.0);
             vBox.setAlignment(Pos.CENTER);
             vBox.setPrefHeight(472.0);
             vBox.setPrefWidth(32.0);
                         
-            for (int row = 0; row < Values.NOTES_IN_A_LINE; row++) {
+            for (int row = 0; row < height; row++) {
                 StackPane stack = new StackPane();
                 stack.setDisable(true);
                 stack.setPrefHeight(36.0);
                 stack.setPrefWidth(32.0);
                 
-                for (int d = 0; d < Values.MAX_STACKABLE_NOTES; d++) {
+                for (int d = 0; d < depth; d++) {
                     ImageView iv = makeAccidentalImageView();
                     stack.getChildren().add(iv);
                     StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, d);
@@ -310,7 +321,7 @@ public class StaffDisplayManager {
         
         measureLines = new ArrayList<ImageView>();
         
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             ImageView iv = new ImageView();
             iv.setFitHeight(448.0);
             iv.setFitWidth(2.0);
@@ -335,7 +346,7 @@ public class StaffDisplayManager {
         
         measureNums = new ArrayList<Text>();
         
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             HBox box = new HBox();
             box.setAlignment(Pos.CENTER);
             box.setPrefHeight(9.0);
@@ -426,7 +437,7 @@ public class StaffDisplayManager {
             @SuppressWarnings("unchecked")
             ArrayList<Node> arr = (ArrayList<Node>) all[k];
             
-            for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+            for (int i = 0; i < width; i++) {
                 Rectangle ledger = new Rectangle(42.0, 4.0);
                 ledger.setStroke(Paint.valueOf("BLACK"));
                 ledger.setStrokeType(StrokeType.INSIDE);
@@ -443,11 +454,11 @@ public class StaffDisplayManager {
     }
     
     public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             StaffNoteLine stl = seq.getLineSafe(currLine + i);
 
             int high = 0;
-            int low = Values.NOTES_IN_A_LINE;
+            int low = height;
             boolean middleCPresent = false;
             for (StaffNote n : stl.getNotes()) {
                 int nt = n.getPosition();
@@ -511,7 +522,7 @@ public class StaffDisplayManager {
         staffPlayBars.setLayoutY(23);
         staffPlayBars.setPadding(new Insets(0, 0, 0, 117));
         
-        for (int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        for (int i = 0; i < width; i++) {
             ImageView iv = new ImageView(il.getSpriteFX(ImageIndex.PLAY_BAR1));
             iv.setFitHeight(448);
             iv.setFitWidth(56);
@@ -528,7 +539,7 @@ public class StaffDisplayManager {
     }
     
     private void doResetPlayBars() {
-        if (activePlaybar >= 0 && activePlaybar < Values.NOTELINES_IN_THE_WINDOW)
+        if (activePlaybar >= 0 && activePlaybar < width)
             playbars[activePlaybar].setVisible(false);
     }
     
@@ -540,7 +551,7 @@ public class StaffDisplayManager {
     public void updatePlayBars(int position) {
         doResetPlayBars();
         
-        if (position < 0 || position >= Values.NOTELINES_IN_THE_WINDOW)
+        if (position < 0 || position >= width)
             return;
         
         playbars[position].setVisible(true);
@@ -551,7 +562,7 @@ public class StaffDisplayManager {
      * Immutable object providing the representation for a coordinate on the staff: column, row, and depth
      * For given maximum values of row and depth, we provide converters to and from int.
      */
-    protected static class StaffNoteCoordinate {
+    protected class StaffNoteCoordinate {
     	
     	final public int col;
     	final public int row;
@@ -573,8 +584,8 @@ public class StaffDisplayManager {
     		return this.col == oth.col && this.row == oth.row && this.dep == oth.dep;
     	}
     	
-    	public int lin(int maxRow, int maxDep) {
-    		return (dep == -1) ? (maxRow * col) + row : (maxDep * ((maxRow * col) + row)) + dep;
+    	public int lin() {
+    		return (dep == -1) ? (height * col) + row : (depth * ((height * col) + row)) + dep;
     	}
     	
     }
