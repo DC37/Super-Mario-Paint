@@ -275,6 +275,9 @@ public class NoteMatrix {
         }
     }
     
+    /**
+     * Refresh the current silhouette with a possibly different accidental
+     */
     public void refreshSilhouette(Accidental acc) {
         if (currentSilhouette != null && currentSilhouette.getAccidental() != acc) {
             StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getPosition(), acc);
