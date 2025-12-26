@@ -9,12 +9,8 @@ import backend.songs.StaffAccidental;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
-import gui.clipboard.StaffClipboard;
 import gui.components.staff.StaffDisplayManager.StaffNoteCoordinate;
 import gui.loaders.ImageLoader;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.ImageView;
 
 /**
@@ -51,18 +47,6 @@ public class NoteMatrix {
      */
     private StaffNote currentSilhouette;
     private int currentSilhouetteColumn;
-    
-    private static Blend highlightBlend = new Blend(
-            BlendMode.SRC_OVER,
-            null,
-            new ColorInput(
-                    0,
-                    0,
-                    32,
-                    36,
-                    StaffClipboard.HIGHLIGHT_FILL
-                    )
-            );
 
     public NoteMatrix(ImageLoader il, StaffDisplayManager disp) {
         this.il = il;
@@ -146,7 +130,7 @@ public class NoteMatrix {
                     stackedAmounts[row] = d + 1;
                     ImageView iv = matrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
                     iv.setImage(il.getSpriteFX(s.getImageIndex()));
-                    iv.setEffect(s.isSelected() ? highlightBlend : null);
+                    iv.setEffect(s.isSelected() ? StaffDisplayManager.highlightBlend : null);
                     iv.setVisible(true);
                 }
                 

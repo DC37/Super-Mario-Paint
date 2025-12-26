@@ -12,13 +12,16 @@ import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import gui.Staff;
 import gui.Values;
+import gui.clipboard.StaffClipboard;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -301,6 +304,18 @@ public class StaffDisplayManager {
         iv.setTranslateX(-18);
         return iv;
     }
+    
+    protected static Blend highlightBlend = new Blend(
+            BlendMode.SRC_OVER,
+            null,
+            new ColorInput(
+                    0,
+                    0,
+                    32,
+                    36,
+                    StaffClipboard.HIGHLIGHT_FILL
+                    )
+            );
     
     public void updateNoteDisplay(StaffSequence seq, int currLine) {
         matrix.clearNoteDisplay();
