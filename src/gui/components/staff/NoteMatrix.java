@@ -39,22 +39,22 @@ public class NoteMatrix {
     final private int height;
     final private int depth;
 
-    private ArrayList<ImageView> matrix;
-    private ArrayList<ImageView> accMatrix;
+    final private ArrayList<ImageView> matrix;
+    final private ArrayList<ImageView> accMatrix;
     
     private int map(int col, int row, int d) {
         return (depth * ((height * col) + row)) + d;
     }
     
-    private ArrayList<ImageView> silMatrix;
-    private ArrayList<ImageView> accSilMatrix;
+    final private ArrayList<ImageView> silMatrix;
+    final private ArrayList<ImageView> accSilMatrix;
     
     private int silMap(int col, int row) {
         return (height * col) + row;
     }
     
     /** Pointer to the image loader object. */
-    private transient ImageLoader il;
+    final private transient ImageLoader il;
     
     /**
      * A silhouette note to display where the cursor is.
@@ -75,8 +75,8 @@ public class NoteMatrix {
                     )
             );
 
-    public NoteMatrix(ImageLoader i, int width, int height, int depth) {
-        il = i;
+    public NoteMatrix(ImageLoader il, int width, int height, int depth) {
+        this.il = il;
         this.width = width;
         this.height = height;
         this.depth = depth;
