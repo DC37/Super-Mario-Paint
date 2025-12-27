@@ -23,7 +23,6 @@ import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffClipboardFilter;
 import gui.clipboard.StaffRubberBand;
 import gui.components.SongNameController;
-import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
@@ -158,18 +157,6 @@ public class SMPFXController {
     /** The scrollbar that moves the staff. */
     @FXML
     private Slider scrollbar;
-
-    @FXML
-    private SMPButton leftArrow;
-
-    @FXML
-    private SMPButton rightArrow;
-
-    @FXML
-    private SMPButton leftFastArrow;
-
-    @FXML
-    private SMPButton rightFastArrow;
     
     @FXML
     private AnchorPane basePane;
@@ -278,19 +265,6 @@ public class SMPFXController {
             if (StateMachine.isClipboardPressed())
                 displayManager.resetSilhouette();
         });
-        
-        // dirty hack to correct arrow buttons' sizes
-        SMPButton[] arrowButtons = { leftArrow, rightArrow, leftFastArrow, rightFastArrow };
-        for (SMPButton btn : arrowButtons) {
-            btn.graphicProperty().addListener(obs -> {
-                Node graphic = btn.getGraphic();
-                if (graphic != null && graphic instanceof ImageView) {
-                    ImageView iv = (ImageView) graphic;
-                    iv.setFitHeight(24);
-                    iv.setFitWidth(24);
-                }
-            });
-        }
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
