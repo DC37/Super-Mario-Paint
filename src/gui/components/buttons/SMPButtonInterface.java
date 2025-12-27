@@ -1,6 +1,7 @@
 package gui.components.buttons;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -31,6 +32,20 @@ public interface SMPButtonInterface {
     public ObjectProperty<Image> imagePressed();
     public Image getImagePressed();
     public void setImagePressed(Image imagePressed);
+    
+    /**
+     * Bound to the {@link ImageView} property of the same name
+     */
+    public DoubleProperty fitHeight();
+    public double getFitHeight();
+    public void setFitHeight(double x);
+    
+    /**
+     * Bound to the {@link ImageView} property of the same name
+     */
+    public DoubleProperty fitWidth();
+    public double getFitWidth();
+    public void setFitWidth(double x);
     
     /**
      * <p>Utility method to bind some {@link Image} property (typically the image of an {@link ImageView})
@@ -77,10 +92,15 @@ public interface SMPButtonInterface {
     {
         ImageView imageView = new ImageView();
         imageView.setPreserveRatio(true);
+        imageView.setSmooth(false);
+        imageView.fitHeightProperty().bind(button.fitHeight());
+        imageView.fitWidthProperty().bind(button.fitWidth());
         imageViewProperty.bind(new SimpleObjectProperty<>(imageView));
         ObjectProperty<Image> imageProperty = imageView.imageProperty();
         
         return subscribeImageProperty(button, conditionPressed, imageProperty)
+        		.and(() -> imageView.fitHeightProperty().unbind())
+        		.and(() -> imageView.fitWidthProperty().unbind())
                 .and(() -> imageViewProperty.unbind());
     }
     

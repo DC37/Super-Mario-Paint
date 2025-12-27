@@ -1,6 +1,8 @@
 package gui.components.buttons;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Skin;
@@ -39,6 +41,27 @@ public class SMPToggleButton extends ToggleButton implements SMPButtonInterface 
     }
     public Image getImagePressed() { return imagePressed().getValue(); }
     public void setImagePressed(Image imagePressed) { imagePressed().setValue(imagePressed); }
+    
+    private DoubleProperty fitHeight;
+    public DoubleProperty fitHeight() {
+    	if (fitHeight == null) {
+    		fitHeight = new SimpleDoubleProperty(this, "fitHeight", 0.0);
+    	}
+    	return fitHeight;
+    }
+    public double getFitHeight() { return fitHeight().getValue(); }
+    public void setFitHeight(double x) { fitHeight().setValue(x); }
+    
+    private DoubleProperty fitWidth;
+    public DoubleProperty fitWidth() {
+    	if (fitWidth == null) {
+    		fitWidth = new SimpleDoubleProperty(this, "fitWidth", 0.0);
+    	}
+    	return fitWidth;
+    }
+    public double getFitWidth() { return fitWidth().getValue(); }
+    public void setFitWidth(double x) { fitWidth().setValue(x); }
+    
     
     public SMPToggleButton() {
         super();
