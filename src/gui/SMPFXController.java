@@ -421,7 +421,7 @@ public class SMPFXController {
     		b.setSmooth(false);
     		
     		b.setOnMousePressed(e -> {
-    			if (e.isShiftDown()) {
+    			if (StateMachine.isShiftPressed()) {
     		        boolean ex = StateMachine.getNoteExtension(inst.ordinal());
     		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
     		        
