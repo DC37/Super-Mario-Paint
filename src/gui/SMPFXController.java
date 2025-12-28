@@ -425,6 +425,10 @@ public class SMPFXController {
     		        boolean ex = StateMachine.getNoteExtension(inst.ordinal());
     		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
     		        
+    			} else if (StateMachine.isCtrlPressed()) {
+    				boolean ex = StateMachine.getFilteredNote(inst.ordinal());
+    				StateMachine.setFilteredNote(inst.ordinal(), !ex);
+    				
     			} else {
     		        MidiChannel[] chan = SoundfontLoader.getChannels();
     		        if (chan[inst.getChannel() - 1] != null) {
@@ -1012,10 +1016,10 @@ public class SMPFXController {
             case F:
             	if (songName.focusedProperty().get())
             		break;
-            	
+
             	clipboardFilter.toggleInstrumentNoImage();
             	break;
-                
+
             case R:
                 if (songName.focusedProperty().get())
                     break;
