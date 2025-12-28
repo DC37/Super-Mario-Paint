@@ -1,5 +1,8 @@
 package gui.components.buttons;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -74,6 +77,11 @@ public class SMPInstrumentButton extends SMPButton {
     }
     public Image getImageSustainOn() { return imagePressed().getValue(); }
     public void setImageSustainOn(Image imageSustainOn) { imagePressed().setValue(imageSustainOn); }
+    
+    /**
+     * The list of all instrument buttons---used to manage all animations for the filter
+     */
+    private static Collection<SMPInstrumentButton> instrumentButtonGroup = new ArrayList<>(32);
 	
 	public SMPInstrumentButton() {
 		super();
@@ -139,11 +147,14 @@ public class SMPInstrumentButton extends SMPButton {
                 		SMPButtonInterface.subscribeNodeProperty(SMPInstrumentButton.this, armedProperty(), buttonImageView)
                 		.and(imageSustainSubscription())
                 		.and(() -> graphicProperty().unbind());
+                
+                instrumentButtonGroup.add(SMPInstrumentButton.this);
             }
             
             @Override
             public void dispose() {
                 graphicSubscription.unsubscribe();
+                instrumentButtonGroup.remove(SMPInstrumentButton.this);
             }
         };
     }
