@@ -198,6 +198,11 @@ public class SMPFXController {
         commandManager = new ModifySongManager(() -> staff.redraw());
         
         basePane.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+        	if (event.isControlDown())
+        		StateMachine.setCtrlPressed(true);
+        	if (event.isShiftDown())
+        		StateMachine.setShiftPressed(true);
+        	
             if (event.isControlDown())
                 switch (event.getCode()) {
                 case Y:
@@ -209,6 +214,13 @@ public class SMPFXController {
                 default:
                     break;
                 }
+        });
+        
+        basePane.addEventHandler(KeyEvent.KEY_RELEASED, (event) -> {
+        	if (!event.isControlDown())
+        		StateMachine.setCtrlPressed(false);
+        	if (!event.isShiftDown())
+        		StateMachine.setShiftPressed(false);
         });
         
         // Set up staff.
