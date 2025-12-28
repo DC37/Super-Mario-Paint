@@ -59,7 +59,7 @@ public class StateMachine {
     private static IntegerProperty noteExtensions = new SimpleIntegerProperty(0);
     
     /** The list of values denoting which notes are filtered. */
-    private static IntegerProperty filteredNotes = new SimpleIntegerProperty(0);
+    private static IntegerProperty filteredNotes = new SimpleIntegerProperty(-1);
     
     /**
      * The file directory that we are currently located in. We'll start in the

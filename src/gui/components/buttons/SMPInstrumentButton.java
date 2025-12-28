@@ -3,6 +3,7 @@ package gui.components.buttons;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import gui.StateMachine;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Skin;
 import javafx.scene.control.skin.ButtonSkin;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.util.Subscription;
 
@@ -79,6 +81,19 @@ public class SMPInstrumentButton extends SMPButton {
     public void setImageSustainOn(Image imageSustainOn) { imagePressed().setValue(imageSustainOn); }
     
     /**
+     * The image for the <i>filtered</i> state (overlayed)
+     */
+    private ObjectProperty<Image> imageFiltered;
+    public ObjectProperty<Image> imageFiltered() {
+        if (imageFiltered == null) {
+        	imageFiltered = new SimpleObjectProperty<Image>(this, "imageFiltered", null);
+        }
+        return imageFiltered;
+    }
+    public Image getImageFiltered() { return imageFiltered().getValue(); }
+    public void setImageFiltered(Image imageFiltered) { imageFiltered().setValue(imageFiltered); }
+    
+    /**
      * The list of all instrument buttons---used to manage all animations for the filter
      */
     private static Collection<SMPInstrumentButton> instrumentButtonGroup = new ArrayList<>(32);
@@ -115,15 +130,36 @@ public class SMPInstrumentButton extends SMPButton {
         return new ButtonSkin(this) {
             Subscription graphicSubscription;
             
-            private Binding<Node> buildGraphic(ObservableValue<Node> button) {
+            private Binding<Node> buildGraphic(ObservableValue<Node> button, Node filter) {
             	return Bindings.createObjectBinding(() -> {
             		if (button == null || button.getValue() == null)
             			return null;
             		
             		StackPane stack = new StackPane();
-            		stack.getChildren().add(button.getValue());
+            		stack.getChildren().addAll(button.getValue(), filter);
             		return stack;
             	}, button);
+            }
+            
+            private ImageView buildFilter() {
+            	ImageView filter = new ImageView();
+            	filter.setPreserveRatio(true);
+            	filter.setSmooth(false);
+            	return filter;
+            }
+            
+            private Subscription filterSubscription(ImageView filter) {
+            	filter.fitHeightProperty().bind(fitHeight());
+            	filter.fitWidthProperty().bind(fitWidth());
+            	filter.imageProperty().bind(imageFiltered());
+            	filter.visibleProperty().bind(Bindings.and(active(), Bindings.notEqual(-1, StateMachine.filteredNotesProperty())));
+            	
+            	return () -> {
+            		filter.fitHeightProperty().unbind();
+            		filter.fitWidthProperty().unbind();
+            		filter.imageProperty().unbind();
+            		filter.visibleProperty().unbind();
+            	};
             }
             
             private Subscription imageSustainSubscription() {
@@ -140,11 +176,13 @@ public class SMPInstrumentButton extends SMPButton {
             @Override
             public void install() {
             	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
-            	ObservableValue<Node> graphic = buildGraphic(buttonImageView);
+            	ImageView filterIv = buildFilter();
+            	ObservableValue<Node> graphic = buildGraphic(buttonImageView, filterIv);
             	graphicProperty().bind(graphic);
             	
                 graphicSubscription =
                 		SMPButtonInterface.subscribeNodeProperty(SMPInstrumentButton.this, armedProperty(), buttonImageView)
+                		.and(filterSubscription(filterIv))
                 		.and(imageSustainSubscription())
                 		.and(() -> graphicProperty().unbind());
                 
