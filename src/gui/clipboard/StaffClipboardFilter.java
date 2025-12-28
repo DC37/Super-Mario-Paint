@@ -1,10 +1,10 @@
 package gui.clipboard;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import gui.InstrumentIndex;
+import gui.StateMachine;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import javafx.animation.FadeTransition;
@@ -20,12 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
-
-	/**
-	 * wot
-	 */
-	private static final long serialVersionUID = 1L;
+public class StaffClipboardFilter {
 	
 	private HBox instrumentLine;
 	private ImageLoader il;
@@ -107,15 +102,6 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 	}
 	
 	/**
-	 * @param ind
-	 *            the instrument
-	 * @return if instrument is allowed copying, deleting, etc.
-	 */
-	public boolean isFiltered(InstrumentIndex ind) {
-		return this.isEmpty() || this.contains(ind);
-	}
-	
-	/**
 	 * turn instrument on/off in filter, display and fade the filter image
 	 * 
 	 * @param ind
@@ -141,13 +127,13 @@ public class StaffClipboardFilter extends HashSet<InstrumentIndex> {
 	 */
 	public boolean toggleInstrumentNoImage(InstrumentIndex ind) {
 		int index = ind.ordinal();
-		if(!this.contains(ind)){
-			this.add(ind);
+		if(!StateMachine.getFilteredNote(index)){
+			StateMachine.setFilteredNote(index, true);
 			filterImages.get(index).setImage(il.getSpriteFX(ImageIndex.FILTER));
 			return true;
 		}
 		else{
-			this.remove(ind);
+			StateMachine.setFilteredNote(index, false);
 			filterImages.get(index).setImage(null);
 			return false;
 		}

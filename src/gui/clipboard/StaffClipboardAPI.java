@@ -201,15 +201,13 @@ public class StaffClipboardAPI {
 	 *            (>= positionBegin, i.e. positionEnd could be higher notes)
 	 */
 	public void select(int lineBegin, int positionBegin, int lineEnd, int positionEnd) {
-		StaffClipboardFilter instFilter = theStaffClipboard.getInstrumentFilter();
-
 		for (int line = lineBegin; line <= lineEnd; line++) {
 			StaffNoteLine lineSrc = theStaff.getSequence().getLineSafe(line);
 
 			ArrayList<StaffNote> ntList = lineSrc.getNotes();
 			for (StaffNote note : ntList) {
 				if (positionBegin <= note.getPosition() && note.getPosition() <= positionEnd
-						&& instFilter.isFiltered(note.getInstrument())) {
+						&& StateMachine.getFilteredNote(note.getInstrument().ordinal())) {
 					// store the copied note at the relative line
 					selectNote(line, note);
 					// store the staffnoteline's volume at the relative line
