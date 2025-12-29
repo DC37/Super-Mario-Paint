@@ -73,8 +73,8 @@ public abstract class SMPButtonBase extends Button implements SMPButtonInterface
     @Override
     protected Skin<?> createDefaultSkin() {
         // We extend an anonymous class because ButtonSkin lacks genericity.
-        // It's not possible make a class extending ButtonSkin whose getSkinnable
-        // returns anything other than a Button.
+        // It's not possible to make a class extending ButtonSkin whose getSkinnable
+        // method returns anything other than a Button.
         return new ButtonSkin(this) {
             Subscription imageSubscription;
             

@@ -1,7 +1,7 @@
 package gui.components.buttons;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import gui.StateMachine;
 import javafx.animation.FadeTransition;
@@ -13,11 +13,14 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Skin;
 import javafx.scene.control.skin.ButtonSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import javafx.util.Subscription;
@@ -94,11 +97,6 @@ public class SMPInstrumentButton extends SMPButton {
     }
     public Image getImageFiltered() { return imageFiltered().getValue(); }
     public void setImageFiltered(Image imageFiltered) { imageFiltered().setValue(imageFiltered); }
-    
-    /**
-     * The list of all instrument buttons---used to manage all animations for the filter
-     */
-    private static Collection<SMPInstrumentButton> instrumentButtonGroup = new ArrayList<>(32);
 	
 	public SMPInstrumentButton() {
 		super();
@@ -131,7 +129,11 @@ public class SMPInstrumentButton extends SMPButton {
     protected Skin<?> createDefaultSkin() {
         return new ButtonSkin(this) {
             Subscription graphicSubscription;
+            ImageView filterIv;
             FadeTransition fadeTransition;
+            
+            private static List<Runnable> fadeoutResetList = new ArrayList<>(32);
+            private static List<Runnable> fadeoutPlayList = new ArrayList<>(32);
             
             private Binding<Node> buildGraphic(ObservableValue<Node> button, Node filter) {
             	return Bindings.createObjectBinding(() -> {
@@ -184,10 +186,37 @@ public class SMPInstrumentButton extends SMPButton {
             	return ft;
             }
             
+            private Subscription activateFadeoutSubscription() {
+            	EventHandler<MouseEvent> onEntered = new EventHandler<>() {
+            		@Override public void handle(MouseEvent event) {
+            			if (event.getEventType() == MouseEvent.MOUSE_ENTERED)
+            				for (Runnable r : fadeoutResetList)
+            					r.run();
+            		}
+            	};
+            	
+            	EventHandler<MouseEvent> onExited = new EventHandler<>() {
+            		@Override public void handle(MouseEvent event) {
+            			if (event.getEventType() == MouseEvent.MOUSE_EXITED)
+            				for (Runnable r : fadeoutPlayList)
+            					r.run();
+            		}
+            	};
+            	
+            	Button c = getSkinnable();
+            	c.addEventHandler(MouseEvent.MOUSE_ENTERED, onEntered);
+            	c.addEventHandler(MouseEvent.MOUSE_EXITED, onExited);
+            	
+            	return () -> {
+            		c.removeEventHandler(MouseEvent.MOUSE_ENTERED, onEntered);
+            		c.removeEventHandler(MouseEvent.MOUSE_EXITED, onExited);
+            	};
+            }
+            
             @Override
             public void install() {
             	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
-            	ImageView filterIv = buildFilter();
+            	filterIv = buildFilter();
             	fadeTransition = makeTransition(filterIv);
             	ObservableValue<Node> graphic = buildGraphic(buttonImageView, filterIv);
             	graphicProperty().bind(graphic);
@@ -196,15 +225,27 @@ public class SMPInstrumentButton extends SMPButton {
                 		SMPButtonInterface.subscribeNodeProperty(SMPInstrumentButton.this, armedProperty(), buttonImageView)
                 		.and(filterSubscription(filterIv))
                 		.and(imageSustainSubscription())
+                		.and(activateFadeoutSubscription())
                 		.and(() -> graphicProperty().unbind());
                 
-                instrumentButtonGroup.add(SMPInstrumentButton.this);
+                fadeoutResetList.add(this::fadeoutReset);
+                fadeoutPlayList.add(this::fadeoutPlay);
+            }
+            
+            private void fadeoutReset() {
+            	filterIv.setOpacity(1.0);
+            	fadeTransition.pause();
+            }
+            
+            private void fadeoutPlay() {
+            	fadeTransition.playFromStart();
             }
             
             @Override
             public void dispose() {
                 graphicSubscription.unsubscribe();
-                instrumentButtonGroup.remove(SMPInstrumentButton.this);
+//                fadeoutResetList.remove(this::fadeoutReset);
+//                fadeoutPlayList.remove(this::fadeoutPlay);
             }
         };
     }
