@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import gui.StateMachine;
+import javafx.animation.FadeTransition;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -18,6 +19,7 @@ import javafx.scene.control.skin.ButtonSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import javafx.util.Subscription;
 
 /**
@@ -129,6 +131,7 @@ public class SMPInstrumentButton extends SMPButton {
     protected Skin<?> createDefaultSkin() {
         return new ButtonSkin(this) {
             Subscription graphicSubscription;
+            FadeTransition fadeTransition;
             
             private Binding<Node> buildGraphic(ObservableValue<Node> button, Node filter) {
             	return Bindings.createObjectBinding(() -> {
@@ -174,10 +177,18 @@ public class SMPInstrumentButton extends SMPButton {
             	}, sustainOn(), imageSustainOff(), imageSustainOn());
             }
             
+            private FadeTransition makeTransition(ImageView iv) {
+            	FadeTransition ft = new FadeTransition(Duration.millis(2000), iv);
+            	ft.setFromValue(1.0);
+            	ft.setToValue(0.0);
+            	return ft;
+            }
+            
             @Override
             public void install() {
             	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
             	ImageView filterIv = buildFilter();
+            	fadeTransition = makeTransition(filterIv);
             	ObservableValue<Node> graphic = buildGraphic(buttonImageView, filterIv);
             	graphicProperty().bind(graphic);
             	

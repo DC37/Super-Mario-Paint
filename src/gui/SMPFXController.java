@@ -423,8 +423,18 @@ public class SMPFXController {
     		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
     		        
     			} else if (StateMachine.isCtrlPressed()) {
-    				boolean ex = StateMachine.getFilteredNote(inst.ordinal());
-    				StateMachine.setFilteredNote(inst.ordinal(), !ex);
+    				if (StateMachine.getFilteredNotes() == -1) {
+    					for (InstrumentIndex i : InstrumentIndex.values()) {
+    						if (i == inst)
+    							continue;
+    						
+    						StateMachine.setFilteredNote(i.ordinal(), false);
+    					}
+    					
+    				} else {
+    					boolean ex = StateMachine.getFilteredNote(inst.ordinal());
+    					StateMachine.setFilteredNote(inst.ordinal(), !ex);
+    				}
     				
     			} else {
     		        MidiChannel[] chan = SoundfontLoader.getChannels();

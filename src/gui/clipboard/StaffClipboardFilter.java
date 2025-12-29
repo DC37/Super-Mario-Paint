@@ -46,7 +46,9 @@ public class StaffClipboardFilter {
 				@Override
 				public void handle(MouseEvent event) {
 					instInFocus = indexToInst(index);
-					fadeFilterImages(false);
+					for (FadeTransition ft : filterImagesFades) {
+						ft.pause();
+					}
 					for(ImageView filterImage : filterImages)
 						filterImage.setOpacity(1.0);
 				}});
@@ -55,7 +57,9 @@ public class StaffClipboardFilter {
 				@Override
 				public void handle(MouseEvent event) {
 					instInFocus = null;
-					fadeFilterImages(true);
+					for (FadeTransition ft : filterImagesFades) {
+						ft.playFromStart();
+					}
 				}});
 		}
 	}
@@ -93,14 +97,6 @@ public class StaffClipboardFilter {
 		});
 	}
 	
-	private void fadeFilterImages(boolean fadeThem) {
-		for (FadeTransition fade : filterImagesFades)
-			if(fadeThem)
-				fade.playFromStart();
-			else
-				fade.pause();
-	}
-	
 	/**
 	 * turn instrument on/off in filter, display and fade the filter image
 	 * 
@@ -109,13 +105,13 @@ public class StaffClipboardFilter {
 	 * @return true if it now contains ind, false if it doesn't
 	 */
 	public boolean toggleInstrument(InstrumentIndex ind) {
-		if(toggleInstrumentNoImage(ind)) {
-			fadeFilterImages(true);
-			return true;
-		} else {
-			fadeFilterImages(true);
-			return false;
+		boolean ret = toggleInstrumentNoImage(ind);
+
+		for (FadeTransition ft : filterImagesFades) {
+			ft.playFromStart();
 		}
+		
+		return ret;
 	}
 	
 	/**
