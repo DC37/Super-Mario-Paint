@@ -36,8 +36,6 @@ public class StaffClipboard {
 	private Pane rubberBandLayer;
 	private StaffRubberBand rubberBand;
 	private StaffRubberBandEventHandler rbeh;
-
-	private StaffClipboardFilter instFilter;
 	
 	/** The functions class for copy, cut, paste, etc. */
 	private StaffClipboardAPI theAPI;
@@ -79,7 +77,7 @@ public class StaffClipboard {
 		
 		initializeHighlightedVolumes(ct);
 		
-		instFilter = new StaffClipboardFilter(ct.getInstLine(), il);
+		new StaffClipboardFilter(ct.getInstLine(), il);
 	}
 
 	private void initializeHighlightedVolumes(SMPFXController ct) {
@@ -215,10 +213,6 @@ public class StaffClipboard {
 	
 	public ChangeListener<Number> getHighlightedVolumesRedrawer() {
 		return highlightedVolumesRedrawer;
-	}
-	
-	public StaffClipboardFilter getInstrumentFilter() {
-		return instFilter;
 	}
 	
 	// temp? merge the two classes together?

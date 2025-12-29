@@ -77,8 +77,8 @@ public class SMPInstrumentButton extends SMPButton {
         }
         return imageSustainOn;
     }
-    public Image getImageSustainOn() { return imagePressed().getValue(); }
-    public void setImageSustainOn(Image imageSustainOn) { imagePressed().setValue(imageSustainOn); }
+    public Image getImageSustainOn() { return imageSustainOn().getValue(); }
+    public void setImageSustainOn(Image imageSustainOn) { imageSustainOn().setValue(imageSustainOn); }
     
     /**
      * The image for the <i>filtered</i> state (overlayed)
@@ -145,6 +145,7 @@ public class SMPInstrumentButton extends SMPButton {
             	ImageView filter = new ImageView();
             	filter.setPreserveRatio(true);
             	filter.setSmooth(false);
+            	filter.setMouseTransparent(true);
             	return filter;
             }
             

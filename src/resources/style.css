@@ -8,6 +8,10 @@
 	-fx-padding: 2px;
 }
 
+.button.smp-button.smp-instrument-button {
+	-fx-padding: 0px;
+}
+
 .button.smp-arranger-button,
 .button.smp-tempo-box-button,
 .button.smp-scroll-arrow-button {

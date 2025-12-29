@@ -404,10 +404,8 @@ public class StateMachine {
     	filteredNotes.set(v);
     }
 
-    public static void setFilteredNotes(boolean[] set) {
-    	for (int i = 0; i < set.length; i++) {
-    		setFilteredNote(i, set[i]);
-    	}
+    public static void setFilteredNotes(int v) {
+    	filteredNotes.set(v);
     }
     
     /**
@@ -420,12 +418,8 @@ public class StateMachine {
     	return (v & m) != 0;
     }
 
-    public static boolean[] getFilteredNotes() {
-    	boolean[] ret = new boolean[32];
-    	for (int i = 0; i < 32; i++) {
-    		ret[i] = getFilteredNote(i);
-    	}
-    	return ret;
+    public static int getFilteredNotes() {
+    	return filteredNotes.get();
     }
 
     /**

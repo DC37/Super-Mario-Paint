@@ -20,9 +20,9 @@ import backend.songs.StaffNote;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.clipboard.StaffClipboard;
-import gui.clipboard.StaffClipboardFilter;
 import gui.clipboard.StaffRubberBand;
 import gui.components.SongNameController;
+import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
@@ -163,7 +163,6 @@ public class SMPFXController {
     
     private StaffMouseEventHandler staffMouseEventHandler;
     private StaffRubberBand rubberBand;
-    private StaffClipboardFilter clipboardFilter;
     
     private ModifySongManager commandManager;
     
@@ -323,8 +322,7 @@ public class SMPFXController {
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
-        StaffClipboard clipboard = new StaffClipboard(rubberBand, staff, this, il);
-        clipboardFilter = clipboard.getInstrumentFilter();
+        new StaffClipboard(rubberBand, staff, this, il);
         
         volumeBars.mouseTransparentProperty().bind(StateMachine.clipboardPressedProperty());
         
@@ -410,17 +408,16 @@ public class SMPFXController {
     }
     
     private void populateInstrumentButtons(Pane n) {
-    	ImageView[] vs = new ImageView[InstrumentIndex.values().length];
+    	SMPInstrumentButton[] vs = new SMPInstrumentButton[InstrumentIndex.values().length];
     	n.getChildren().clear();
     	
     	for (InstrumentIndex inst : InstrumentIndex.values()) {
-    		ImageView b = new ImageView(il.getSpriteFX(inst.smImageIndex()));
+    		SMPInstrumentButton b = new SMPInstrumentButton(inst.name(), il.getSpriteFX(inst.smImageIndex()), il.getSpriteFX(inst.smaImageIndex()));
+    		b.setImageFiltered(il.getSpriteFX(ImageIndex.FILTER));
     		b.setFitHeight(28);
     		b.setFitWidth(26);
-    		b.setPreserveRatio(true);
-    		b.setSmooth(false);
     		
-    		b.setOnMousePressed(e -> {
+    		b.setOnAction(e -> {
     			if (StateMachine.isShiftPressed()) {
     		        boolean ex = StateMachine.getNoteExtension(inst.ordinal());
     		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
@@ -445,8 +442,13 @@ public class SMPFXController {
         
         StateMachine.noteExtensionsProperty().addListener(obs -> {
         	for (InstrumentIndex inst : InstrumentIndex.values()) {
-        		ImageIndex image = StateMachine.getNoteExtension(inst.ordinal()) ? inst.smaImageIndex() : inst.smImageIndex();
-        		vs[inst.ordinal()].setImage(il.getSpriteFX(image));
+        		vs[inst.ordinal()].setSustainOn(StateMachine.getNoteExtension(inst.ordinal()));
+        	}
+        });
+        
+        StateMachine.filteredNotesProperty().addListener(obs -> {
+        	for (InstrumentIndex inst : InstrumentIndex.values()) {
+        		vs[inst.ordinal()].setActive(StateMachine.getFilteredNote(inst.ordinal()));
         	}
         });
     }
@@ -1012,13 +1014,6 @@ public class SMPFXController {
                 }
 
                 break;
-                
-            case F:
-            	if (songName.focusedProperty().get())
-            		break;
-
-            	clipboardFilter.toggleInstrumentNoImage();
-            	break;
 
             case R:
                 if (songName.focusedProperty().get())
