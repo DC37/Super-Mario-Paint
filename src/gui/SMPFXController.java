@@ -322,7 +322,7 @@ public class SMPFXController {
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
-        new StaffClipboard(rubberBand, staff, this, il);
+        new StaffClipboard(rubberBand, staff, this);
         
         volumeBars.mouseTransparentProperty().bind(StateMachine.clipboardPressedProperty());
         
@@ -1159,10 +1159,6 @@ public class SMPFXController {
     
     public AnchorPane getBasePane() {
         return basePane;
-    }
-    
-    public HBox getInstLine() {
-        return instLine;
     }
     
     public StaffMouseEventHandler getStaffMouseEventHandler() {

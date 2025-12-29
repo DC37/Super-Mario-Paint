@@ -7,7 +7,6 @@ import backend.songs.StaffNoteLine;
 import gui.SMPFXController;
 import gui.Staff;
 import gui.Values;
-import gui.loaders.ImageLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -32,7 +31,6 @@ public class StaffClipboard {
 	
 	private Staff theStaff;
 	private SMPFXController controller;
-	private ImageLoader il;
 	private Pane rubberBandLayer;
 	private StaffRubberBand rubberBand;
 	private StaffRubberBandEventHandler rbeh;
@@ -55,10 +53,9 @@ public class StaffClipboard {
 	 */
 	private ChangeListener<Number> highlightedVolumesRedrawer;
 
-	public StaffClipboard(StaffRubberBand rb, Staff st, SMPFXController ct, ImageLoader im) {
+	public StaffClipboard(StaffRubberBand rb, Staff st, SMPFXController ct) {
 
 		rubberBand = rb;
-		il = im;
 		theStaff = st;
 		controller = ct;
 
@@ -76,8 +73,6 @@ public class StaffClipboard {
 		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
 		
 		initializeHighlightedVolumes(ct);
-		
-		new StaffClipboardFilter(ct.getInstLine(), il);
 	}
 
 	private void initializeHighlightedVolumes(SMPFXController ct) {
