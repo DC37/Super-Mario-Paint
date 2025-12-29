@@ -213,6 +213,23 @@ public class SMPInstrumentButton extends SMPButton {
             	};
             }
             
+            private Subscription onMousePressedSubscription() {
+            	Button b = getSkinnable();
+            	
+            	// ~ Dirty hack ~
+            	// Normally a mouse press with key modifiers such as Ctrl or Shift does not arm the button
+            	// We override this in the only possible way (original implementation is private API)
+            	EventHandler<MouseEvent> onMousePressed = new EventHandler<>() {
+            		@Override public void handle(MouseEvent event) {
+            			if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
+            				b.arm();
+            		}
+            	};
+            	
+            	b.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
+            	return () -> b.removeEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
+			}
+            
             @Override
             public void install() {
             	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
@@ -226,13 +243,14 @@ public class SMPInstrumentButton extends SMPButton {
                 		.and(filterSubscription(filterIv))
                 		.and(imageSustainSubscription())
                 		.and(activateFadeoutSubscription())
-                		.and(() -> graphicProperty().unbind());
+                		.and(() -> graphicProperty().unbind())
+                		.and(onMousePressedSubscription());
                 
                 fadeoutResetList.add(this::fadeoutReset);
                 fadeoutPlayList.add(this::fadeoutPlay);
             }
-            
-            private void fadeoutReset() {
+
+			private void fadeoutReset() {
             	filterIv.setOpacity(1.0);
             	fadeTransition.pause();
             }
