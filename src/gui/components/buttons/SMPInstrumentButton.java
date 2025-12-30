@@ -138,7 +138,7 @@ public class SMPInstrumentButton extends SMPButton {
     @Override
     protected Skin<?> createDefaultSkin() {
         return new ButtonSkin(this) {
-            Subscription graphicSubscription;
+            Subscription mainSubscription;
             ImageView filterIv;
             FadeTransition fadeTransition;
             
@@ -255,7 +255,7 @@ public class SMPInstrumentButton extends SMPButton {
             	ObservableValue<Node> graphic = buildGraphic(buttonImageView, filterIv);
             	graphicProperty().bind(graphic);
             	
-                graphicSubscription =
+                mainSubscription =
                 		SMPButtonInterface.subscribeNodeProperty(SMPInstrumentButton.this, armedProperty(), buttonImageView)
                 		.and(filterSubscription(filterIv))
                 		.and(imageSustainSubscription())
@@ -276,7 +276,7 @@ public class SMPInstrumentButton extends SMPButton {
             
             @Override
             public void dispose() {
-                graphicSubscription.unsubscribe();
+                mainSubscription.unsubscribe();
             }
         };
     }
