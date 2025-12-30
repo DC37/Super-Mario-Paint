@@ -1,7 +1,6 @@
 package gui.components.buttons;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import gui.StateMachine;
 import javafx.animation.FadeTransition;
@@ -99,19 +98,22 @@ public class SMPInstrumentButton extends SMPButton {
     public void setImageFiltered(Image imageFiltered) { imageFiltered().setValue(imageFiltered); }
 	
 	public SMPInstrumentButton() {
-		super();
-		initialize();
+		this("", null, null, DEFAULT_GROUP);
 	}
 	
 	public SMPInstrumentButton(String text) {
-		super(text);
-		initialize();
+		this(text, null, null, DEFAULT_GROUP);
 	}
     
     public SMPInstrumentButton(String text, Image imageSustainOff, Image imageSustainOn) {
+    	this(text, imageSustainOff, imageSustainOn, DEFAULT_GROUP);
+    }
+    
+    public SMPInstrumentButton(String text, Image imageSustainOff, Image imageSustainOn, HashSet<SMPInstrumentButton> group) {
         super(text);
         setImageSustainOff(imageSustainOff);
         setImageSustainOn(imageSustainOn);
+        this.buttonsGroup = group;
         initialize();
     }
     
@@ -125,15 +127,20 @@ public class SMPInstrumentButton extends SMPButton {
     private static final PseudoClass SUSTAINED_PSEUDO_CLASS = PseudoClass.getPseudoClass("sustained");
     private static final PseudoClass FILTERED_PSEUDO_CLASS = PseudoClass.getPseudoClass("filtered");
     
+    private Runnable onMouseEntered = null;
+    private Runnable onMouseExited = null;
+    
+    // Synchronize animations for all buttons in this group
+    final private HashSet<SMPInstrumentButton> buttonsGroup;
+    
+    private static HashSet<SMPInstrumentButton> DEFAULT_GROUP = new HashSet<>();
+    
     @Override
     protected Skin<?> createDefaultSkin() {
         return new ButtonSkin(this) {
             Subscription graphicSubscription;
             ImageView filterIv;
             FadeTransition fadeTransition;
-            
-            private static List<Runnable> fadeoutResetList = new ArrayList<>(32);
-            private static List<Runnable> fadeoutPlayList = new ArrayList<>(32);
             
             private Binding<Node> buildGraphic(ObservableValue<Node> button, Node filter) {
             	return Bindings.createObjectBinding(() -> {
@@ -190,18 +197,25 @@ public class SMPInstrumentButton extends SMPButton {
             	EventHandler<MouseEvent> onEntered = new EventHandler<>() {
             		@Override public void handle(MouseEvent event) {
             			if (event.getEventType() == MouseEvent.MOUSE_ENTERED)
-            				for (Runnable r : fadeoutResetList)
-            					r.run();
+            				for (SMPInstrumentButton b : buttonsGroup) {
+            					if (b.onMouseEntered != null)
+            						b.onMouseEntered.run();
+            				}
             		}
             	};
             	
             	EventHandler<MouseEvent> onExited = new EventHandler<>() {
             		@Override public void handle(MouseEvent event) {
             			if (event.getEventType() == MouseEvent.MOUSE_EXITED)
-            				for (Runnable r : fadeoutPlayList)
-            					r.run();
+            				for (SMPInstrumentButton b : buttonsGroup) {
+            					if (b.onMouseExited != null)
+            						b.onMouseExited.run();
+            				}
             		}
             	};
+            	
+            	onMouseEntered = this::fadeoutReset;
+            	onMouseExited = this::fadeoutPlay;
             	
             	Button c = getSkinnable();
             	c.addEventHandler(MouseEvent.MOUSE_ENTERED, onEntered);
@@ -210,6 +224,8 @@ public class SMPInstrumentButton extends SMPButton {
             	return () -> {
             		c.removeEventHandler(MouseEvent.MOUSE_ENTERED, onEntered);
             		c.removeEventHandler(MouseEvent.MOUSE_EXITED, onExited);
+            		onMouseEntered = null;
+            		onMouseExited = null;
             	};
             }
             
@@ -232,6 +248,7 @@ public class SMPInstrumentButton extends SMPButton {
             
             @Override
             public void install() {
+            	buttonsGroup.add(SMPInstrumentButton.this);
             	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
             	filterIv = buildFilter();
             	fadeTransition = makeTransition(filterIv);
@@ -244,10 +261,8 @@ public class SMPInstrumentButton extends SMPButton {
                 		.and(imageSustainSubscription())
                 		.and(activateFadeoutSubscription())
                 		.and(() -> graphicProperty().unbind())
-                		.and(onMousePressedSubscription());
-                
-                fadeoutResetList.add(this::fadeoutReset);
-                fadeoutPlayList.add(this::fadeoutPlay);
+                		.and(onMousePressedSubscription())
+                		.and(() -> buttonsGroup.remove(SMPInstrumentButton.this));
             }
 
 			private void fadeoutReset() {
@@ -262,8 +277,6 @@ public class SMPInstrumentButton extends SMPButton {
             @Override
             public void dispose() {
                 graphicSubscription.unsubscribe();
-//                fadeoutResetList.remove(this::fadeoutReset);
-//                fadeoutPlayList.remove(this::fadeoutPlay);
             }
         };
     }
