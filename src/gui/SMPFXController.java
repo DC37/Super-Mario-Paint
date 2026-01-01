@@ -423,18 +423,23 @@ public class SMPFXController {
     		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
     		        
     			} else if (StateMachine.isCtrlPressed()) {
-    				if (StateMachine.getFilteredNotes() == -1) {
-    					for (InstrumentIndex i : InstrumentIndex.values()) {
-    						if (i == inst)
-    							continue;
-    						
-    						StateMachine.setFilteredNote(i.ordinal(), false);
-    					}
+    				int flt = StateMachine.getFilteredNotes();
+    				int new_flt;
+    				int mask = ~ ((-1) << InstrumentIndex.values().length);
+    				
+    				// we go through bitwise computations to only set the property once
+    				if ((flt & mask) == mask) {
+    					new_flt = 1 << inst.ordinal();
     					
     				} else {
-    					boolean ex = StateMachine.getFilteredNote(inst.ordinal());
-    					StateMachine.setFilteredNote(inst.ordinal(), !ex);
+    					new_flt = flt ^ (1 << inst.ordinal());
+    					
+    					if ((new_flt & mask) == 0) {
+    						new_flt = -1;
+    					}
     				}
+    				
+    				StateMachine.setFilteredNotes(new_flt);
     				
     			} else {
     		        MidiChannel[] chan = SoundfontLoader.getChannels();
@@ -456,9 +461,14 @@ public class SMPFXController {
         	}
         });
         
-        StateMachine.filteredNotesProperty().addListener(obs -> {
+        StateMachine.filteredNotesProperty().addListener((obs, oldv, newv) -> {
+        	int diff = (int) oldv ^ (int) newv;
         	for (InstrumentIndex inst : InstrumentIndex.values()) {
-        		vs[inst.ordinal()].setActive(StateMachine.getFilteredNote(inst.ordinal()));
+        		if ((diff & 1) == 1) {
+        			boolean ex = StateMachine.getFilteredNote(inst.ordinal());
+            		vs[inst.ordinal()].setActive(ex);
+        		}
+        		diff >>= 1;
         	}
         });
     }

@@ -1,13 +1,16 @@
 package gui.components.buttons;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import gui.StateMachine;
 import javafx.animation.FadeTransition;
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -43,6 +46,7 @@ public class SMPInstrumentButton extends SMPButton {
 		return active;
 	}
 	public boolean isActive() { return active().getValue(); }
+	public boolean isInactive() { return !isActive(); }
 	public void setActive(boolean b) { active().setValue(b); }
 	
 	/**
@@ -98,22 +102,19 @@ public class SMPInstrumentButton extends SMPButton {
     public void setImageFiltered(Image imageFiltered) { imageFiltered().setValue(imageFiltered); }
 	
 	public SMPInstrumentButton() {
-		this("", null, null, DEFAULT_GROUP);
+		super();
+        initialize();
 	}
 	
 	public SMPInstrumentButton(String text) {
-		this(text, null, null, DEFAULT_GROUP);
+		super(text);
+        initialize();
 	}
     
     public SMPInstrumentButton(String text, Image imageSustainOff, Image imageSustainOn) {
-    	this(text, imageSustainOff, imageSustainOn, DEFAULT_GROUP);
-    }
-    
-    public SMPInstrumentButton(String text, Image imageSustainOff, Image imageSustainOn, HashSet<SMPInstrumentButton> group) {
         super(text);
         setImageSustainOff(imageSustainOff);
         setImageSustainOn(imageSustainOn);
-        this.buttonsGroup = group;
         initialize();
     }
     
@@ -130,10 +131,52 @@ public class SMPInstrumentButton extends SMPButton {
     private Runnable onMouseEntered = null;
     private Runnable onMouseExited = null;
     
-    // Synchronize animations for all buttons in this group
-    final private HashSet<SMPInstrumentButton> buttonsGroup;
+    private static class SMPInstrumentButtonGroup implements Iterable<SMPInstrumentButton> {
+    	
+    	private Map<SMPInstrumentButton, InvalidationListener> group;
+    	private BooleanProperty allActive;
+    	
+    	public SMPInstrumentButtonGroup() {
+    		this.group = new HashMap<>();
+    		this.allActive = new SimpleBooleanProperty(true);
+    	}
+    	
+    	public void addButton(SMPInstrumentButton b) {
+    		InvalidationListener activeListen = obs -> invalid();
+    		b.active().addListener(activeListen);
+    		group.put(b, activeListen);
+    	}
+    	
+    	public void removeButton(SMPInstrumentButton b) {
+    		InvalidationListener l = group.remove(b);
+    		b.active().removeListener(l);
+    	}
+    	
+    	private void invalid() {
+    		for (SMPInstrumentButton b : group.keySet()) {
+    			if (!b.isActive()) {
+    				allActive.setValue(false);
+    				return;
+    			}
+    			
+    			allActive.setValue(true);
+    		}
+    	}
+
+		public Iterator<SMPInstrumentButton> iterator() {
+			return group.keySet().iterator();
+		}
+		
+		public ReadOnlyBooleanProperty allActive() {
+			return allActive;
+		}
+    	
+    }
     
-    private static HashSet<SMPInstrumentButton> DEFAULT_GROUP = new HashSet<>();
+    // Synchronize animations for all buttons in this group
+    final private SMPInstrumentButtonGroup buttonsGroup = DEFAULT_GROUP;
+    
+    private static SMPInstrumentButtonGroup DEFAULT_GROUP = new SMPInstrumentButtonGroup();
     
     @Override
     protected Skin<?> createDefaultSkin() {
@@ -165,7 +208,7 @@ public class SMPInstrumentButton extends SMPButton {
             	filter.fitHeightProperty().bind(fitHeight());
             	filter.fitWidthProperty().bind(fitWidth());
             	filter.imageProperty().bind(imageFiltered());
-            	filter.visibleProperty().bind(Bindings.and(active(), Bindings.notEqual(-1, StateMachine.filteredNotesProperty())));
+            	filter.visibleProperty().bind(Bindings.and(active(), Bindings.not(buttonsGroup.allActive())));
             	
             	return () -> {
             		filter.fitHeightProperty().unbind();
@@ -248,7 +291,7 @@ public class SMPInstrumentButton extends SMPButton {
             
             @Override
             public void install() {
-            	buttonsGroup.add(SMPInstrumentButton.this);
+            	buttonsGroup.addButton(SMPInstrumentButton.this);
             	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
             	filterIv = buildFilter();
             	fadeTransition = makeTransition(filterIv);
@@ -262,7 +305,7 @@ public class SMPInstrumentButton extends SMPButton {
                 		.and(activateFadeoutSubscription())
                 		.and(() -> graphicProperty().unbind())
                 		.and(onMousePressedSubscription())
-                		.and(() -> buttonsGroup.remove(SMPInstrumentButton.this));
+                		.and(() -> buttonsGroup.removeButton(SMPInstrumentButton.this));
             }
 
 			private void fadeoutReset() {
