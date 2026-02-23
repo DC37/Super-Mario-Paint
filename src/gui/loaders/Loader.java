@@ -15,10 +15,4 @@ public interface Loader extends Runnable {
      */
     public double getLoadStatus();
 
-    /**
-     * Sets the load status of the Loader to some double
-     * between 0 and 1.
-     */
-    public void setLoadStatus(double d);
-
 }

@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
  * @author RehdBlob
  * @since 2012.08.14
  */
-public class ImageLoader implements Loader {
+public class ImageLoader extends LoaderBase {
 
     /**
      * Contains references to all the loaded sprites in JavaFX Image form.
@@ -30,11 +30,6 @@ public class ImageLoader implements Loader {
      * program.
      */
     private ArrayList<ImageCursor> cursors;
-    
-    /**
-     * The amount of loading that the imageLoader has done, anywhere between 0 to 1.
-     */
-    private static double loadStatus = 0.0;
 
     /**
      * The extension of the image files that we are to be loading. An advantage of
@@ -126,25 +121,6 @@ public class ImageLoader implements Loader {
         if (type >= cursors.size() || type < 0)
             return null;
         return cursors.get(type);
-    }
-    
-    /**
-     * @return The current load status, which is anywhere between 0 and 1.
-     */
-    @Override
-    public double getLoadStatus() {
-        return loadStatus;
-    }
-
-    /**
-     * Sets the load status of the Thread version of ImageLoader.
-     * 
-     * @param d A <b>double</b> that is anywhere between 0 and 1.
-     */
-    @Override
-    public void setLoadStatus(double d) {
-        if (d >= 0 && d <= 1)
-            loadStatus = d;
     }
 
 }

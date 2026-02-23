@@ -35,13 +35,7 @@ import javafx.stage.Window;
  * @author j574y923
  * @since 2012.08.14
  */
-public class SoundfontLoader implements Loader {
-
-    /**
-     * A number between 0 and 1 that indicates the
-     * completion of the loading Thread's tasks.
-     */
-    private double loadStatus = 0.0;
+public class SoundfontLoader extends LoaderBase {
 
     /**
      * The sound synthesizer used to hold as many instruments as needed.
@@ -329,26 +323,6 @@ public class SoundfontLoader implements Loader {
      */
     public void close() {
         theSynthesizer.close();
-    }
-
-    /**
-     * @return A double value between 0 and 1, representing the
-     * load status of this class.
-     */
-    @Override
-    public double getLoadStatus() {
-        return loadStatus;
-    }
-
-    /**
-     * Set the load status of the SoundfontLoader.
-     * @param d A double value between 0 and 1 that represents the
-     * load state of this class.
-     */
-    @Override
-    public void setLoadStatus(double d) {
-        if (d >= 0 && d <= 1)
-            loadStatus = d;
     }
 
     /**
