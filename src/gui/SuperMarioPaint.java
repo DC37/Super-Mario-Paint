@@ -8,7 +8,6 @@ import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
 import gui.loaders.SoundfontLoader;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.application.Preloader.ErrorNotification;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
@@ -353,17 +352,10 @@ public class SuperMarioPaint extends Application  {
      * 			Which mouse button is being pressed (if any).
      */
     public void setCursor(int type) {
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                ImageCursor im = ((ImageLoader) imgLoader).getCursor(type);
-                if (im != null) {
-                    primaryScene.setCursor(im);
-                }
-            }
-            
-        });
+    	ImageCursor im = ((ImageLoader) imgLoader).getCursor(type);
+    	if (im != null) {
+    		primaryScene.setCursor(im);
+    	}
     }
     
     /**
