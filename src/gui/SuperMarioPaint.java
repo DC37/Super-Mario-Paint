@@ -3,9 +3,13 @@ package gui;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
+import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
+import gui.loaders.SMPCursorType;
 import gui.loaders.SoundfontLoader;
 import javafx.application.Application;
 import javafx.application.Preloader.ErrorNotification;
@@ -61,7 +65,9 @@ public class SuperMarioPaint extends Application  {
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
      */
-    private Loader imgLoader = new ImageLoader();
+    private ImageLoader imgLoader = new ImageLoader();
+    
+    private Map<SMPCursorType, ImageCursor> cursorImages = new HashMap<>();
 
     /**
      * Loads the soundfonts that will be used in Super Mario Paint.
@@ -112,6 +118,11 @@ public class SuperMarioPaint extends Application  {
             notifyPreloader(new ProgressNotification(ld));
         } while (imgLd.isAlive() || sfLd.isAlive());
         
+        cursorImages.put(SMPCursorType.HAND_POINTING, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_0)));
+        cursorImages.put(SMPCursorType.HAND_OPEN, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_1)));
+        cursorImages.put(SMPCursorType.HAND_CLOSED, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_2)));
+        cursorImages.put(SMPCursorType.ERASER, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_3)));
+        
         FXMLLoader loader = new FXMLLoader();
         loader.setController(controller);
         File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
@@ -151,7 +162,7 @@ public class SuperMarioPaint extends Application  {
             
             /* @since 2020.4.28 - seymour
              * Changes the cursor image */
-            setCursor(0);
+            setCursor(SMPCursorType.HAND_POINTING);
             
             /* Changes the app icon 
              * (gives the option to use a given icon OR a random icon from all instruments) */
@@ -280,11 +291,11 @@ public class SuperMarioPaint extends Application  {
                             mouseButtons.add(m.getButton());
                         
                         if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
-                            setCursor(2);
+                            setCursor(SMPCursorType.HAND_CLOSED);
                         else if (mouseButtons.contains(MouseButton.PRIMARY))
-                            setCursor(1);
+                            setCursor(SMPCursorType.HAND_OPEN);
                         else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
-                            setCursor(3);
+                            setCursor(SMPCursorType.ERASER);
                         
                         m.consume();
                     }
@@ -298,14 +309,14 @@ public class SuperMarioPaint extends Application  {
                         mouseButtons.remove(m.getButton());
                         
                         if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
-                            setCursor(2);
+                            setCursor(SMPCursorType.HAND_CLOSED);
                         else if (mouseButtons.contains(MouseButton.PRIMARY))
-                            setCursor(1);
+                            setCursor(SMPCursorType.HAND_OPEN);
                         else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
-                            setCursor(3);
+                            setCursor(SMPCursorType.ERASER);
                         
                         if (mouseButtons.isEmpty())
-                            setCursor(0);
+                            setCursor(SMPCursorType.HAND_POINTING);
                         
                         m.consume();
                     }
@@ -340,22 +351,8 @@ public class SuperMarioPaint extends Application  {
         }
 	}
     
-    /**
-     * Changes the cursor image.
-     * TYPES:
-     * 0 - Default
-     * 1 - Grab
-     * 2 - Open (splayed)
-     * 3 - Eraser
-     * 
-     * @param isPressed
-     * 			Which mouse button is being pressed (if any).
-     */
-    public void setCursor(int type) {
-    	ImageCursor im = ((ImageLoader) imgLoader).getCursor(type);
-    	if (im != null) {
-    		primaryScene.setCursor(im);
-    	}
+    public void setCursor(SMPCursorType type) {
+    	primaryScene.setCursor(cursorImages.get(type));
     }
     
     /**

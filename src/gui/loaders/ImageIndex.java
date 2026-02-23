@@ -16,6 +16,9 @@ public enum ImageIndex {
 
     /** Blank image. */
     BLANK (NONE, NONE),
+    
+    /** Cursor images */
+    CURSOR_0, CURSOR_1, CURSOR_2, CURSOR_3,
 
     /*
      * Instruments grayed out.
