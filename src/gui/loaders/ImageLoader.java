@@ -1,13 +1,11 @@
 package gui.loaders;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 import gui.Settings;
 import gui.Utilities;
 import gui.Values;
-import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 
 /**
@@ -24,13 +22,6 @@ public class ImageLoader extends LoaderBase {
      */
     private Hashtable<ImageIndex, Image> spritesFX;
 
-    
-    /**
-     * Contains references to all of the loaded sprites for the cursors in this 
-     * program.
-     */
-    private ArrayList<ImageCursor> cursors;
-
     /**
      * The extension of the image files that we are to be loading. An advantage of
      * .png files is that they can have transparent pixels.
@@ -42,7 +33,6 @@ public class ImageLoader extends LoaderBase {
      * class is better: java.awt.Image, or javafx.scene.image.Image.
      */
     public ImageLoader() {
-        cursors = new ArrayList<ImageCursor>();
         spritesFX = new Hashtable<ImageIndex, javafx.scene.image.Image>();
     }
 
@@ -54,24 +44,6 @@ public class ImageLoader extends LoaderBase {
     @Override
     public void run() {
         ImageIndex [] ind = ImageIndex.values();
-        
-        /** Change this if for some reason we want more cursors. */
-        int NUM_CURSORS = 4;
-        for (int i = 0; i < NUM_CURSORS; i++) {
-            String path = "CURSOR_" + i + extension;
-            try {
-                File f = Utilities.getResourceFile(path, Values.SPRITES_FOLDER);
-                if (f.exists()) {
-                    cursors.add(new ImageCursor(
-                            new Image(f.toURI().toString()), 0, 0));
-                    if ((Settings.debug & 0b01) != 0)
-                        System.out.println(
-                                "Loaded Cursor: " + path);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
         
         for (ImageIndex i : ind) {
             if (i == ImageIndex.NONE || i == ImageIndex.BLANK)
@@ -110,17 +82,6 @@ public class ImageLoader extends LoaderBase {
      */
     public Image getSpriteFX(ImageIndex index) throws NullPointerException {
         return spritesFX.get(index);
-    }
-
-    /**
-     * Gets a cursor from
-     * @param type 
-     * @return
-     */
-    public ImageCursor getCursor(int type) {
-        if (type >= cursors.size() || type < 0)
-            return null;
-        return cursors.get(type);
     }
 
 }
