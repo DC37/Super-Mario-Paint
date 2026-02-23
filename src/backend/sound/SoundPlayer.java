@@ -23,9 +23,6 @@ import gui.loaders.SoundfontLoader;
  */
 public class SoundPlayer {
 
-    /** Tells whether we want this thread to keep running. */
-    private boolean run = true;
-
     /** This is the index that we are playing. */
     int ind;
 
@@ -44,8 +41,6 @@ public class SoundPlayer {
      * Plays the current line of notes.
      */
     public void playSoundLine(int index) {
-        if (!run)
-            return;
         StaffNoteLine s = theStaff.getSequence().getLineSafe(
                 StateMachine.getMeasureLineNum() + index);
         ArrayList<StaffNote> theNotes = s.getNotes();
@@ -109,14 +104,6 @@ public class SoundPlayer {
     		tracker.stopInstrument(new StaffNote(in, 0, Accidental.NATURAL));
     	}
     	
-    }
-    
-    /**
-     *
-     * @param r
-     */
-    public void setRun(boolean r) {
-        run = r;
     }
     
     /**

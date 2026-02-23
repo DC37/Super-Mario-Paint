@@ -244,7 +244,6 @@ public class Staff {
 
     /** Begins animation of the Staff. (Starts a song) */
     public synchronized void startSong() {
-        soundPlayer.setRun(true);
         songPlaying = true;
         setTempo(StateMachine.getTempo());
         animationService.restart();
@@ -252,7 +251,6 @@ public class Staff {
 
     /** Starts an arrangement. */
     public synchronized void startArrangement() {
-        soundPlayer.setRun(true);
         ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
         ArrayList<File> files = theArrangement.getTheSequenceFiles();
         resetLocation();
@@ -280,7 +278,6 @@ public class Staff {
 
     /** Stops the song that is currently playing. */
     public void stopSong() {
-        soundPlayer.setRun(false);
         Platform.runLater(new Runnable() {
 
             @Override
