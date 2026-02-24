@@ -19,6 +19,7 @@ import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
+import backend.sound.SoundPlayer;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.SongNameController;
@@ -166,11 +167,10 @@ public class SMPFXController {
     
     private ModifySongManager commandManager;
     
-    /** This is the image loader. */
     private ImageLoader il;
     
-    /** This is the soundfont loader. */
     private SoundfontLoader sf;
+    private SoundPlayer soundPlayer;
     
     /** Handles the options menu */
     private OptionsMenu optionsMenu;
@@ -224,7 +224,8 @@ public class SMPFXController {
         
         // Set up staff.
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
-        staff = new Staff(this, displayManager, arrangementList);
+        soundPlayer = new SoundPlayer();
+        staff = new Staff(this, displayManager, soundPlayer, arrangementList);
         displayManager.initialize();
         makeKeyboardHandlers(basePane);
         
