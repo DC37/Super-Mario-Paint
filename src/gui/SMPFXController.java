@@ -225,7 +225,7 @@ public class SMPFXController {
         // Set up staff.
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         soundPlayer = sf.getSoundPlayer();
-        staff = new Staff(this, displayManager, soundPlayer, arrangementList);
+        staff = new Staff(displayManager, soundPlayer, arrangementList);
         displayManager.initialize();
         makeKeyboardHandlers(basePane);
         
@@ -1161,10 +1161,6 @@ public class SMPFXController {
     /** @since v1.1.2 */
     public void setSoundfontLoader(SoundfontLoader sfLoader) {
         sf = sfLoader;
-    }
-    
-    public Staff getStaff(){
-        return staff;
     }
     
     public AnchorPane getBasePane() {

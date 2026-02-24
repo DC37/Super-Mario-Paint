@@ -73,9 +73,6 @@ public class Staff {
      */
     private File theArrangementFile = null;
 
-    /** The FXML controller class. */
-    private SMPFXController controller;
-
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     final private SoundPlayer soundPlayer;
 
@@ -95,22 +92,11 @@ public class Staff {
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
      */
-    public Staff(SMPFXController ct, StaffDisplayManager display, SoundPlayer soundPlayer, ListView<String> arrList) {
+    public Staff(StaffDisplayManager display, SoundPlayer soundPlayer, ListView<String> arrList) {
         displayManager = display;
-        setController(ct);
         theArrangementList = arrList;
         animationService = new AnimationService();
         this.soundPlayer = soundPlayer;
-    }
-
-    /**
-     * Sets the controller class.
-     *
-     * @param ct
-     *            The FXML controller class.
-     */
-    public void setController(SMPFXController ct) {
-        controller = ct;
     }
     
     public SoundPlayer getSoundPlayer() {
