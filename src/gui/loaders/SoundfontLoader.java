@@ -25,12 +25,11 @@ import gui.Values;
  * @author j574y923
  * @since 2012.08.14
  */
-public class SoundfontLoader extends LoaderBase {
-	
-	private SoundPlayer soundPlayer;
+public class SoundfontLoader extends LoaderBase<SoundPlayer> {
 
     @Override
-    public void run() {
+    public SoundPlayer call() {
+    	SoundPlayer soundPlayer = null;
     	SMPSynthesizer theSynthesizer;
     	Soundbank bank;
     	MidiChannel[] chan;
@@ -100,10 +99,8 @@ public class SoundfontLoader extends LoaderBase {
             e.printStackTrace();
             System.exit(0);
         }
+        
+        return soundPlayer;
 	}
-    
-    public SoundPlayer getSoundPlayer() {
-    	return soundPlayer;
-    }
 
 }

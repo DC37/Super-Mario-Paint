@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.RunnableFuture;
 
+import backend.sound.SoundPlayer;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
@@ -65,14 +68,18 @@ public class SuperMarioPaint extends Application  {
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
      */
-    private ImageLoader imgLoader = new ImageLoader();
+    private Loader<Map<ImageIndex, Image>> imgLoader;
+    
+    private RunnableFuture<Map<ImageIndex, Image>> imagesHolderFuture;
     
     private Map<SMPCursorType, ImageCursor> cursorImages = new HashMap<>();
 
     /**
      * Loads the soundfonts that will be used in Super Mario Paint.
      */
-    private SoundfontLoader sfLoader = new SoundfontLoader();
+    private Loader<SoundPlayer> sfLoader;
+    
+    private RunnableFuture<SoundPlayer> soundPlayerFuture;
 
     /** Image Loader thread. */
     private Thread imgLd;
@@ -118,14 +125,17 @@ public class SuperMarioPaint extends Application  {
             notifyPreloader(new ProgressNotification(ld));
         } while (imgLd.isAlive() || sfLd.isAlive());
         
-        cursorImages.put(SMPCursorType.HAND_POINTING, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_0)));
-        cursorImages.put(SMPCursorType.HAND_OPEN, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_1)));
-        cursorImages.put(SMPCursorType.HAND_CLOSED, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_2)));
-        cursorImages.put(SMPCursorType.ERASER, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_3)));
+        Map<ImageIndex, Image> imagesHolder = imagesHolderFuture.get();
+        SoundPlayer soundPlayer = soundPlayerFuture.get();
+        
+        cursorImages.put(SMPCursorType.HAND_POINTING, new ImageCursor(imagesHolder.get(ImageIndex.CURSOR_0)));
+        cursorImages.put(SMPCursorType.HAND_OPEN, new ImageCursor(imagesHolder.get(ImageIndex.CURSOR_1)));
+        cursorImages.put(SMPCursorType.HAND_CLOSED, new ImageCursor(imagesHolder.get(ImageIndex.CURSOR_2)));
+        cursorImages.put(SMPCursorType.ERASER, new ImageCursor(imagesHolder.get(ImageIndex.CURSOR_3)));
         
         FXMLLoader loader = new FXMLLoader();
-        controller.setImagesHolder(imgLoader.getImagesHolder());
-        controller.setSoundPlayer(sfLoader.getSoundPlayer());
+        controller.setImagesHolder(imagesHolder);
+        controller.setSoundPlayer(soundPlayer);
         loader.setController(controller);
         File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
         loader.setLocation(fxml.toURI().toURL());
@@ -201,8 +211,13 @@ public class SuperMarioPaint extends Application  {
      */
     @Override
     public void init() {
-        imgLd = new Thread(imgLoader);
-        sfLd = new Thread(sfLoader);
+    	imgLoader = new ImageLoader();
+    	imagesHolderFuture = new FutureTask<>(imgLoader);
+        imgLd = new Thread(imagesHolderFuture);
+        
+        sfLoader = new SoundfontLoader();
+        soundPlayerFuture = new FutureTask<>(sfLoader);
+        sfLd = new Thread(soundPlayerFuture);
     }
     
     /**
@@ -364,15 +379,5 @@ public class SuperMarioPaint extends Application  {
     public void setIcon(String fileLocation) {
     	if (new File(fileLocation).exists())
     		primaryStage.getIcons().add(new Image("file:" + fileLocation));
-    }
-
-	/**
-	 * Gets the soundfont Loader. This function will probably only be temporary
-	 * if we plan to move the loader to another class.
-	 * 
-	 * @return the soundfont Loader
-	 */
-	public Loader getSoundfontLoader() {
-    	return sfLoader;
     }
 }
