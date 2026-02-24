@@ -313,20 +313,6 @@ public class Staff {
 		}
 	}
 
-    /**
-     * Imports a Mario Paint Composer song.
-     */
-    public void importMPCSong() {
-
-    }
-
-    /**
-     * Imports an Advanced Mario Sequencer song.
-     */
-    public void importAMSSong() {
-
-    }
-
     /** @return The current song that we are displaying. */
     public synchronized StaffSequence getSequence() {
         return theSequence;
