@@ -1178,12 +1178,4 @@ public class SMPFXController {
     public ModifySongManager getModifySongManager() {
         return commandManager;
     }
-    
-    /**
-     * @return the program's Soundfont Loader
-     * @since v1.1.2
-     */
-    public SoundfontLoader getSoundfontLoader() {
-        return sf;
-    }
 }
