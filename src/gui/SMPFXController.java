@@ -91,13 +91,6 @@ public class SMPFXController {
     @FXML
     private Text modeText;
 
-    /**
-     * The controls line that includes the play button, stop button, loop
-     * button, etc.
-     */
-    @FXML
-    private HBox controls;
-
     @FXML
     private SMPRadioButton playButton;
 
