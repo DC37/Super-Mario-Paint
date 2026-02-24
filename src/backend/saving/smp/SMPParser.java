@@ -11,13 +11,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import backend.saving.mpc.MPCDecoder;
+import backend.saving.Parser;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import gui.Utilities;
 
-public class SMPParser {
+public class SMPParser implements Parser<StaffSequence> {
 
 	/**
 	 * Loads a song from the file specified.
@@ -29,12 +29,12 @@ public class SMPParser {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static StaffSequence parse(File inputFile)
+	public StaffSequence parse(File inputFile)
 			throws FileNotFoundException, IOException, NullPointerException {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		StaffSequence loaded = null;
 		try {
-			loaded = MPCDecoder.parse(inputFile);
+			loaded = Parser.MPC_SEQUENCE_PARSER.parse(inputFile);
 		} catch (ParseException e1) {
 			try {
 				// Decode as object
@@ -70,7 +70,7 @@ public class SMPParser {
 	 *            <code>ArrayList</code> of notes and parameters.
 	 * @return Hopefully, a decoded <code>StaffSequence</code>
 	 */
-	private static StaffSequence parseText(ArrayList<String> read) {
+	private StaffSequence parseText(ArrayList<String> read) {
 		StaffSequence loaded = new StaffSequence();
 		for (String s : read) {
 			if (s.contains("TEMPO") || s.contains("EXT") || s.contains("TIME") || s.contains("SOUNDSET")) {

@@ -10,8 +10,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
-import backend.saving.mpc.MPCDecoder;
-import backend.saving.smp.SMPParser;
+import backend.saving.Parser;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffEvent;
 import backend.songs.StaffNoteLine;
@@ -260,10 +259,10 @@ public class Staff {
         for (int i = 0; i < seq.size(); i++) {
             File f = files.get(i);
             try {
-                seq.set(i, SMPParser.parse(f));
-            } catch (StreamCorruptedException | NullPointerException e) {
+                seq.set(i, Parser.SMP_SEQUENCE_PARSER.parse(f));
+            } catch (StreamCorruptedException | NullPointerException | ParseException e) {
                 try {
-                    seq.set(i, MPCDecoder.parse(f));
+                    seq.set(i, Parser.MPC_SEQUENCE_PARSER.parse(f));
                 } catch (ParseException | IOException e1) {
                     e1.printStackTrace();
                     stopSong();

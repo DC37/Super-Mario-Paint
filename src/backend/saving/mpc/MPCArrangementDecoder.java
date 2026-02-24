@@ -6,10 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 
+import backend.saving.Parser;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffSequence;
 
-public class MPCArrangementDecoder {
+public class MPCArrangementDecoder implements Parser<StaffArrangement> {
 
     /**
      * Opens a file and decodes Mario Paint Composer arrangement data from it.
@@ -22,7 +23,7 @@ public class MPCArrangementDecoder {
      * @throws IOException
      *             If the file is not readable.
      */
-    public static StaffArrangement parse(File f)
+    public StaffArrangement parse(File f)
             throws ParseException, IOException {
         BufferedReader bf = new BufferedReader(new FileReader(f));
         String line = "";
@@ -52,7 +53,7 @@ public class MPCArrangementDecoder {
      * @throws IOException
      *             If something goes wrong while attempting to read the files.
      */
-    private static StaffArrangement parseFiles(String str, File inputFile)
+    private StaffArrangement parseFiles(String str, File inputFile)
             throws ParseException, IOException {
         if (str.isEmpty() || str == null) {
             throw new ParseException("Invalid Arr File.", 0);
@@ -63,7 +64,7 @@ public class MPCArrangementDecoder {
         	String sp = s;
             String st = inputFile.getParent() + File.separatorChar + sp + "]MarioPaint.txt";
             File f = new File(st);
-            StaffSequence seq = MPCDecoder.parse(f);
+            StaffSequence seq = Parser.MPC_SEQUENCE_PARSER.parse(f);
             theArr.add(seq, f);
             theArr.getTheSequenceNames().add(sp);
         }

@@ -18,8 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import backend.saving.mpc.MPCDecoder;
-import backend.saving.smp.SMPParser;
+import backend.saving.Parser;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffSequence;
 import javafx.concurrent.Task;
@@ -178,9 +177,9 @@ public class Utilities {
             }
             StaffSequence loaded = null;
             try {
-                loaded = MPCDecoder.parse(inputFile);
+                loaded = Parser.MPC_SEQUENCE_PARSER.parse(inputFile);
             } catch (ParseException e1) {
-                loaded = SMPParser.parse(inputFile);
+                loaded = Parser.SMP_SEQUENCE_PARSER.parse(inputFile);
             }
             if (loaded == null) {
                 throw new IOException();
@@ -189,7 +188,7 @@ public class Utilities {
             return loaded;
 
         } catch (ClassCastException | EOFException | StreamCorruptedException
-                | NullPointerException e) {
+                | NullPointerException | ParseException e) {
             Dialog.showDialog("Not a valid song file.", owner);
             return null;
         } catch (FileNotFoundException e) {
@@ -260,7 +259,7 @@ public class Utilities {
      */
     public static void normalizeArrangement(StaffArrangement loaded,
             File filePath) throws FileNotFoundException, NullPointerException,
-            IOException {
+            IOException, ParseException {
         String basePath = filePath.getParent() + File.separatorChar;
         int sz1 = loaded.getTheSequenceFiles().size();
         int sz2 = loaded.getTheSequences().size();
@@ -277,7 +276,7 @@ public class Utilities {
                 fName = fName + "]MarioPaint.txt";
                 newPath = basePath + fName;
                 loaded.getTheSequenceFiles().set(i, new File(newPath));
-                loaded.getTheSequences().set(i, SMPParser.parse(new File(newPath)));
+                loaded.getTheSequences().set(i, Parser.SMP_SEQUENCE_PARSER.parse(new File(newPath)));
                 continue;
             }
             loaded.getTheSequenceFiles().set(i, new File(newPath));
@@ -371,11 +370,11 @@ public class Utilities {
         final ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
         for (int i = 0; i < files.size(); i++) {
             try {
-                seq.add(SMPParser.parse(files.get(i)));
+                seq.add(Parser.SMP_SEQUENCE_PARSER.parse(files.get(i)));
             } catch (ClassCastException | EOFException
-                    | StreamCorruptedException | NullPointerException e) {
+                    | StreamCorruptedException | NullPointerException | ParseException e) {
                 try {
-                    seq.add(MPCDecoder.parse(files.get(i)));
+                    seq.add(Parser.MPC_SEQUENCE_PARSER.parse(files.get(i)));
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     return;
