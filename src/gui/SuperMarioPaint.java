@@ -124,7 +124,7 @@ public class SuperMarioPaint extends Application  {
         cursorImages.put(SMPCursorType.ERASER, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_3)));
         
         FXMLLoader loader = new FXMLLoader();
-        controller.setImageLoader(imgLoader);
+        controller.setImagesHolder(imgLoader.getImagesHolder());
         controller.setSoundPlayer(sfLoader.getSoundPlayer());
         loader.setController(controller);
         File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);

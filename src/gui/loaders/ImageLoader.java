@@ -84,5 +84,9 @@ public class ImageLoader extends LoaderBase {
     public Image getSpriteFX(ImageIndex index) throws NullPointerException {
         return spritesFX.get(index);
     }
+    
+    public Map<ImageIndex, Image> getImagesHolder() {
+    	return spritesFX;
+    }
 
 }

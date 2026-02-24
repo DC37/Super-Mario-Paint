@@ -1,14 +1,16 @@
 package gui.components.staff;
 
+import java.util.Map;
+
 import backend.editing.ModifySongManager;
 import backend.editing.commands.AddVolumeCommand;
 import backend.editing.commands.RemoveVolumeCommand;
 import backend.songs.StaffNoteLine;
 import gui.Values;
 import gui.loaders.ImageIndex;
-import gui.loaders.ImageLoader;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -34,9 +36,6 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     /** The StaffNoteLine that this event handler is associated with. */
     private StaffNoteLine theLine;
     
-    /** The ImageLoader class. */
-    private ImageLoader il;
-    
     /** The text representing the volume bar the mouse is currently hovering over. */
     private static Text volText;
     
@@ -51,11 +50,10 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 	private ModifySongManager commandManager;
 	
 	/** Makes a new StaffVolumeEventHandler. */
-    public StaffVolumeEventHandler(StackPane st, ImageLoader i, ModifySongManager cm) {
+    public StaffVolumeEventHandler(StackPane st, Map<ImageIndex, Image> imagesHolder, ModifySongManager cm) {
         stp = st;
-        il = i;
         theVolBar = (ImageView) st.getChildren().get(0);
-        theVolBar.setImage(il.getSpriteFX(ImageIndex.VOL_BAR));
+        theVolBar.setImage(imagesHolder.get(ImageIndex.VOL_BAR));
         theVolBar.setVisible(false);
         commandManager = cm;
     }

@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.sound.midi.MidiChannel;
 
@@ -29,7 +30,6 @@ import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.loaders.ImageIndex;
-import gui.loaders.ImageLoader;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
@@ -43,6 +43,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
@@ -166,8 +167,7 @@ public class SMPFXController {
     
     private ModifySongManager commandManager;
     
-    private ImageLoader il;
-    
+    private Map<ImageIndex, Image> imagesHolder;
     private SoundPlayer soundPlayer;
     
     /** Handles the options menu */
@@ -184,13 +184,6 @@ public class SMPFXController {
      * Initializes the Controller class for Super Mario Paint
      */
     public void initialize() {
-        while (il == null)
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                continue;
-            }
-
         // Set up command manager (undo and redo)
         commandManager = new ModifySongManager(() -> staff.redraw());
         
@@ -221,7 +214,7 @@ public class SMPFXController {
         });
         
         // Set up staff.
-        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
+        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, imagesHolder, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         staff = new Staff(displayManager, soundPlayer, arrangementList);
         displayManager.initialize();
         makeKeyboardHandlers(basePane);
@@ -312,7 +305,7 @@ public class SMPFXController {
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
         	InstrumentIndex i = StateMachine.getSelectedInstrument();
-        	return il.getSpriteFX(ImageIndex.valueOf(i.toString()));
+        	return imagesHolder.get(ImageIndex.valueOf(i.toString()));
         }, StateMachine.selectedInstrumentProperty()));
 
         arrangementList.setEditable(true);
@@ -410,8 +403,8 @@ public class SMPFXController {
     	n.getChildren().clear();
     	
     	for (InstrumentIndex inst : InstrumentIndex.values()) {
-    		SMPInstrumentButton b = new SMPInstrumentButton(inst.name(), il.getSpriteFX(inst.smImageIndex()), il.getSpriteFX(inst.smaImageIndex()));
-    		b.setImageFiltered(il.getSpriteFX(ImageIndex.FILTER));
+    		SMPInstrumentButton b = new SMPInstrumentButton(inst.name(), imagesHolder.get(inst.smImageIndex()), imagesHolder.get(inst.smaImageIndex()));
+    		b.setImageFiltered(imagesHolder.get(ImageIndex.FILTER));
     		b.setFitHeight(28);
     		b.setFitWidth(26);
     		
@@ -1151,8 +1144,8 @@ public class SMPFXController {
         return volumeBars;
     }
 
-    public void setImageLoader(ImageLoader imgLoader) {
-        il = imgLoader;
+    public void setImagesHolder(Map<ImageIndex, Image> imagesHolder) {
+        this.imagesHolder = imagesHolder;
     }
 
     /** @since v1.1.2 */

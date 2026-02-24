@@ -10,7 +10,8 @@ import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import gui.components.staff.StaffDisplayManager.StaffNoteCoordinate;
-import gui.loaders.ImageLoader;
+import gui.loaders.ImageIndex;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -39,7 +40,7 @@ public class NoteMatrix {
     final private List<ImageView> accSilMatrix;
     
     /** Pointer to the image loader object. */
-    final private transient ImageLoader il;
+    final private transient Map<ImageIndex, Image> imagesHolder;
     
     /**
      * A silhouette note to display where the cursor is.
@@ -48,8 +49,8 @@ public class NoteMatrix {
     private StaffNote currentSilhouette;
     private int currentSilhouetteColumn;
 
-    public NoteMatrix(ImageLoader il, StaffDisplayManager disp) {
-        this.il = il;
+    public NoteMatrix(Map<ImageIndex, Image> imagesHolder, StaffDisplayManager disp) {
+        this.imagesHolder = imagesHolder;
         this.disp = disp;
         
         int notesCapacity = disp.width * disp.height * disp.depth;
@@ -129,7 +130,7 @@ public class NoteMatrix {
                 if (d < disp.depth) {
                     stackedAmounts[row] = d + 1;
                     ImageView iv = matrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
-                    iv.setImage(il.getSpriteFX(s.getImageIndex()));
+                    iv.setImage(imagesHolder.get(s.getImageIndex()));
                     iv.setEffect(s.isSelected() ? StaffDisplayManager.highlightBlend : null);
                     iv.setVisible(true);
                 }
@@ -138,7 +139,7 @@ public class NoteMatrix {
                 if (d < disp.depth) {
                     accStackedAmounts[row] = d + 1;
                     ImageView iv = accMatrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
-                    iv.setImage(il.getSpriteFX(accidental.getImageIndex()));
+                    iv.setImage(imagesHolder.get(accidental.getImageIndex()));
                     iv.setVisible(true);
                 }
             }
@@ -179,13 +180,13 @@ public class NoteMatrix {
         currentSilhouette = silhouette;
         
         ImageView iv = silMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
-        iv.setImage(il.getSpriteFX(silhouette.getImageIndex()));
+        iv.setImage(imagesHolder.get(silhouette.getImageIndex()));
         iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
             ImageView acciv = accSilMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
             StaffAccidental acc = new StaffAccidental(silhouette);
-            acciv.setImage(il.getSpriteFX(acc.getImageIndex()));
+            acciv.setImage(imagesHolder.get(acc.getImageIndex()));
             acciv.setVisible(true);
         }
     }
