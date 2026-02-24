@@ -72,7 +72,7 @@ public class SuperMarioPaint extends Application  {
     /**
      * Loads the soundfonts that will be used in Super Mario Paint.
      */
-    private Loader sfLoader = new SoundfontLoader();
+    private SoundfontLoader sfLoader = new SoundfontLoader();
 
     /** Image Loader thread. */
     private Thread imgLd;
@@ -124,6 +124,8 @@ public class SuperMarioPaint extends Application  {
         cursorImages.put(SMPCursorType.ERASER, new ImageCursor(imgLoader.getSpriteFX(ImageIndex.CURSOR_3)));
         
         FXMLLoader loader = new FXMLLoader();
+        controller.setImageLoader(imgLoader);
+        controller.setSoundfontLoader(sfLoader);
         loader.setController(controller);
         File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
         loader.setLocation(fxml.toURI().toURL());
@@ -200,9 +202,7 @@ public class SuperMarioPaint extends Application  {
     @Override
     public void init() {
         imgLd = new Thread(imgLoader);
-        sfLd = new Thread(sfLoader);        
-        controller.setImageLoader((ImageLoader) imgLoader);
-        controller.setSoundfontLoader((SoundfontLoader) sfLoader);
+        sfLd = new Thread(sfLoader);
     }
     
     /**
