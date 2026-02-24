@@ -137,7 +137,7 @@ public class SoundfontLoader extends LoaderBase {
 	 * @throws MidiUnavailableException
 	 * @since v1.1.2
 	 */
-	public void loadSoundfont(String path) throws InvalidMidiDataException, IOException, MidiUnavailableException {
+	private void loadSoundfont(String path) throws InvalidMidiDataException, IOException, MidiUnavailableException {
 		File f = new File(path);
 		if(f.getName().isEmpty())
 			return;
@@ -163,18 +163,6 @@ public class SoundfontLoader extends LoaderBase {
 		if(soundset.isEmpty())
 			return;
 		loadSoundfont(Values.SOUNDFONTS_FOLDER + soundset);
-	}
-
-	/**
-	 * Copies the soundfont file to AppData.
-	 * 
-	 * @param path
-	 *            Path to the soundfont
-	 * @return if soundfont exists in AppData now
-	 * @since v1.1.2
-	 */
-	public boolean addSoundfont(String path, Window owner) {
-		return addSoundfont(new File(path), owner);
 	}
 	
 	/**
@@ -268,14 +256,6 @@ public class SoundfontLoader extends LoaderBase {
 	public void clearCache() {
 		bankCache.clear();
 	}
-
-	/**
-	 * @return The Soundbank cache that holds a map of soundbanks.
-	 * @since v1.1.2
-	 */
-	public static Map<String, Soundbank> getBankCache() {
-        return bankCache;
-    }
 
     /**
      * @return An Array of references for MidiChannel objects needed to
