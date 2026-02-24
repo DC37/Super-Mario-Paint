@@ -14,7 +14,6 @@ import gui.Staff;
 import gui.Values;
 import gui.clipboard.StaffClipboard;
 import gui.loaders.ImageIndex;
-import gui.loaders.ImageLoader;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -66,8 +66,7 @@ public class StaffDisplayManager {
      */
     private ArrayList<Text> measureNums;
 
-    /** This is the ImageLoader class. */
-    private ImageLoader il;
+    private Map<ImageIndex, Image> imagesHolder;
 
     /** The ledger lines at the high C of the staff. */
     private ArrayList<Node> highC;
@@ -93,16 +92,16 @@ public class StaffDisplayManager {
     /**
      * Constructor that also sets up the staff ledger lines.
      */
-    public StaffDisplayManager(Pane staffFrame, ImageLoader il, HBox staffVolumeBars, ModifySongManager commandManager, int width, int height, int depth) {
+    public StaffDisplayManager(Pane staffFrame, Map<ImageIndex, Image> imagesHolder, HBox staffVolumeBars, ModifySongManager commandManager, int width, int height, int depth) {
         this.staffVolumeBars = staffVolumeBars;
         this.staffFrame = staffFrame;
 
-        this.il = il;
+        this.imagesHolder = imagesHolder;
         this.width = width;
         this.height = height;
         this.depth = depth;
         
-        this.matrix = new NoteMatrix(il, this);
+        this.matrix = new NoteMatrix(imagesHolder, this);
         this.commandManager = commandManager;
         
         this.playbars = new Node[width];
@@ -119,7 +118,7 @@ public class StaffDisplayManager {
      * on the measure lines side.
      */
     public void initialize() {
-        ImageView instBackground = new ImageView(il.getSpriteFX(ImageIndex.INST_BACKGROUND));
+        ImageView instBackground = new ImageView(imagesHolder.get(ImageIndex.INST_BACKGROUND));
         instBackground.setFitHeight(720);
         instBackground.setFitWidth(1024);
         instBackground.setLayoutY(-52);
@@ -138,7 +137,7 @@ public class StaffDisplayManager {
         staffRect.setStroke(Paint.valueOf("BLACK"));
         staffRect.setStrokeType(StrokeType.INSIDE);
         staffRect.setStrokeWidth(2);
-        ImageView staffImageView = new ImageView(il.getSpriteFX(ImageIndex.STAFF_BG_TREBLEBASS));
+        ImageView staffImageView = new ImageView(imagesHolder.get(ImageIndex.STAFF_BG_TREBLEBASS));
         staffImageView.setFitHeight(452);
         staffImageView.setFitWidth(983);
         staffImageView.setMouseTransparent(true);
@@ -177,7 +176,7 @@ public class StaffDisplayManager {
             
             stack.getChildren().add(iv);
             
-            StaffVolumeEventHandler handler = new StaffVolumeEventHandler(stack, il, commandManager);
+            StaffVolumeEventHandler handler = new StaffVolumeEventHandler(stack, imagesHolder, commandManager);
             handler.setStaffNoteLine(new StaffNoteLine());
             stack.addEventHandler(Event.ANY, handler);
             
@@ -401,7 +400,7 @@ public class StaffDisplayManager {
             int k = Arrays.binarySearch(cumulativeSubLengths, relativeIndex);
             
             if (k == 0) {
-                currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_MLINE));
+                currImage.setImage(imagesHolder.get(ImageIndex.STAFF_MLINE));
                 String txt = String.valueOf(currentBarIndex + 1);
                 double fontSize = Font.getDefault().getSize();
                 currText.setText(txt);
@@ -409,14 +408,14 @@ public class StaffDisplayManager {
 
                 
             } else if (k > 0) {
-                currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_SLINE));
+                currImage.setImage(imagesHolder.get(ImageIndex.STAFF_SLINE));
                 String txt = String.valueOf(currentBarIndex + 1) + "." + String.valueOf(k);
                 double fontSize = Font.getDefault().getSize() * .75;
                 currText.setText(txt);
                 currText.setFont(new Font(fontSize));
                 
             } else {
-                currImage.setImage(il.getSpriteFX(ImageIndex.STAFF_LINE));
+                currImage.setImage(imagesHolder.get(ImageIndex.STAFF_LINE));
                 currText.setText("");
             }
         }
@@ -538,7 +537,7 @@ public class StaffDisplayManager {
         staffPlayBars.setPadding(new Insets(0, 0, 0, 117));
         
         for (int i = 0; i < width; i++) {
-            ImageView iv = new ImageView(il.getSpriteFX(ImageIndex.PLAY_BAR1));
+            ImageView iv = new ImageView(imagesHolder.get(ImageIndex.PLAY_BAR1));
             iv.setFitHeight(448);
             iv.setFitWidth(56);
             iv.setVisible(false);
