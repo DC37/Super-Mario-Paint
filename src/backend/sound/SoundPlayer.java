@@ -53,7 +53,7 @@ public class SoundPlayer {
      * @param s
      *            The StaffNoteLine.
      */
-    private void playSound(StaffNote sn, int vel) {
+    public void playSound(StaffNote sn, int vel) {
         SoundfontLoader.playSound(
                 Values.staffNotes[sn.getPosition()].getKeyNum(),
                 sn.getInstrument(), sn.getAccidental(), vel);
