@@ -101,7 +101,7 @@ public class Staff {
         setController(ct);
         theArrangementList = arrList;
         animationService = new AnimationService();
-        soundPlayer = new SoundPlayer(this);
+        soundPlayer = new SoundPlayer();
     }
 
     /**
@@ -646,7 +646,7 @@ public class Staff {
              *            The index to play.
              */
             private void playSoundLine(int index) {
-                soundPlayer.playSoundLine(index);
+                soundPlayer.playSoundLine(theSequence, index);
             }
 
         }

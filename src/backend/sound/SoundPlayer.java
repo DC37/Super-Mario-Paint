@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import backend.songs.Accidental;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
+import backend.songs.StaffSequence;
 import gui.InstrumentIndex;
-import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
 import gui.loaders.SoundfontLoader;
@@ -26,20 +26,11 @@ public class SoundPlayer {
     /** This keeps track of which notes are actually playing. */
     private NoteTracker tracker = new NoteTracker();
 
-    /** This is the staff that we are referencing. */
-    private Staff theStaff;
-    
-    /** Initializes this sound player and binds a staff to it. */
-    public SoundPlayer(Staff s) {
-        theStaff = s;
-    }
-
     /**
      * Plays the current line of notes.
      */
-    public void playSoundLine(int index) {
-        StaffNoteLine s = theStaff.getSequence().getLineSafe(
-                StateMachine.getMeasureLineNum() + index);
+    public void playSoundLine(StaffSequence seq, int index) {
+        StaffNoteLine s = seq.getLineSafe(StateMachine.getMeasureLineNum() + index);
         ArrayList<StaffNote> theNotes = s.getNotes();
         tracker.stopNotes(s);
         for (StaffNote sn : theNotes) {
