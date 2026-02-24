@@ -30,7 +30,6 @@ import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
-import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
@@ -169,7 +168,6 @@ public class SMPFXController {
     
     private ImageLoader il;
     
-    private SoundfontLoader sf;
     private SoundPlayer soundPlayer;
     
     /** Handles the options menu */
@@ -224,7 +222,6 @@ public class SMPFXController {
         
         // Set up staff.
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
-        soundPlayer = sf.getSoundPlayer();
         staff = new Staff(displayManager, soundPlayer, arrangementList);
         displayManager.initialize();
         makeKeyboardHandlers(basePane);
@@ -1159,8 +1156,8 @@ public class SMPFXController {
     }
 
     /** @since v1.1.2 */
-    public void setSoundfontLoader(SoundfontLoader sfLoader) {
-        sf = sfLoader;
+    public void setSoundPlayer(SoundPlayer soundPlayer) {
+        this.soundPlayer = soundPlayer;
     }
     
     public AnchorPane getBasePane() {

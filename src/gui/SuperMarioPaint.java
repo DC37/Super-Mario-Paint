@@ -125,7 +125,7 @@ public class SuperMarioPaint extends Application  {
         
         FXMLLoader loader = new FXMLLoader();
         controller.setImageLoader(imgLoader);
-        controller.setSoundfontLoader(sfLoader);
+        controller.setSoundPlayer(sfLoader.getSoundPlayer());
         loader.setController(controller);
         File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
         loader.setLocation(fxml.toURI().toURL());
