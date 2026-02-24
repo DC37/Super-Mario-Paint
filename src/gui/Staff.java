@@ -78,7 +78,7 @@ public class Staff {
     private SMPFXController controller;
 
     /** This is the SoundPlayer object that we will invoke to set parameters. */
-    private SoundPlayer soundPlayer;
+    final private SoundPlayer soundPlayer;
 
     /**
      * This is a service that will help run the animation and sound of playing a
@@ -112,6 +112,10 @@ public class Staff {
      */
     public void setController(SMPFXController ct) {
         controller = ct;
+    }
+    
+    public SoundPlayer getSoundPlayer() {
+    	return soundPlayer;
     }
 
     /**
