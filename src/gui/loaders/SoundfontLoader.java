@@ -17,6 +17,7 @@ import javax.sound.midi.Soundbank;
 import backend.songs.Accidental;
 import backend.songs.Note;
 import backend.sound.SMPSynthesizer;
+import backend.sound.SoundPlayer;
 import gui.Dialog;
 import gui.InstrumentIndex;
 import gui.Settings;
@@ -34,6 +35,8 @@ import javafx.stage.Window;
  * @since 2012.08.14
  */
 public class SoundfontLoader extends LoaderBase {
+	
+	private SoundPlayer soundPlayer;
 
     /**
      * The sound synthesizer used to hold as many instruments as needed.
@@ -286,6 +289,10 @@ public class SoundfontLoader extends LoaderBase {
     public static void stopSound(int i, InstrumentIndex theInd, Accidental acc, int vel) {
         int ind = theInd.getChannel() - 1;
         chan[ind].noteOff(i + acc.getOffset(), vel);
+    }
+    
+    public SoundPlayer getSoundPlayer() {
+    	return soundPlayer;
     }
 
 }
