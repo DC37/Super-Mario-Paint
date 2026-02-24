@@ -303,13 +303,6 @@ public class SoundfontLoader extends LoaderBase {
         return bankCache;
     }
 
-	/**
-	 * @return The current MultiSynthesizer that holds a list of Synthesizers.
-	 */
-	public static Synthesizer getSynth() {
-		return theSynthesizer;
-    }
-
     /**
      * @return An Array of references for MidiChannel objects needed to
      * play sounds.
