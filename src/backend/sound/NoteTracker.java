@@ -7,7 +7,6 @@ import backend.songs.StaffNoteLine;
 import gui.InstrumentIndex;
 import gui.StateMachine;
 import gui.Values;
-import gui.loaders.SoundfontLoader;
 
 /**
  * This is a class that keeps track of the different channels in Super
@@ -127,7 +126,7 @@ public class NoteTracker {
      * @param s The StaffNoteLine.
      */
     private void stopSound(PlayingNote pn) {
-        SoundfontLoader.stopSound(pn.keyNum(), pn.instrument(),
+        soundPlayer.stopSound(pn.keyNum(), pn.instrument(),
                 pn.accidental());
     }
 

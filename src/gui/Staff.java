@@ -18,7 +18,6 @@ import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
 import gui.components.staff.StaffDisplayManager;
-import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -309,7 +308,7 @@ public class Staff {
      */
 	public void stopSounds() {
 		soundPlayer.stopAllInstruments();
-		MidiChannel [] chan = SoundfontLoader.getChannels();
+		MidiChannel [] chan = soundPlayer.getChannels();
 		for (int ind = 0; ind < InstrumentIndex.values().length; ind++) {
 	        if (chan[ind] != null) {
 	            chan[ind].allSoundOff();
@@ -439,7 +438,7 @@ public class Staff {
         StateMachine.setArrModified(true);
         theArrangementList.getItems().add(StateMachine.getCurrentSongName());
         theArrangement.add(theSequence, theSequenceFile);
-        controller.getSoundfontLoader().storeInCache();
+        soundPlayer.storeInCache();
     }
     
     public void deleteSongFromArrangement() {
@@ -717,13 +716,13 @@ public class Staff {
 			 * @since v1.1.2
 			 */
             private void setSoundset(final String soundset) {
-                if (!controller.getSoundfontLoader().loadFromCache(soundset)) {
+                if (!soundPlayer.loadFromCache(soundset)) {
                     try {
-                        controller.getSoundfontLoader().loadFromAppData(soundset);
+                        soundPlayer.loadFromAppData(soundset);
                     } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
                         e.printStackTrace();
                     }
-                    controller.getSoundfontLoader().storeInCache();
+                    soundPlayer.storeInCache();
                 }
 			}
         }
