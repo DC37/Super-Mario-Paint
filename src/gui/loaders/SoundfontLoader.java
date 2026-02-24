@@ -1,7 +1,6 @@
 package gui.loaders;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -125,30 +124,6 @@ public class SoundfontLoader extends LoaderBase {
             System.exit(0);
         }
 	}
-	
-	/**
-	 * Creates the soundfont folder if it does not already exists.
-	 */
-	public File getSoundfontFolder() throws IOException {
-	    File dir = new File(Values.SOUNDFONTS_FOLDER);
-	    Files.createDirectories(dir.toPath());
-	    return dir;
-	}
-    
-	/**
-	 * @return The list of filenames *.sf2 in the soundfonts folder.
-	 * @since v1.1.2
-	 */
-	public String[] getSoundfontsList() throws IOException {
-		File soundfontsFolder = getSoundfontFolder();
-		
-		return soundfontsFolder.list(new FilenameFilter() {
-		    @Override
-		    public boolean accept(File dir, String name) {
-		        return name.toLowerCase().endsWith(".sf2");
-		    }
-		});
-    }
     
 	/**
 	 * Takes in the absolute path of a soundfont file and constructs a new

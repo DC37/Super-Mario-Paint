@@ -3,6 +3,7 @@ package gui;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.net.URL;
@@ -123,6 +124,30 @@ public class Utilities {
     public static void openDialog(String in) {
         JOptionPane.showMessageDialog(null, in, "Information",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+	
+	/**
+	 * Creates the soundfont folder if it does not already exists.
+	 */
+	public static File getSoundfontFolder() throws IOException {
+	    File dir = new File(Values.SOUNDFONTS_FOLDER);
+	    Files.createDirectories(dir.toPath());
+	    return dir;
+	}
+    
+	/**
+	 * @return The list of filenames *.sf2 in the soundfonts folder.
+	 * @since v1.1.2
+	 */
+	public static String[] getSoundfontsList() throws IOException {
+		File soundfontsFolder = getSoundfontFolder();
+		
+		return soundfontsFolder.list(new FilenameFilter() {
+		    @Override
+		    public boolean accept(File dir, String name) {
+		        return name.toLowerCase().endsWith(".sf2");
+		    }
+		});
     }
 
 	/**
