@@ -14,7 +14,6 @@ import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
-import javax.sound.midi.Synthesizer;
 
 import backend.songs.Accidental;
 import backend.songs.Note;
@@ -309,13 +308,6 @@ public class SoundfontLoader extends LoaderBase {
      */
     public static MidiChannel[] getChannels() {
         return chan;
-    }
-
-    /**
-     * Closes the synthesizers.
-     */
-    public void close() {
-        theSynthesizer.close();
     }
 
     /**
