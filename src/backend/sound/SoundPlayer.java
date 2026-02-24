@@ -24,7 +24,7 @@ import gui.loaders.SoundfontLoader;
 public class SoundPlayer {
 
     /** This keeps track of which notes are actually playing. */
-    private NoteTracker tracker = new NoteTracker();
+    final private NoteTracker tracker = new NoteTracker(this);
 
     /**
      * Plays the current line of notes.

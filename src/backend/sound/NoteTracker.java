@@ -26,18 +26,21 @@ public class NoteTracker {
 
     /** This tells us which channels are currently playing notes. */
     private ArrayList<Boolean> channelOn;
+    
+    final private SoundPlayer soundPlayer;
 
     /**
      * Creates a new <code>NoteTracker</code> object and initializes
      * a list that is linked to each channel of sound.
      */
-    public NoteTracker() {
+    public NoteTracker(SoundPlayer soundPlayer) {
         channelOn = new ArrayList<Boolean>();
         notesOn = new ArrayList<ArrayList<PlayingNote>>();
         for (int i = 0; i < InstrumentIndex.values().length; i++) {
             channelOn.add(false);
             notesOn.add(new ArrayList<PlayingNote>());
         }
+        this.soundPlayer = soundPlayer;
     }
 
     /**
