@@ -2,6 +2,7 @@ package gui.loaders;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Map;
 
 import gui.Settings;
 import gui.Utilities;
@@ -20,7 +21,7 @@ public class ImageLoader extends LoaderBase {
     /**
      * Contains references to all the loaded sprites in JavaFX Image form.
      */
-    private Hashtable<ImageIndex, Image> spritesFX;
+    private Map<ImageIndex, Image> spritesFX;
 
     /**
      * The extension of the image files that we are to be loading. An advantage of
