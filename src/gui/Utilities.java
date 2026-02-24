@@ -260,7 +260,7 @@ public class Utilities {
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         
         try {
-			controller.getSoundfontLoader().loadFromAppData(theStaff.getSequence().getSoundset());
+			theStaff.getSoundPlayer().loadFromAppData(theStaff.getSequence().getSoundset());
 		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -419,10 +419,10 @@ public class Utilities {
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
         	@Override
             public Void call() {
-        		controller.getSoundfontLoader().clearCache();
+        		theStaff.getSoundPlayer().clearCache();
         		for(StaffSequence s : seq) {
         			try {
-						controller.getSoundfontLoader().loadToCache(s.getSoundset());
+						theStaff.getSoundPlayer().loadToCache(s.getSoundset());
 					} catch (InvalidMidiDataException | IOException e) {
 						e.printStackTrace();
 					}
@@ -433,7 +433,7 @@ public class Utilities {
         new Thread(soundsetsTaskUtilities).start();
         
         try {
-			controller.getSoundfontLoader().loadFromAppData(first.getSoundset());
+			theStaff.getSoundPlayer().loadFromAppData(first.getSoundset());
 		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
 			e.printStackTrace();
 		}

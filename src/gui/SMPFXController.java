@@ -224,7 +224,7 @@ public class SMPFXController {
         
         // Set up staff.
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, il, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
-        soundPlayer = new SoundPlayer();
+        soundPlayer = sf.getSoundPlayer();
         staff = new Staff(this, displayManager, soundPlayer, arrangementList);
         displayManager.initialize();
         makeKeyboardHandlers(basePane);
@@ -443,7 +443,7 @@ public class SMPFXController {
     				StateMachine.setFilteredNotes(new_flt);
     				
     			} else {
-    		        MidiChannel[] chan = SoundfontLoader.getChannels();
+    		        MidiChannel[] chan = soundPlayer.getChannels();
     		        if (chan[inst.getChannel() - 1] != null) {
     		            chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
     		        }
@@ -802,7 +802,7 @@ public class SMPFXController {
                 String currSeqName = getNameTextField().getText();
                 for (String seqName : seqNames) 
                     if (seqName.equals(currSeqName)) {
-                        getSoundfontLoader().storeInCache();
+                        soundPlayer.storeInCache();
                         break;
                     }
                 return null;

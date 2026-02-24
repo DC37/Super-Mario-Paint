@@ -9,7 +9,6 @@ import javax.sound.midi.MidiUnavailableException;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
-import gui.loaders.SoundfontLoader;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -164,7 +163,7 @@ public class OptionsMenu {
                                 return;
                             }
                             
-                            if(!controller.getSoundfontLoader().addSoundfont(sf, owner)) {
+                            if(!staff.getSoundPlayer().addSoundfont(sf, owner)) {
                                 soundfontsMenu.getSelectionModel().selectPrevious();
                                 return;
                             }
@@ -297,10 +296,9 @@ public class OptionsMenu {
     
     /** Updates the program's soundfont, bind to song if checked. */
     private void changeSoundfont() {
-        SoundfontLoader sfLoader = controller.getSoundfontLoader();
         String selectedSoundfont = soundfontsMenu.getSelectionModel().getSelectedItem();
         try {
-            sfLoader.loadFromAppData(selectedSoundfont);
+            staff.getSoundPlayer().loadFromAppData(selectedSoundfont);
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
             e.printStackTrace();
         }
