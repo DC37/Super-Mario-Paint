@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 
 import backend.editing.ModifySongManager;
-import backend.saving.mpc.MPCArrangementDecoder;
-import backend.saving.mpc.MPCDecoder;
-import backend.saving.smp.SMPArrangementParser;
-import backend.saving.smp.SMPParser;
+import backend.saving.Parser;
 import backend.songs.Accidental;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
@@ -861,9 +858,9 @@ public class SMPFXController {
         try {
             StaffSequence loaded = null;
             try {
-                loaded = MPCDecoder.parse(inputFile);
+                loaded = Parser.MPC_SEQUENCE_PARSER.parse(inputFile);
             } catch (ParseException e1) {
-                loaded = SMPParser.parse(inputFile);
+                loaded = Parser.SMP_SEQUENCE_PARSER.parse(inputFile);
             }
             if (loaded == null) {
                 throw new IOException();
@@ -912,16 +909,15 @@ public class SMPFXController {
                 if (inputFile == null)
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                StaffArrangement loaded = SMPArrangementParser.parse(inputFile);
+                StaffArrangement loaded = Parser.SMP_ARRANGEMENT_PARSER.parse(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false, staff, this, owner);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
-            } catch (ClassNotFoundException | StreamCorruptedException
+            } catch (ParseException | StreamCorruptedException
                     | NullPointerException e) {
                 try {
-                    StaffArrangement loaded = MPCArrangementDecoder
-                            .parse(inputFile);
+                    StaffArrangement loaded = Parser.MPC_ARRANGEMENT_PARSER.parse(inputFile);
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                     Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true, staff, this, owner);

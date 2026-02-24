@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import backend.saving.Parser;
 import backend.songs.Accidental;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
@@ -27,7 +28,7 @@ import gui.Values;
  * @author RehdBlob
  * @since 2012.09.01
  */
-public class MPCDecoder {
+public class MPCDecoder implements Parser<StaffSequence> {
 
     /**
      * Opens a file and decodes the Mario Paint Composer song data from it,
@@ -44,7 +45,7 @@ public class MPCDecoder {
      * @throws IOException
      *             IF some error occurs during the decoding process.
      */
-    public static StaffSequence parse(File f) throws ParseException,
+    public StaffSequence parse(File f) throws ParseException,
             IOException {
         BufferedReader bf = new BufferedReader(new FileReader(f));
         String line = "";
@@ -67,7 +68,7 @@ public class MPCDecoder {
      * @throws ParseException
      *             If someone tries to feed this method an invalid text file.
      */
-    private static StaffSequence decode(String in) throws ParseException {
+    private StaffSequence decode(String in) throws ParseException {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
             throw new ParseException("Invalid Text File.", 0);
         }
@@ -91,7 +92,7 @@ public class MPCDecoder {
      * @return A new <code>StaffSequence</code> that is to be loaded by the main
      *         program.
      */
-    private static StaffSequence populateSequence(String timeSig,
+    private StaffSequence populateSequence(String timeSig,
             ArrayList<String> songData, String tempo) {
         StaffSequence song = new StaffSequence();
         song.setTempo(Double.parseDouble(tempo));
