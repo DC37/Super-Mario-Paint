@@ -45,7 +45,7 @@ public class MPCDecoder {
      * @throws IOException
      *             IF some error occurs during the decoding process.
      */
-    public static StaffSequence decode(File f) throws ParseException,
+    public static StaffSequence parseSong(File f) throws ParseException,
             IOException {
         BufferedReader bf = new BufferedReader(new FileReader(f));
         String line = "";
@@ -68,7 +68,7 @@ public class MPCDecoder {
      * @throws ParseException
      *             If someone tries to feed this method an invalid text file.
      */
-    public static StaffSequence decode(String in) throws ParseException {
+    private static StaffSequence decode(String in) throws ParseException {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
             throw new ParseException("Invalid Text File.", 0);
         }
@@ -150,7 +150,7 @@ public class MPCDecoder {
      * @throws IOException
      *             If the file is not readable.
      */
-    public static StaffArrangement decodeArrangement(File f)
+    public static StaffArrangement parseArrangement(File f)
             throws ParseException, IOException {
         BufferedReader bf = new BufferedReader(new FileReader(f));
         String line = "";
@@ -191,7 +191,7 @@ public class MPCDecoder {
         	String sp = s;
             String st = inputFile.getParent() + File.separatorChar + sp + "]MarioPaint.txt";
             File f = new File(st);
-            StaffSequence seq = decode(f);
+            StaffSequence seq = parseSong(f);
             theArr.add(seq, f);
             theArr.getTheSequenceNames().add(sp);
         }

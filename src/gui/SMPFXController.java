@@ -859,7 +859,7 @@ public class SMPFXController {
         try {
             StaffSequence loaded = null;
             try {
-                loaded = MPCDecoder.decode(inputFile);
+                loaded = MPCDecoder.parseSong(inputFile);
             } catch (ParseException e1) {
                 loaded = SMPParser.parseSong(inputFile);
             }
@@ -910,7 +910,7 @@ public class SMPFXController {
                 if (inputFile == null)
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                StaffArrangement loaded = SMPParser.loadArrangement(inputFile);
+                StaffArrangement loaded = SMPParser.parseArrangement(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false, staff, this, owner);
                 StateMachine.setSongModified(false);
@@ -919,7 +919,7 @@ public class SMPFXController {
                     | NullPointerException e) {
                 try {
                     StaffArrangement loaded = MPCDecoder
-                            .decodeArrangement(inputFile);
+                            .parseArrangement(inputFile);
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                     Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true, staff, this, owner);

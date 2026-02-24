@@ -35,7 +35,7 @@ public class SMPParser {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		StaffSequence loaded = null;
 		try {
-			loaded = MPCDecoder.decode(inputFile);
+			loaded = MPCDecoder.parseSong(inputFile);
 		} catch (ParseException e1) {
 			try {
 				// Decode as object
@@ -136,7 +136,7 @@ public class SMPParser {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static StaffArrangement loadArrangement(File inputFile)
+	public static StaffArrangement parseArrangement(File inputFile)
 			throws FileNotFoundException, IOException, ClassNotFoundException {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		StaffArrangement loaded = null;

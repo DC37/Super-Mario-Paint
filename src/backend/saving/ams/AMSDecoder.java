@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import backend.songs.Bookmark;
 import backend.songs.Speedmark;
+import backend.songs.StaffArrangement;
 import backend.songs.StaffSequence;
 import backend.sound.SMPSoundfont;
 
@@ -16,7 +17,12 @@ import backend.sound.SMPSoundfont;
  */
 public class AMSDecoder {
 
-    public static StaffSequence decode(File file) {
+    public static StaffSequence parseSong(File file) {
+        // TODO: Fix this.
+        return null;
+    }
+
+    public static StaffArrangement parseArrangement(File file) {
         // TODO: Fix this.
         return null;
     }
@@ -28,7 +34,8 @@ public class AMSDecoder {
      * @throws ParseException If someone tries to feed this method an invalid
      * text file.
      */
-    public static StaffSequence decode(String in) throws ParseException {
+    @SuppressWarnings("unused") // Please remove when the implementation is done
+	private static StaffSequence decode(String in) throws ParseException {
         if (!isValid(in)) {
             throw new ParseException("Invalid File", 0);
         }

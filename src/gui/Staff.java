@@ -263,7 +263,7 @@ public class Staff {
                 seq.set(i, SMPParser.parseSong(f));
             } catch (StreamCorruptedException | NullPointerException e) {
                 try {
-                    seq.set(i, MPCDecoder.decode(f));
+                    seq.set(i, MPCDecoder.parseSong(f));
                 } catch (ParseException | IOException e1) {
                     e1.printStackTrace();
                     stopSong();
