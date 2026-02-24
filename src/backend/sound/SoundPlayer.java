@@ -23,9 +23,6 @@ import gui.loaders.SoundfontLoader;
  */
 public class SoundPlayer {
 
-    /** This is the index that we are playing. */
-    int ind;
-
     /** This keeps track of which notes are actually playing. */
     private NoteTracker tracker = new NoteTracker();
 
@@ -104,14 +101,6 @@ public class SoundPlayer {
     		tracker.stopInstrument(new StaffNote(in, 0, Accidental.NATURAL));
     	}
     	
-    }
-    
-    /**
-     *
-     * @param i
-     */
-    public void setInd(int i) {
-        ind = i;
     }
 
 }
