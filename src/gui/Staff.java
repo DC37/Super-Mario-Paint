@@ -96,12 +96,12 @@ public class Staff {
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
      */
-    public Staff(SMPFXController ct, StaffDisplayManager display, ListView<String> arrList) {
+    public Staff(SMPFXController ct, StaffDisplayManager display, SoundPlayer soundPlayer, ListView<String> arrList) {
         displayManager = display;
         setController(ct);
         theArrangementList = arrList;
         animationService = new AnimationService();
-        soundPlayer = new SoundPlayer();
+        this.soundPlayer = soundPlayer;
     }
 
     /**
