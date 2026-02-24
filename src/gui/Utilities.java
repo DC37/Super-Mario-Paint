@@ -178,9 +178,9 @@ public class Utilities {
             }
             StaffSequence loaded = null;
             try {
-                loaded = MPCDecoder.parseSong(inputFile);
+                loaded = MPCDecoder.parse(inputFile);
             } catch (ParseException e1) {
-                loaded = SMPParser.parseSong(inputFile);
+                loaded = SMPParser.parse(inputFile);
             }
             if (loaded == null) {
                 throw new IOException();
@@ -277,7 +277,7 @@ public class Utilities {
                 fName = fName + "]MarioPaint.txt";
                 newPath = basePath + fName;
                 loaded.getTheSequenceFiles().set(i, new File(newPath));
-                loaded.getTheSequences().set(i, SMPParser.parseSong(new File(newPath)));
+                loaded.getTheSequences().set(i, SMPParser.parse(new File(newPath)));
                 continue;
             }
             loaded.getTheSequenceFiles().set(i, new File(newPath));
@@ -371,11 +371,11 @@ public class Utilities {
         final ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
         for (int i = 0; i < files.size(); i++) {
             try {
-                seq.add(SMPParser.parseSong(files.get(i)));
+                seq.add(SMPParser.parse(files.get(i)));
             } catch (ClassCastException | EOFException
                     | StreamCorruptedException | NullPointerException e) {
                 try {
-                    seq.add(MPCDecoder.parseSong(files.get(i)));
+                    seq.add(MPCDecoder.parse(files.get(i)));
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     return;

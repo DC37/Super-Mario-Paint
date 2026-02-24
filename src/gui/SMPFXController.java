@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import javax.sound.midi.MidiChannel;
 
 import backend.editing.ModifySongManager;
+import backend.saving.mpc.MPCArrangementDecoder;
 import backend.saving.mpc.MPCDecoder;
+import backend.saving.smp.SMPArrangementParser;
 import backend.saving.smp.SMPParser;
 import backend.songs.Accidental;
 import backend.songs.StaffArrangement;
@@ -859,9 +861,9 @@ public class SMPFXController {
         try {
             StaffSequence loaded = null;
             try {
-                loaded = MPCDecoder.parseSong(inputFile);
+                loaded = MPCDecoder.parse(inputFile);
             } catch (ParseException e1) {
-                loaded = SMPParser.parseSong(inputFile);
+                loaded = SMPParser.parse(inputFile);
             }
             if (loaded == null) {
                 throw new IOException();
@@ -910,7 +912,7 @@ public class SMPFXController {
                 if (inputFile == null)
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                StaffArrangement loaded = SMPParser.parseArrangement(inputFile);
+                StaffArrangement loaded = SMPArrangementParser.parse(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false, staff, this, owner);
                 StateMachine.setSongModified(false);
@@ -918,8 +920,8 @@ public class SMPFXController {
             } catch (ClassNotFoundException | StreamCorruptedException
                     | NullPointerException e) {
                 try {
-                    StaffArrangement loaded = MPCDecoder
-                            .parseArrangement(inputFile);
+                    StaffArrangement loaded = MPCArrangementDecoder
+                            .parse(inputFile);
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                     Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true, staff, this, owner);

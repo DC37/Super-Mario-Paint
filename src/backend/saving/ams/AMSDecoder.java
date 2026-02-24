@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import backend.songs.Bookmark;
 import backend.songs.Speedmark;
-import backend.songs.StaffArrangement;
 import backend.songs.StaffSequence;
 import backend.sound.SMPSoundfont;
 
@@ -17,12 +16,7 @@ import backend.sound.SMPSoundfont;
  */
 public class AMSDecoder {
 
-    public static StaffSequence parseSong(File file) {
-        // TODO: Fix this.
-        return null;
-    }
-
-    public static StaffArrangement parseArrangement(File file) {
+    public static StaffSequence parse(File file) {
         // TODO: Fix this.
         return null;
     }

@@ -260,10 +260,10 @@ public class Staff {
         for (int i = 0; i < seq.size(); i++) {
             File f = files.get(i);
             try {
-                seq.set(i, SMPParser.parseSong(f));
+                seq.set(i, SMPParser.parse(f));
             } catch (StreamCorruptedException | NullPointerException e) {
                 try {
-                    seq.set(i, MPCDecoder.parseSong(f));
+                    seq.set(i, MPCDecoder.parse(f));
                 } catch (ParseException | IOException e1) {
                     e1.printStackTrace();
                     stopSong();
