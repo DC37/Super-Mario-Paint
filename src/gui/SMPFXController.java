@@ -14,6 +14,7 @@ import javax.sound.midi.MidiChannel;
 
 import backend.editing.ModifySongManager;
 import backend.saving.mpc.MPCDecoder;
+import backend.saving.smp.SMPParser;
 import backend.songs.Accidental;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
@@ -860,7 +861,7 @@ public class SMPFXController {
             try {
                 loaded = MPCDecoder.decode(inputFile);
             } catch (ParseException e1) {
-                loaded = Utilities.loadSong(inputFile);
+                loaded = SMPParser.parseSong(inputFile);
             }
             if (loaded == null) {
                 throw new IOException();
@@ -909,7 +910,7 @@ public class SMPFXController {
                 if (inputFile == null)
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                StaffArrangement loaded = Utilities.loadArrangement(inputFile);
+                StaffArrangement loaded = SMPParser.loadArrangement(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false, staff, this, owner);
                 StateMachine.setSongModified(false);

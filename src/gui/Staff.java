@@ -11,6 +11,7 @@ import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
 import backend.saving.mpc.MPCDecoder;
+import backend.saving.smp.SMPParser;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffEvent;
 import backend.songs.StaffNoteLine;
@@ -259,7 +260,7 @@ public class Staff {
         for (int i = 0; i < seq.size(); i++) {
             File f = files.get(i);
             try {
-                seq.set(i, Utilities.loadSong(f));
+                seq.set(i, SMPParser.parseSong(f));
             } catch (StreamCorruptedException | NullPointerException e) {
                 try {
                     seq.set(i, MPCDecoder.decode(f));
