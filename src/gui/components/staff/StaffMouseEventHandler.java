@@ -16,7 +16,6 @@ import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
-import gui.loaders.SoundfontLoader;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -186,15 +185,15 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         
         if (vel <= 0 || vel >= 128)
             vel = Values.DEFAULT_VELOCITY;
-        
-        if (!mute && !muteA)
-            playSound(theInd, position, acc, vel);
 
         if ((Settings.debug & 0b10000) != 0)
             System.out.println("Index: " + theInd + "\nPosition: "+ position + "\nAcc: " + acc + "\nVel: " + vel);
         
         StaffNote theStaffNote = new StaffNote(theInd, position, acc);
         theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
+        
+        if (!mute && !muteA)
+            theStaff.getSoundPlayer().playSound(theStaffNote, vel);
         
         theStaff.getDisplayManager().resetSilhouette();
 
@@ -310,21 +309,6 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             return Accidental.FLAT;
         else
             return Accidental.NATURAL;
-    }
-
-    /**
-     * Plays a sound given an index and a position.
-     *
-     * @param theInd
-     *            The index at which this instrument is located at.
-     * @param pos
-     *            The position at which this note is located at.
-     * @param acc
-     *            The sharp / flat that we want to play this note at.
-     */
-    private static void playSound(InstrumentIndex theInd, int pos, Accidental acc, int vel) {
-        SoundfontLoader.playSound(Values.staffNotes[pos].getKeyNum(), theInd,
-                acc, vel);
     }
 
     @Override
