@@ -178,7 +178,7 @@ public class Utilities {
             }
             StaffSequence loaded = null;
             try {
-                loaded = MPCDecoder.decode(inputFile);
+                loaded = MPCDecoder.parseSong(inputFile);
             } catch (ParseException e1) {
                 loaded = SMPParser.parseSong(inputFile);
             }
@@ -375,7 +375,7 @@ public class Utilities {
             } catch (ClassCastException | EOFException
                     | StreamCorruptedException | NullPointerException e) {
                 try {
-                    seq.add(MPCDecoder.decode(files.get(i)));
+                    seq.add(MPCDecoder.parseSong(files.get(i)));
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     return;
