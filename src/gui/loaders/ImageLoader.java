@@ -16,12 +16,7 @@ import javafx.scene.image.Image;
  * @author RehdBlob
  * @since 2012.08.14
  */
-public class ImageLoader extends LoaderBase {
-
-    /**
-     * Contains references to all the loaded sprites in JavaFX Image form.
-     */
-    private Map<ImageIndex, Image> spritesFX;
+public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
 
     /**
      * The extension of the image files that we are to be loading. An advantage of
@@ -30,20 +25,13 @@ public class ImageLoader extends LoaderBase {
     private String extension = ".png";
 
     /**
-     * Initializes the sprites hashtables. Will eventually figure out which Image
-     * class is better: java.awt.Image, or javafx.scene.image.Image.
-     */
-    public ImageLoader() {
-        spritesFX = new Hashtable<ImageIndex, javafx.scene.image.Image>();
-    }
-
-    /**
      * Loads all of the image files that will be used in drawing
      * the main window and all of the buttons of Super Mario Paint.
      * A splash screen runs while this is happening.
      */
     @Override
-    public void run() {
+    public Map<ImageIndex, Image> call() {
+    	Map<ImageIndex, Image> spritesFX = new Hashtable<ImageIndex, javafx.scene.image.Image>();
         ImageIndex [] ind = ImageIndex.values();
         
         for (ImageIndex i : ind) {
@@ -68,25 +56,9 @@ public class ImageLoader extends LoaderBase {
                 e.printStackTrace();
             }
         }
+        
         setLoadStatus(1);
-
-    }
-
-    /**
-     * Gets an image from whatever <code>ImageIndex</code> that was passed to it.
-     * 
-     * @param index An ImageIndex, presumably the one that one wants to retreive an
-     *              image with.
-     * @return An <code>Image</code> that was loaded by the ImageLoader in the
-     *         beginning, linked by the ImageIndex in a Hashtable.
-     * @throws NullPointerException
-     */
-    public Image getSpriteFX(ImageIndex index) throws NullPointerException {
-        return spritesFX.get(index);
-    }
-    
-    public Map<ImageIndex, Image> getImagesHolder() {
-    	return spritesFX;
+        return spritesFX;
     }
 
 }

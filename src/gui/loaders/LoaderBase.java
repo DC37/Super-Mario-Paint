@@ -1,6 +1,6 @@
 package gui.loaders;
 
-public abstract class LoaderBase implements Loader {
+public abstract class LoaderBase<V> implements Loader<V> {
 	
 	protected double loadStatus = 0.0;
 
