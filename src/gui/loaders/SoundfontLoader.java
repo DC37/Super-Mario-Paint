@@ -265,62 +265,24 @@ public class SoundfontLoader extends LoaderBase {
         return chan;
     }
 
-    /**
-     * Plays a certain sound given a Note and some instrument.
-     * @param n The Note to play
-     * @param i The Instrument to play it with.
-     */
     public static void playSound(Note n, InstrumentIndex i) {
         playSound(n.getKeyNum(), i, Accidental.NATURAL);
     }
 
-    /**
-     * Plays a certain sound given a Note and some instrument, along with the
-     * accidental we are supposed to play it with.
-     * @param i The note index we are supposed to play this note at.
-     * @param theInd The InstrumentIndex.
-     * @param acc The accidental that we are given.
-     */
     public static void playSound(int i, InstrumentIndex theInd, Accidental acc) {
         playSound(i, theInd, acc, Values.MAX_VELOCITY);
     }
 
-    /**
-     * Plays a certain sound given a Note and some instrument, along with the
-     * accidental we are supposed to play it with and the volume with which we are
-     * trying to play at.
-     * @param i The note index we are supposed to play this note at.
-     * @param theInd The InstrumentIndex.
-     * @param acc The accidental that we are given.
-     * @param vel The velocity of the note that we are given.
-     */
     public static void playSound(int i, InstrumentIndex theInd, Accidental acc, int vel) {
         int ind = theInd.getChannel() - 1;
         chan[ind].noteOn(i + acc.getOffset(), vel);
     }
 
-    /**
-     * Stops a certain sound given a Note and some instrument, along with the
-     * accidental we are supposed to play it with and the volume with which we are
-     * trying to play at.
-     * @param i The note index we are supposed to play this note at.
-     * @param theInd The InstrumentIndex.
-     * @param acc The accidental that we are given.
-     */
     public static void stopSound(int i, InstrumentIndex theInd, Accidental acc) {
         int ind = theInd.getChannel() - 1;
         chan[ind].noteOff(i + acc.getOffset());
     }
 
-    /**
-     * Stops a certain sound given a Note and some instrument, along with the
-     * accidental we are supposed to play it with and the volume with which we are
-     * trying to play at.
-     * @param i The note index we are supposed to play this note at.
-     * @param theInd The InstrumentIndex.
-     * @param acc The accidental that we are given.
-     * @param vel The note-off velocity.
-     */
     public static void stopSound(int i, InstrumentIndex theInd, Accidental acc, int vel) {
         int ind = theInd.getChannel() - 1;
         chan[ind].noteOff(i + acc.getOffset(), vel);
