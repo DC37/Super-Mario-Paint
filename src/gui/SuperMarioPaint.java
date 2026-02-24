@@ -60,12 +60,6 @@ import javafx.stage.Stage;
 public class SuperMarioPaint extends Application  {
 
     /**
-     * The number of threads that are running to load things for Super Mario
-     * Paint.
-     */
-    private static final int NUM_THREADS = 2;
-
-    /**
      * Loads all the sprites that will be used in Super Mario Paint.
      */
     private Loader<Map<ImageIndex, Image>> imgLoader;
@@ -120,9 +114,9 @@ public class SuperMarioPaint extends Application  {
             
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();
-            double ld = (imgStatus + sfStatus) * 100 / NUM_THREADS
-                    * 0.5;
+            double ld = (imgStatus + sfStatus) / 2.0;
             notifyPreloader(new ProgressNotification(ld));
+            
         } while (imgLd.isAlive() || sfLd.isAlive());
         
         Map<ImageIndex, Image> imagesHolder = imagesHolderFuture.get();
