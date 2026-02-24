@@ -41,7 +41,7 @@ public class SoundPlayer {
         }
         for (StaffNote sn : theNotes) {
             if (sn.muteNoteVal() == 0)
-                playSound(sn, s);
+                playSound(sn, s.getVolume());
         }
     }
 
@@ -53,10 +53,10 @@ public class SoundPlayer {
      * @param s
      *            The StaffNoteLine.
      */
-    private void playSound(StaffNote sn, StaffNoteLine s) {
+    private void playSound(StaffNote sn, int vel) {
         SoundfontLoader.playSound(
                 Values.staffNotes[sn.getPosition()].getKeyNum(),
-                sn.getInstrument(), sn.getAccidental(), s.getVolume());
+                sn.getInstrument(), sn.getAccidental(), vel);
         tracker.addNotePlaying(Values.staffNotes[sn.getPosition()].getKeyNum(),
                 sn.getInstrument(), sn.getAccidental());
     }
