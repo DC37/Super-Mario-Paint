@@ -29,7 +29,7 @@ import javafx.scene.image.ImageView;
  * @since 2013.08.18
  *
  */
-public class NoteMatrix {
+class NoteMatrix {
     
     final private StaffDisplayManager disp;
 
