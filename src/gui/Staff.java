@@ -2,8 +2,6 @@ package gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StreamCorruptedException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -246,15 +244,7 @@ public class Staff {
         for (int i = 0; i < seq.size(); i++) {
             File f = files.get(i);
             try {
-                seq.set(i, Parser.SMP_SEQUENCE_PARSER.parse(f));
-            } catch (StreamCorruptedException | NullPointerException | ParseException e) {
-                try {
-                    seq.set(i, Parser.MPC_SEQUENCE_PARSER.parse(f));
-                } catch (ParseException | IOException e1) {
-                    e1.printStackTrace();
-                    stopSong();
-                    return;
-                }
+                seq.set(i, Parser.SEQUENCE_PARSER.parse(f).orElseThrow(IOException::new));
             } catch (IOException e) {
                 e.printStackTrace();
                 stopSong();
