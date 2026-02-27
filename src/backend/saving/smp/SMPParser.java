@@ -30,30 +30,26 @@ public class SMPParser implements Parser<StaffSequence> {
 	 * @throws ClassNotFoundException
 	 */
 	public StaffSequence parse(File inputFile)
-			throws FileNotFoundException, IOException, NullPointerException {
+			throws FileNotFoundException, IOException {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		StaffSequence loaded = null;
 		try {
-			loaded = Parser.MPC_SEQUENCE_PARSER.parse(inputFile);
-		} catch (ParseException e1) {
-			try {
-				// Decode as object
-				ObjectInputStream o_in = new ObjectInputStream(f_in);
-				loaded = (StaffSequence) o_in.readObject();
-				o_in.close();
-			} catch (ClassNotFoundException | ClassCastException | EOFException
-					| StreamCorruptedException e) {
-				// If it's not an object, try using the human-readable option.
-				f_in.close();
-				f_in = new FileInputStream(inputFile);
-				Scanner sc = new Scanner(f_in);
-				ArrayList<String> read = new ArrayList<String>();
-				while (sc.hasNext()) {
-					read.add(sc.nextLine());
-				}
-				sc.close();
-				loaded = parseText(read);
+			// Decode as object
+			ObjectInputStream o_in = new ObjectInputStream(f_in);
+			loaded = (StaffSequence) o_in.readObject();
+			o_in.close();
+		} catch (ClassNotFoundException | ClassCastException | EOFException
+				| StreamCorruptedException e) {
+			// If it's not an object, try using the human-readable option.
+			f_in.close();
+			f_in = new FileInputStream(inputFile);
+			Scanner sc = new Scanner(f_in);
+			ArrayList<String> read = new ArrayList<String>();
+			while (sc.hasNext()) {
+				read.add(sc.nextLine());
 			}
+			sc.close();
+			loaded = parseText(read);
 		}
 		f_in.close();
 		if (loaded == null) {

@@ -841,14 +841,7 @@ public class SMPFXController {
     private void loadSong(File inputFile, Window owner) {
         try {
             StaffSequence loaded = null;
-            try {
-                loaded = Parser.MPC_SEQUENCE_PARSER.parse(inputFile);
-            } catch (ParseException e1) {
-                loaded = Parser.SMP_SEQUENCE_PARSER.parse(inputFile);
-            }
-            if (loaded == null) {
-                throw new IOException();
-            }
+            loaded = Parser.SEQUENCE_PARSER.parse(inputFile).orElseThrow(IOException::new);
             String fname = Utilities.populateStaff(loaded, inputFile, false, staff, this);
             getNameTextField().setText(fname);
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
