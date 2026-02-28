@@ -44,7 +44,7 @@ public class Utilities {
      * @param filename name of the file or resource
      * @param dir expected location for the file
      */
-    public static File getResourceFile(String filename, String dir, boolean forceCopy) throws NullPointerException, IOException {
+    public static File getResourceFile(String filename, String dir, boolean forceCopy) throws IOException {
         File ret = new File(dir, filename);
         
         if (!forceCopy && ret.exists())
@@ -58,11 +58,11 @@ public class Utilities {
         return ret;
     }
     
-    public static File getResourceFile(String filename, String dir) throws NullPointerException, IOException {
+    public static File getResourceFile(String filename, String dir) throws IOException {
         return getResourceFile(filename, dir, false);
     }
     
-    public static URL getResourceURL(String filename) throws NullPointerException {
+    public static URL getResourceURL(String filename) {
         URL url = Utilities.class.getResource("/resources/" + filename);
         if (url == null)
             throw new NullPointerException("Cannot load resource: " + filename);
@@ -275,8 +275,7 @@ public class Utilities {
      * @throws FileNotFoundException
      */
     public static void normalizeArrangement(StaffArrangement loaded,
-            File filePath) throws FileNotFoundException, NullPointerException,
-            IOException {
+            File filePath) throws FileNotFoundException, IOException {
         String basePath = filePath.getParent() + File.separatorChar;
         int sz1 = loaded.getTheSequenceFiles().size();
         int sz2 = loaded.getTheSequences().size();
