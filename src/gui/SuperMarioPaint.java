@@ -2,7 +2,6 @@ package gui;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.FutureTask;
@@ -170,19 +169,16 @@ public class SuperMarioPaint extends Application  {
              * Changes the cursor image */
             setCursor(SMPCursorType.HAND_POINTING);
             
-            /* Changes the app icon 
-             * (gives the option to use a given icon OR a random icon from all instruments) */
-            if (new File("./sprites/ICON.png").exists())
-                setIcon("./sprites/ICON.png");
-            else {
-                int randNum = (int) Math.floor(Math.random() * Values.NUMINSTRUMENTS);
-                ArrayList<InstrumentIndex> instList = new ArrayList<InstrumentIndex>(
-                        EnumSet.allOf(InstrumentIndex.class));
-                String instName = instList.get(randNum).name();
-                setIcon("./sprites/" + instName + "_SM.png");
-            }
+            // 1 chance out of 10 to set a random instrument as icon image
+            int randValue = (int) Math.floor(Math.random() * 10 * InstrumentIndex.values().length);
+            String iconFile = (randValue < InstrumentIndex.values().length) ?
+            	InstrumentIndex.values()[randValue].name() :
+            	"ICON";
+            Image iconImage = new Image(Utilities.getResourceURL(iconFile + ".png").toString());
+    		primaryStage.getIcons().add(iconImage);
             
             primaryStage.show();
+            
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
@@ -364,14 +360,4 @@ public class SuperMarioPaint extends Application  {
     	primaryScene.setCursor(cursorImages.get(type));
     }
     
-    /**
-     * Changes the icon to the given image location.
-     * 
-     * @param fileLocation
-     * 			The location of the new icon image.
-     */
-    public void setIcon(String fileLocation) {
-    	if (new File(fileLocation).exists())
-    		primaryStage.getIcons().add(new Image("file:" + fileLocation));
-    }
 }
