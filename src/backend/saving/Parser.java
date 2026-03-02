@@ -35,7 +35,7 @@ public interface Parser<T> {
 						T result = p.parse(in);
 						return Optional.of(result);
 						
-					} catch (ParseException _) {
+					} catch (ParseException e) {
 						continue;
 					}
 				}
