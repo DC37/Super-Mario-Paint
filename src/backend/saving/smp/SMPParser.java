@@ -78,6 +78,7 @@ public class SMPParser implements Parser<StaffSequence> {
 					} else if (spl.contains("EXT")) {
 						loaded.setNoteExtensions(Utilities.boolFromLong(Long
 								.parseLong(num.trim())));
+						swap15And16(loaded);
 					} else if (spl.contains("TIME")) {
 						loaded.setTimeSignature(num.trim());
 					} else if (spl.contains("SOUNDSET")) {
@@ -119,6 +120,16 @@ public class SMPParser implements Parser<StaffSequence> {
 		}
 		loaded.normalize();
 		return loaded;
+	}
+	
+	// Coin and piranha used to be swapped, so we unswap the note extensions
+	// found in sequences files to conform with existing files
+	private void swap15And16(StaffSequence seq) {
+		boolean[] exts = seq.getNoteExtensions();
+		boolean ext15 = exts[15];
+		exts[15] = exts[16];
+		exts[16] = ext15;
+		seq.setNoteExtensions(exts);
 	}
 
 }
