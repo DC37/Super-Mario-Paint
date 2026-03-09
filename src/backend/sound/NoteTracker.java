@@ -15,7 +15,7 @@ import gui.Values;
  * @since 2013.11.10
  *
  */
-public class NoteTracker {
+class NoteTracker {
 
     /**
      * This is the list of lists, arranged by channel, of notes that are
@@ -67,7 +67,7 @@ public class NoteTracker {
     }
 
     /** Tells us whether this note channel has a note playing. */
-    public boolean isChannelOn(int channel) {
+    private boolean isChannelOn(int channel) {
         return channelOn.get(channel);
     }
 
@@ -75,7 +75,7 @@ public class NoteTracker {
      * Sets a channel to "on"
      * @param channel The channel we want to set to on.
      */
-    public void setChannelOn(int channel) {
+    private void setChannelOn(int channel) {
         channelOn.set(channel, true);
     }
 
@@ -83,7 +83,7 @@ public class NoteTracker {
      * Sets a channel to "off"
      * @param channel The channel we want to set to off.
      */
-    public void setChannelOff(int channel) {
+    private void setChannelOff(int channel) {
         channelOn.set(channel, false);
     }
 
@@ -106,18 +106,6 @@ public class NoteTracker {
      */
     private ArrayList<PlayingNote> getNotesPlaying(int channel) {
         return notesOn.get(channel);
-    }
-
-    /**
-     * Makes new lists of notes that are playing. Use this to prevent
-     * memory leaks while using the program.
-     */
-    public void reset() {
-        channelOn.clear();
-        for (ArrayList<PlayingNote> a : notesOn)
-            a.clear();
-        for (int i = 0; i < InstrumentIndex.values().length; i++)
-            channelOn.add(false);
     }
 
     /**
