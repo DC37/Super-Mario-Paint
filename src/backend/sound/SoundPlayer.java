@@ -291,9 +291,4 @@ public class SoundPlayer {
         chan[ind].noteOff(i + acc.getOffset());
     }
 
-    public void stopSound(int i, InstrumentIndex theInd, Accidental acc, int vel) {
-        int ind = theInd.getChannel() - 1;
-        chan[ind].noteOff(i + acc.getOffset(), vel);
-    }
-
 }
