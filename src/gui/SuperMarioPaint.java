@@ -1,6 +1,6 @@
 package gui;
 
-import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -130,8 +130,11 @@ public class SuperMarioPaint extends Application  {
         controller.setImagesHolder(imagesHolder);
         controller.setSoundPlayer(soundPlayer);
         loader.setController(controller);
-        File fxml = FileUtils.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
-        loader.setLocation(fxml.toURI().toURL());
+        
+        // The FXML expects sprites to be in a folder named sprites/
+        // Until this changes we'll copy the resource's contents in AppData
+        URL fxml = FileUtils.getSMPResource(Values.FXML, Values.SMP_FOLDER);
+        loader.setLocation(fxml);
         
         root = (Parent) loader.load();
         notifyPreloader(new ProgressNotification(0.75));

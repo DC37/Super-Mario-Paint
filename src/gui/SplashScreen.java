@@ -1,6 +1,6 @@
 package gui;
 
-import java.io.File;
+import java.net.URL;
 
 import javafx.application.Preloader;
 import javafx.scene.Scene;
@@ -45,19 +45,15 @@ public class SplashScreen extends Preloader {
         BorderPane p = new BorderPane();
         p.setCenter(bar);
         /* @since 1.4, to spice up the load screen. why not? - seymour */
-        File loadingGif;
-        try {
-            loadingGif = FileUtils.getResourceFile("LOADING_ANIM.gif", Values.SPRITES_FOLDER);
-            imageview = new ImageView();
-            imageview.setImage(new Image(loadingGif.toURI().toURL().toString()));
-            imageview.setFitWidth(236);
-            imageview.setFitHeight(36);
-            imageview.setTranslateX(32);
-            imageview.setTranslateY(32);
-            p.setTop(imageview);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        URL loadingGif = FileUtils.getSMPResource("LOADING_ANIM.gif", Values.SPRITES_FOLDER);
+        imageview = new ImageView();
+        imageview.setImage(new Image(loadingGif.toString()));
+        imageview.setFitWidth(236);
+        imageview.setFitHeight(36);
+        imageview.setTranslateX(32);
+        imageview.setTranslateY(32);
+        p.setTop(imageview);
+        
         return new Scene(p, 300, 150);
     }
 

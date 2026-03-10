@@ -73,33 +73,6 @@ public class FileUtils {
     	
     	return url;
     }
-    
-    /**
-     * <p>Get a file that's also a resource of the program (typically a default sprite or soundfont).
-     * 
-     * <p>This method will attempt to load the file from its expected location. If the file is not found
-     * there, it is loaded as a resource and then copied onto the expected location for future calls.
-     * 
-     * @param filename name of the file or resource
-     * @param dir expected location for the file
-     */
-    public static File getResourceFile(String filename, String dir, boolean forceCopy) throws IOException {
-        File ret = new File(dir, filename);
-        
-        if (!forceCopy && ret.exists())
-            return ret;
-        
-        URL url = getSMPResource(filename);
-        
-        Files.createDirectories(ret.getParentFile().toPath());
-        Files.copy(url.openStream(), ret.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        
-        return ret;
-    }
-    
-    public static File getResourceFile(String filename, String dir) throws IOException {
-        return getResourceFile(filename, dir, false);
-    }
 	
 	/**
 	 * Creates the soundfont folder if it does not already exists.
