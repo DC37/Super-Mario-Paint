@@ -174,7 +174,7 @@ public class SuperMarioPaint extends Application  {
             String iconFile = (randValue < InstrumentIndex.values().length) ?
             	InstrumentIndex.values()[randValue].name() :
             	"ICON";
-            Image iconImage = new Image(FileUtils.getResourceURL(iconFile + ".png").toString());
+            Image iconImage = new Image(FileUtils.getSMPResource(iconFile + ".png").toString());
     		primaryStage.getIcons().add(iconImage);
             
             primaryStage.show();
