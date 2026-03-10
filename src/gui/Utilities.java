@@ -13,10 +13,6 @@ import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import backend.saving.Parser;
 import backend.songs.StaffArrangement;
@@ -83,46 +79,6 @@ public class Utilities {
             return null;
         
         return ((Node) src).getScene().getWindow();
-    }
-
-    /**
-     * Opens a file dialog that people can choose a file from. This is a Java
-     * Swing version.
-     *
-     * @return A File reference that the user has chosen.
-     * @throws IOException
-     */
-    public static File openFileDialog() throws IOException,
-            NullPointerException {
-        JFileChooser fd = new JFileChooser(".");
-        FileFilter filter = new FileNameExtensionFilter("Text File (*.txt)",
-                "txt");
-        FileFilter filter2 = new FileNameExtensionFilter(
-                "AMS Sequence (*.mss)", "mss");
-        fd.addChoosableFileFilter(filter);
-        fd.addChoosableFileFilter(filter2);
-        fd.setFileFilter(filter);
-        int returnVal = fd.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            return fd.getSelectedFile();
-        } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-            throw new NullPointerException();
-        } else {
-            System.out.print("Error opening file!");
-            throw new IOException();
-        }
-    }
-
-    /**
-     * Opens some dialog box that contains some text in it. Whether this is done
-     * in Swing or JavaFX is TBD.
-     *
-     * @param in
-     *            What should be shown in this dialog box.
-     */
-    public static void openDialog(String in) {
-        JOptionPane.showMessageDialog(null, in, "Information",
-                JOptionPane.INFORMATION_MESSAGE);
     }
 	
 	/**
