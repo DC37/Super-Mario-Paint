@@ -129,7 +129,7 @@ public class OptionsMenu {
         final ComboBox<String> soundfontsMenu = new ComboBox<>();
         String[] listOfFiles;
         try {
-            listOfFiles = Utilities.getSoundfontsList();
+            listOfFiles = FileUtils.getSoundfontsList();
         } catch (IOException e) {
             e.printStackTrace();
             listOfFiles = new String[0];

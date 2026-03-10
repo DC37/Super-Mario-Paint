@@ -12,9 +12,9 @@ import javax.sound.midi.Soundbank;
 
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
+import gui.FileUtils;
 import gui.InstrumentIndex;
 import gui.Settings;
-import gui.Utilities;
 import gui.Values;
 
 /**
@@ -35,7 +35,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
     	MidiChannel[] chan;
     	
         try {
-    		File defaultSoundfontFile = Utilities.getResourceFile(Values.DEFAULT_SOUNDFONT, Values.SOUNDFONTS_FOLDER);
+    		File defaultSoundfontFile = FileUtils.getResourceFile(Values.DEFAULT_SOUNDFONT, Values.SOUNDFONTS_FOLDER);
             bank = MidiSystem.getSoundbank(defaultSoundfontFile);
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();

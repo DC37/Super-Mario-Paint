@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.Map;
 
+import gui.FileUtils;
 import gui.Settings;
-import gui.Utilities;
 import gui.Values;
 import javafx.scene.image.Image;
 
@@ -41,7 +41,7 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
             setLoadStatus((i.ordinal() + 1.0) / ind.length);
             String path = i.toString() + extension;
             try {
-                File f = Utilities.getResourceFile(path, Values.SPRITES_FOLDER);
+                File f = FileUtils.getResourceFile(path, Values.SPRITES_FOLDER);
                 Image temp2 = new Image(f.toURI().toString());
                 spritesFX.put(i, temp2);
                 if ((Settings.debug & 0b01) != 0)

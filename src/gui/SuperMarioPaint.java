@@ -130,7 +130,7 @@ public class SuperMarioPaint extends Application  {
         controller.setImagesHolder(imagesHolder);
         controller.setSoundPlayer(soundPlayer);
         loader.setController(controller);
-        File fxml = Utilities.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
+        File fxml = FileUtils.getResourceFile(Values.FXML, Values.SMP_FOLDER, true);
         loader.setLocation(fxml.toURI().toURL());
         
         root = (Parent) loader.load();
@@ -174,7 +174,7 @@ public class SuperMarioPaint extends Application  {
             String iconFile = (randValue < InstrumentIndex.values().length) ?
             	InstrumentIndex.values()[randValue].name() :
             	"ICON";
-            Image iconImage = new Image(Utilities.getResourceURL(iconFile + ".png").toString());
+            Image iconImage = new Image(FileUtils.getResourceURL(iconFile + ".png").toString());
     		primaryStage.getIcons().add(iconImage);
             
             primaryStage.show();
