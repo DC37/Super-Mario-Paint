@@ -1,7 +1,7 @@
 package gui.loaders;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.sound.midi.Instrument;
 import javax.sound.midi.InvalidMidiDataException;
@@ -35,7 +35,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
     	MidiChannel[] chan;
     	
         try {
-    		File defaultSoundfontFile = FileUtils.getResourceFile(Values.DEFAULT_SOUNDFONT, Values.SOUNDFONTS_FOLDER);
+    		URL defaultSoundfontFile = FileUtils.getSMPResource(Values.DEFAULT_SOUNDFONT, Values.SOUNDFONTS_FOLDER);
             bank = MidiSystem.getSoundbank(defaultSoundfontFile);
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();

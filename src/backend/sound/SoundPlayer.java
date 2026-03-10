@@ -2,8 +2,6 @@ package backend.sound;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,11 +17,9 @@ import backend.songs.Note;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
-import gui.Dialog;
 import gui.InstrumentIndex;
 import gui.StateMachine;
 import gui.Values;
-import javafx.stage.Window;
 
 /**
  *

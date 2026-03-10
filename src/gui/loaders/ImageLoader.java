@@ -1,6 +1,6 @@
 package gui.loaders;
 
-import java.io.File;
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -39,21 +39,19 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
                 continue;
             
             setLoadStatus((i.ordinal() + 1.0) / ind.length);
+            
             String path = i.toString() + extension;
+            URL url = FileUtils.getSMPResource(path, Values.SPRITES_FOLDER);
+            Image temp2 = new Image(url.toString());
+            spritesFX.put(i, temp2);
+            
+            if ((Settings.debug & 0b01) != 0)
+            	System.out.println(
+            			"Loaded Image: " + i.toString() + extension);
             try {
-                File f = FileUtils.getResourceFile(path, Values.SPRITES_FOLDER);
-                Image temp2 = new Image(f.toURI().toString());
-                spritesFX.put(i, temp2);
-                if ((Settings.debug & 0b01) != 0)
-                    System.out.println(
-                            "Loaded Image: " + i.toString() + extension);
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            	Thread.sleep(1);
+            } catch (InterruptedException e) {
+            	e.printStackTrace();
             }
         }
         
