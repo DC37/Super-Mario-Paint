@@ -47,7 +47,7 @@ public class SplashScreen extends Preloader {
         /* @since 1.4, to spice up the load screen. why not? - seymour */
         File loadingGif;
         try {
-            loadingGif = Utilities.getResourceFile("LOADING_ANIM.gif", Values.SPRITES_FOLDER);
+            loadingGif = FileUtils.getResourceFile("LOADING_ANIM.gif", Values.SPRITES_FOLDER);
             imageview = new ImageView();
             imageview.setImage(new Image(loadingGif.toURI().toURL().toString()));
             imageview.setFitWidth(236);
