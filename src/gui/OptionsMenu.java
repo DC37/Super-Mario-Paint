@@ -163,7 +163,7 @@ public class OptionsMenu {
                                 return;
                             }
                             
-                            if(!staff.getSoundPlayer().addSoundfont(sf, owner)) {
+                            if(!FileUtils.addSoundfont(sf, owner)) {
                                 soundfontsMenu.getSelectionModel().selectPrevious();
                                 return;
                             }
