@@ -174,35 +174,6 @@ public class SoundPlayer {
 	}
 	
 	/**
-	 * Copies the soundfont file to AppData.
-	 * 
-	 * @param sf
-	 *            The soundfont file.
-	 * @return if soundfont exists in AppData now
-	 * @since v1.1.2
-	 */
-	public boolean addSoundfont(File sf, Window owner) {
-		String sfName = sf.getName();
-		if(sfName.isEmpty())
-			return false;
-		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
-		
-		if (destSf.exists()) {
-		    String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-		    if (!Dialog.showYesNoDialog(mssg, owner))
-		        return false;
-		}
-		
-		try {
-			Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
-	/**
 	 * Stores the current soundbank in cache for quick loading. 
 	 * 
 	 * @since v1.1.2

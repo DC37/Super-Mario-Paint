@@ -7,6 +7,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import javafx.stage.Window;
+
 /**
  * This class contains static methods to access resources or interact with files on the user's system.
  */
@@ -70,5 +72,34 @@ public class FileUtils {
 		    }
 		});
     }
+	
+	/**
+	 * Copies the soundfont file to AppData.
+	 * 
+	 * @param sf
+	 *            The soundfont file.
+	 * @return if soundfont exists in AppData now
+	 * @since v1.1.2
+	 */
+	public static boolean addSoundfont(File sf, Window owner) {
+		String sfName = sf.getName();
+		if(sfName.isEmpty())
+			return false;
+		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
+		
+		if (destSf.exists()) {
+		    String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
+		    if (!Dialog.showYesNoDialog(mssg, owner))
+		        return false;
+		}
+		
+		try {
+			Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
 }
