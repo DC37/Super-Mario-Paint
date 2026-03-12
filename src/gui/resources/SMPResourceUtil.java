@@ -20,7 +20,7 @@ import java.nio.file.StandardCopyOption;
  * </ol>
  * Most of the time we are only interested in the URL. The steps above implement a safe way to get it but also create files that the user can modify if she wants to.
  */
-public class FileUtils {
+public class SMPResourceUtil {
     
 	/**
 	 * <p>Access a SMP resource. This method either returns a non-null URL or raises an exception.
@@ -28,8 +28,8 @@ public class FileUtils {
 	 * @return a {@link URL} pointing to the resource---cannot be {@code null}
 	 * @throws NullPointerException if {@code name} is null or the resource cannot be accessed
 	 */
-    public static URL getSMPResource(String name) {
-        URL url = FileUtils.class.getResource("/resources/" + name);
+    public static URL get(String name) {
+        URL url = SMPResourceUtil.class.getResource("/resources/" + name);
         if (url == null)
             throw new NullPointerException("Cannot load resource: " + name);
         
@@ -45,7 +45,7 @@ public class FileUtils {
      * @return a {@link URL} pointing to the resource---cannot be {@code null}
      * @throws NullPointerException if {@code name} is null or the resource cannot be accessed
      */
-    public static URL getSMPResource(String name, String dir) {
+    public static URL get(String name, String dir) {
     	File ret = new File(dir, name);
     	
     	if (ret.exists()) {
@@ -57,7 +57,7 @@ public class FileUtils {
     		}
     	}
     	
-    	URL url = getSMPResource(name);
+    	URL url = get(name);
     	
     	try {
         	Files.createDirectories(ret.getParentFile().toPath());

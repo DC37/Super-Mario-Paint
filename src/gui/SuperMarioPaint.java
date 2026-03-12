@@ -13,7 +13,7 @@ import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
 import gui.loaders.SMPCursorType;
 import gui.loaders.SoundfontLoader;
-import gui.resources.FileUtils;
+import gui.resources.SMPResourceUtil;
 import javafx.application.Application;
 import javafx.application.Preloader.ErrorNotification;
 import javafx.application.Preloader.ProgressNotification;
@@ -139,7 +139,7 @@ public class SuperMarioPaint extends Application  {
         
         // The FXML expects sprites to be in a folder named sprites/
         // Until this changes we'll copy the resource's contents in AppData
-        URL fxml = FileUtils.getSMPResource(Values.FXML, Values.SMP_FOLDER);
+        URL fxml = SMPResourceUtil.get(Values.FXML, Values.SMP_FOLDER);
         loader.setLocation(fxml);
         
         root = (Parent) loader.load();
@@ -370,7 +370,7 @@ public class SuperMarioPaint extends Application  {
         String iconFile = (randValue < InstrumentIndex.values().length) ?
         	InstrumentIndex.values()[randValue].name() :
         	"ICON";
-        headerIcon = new Image(FileUtils.getSMPResource(iconFile + ".png").toString());
+        headerIcon = new Image(SMPResourceUtil.get(iconFile + ".png").toString());
     }
     
 }
