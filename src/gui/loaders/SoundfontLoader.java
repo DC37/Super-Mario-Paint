@@ -15,7 +15,7 @@ import backend.sound.SoundPlayer;
 import gui.InstrumentIndex;
 import gui.Settings;
 import gui.Values;
-import gui.resources.FileUtils;
+import gui.resources.SMPResourceUtil;
 
 /**
  * Loads the soundfonts that will be used to play sounds.
@@ -35,7 +35,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
     	MidiChannel[] chan;
     	
         try {
-    		URL defaultSoundfontFile = FileUtils.getSMPResource(Values.DEFAULT_SOUNDFONT, Values.SOUNDFONTS_FOLDER);
+    		URL defaultSoundfontFile = SMPResourceUtil.get(Values.DEFAULT_SOUNDFONT, Values.SOUNDFONTS_FOLDER);
             bank = MidiSystem.getSoundbank(defaultSoundfontFile);
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();
