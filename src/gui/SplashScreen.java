@@ -70,7 +70,7 @@ public class SplashScreen extends Preloader {
         } else {
             stage.setTitle("Loading...");
         }
-        stage.getIcons().add(new Image("file:./sprites/ICON.png"));
+        stage.getIcons().add(SuperMarioPaint.headerIcon);
         stage.setResizable(false);
         stage.show();
     }

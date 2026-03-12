@@ -95,6 +95,11 @@ public class SuperMarioPaint extends Application  {
     private SMPFXController controller = new SMPFXController();
     
     private Task<Void> preloaderTask;
+    
+    /**
+     * Header graphic for preloader and application windows. This has a small chance of being a random instrument.
+     */
+    static Image headerIcon;
 
     /**
      * This should hopefully get something up on the screen quickly. This is
@@ -172,14 +177,7 @@ public class SuperMarioPaint extends Application  {
              * Changes the cursor image */
             setCursor(SMPCursorType.HAND_POINTING);
             
-            // 1 chance out of 10 to set a random instrument as icon image
-            int randValue = (int) Math.floor(Math.random() * 10 * InstrumentIndex.values().length);
-            String iconFile = (randValue < InstrumentIndex.values().length) ?
-            	InstrumentIndex.values()[randValue].name() :
-            	"ICON";
-            Image iconImage = new Image(FileUtils.getSMPResource(iconFile + ".png").toString());
-    		primaryStage.getIcons().add(iconImage);
-            
+    		primaryStage.getIcons().add(headerIcon);
             primaryStage.show();
             
         } catch (Exception e) {
@@ -350,6 +348,8 @@ public class SuperMarioPaint extends Application  {
                 Settings.setDebug(Integer.MIN_VALUE);
             }   
         }
+        
+        setHeaderIcon();
             
         try {
             System.setProperty("javafx.preloader", SplashScreen.class.getName());
@@ -361,6 +361,15 @@ public class SuperMarioPaint extends Application  {
     
     public void setCursor(SMPCursorType type) {
     	primaryScene.setCursor(cursorImages.get(type));
+    }
+
+    // selects the default icon 9 times out of 10, otherwise a random instrument
+    static void setHeaderIcon() {
+        int randValue = (int) Math.floor(Math.random() * 10 * InstrumentIndex.values().length);
+        String iconFile = (randValue < InstrumentIndex.values().length) ?
+        	InstrumentIndex.values()[randValue].name() :
+        	"ICON";
+        headerIcon = new Image(FileUtils.getSMPResource(iconFile + ".png").toString());
     }
     
 }
