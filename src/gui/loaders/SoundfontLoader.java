@@ -12,10 +12,10 @@ import javax.sound.midi.Soundbank;
 
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
-import gui.FileUtils;
 import gui.InstrumentIndex;
 import gui.Settings;
 import gui.Values;
+import gui.resources.FileUtils;
 
 /**
  * Loads the soundfonts that will be used to play sounds.

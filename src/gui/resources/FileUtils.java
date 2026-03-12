@@ -1,4 +1,4 @@
-package gui;
+package gui.resources;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class FileUtils {
 	 * @throws NullPointerException if {@code name} is null or the resource cannot be accessed
 	 */
     public static URL getSMPResource(String name) {
-        URL url = SuperMarioPaint.class.getResource("/resources/" + name);
+        URL url = FileUtils.class.getResource("/resources/" + name);
         if (url == null)
             throw new NullPointerException("Cannot load resource: " + name);
         

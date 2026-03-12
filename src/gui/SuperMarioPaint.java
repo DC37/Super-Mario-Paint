@@ -13,6 +13,7 @@ import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
 import gui.loaders.SMPCursorType;
 import gui.loaders.SoundfontLoader;
+import gui.resources.FileUtils;
 import javafx.application.Application;
 import javafx.application.Preloader.ErrorNotification;
 import javafx.application.Preloader.ProgressNotification;
