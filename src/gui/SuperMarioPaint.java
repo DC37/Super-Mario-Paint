@@ -13,6 +13,7 @@ import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
 import gui.loaders.SMPCursorType;
 import gui.loaders.SoundfontLoader;
+import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
 import javafx.application.Application;
 import javafx.application.Preloader.ErrorNotification;
@@ -137,9 +138,10 @@ public class SuperMarioPaint extends Application  {
         controller.setSoundPlayer(soundPlayer);
         loader.setController(controller);
         
-        // The FXML expects sprites to be in a folder named sprites/
-        // Until this changes we'll copy the resource's contents in AppData
-        URL fxml = SMPResourceUtil.get(Values.FXML, Values.SMP_FOLDER);
+        // We *have* to copy the FXML onto the user file system because it expects a sprites/ folder
+        // But also, we may update it regularly as we develop, so we want to always use our internal version
+        FetchStrategy fxmlFetchStrategy = FetchStrategy.COPY_INTERNAL;
+        URL fxml = SMPResourceUtil.get(Values.FXML, fxmlFetchStrategy, Values.SMP_FOLDER);
         loader.setLocation(fxml);
         
         root = (Parent) loader.load();
