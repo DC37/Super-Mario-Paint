@@ -1,7 +1,10 @@
 package gui;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
@@ -129,7 +132,7 @@ public class OptionsMenu {
         final ComboBox<String> soundfontsMenu = new ComboBox<>();
         String[] listOfFiles;
         try {
-            listOfFiles = FileUtils.getSoundfontsList();
+            listOfFiles = getSoundfontsList();
         } catch (IOException e) {
             e.printStackTrace();
             listOfFiles = new String[0];
@@ -163,7 +166,7 @@ public class OptionsMenu {
                                 return;
                             }
                             
-                            if(!FileUtils.addSoundfont(sf, owner)) {
+                            if(!addSoundfont(sf, owner)) {
                                 soundfontsMenu.getSelectionModel().selectPrevious();
                                 return;
                             }
@@ -325,5 +328,58 @@ public class OptionsMenu {
         
         staff.setTimeSignature(t);
     }
+	
+	/**
+	 * Creates the soundfont folder if it does not already exists.
+	 */
+	private static File getSoundfontFolder() throws IOException {
+	    File dir = new File(Values.SOUNDFONTS_FOLDER);
+	    Files.createDirectories(dir.toPath());
+	    return dir;
+	}
+    
+	/**
+	 * @return The list of filenames *.sf2 in the soundfonts folder.
+	 * @since v1.1.2
+	 */
+	private static String[] getSoundfontsList() throws IOException {
+		File soundfontsFolder = getSoundfontFolder();
+		
+		return soundfontsFolder.list(new FilenameFilter() {
+		    @Override
+		    public boolean accept(File dir, String name) {
+		        return name.toLowerCase().endsWith(".sf2");
+		    }
+		});
+    }
+	
+	/**
+	 * Copies the soundfont file to AppData.
+	 * 
+	 * @param sf
+	 *            The soundfont file.
+	 * @return if soundfont exists in AppData now
+	 * @since v1.1.2
+	 */
+	private static boolean addSoundfont(File sf, Window owner) {
+		String sfName = sf.getName();
+		if(sfName.isEmpty())
+			return false;
+		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
+		
+		if (destSf.exists()) {
+		    String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
+		    if (!Dialog.showYesNoDialog(mssg, owner))
+		        return false;
+		}
+		
+		try {
+			Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
 }
