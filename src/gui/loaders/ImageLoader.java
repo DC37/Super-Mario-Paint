@@ -4,9 +4,9 @@ import java.net.URL;
 import java.util.Hashtable;
 import java.util.Map;
 
-import gui.FileUtils;
 import gui.Settings;
 import gui.Values;
+import gui.resources.FileUtils;
 import javafx.scene.image.Image;
 
 /**

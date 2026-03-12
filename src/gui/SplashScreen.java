@@ -2,6 +2,7 @@ package gui;
 
 import java.net.URL;
 
+import gui.resources.FileUtils;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
