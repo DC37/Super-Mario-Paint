@@ -6,6 +6,7 @@ import java.util.Map;
 
 import gui.Settings;
 import gui.Values;
+import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
 import javafx.scene.image.Image;
 
@@ -41,7 +42,7 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
             setLoadStatus((i.ordinal() + 1.0) / ind.length);
             
             String path = i.toString() + extension;
-            URL url = SMPResourceUtil.get(path, Values.SPRITES_FOLDER);
+            URL url = SMPResourceUtil.get(path, FetchStrategy.FROM_COPY, Values.SPRITES_FOLDER);
             Image temp2 = new Image(url.toString());
             spritesFX.put(i, temp2);
             
