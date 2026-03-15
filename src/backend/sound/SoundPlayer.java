@@ -17,7 +17,6 @@ import backend.songs.MuteModifier;
 import backend.songs.Pitch;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
-import backend.songs.StaffSequence;
 import gui.InstrumentIndex;
 import gui.StateMachine;
 import gui.Values;
@@ -65,18 +64,22 @@ public class SoundPlayer {
     }
 
     /**
-     * Plays the current line of notes.
+     * Play a line of notes on the staff, applying mute notes if there are any.
+     * @param s A line of notes
      */
-    public void playSoundLine(StaffSequence seq, int index) {
-        StaffNoteLine s = seq.getLineSafe(StateMachine.getMeasureLineNum() + index);
+    public void playSoundLine(StaffNoteLine s) {
         ArrayList<StaffNote> theNotes = s.getNotes();
+        
         tracker.stopNotes(s);
+        
         for (StaffNote sn : theNotes) {
             if (sn.getMuteModifier().equals(MuteModifier.MUTE_THIS_PITCH))
                 stopSound(sn);
+            
             else if (sn.getMuteModifier().equals(MuteModifier.MUTE_THIS_INST))
                 stopInstrument(sn);
         }
+        
         for (StaffNote sn : theNotes) {
             if (sn.getMuteModifier().equals(MuteModifier.REGULAR))
                 playSound(sn, s.getVolume());
