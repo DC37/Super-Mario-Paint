@@ -33,10 +33,9 @@ public class StaffNote implements Serializable {
     private int volume = Values.DEFAULT_VELOCITY;
 
     /**
-     * Whether this is a mute note or not. 0 indicates no. 1 indicates a note
-     * mute type. 2 indicates an instrument mute type.
+     * Modifier indicating if this is a mute note and of what type.
      */
-    private int muteNote;
+    private MuteModifier muteMod;
 
     /**
      * The Instrument that the note on the staff is to use.
@@ -86,14 +85,15 @@ public class StaffNote implements Serializable {
     }
     
     public ImageIndex getImageIndex() {
-        switch (muteNote) {
-        case 1:
-            return theInstrument.imageIndex().alt();
-        case 2:
-            return theInstrument.imageIndex().silhouette();
-        case 0:
-        default:
+        switch (muteMod) {
+        case REGULAR:
             return theInstrument.imageIndex();
+        case MUTE_THIS_PITCH:
+            return theInstrument.imageIndex().alt();
+        case MUTE_THIS_INST:
+            return theInstrument.imageIndex().silhouette();
+        default:
+        	throw new IllegalArgumentException("Unrecognized mute modifier: " + muteMod);   
         }
     }
     
@@ -130,23 +130,23 @@ public class StaffNote implements Serializable {
         switch (sp[1].length()) {
         case 2:
             accidental = Accidental.NATURAL;
-            muteNote = 0;
+            muteMod = MuteModifier.REGULAR;
             break;
         case 3:
             accidental = decodeAccidental(sp[1].charAt(2));
-            muteNote = 0;
+            muteMod = MuteModifier.REGULAR;
             break;
         case 4:
             accidental = Accidental.NATURAL;
-            muteNote = Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1));
+            muteMod = MuteModifier.fromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
             break;
         case 5:
             accidental = decodeAccidental(sp[1].charAt(2));
-            muteNote = Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1));
+            muteMod = MuteModifier.fromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
             break;
         default:
             accidental = Accidental.NATURAL;
-            muteNote = 0;
+            muteMod = MuteModifier.REGULAR;
             break;
         }
     }
@@ -193,7 +193,7 @@ public class StaffNote implements Serializable {
             return other.position == position
                     && other.theInstrument == theInstrument
                     && other.accidental == accidental
-                    && other.muteNote == muteNote;
+                    && other.muteMod == muteMod;
         }
     }
 
@@ -229,22 +229,18 @@ public class StaffNote implements Serializable {
     }
 
     /**
-     * @return The mute note type that this note is.
+     * @return The mute modifier of this note.
      */
-    public int muteNoteVal() {
-        return muteNote;
+    public MuteModifier getMuteModifier() {
+        return muteMod;
     }
 
     /**
-     * Sets the StaffNote to a specific type of mute note. 1 indicates a mute
-     * note that mutes a single note. 2 indicates a mute note that mutes an
-     * entire instrument.
-     *
-     * @param m
-     *            What type of mute note this is.
+     * Set the mute modifier for this note.
+     * @param m A mute modifier
      */
-    public void setMuteNote(int m) {
-        muteNote = m;
+    public void setMuteModifier(MuteModifier m) {
+        muteMod = m;
     }
 
     @Override
@@ -268,11 +264,13 @@ public class StaffNote implements Serializable {
             break;
 
         }
-        if (muteNote == 2) {
+        
+        switch (muteMod) {
+        case MUTE_THIS_INST:
             return theInstrument.toString() + " " + noteName + noteAcc + "m2";
-        } else if (muteNote == 1) {
+        case MUTE_THIS_PITCH:
             return theInstrument.toString() + " " + noteName + noteAcc + "m1";
-        } else {
+        default:
             return theInstrument.toString() + " " + noteName + noteAcc;
         }
     }

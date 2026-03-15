@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import backend.songs.Accidental;
+import backend.songs.MuteModifier;
 import backend.songs.StaffAccidental;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
@@ -174,7 +175,7 @@ class NoteMatrix {
         
         int row = note.getPosition();
         StaffNote silhouette = new StaffNote(note);
-        silhouette.setMuteNote(2);
+        silhouette.setMuteModifier(MuteModifier.MUTE_THIS_INST);
         
         currentSilhouetteColumn = col;
         currentSilhouette = silhouette;

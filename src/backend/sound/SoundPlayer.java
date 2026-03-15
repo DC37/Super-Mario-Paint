@@ -13,6 +13,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 
 import backend.songs.Accidental;
+import backend.songs.MuteModifier;
 import backend.songs.Pitch;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
@@ -71,13 +72,13 @@ public class SoundPlayer {
         ArrayList<StaffNote> theNotes = s.getNotes();
         tracker.stopNotes(s);
         for (StaffNote sn : theNotes) {
-            if (sn.muteNoteVal() == 1)
+            if (sn.getMuteModifier().equals(MuteModifier.MUTE_THIS_PITCH))
                 stopSound(sn);
-            else if (sn.muteNoteVal() == 2)
+            else if (sn.getMuteModifier().equals(MuteModifier.MUTE_THIS_INST))
                 stopInstrument(sn);
         }
         for (StaffNote sn : theNotes) {
-            if (sn.muteNoteVal() == 0)
+            if (sn.getMuteModifier().equals(MuteModifier.REGULAR))
                 playSound(sn, s.getVolume());
         }
     }

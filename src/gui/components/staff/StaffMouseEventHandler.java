@@ -9,6 +9,7 @@ import backend.editing.commands.AddVolumeCommand;
 import backend.editing.commands.RemoveNoteCommand;
 import backend.editing.commands.RemoveVolumeCommand;
 import backend.songs.Accidental;
+import backend.songs.MuteModifier;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import gui.InstrumentIndex;
@@ -190,7 +191,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             System.out.println("Index: " + theInd + "\nPosition: "+ position + "\nAcc: " + acc + "\nVel: " + vel);
         
         StaffNote theStaffNote = new StaffNote(theInd, position, acc);
-        theStaffNote.setMuteNote(muteA ? 2 : mute ? 1 : 0);
+        theStaffNote.setMuteModifier(muteA ? MuteModifier.MUTE_THIS_INST : mute ? MuteModifier.MUTE_THIS_PITCH : MuteModifier.REGULAR);
         
         if (!mute && !muteA)
             theStaff.getSoundPlayer().playSound(theStaffNote, vel);

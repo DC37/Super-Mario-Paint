@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import backend.saving.Parser;
 import backend.songs.Accidental;
+import backend.songs.MuteModifier;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
@@ -117,7 +118,7 @@ public class MPCDecoder implements Parser<StaffSequence> {
                 if (note.length() == 3) {
                     if (note.substring(1).equals("17")) {
                         StaffNote mn = new StaffNote(in, pos, acc);
-                        mn.setMuteNote(2);
+                        mn.setMuteModifier(MuteModifier.MUTE_THIS_INST);
                         sl.add(mn);
                         continue;
                     } else {

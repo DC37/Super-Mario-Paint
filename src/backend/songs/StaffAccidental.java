@@ -32,14 +32,15 @@ public class StaffAccidental {
     }
     
     public ImageIndex getImageIndex() {
-        switch (theNote.muteNoteVal()) {
-        case 1:
-            return theNote.getAccidental().imageIndex().alt();
-        case 2:
-            return theNote.getAccidental().imageIndex().silhouette();
-        case 0:
-        default:
+        switch (theNote.getMuteModifier()) {
+        case REGULAR:
             return theNote.getAccidental().imageIndex();
+        case MUTE_THIS_PITCH:
+            return theNote.getAccidental().imageIndex().alt();
+        case MUTE_THIS_INST:
+            return theNote.getAccidental().imageIndex().silhouette();
+        default:
+        	throw new IllegalArgumentException("Unrecognized mute modifier: " + theNote.getMuteModifier());
         }
     }
 
