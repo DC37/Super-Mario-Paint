@@ -95,8 +95,9 @@ public class SoundPlayer {
      *            The StaffNoteLine.
      */
     public void playSound(StaffNote sn, int vel) {
-        playSound(Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
-                sn.getInstrument(), sn.getAccidental(), vel);
+        playSound(sn.getInstrument(),
+        		Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
+                sn.getAccidental(), vel);
         tracker.addNotePlaying(Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
                 sn.getInstrument(), sn.getAccidental());
     }
@@ -108,8 +109,9 @@ public class SoundPlayer {
      *            The StaffNote.
      */
     private void stopSound(StaffNote sn) {
-        stopSound(Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
-                sn.getInstrument(), sn.getAccidental());
+        stopSound(sn.getInstrument(),
+        		Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
+                sn.getAccidental());
     }
 
     /**
@@ -244,22 +246,26 @@ public class SoundPlayer {
         return chan;
     }
 
-    public void playSound(Pitch n, InstrumentIndex i) {
-        playSound(n.getKeyNum(), i, Accidental.NATURAL);
+    public void playSound(InstrumentIndex inst, Pitch n) {
+        playSound(inst, n.getKeyNum(), Accidental.NATURAL, Values.MAX_VELOCITY);
     }
 
-    public void playSound(int i, InstrumentIndex theInd, Accidental acc) {
-        playSound(i, theInd, acc, Values.MAX_VELOCITY);
+    public void playSound(InstrumentIndex inst, Pitch n, int vel) {
+        playSound(inst, n.getKeyNum(), Accidental.NATURAL, vel);
     }
 
-    public void playSound(int i, InstrumentIndex theInd, Accidental acc, int vel) {
-        int ind = theInd.getChannel() - 1;
-        chan[ind].noteOn(i + acc.getOffset(), vel);
+    public void playSound(InstrumentIndex inst, int verticalPos, Accidental acc) {
+        playSound(inst, verticalPos, acc, Values.MAX_VELOCITY);
     }
 
-    public void stopSound(int i, InstrumentIndex theInd, Accidental acc) {
-        int ind = theInd.getChannel() - 1;
-        chan[ind].noteOff(i + acc.getOffset());
+    public void playSound(InstrumentIndex inst, int verticalPos, Accidental acc, int vel) {
+        int ind = inst.getChannel() - 1;
+        chan[ind].noteOn(verticalPos + acc.getOffset(), vel);
+    }
+
+    public void stopSound(InstrumentIndex inst, int verticalPos, Accidental acc) {
+        int ind = inst.getChannel() - 1;
+        chan[ind].noteOff(verticalPos + acc.getOffset());
     }
 
 }
