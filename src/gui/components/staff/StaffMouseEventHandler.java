@@ -245,7 +245,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             ArrayList<StaffNote> nt = temp.getNotes();
             for (int i = nt.size() - 1; i >= 0; i--) {
                 StaffNote s = nt.get(i);
-                if (s.getPosition() == position) {
+                if (s.getVerticalPosition() == position) {
                     StaffNote removedNote = nt.remove(i);
                     commandManager.execute(new RemoveNoteCommand(temp, removedNote));
                     break;
