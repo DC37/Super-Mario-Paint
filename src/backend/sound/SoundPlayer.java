@@ -13,7 +13,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 
 import backend.songs.Accidental;
-import backend.songs.Note;
+import backend.songs.Pitch;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
@@ -240,7 +240,7 @@ public class SoundPlayer {
         return chan;
     }
 
-    public void playSound(Note n, InstrumentIndex i) {
+    public void playSound(Pitch n, InstrumentIndex i) {
         playSound(n.getKeyNum(), i, Accidental.NATURAL);
     }
 

@@ -2,7 +2,7 @@ package gui;
 
 import java.io.File;
 
-import backend.songs.Note;
+import backend.songs.Pitch;
 import backend.songs.TimeSignature;
 
 /**
@@ -94,7 +94,7 @@ public class Values {
     public static int DEFAULT_TEMPO = 400;
     
     /** Pitch to play when an instrument is selected */
-    public static int DEFAULT_NOTE = Note.A3.getKeyNum();
+    public static int DEFAULT_NOTE = Pitch.A3.getKeyNum();
 
     /**
      * The amount of time the mouse must be held before we start repeating
@@ -145,10 +145,10 @@ public class Values {
     public static final int DRUMCHANNEL = 10;
 
     /** Array of notes that we can see on the staff. */
-    public static final Note[] staffNotes = { Note.C2, Note.D2, Note.E2, Note.F2, Note.G2, Note.A2, Note.B2, Note.C3,
-            Note.D3, Note.E3, Note.F3, Note.G3, Note.A3, Note.B3, Note.C4,
-            Note.D4, Note.E4, Note.F4, Note.G4, Note.A4, Note.B4, Note.C5,
-            Note.D5, Note.E5, Note.F5, Note.G5, Note.A5, Note.B5, Note.C6 };
+    public static final Pitch[] staffNotes = { Pitch.C2, Pitch.D2, Pitch.E2, Pitch.F2, Pitch.G2, Pitch.A2, Pitch.B2, Pitch.C3,
+            Pitch.D3, Pitch.E3, Pitch.F3, Pitch.G3, Pitch.A3, Pitch.B3, Pitch.C4,
+            Pitch.D4, Pitch.E4, Pitch.F4, Pitch.G4, Pitch.A4, Pitch.B4, Pitch.C5,
+            Pitch.D5, Pitch.E5, Pitch.F5, Pitch.G5, Pitch.A5, Pitch.B5, Pitch.C6 };
     
 	/**
 	 * The max undo/redo stack size for recorded commands.

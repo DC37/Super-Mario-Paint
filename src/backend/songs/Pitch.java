@@ -8,7 +8,7 @@ package backend.songs;
  * @author RehdBlob
  * @since 2012.08.22
  */
-public enum Note {
+public enum Pitch {
 
     /** Lowest note on the piano. */
     A0(21),
@@ -141,7 +141,7 @@ public enum Note {
      * @param num The int representation of a piano
      * key, as initialized.
      */
-    private Note(int num) {
+    private Pitch(int num) {
         value = num;
     }
 

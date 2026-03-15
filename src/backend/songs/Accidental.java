@@ -16,7 +16,7 @@ public enum Accidental {
     DOUBLE_SHARP(2, ImageIndex.DOUBLESHARP);
     
     /**
-     * Given some {@link Note} value, applying this offset will result in the
+     * Given some {@link Pitch} value, applying this offset will result in the
      * value of the altered note.
      */
     private int offset;
