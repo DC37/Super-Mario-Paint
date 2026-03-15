@@ -114,8 +114,7 @@ class NoteTracker {
      * @param s The StaffNoteLine.
      */
     private void stopSound(PlayingNote pn) {
-        soundPlayer.stopSound(pn.keyNum(), pn.instrument(),
-                pn.accidental());
+        soundPlayer.stopSound(pn.instrument(), pn.keyNum(), pn.accidental());
     }
 
     /**
