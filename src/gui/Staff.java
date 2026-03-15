@@ -604,14 +604,12 @@ public class Staff {
             }            
 
             /**
-             * Plays a sound line at the index specified. Or rather, tells the
-             * SoundPlayer thread to do that.
-             *
-             * @param index
-             *            The index to play.
+             * Plays a sound line at the index specified.
+             * @param index Position of the line to play relative to the current position in the sequence
              */
             private void playSoundLine(int index) {
-                soundPlayer.playSoundLine(theSequence, index);
+            	int currentLine = StateMachine.getMeasureLineNum();
+                soundPlayer.playSoundLine(theSequence.getLineSafe(currentLine + index));
             }
 
         }
