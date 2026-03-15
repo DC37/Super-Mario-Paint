@@ -1,0 +1,24 @@
+package backend.songs;
+
+/**
+ * Modifiers for notes: some notes on the staff are mute notes, whose purpose
+ * is not to play sounds but to cancel previous notes.
+ */
+public enum MuteModifier {
+	
+	/**
+	 * Note a mute note; just a regular note.
+	 */
+	REGULAR,
+	
+	/**
+	 * This note will cancel sounds of that instrument and pitch.
+	 */
+	MUTE_THIS_PITCH,
+	
+	/**
+	 * This note will cancel sounds of that instrument (every pitch).
+	 */
+	MUTE_THIS_INST;
+
+}
