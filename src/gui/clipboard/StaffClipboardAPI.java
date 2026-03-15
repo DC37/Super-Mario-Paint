@@ -146,7 +146,7 @@ public class StaffClipboardAPI {
 				
 				// see StaffInstrumentEventHandler's placeNote function
 				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
-				theStaffNote.setMuteNote(note.muteNoteVal());
+				theStaffNote.setMuteModifier(note.getMuteModifier());
 
 				if (lineDest.isEmpty()) {
 					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
@@ -278,7 +278,7 @@ public class StaffClipboardAPI {
 	 */
 	public void copyNote(int line, StaffNote note) {
 		StaffNote newNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
-		newNote.setMuteNote(note.muteNoteVal());
+		newNote.setMuteModifier(note.getMuteModifier());
 		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		if(!copiedData.containsKey(line))
 			copiedData.put(line, new StaffNoteLine());
