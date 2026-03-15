@@ -124,7 +124,7 @@ class NoteMatrix {
             List<StaffNote> st = stl.getNotes();
             
             for (StaffNote s : st) {
-                int row = s.getPosition();                
+                int row = s.getVerticalPosition();                
                 StaffAccidental accidental = new StaffAccidental(s);
                 
                 int d = stackedAmounts[row];
@@ -152,7 +152,7 @@ class NoteMatrix {
             return;
         
         int col = currentSilhouetteColumn;
-        int row = currentSilhouette.getPosition();
+        int row = currentSilhouette.getVerticalPosition();
         
         silMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin()).setVisible(false);
         
@@ -173,7 +173,7 @@ class NoteMatrix {
         
         resetSilhouette();
         
-        int row = note.getPosition();
+        int row = note.getVerticalPosition();
         StaffNote silhouette = new StaffNote(note);
         silhouette.setMuteModifier(MuteModifier.MUTE_THIS_INST);
         
@@ -197,7 +197,7 @@ class NoteMatrix {
      */
     public void refreshSilhouette(Accidental acc) {
         if (currentSilhouette != null && currentSilhouette.getAccidental() != acc) {
-            StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getPosition(), acc);
+            StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getVerticalPosition(), acc);
             updateSilhouette(currentSilhouetteColumn, sil);
         }
     }

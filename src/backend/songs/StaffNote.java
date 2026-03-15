@@ -25,7 +25,7 @@ public class StaffNote implements Serializable {
      * can recover the note that you are supposed to actually play by adding a
      * constant offset to this position value.
      */
-    private int position;
+    private int verticalPosition;
 
     private Accidental accidental = Accidental.NATURAL;
 
@@ -52,21 +52,21 @@ public class StaffNote implements Serializable {
      *
      * @param theInd
      *            The instrument that this StaffNote will play.
-     * @param position
-     *            The physical location of this note on the staff.
+     * @param verticalPosition
+     *            The vertical position of this note on the staff.
      * @param acc
      *            The sharp / flat / whatever that we are offsetting this note
      *            by.
      */
-    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc) {
-        this(theInd, pos, acc, Values.HALF_VELOCITY);
+    public StaffNote(InstrumentIndex theInd, int verticalPosition, Accidental acc) {
+        this(theInd, verticalPosition, acc, Values.HALF_VELOCITY);
     }
 
     /**
      * @param theInd
      *            The instrument that this StaffNote will play.
-     * @param position
-     *            The physical location of this note on the staff.
+     * @param verticalPosition
+     *            The vertical position of this note on the staff.
      * @param acc
      *            The sharp / flat / whatever that we are offsetting this note
      *            by.
@@ -76,12 +76,12 @@ public class StaffNote implements Serializable {
     public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, int vol) {
         theInstrument = theInd;
         accidental = acc;
-        position = pos;
+        verticalPosition = pos;
         volume = vol;
     }
     
     public StaffNote(StaffNote note) {
-        this(note.theInstrument, note.position, note.accidental, note.volume);
+        this(note.theInstrument, note.verticalPosition, note.accidental, note.volume);
     }
     
     public ImageIndex getImageIndex() {
@@ -122,7 +122,7 @@ public class StaffNote implements Serializable {
         theInstrument = InstrumentIndex.valueOf(sp[0]);
         for (int i = 0; i < Values.staffNotes.length; i++) {
             if (sp[1].contains(Values.staffNotes[i].name())) {
-                position = i;
+                verticalPosition = i;
             }
         }
         // Single-note volumes not implemented yet.
@@ -190,24 +190,35 @@ public class StaffNote implements Serializable {
             return false;
         } else {
             StaffNote other = (StaffNote) o;
-            return other.position == position
+            return other.verticalPosition == verticalPosition
                     && other.theInstrument == theInstrument
                     && other.accidental == accidental
                     && other.muteMod == muteMod;
         }
     }
 
-    /** @return The offset from the actual note that we have here. */
+    /**
+     * The accidental of this note.
+     * @return The accidental of this note
+     */
     public Accidental getAccidental() {
         return accidental;
     }
 
-    /** @return The numerical position that this note is located at. */
-    public int getPosition() {
-        return position;
+    /**
+     * The vertical position of this note on the staff. 0 is associated to the
+     * lowest note (C2 in the current setup).
+     * @return The vertical position of the note on the staff
+     */
+    public int getVerticalPosition() {
+        return verticalPosition;
     }
 
-    /** @return The numerical volume of this note. */
+    /**
+     * The volume of this note.
+     * @return The volume of this note
+     */
+    @Deprecated
     public int volume() {
         return volume;
     }
@@ -218,6 +229,7 @@ public class StaffNote implements Serializable {
      * @param v
      *            The volume we want to set.
      */
+    @Deprecated
     public void setVolume(int v) {
         if (v >= Values.MIN_VELOCITY && v <= Values.MAX_VELOCITY)
             volume = v;
@@ -229,7 +241,8 @@ public class StaffNote implements Serializable {
     }
 
     /**
-     * @return The mute modifier of this note.
+     * The mute modifier of this note.
+     * @return The mute modifier of this note
      */
     public MuteModifier getMuteModifier() {
         return muteMod;
@@ -245,7 +258,7 @@ public class StaffNote implements Serializable {
 
     @Override
     public String toString() {
-        String noteName = Values.staffNotes[position].name();
+        String noteName = Values.staffNotes[verticalPosition].name();
         String noteAcc = "";
         switch (accidental) {
         case DOUBLE_SHARP:

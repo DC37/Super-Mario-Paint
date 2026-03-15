@@ -475,7 +475,7 @@ public class StaffDisplayManager {
             int low = height;
             boolean middleCPresent = false;
             for (StaffNote n : stl.getNotes()) {
-                int nt = n.getPosition();
+                int nt = n.getVerticalPosition();
                 if (nt >= high)
                     high = nt;
                 if (nt <= low)

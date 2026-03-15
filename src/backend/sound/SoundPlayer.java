@@ -95,9 +95,9 @@ public class SoundPlayer {
      *            The StaffNoteLine.
      */
     public void playSound(StaffNote sn, int vel) {
-        playSound(Values.staffNotes[sn.getPosition()].getKeyNum(),
+        playSound(Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
                 sn.getInstrument(), sn.getAccidental(), vel);
-        tracker.addNotePlaying(Values.staffNotes[sn.getPosition()].getKeyNum(),
+        tracker.addNotePlaying(Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
                 sn.getInstrument(), sn.getAccidental());
     }
 
@@ -108,7 +108,7 @@ public class SoundPlayer {
      *            The StaffNote.
      */
     private void stopSound(StaffNote sn) {
-        stopSound(Values.staffNotes[sn.getPosition()].getKeyNum(),
+        stopSound(Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
                 sn.getInstrument(), sn.getAccidental());
     }
 

@@ -145,7 +145,7 @@ public class StaffClipboardAPI {
 			for(StaffNote note : lineSrc.getNotes()) {
 				
 				// see StaffInstrumentEventHandler's placeNote function
-				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
+				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getVerticalPosition(), note.getAccidental());
 				theStaffNote.setMuteModifier(note.getMuteModifier());
 
 				if (lineDest.isEmpty()) {
@@ -206,7 +206,7 @@ public class StaffClipboardAPI {
 
 			ArrayList<StaffNote> ntList = lineSrc.getNotes();
 			for (StaffNote note : ntList) {
-				if (positionBegin <= note.getPosition() && note.getPosition() <= positionEnd
+				if (positionBegin <= note.getVerticalPosition() && note.getVerticalPosition() <= positionEnd
 						&& StateMachine.getFilteredNote(note.getInstrument().ordinal())) {
 					// store the copied note at the relative line
 					selectNote(line, note);
@@ -277,7 +277,7 @@ public class StaffClipboardAPI {
 	 *            info to be copied
 	 */
 	public void copyNote(int line, StaffNote note) {
-		StaffNote newNote = new StaffNote(note.getInstrument(), note.getPosition(), note.getAccidental());
+		StaffNote newNote = new StaffNote(note.getInstrument(), note.getVerticalPosition(), note.getAccidental());
 		newNote.setMuteModifier(note.getMuteModifier());
 		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		if(!copiedData.containsKey(line))
