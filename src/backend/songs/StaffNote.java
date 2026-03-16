@@ -255,6 +255,14 @@ public class StaffNote implements Serializable {
     public void setMuteModifier(MuteModifier m) {
         muteMod = m;
     }
+    
+    /**
+     * Get the pitch of this note.
+     * @return The pitch of this note
+     */
+    public Pitch getPitch() {
+    	return Pitch.valueOf(Values.staffNotes[verticalPosition].getValue() + accidental.getOffset());
+    }
 
     @Override
     public String toString() {
