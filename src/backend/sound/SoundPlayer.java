@@ -246,12 +246,13 @@ public class SoundPlayer {
         return chan;
     }
 
-    public void playSound(InstrumentIndex inst, Pitch n) {
-        playSound(inst, n.getValue(), Accidental.NATURAL, Values.MAX_VELOCITY);
+    public void playSound(InstrumentIndex inst, Pitch pitch) {
+        playSound(inst, pitch, Values.MAX_VELOCITY);
     }
 
     public void playSound(InstrumentIndex inst, Pitch n, int vel) {
-        playSound(inst, n.getValue(), Accidental.NATURAL, vel);
+    	int iChan = inst.getChannel() - 1;
+    	chan[iChan].noteOn(n.getValue(), vel);
     }
 
     public void playSound(InstrumentIndex inst, int verticalPos, Accidental acc) {
@@ -259,13 +260,16 @@ public class SoundPlayer {
     }
 
     public void playSound(InstrumentIndex inst, int verticalPos, Accidental acc, int vel) {
-        int ind = inst.getChannel() - 1;
-        chan[ind].noteOn(verticalPos + acc.getOffset(), vel);
+    	playSound(inst, Pitch.valueOf(verticalPos + acc.getOffset()), vel);
+    }
+    
+    public void stopSound(InstrumentIndex inst, Pitch pitch) {
+    	int iChan = inst.getChannel() - 1;
+    	chan[iChan].noteOff(pitch.getValue());
     }
 
     public void stopSound(InstrumentIndex inst, int verticalPos, Accidental acc) {
-        int ind = inst.getChannel() - 1;
-        chan[ind].noteOff(verticalPos + acc.getOffset());
+    	stopSound(inst, Pitch.valueOf(verticalPos + acc.getOffset()));
     }
 
 }
