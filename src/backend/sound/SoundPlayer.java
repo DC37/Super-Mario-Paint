@@ -96,9 +96,9 @@ public class SoundPlayer {
      */
     public void playSound(StaffNote sn, int vel) {
         playSound(sn.getInstrument(),
-        		Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
+        		Values.staffNotes[sn.getVerticalPosition()].getValue(),
                 sn.getAccidental(), vel);
-        tracker.addNotePlaying(Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
+        tracker.addNotePlaying(Values.staffNotes[sn.getVerticalPosition()].getValue(),
                 sn.getInstrument(), sn.getAccidental());
     }
 
@@ -110,7 +110,7 @@ public class SoundPlayer {
      */
     private void stopSound(StaffNote sn) {
         stopSound(sn.getInstrument(),
-        		Values.staffNotes[sn.getVerticalPosition()].getKeyNum(),
+        		Values.staffNotes[sn.getVerticalPosition()].getValue(),
                 sn.getAccidental());
     }
 
@@ -247,11 +247,11 @@ public class SoundPlayer {
     }
 
     public void playSound(InstrumentIndex inst, Pitch n) {
-        playSound(inst, n.getKeyNum(), Accidental.NATURAL, Values.MAX_VELOCITY);
+        playSound(inst, n.getValue(), Accidental.NATURAL, Values.MAX_VELOCITY);
     }
 
     public void playSound(InstrumentIndex inst, Pitch n, int vel) {
-        playSound(inst, n.getKeyNum(), Accidental.NATURAL, vel);
+        playSound(inst, n.getValue(), Accidental.NATURAL, vel);
     }
 
     public void playSound(InstrumentIndex inst, int verticalPos, Accidental acc) {
