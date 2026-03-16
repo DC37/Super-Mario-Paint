@@ -94,7 +94,7 @@ public class Values {
     public static int DEFAULT_TEMPO = 400;
     
     /** Pitch to play when an instrument is selected */
-    public static int DEFAULT_NOTE = Pitch.DEFAULT.getKeyNum();
+    public static int DEFAULT_NOTE = Pitch.DEFAULT.getValue();
 
     /**
      * The amount of time the mouse must be held before we start repeating

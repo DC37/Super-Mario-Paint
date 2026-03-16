@@ -55,7 +55,7 @@ public class Pitch {
      * Get the MIDI value of this pitch.
      * @return The MIDI value of this pitch
      */
-    public int getKeyNum() {
+    public int getValue() {
         return value;
     }
     
