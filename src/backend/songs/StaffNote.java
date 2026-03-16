@@ -121,7 +121,7 @@ public class StaffNote implements Serializable {
         }
         theInstrument = InstrumentIndex.valueOf(sp[0]);
         for (int i = 0; i < Values.staffNotes.length; i++) {
-            if (sp[1].contains(Values.staffNotes[i].name())) {
+            if (sp[1].contains(Values.staffNoteNames[i])) {
                 verticalPosition = i;
             }
         }
@@ -258,7 +258,7 @@ public class StaffNote implements Serializable {
 
     @Override
     public String toString() {
-        String noteName = Values.staffNotes[verticalPosition].name();
+        String noteName = Values.staffNoteNames[verticalPosition];
         String noteAcc = "";
         switch (accidental) {
         case DOUBLE_SHARP:

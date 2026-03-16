@@ -94,7 +94,7 @@ public class Values {
     public static int DEFAULT_TEMPO = 400;
     
     /** Pitch to play when an instrument is selected */
-    public static int DEFAULT_NOTE = Pitch.A3.getKeyNum();
+    public static int DEFAULT_NOTE = Pitch.DEFAULT.getKeyNum();
 
     /**
      * The amount of time the mouse must be held before we start repeating
@@ -145,10 +145,25 @@ public class Values {
     public static final int DRUMCHANNEL = 10;
 
     /** Array of notes that we can see on the staff. */
-    public static final Pitch[] staffNotes = { Pitch.C2, Pitch.D2, Pitch.E2, Pitch.F2, Pitch.G2, Pitch.A2, Pitch.B2, Pitch.C3,
-            Pitch.D3, Pitch.E3, Pitch.F3, Pitch.G3, Pitch.A3, Pitch.B3, Pitch.C4,
-            Pitch.D4, Pitch.E4, Pitch.F4, Pitch.G4, Pitch.A4, Pitch.B4, Pitch.C5,
-            Pitch.D5, Pitch.E5, Pitch.F5, Pitch.G5, Pitch.A5, Pitch.B5, Pitch.C6 };
+    public static final Pitch[] staffNotes = {
+    		Pitch.valueOf(36), Pitch.valueOf(38), Pitch.valueOf(40),
+    		Pitch.valueOf(41), Pitch.valueOf(43), Pitch.valueOf(45),
+    		Pitch.valueOf(47), Pitch.valueOf(48), Pitch.valueOf(50),
+    		Pitch.valueOf(52), Pitch.valueOf(53), Pitch.valueOf(55),
+    		Pitch.valueOf(57), Pitch.valueOf(59), Pitch.valueOf(60),
+            Pitch.valueOf(62), Pitch.valueOf(64), Pitch.valueOf(65),
+            Pitch.valueOf(67), Pitch.valueOf(69), Pitch.valueOf(71),
+            Pitch.valueOf(72), Pitch.valueOf(74), Pitch.valueOf(76),
+            Pitch.valueOf(77), Pitch.valueOf(79), Pitch.valueOf(81),
+            Pitch.valueOf(83), Pitch.valueOf(84) };
+    
+    public static final String[] staffNoteNames = {
+    		"C2", "D2", "E2", "F2", "G2", "A2", "B2",
+    		"C3", "D3", "E3", "F3", "G3", "A3", "B3",
+    		"C4", "D4", "E4", "F4", "G4", "A4", "B4",
+    		"C5", "D5", "E5", "F5", "G5", "A5", "B5",
+    		"C6"
+    };
     
 	/**
 	 * The max undo/redo stack size for recorded commands.
