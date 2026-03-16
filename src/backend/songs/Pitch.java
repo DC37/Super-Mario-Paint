@@ -6,20 +6,24 @@ package backend.songs;
  */
 public class Pitch {
 	
+	final private static int LOWEST_INT = 21;
+	final private static int HIGHEST_INT = 108;
+	final private static int DEFAULT_INT = 57;
+	
 	/**
 	 * Lowest pitch we can play; this is A0 on a piano keyboard.
 	 */
-	final public static Pitch LOWEST = new Pitch(21);
+	final public static Pitch LOWEST = new Pitch(LOWEST_INT);
 	
 	/**
 	 * A default pitch; this is A3 on a piano keyboard.
 	 */
-	final public static Pitch DEFAULT = new Pitch(57);
+	final public static Pitch DEFAULT = new Pitch(DEFAULT_INT);
 	
 	/**
 	 * Highest pitch we can play; this is B#7 on a piano keyboard.
 	 */
-	final public static Pitch HIGHEST = new Pitch(108);
+	final public static Pitch HIGHEST = new Pitch(HIGHEST_INT);
 	
 	/**
 	 * The integer identifying this pitch in MIDI format.
@@ -33,7 +37,7 @@ public class Pitch {
 	 * 		range
 	 */
     private Pitch(int value) {
-    	if (value < LOWEST.value || value > HIGHEST.value) {
+    	if (value < LOWEST_INT || value > HIGHEST_INT) {
     		throw new IllegalArgumentException("Illegal value for Pitch: " + value);
     	}
     	
