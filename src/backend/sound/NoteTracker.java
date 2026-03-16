@@ -1,7 +1,7 @@
 package backend.sound;
 import java.util.ArrayList;
 
-import backend.songs.Accidental;
+import backend.songs.Pitch;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import gui.InstrumentIndex;
@@ -89,14 +89,12 @@ class NoteTracker {
 
     /** This adds a note that is currently
      * playing to our list of notes playing.
-     * @param keyNum The key number of the note that is playing.
      * @param instrument The instrument of the note that is playing.
-     * @param accidental The accidental of the note that is playing.
+     * @param pitch The pitchof the note that is playing.
      */
-    public void addNotePlaying(int keyNum, InstrumentIndex instrument,
-            Accidental accidental) {
+    public void addNotePlaying(InstrumentIndex instrument, Pitch pitch) {
         notesOn.get(instrument.getChannel() - 1).add(
-                new PlayingNote(keyNum, instrument, accidental));
+                new PlayingNote(instrument, pitch));
         setChannelOn(instrument.getChannel() - 1);
     }
 
@@ -114,7 +112,7 @@ class NoteTracker {
      * @param s The StaffNoteLine.
      */
     private void stopSound(PlayingNote pn) {
-        soundPlayer.stopSound(pn.instrument(), pn.keyNum(), pn.accidental());
+        soundPlayer.stopSound(pn.instrument(), pn.pitch());
     }
 
     /**
@@ -139,33 +137,21 @@ class NoteTracker {
      */
     class PlayingNote {
 
-        /** The key number of the note that is playing. */
-        private int keyNum;
-
         /** The instrument of the note that is playing. */
         private InstrumentIndex instrument;
 
-        /** The accidental of the note that is playing. */
-        private Accidental accidental;
+        /** The pitch of the note that is playing. */
+        private Pitch pitch;
 
         /**
          * Makes a PlayingNote object, which keeps track of which notes
          * are playing when.
-         * @param k The key number.
          * @param ins The InstrumentIndex.
-         * @param acc The accidental.
+         * @param acc The pitch.
          */
-        public PlayingNote(int k, InstrumentIndex ins, Accidental acc) {
-            keyNum = k;
-            instrument = ins;
-            accidental = acc;
-        }
-
-        /**
-         * @return The key number of the note that is playing.
-         */
-        public int keyNum() {
-            return keyNum;
+        public PlayingNote(InstrumentIndex ins, Pitch pitch) {
+            this.instrument = ins;
+            this.pitch = pitch;
         }
 
         /**
@@ -176,10 +162,10 @@ class NoteTracker {
         }
 
         /**
-         * @return The accidental of the note that is playing.
+         * @return The pitch of the note that is playing.
          */
-        public Accidental accidental() {
-            return accidental;
+        public Pitch pitch() {
+            return pitch;
         }
     }
 
