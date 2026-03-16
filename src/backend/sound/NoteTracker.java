@@ -117,11 +117,10 @@ class NoteTracker {
 
     /**
      * Stops the sound of a set of instruments.
-     * @param sn The StaffNoteLine.
-     * @param s The StaffNote.
+     * @param inst The instrument to stop
      */
-    public void stopInstrument(StaffNote sn) {
-        int i = sn.getInstrument().getChannel() - 1;
+    public void stopInstrument(InstrumentIndex inst) {
+        int i = inst.getChannel() - 1;
         ArrayList<PlayingNote> pna = getNotesPlaying(i);
         for (PlayingNote pn : pna)
             stopSound(pn);

@@ -12,7 +12,6 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 
-import backend.songs.Accidental;
 import backend.songs.MuteModifier;
 import backend.songs.Pitch;
 import backend.songs.StaffNote;
@@ -77,7 +76,7 @@ public class SoundPlayer {
                 stopSound(sn);
             
             else if (sn.getMuteModifier().equals(MuteModifier.MUTE_THIS_INST))
-                stopInstrument(sn);
+                stopInstrument(sn.getInstrument());
         }
         
         for (StaffNote sn : theNotes) {
@@ -111,12 +110,10 @@ public class SoundPlayer {
 
     /**
      * Stops a full set of instruments from playing sounds.
-     *
-     * @param sn
-     *            The StaffNote.
+     * @param sn The instrument to stop
      */
-    private void stopInstrument(StaffNote sn) {
-        tracker.stopInstrument(sn);
+    private void stopInstrument(InstrumentIndex inst) {
+        tracker.stopInstrument(inst);
     }
 
     
@@ -124,8 +121,8 @@ public class SoundPlayer {
      * Turn off all sounds.
      */
     public void stopAllInstruments() {
-    	for (InstrumentIndex in : InstrumentIndex.values()) {
-    		tracker.stopInstrument(new StaffNote(in, 0, Accidental.NATURAL));
+    	for (InstrumentIndex inst : InstrumentIndex.values()) {
+    		tracker.stopInstrument(inst);
     	}
     	
     }
