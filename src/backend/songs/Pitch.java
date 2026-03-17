@@ -68,7 +68,8 @@ public class Pitch {
      * @param oth A pitch
      * @return true iff the two pitches have the same value
      */
-    public boolean equals(Pitch oth) {
+    @Override
+    public boolean equals(Object oth) {
     	if (!(oth instanceof Pitch)) {
     		return false;
     	}
