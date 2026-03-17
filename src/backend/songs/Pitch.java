@@ -85,5 +85,14 @@ public class Pitch {
     public int hashCode() {
     	return value;
     }
+    
+    /**
+     * Returns a string representation of the Pitch.
+     * @return a string representation of the pitch
+     */
+    @Override
+    public String toString() {
+    	return "Pitch [value=" + value + "]";
+    }
 
 }
