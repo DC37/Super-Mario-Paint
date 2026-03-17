@@ -76,5 +76,14 @@ public class Pitch {
     	
     	return this.value == ((Pitch) oth).value;
     }
+    
+    /**
+     * Returns a hash code value for the Pitch.
+     * @return a hash code value for the pitch
+     */
+    @Override
+    public int hashCode() {
+    	return value;
+    }
 
 }
