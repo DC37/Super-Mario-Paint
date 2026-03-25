@@ -10,10 +10,10 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import backend.saving.Parser;
+import backend.saving.Decoder;
 import backend.songs.StaffArrangement;
 
-public class SMPArrangementParser implements Parser<StaffArrangement> {
+public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
 
 	/**
 	 * Loads an arrangement from the file specified.
@@ -22,7 +22,7 @@ public class SMPArrangementParser implements Parser<StaffArrangement> {
 	 *            The file to load from.
 	 * @return A loaded arrangement file. The format is StaffArrangement.
 	 */
-	public StaffArrangement parse(File inputFile) throws IOException, FileNotFoundException {
+	public StaffArrangement decode(File inputFile) throws IOException, FileNotFoundException {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		StaffArrangement loaded = null;
 		try {

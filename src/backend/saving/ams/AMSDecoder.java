@@ -4,7 +4,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import backend.saving.Parser;
+import backend.saving.Decoder;
 import backend.songs.Bookmark;
 import backend.songs.Speedmark;
 import backend.songs.StaffSequence;
@@ -15,9 +15,9 @@ import backend.sound.SMPSoundfont;
  * @author RehdBlob
  * @since 2012.09.10
  */
-public class AMSDecoder implements Parser<StaffSequence> {
+public class AMSDecoder implements Decoder<StaffSequence> {
 
-    public StaffSequence parse(File file) {
+    public StaffSequence decode(File file) {
         // TODO: Fix this.
         return null;
     }

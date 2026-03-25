@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import backend.saving.Parser;
+import backend.saving.Decoder;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffSequence;
 import javafx.concurrent.Task;
@@ -92,7 +92,7 @@ public class Utilities {
                         + inputFile.getName());
             }
             StaffSequence loaded = null;
-            loaded = Parser.SEQUENCE_PARSER.parse(inputFile).orElseThrow(IOException::new);
+            loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
             populateStaff(loaded, inputFile, false, theStaff, controller);
             return loaded;
 
@@ -184,7 +184,7 @@ public class Utilities {
                 fName = fName + "]MarioPaint.txt";
                 newPath = basePath + fName;
                 loaded.getTheSequenceFiles().set(i, new File(newPath));
-                loaded.getTheSequences().set(i, Parser.SEQUENCE_PARSER.parse(new File(newPath)).orElseThrow(IOException::new));
+                loaded.getTheSequences().set(i, Decoder.SEQUENCE_DECODER.decode(new File(newPath)).orElseThrow(IOException::new));
                 continue;
             }
             loaded.getTheSequenceFiles().set(i, new File(newPath));
@@ -278,7 +278,7 @@ public class Utilities {
         final ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
         for (int i = 0; i < files.size(); i++) {
             try {
-                seq.add(Parser.SEQUENCE_PARSER.parse(files.get(i)).orElseThrow(IOException::new));
+                seq.add(Decoder.SEQUENCE_DECODER.decode(files.get(i)).orElseThrow(IOException::new));
             } catch (ClassCastException | EOFException
                     | StreamCorruptedException | NullPointerException e) {
             } catch (FileNotFoundException e) {
