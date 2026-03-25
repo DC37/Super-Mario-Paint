@@ -8,7 +8,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
-import backend.saving.Parser;
+import backend.saving.Decoder;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffEvent;
 import backend.songs.StaffNoteLine;
@@ -244,7 +244,7 @@ public class Staff {
         for (int i = 0; i < seq.size(); i++) {
             File f = files.get(i);
             try {
-                seq.set(i, Parser.SEQUENCE_PARSER.parse(f).orElseThrow(IOException::new));
+                seq.set(i, Decoder.SEQUENCE_DECODER.decode(f).orElseThrow(IOException::new));
             } catch (IOException e) {
                 e.printStackTrace();
                 stopSong();

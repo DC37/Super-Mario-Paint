@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.sound.midi.MidiChannel;
 
 import backend.editing.ModifySongManager;
-import backend.saving.Parser;
+import backend.saving.Decoder;
 import backend.songs.Accidental;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
@@ -841,7 +841,7 @@ public class SMPFXController {
     private void loadSong(File inputFile, Window owner) {
         try {
             StaffSequence loaded = null;
-            loaded = Parser.SEQUENCE_PARSER.parse(inputFile).orElseThrow(IOException::new);
+            loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
             String fname = Utilities.populateStaff(loaded, inputFile, false, staff, this);
             getNameTextField().setText(fname);
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
@@ -886,7 +886,7 @@ public class SMPFXController {
                 if (inputFile == null)
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                StaffArrangement loaded = Parser.SMP_ARRANGEMENT_PARSER.parse(inputFile);
+                StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
                 Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, inputFile, false, staff, this, owner);
                 StateMachine.setSongModified(false);
@@ -894,7 +894,7 @@ public class SMPFXController {
             } catch (ParseException | StreamCorruptedException
                     | NullPointerException e) {
                 try {
-                    StaffArrangement loaded = Parser.MPC_ARRANGEMENT_PARSER.parse(inputFile);
+                    StaffArrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                     Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, inputFile, true, staff, this, owner);

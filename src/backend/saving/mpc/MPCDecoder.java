@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import backend.saving.Parser;
+import backend.saving.Decoder;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
 import backend.songs.StaffNote;
@@ -29,7 +29,7 @@ import gui.Values;
  * @author RehdBlob
  * @since 2012.09.01
  */
-public class MPCDecoder implements Parser<StaffSequence> {
+public class MPCDecoder implements Decoder<StaffSequence> {
 
     /**
      * Opens a file and decodes the Mario Paint Composer song data from it,
@@ -46,7 +46,7 @@ public class MPCDecoder implements Parser<StaffSequence> {
      * @throws IOException
      *             IF some error occurs during the decoding process.
      */
-    public StaffSequence parse(File f) throws ParseException,
+    public StaffSequence decode(File f) throws ParseException,
             IOException {
         BufferedReader bf = new BufferedReader(new FileReader(f));
         String line = "";

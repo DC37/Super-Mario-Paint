@@ -11,13 +11,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import backend.saving.Parser;
+import backend.saving.Decoder;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import gui.Utilities;
 
-public class SMPParser implements Parser<StaffSequence> {
+public class SMPDecoder implements Decoder<StaffSequence> {
 
 	/**
 	 * Loads a song from the file specified.
@@ -29,7 +29,7 @@ public class SMPParser implements Parser<StaffSequence> {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public StaffSequence parse(File inputFile)
+	public StaffSequence decode(File inputFile)
 			throws FileNotFoundException, IOException {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		StaffSequence loaded = null;
