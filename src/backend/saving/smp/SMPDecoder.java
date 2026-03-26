@@ -27,7 +27,6 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 	 * @return A loaded song file. The format is a StaffSequence.
 	 * @throws FileNotFoundException
 	 * @throws IOException
-	 * @throws ClassNotFoundException
 	 */
 	public StaffSequence decode(File inputFile)
 			throws FileNotFoundException, IOException {
