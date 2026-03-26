@@ -159,7 +159,7 @@ public class StaffNote implements Serializable {
      *            The character to decode.
      * @return The accidental to set.
      */
-    private Accidental decodeAccidental(char c) {
+    private static Accidental decodeAccidental(char c) {
         switch (c) {
         case 'X':
             return Accidental.DOUBLE_SHARP;
