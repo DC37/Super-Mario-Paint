@@ -846,13 +846,18 @@ public class SMPFXController {
             getNameTextField().setText(fname);
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);
+            
         } catch (FileNotFoundException e) {
+            Dialog.showDialog("File " + inputFile + "not found!", owner);
             e.printStackTrace();
+            
         } catch (IOException e) {
-            Dialog.showDialog("Problem loading file!", owner);
+            Dialog.showDialog("An IO exception occurred while reading file " + inputFile + "!", owner);
             e.printStackTrace();
+            
         } catch (Exception e) {
-            Dialog.showDialog("Not a valid song file.", owner);
+            Dialog.showDialog("An error occurred while reading file " + inputFile + "!", owner);
+            e.printStackTrace();
         }
     }
 
