@@ -266,34 +266,41 @@ public class StaffNote implements Serializable {
 
     @Override
     public String toString() {
+    	String instName = theInstrument.toString();
         String noteName = Values.staffNoteNames[verticalPosition];
-        String noteAcc = "";
-        switch (accidental) {
-        case DOUBLE_SHARP:
-            noteAcc = "X";
-            break;
-        case SHARP:
-            noteAcc = "#";
-            break;
-        case FLAT:
-            noteAcc = "b";
-            break;
-        case DOUBLE_FLAT:
-            noteAcc = "B";
-            break;
-        default:
-            break;
-
-        }
-        
-        switch (muteMod) {
-        case MUTE_THIS_INST:
-            return theInstrument.toString() + " " + noteName + noteAcc + "m2";
-        case MUTE_THIS_PITCH:
-            return theInstrument.toString() + " " + noteName + noteAcc + "m1";
-        default:
-            return theInstrument.toString() + " " + noteName + noteAcc;
-        }
+        String noteAcc = accidentalToString(accidental);
+        String muteName = muteModifierToString(muteMod);
+        return instName + " " + noteName + noteAcc + muteName;
+    }
+    
+    private static String accidentalToString(Accidental acc) {
+    	switch (acc) {
+    	case Accidental.DOUBLE_FLAT:
+    		return "B";
+    	case Accidental.FLAT:
+    		return "b";
+    	case Accidental.NATURAL:
+    		return "";
+    	case Accidental.SHARP:
+    		return "#";
+    	case Accidental.DOUBLE_SHARP:
+    		return "X";
+    	default:
+    		throw new IllegalArgumentException("Cannot convert " + acc + " to String");
+    	}
+    }
+    
+    private static String muteModifierToString(MuteModifier mod) {
+    	switch (mod) {
+    	case MuteModifier.REGULAR:
+    		return "";
+    	case MuteModifier.MUTE_THIS_PITCH:
+    		return "m1";
+    	case MuteModifier.MUTE_THIS_INST:
+    		return "m2";
+    	default:
+    		throw new IllegalArgumentException("Cannot convert " + mod + " to String");
+    	}
     }
 
 }
