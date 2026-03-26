@@ -132,7 +132,13 @@ public class StaffNote implements Serializable {
      * @throws ParseException
      *             In case we are trying to parse an invalid string.
      */
-    public StaffNote(String spl) throws ParseException {
+    public static StaffNote valueOf(String spl) throws ParseException {
+    	InstrumentIndex theInstrument;
+    	int verticalPosition = -1;
+    	Accidental accidental;
+    	MuteModifier muteMod;
+    	int volume;
+    	
         String[] sp = spl.split(" ");
         if (sp.length != 2) {
             throw new ParseException("Invalid note", 0);
@@ -167,6 +173,8 @@ public class StaffNote implements Serializable {
             muteMod = MuteModifier.REGULAR;
             break;
         }
+        
+        return new StaffNote(theInstrument, verticalPosition, accidental, muteMod, volume);
     }
 
     /**
