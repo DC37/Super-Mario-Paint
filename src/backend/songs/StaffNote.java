@@ -160,13 +160,13 @@ public class StaffNote implements Serializable {
             accidental = decodeAccidental(sp[1].charAt(2));
             muteMod = MuteModifier.REGULAR;
             break;
-        case 4:
+        case 4:	
             accidental = Accidental.NATURAL;
-            muteMod = MuteModifier.fromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
+            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
             break;
         case 5:
             accidental = decodeAccidental(sp[1].charAt(2));
-            muteMod = MuteModifier.fromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
+            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
             break;
         default:
             accidental = Accidental.NATURAL;
@@ -176,6 +176,19 @@ public class StaffNote implements Serializable {
         
         return new StaffNote(theInstrument, verticalPosition, accidental, muteMod, volume);
     }
+	
+	private static MuteModifier muteModifierFromInt(int v) {
+		switch (v) {
+		case 0:
+			return MuteModifier.REGULAR;
+		case 1:
+			return MuteModifier.MUTE_THIS_PITCH;
+		case 2:
+			return MuteModifier.MUTE_THIS_INST;
+		default:
+			throw new IllegalArgumentException("No mute modifier associated to value " + v);
+		}
+	}
 
     /**
      * Given character <code>c</code>, decode it as a doublesharp, sharp, flat,
