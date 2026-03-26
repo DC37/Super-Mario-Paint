@@ -59,7 +59,7 @@ public class StaffNote implements Serializable {
      *            by.
      */
     public StaffNote(InstrumentIndex theInd, int verticalPosition, Accidental acc) {
-        this(theInd, verticalPosition, acc, Values.HALF_VELOCITY);
+        this(theInd, verticalPosition, acc, MuteModifier.REGULAR);
     }
 
     /**
@@ -70,18 +70,36 @@ public class StaffNote implements Serializable {
      * @param acc
      *            The sharp / flat / whatever that we are offsetting this note
      *            by.
+     * @param mod
+     * 			  The mute modifier of this note
+     */
+    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, MuteModifier mod) {
+        this(theInd, pos, acc, mod, Values.HALF_VELOCITY);
+    }
+
+    /**
+     * @param theInd
+     *            The instrument that this StaffNote will play.
+     * @param verticalPosition
+     *            The vertical position of this note on the staff.
+     * @param acc
+     *            The sharp / flat / whatever that we are offsetting this note
+     *            by.
+     * @param mod
+     * 			  The mute modifier of this note
      * @param vol
      *            The volume that we want this note to play at.
      */
-    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, int vol) {
+    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, MuteModifier mod, int vol) {
         theInstrument = theInd;
         accidental = acc;
         verticalPosition = pos;
+        muteMod = mod;
         volume = vol;
     }
     
     public StaffNote(StaffNote note) {
-        this(note.theInstrument, note.verticalPosition, note.accidental, note.volume);
+        this(note.theInstrument, note.verticalPosition, note.accidental, note.muteMod, note.volume);
     }
     
     public ImageIndex getImageIndex() {
