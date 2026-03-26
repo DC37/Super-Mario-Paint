@@ -55,8 +55,10 @@ public interface Decoder<T> {
 	public final static Decoder<StaffArrangement> SMP_ARRANGEMENT_DECODER = new SMPArrangementDecoder();
 	
 	// TODO Add AMS parsers when they are implemented
-	public final static CheckedDecoder<Optional<StaffSequence>> SEQUENCE_DECODER = Decoder.trySequence(SMP_SEQUENCE_DECODER, MPC_SEQUENCE_DECODER);
-	public final static CheckedDecoder<Optional<StaffArrangement>> ARRANGEMENT_DECODER = Decoder.trySequence(SMP_ARRANGEMENT_DECODER, MPC_ARRANGEMENT_DECODER);
+	// On wrong inputs, the SMP decoder tends to return empty songs instead of throwing exceptions
+	// ... This is why we try it last
+	public final static CheckedDecoder<Optional<StaffSequence>> SEQUENCE_DECODER = Decoder.trySequence(MPC_SEQUENCE_DECODER, SMP_SEQUENCE_DECODER);
+	public final static CheckedDecoder<Optional<StaffArrangement>> ARRANGEMENT_DECODER = Decoder.trySequence(MPC_ARRANGEMENT_DECODER, SMP_ARRANGEMENT_DECODER);
 	
 	/**
 	 * Parsers whose implementation does not throw {@link ParseException}.
