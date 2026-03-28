@@ -2,6 +2,7 @@ package gui.resources;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -72,11 +73,27 @@ public class SMPResourceUtil {
 	 *   some reason
 	 */
     public static URL get(String name) {
-        URL url = SMPResourceUtil.class.getResource("/resources/" + name);
+        URL url = SMPResourceUtil.class.getClassLoader().getResource(name);
         if (url == null)
             throw new NullPointerException("Cannot load resource: " + name);
         
         return url;
+    }
+    
+    /**
+	 * <p>Access a SMP resource from its internal file (packaged with the
+	 * distribution), and retrieves its {@link InputStream}.
+	 * @param name Name of the resource matching its file's name
+	 * @return A non-null {@link InputStream} pointing to the resource
+	 * @throws NullPointerException if the resource couldn't be retrieved for
+	 *   some reason
+	 */
+    public static InputStream getStream(String name) {
+        InputStream inStream = SMPResourceUtil.class.getClassLoader().getResourceAsStream(name);
+        if (inStream == null)
+            throw new NullPointerException("Cannot load resource: " + name);
+        
+        return inStream;
     }
     
     /**

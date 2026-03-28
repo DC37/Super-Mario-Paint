@@ -1,4 +1,5 @@
 package gui.components.buttons;
+import gui.resources.SMPResourceUtil;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -128,8 +129,8 @@ public interface SMPButtonInterface {
         }, conditionPressed, imageReleased, imagePressed);
     }
     
-    public static Image DEFAULT_IMAGE_RELEASED = new Image(SMPButtonInterface.class.getResourceAsStream("/resources/GENERIC_BUTTON_RELEASED.png"));
-    public static Image DEFAULT_IMAGE_PRESSED = new Image(SMPButtonInterface.class.getResourceAsStream("/resources/GENERIC_BUTTON_PRESSED.png"));
+    public static Image DEFAULT_IMAGE_RELEASED = new Image(SMPResourceUtil.getStream("GENERIC_BUTTON_RELEASED.png"));
+    public static Image DEFAULT_IMAGE_PRESSED = new Image(SMPResourceUtil.getStream("GENERIC_BUTTON_PRESSED.png"));
     
     public static String STYLE_CLASS_IMAGE_BUTTON = "smp-button";
     public static String STYLE_CLASS_IMAGE_INSTRUMENT_BUTTON = "smp-instrument-button";
