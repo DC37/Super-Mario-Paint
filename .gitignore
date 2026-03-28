@@ -8,3 +8,12 @@ bin/
 *.rar
 *.jar
 *.bat
+
+# Eclipse-specific ignores
+.settings/
+
+# Gradle-specific ignores
+.gradle
+build
+.kotlin
+
