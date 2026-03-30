@@ -11,15 +11,14 @@ plugins {
     id("org.openjfx.javafxplugin") version "0.1.0" apply false
 }
 
-val javaVersion = JavaVersion.current()
-
-if (javaVersion >= JavaVersion.VERSION_11) {
-    apply(plugin = "org.openjfx.javafxplugin")
-    
-    configure<org.openjfx.gradle.JavaFXOptions> {
-        version = javaVersion.toString()
-        modules("javafx.base", "javafx.controls", "javafx.fxml", "javafx.graphics", "javafx.media", "javafx.swing", "javafx.web")
-    }
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+	
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
 }
 
 repositories {
@@ -43,14 +42,18 @@ sourceSets {
     }
 }
 
-// Apply a specific Java toolchain to ease working on different environments.
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
 application {
     // Define the main class for the application.
     mainClass = "gui.SuperMarioPaint"
+}
+
+val javaVersion = JavaVersion.current()
+
+if (javaVersion >= JavaVersion.VERSION_11) {
+    apply(plugin = "org.openjfx.javafxplugin")
+    
+    configure<org.openjfx.gradle.JavaFXOptions> {
+        version = javaVersion.toString()
+        modules("javafx.base", "javafx.controls", "javafx.fxml", "javafx.graphics", "javafx.media", "javafx.swing", "javafx.web")
+    }
 }
