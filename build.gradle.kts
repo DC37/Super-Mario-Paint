@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id("application")
     id("org.openjfx.javafxplugin") version "0.1.0" apply false
+    id("org.beryx.jlink") version "4.0.0"
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -55,5 +56,17 @@ if (javaVersion >= JavaVersion.VERSION_11) {
     configure<org.openjfx.gradle.JavaFXOptions> {
         version = javaVersion.toString()
         modules("javafx.base", "javafx.controls", "javafx.fxml", "javafx.graphics", "javafx.media", "javafx.swing", "javafx.web")
+    }
+}
+
+jlink {
+	options.set(listOf("--strip-debug", "--compress", "zip-6", "--no-header-files", "--no-man-pages"))
+    
+    launcher {
+        name = "SuperMarioPaint-" + project.version
+    }
+    
+    jpackage {
+    	imageOptions.addAll("--icon", "${project.projectDir}/ICON.ico")
     }
 }
