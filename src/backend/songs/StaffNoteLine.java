@@ -17,7 +17,7 @@ public class StaffNoteLine {
     private int volume;
 
     /** This List holds staff notes inside it. */
-    private List<StaffNote> notes;
+    final private List<StaffNote> notes;
 
     /**
      * Creates a new staff note line with the specified
