@@ -5,8 +5,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import backend.saving.Decoder;
-import backend.songs.Bookmark;
-import backend.songs.Speedmark;
 import backend.songs.StaffSequence;
 import backend.sound.SMPSoundfont;
 
@@ -36,11 +34,8 @@ public class AMSDecoder implements Decoder<StaffSequence> {
         }
         String timeSig = null, tempo = null;
         SMPSoundfont soundfont = null;
-        ArrayList<Speedmark> speedmarks = null;
-        ArrayList<Bookmark> bookmarks = null;
         ArrayList<String> data = new ArrayList<String>();
-        return populateSequence(timeSig, soundfont, speedmarks,
-                bookmarks, data, tempo);
+        return populateSequence(timeSig, soundfont, data, tempo);
     }
 
     /**
@@ -60,18 +55,13 @@ public class AMSDecoder implements Decoder<StaffSequence> {
      * Creates a new Super Mario Paint song
      * @param timeSig The time signature of the song.
      * @param soundfont The soundfont of the song
-     * @param speedmarks The speedmarks present in the Advanced Mario Sequencer
-     * song.
-     * @param bookmarks The bookmarks present in the Advanced Mario Sequencer
-     * song.
      * @param tempo The tempo that this song is to run at.
      * @param data The song data that has been parsed.
      * @return A new Super Mario Paint sequence that is to be loaded
      * immediately upon creation.
      */
     private StaffSequence populateSequence(String timeSig,
-            SMPSoundfont soundfont, ArrayList<Speedmark> speedmarks,
-            ArrayList<Bookmark> bookmarks, ArrayList<String> data,
+            SMPSoundfont soundfont, ArrayList<String> data,
             String tempo) {
         return null;
     }

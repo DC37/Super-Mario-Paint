@@ -30,16 +30,12 @@ public class StaffNoteLine implements Serializable {
     /** This ArrayList holds staff notes inside it. */
     private ArrayList<StaffNote> notes;
 
-    /** This ArrayList holds staff events in it. */
-    private ArrayList<StaffEvent> events;
-
     /**
      * Creates a new staff note line with the specified
      * line number.
      */
     public StaffNoteLine() {
         notes = new ArrayList<StaffNote>();
-        events = new ArrayList<StaffEvent>();
     }
 
     /**
@@ -48,14 +44,6 @@ public class StaffNoteLine implements Serializable {
      */
     public void add(StaffNote n) {
         notes.add(n);
-    }
-
-    /**
-     * Adds an event to this staff note line.
-     * @param e The event that we are trying to add.
-     */
-    public void addEvent(StaffEvent e) {
-        events.add(e);
     }
 
     /**
@@ -74,15 +62,6 @@ public class StaffNoteLine implements Serializable {
      */
     public StaffNote remove(int index) {
         return notes.remove(index);
-    }
-
-    /**
-     * Deletes an event from this staff note line.
-     * @param e The event that we are trying to remove.
-     * @return True if we successfully removed the event.
-     */
-    public boolean removeEvent(StaffEvent e) {
-        return events.remove(e);
     }
 
     /** @return Whether this StaffNoteLine contains the staff note already. */
@@ -106,14 +85,6 @@ public class StaffNoteLine implements Serializable {
     public ArrayList<StaffNote> getNotes() {
         return notes;
     }
-    
-    /**
-     * @return The list of events that this <code>StaffNoteLine</code> contains.
-     */
-    public ArrayList<StaffEvent> getEvents() {
-        return events;
-    }
-    
 
     /** @return The list of volumes of the different notes. */
     public ArrayList<Integer> getVolumes() {

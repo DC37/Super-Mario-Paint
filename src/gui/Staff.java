@@ -10,8 +10,6 @@ import javax.sound.midi.MidiUnavailableException;
 
 import backend.saving.Decoder;
 import backend.songs.StaffArrangement;
-import backend.songs.StaffEvent;
-import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
@@ -388,19 +386,6 @@ public class Staff {
         delayNanos = (int) nano;
     }
     
-   /**
-     * 
-     * @param index The index to do events from
-     */
-    private void doEvents(int index) {
-        StaffNoteLine s = getSequence().getLineSafe(
-                StateMachine.getMeasureLineNum() + index);
-        ArrayList<StaffEvent> theEvents = s.getEvents();
-        for (StaffEvent e : theEvents) {
-            e.doEvent(this);
-        }
-    }
-    
     public void addSongToArrangement() {
         if (StateMachine.isPlaybackActive())
             return;
@@ -598,7 +583,6 @@ public class Staff {
                             int loc = currentLoc + Values.NOTELINES_IN_THE_WINDOW;
                             setLocation(loc);
                         }
-                        doEvents(index);
                         playSoundLine(index);
                         queue--;
                     }
