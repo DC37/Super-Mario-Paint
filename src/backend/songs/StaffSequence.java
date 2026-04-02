@@ -1,6 +1,5 @@
 package backend.songs;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +12,7 @@ import gui.Values;
  * @author RehdBlob
  * @since 2013.08.23
  */
-public class StaffSequence implements Serializable {
-
-    /**
-     * Generated serial ID.
-     */
-    private static final long serialVersionUID = 5752285850525402081L;
+public class StaffSequence {
 
     /**
      * The tempo of this sequence.

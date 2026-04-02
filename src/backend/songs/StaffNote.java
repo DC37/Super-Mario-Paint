@@ -1,6 +1,5 @@
 package backend.songs;
 
-import java.io.Serializable;
 import java.text.ParseException;
 
 import gui.InstrumentIndex;
@@ -13,12 +12,7 @@ import gui.loaders.ImageIndex;
  * @author RehdBlob
  * @since 2012.08.31
  */
-public class StaffNote implements Serializable {
-
-    /**
-     * Generated serial ID.
-     */
-    private static final long serialVersionUID = 6827248837281952104L;
+public class StaffNote {
 
     /**
      * This is the location on the matrix where the note exists. (y-axis). One

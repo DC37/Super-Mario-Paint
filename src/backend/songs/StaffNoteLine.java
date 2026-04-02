@@ -1,6 +1,5 @@
 package backend.songs;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import gui.Values;
@@ -11,12 +10,7 @@ import gui.Values;
  * @author RehdBlob
  * @since 2012.09.19
  */
-public class StaffNoteLine implements Serializable {
-
-    /**
-     * Generated serial ID
-     */
-    private static final long serialVersionUID = 3876410979457142750L;
+public class StaffNoteLine {
 
     /**
      * This is the list of note volumes (we will use this later as an extension

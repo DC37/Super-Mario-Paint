@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
@@ -719,11 +718,7 @@ public class SMPFXController {
             StaffArrangement out = staff.getArrangement();
             out.getTheSequenceNames().clear();
             out.setTheSequenceNames(staff.getArrangementList().getItems());
-            if (Settings.SAVE_OBJECTS) {
-                saveArrObject(f_out, out);
-            } else {
-                saveArrTxt(f_out, out);
-            }
+            saveArrTxt(f_out, out);
             f_out.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             staff.setArrangementFile(outputFile);
@@ -741,23 +736,6 @@ public class SMPFXController {
             pr.println(s);
         }
         pr.close();
-    }
-
-    /**
-     * Saves arrangement in object format.
-     *
-     * @param f_out
-     *            FileOutputStream to write in.
-     * @param out
-     *            The output arrangement file
-     * @throws IOException
-     * @deprecated
-     */
-    public void saveArrObject(FileOutputStream f_out, StaffArrangement out)
-            throws IOException {
-        ObjectOutputStream o_out = new ObjectOutputStream(f_out);
-        o_out.writeObject(out);
-        o_out.close();
     }
 
     public void saveSong(Window owner) {
@@ -781,11 +759,7 @@ public class SMPFXController {
             FileOutputStream f_out = new FileOutputStream(outputFile);
             StaffSequence out = staff.getSequence();
             out.setTempo(StateMachine.getTempo());
-            if (Settings.SAVE_OBJECTS) {
-                saveSongObject(f_out, out);
-            } else {
-                saveSongTxt(f_out, out);
-            }
+            saveSongTxt(f_out, out);
             f_out.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             staff.setSequenceFile(outputFile);
@@ -795,25 +769,6 @@ public class SMPFXController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Saves in object file format. Makes decent use of serialization. There are
-     * some issues with this because if one changes the staff sequence class,
-     * there are going to be issues loading the file.
-     *
-     * @param f_out
-     *            FileOutputStream for saving into a file.
-     * @param out
-     *            The StaffSequence to write.
-     * @throws IOException
-     * @deprecated
-     */
-    public void saveSongObject(FileOutputStream f_out, StaffSequence out)
-            throws IOException {
-        ObjectOutputStream o_out = new ObjectOutputStream(f_out);
-        o_out.writeObject(out);
-        o_out.close();
     }
 
     public void saveSongTxt(FileOutputStream f_out, StaffSequence seq)

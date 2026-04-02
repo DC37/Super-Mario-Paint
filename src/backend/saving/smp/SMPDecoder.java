@@ -1,12 +1,9 @@
 package backend.saving.smp;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -25,31 +22,17 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 	 * @param inputFile
 	 *            The file to load from.
 	 * @return A loaded song file. The format is a StaffSequence.
-	 * @throws FileNotFoundException
-	 * @throws IOException
 	 */
 	public StaffSequence decode(File inputFile)
 			throws FileNotFoundException, IOException {
 		FileInputStream f_in = new FileInputStream(inputFile);
-		StaffSequence loaded = null;
-		try {
-			// Decode as object
-			ObjectInputStream o_in = new ObjectInputStream(f_in);
-			loaded = (StaffSequence) o_in.readObject();
-			o_in.close();
-		} catch (ClassNotFoundException | ClassCastException | EOFException
-				| StreamCorruptedException e) {
-			// If it's not an object, try using the human-readable option.
-			f_in.close();
-			f_in = new FileInputStream(inputFile);
-			Scanner sc = new Scanner(f_in);
-			ArrayList<String> read = new ArrayList<String>();
-			while (sc.hasNext()) {
-				read.add(sc.nextLine());
-			}
-			sc.close();
-			loaded = parseText(read);
+		Scanner sc = new Scanner(f_in);
+		ArrayList<String> read = new ArrayList<String>();
+		while (sc.hasNext()) {
+			read.add(sc.nextLine());
 		}
+		sc.close();
+		StaffSequence loaded = parseText(read);
 		f_in.close();
 		if (loaded == null) {
 			throw new NullPointerException();
