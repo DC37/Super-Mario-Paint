@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.sound.midi.MidiChannel;
@@ -786,7 +787,7 @@ public class SMPFXController {
                 continue;
             }
             pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
-            ArrayList<StaffNote> line = seq.getLine(i).getNotes();
+            List<StaffNote> line = seq.getLine(i).getNotes();
             for (int j = 0; j < line.size(); j++) {
                 pr.print(line.get(j) + ",");
             }

@@ -1,6 +1,7 @@
 package backend.songs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import gui.Values;
 
@@ -15,8 +16,8 @@ public class StaffNoteLine {
     /** This is the volume of the entire <code>StaffNoteLine</code> */
     private int volume;
 
-    /** This ArrayList holds staff notes inside it. */
-    private ArrayList<StaffNote> notes;
+    /** This List holds staff notes inside it. */
+    private List<StaffNote> notes;
 
     /**
      * Creates a new staff note line with the specified
@@ -70,7 +71,7 @@ public class StaffNoteLine {
     /**
      * @return The list of notes that this <code>StaffNoteLine</code> contains.
      */
-    public ArrayList<StaffNote> getNotes() {
+    public List<StaffNote> getNotes() {
         return notes;
     }
 

@@ -1,7 +1,7 @@
 package gui.clipboard;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import backend.editing.ModifySongManager;
@@ -73,7 +73,7 @@ public class StaffClipboardAPI {
 
 		for (Map.Entry<Integer, StaffNoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
 			int line = noteLine.getKey();
-			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
+			List<StaffNote> ntList = noteLine.getValue().getNotes();
 			if (selectNotesFlag)
 				for(StaffNote note : ntList) 
 					//relative index
@@ -102,7 +102,7 @@ public class StaffClipboardAPI {
 
 		for (Map.Entry<Integer, StaffNoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
 			int line = noteLine.getKey();
-			ArrayList<StaffNote> ntList = noteLine.getValue().getNotes();
+			List<StaffNote> ntList = noteLine.getValue().getNotes();
 			
 			StaffNoteLine lineDest = theStaff.getSequence().getLineSafe(line);
 			
@@ -204,7 +204,7 @@ public class StaffClipboardAPI {
 		for (int line = lineBegin; line <= lineEnd; line++) {
 			StaffNoteLine lineSrc = theStaff.getSequence().getLineSafe(line);
 
-			ArrayList<StaffNote> ntList = lineSrc.getNotes();
+			List<StaffNote> ntList = lineSrc.getNotes();
 			for (StaffNote note : ntList) {
 				if (positionBegin <= note.getVerticalPosition() && note.getVerticalPosition() <= positionEnd
 						&& StateMachine.getFilteredNote(note.getInstrument().ordinal())) {

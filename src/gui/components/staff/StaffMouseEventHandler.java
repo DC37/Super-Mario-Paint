@@ -1,6 +1,6 @@
 package gui.components.staff;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import backend.editing.ModifySongManager;
@@ -242,7 +242,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
                 line + StateMachine.getMeasureLineNum());
 
         if (!temp.isEmpty()) {
-            ArrayList<StaffNote> nt = temp.getNotes();
+            List<StaffNote> nt = temp.getNotes();
             for (int i = nt.size() - 1; i >= 0; i--) {
                 StaffNote s = nt.get(i);
                 if (s.getVerticalPosition() == position) {

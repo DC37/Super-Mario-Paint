@@ -2,8 +2,8 @@ package backend.sound;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -67,7 +67,7 @@ public class SoundPlayer {
      * @param s A line of notes
      */
     public void playSoundLine(StaffNoteLine s) {
-        ArrayList<StaffNote> theNotes = s.getNotes();
+        List<StaffNote> theNotes = s.getNotes();
         
         tracker.stopNotes(s);
         

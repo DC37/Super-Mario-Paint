@@ -1,5 +1,6 @@
 package backend.sound;
 import java.util.ArrayList;
+import java.util.List;
 
 import backend.songs.Pitch;
 import backend.songs.StaffNote;
@@ -48,7 +49,7 @@ class NoteTracker {
      */
     public void stopNotes(StaffNoteLine s) {
         boolean[] turnOff = new boolean[Values.NUMINSTRUMENTS];
-        ArrayList<StaffNote> theNotes = s.getNotes();
+        List<StaffNote> theNotes = s.getNotes();
         for(StaffNote sn : theNotes)
             turnOff[sn.getInstrument().getChannel() - 1] = true;
 
