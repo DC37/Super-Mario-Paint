@@ -783,7 +783,7 @@ public class SMPFXController {
                 Utilities.longFromBool(seq.getNoteExtensions()), t, seq.getSoundset());
         
         for (int i = 0; i < seq.getLength(); i++) {
-            if (seq.getLine(i).isEmpty()) {
+            if (seq.getLine(i).getNotes().isEmpty()) {
                 continue;
             }
             pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");

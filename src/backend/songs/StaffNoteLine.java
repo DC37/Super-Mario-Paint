@@ -28,47 +28,6 @@ public class StaffNoteLine {
     }
 
     /**
-     * Adds a note to the staff note line.
-     * @param n The note to add to this StaffNoteLine.
-     */
-    public void add(StaffNote n) {
-        notes.add(n);
-    }
-
-    /**
-     * Deletes a note from the staff.
-     * @param n The note to delete.
-     * @return True if we successfully removed the note.
-     */
-    public boolean remove(StaffNote n) {
-        return notes.remove(n);
-    }
-
-    /**
-     * Deletes a note from the staff.
-     * @param index The index which we are deleting from.
-     * @return The deleted element.
-     */
-    public StaffNote remove(int index) {
-        return notes.remove(index);
-    }
-
-    /** @return Whether this StaffNoteLine contains the staff note already. */
-    public boolean contains(StaffNote theNote) {
-        return notes.contains(theNote);
-    }
-
-    /** @return The number of notes that are in this StaffNoteLine. */
-    public int size() {
-        return notes.size();
-    }
-
-    /** @return Whether the StaffNoteLine has any notes or not. */
-    public boolean isEmpty() {
-        return notes.isEmpty();
-    }
-
-    /**
      * @return The list of notes that this <code>StaffNoteLine</code> contains.
      */
     public List<StaffNote> getNotes() {

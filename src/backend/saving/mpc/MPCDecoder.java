@@ -119,7 +119,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
                     if (note.substring(1).equals("17")) {
                         StaffNote mn = new StaffNote(in, pos, acc);
                         mn.setMuteModifier(MuteModifier.MUTE_THIS_INST);
-                        sl.add(mn);
+                        sl.getNotes().add(mn);
                         continue;
                     } else {
                         pos = parsePosition(note.charAt(1));
@@ -130,7 +130,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
                     acc = Accidental.NATURAL;
                 }
                 StaffNote sn = new StaffNote(in, pos, acc);
-                sl.add(sn);
+                sl.getNotes().add(sn);
             }
             sl.setVolume(vol);
             song.setLine(accum, sl);

@@ -16,12 +16,12 @@ public class RemoveNoteCommand implements CommandInterface {
 	
 	@Override
 	public void redo() {
-		theLine.remove(theNote);
+		theLine.getNotes().remove(theNote);
 	}
 
 	@Override
 	public void undo() {
-		theLine.add(theNote);
+		theLine.getNotes().add(theNote);
 	}
 
 }

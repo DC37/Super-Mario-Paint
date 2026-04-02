@@ -53,7 +53,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 						System.out.println("COPY");
 						theStaffClipboard.getAPI().copy();
 						for (StaffNoteLine line : theStaffClipboard.getCopiedData().values()) {
-							if (!line.isEmpty())
+							if (!line.getNotes().isEmpty())
 								System.out.println(line);
 						}
 					}

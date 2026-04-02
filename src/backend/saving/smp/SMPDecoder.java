@@ -86,7 +86,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 									spl.indexOf(":") + 1).trim()));
 						} else {
 							try {
-								st.add(StaffNote.valueOf(spl));
+								st.getNotes().add(StaffNote.valueOf(spl));
 							} catch (ParseException e) {
 								e.printStackTrace();
 							}

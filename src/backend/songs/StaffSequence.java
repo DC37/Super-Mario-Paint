@@ -64,7 +64,7 @@ public class StaffSequence {
      */
     public int getEndlineIndex() {
         int lastNonempty = theLines.size() - 1;
-        while (lastNonempty >= 0 && theLines.get(lastNonempty).isEmpty()) {
+        while (lastNonempty >= 0 && theLines.get(lastNonempty).getNotes().isEmpty()) {
             lastNonempty--;
         }
         if (lastNonempty < 0) {
@@ -182,7 +182,7 @@ public class StaffSequence {
             if (i % n == 0)
                 continue;
             
-            if (!theLines.get(i).isEmpty())
+            if (!theLines.get(i).getNotes().isEmpty())
                 throw new IllegalArgumentException("Can't undo Multiply Tempo");
         }
         

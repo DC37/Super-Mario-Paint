@@ -201,14 +201,14 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
 
-        if (temp.isEmpty()) {
+        if (temp.getNotes().isEmpty()) {
             temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY)
                     / Values.MAX_VELOCITY);
             commandManager.execute(new AddVolumeCommand(temp, Values.DEFAULT_VELOCITY));
         }
 
-        if (!temp.contains(theStaffNote)) {
-            temp.add(theStaffNote);
+        if (!temp.getNotes().contains(theStaffNote)) {
+            temp.getNotes().add(theStaffNote);
             commandManager.execute(new AddNoteCommand(temp, theStaffNote));
         }
         StaffVolumeEventHandler sveh = theStaff.getDisplayManager().getVolHandler(
@@ -241,7 +241,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         StaffNoteLine temp = theStaff.getSequence().getLineSafe(
                 line + StateMachine.getMeasureLineNum());
 
-        if (!temp.isEmpty()) {
+        if (!temp.getNotes().isEmpty()) {
             List<StaffNote> nt = temp.getNotes();
             for (int i = nt.size() - 1; i >= 0; i--) {
                 StaffNote s = nt.get(i);
@@ -253,7 +253,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             }
         }
 
-        if (temp.isEmpty()) {
+        if (temp.getNotes().isEmpty()) {
             StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);

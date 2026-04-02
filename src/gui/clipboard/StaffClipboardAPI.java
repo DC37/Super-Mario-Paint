@@ -107,11 +107,11 @@ public class StaffClipboardAPI {
 			StaffNoteLine lineDest = theStaff.getSequence().getLineSafe(line);
 			
 			for(StaffNote note : ntList){
-				lineDest.remove(note);
+				lineDest.getNotes().remove(note);
 	            StateMachine.setSongModified(true);
 	            commandManager.execute(new RemoveNoteCommand(lineDest, note));
 
-				if (lineDest.isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
+				if (lineDest.getNotes().isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
 						&& line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 					StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
 							.getVolHandler(line - StateMachine.getMeasureLineNum());
@@ -148,7 +148,7 @@ public class StaffClipboardAPI {
 				StaffNote theStaffNote = new StaffNote(note.getInstrument(), note.getVerticalPosition(), note.getAccidental());
 				theStaffNote.setMuteModifier(note.getMuteModifier());
 
-				if (lineDest.isEmpty()) {
+				if (lineDest.getNotes().isEmpty()) {
 					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
 					
 					if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
@@ -160,8 +160,8 @@ public class StaffClipboardAPI {
 		            commandManager.execute(new AddVolumeCommand(lineDest, Values.DEFAULT_VELOCITY));
 				}
 
-				if (!lineDest.contains(theStaffNote)) {
-		        	lineDest.add(theStaffNote);
+				if (!lineDest.getNotes().contains(theStaffNote)) {
+		        	lineDest.getNotes().add(theStaffNote);
 		            StateMachine.setSongModified(true);
 		            commandManager.execute(new AddNoteCommand(lineDest, theStaffNote));
 				}
@@ -282,7 +282,7 @@ public class StaffClipboardAPI {
 		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		if(!copiedData.containsKey(line))
 			copiedData.put(line, new StaffNoteLine());
-		copiedData.get(line).add(newNote);
+		copiedData.get(line).getNotes().add(newNote);
 	}
 	
 	/**
@@ -297,7 +297,7 @@ public class StaffClipboardAPI {
 		HashMap<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
 		if(!selection.containsKey(line))
 			selection.put(line, new StaffNoteLine());
-		selection.get(line).add(note);
+		selection.get(line).getNotes().add(note);
 		highlightNote(note, true);
 	}
 	

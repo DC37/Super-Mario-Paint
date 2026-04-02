@@ -203,7 +203,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      */
     public void updateVolume() {
         setVolumeDisplay(theLine.getVolumePercent() * stp.getHeight());
-        if (theLine.getVolume() == 0 || theLine.isEmpty()) {
+        if (theLine.getVolume() == 0 || theLine.getNotes().isEmpty()) {
             setVolumeVisible(false);
         }
 
