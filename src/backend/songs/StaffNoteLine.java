@@ -20,11 +20,19 @@ public class StaffNoteLine {
     final private List<StaffNote> notes;
 
     /**
-     * Creates a new staff note line with the specified
-     * line number.
+     * Create an empty line of notes at the default volume.
      */
     public StaffNoteLine() {
-        notes = new ArrayList<StaffNote>();
+    	this(Values.DEFAULT_VELOCITY);
+    }
+    
+    /**
+     * Create an empty line of notes at a specified volume.
+     * @param volume The volume
+     */
+    public StaffNoteLine(int volume) {
+        this.notes = new ArrayList<StaffNote>();
+        this.volume = volume;
     }
 
     /**
