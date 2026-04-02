@@ -12,12 +12,6 @@ import gui.Values;
  */
 public class StaffNoteLine {
 
-    /**
-     * This is the list of note volumes (we will use this later as an extension
-     * to the usual volume-bar-sets-the-volume-of-the-whole-line thing.
-     */
-    private ArrayList<Integer> volumes;
-
     /** This is the volume of the entire <code>StaffNoteLine</code> */
     private int volume;
 
@@ -78,11 +72,6 @@ public class StaffNoteLine {
      */
     public ArrayList<StaffNote> getNotes() {
         return notes;
-    }
-
-    /** @return The list of volumes of the different notes. */
-    public ArrayList<Integer> getVolumes() {
-        return volumes;
     }
 
     /** @return The volume of this <code>StaffNoteLine</code>. */
