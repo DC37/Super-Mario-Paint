@@ -82,7 +82,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 								+ Integer.parseInt(meas[1]);
 					} else {
 						if (spl.contains("VOL")) {
-							st.setVolume(Double.parseDouble(spl.substring(
+							st.setVolume((int) Double.parseDouble(spl.substring(
 									spl.indexOf(":") + 1).trim()));
 						} else {
 							try {

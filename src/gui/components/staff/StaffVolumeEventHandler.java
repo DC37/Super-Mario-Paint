@@ -148,7 +148,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * Sets the volume of this note based on the y location of the click.
      * @param y The y-location of the click.
      */
-    private void setVolume(double y) {
+    private void setVolume(int y) {
         theLine.setVolume(y);
     }
 

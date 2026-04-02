@@ -42,10 +42,10 @@ public class StaffNoteLine {
     /**
      * @param y The volume that we want to set this note line to.
      */
-    public void setVolume(double y) {
+    public void setVolume(int y) {
         if (volume >= Values.MIN_VELOCITY &&
                 volume <= Values.MAX_VELOCITY)
-            volume = (int) y;
+            volume = y;
     }
 
     /**
