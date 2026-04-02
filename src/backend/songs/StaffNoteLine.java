@@ -6,17 +6,25 @@ import java.util.List;
 import gui.Values;
 
 /**
- * A line of notes on the staff. This can include
- * notes, bookmarks, etc.
- * @author RehdBlob
- * @since 2012.09.19
+ * <p>A vertical line of notes on the staff. These notes all share the same
+ * volume value.
+ * 
+ * <p>This is mostly a wrapper around a list of {@link StaffNote}s. The method
+ * {@link getNotes} provides a reference to that modifiable list. The order of
+ * notes in the list determines how they are ultimately displayed; the last
+ * element will end up at the front. Typically we want that note to be the most
+ * recently-placed.
  */
 public class StaffNoteLine {
 
-    /** This is the volume of the entire <code>StaffNoteLine</code> */
+	/**
+	 * The volume of this line.
+	 */
     private int volume;
 
-    /** This List holds staff notes inside it. */
+    /**
+     * The notes on this line.
+     */
     final private List<StaffNote> notes;
 
     /**
@@ -36,30 +44,35 @@ public class StaffNoteLine {
     }
 
     /**
-     * @return The list of notes that this <code>StaffNoteLine</code> contains.
+     * Get the reference to the list of notes held by this line.
+     * @return The list of notes on this line
      */
     public List<StaffNote> getNotes() {
         return notes;
     }
 
-    /** @return The volume of this <code>StaffNoteLine</code>. */
+    /**
+     * Get the volume of this line.
+     * @return The volume of this line
+     */
     public int getVolume() {
         return volume;
     }
 
     /**
-     * @param y The volume that we want to set this note line to.
+     * Set the volume of this line. The value must be in the range specified by
+     * {@link Values#MIN_VELOCITY} and {@link Values#MAX_VELOCITY}. If the
+     * parameter is not in the range then the method has no effect.
+     * @param volume The volume to set
      */
-    public void setVolume(int y) {
-        if (volume >= Values.MIN_VELOCITY &&
-                volume <= Values.MAX_VELOCITY)
-            volume = y;
+    public void setVolume(int volume) {
+        if (volume >= Values.MIN_VELOCITY && volume <= Values.MAX_VELOCITY)
+            this.volume = volume;
     }
 
     @Override
     public String toString() {
         return notes.toString();
     }
-
 
 }
