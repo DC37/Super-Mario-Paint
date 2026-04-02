@@ -149,7 +149,7 @@ public class StaffClipboardAPI {
 				theStaffNote.setMuteModifier(note.getMuteModifier());
 
 				if (lineDest.getNotes().isEmpty()) {
-					lineDest.setVolumePercent(((double) Values.DEFAULT_VELOCITY) / Values.MAX_VELOCITY);
+					lineDest.setVolume(Values.DEFAULT_VELOCITY);
 					
 					if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
 						StaffVolumeEventHandler sveh = theStaff.getDisplayManager()

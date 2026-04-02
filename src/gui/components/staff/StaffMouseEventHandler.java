@@ -202,8 +202,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
                 line + StateMachine.getMeasureLineNum());
 
         if (temp.getNotes().isEmpty()) {
-            temp.setVolumePercent(((double) Values.DEFAULT_VELOCITY)
-                    / Values.MAX_VELOCITY);
+            temp.setVolume(Values.DEFAULT_VELOCITY);
             commandManager.execute(new AddVolumeCommand(temp, Values.DEFAULT_VELOCITY));
         }
 

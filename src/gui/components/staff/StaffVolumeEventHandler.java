@@ -158,7 +158,9 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * between 0 and 1.
      */
     private void setVolumePercent(double y) throws IllegalArgumentException {
-        theLine.setVolumePercent(y);
+    	if (y >= 0 && y <= 1) {
+            theLine.setVolume((int) (y * Values.MAX_VELOCITY));
+    	}
     }
 
     /**
@@ -202,7 +204,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * Updates the volume display on this volume displayer.
      */
     public void updateVolume() {
-        setVolumeDisplay(theLine.getVolumePercent() * stp.getHeight());
+        setVolumeDisplay(((double) theLine.getVolume()) * stp.getHeight() / Values.MAX_VELOCITY);
         if (theLine.getVolume() == 0 || theLine.getNotes().isEmpty()) {
             setVolumeVisible(false);
         }
