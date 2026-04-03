@@ -18,13 +18,6 @@ jobs:
             path_sep: ';'
             dist: windows_x64
             
-          # windows aarch64
-          - os: windows-11-arm
-            arch: aarch64
-            osheader: windows
-            path_sep: ';'
-            dist: windows_aarch64
-            
           # macos x64
           - os: macos-15-intel
             arch: x64
