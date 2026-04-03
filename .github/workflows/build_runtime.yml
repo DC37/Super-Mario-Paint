@@ -64,15 +64,15 @@ jobs:
         cache-disabled: true
     
     - name: Create package (Windows)
-      if: runner.os == "Windows"
+      if: runner.os == 'Windows'
       run: ./gradlew.bat jpackageImage
       
     - name: Create package (non-Windows)
-      if: runner.os != "Windows"
+      if: runner.os != 'Windows'
       run: ./gradle jpackageImage
 
     - name: Package artifacts (Windows)
-      if: runner.os == "Windows"
+      if: runner.os == 'Windows'
       shell: pwsh
       run: |
         $ErrorActionPreference = 'Stop'
@@ -84,7 +84,7 @@ jobs:
         Move-Item -Path ./build/jpackage/* -Destination $DIST/
 
     - name: Package artifacts (non-Windows)
-      if: runner.os != "Windows"
+      if: runner.os != 'Windows'
       shell: bash
       run: |
         set -euo pipefail
