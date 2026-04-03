@@ -3,8 +3,7 @@ on:
   workflow_dispatch:
 
 env:
-  JAVA_VERSION: '24'
-  FX_VERSION: '24.0.2'
+  JAVA_VERSION: '21'
 
 defaults:
   run:
@@ -57,36 +56,24 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v4
 
-    - name: Set up JDK ${{ env.JAVA_VERSION}}
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
       uses: actions/setup-java@v4
       with:
-        distribution: temurin
+        distribution: 'zulu'
         java-version: ${{ env.JAVA_VERSION }}
-
-    - name: Download JavaFX ${{ env.FX_VERSION }} jmods
-      run: |
-        fx_jmods_url="https://download2.gluonhq.com/openjfx/${{ env.FX_VERSION }}/openjfx-${{ env.FX_VERSION }}_${{ matrix.osheader }}-${{ matrix.arch }}_bin-jmods.zip"
-        curl -L -o jfx-jmods.zip \
-           "${fx_jmods_url}"
-        unzip -q jfx-jmods.zip -d jfx-jmods
-
-    - name: Build runtime
-      run: |
-        JMODS_DIR="${JAVA_HOME}/jmods"
-        FX_JMODS_DIR="$GITHUB_WORKSPACE/jfx-jmods/javafx-jmods-${{ env.FX_VERSION }}"
-        MODULE_PATH="$JMODS_DIR${{ matrix.path_sep }}$FX_JMODS_DIR"
-        "$JAVA_HOME/bin/jlink" \
-         --module-path "$MODULE_PATH" \
-         --add-modules java.base,java.logging,java.desktop,java.xml,javafx.base,javafx.controls,javafx.fxml,javafx.graphics \
-         --strip-debug --no-header-files --no-man-pages --compress=2 \
-         --output runtime
+        
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v4
+      
+    - name: Create package
+      run: ./gradlew jpackageImage
 
     - name: Package artifacts
       run: |
         set -euo pipefail
         DIST="${{ matrix.dist }}"
         mkdir -p "$DIST"
-        mv ./runtime/* "$DIST/"
+        mv ./build/jpackage/* "$DIST/"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -94,4 +81,3 @@ jobs:
         name: test_${{ matrix.os }}_${{ matrix.arch }}
         path: |
           ${{ matrix.dist }}/**
-    
