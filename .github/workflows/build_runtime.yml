@@ -69,7 +69,7 @@ jobs:
       
     - name: Create package (non-Windows)
       if: runner.os != 'Windows'
-      run: ./gradle jpackageImage
+      run: ./gradlew jpackageImage
 
     - name: Package artifacts (Windows)
       if: runner.os == 'Windows'
