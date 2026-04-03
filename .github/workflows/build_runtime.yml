@@ -11,13 +11,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # macos aarch64
-          - os: macos-latest
-            osheader: osx
+          # windows x64
+          - os: windows-latest
+            arch: x64
+            osheader: windows
+            path_sep: ';'
+            dist: windows_x64
+            
+          # windows aarch64
+          - os: windows-11-arm
             arch: aarch64
-            path_sep: ':'
-            dist: macOS_aarch64
-
+            osheader: windows
+            path_sep: ';'
+            dist: windows_aarch64
+            
           # macos x64
           - os: macos-15-intel
             arch: x64
@@ -25,7 +32,14 @@ jobs:
             path_sep: ':'
             dist: macOS_x64
             
-          # linux ubuntu
+          # macos aarch64
+          - os: macos-latest
+            osheader: osx
+            arch: aarch64
+            path_sep: ':'
+            dist: macOS_aarch64
+            
+          # linux x64
           - os: ubuntu-latest
             arch: x64
             osheader: linux
@@ -38,13 +52,6 @@ jobs:
             osheader: linux
             path_sep: ':'
             dist: linux_aarch64
-
-          # windows
-          - os: windows-latest
-            arch: x64
-            osheader: windows
-            path_sep: ';'
-            dist: windows_x64
             
     runs-on: ${{ matrix.os }}
 
