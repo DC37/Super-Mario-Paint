@@ -60,7 +60,9 @@ jobs:
         
     - name: Set up Gradle
       uses: gradle/actions/setup-gradle@v6
-      
+      with:
+        cache-disabled: true
+    
     - name: Create package
       run: ./gradlew jpackageImage
 
