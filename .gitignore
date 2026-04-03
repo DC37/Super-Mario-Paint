@@ -17,3 +17,6 @@ bin/
 build
 .kotlin
 
+# Exclude Gradle wrapper
+!gradle/wrapper/gradle-wrapper.jar
+
