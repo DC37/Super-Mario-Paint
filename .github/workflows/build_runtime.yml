@@ -63,6 +63,13 @@ jobs:
       with:
         cache-disabled: true
     
+    - name: Get program version
+      uses: christian-draeger/read-properties@1.1.1
+      id: prog_version
+      with:
+        path: './gradle.properties'
+        properties: 'version'
+    
     - name: Create package (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
@@ -96,8 +103,8 @@ jobs:
         mv ./build/jpackage/* "$DIST/"
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
-        name: test_${{ matrix.os }}_${{ matrix.arch }}
+        name: SuperMarioPaint-${{ steps.prog_version.outputs.version }}_${{ matrix.os }}_${{ matrix.arch }}
         path: |
           ${{ matrix.dist }}/**
