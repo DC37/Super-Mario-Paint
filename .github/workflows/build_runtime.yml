@@ -62,13 +62,12 @@ jobs:
       uses: gradle/actions/setup-gradle@v6
       with:
         cache-disabled: true
-    
-    - name: Get program version
-      uses: christian-draeger/read-properties@1.1.1
-      id: prog_version
+        
+    - name: Read Gradle properties
+      uses: guillermocalvo/gradle-properties@v3
+      id: gradle_props
       with:
-        path: './gradle.properties'
-        properties: 'version'
+        output_file: ${{ github.output }}
     
     - name: Create package (Windows)
       if: runner.os == 'Windows'
@@ -105,6 +104,6 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v7
       with:
-        name: SuperMarioPaint-${{ steps.prog_version.outputs.version }}_${{ matrix.os }}_${{ matrix.arch }}
+        name: SuperMarioPaint-${{ steps.gradle_props.outputs.version }}_${{ matrix.os }}_${{ matrix.arch }}
         path: |
           ${{ matrix.dist }}/**
