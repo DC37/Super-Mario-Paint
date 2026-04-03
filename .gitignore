@@ -17,6 +17,8 @@ bin/
 build
 .kotlin
 
+# Exclude Gradle batch executable
+!gradlew.bat
+
 # Exclude Gradle wrapper
 !gradle/wrapper/gradle-wrapper.jar
-
