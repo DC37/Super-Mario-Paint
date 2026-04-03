@@ -63,13 +63,32 @@ jobs:
       with:
         cache-disabled: true
     
-    - name: Create package
-      run: ./gradlew jpackageImage
+    - name: Create package (Windows)
+      if: runner.os == "Windows"
+      run: ./gradlew.bat jpackageImage
+      
+    - name: Create package (non-Windows)
+      if: runner.os != "Windows"
+      run: ./gradle jpackageImage
 
-    - name: Package artifacts
+    - name: Package artifacts (Windows)
+      if: runner.os == "Windows"
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        Set-StrictMode -Version Latest
+        $PSNativeCommandUseErrorActionPreference = $true
+        
+        $DIST = "${{ matrix.dist }}"
+        New-Item -ItemType Directory -Force -Path $DIST | Out-Null
+        Move-Item -Path ./build/jpackage/* -Destination $DIST/
+
+    - name: Package artifacts (non-Windows)
+      if: runner.os != "Windows"
       shell: bash
       run: |
         set -euo pipefail
+        
         DIST="${{ matrix.dist }}"
         mkdir -p "$DIST"
         mv ./build/jpackage/* "$DIST/"
