@@ -65,10 +65,12 @@ jobs:
     
     - name: Create package (Windows)
       if: runner.os == 'Windows'
-      run: ./gradlew.bat jpackageImage
+      shell: pwsh
+      run: .\gradlew.bat jpackageImage
       
     - name: Create package (non-Windows)
       if: runner.os != 'Windows'
+      shell: bash
       run: ./gradlew jpackageImage
 
     - name: Package artifacts (Windows)
