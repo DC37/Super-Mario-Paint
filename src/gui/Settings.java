@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import gui.resources.SMPResourceUtil;
+
 /**
  * A loadable settings file that determines whatever is supposed
  * to display eventually on the screen.
@@ -16,7 +18,7 @@ import java.io.Serializable;
 public class Settings {
 
     /** The current version number of this program. */
-    public final static String version = "v1.5.1";
+    public final static String version = "v%s".formatted(SMPResourceUtil.getProperty("gradle.bridge.properties", "version"));
 
     /** The name of the file that we write to. */
     private final static String settingsFile = "settings.data";

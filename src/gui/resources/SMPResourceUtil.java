@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Properties;
 
 /**
  * <p>This class contains static methods to access <i>Super Mario Paint</i>
@@ -94,6 +95,27 @@ public class SMPResourceUtil {
             throw new NullPointerException("Cannot load resource: " + name);
         
         return inStream;
+    }
+    
+    /**
+	 * <p>Get a resource properties string stored as an internal file
+	 * (packaged with the distribution).
+	 * @param propsFileName Name of the properties file to get information from
+	 * @param propName Name of the property to retrieve
+	 * @return The property value, or <b>null</b> if the resource cannot be read
+	 */
+    public static String getProperty(String propsFileName, String propName) {
+    	String valueRead;
+    	
+    	try {
+    		Properties props = new Properties();
+    		props.load(SMPResourceUtil.getStream(propsFileName));
+    		valueRead = props.getProperty(propName);
+    	} catch (IOException | NullPointerException e) {
+    		valueRead = null;
+    	}
+    	
+    	return valueRead;
     }
     
     /**
