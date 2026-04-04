@@ -10,6 +10,7 @@ import backend.songs.Accidental;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
+import gui.Settings;
 import gui.Staff;
 import gui.Values;
 import gui.clipboard.StaffClipboard;
@@ -392,6 +393,9 @@ public class StaffDisplayManager {
         for (int i = 0; i < measureLines.size(); i++) {
             ImageView currImage = measureLines.get(i);
             Text currText = measureNums.get(i);
+            
+            currImage.setVisible(Settings.barsVisible);
+            currText.setVisible(Settings.barsVisible);
 
             int currentIndex = currLine + i;
             int currentBarIndex = currentIndex / barLength;

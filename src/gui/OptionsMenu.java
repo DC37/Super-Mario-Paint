@@ -54,6 +54,9 @@ public class OptionsMenu {
     /** Where the new time signature is entered. */
     private TextField timesigField;
     
+    /** Make the bars and bar numbers visible */
+    private CheckBox barsVisibleBox;
+    
     SMPFXController controller;
     Staff staff;
     
@@ -99,18 +102,20 @@ public class OptionsMenu {
         bindBox = makeBindCheckBox();
         VBox soundfontsOptions = new VBox(1);
         soundfontsOptions.setAlignment(Pos.CENTER);
+        
+        barsVisibleBox = makeBarsVisibleCheckbox();
 
         // Hide some options while in arranger mode, due to them being impractical (Tempo multiplier, Soundfont binder) - seymour
         switch (StateMachine.getMode()) {
         case SONG:
             soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
             vBox.getChildren().addAll(label, defaultVolume, timesigLabel, timesigField,
-                    tempoAdjustHack, tempoField, soundfontsOptions, pane);
+                    tempoAdjustHack, tempoField, soundfontsOptions, barsVisibleBox, pane);
             break;
             
         case ARRANGEMENT:
             soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu);
-            vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, pane);
+            vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, barsVisibleBox, pane);
             break;
         }
         
@@ -122,7 +127,7 @@ public class OptionsMenu {
         staff.redraw();
     }
 
-    /**
+	/**
      * @return A ComboBox listing all soundfonts in the AppData folder and an
      *         additional item to "Add Soundfont"
      */
@@ -257,9 +262,10 @@ public class OptionsMenu {
         changeTimeSignature();
         multiplyTempo();
         changeSoundfont();
+        updateBarVisibility();
     }
 
-    /** Updates the default volume of the program notes. */
+	/** Updates the default volume of the program notes. */
     private void changeDefaultVol() {
         int vol = (int) defaultVolume.getValue();
         Values.DEFAULT_VELOCITY = vol >= 128 ? 127 : vol;
@@ -380,6 +386,16 @@ public class OptionsMenu {
 			return false;
 		}
 		return true;
+	}
+
+    private CheckBox makeBarsVisibleCheckbox() {
+		CheckBox box = new CheckBox("Bars and bar numbers visible");
+		box.setSelected(Settings.barsVisible);
+		return box;
+	}
+
+    private void updateBarVisibility() {
+    	Settings.barsVisible = barsVisibleBox.isSelected();
 	}
 
 }

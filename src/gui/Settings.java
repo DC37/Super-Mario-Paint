@@ -101,6 +101,11 @@ public class Settings {
      * true...
      */
     public static boolean ADV_MODE = false;
+    
+    /**
+     * Visibility of the bars and numbers on the staff
+     */
+    public static boolean barsVisible = true;
 
     /**
      * Sets whether we want to see debug mode or not.
