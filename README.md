@@ -1,6 +1,6 @@
 Super Mario Paint
 ==========
-* Current Version: 1.5.0 (current), 1.3.2 (legacy smaller staff, requires J1.8u441 runtime)
+* Current Version: 1.5.1 (current), 1.3.2 (legacy smaller staff, requires J1.8u441 runtime)
 
 Help would be very much appreciated! If you manage to debug something, submit a pull request and I'll review it and (hopefully) merge it in.
 
