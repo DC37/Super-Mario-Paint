@@ -54,8 +54,11 @@ public class OptionsMenu {
     /** Where the new time signature is entered. */
     private TextField timesigField;
     
-    /** Make the bars and bar numbers visible */
+    /** Make the bars visible */
     private CheckBox barsVisibleBox;
+    
+    /** Make the bars visible */
+    private CheckBox numsVisibleBox;
     
     SMPFXController controller;
     Staff staff;
@@ -104,18 +107,19 @@ public class OptionsMenu {
         soundfontsOptions.setAlignment(Pos.CENTER);
         
         barsVisibleBox = makeBarsVisibleCheckbox();
+        numsVisibleBox = makeNumsVisibleCheckbox();
 
         // Hide some options while in arranger mode, due to them being impractical (Tempo multiplier, Soundfont binder) - seymour
         switch (StateMachine.getMode()) {
         case SONG:
             soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
             vBox.getChildren().addAll(label, defaultVolume, timesigLabel, timesigField,
-                    tempoAdjustHack, tempoField, soundfontsOptions, barsVisibleBox, pane);
+                    tempoAdjustHack, tempoField, soundfontsOptions, barsVisibleBox, numsVisibleBox, pane);
             break;
             
         case ARRANGEMENT:
             soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu);
-            vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, barsVisibleBox, pane);
+            vBox.getChildren().addAll(label, defaultVolume, soundfontsOptions, barsVisibleBox, numsVisibleBox, pane);
             break;
         }
         
@@ -263,6 +267,7 @@ public class OptionsMenu {
         multiplyTempo();
         changeSoundfont();
         updateBarVisibility();
+        updateNumVisibility();
     }
 
 	/** Updates the default volume of the program notes. */
@@ -389,13 +394,23 @@ public class OptionsMenu {
 	}
 
     private CheckBox makeBarsVisibleCheckbox() {
-		CheckBox box = new CheckBox("Bars and bar numbers visible");
+		CheckBox box = new CheckBox("Bars visible");
 		box.setSelected(Settings.barsVisible);
 		return box;
 	}
 
     private void updateBarVisibility() {
     	Settings.barsVisible = barsVisibleBox.isSelected();
+	}
+
+    private CheckBox makeNumsVisibleCheckbox() {
+		CheckBox box = new CheckBox("Measure numbers visible");
+		box.setSelected(Settings.numsVisible);
+		return box;
+	}
+
+    private void updateNumVisibility() {
+    	Settings.numsVisible = numsVisibleBox.isSelected();
 	}
 
 }

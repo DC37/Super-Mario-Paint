@@ -103,9 +103,14 @@ public class Settings {
     public static boolean ADV_MODE = false;
     
     /**
-     * Visibility of the bars and numbers on the staff
+     * Visibility of the vertical bars on the staff
      */
     public static boolean barsVisible = true;
+    
+    /**
+     * Visibility of measure numbers on the staff
+     */
+    public static boolean numsVisible = true;
 
     /**
      * Sets whether we want to see debug mode or not.

@@ -395,7 +395,7 @@ public class StaffDisplayManager {
             Text currText = measureNums.get(i);
             
             currImage.setVisible(Settings.barsVisible);
-            currText.setVisible(Settings.barsVisible);
+            currText.setVisible(Settings.numsVisible);
 
             int currentIndex = currLine + i;
             int currentBarIndex = currentIndex / barLength;
@@ -409,7 +409,6 @@ public class StaffDisplayManager {
                 double fontSize = Font.getDefault().getSize();
                 currText.setText(txt);
                 currText.setFont(new Font(fontSize));
-
                 
             } else if (k > 0) {
                 currImage.setImage(imagesHolder.get(ImageIndex.STAFF_SLINE));
