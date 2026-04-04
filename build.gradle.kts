@@ -43,6 +43,14 @@ sourceSets {
     }
 }
 
+tasks.processResources {
+    val projectVersion = project.version
+    inputs.property("version", projectVersion)
+    filesMatching("gradle.bridge.properties") {
+        expand("projectVersion" to projectVersion)
+    }
+}
+
 application {
     // Define the main class for the application.
     mainClass = "gui.SuperMarioPaint"
