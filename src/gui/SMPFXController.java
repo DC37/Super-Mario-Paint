@@ -406,6 +406,9 @@ public class SMPFXController {
     		        boolean ex = StateMachine.getNoteExtension(inst.ordinal());
     		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
     		        
+    		        int i = (inst.ordinal() == 15) ? 16 : (inst.ordinal() == 16) ? 15 : inst.ordinal();
+    		        staff.getSequence().getNoteExtensions()[i] = !ex;
+    		        
     			} else if (StateMachine.isCtrlPressed()) {
     				int flt = StateMachine.getFilteredNotes();
     				int new_flt;
