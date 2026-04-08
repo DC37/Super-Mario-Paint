@@ -139,7 +139,7 @@ public class Dialog {
     }
     
     public static String showTextDialog(String txt, Window owner) {
-    	return showTextDialog(txt, null, owner);
+    	return showTextDialog(txt, null, owner, false);
     }
 
     /**
@@ -147,7 +147,7 @@ public class Dialog {
      * Modified it to show a text dialog.
      * @param txt The text to show.
      */
-    public static String showTextDialog(String txt, String prompt, Window owner) {
+    public static String showTextDialog(String txt, String prompt, Window owner, boolean focusOnButton) {
         final StageWithReturn<String> dialog = initDialogStage(owner);
         
         Label label = new Label(txt);
@@ -186,7 +186,9 @@ public class Dialog {
         
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
-        okButton.requestFocus(); // little trick to always display prompt
+        if (focusOnButton) {
+        	okButton.requestFocus(); // little trick to always display prompt
+        }
         return dialog.showAndReturn("");
     }
     

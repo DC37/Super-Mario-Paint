@@ -482,7 +482,7 @@ public class SMPFXController {
     
     public void setTimesig_custom(ActionEvent e) {
         Window owner = ((Node) e.getSource()).getScene().getWindow();
-        String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner);
+        String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
         if (str.isEmpty())
             return;
         
