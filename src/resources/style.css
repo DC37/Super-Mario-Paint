@@ -8,6 +8,12 @@
 	-fx-padding: 2px;
 }
 
+.button.smp-button: disabled,
+.toggle-button.smp-button: disabled,
+.radio-button.smp-button: disabled {
+	-fx-opacity: 1.0;
+}
+
 .button.smp-button.smp-instrument-button {
 	-fx-padding: 0px;
 }

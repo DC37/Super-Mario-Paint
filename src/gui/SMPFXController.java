@@ -24,6 +24,8 @@ import backend.sound.SoundPlayer;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.SongNameController;
+import gui.components.buttons.SMPButton;
+import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
@@ -120,6 +122,24 @@ public class SMPFXController {
     
     @FXML
     private SMPRadioButton timesigButtonCustom;
+    
+    @FXML
+    private SMPButton saveButton;
+    
+    @FXML
+    private SMPButton loadButton;
+    
+    @FXML
+    private SMPButton newButton;
+    
+    @FXML
+    private SMPButton optionsButton;
+    
+    @FXML
+    private SMPHoldButton tempoPlusButton;
+    
+    @FXML
+    private SMPHoldButton tempoMinusButton;
 
     @FXML
     private Parent arrangerView;
@@ -342,7 +362,7 @@ public class SMPFXController {
 
         tempoBox.setOnMousePressed(evt -> {
             try {
-                if (StateMachine.getMode() == SMPMode.SONG) {
+                if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
                     Window owner = Utilities.getOwner(evt);
                     String tempo = Dialog.showTextDialog("Tempo", owner);
                     StateMachine.setTempo(Double.parseDouble(tempo));
@@ -388,6 +408,19 @@ public class SMPFXController {
                 displayManager.resetPlayBars();
             }
         });
+        
+        // Disable buttons while playback is active
+        timesigButton_4_4.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        timesigButton_3_4.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        timesigButton_6_8.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        timesigButtonCustom.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        modeButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        saveButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        loadButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        newButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        optionsButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        tempoPlusButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        tempoMinusButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
     }
     

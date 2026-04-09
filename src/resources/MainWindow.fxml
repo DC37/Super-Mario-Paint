@@ -34,19 +34,19 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="228.0" spacing="14.0">
                           <children>
-                            <SMPButton id="saveButton" onAction="#save" fitHeight="28.0" fitWidth="54.0" focusTraversable="false">
+                            <SMPButton fx:id="saveButton" onAction="#save" fitHeight="28.0" fitWidth="54.0" focusTraversable="false">
                               <imageReleased>
                                 <Image url="@sprites/SAVE.png"/>
                               </imageReleased>
                             </SMPButton>
                             
-                            <SMPButton id="loadButton" onAction="#load" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
+                            <SMPButton fx:id="loadButton" onAction="#load" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
                               <imageReleased>
                                 <Image url="@sprites/LOAD.png"/>
                               </imageReleased>
                             </SMPButton>
                             
-                            <SMPButton id="newButton" onAction="#newSongOrArrangement" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
+                            <SMPButton fx:id="newButton" onAction="#newSongOrArrangement" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
                               <imageReleased>
                                 <Image url="@sprites/NEW_SONG.png"/>
                               </imageReleased>
@@ -81,7 +81,7 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="100.0">
                           <children>
-                            <SMPButton id="optionsButton" onAction="#options" fitHeight="28.0" fitWidth="80.0" focusTraversable="false">
+                            <SMPButton fx:id="optionsButton" onAction="#options" fitHeight="28.0" fitWidth="80.0" focusTraversable="false">
                               <imageReleased>
                                 <Image url="@sprites/OPTIONS.png"/>
                               </imageReleased>
@@ -345,13 +345,13 @@
                                   
                                   <VBox spacing="0">
                                     <children>
-                                      <SMPHoldButton id="tempoPlusButton" onHold="#tempoUp" fitHeight="32.0" fitWidth="14.0" styleClass="smp-tempo-box-button">
+                                      <SMPHoldButton fx:id="tempoPlusButton" onHold="#tempoUp" fitHeight="32.0" fitWidth="14.0" styleClass="smp-tempo-box-button">
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_PLUS.png"/>
                                         </imageReleased>
                                       </SMPHoldButton>
                                         
-                                      <SMPHoldButton id="tempoMinusButton" onHold="#tempoDown" fitHeight="32.0" fitWidth="14.0" styleClass="smp-tempo-box-button">
+                                      <SMPHoldButton fx:id="tempoMinusButton" onHold="#tempoDown" fitHeight="32.0" fitWidth="14.0" styleClass="smp-tempo-box-button">
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_MINUS.png"/>
                                         </imageReleased>
