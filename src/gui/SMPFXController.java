@@ -140,6 +140,18 @@ public class SMPFXController {
     
     @FXML
     private SMPHoldButton tempoMinusButton;
+    
+    @FXML
+    private SMPButton addButton;
+    
+    @FXML
+    private SMPButton deleteButton;
+    
+    @FXML
+    private SMPButton upButton;
+    
+    @FXML
+    private SMPButton downButton;
 
     @FXML
     private Parent arrangerView;
@@ -421,6 +433,10 @@ public class SMPFXController {
         optionsButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         tempoPlusButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         tempoMinusButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        addButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        deleteButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        upButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        downButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
     }
     
