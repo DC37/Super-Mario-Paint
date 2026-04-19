@@ -477,6 +477,7 @@ public class Staff {
     }
     
     public void stop() {
+        stopSounds();
         stopSong();
         StateMachine.setPlaybackActive(false);
     }
