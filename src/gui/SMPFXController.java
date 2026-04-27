@@ -449,6 +449,7 @@ public class SMPFXController {
     		b.setImageFiltered(imagesHolder.get(ImageIndex.FILTER));
     		b.setFitHeight(28);
     		b.setFitWidth(26);
+    		b.setFocusTraversable(false);
     		
     		b.setOnAction(e -> {
     			if (StateMachine.isShiftPressed()) {
