@@ -395,6 +395,16 @@ public class SMPFXController {
         
         scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
+        StateMachine.getPlaybackActiveProperty().addListener(obs -> {
+        	if (StateMachine.isPlaybackActive()) {
+        		// scrollbar disabled; we give focus elsewhere to be able to handle
+        		// key events (hitting space should stop playback)
+        		basePane.requestFocus();
+        	} else {
+        		scrollbar.requestFocus();
+        	}
+        });
+        
         // Trigger a redraw, editing mode only
         InvalidationListener doRedraw = (obv) -> staff.redraw();
         
