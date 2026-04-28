@@ -978,6 +978,8 @@ public class SMPFXController {
     
     private void makeKeyboardHandlers(Node n) {
         n.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
+        	System.out.println("hi");
+        	
             switch(ke.getCode()) {
             case PAGE_UP:
                 if (StateMachine.isPlaybackActive())
@@ -1061,9 +1063,11 @@ public class SMPFXController {
                     staff.setLocation(0);
                 
                 if (StateMachine.isPlaybackActive()) {
+                	stopButton.setSelected(true);
                     staff.stop();
                     
                 } else {
+                	playButton.setSelected(true);
                     staff.play();
                 }
 
