@@ -988,8 +988,6 @@ public class SMPFXController {
     
     private void makeKeyboardHandlers(Node n) {
         n.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
-        	System.out.println("hi");
-        	
             switch(ke.getCode()) {
             case PAGE_UP:
                 if (StateMachine.isPlaybackActive())
