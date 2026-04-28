@@ -473,6 +473,7 @@ public class Staff {
             break;
         }
         
+        displayManager.resetSilhouette();
         StateMachine.setPlaybackActive(true);
     }
     
