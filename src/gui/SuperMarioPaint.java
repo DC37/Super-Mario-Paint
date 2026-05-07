@@ -54,6 +54,7 @@ import javafx.stage.Stage;
  * @author CyanSMP64
  * @author seymour
  * @author rozlynd
+ * @author aura-lsprog-86
  * 
  * @since 2012.08.16
  * @version 1.4.4
