@@ -33,9 +33,19 @@ public class StaffSequence {
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
+    	this(Values.DEFAULT_LINES_PER_SONG);
+    }
+    
+    /**
+     * Makes an empty song sequence of a specified length.
+     * @param length The initial length
+     */
+    public StaffSequence(int length) {
         theLines = new ArrayList<StaffNoteLine>();
-        for (int i = 0; i < Values.DEFAULT_LINES_PER_SONG; i++)
+        
+        for (int i = 0; i < length; i++) {
             theLines.add(new StaffNoteLine());
+        }
     }
     
     public int getLength() {
