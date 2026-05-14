@@ -23,9 +23,6 @@ public class StaffNote {
 
     private Accidental accidental = Accidental.NATURAL;
 
-    /** This is the volume of the note. */
-    private int volume = Values.DEFAULT_VELOCITY;
-
     /**
      * Modifier indicating if this is a mute note and of what type.
      */
@@ -66,34 +63,18 @@ public class StaffNote {
      *            by.
      * @param mod
      * 			  The mute modifier of this note
-     */
-    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, MuteModifier mod) {
-        this(theInd, pos, acc, mod, Values.HALF_VELOCITY);
-    }
-
-    /**
-     * @param theInd
-     *            The instrument that this StaffNote will play.
-     * @param verticalPosition
-     *            The vertical position of this note on the staff.
-     * @param acc
-     *            The sharp / flat / whatever that we are offsetting this note
-     *            by.
-     * @param mod
-     * 			  The mute modifier of this note
      * @param vol
      *            The volume that we want this note to play at.
      */
-    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, MuteModifier mod, int vol) {
+    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, MuteModifier mod) {
         theInstrument = theInd;
         accidental = acc;
         verticalPosition = pos;
         muteMod = mod;
-        volume = vol;
     }
     
     public StaffNote(StaffNote note) {
-        this(note.theInstrument, note.verticalPosition, note.accidental, note.muteMod, note.volume);
+        this(note.theInstrument, note.verticalPosition, note.accidental, note.muteMod);
     }
     
     public ImageIndex getImageIndex() {
@@ -131,7 +112,6 @@ public class StaffNote {
     	int verticalPosition = -1;
     	Accidental accidental;
     	MuteModifier muteMod;
-    	int volume;
     	
         String[] sp = spl.split(" ");
         if (sp.length != 2) {
@@ -143,8 +123,6 @@ public class StaffNote {
                 verticalPosition = i;
             }
         }
-        // Single-note volumes not implemented yet.
-        volume = Values.HALF_VELOCITY;
         switch (sp[1].length()) {
         case 2:
             accidental = Accidental.NATURAL;
@@ -168,7 +146,7 @@ public class StaffNote {
             break;
         }
         
-        return new StaffNote(theInstrument, verticalPosition, accidental, muteMod, volume);
+        return new StaffNote(theInstrument, verticalPosition, accidental, muteMod);
     }
 	
 	private static MuteModifier muteModifierFromInt(int v) {
@@ -245,27 +223,6 @@ public class StaffNote {
      */
     public int getVerticalPosition() {
         return verticalPosition;
-    }
-
-    /**
-     * The volume of this note.
-     * @return The volume of this note
-     */
-    @Deprecated
-    public int volume() {
-        return volume;
-    }
-
-    /**
-     * Sets the volume to some number that we give to this method.
-     *
-     * @param v
-     *            The volume we want to set.
-     */
-    @Deprecated
-    public void setVolume(int v) {
-        if (v >= Values.MIN_VELOCITY && v <= Values.MAX_VELOCITY)
-            volume = v;
     }
 
     /** @return The instrument that this StaffNote is. */
