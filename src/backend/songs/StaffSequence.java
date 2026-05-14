@@ -20,7 +20,7 @@ public class StaffSequence {
     private double tempo = Values.DEFAULT_TEMPO;
 
     /** These are all of the lines on the staff. */
-    private List<StaffNoteLine> theLines;
+    final private List<StaffNoteLine> theLines;
 
     /** This tells us which notes are extended (green highlight) or not. */
     private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
