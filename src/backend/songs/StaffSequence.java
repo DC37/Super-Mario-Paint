@@ -26,7 +26,7 @@ public class StaffSequence {
     final private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
     /** The time signature of this sequence. */
-    private TimeSignature t = TimeSignature.FOUR_FOUR;
+    private TimeSignature timeSignature = TimeSignature.FOUR_FOUR;
     
     /** The soundset bound to and should be loaded for this sequence. */
     private String soundsetBinding = "";
@@ -70,7 +70,7 @@ public class StaffSequence {
         if (lastNonempty < 0) {
             return 0;
         } else {
-            int barLength = t.top();
+            int barLength = timeSignature.top();
             // return first multiple of barLength that is > lastNonempty
             return barLength * ((lastNonempty / barLength) + 1);
         }
@@ -93,7 +93,7 @@ public class StaffSequence {
      */
     public void normalize() {
         int endline = getEndlineIndex();
-        int barLength = t.top();
+        int barLength = timeSignature.top();
         
         int screenWidth = Values.NOTELINES_IN_THE_WINDOW;
         int numberOfScreens = (endline / screenWidth) + 1;
@@ -230,16 +230,16 @@ public class StaffSequence {
     }
 
     public void setTimeSignature(TimeSignature t) {
-        this.t = t;
+        this.timeSignature = t;
     }
 
     public void setTimeSignature(String s) {
-        t = TimeSignature.valueOf(s);
+        timeSignature = TimeSignature.valueOf(s);
     }
 
     /** @return The time signature of this sequence. */
     public TimeSignature getTimeSignature() {
-        return t;
+        return timeSignature;
     }
 
 	/**
