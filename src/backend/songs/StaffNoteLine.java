@@ -66,13 +66,22 @@ public class StaffNoteLine {
      * @param volume The volume to set
      */
     public void setVolume(int volume) {
-        if (volume >= Values.MIN_VELOCITY && volume <= Values.MAX_VELOCITY)
+        if (checkVolumeValue(volume))
             this.volume = volume;
     }
 
     @Override
     public String toString() {
         return notes.toString();
+    }
+    
+    /**
+     * Check that some value is in the accepted range for volumes.
+     * @param volume The volume value to check
+     * @return True if the value is in the accepted range
+     */
+    private boolean checkVolumeValue(int volume) {
+    	return volume >= Values.MIN_VELOCITY && volume <= Values.MAX_VELOCITY;
     }
 
 }
