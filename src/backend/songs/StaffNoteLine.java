@@ -66,8 +66,9 @@ public class StaffNoteLine {
      * @param volume The volume to set
      */
     public void setVolume(int volume) {
-        if (checkVolumeValue(volume))
+        if (checkVolumeValue(volume)) {
             this.volume = volume;
+        }
     }
 
     @Override
