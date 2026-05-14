@@ -35,12 +35,13 @@ public class StaffNoteLine {
     }
     
     /**
-     * Create an empty line of notes at a specified volume.
+     * Create an empty line of notes at a specified volume. The default volume
+     * is used if the provided value is not in the adequate range.
      * @param volume The volume
      */
     public StaffNoteLine(int volume) {
         this.notes = new ArrayList<StaffNote>();
-        this.volume = volume;
+        this.volume = (checkVolumeValue(volume)) ? volume : Values.DEFAULT_VELOCITY;
     }
 
     /**
