@@ -2,6 +2,7 @@ package backend.songs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import gui.Values;
 
@@ -43,6 +44,18 @@ public class StaffNoteLine {
     public StaffNoteLine(int volume) {
         this.notes = new ArrayList<StaffNote>();
         this.volume = (checkVolumeValue(volume)) ? volume : Values.DEFAULT_VELOCITY;
+    }
+    
+    /**
+     * Copy constructor. Makes a deep copy of the argument's list of notes.
+     * @param oth Other StaffNoteLine to copy
+     */
+    public StaffNoteLine(StaffNoteLine oth) {
+    	this.notes = oth.notes.stream()
+    			.map(StaffNote::new)
+    			.collect(Collectors.toList());
+    	
+    	this.volume = oth.volume;
     }
 
     /**
