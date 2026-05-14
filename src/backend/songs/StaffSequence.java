@@ -23,7 +23,7 @@ public class StaffSequence {
     final private List<StaffNoteLine> theLines;
 
     /** This tells us which notes are extended (green highlight) or not. */
-    private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+    final private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
     /** The time signature of this sequence. */
     private TimeSignature t = TimeSignature.FOUR_FOUR;
