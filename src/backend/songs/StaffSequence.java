@@ -2,6 +2,7 @@ package backend.songs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import gui.Values;
 
@@ -46,6 +47,16 @@ public class StaffSequence {
         for (int i = 0; i < length; i++) {
             theLines.add(new StaffNoteLine());
         }
+    }
+    
+    /**
+     * Builds a sequence by making a deep copy of another sequence of note lines.
+     * @param lines A list of note lines
+     */
+    public StaffSequence(List<StaffNoteLine> lines) {
+    	this.theLines = lines.stream()
+    			.map(StaffNoteLine::new)
+    			.collect(Collectors.toList());
     }
     
     public int getLength() {
