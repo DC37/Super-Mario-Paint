@@ -210,11 +210,18 @@ public class StaffSequence {
     }
 
     /**
-     * @param i
-     *            The note extensions bitfield that we want to set.
+     * Set the note extensions.
+     * @param exts An array holding the new extension values
+     * @throws IllegalArgumentException if the array to assign is the wrong length
      */
-    public void setNoteExtensions(boolean[] i) {
-        noteExtensions = i;
+    public void setNoteExtensions(boolean[] exts) {
+    	if (exts.length != noteExtensions.length) {
+    		throw new IllegalArgumentException("setNoteExtensions expects an array of length " + noteExtensions.length);
+    	}
+    	
+    	for (int i = 0; i < noteExtensions.length; i++) {
+    		noteExtensions[i] = exts[i];
+    	}
     }
 
     /** @return The bitfield denoting which notes are extended. */
