@@ -7,7 +7,8 @@ import gui.Values;
 
 /**
  * <p>A vertical line of notes on the staff. These notes all share the same
- * volume value.
+ * volume value, which is guaranteed to be in the range specified by
+ * {@link Values#MIN_VELOCITY} and {@link Values#MAX_VELOCITY}.
  * 
  * <p>This is mostly a wrapper around a list of {@link StaffNote}s. The method
  * {@link getNotes} provides a reference to that modifiable list. The order of
