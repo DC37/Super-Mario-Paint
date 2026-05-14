@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import backend.saving.Decoder;
 import backend.songs.Accidental;
@@ -95,16 +96,12 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      */
     private StaffSequence populateSequence(String timeSig,
             ArrayList<String> songData, String tempo) {
-        StaffSequence song = new StaffSequence();
-        song.setTempo(Double.parseDouble(tempo));
-        int accum = 0;
+    	List<StaffNoteLine> lines = new ArrayList<>(Values.LINES_PER_MPC_SONG);
+
         for (String s : songData) {
-            if (accum >= Values.LINES_PER_MPC_SONG)
-                break;
             StaffNoteLine sl = new StaffNoteLine();
             if (s.length() <= 1) {
-                song.setLine(accum, sl);
-                accum++;
+            	lines.addLast(sl);
                 continue;
             }
             ArrayList<String> inst = dice(s);
@@ -133,10 +130,11 @@ public class MPCDecoder implements Decoder<StaffSequence> {
                 sl.getNotes().add(sn);
             }
             sl.setVolume(vol);
-            song.setLine(accum, sl);
-            accum++;
+        	lines.addLast(sl);
         }
-        song.resize(Values.LINES_PER_MPC_SONG);
+
+        StaffSequence song = new StaffSequence(lines);
+        song.setTempo(Double.parseDouble(tempo));
         return song;
     }
 
