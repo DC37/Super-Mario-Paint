@@ -77,19 +77,6 @@ public class StaffNote {
         this(note.theInstrument, note.verticalPosition, note.accidental, note.muteMod);
     }
     
-    public ImageIndex getImageIndex() {
-        switch (muteMod) {
-        case REGULAR:
-            return theInstrument.imageIndex();
-        case MUTE_THIS_PITCH:
-            return theInstrument.imageIndex().alt();
-        case MUTE_THIS_INST:
-            return theInstrument.imageIndex().silhouette();
-        default:
-        	throw new IllegalArgumentException("Unrecognized mute modifier: " + muteMod);   
-        }
-    }
-    
     public void setSelected(boolean b) {
         this.selected = b;
     }
@@ -195,6 +182,19 @@ public class StaffNote {
      */
     public void setMuteModifier(MuteModifier m) {
         muteMod = m;
+    }
+    
+    public ImageIndex getImageIndex() {
+        switch (muteMod) {
+        case REGULAR:
+            return theInstrument.imageIndex();
+        case MUTE_THIS_PITCH:
+            return theInstrument.imageIndex().alt();
+        case MUTE_THIS_INST:
+            return theInstrument.imageIndex().silhouette();
+        default:
+        	throw new IllegalArgumentException("Unrecognized mute modifier: " + muteMod);   
+        }
     }
     
     /**
