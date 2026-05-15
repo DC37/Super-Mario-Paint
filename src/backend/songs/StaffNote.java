@@ -26,12 +26,12 @@ public class StaffNote {
     /**
      * Modifier indicating if this is a mute note and of what type.
      */
-    private MuteModifier muteMod;
+    private MuteModifier muteModifier;
 
     /**
      * The Instrument that the note on the staff is to use.
      */
-    private InstrumentIndex theInstrument;
+    private InstrumentIndex instrument;
     
     /**
      * True if this note is currently selected with the clipboard.
@@ -67,14 +67,14 @@ public class StaffNote {
      *            The volume that we want this note to play at.
      */
     public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, MuteModifier mod) {
-        theInstrument = theInd;
+        instrument = theInd;
         accidental = acc;
         verticalPosition = pos;
-        muteMod = mod;
+        muteModifier = mod;
     }
     
     public StaffNote(StaffNote note) {
-        this(note.theInstrument, note.verticalPosition, note.accidental, note.muteMod);
+        this(note.instrument, note.verticalPosition, note.accidental, note.muteModifier);
     }
     
     public void setSelected(boolean b) {
@@ -104,7 +104,7 @@ public class StaffNote {
 
     /** @return The instrument that this StaffNote is. */
     public InstrumentIndex getInstrument() {
-        return theInstrument;
+        return instrument;
     }
 
     /**
@@ -112,7 +112,7 @@ public class StaffNote {
      * @return The mute modifier of this note
      */
     public MuteModifier getMuteModifier() {
-        return muteMod;
+        return muteModifier;
     }
 
     /**
@@ -120,19 +120,19 @@ public class StaffNote {
      * @param m A mute modifier
      */
     public void setMuteModifier(MuteModifier m) {
-        muteMod = m;
+        muteModifier = m;
     }
     
     public ImageIndex getImageIndex() {
-        switch (muteMod) {
+        switch (muteModifier) {
         case REGULAR:
-            return theInstrument.imageIndex();
+            return instrument.imageIndex();
         case MUTE_THIS_PITCH:
-            return theInstrument.imageIndex().alt();
+            return instrument.imageIndex().alt();
         case MUTE_THIS_INST:
-            return theInstrument.imageIndex().silhouette();
+            return instrument.imageIndex().silhouette();
         default:
-        	throw new IllegalArgumentException("Unrecognized mute modifier: " + muteMod);   
+        	throw new IllegalArgumentException("Unrecognized mute modifier: " + muteModifier);   
         }
     }
     
@@ -151,9 +151,9 @@ public class StaffNote {
         } else {
             StaffNote other = (StaffNote) o;
             return other.verticalPosition == verticalPosition
-                    && other.theInstrument == theInstrument
+                    && other.instrument == instrument
                     && other.accidental == accidental
-                    && other.muteMod == muteMod;
+                    && other.muteModifier == muteModifier;
         }
     }
 
@@ -210,10 +210,10 @@ public class StaffNote {
 
     @Override
     public String toString() {
-    	String instName = theInstrument.toString();
+    	String instName = instrument.toString();
         String noteName = Values.staffNoteNames[verticalPosition];
         String noteAcc = accidentalToString(accidental);
-        String muteName = muteModifierToString(muteMod);
+        String muteName = muteModifierToString(muteModifier);
         return instName + " " + noteName + noteAcc + muteName;
     }
 	
