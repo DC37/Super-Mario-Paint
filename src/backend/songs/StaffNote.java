@@ -86,16 +86,6 @@ public class StaffNote {
     }
 
     /**
-     * Sets the accidental of this note to whatever <code>a</code> is.
-     *
-     * @param a
-     *            The accidental that we're trying to set this note to.
-     */
-    public void setAccidental(Accidental a) {
-        accidental = a;
-    }
-
-    /**
      * The accidental of this note.
      * @return The accidental of this note
      */
