@@ -195,19 +195,6 @@ public class StaffNote {
         accidental = a;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof StaffNote)) {
-            return false;
-        } else {
-            StaffNote other = (StaffNote) o;
-            return other.verticalPosition == verticalPosition
-                    && other.theInstrument == theInstrument
-                    && other.accidental == accidental
-                    && other.muteMod == muteMod;
-        }
-    }
-
     /**
      * The accidental of this note.
      * @return The accidental of this note
@@ -252,6 +239,19 @@ public class StaffNote {
      */
     public Pitch getPitch() {
     	return Pitch.valueOf(Values.staffNotes[verticalPosition].getValue() + accidental.getOffset());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof StaffNote)) {
+            return false;
+        } else {
+            StaffNote other = (StaffNote) o;
+            return other.verticalPosition == verticalPosition
+                    && other.theInstrument == theInstrument
+                    && other.accidental == accidental
+                    && other.muteMod == muteMod;
+        }
     }
 
     @Override
