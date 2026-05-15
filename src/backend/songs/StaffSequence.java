@@ -254,10 +254,6 @@ public class StaffSequence {
         this.timeSignature = t;
     }
 
-    public void setTimeSignature(String s) {
-        timeSignature = TimeSignature.valueOf(s);
-    }
-
     /** @return The time signature of this sequence. */
     public TimeSignature getTimeSignature() {
         return timeSignature;
