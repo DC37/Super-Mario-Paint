@@ -148,42 +148,6 @@ public class StaffNote {
         
         return new StaffNote(theInstrument, verticalPosition, accidental, muteMod);
     }
-	
-	private static MuteModifier muteModifierFromInt(int v) {
-		switch (v) {
-		case 0:
-			return MuteModifier.REGULAR;
-		case 1:
-			return MuteModifier.MUTE_THIS_PITCH;
-		case 2:
-			return MuteModifier.MUTE_THIS_INST;
-		default:
-			throw new IllegalArgumentException("No mute modifier associated to value " + v);
-		}
-	}
-
-    /**
-     * Given character <code>c</code>, decode it as a doublesharp, sharp, flat,
-     * or doubleflat.
-     *
-     * @param c
-     *            The character to decode.
-     * @return The accidental to set.
-     */
-    private static Accidental decodeAccidental(char c) {
-        switch (c) {
-        case 'X':
-            return Accidental.DOUBLE_SHARP;
-        case '#':
-            return Accidental.SHARP;
-        case 'b':
-            return Accidental.FLAT;
-        case 'B':
-            return Accidental.DOUBLE_FLAT;
-        default:
-            return Accidental.NATURAL;
-        }
-    }
 
     /**
      * Sets the accidental of this note to whatever <code>a</code> is.
@@ -261,6 +225,42 @@ public class StaffNote {
         String noteAcc = accidentalToString(accidental);
         String muteName = muteModifierToString(muteMod);
         return instName + " " + noteName + noteAcc + muteName;
+    }
+	
+	private static MuteModifier muteModifierFromInt(int v) {
+		switch (v) {
+		case 0:
+			return MuteModifier.REGULAR;
+		case 1:
+			return MuteModifier.MUTE_THIS_PITCH;
+		case 2:
+			return MuteModifier.MUTE_THIS_INST;
+		default:
+			throw new IllegalArgumentException("No mute modifier associated to value " + v);
+		}
+	}
+
+    /**
+     * Given character <code>c</code>, decode it as a doublesharp, sharp, flat,
+     * or doubleflat.
+     *
+     * @param c
+     *            The character to decode.
+     * @return The accidental to set.
+     */
+    private static Accidental decodeAccidental(char c) {
+        switch (c) {
+        case 'X':
+            return Accidental.DOUBLE_SHARP;
+        case '#':
+            return Accidental.SHARP;
+        case 'b':
+            return Accidental.FLAT;
+        case 'B':
+            return Accidental.DOUBLE_FLAT;
+        default:
+            return Accidental.NATURAL;
+        }
     }
     
     private static String accidentalToString(Accidental acc) {
