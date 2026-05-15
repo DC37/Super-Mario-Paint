@@ -86,57 +86,6 @@ public class StaffNote {
     }
 
     /**
-     * Construct a <code>StaffNote</code> given its printed
-     * <code>toString()</code>
-     *
-     * @param spl
-     *            The String to attempt to convert to a <code>StaffNote</code>
-     * @throws ParseException
-     *             In case we are trying to parse an invalid string.
-     */
-    public static StaffNote valueOf(String spl) throws ParseException {
-    	InstrumentIndex theInstrument;
-    	int verticalPosition = -1;
-    	Accidental accidental;
-    	MuteModifier muteMod;
-    	
-        String[] sp = spl.split(" ");
-        if (sp.length != 2) {
-            throw new ParseException("Invalid note", 0);
-        }
-        theInstrument = InstrumentIndex.valueOf(sp[0]);
-        for (int i = 0; i < Values.staffNotes.length; i++) {
-            if (sp[1].contains(Values.staffNoteNames[i])) {
-                verticalPosition = i;
-            }
-        }
-        switch (sp[1].length()) {
-        case 2:
-            accidental = Accidental.NATURAL;
-            muteMod = MuteModifier.REGULAR;
-            break;
-        case 3:
-            accidental = decodeAccidental(sp[1].charAt(2));
-            muteMod = MuteModifier.REGULAR;
-            break;
-        case 4:	
-            accidental = Accidental.NATURAL;
-            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
-            break;
-        case 5:
-            accidental = decodeAccidental(sp[1].charAt(2));
-            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
-            break;
-        default:
-            accidental = Accidental.NATURAL;
-            muteMod = MuteModifier.REGULAR;
-            break;
-        }
-        
-        return new StaffNote(theInstrument, verticalPosition, accidental, muteMod);
-    }
-
-    /**
      * Sets the accidental of this note to whatever <code>a</code> is.
      *
      * @param a
@@ -216,6 +165,57 @@ public class StaffNote {
                     && other.accidental == accidental
                     && other.muteMod == muteMod;
         }
+    }
+
+    /**
+     * Construct a <code>StaffNote</code> given its printed
+     * <code>toString()</code>
+     *
+     * @param spl
+     *            The String to attempt to convert to a <code>StaffNote</code>
+     * @throws ParseException
+     *             In case we are trying to parse an invalid string.
+     */
+    public static StaffNote valueOf(String spl) throws ParseException {
+    	InstrumentIndex theInstrument;
+    	int verticalPosition = -1;
+    	Accidental accidental;
+    	MuteModifier muteMod;
+    	
+        String[] sp = spl.split(" ");
+        if (sp.length != 2) {
+            throw new ParseException("Invalid note", 0);
+        }
+        theInstrument = InstrumentIndex.valueOf(sp[0]);
+        for (int i = 0; i < Values.staffNotes.length; i++) {
+            if (sp[1].contains(Values.staffNoteNames[i])) {
+                verticalPosition = i;
+            }
+        }
+        switch (sp[1].length()) {
+        case 2:
+            accidental = Accidental.NATURAL;
+            muteMod = MuteModifier.REGULAR;
+            break;
+        case 3:
+            accidental = decodeAccidental(sp[1].charAt(2));
+            muteMod = MuteModifier.REGULAR;
+            break;
+        case 4:	
+            accidental = Accidental.NATURAL;
+            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
+            break;
+        case 5:
+            accidental = decodeAccidental(sp[1].charAt(2));
+            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
+            break;
+        default:
+            accidental = Accidental.NATURAL;
+            muteMod = MuteModifier.REGULAR;
+            break;
+        }
+        
+        return new StaffNote(theInstrument, verticalPosition, accidental, muteMod);
     }
 
     @Override
