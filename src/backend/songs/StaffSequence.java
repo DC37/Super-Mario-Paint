@@ -163,16 +163,6 @@ public class StaffSequence {
             return getLineSafe(i);
         }
     }
-
-    /**
-     * @param i
-     *            The index that we want to modify.
-     * @param s
-     *            The StaffNoteLine that we want to place at this index.
-     */
-    public void setLine(int i, StaffNoteLine s) {
-        theLines.set(i, s);
-    }
     
     /**
      * <p>Insert empty lines to implement the "Multiply Tempo" feature.</p>
