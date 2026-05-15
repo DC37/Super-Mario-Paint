@@ -76,13 +76,14 @@ public class StaffNote {
     public StaffNote(StaffNote note) {
         this(note.instrument, note.verticalPosition, note.accidental, note.muteModifier);
     }
-    
-    public void setSelected(boolean b) {
-        this.selected = b;
-    }
-    
-    public boolean isSelected() {
-        return selected;
+
+    /**
+     * The vertical position of this note on the staff. 0 is associated to the
+     * lowest note (C2 in the current setup).
+     * @return The vertical position of the note on the staff
+     */
+    public int getVerticalPosition() {
+        return verticalPosition;
     }
 
     /**
@@ -94,25 +95,24 @@ public class StaffNote {
     }
 
     /**
-     * The vertical position of this note on the staff. 0 is associated to the
-     * lowest note (C2 in the current setup).
-     * @return The vertical position of the note on the staff
+     * The mute modifier of this note.
+     * @return The mute modifier of this note
      */
-    public int getVerticalPosition() {
-        return verticalPosition;
+    public MuteModifier getMuteModifier() {
+        return muteModifier;
     }
 
     /** @return The instrument that this StaffNote is. */
     public InstrumentIndex getInstrument() {
         return instrument;
     }
-
-    /**
-     * The mute modifier of this note.
-     * @return The mute modifier of this note
-     */
-    public MuteModifier getMuteModifier() {
-        return muteModifier;
+    
+    public boolean isSelected() {
+        return selected;
+    }
+    
+    public void setSelected(boolean b) {
+        this.selected = b;
     }
 
     /**
