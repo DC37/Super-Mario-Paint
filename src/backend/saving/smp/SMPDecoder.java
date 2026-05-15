@@ -6,13 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import backend.saving.Decoder;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
+import backend.songs.TimeSignature;
 import gui.Utilities;
+import gui.Values;
 
 public class SMPDecoder implements Decoder<StaffSequence> {
 
@@ -49,22 +52,27 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 	 * @return Hopefully, a decoded <code>StaffSequence</code>
 	 */
 	private StaffSequence parseText(ArrayList<String> read) {
-		StaffSequence loaded = new StaffSequence();
+		List<StaffNoteLine> lines = new ArrayList<>();
+		double tempo = Values.DEFAULT_TEMPO;
+		boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+		TimeSignature timeSignature = Values.DEFAULT_TIME_SIGNATURE;
+		String soundset = Values.DEFAULT_SOUNDFONT;
+		
 		for (String s : read) {
 			if (s.contains("TEMPO") || s.contains("EXT") || s.contains("TIME") || s.contains("SOUNDSET")) {
 				String[] sp = s.split(",");
 				for (String spl : sp) {
 					String num = spl.substring(spl.indexOf(":") + 1);
 					if (spl.contains("TEMPO")) {
-						loaded.setTempo(Double.parseDouble(num.trim()));
+						tempo = Double.parseDouble(num.trim());
 					} else if (spl.contains("EXT")) {
-						loaded.setNoteExtensions(Utilities.boolFromLong(Long
-								.parseLong(num.trim())));
-						swap15And16(loaded);
+						noteExtensions = Utilities.boolFromLong(Long
+								.parseLong(num.trim()));
+						swap15And16(noteExtensions);
 					} else if (spl.contains("TIME")) {
-						loaded.setTimeSignature(num.trim());
+						timeSignature = TimeSignature.valueOf(num.trim());
 					} else if (spl.contains("SOUNDSET")) {
-						loaded.setSoundset(num.trim());
+						soundset = num.trim();
 					}
 				}
 			} else {
@@ -78,7 +86,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 							continue;
 						}
 						lineNum = (Integer.parseInt(meas[0]) - 1)
-								* loaded.getTimeSignature().top()
+								* timeSignature.top()
 								+ Integer.parseInt(meas[1]);
 					} else {
 						if (spl.contains("VOL")) {
@@ -93,25 +101,36 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 						}
 					}
 				}
-
-				if (lineNum >= loaded.getLength()) {
-					loaded.resize(lineNum + 1);
+				
+				if (lineNum < lines.size()) {
+					lines.set(lineNum, st);
+					
+				} else {
+					while (lines.size() < lineNum) {
+						lines.addLast(new StaffNoteLine());
+					}
+					
+					lines.addLast(st);
 				}
-				loaded.setLine(lineNum, st);
 			}
 		}
+
+		StaffSequence loaded = new StaffSequence(lines);
 		loaded.normalize();
+		loaded.setTempo(tempo);
+		loaded.setNoteExtensions(noteExtensions);
+		loaded.setTimeSignature(timeSignature);
+		loaded.setSoundset(soundset);
+		
 		return loaded;
 	}
 	
 	// Coin and piranha used to be swapped, so we unswap the note extensions
 	// found in sequences files to conform with existing files
-	private void swap15And16(StaffSequence seq) {
-		boolean[] exts = seq.getNoteExtensions();
+	private void swap15And16(boolean[] exts) {
 		boolean ext15 = exts[15];
 		exts[15] = exts[16];
 		exts[16] = ext15;
-		seq.setNoteExtensions(exts);
 	}
 
 }
