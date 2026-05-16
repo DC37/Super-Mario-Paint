@@ -2,7 +2,6 @@ package backend.songs;
 
 import gui.InstrumentIndex;
 import gui.Values;
-import gui.loaders.ImageIndex;
 
 /**
  * A note on the Staff, to be added to the noteMatrix of the Staff.
@@ -111,19 +110,6 @@ public class StaffNote {
     
     public void setSelected(boolean b) {
         this.selected = b;
-    }
-    
-    public ImageIndex getImageIndex() {
-        switch (muteModifier) {
-        case REGULAR:
-            return instrument.imageIndex();
-        case MUTE_THIS_PITCH:
-            return instrument.imageIndex().alt();
-        case MUTE_THIS_INST:
-            return instrument.imageIndex().silhouette();
-        default:
-        	throw new IllegalArgumentException("Unrecognized mute modifier: " + muteModifier);   
-        }
     }
     
     /**

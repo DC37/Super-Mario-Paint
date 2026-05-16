@@ -1,7 +1,5 @@
 package backend.songs;
 
-import gui.loaders.ImageIndex;
-
 
 /**
  * This denotes a flat / sharp / etc on the staff.
@@ -29,19 +27,6 @@ public class StaffAccidental {
     
     public StaffAccidental(StaffAccidental acc) {
         this(new StaffNote(acc.theNote));
-    }
-    
-    public ImageIndex getImageIndex() {
-        switch (theNote.getMuteModifier()) {
-        case REGULAR:
-            return theNote.getAccidental().imageIndex();
-        case MUTE_THIS_PITCH:
-            return theNote.getAccidental().imageIndex().alt();
-        case MUTE_THIS_INST:
-            return theNote.getAccidental().imageIndex().silhouette();
-        default:
-        	throw new IllegalArgumentException("Unrecognized mute modifier: " + theNote.getMuteModifier());
-        }
     }
 
     @Override

@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
-import backend.songs.StaffAccidental;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
@@ -124,14 +123,13 @@ class NoteMatrix {
             List<StaffNote> st = stl.getNotes();
             
             for (StaffNote s : st) {
-                int row = s.getVerticalPosition();                
-                StaffAccidental accidental = new StaffAccidental(s);
+                int row = s.getVerticalPosition();
                 
                 int d = stackedAmounts[row];
                 if (d < disp.depth) {
                     stackedAmounts[row] = d + 1;
                     ImageView iv = matrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
-                    iv.setImage(imagesHolder.get(s.getImageIndex()));
+                    iv.setImage(imagesHolder.get(noteImageIndex(s)));
                     iv.setEffect(s.isSelected() ? StaffDisplayManager.highlightBlend : null);
                     iv.setVisible(true);
                 }
@@ -140,7 +138,7 @@ class NoteMatrix {
                 if (d < disp.depth) {
                     accStackedAmounts[row] = d + 1;
                     ImageView iv = accMatrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
-                    iv.setImage(imagesHolder.get(accidental.getImageIndex()));
+                    iv.setImage(imagesHolder.get(accImageIndex(s)));
                     iv.setVisible(true);
                 }
             }
@@ -184,13 +182,12 @@ class NoteMatrix {
         currentSilhouette = silhouette;
         
         ImageView iv = silMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
-        iv.setImage(imagesHolder.get(silhouette.getImageIndex()));
+        iv.setImage(imagesHolder.get(noteImageIndex(silhouette)));
         iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
             ImageView acciv = accSilMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
-            StaffAccidental acc = new StaffAccidental(silhouette);
-            acciv.setImage(imagesHolder.get(acc.getImageIndex()));
+            acciv.setImage(imagesHolder.get(accImageIndex(silhouette)));
             acciv.setVisible(true);
         }
     }
@@ -202,6 +199,32 @@ class NoteMatrix {
         if (currentSilhouette != null && currentSilhouette.getAccidental() != acc) {
             StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getVerticalPosition(), acc);
             updateSilhouette(currentSilhouetteColumn, sil);
+        }
+    }
+    
+    public ImageIndex noteImageIndex(StaffNote note) {
+        switch (note.getMuteModifier()) {
+        case REGULAR:
+            return note.getInstrument().imageIndex();
+        case MUTE_THIS_PITCH:
+            return note.getInstrument().imageIndex().alt();
+        case MUTE_THIS_INST:
+            return note.getInstrument().imageIndex().silhouette();
+        default:
+        	throw new IllegalArgumentException("Unrecognized mute modifier: " + note.getMuteModifier());   
+        }
+    }
+    
+    public ImageIndex accImageIndex(StaffNote theNote) {
+        switch (theNote.getMuteModifier()) {
+        case REGULAR:
+            return theNote.getAccidental().imageIndex();
+        case MUTE_THIS_PITCH:
+            return theNote.getAccidental().imageIndex().alt();
+        case MUTE_THIS_INST:
+            return theNote.getAccidental().imageIndex().silhouette();
+        default:
+        	throw new IllegalArgumentException("Unrecognized mute modifier: " + theNote.getMuteModifier());
         }
     }
 
