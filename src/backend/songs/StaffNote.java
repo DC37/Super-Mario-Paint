@@ -4,20 +4,21 @@ import gui.InstrumentIndex;
 import gui.Values;
 
 /**
- * A note on the Staff, to be added to the noteMatrix of the Staff.
- *
- * @author RehdBlob
- * @since 2012.08.31
+ * <p>The representation for a note. All the information required for playing a
+ * sound is contained in that class: instrument, position on a vertical line
+ * and accidental (determines the pitch, see {@link StaffNote#getPitch}), and
+ * whether this is a regular note or a certain mute note.
  */
 public class StaffNote {
 
-    /**
-     * This is the location on the matrix where the note exists. (y-axis). One
-     * can recover the note that you are supposed to actually play by adding a
-     * constant offset to this position value.
-     */
+	/**
+	 * The position of this note in a vertical line.
+	 */
     private int verticalPosition;
 
+    /**
+     * The accidental of this note.
+     */
     private Accidental accidental = Accidental.NATURAL;
 
     /**
@@ -26,7 +27,7 @@ public class StaffNote {
     private MuteModifier muteModifier;
 
     /**
-     * The Instrument that the note on the staff is to use.
+	 * The instrument this note belongs to.
      */
     private InstrumentIndex instrument;
     
@@ -36,55 +37,49 @@ public class StaffNote {
     private boolean selected = false;
 
     /**
-     * Default constructor that makes the note by default at half volume.
-     *
-     * @param theInd
-     *            The instrument that this StaffNote will play.
-     * @param verticalPosition
-     *            The vertical position of this note on the staff.
-     * @param acc
-     *            The sharp / flat / whatever that we are offsetting this note
-     *            by.
+     * Creates a regular note of a certain instrument with a given position and
+     * accidental.
+     * @param instrument The instrument
+     * @param verticalPosition The position
+     * @param accidental The accidental
      */
-    public StaffNote(InstrumentIndex theInd, int verticalPosition, Accidental acc) {
-        this(theInd, verticalPosition, acc, MuteModifier.REGULAR);
+    public StaffNote(InstrumentIndex instrument, int verticalPosition, Accidental accidental) {
+        this(instrument, verticalPosition, accidental, MuteModifier.REGULAR);
     }
 
     /**
-     * @param theInd
-     *            The instrument that this StaffNote will play.
-     * @param verticalPosition
-     *            The vertical position of this note on the staff.
-     * @param acc
-     *            The sharp / flat / whatever that we are offsetting this note
-     *            by.
-     * @param mod
-     * 			  The mute modifier of this note
-     * @param vol
-     *            The volume that we want this note to play at.
+     * Creates a note of a certain instrument with a given position,
+     * accidental, and possibly a mute modifier.
+     * @param instrument The instrument
+     * @param verticalPosition The position
+     * @param accidental The accidental
+     * @param muteModifier The modifier (regular, mute pitch, mute instrument)
      */
-    public StaffNote(InstrumentIndex theInd, int pos, Accidental acc, MuteModifier mod) {
-        instrument = theInd;
-        accidental = acc;
-        verticalPosition = pos;
-        muteModifier = mod;
+    public StaffNote(InstrumentIndex instrument, int verticalPosition, Accidental accidental, MuteModifier muteModifier) {
+        this.instrument = instrument;
+        this.accidental = accidental;
+        this.verticalPosition = verticalPosition;
+        this.muteModifier = muteModifier;
     }
     
+    /**
+     * Creates a copy of another note.
+     * @param note The note to copy
+     */
     public StaffNote(StaffNote note) {
         this(note.instrument, note.verticalPosition, note.accidental, note.muteModifier);
     }
 
     /**
-     * The vertical position of this note on the staff. 0 is associated to the
-     * lowest note (C2 in the current setup).
-     * @return The vertical position of the note on the staff
+     * Get the vertical position of this note on the staff.
+     * @return The vertical position of this note on the staff
      */
     public int getVerticalPosition() {
         return verticalPosition;
     }
 
     /**
-     * The accidental of this note.
+     * Get the accidental of this note.
      * @return The accidental of this note
      */
     public Accidental getAccidental() {
@@ -92,22 +87,33 @@ public class StaffNote {
     }
 
     /**
-     * The mute modifier of this note.
+     * Get the mute modifier of this note.
      * @return The mute modifier of this note
      */
     public MuteModifier getMuteModifier() {
         return muteModifier;
     }
 
-    /** @return The instrument that this StaffNote is. */
+    /**
+     * Get the instrument of this note.
+     * @return The instrument of this note
+     */
     public InstrumentIndex getInstrument() {
         return instrument;
     }
     
+    /**
+     * Checks whether this note is selected.
+     * @return True if the note is selected
+     */
     public boolean isSelected() {
         return selected;
     }
     
+    /**
+     * Set the selected flag of this note.
+     * @param b The new value for the selected flag
+     */
     public void setSelected(boolean b) {
         this.selected = b;
     }
@@ -120,6 +126,10 @@ public class StaffNote {
     	return Pitch.valueOf(Values.staffNotes[verticalPosition].getValue() + accidental.getOffset());
     }
 
+    /**
+     * Notes of the same instrument, position, accidental and mute modifier are
+     * considered equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof StaffNote)) {
