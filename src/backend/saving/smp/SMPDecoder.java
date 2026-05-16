@@ -10,10 +10,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import backend.saving.Decoder;
+import backend.songs.Accidental;
+import backend.songs.MuteModifier;
 import backend.songs.StaffNote;
 import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
+import gui.InstrumentIndex;
 import gui.Utilities;
 import gui.Values;
 
@@ -94,7 +97,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 									spl.indexOf(":") + 1).trim()));
 						} else {
 							try {
-								st.getNotes().add(StaffNote.valueOf(spl));
+								st.getNotes().add(parseNote(spl));
 							} catch (ParseException e) {
 								e.printStackTrace();
 							}
@@ -133,4 +136,82 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 		exts[16] = ext15;
 	}
 
+    private static StaffNote parseNote(String spl) throws ParseException {
+    	InstrumentIndex theInstrument;
+    	int verticalPosition = -1;
+    	Accidental accidental;
+    	MuteModifier muteMod;
+    	
+        String[] sp = spl.split(" ");
+        if (sp.length != 2) {
+            throw new ParseException("Invalid note", 0);
+        }
+        theInstrument = InstrumentIndex.valueOf(sp[0]);
+        for (int i = 0; i < Values.staffNotes.length; i++) {
+            if (sp[1].contains(Values.staffNoteNames[i])) {
+                verticalPosition = i;
+            }
+        }
+        switch (sp[1].length()) {
+        case 2:
+            accidental = Accidental.NATURAL;
+            muteMod = MuteModifier.REGULAR;
+            break;
+        case 3:
+            accidental = decodeAccidental(sp[1].charAt(2));
+            muteMod = MuteModifier.REGULAR;
+            break;
+        case 4:	
+            accidental = Accidental.NATURAL;
+            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
+            break;
+        case 5:
+            accidental = decodeAccidental(sp[1].charAt(2));
+            muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
+            break;
+        default:
+            accidental = Accidental.NATURAL;
+            muteMod = MuteModifier.REGULAR;
+            break;
+        }
+        
+        return new StaffNote(theInstrument, verticalPosition, accidental, muteMod);
+    }
+	
+	private static MuteModifier muteModifierFromInt(int v) {
+		switch (v) {
+		case 0:
+			return MuteModifier.REGULAR;
+		case 1:
+			return MuteModifier.MUTE_THIS_PITCH;
+		case 2:
+			return MuteModifier.MUTE_THIS_INST;
+		default:
+			throw new IllegalArgumentException("No mute modifier associated to value " + v);
+		}
+	}
+
+    /**
+     * Given character <code>c</code>, decode it as a doublesharp, sharp, flat,
+     * or doubleflat.
+     *
+     * @param c
+     *            The character to decode.
+     * @return The accidental to set.
+     */
+    private static Accidental decodeAccidental(char c) {
+        switch (c) {
+        case 'X':
+            return Accidental.DOUBLE_SHARP;
+        case '#':
+            return Accidental.SHARP;
+        case 'b':
+            return Accidental.FLAT;
+        case 'B':
+            return Accidental.DOUBLE_FLAT;
+        default:
+            return Accidental.NATURAL;
+        }
+    }
+    
 }
