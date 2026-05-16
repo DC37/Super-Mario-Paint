@@ -124,13 +124,13 @@ public class StaffNote {
     public boolean equals(Object o) {
         if (!(o instanceof StaffNote)) {
             return false;
-        } else {
-            StaffNote other = (StaffNote) o;
-            return other.verticalPosition == verticalPosition
-                    && other.instrument == instrument
-                    && other.accidental == accidental
-                    && other.muteModifier == muteModifier;
         }
+        
+        StaffNote other = (StaffNote) o;
+        return other.verticalPosition == verticalPosition
+        		&& other.instrument == instrument
+        		&& other.accidental == accidental
+        		&& other.muteModifier == muteModifier;
     }
 
 }
