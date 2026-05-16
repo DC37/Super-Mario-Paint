@@ -114,8 +114,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
                 Accidental acc = Accidental.NATURAL;
                 if (note.length() == 3) {
                     if (note.substring(1).equals("17")) {
-                        StaffNote mn = new StaffNote(in, pos, acc);
-                        mn.setMuteModifier(MuteModifier.MUTE_THIS_INST);
+                        StaffNote mn = new StaffNote(in, pos, acc, MuteModifier.MUTE_THIS_INST);
                         sl.getNotes().add(mn);
                         continue;
                     } else {

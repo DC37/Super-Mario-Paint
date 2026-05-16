@@ -174,8 +174,11 @@ class NoteMatrix {
         resetSilhouette();
         
         int row = note.getVerticalPosition();
-        StaffNote silhouette = new StaffNote(note);
-        silhouette.setMuteModifier(MuteModifier.MUTE_THIS_INST);
+        StaffNote silhouette = new StaffNote(
+        		note.getInstrument(),
+        		note.getVerticalPosition(),
+        		note.getAccidental(),
+        		MuteModifier.MUTE_THIS_INST);
         
         currentSilhouetteColumn = col;
         currentSilhouette = silhouette;

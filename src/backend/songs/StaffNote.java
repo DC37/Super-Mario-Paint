@@ -112,14 +112,6 @@ public class StaffNote {
     public void setSelected(boolean b) {
         this.selected = b;
     }
-
-    /**
-     * Set the mute modifier for this note.
-     * @param m A mute modifier
-     */
-    public void setMuteModifier(MuteModifier m) {
-        muteModifier = m;
-    }
     
     public ImageIndex getImageIndex() {
         switch (muteModifier) {
