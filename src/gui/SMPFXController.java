@@ -16,6 +16,7 @@ import javax.sound.midi.MidiChannel;
 import backend.editing.ModifySongManager;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
+import backend.songs.MuteModifier;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffNote;
 import backend.songs.StaffSequence;
@@ -789,7 +790,7 @@ public class SMPFXController {
             pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
             List<StaffNote> line = seq.getLine(i).getNotes();
             for (int j = 0; j < line.size(); j++) {
-                pr.print(line.get(j) + ",");
+                pr.print(noteToString(line.get(j)) + ",");
             }
             pr.printf("VOL: %d\r\n", seq.getLine(i).getVolume());
         }
@@ -812,6 +813,44 @@ public class SMPFXController {
         };
         
         new Thread(soundsetsTaskSave).start();
+    }
+    
+    private static String noteToString(StaffNote note) {
+    	String instName = note.getInstrument().toString();
+        String noteName = Values.staffNoteNames[note.getVerticalPosition()];
+        String noteAcc = accidentalToString(note.getAccidental());
+        String muteName = muteModifierToString(note.getMuteModifier());
+        return instName + " " + noteName + noteAcc + muteName;
+    }
+    
+    private static String accidentalToString(Accidental acc) {
+    	switch (acc) {
+    	case Accidental.DOUBLE_FLAT:
+    		return "B";
+    	case Accidental.FLAT:
+    		return "b";
+    	case Accidental.NATURAL:
+    		return "";
+    	case Accidental.SHARP:
+    		return "#";
+    	case Accidental.DOUBLE_SHARP:
+    		return "X";
+    	default:
+    		throw new IllegalArgumentException("Cannot convert " + acc + " to String");
+    	}
+    }
+    
+    private static String muteModifierToString(MuteModifier mod) {
+    	switch (mod) {
+    	case MuteModifier.REGULAR:
+    		return "";
+    	case MuteModifier.MUTE_THIS_PITCH:
+    		return "m1";
+    	case MuteModifier.MUTE_THIS_INST:
+    		return "m2";
+    	default:
+    		throw new IllegalArgumentException("Cannot convert " + mod + " to String");
+    	}
     }
     
     @FXML
