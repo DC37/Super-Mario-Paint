@@ -60,22 +60,6 @@ public class StaffArrangement {
     }
 
     /**
-     * Sets a sequence at index <code>i</code> to the specified index.
-     *
-     * @param s
-     *            The sequence to set.
-     * @param f
-     *            The file associated with the sequence.
-     * @param i
-     *            The index at which to set the material at.
-     */
-    public void set(StaffSequence s, File f, int i)
-            throws IndexOutOfBoundsException {
-        theSequences.set(i, s);
-        theSequenceFiles.set(i, f);
-    }
-
-    /**
      * Removes the sequence at index i of the list. This returns and object
      * array of size 2 with the first element as the <code>StaffSequence</code>
      * that has been removed and the second element as the File location of the
