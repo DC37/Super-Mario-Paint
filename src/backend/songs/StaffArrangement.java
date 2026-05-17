@@ -1,7 +1,6 @@
 package backend.songs;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +12,7 @@ import java.util.List;
  * @since 2014.12.31
  *
  */
-public class StaffArrangement implements Serializable {
-
-    /**
-     * At the moment, we're using object serialization to save things.
-     */
-    private static final long serialVersionUID = 1L;
+public class StaffArrangement {
 
     /** This is the list of <code>StaffSequence</code> objects. */
     private transient ArrayList<StaffSequence> theSequences;
