@@ -142,19 +142,19 @@ public class StaffSequence {
      * @return The line at index i
      */
     public StaffNoteLine getLine(int i) {
-        try {
-            if (i < 0) {
-            /* Out of bounds in a bad way, add one to size, 
+    	if (i < 0) {
+    		/* Out of bounds in a bad way, add one to size, 
                then get the last element
                Should be an empty line... */
-                resize(theLines.size() + 1);
-                return getLine(theLines.size() - 1);
-            }
-            return theLines.get(i);
-        } catch (IndexOutOfBoundsException e) {
-            /* Otherwise recursively add lines until we have enough */
+    		resize(theLines.size() + 1);
+    		return theLines.get(theLines.size() - 1);
+    		
+    	} else if (i >= theLines.size()) {
             resize(i + 1);
-            return getLine(i);
+            return theLines.get(i);
+    		
+    	} else {
+    		return theLines.get(i);
         }
     }
     
