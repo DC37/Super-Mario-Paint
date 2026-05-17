@@ -167,7 +167,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (StateMachine.getButtonsPressed().contains(KeyCode.E)) {
             removeNote();
         } else {        
-            StaffNoteLine s = theStaff.getSequence().getLineSafe(
+            StaffNoteLine s = theStaff.getSequence().getLine(
                 StateMachine.getMeasureLineNum() + lineTmp);
             placeNote(theInd, s.getVolume());
         }
@@ -198,7 +198,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         
         theStaff.getDisplayManager().resetSilhouette();
 
-        StaffNoteLine temp = theStaff.getSequence().getLineSafe(
+        StaffNoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
 
         if (temp.getNotes().isEmpty()) {
@@ -237,7 +237,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private void removeNote() {
         theStaff.getDisplayManager().resetSilhouette();
 
-        StaffNoteLine temp = theStaff.getSequence().getLineSafe(
+        StaffNoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
 
         if (!temp.getNotes().isEmpty()) {

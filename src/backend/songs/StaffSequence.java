@@ -134,33 +134,27 @@ public class StaffSequence {
         
         resize(n);
     }
-    
-    public StaffNoteLine getLine(int i) throws IndexOutOfBoundsException {
-        return theLines.get(i);
-    }
 
     /**
-     * <p>Safe version of {@link getLine} that resizes the sequence if the
-     * index is out of bounds.</p>
-     * 
-     * <p>If the sequence's length is bound to UI behavior in some way, it is
-     * recommended to use {@link getLine} instead, as calling this method may
-     * have unexpected consequences on the UI side.
+     * This method extends the sequence with new empty lines if the parameter
+     * is greater than the current length.
+     * @param i The index of the line to get (first index 0)
+     * @return The line at index i
      */
-    public StaffNoteLine getLineSafe(int i) {
+    public StaffNoteLine getLine(int i) {
         try {
             if (i < 0) {
             /* Out of bounds in a bad way, add one to size, 
                then get the last element
                Should be an empty line... */
                 resize(theLines.size() + 1);
-                return getLineSafe(theLines.size() - 1);
+                return getLine(theLines.size() - 1);
             }
             return theLines.get(i);
         } catch (IndexOutOfBoundsException e) {
             /* Otherwise recursively add lines until we have enough */
             resize(i + 1);
-            return getLineSafe(i);
+            return getLine(i);
         }
     }
     

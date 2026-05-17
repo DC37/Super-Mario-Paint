@@ -104,7 +104,7 @@ public class StaffClipboardAPI {
 			int line = noteLine.getKey();
 			List<StaffNote> ntList = noteLine.getValue().getNotes();
 			
-			StaffNoteLine lineDest = theStaff.getSequence().getLineSafe(line);
+			StaffNoteLine lineDest = theStaff.getSequence().getLine(line);
 			
 			for(StaffNote note : ntList){
 				lineDest.getNotes().remove(note);
@@ -140,7 +140,7 @@ public class StaffClipboardAPI {
 		for (Map.Entry<Integer, StaffNoteLine> lineCopy : copiedData.entrySet()) {
 			int line = lineMoveTo + lineCopy.getKey();
 			
-			StaffNoteLine lineDest = theStaff.getSequence().getLineSafe(line);
+			StaffNoteLine lineDest = theStaff.getSequence().getLine(line);
 			StaffNoteLine lineSrc = lineCopy.getValue();
 			for(StaffNote note : lineSrc.getNotes()) {
 				
@@ -201,7 +201,7 @@ public class StaffClipboardAPI {
 	 */
 	public void select(int lineBegin, int positionBegin, int lineEnd, int positionEnd) {
 		for (int line = lineBegin; line <= lineEnd; line++) {
-			StaffNoteLine lineSrc = theStaff.getSequence().getLineSafe(line);
+			StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
 
 			List<StaffNote> ntList = lineSrc.getNotes();
 			for (StaffNote note : ntList) {

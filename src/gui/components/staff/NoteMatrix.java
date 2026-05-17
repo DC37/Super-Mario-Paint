@@ -119,7 +119,7 @@ class NoteMatrix {
                 accStackedAmounts[row] = 0;
             }
             
-            StaffNoteLine stl = seq.getLineSafe(currentPosition + col);
+            StaffNoteLine stl = seq.getLine(currentPosition + col);
             List<StaffNote> st = stl.getNotes();
             
             for (StaffNote s : st) {

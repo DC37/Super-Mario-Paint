@@ -189,7 +189,7 @@ public class StaffDisplayManager {
     public void updateVolumeBars(StaffSequence seq, int currLine) {
         for (int i = 0; i < width; i++) {
             StaffVolumeEventHandler sveh = volumeBarHandlers.get(i);
-            StaffNoteLine stl = seq.getLineSafe(currLine + i);
+            StaffNoteLine stl = seq.getLine(currLine + i);
             
             sveh.setStaffNoteLine(stl);
             sveh.updateVolume();
@@ -472,7 +472,7 @@ public class StaffDisplayManager {
     
     public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
         for (int i = 0; i < width; i++) {
-            StaffNoteLine stl = seq.getLineSafe(currLine + i);
+            StaffNoteLine stl = seq.getLine(currLine + i);
 
             int high = 0;
             int low = height;

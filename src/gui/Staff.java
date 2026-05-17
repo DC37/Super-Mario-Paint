@@ -588,7 +588,7 @@ public class Staff {
              */
             private void playSoundLine(int index) {
             	int currentLine = StateMachine.getMeasureLineNum();
-                soundPlayer.playSoundLine(theSequence.getLineSafe(currentLine + index));
+                soundPlayer.playSoundLine(theSequence.getLine(currentLine + index));
             }
 
         }
