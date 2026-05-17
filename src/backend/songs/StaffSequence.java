@@ -58,9 +58,70 @@ public class StaffSequence {
     			.map(StaffNoteLine::new)
     			.collect(Collectors.toList());
     }
+
+    /** @return The tempo of this sequence. */
+    public double getTempo() {
+        return tempo;
+    }
+
+    /**
+     * Sets the tempo of this sequence.
+     *
+     * @param t
+     *            The tempo of this sequence.
+     */
+    public void setTempo(double t) {
+        tempo = t;
+    }
     
     public int getLength() {
         return theLines.size();
+    }
+
+    /** @return The bitfield denoting which notes are extended. */
+    public boolean[] getNoteExtensions() {
+        return noteExtensions;
+    }
+
+    /**
+     * Set the note extensions.
+     * @param exts An array holding the new extension values
+     * @throws IllegalArgumentException if the array to assign is the wrong length
+     */
+    public void setNoteExtensions(boolean[] exts) {
+    	if (exts.length != noteExtensions.length) {
+    		throw new IllegalArgumentException("setNoteExtensions expects an array of length " + noteExtensions.length);
+    	}
+    	
+    	for (int i = 0; i < noteExtensions.length; i++) {
+    		noteExtensions[i] = exts[i];
+    	}
+    }
+
+    /** @return The time signature of this sequence. */
+    public TimeSignature getTimeSignature() {
+        return timeSignature;
+    }
+
+    public void setTimeSignature(TimeSignature t) {
+        this.timeSignature = t;
+    }
+
+	/**
+	 * @return The soundset bound to this sequence.
+	 * @since v1.1.2
+	 */
+	public String getSoundset() {
+		return soundsetBinding;
+    }
+
+	/**
+	 * Sets the soundset for this sequence which should be loaded with the
+	 * sequence.
+	 * @since v1.1.2
+	 */
+	public void setSoundset(String soundset) {
+		soundsetBinding = soundset;
     }
     
     /**
@@ -191,67 +252,6 @@ public class StaffSequence {
             
             theLines.remove(i);
         }
-    }
-
-    /** @return The tempo of this sequence. */
-    public double getTempo() {
-        return tempo;
-    }
-
-    /**
-     * Sets the tempo of this sequence.
-     *
-     * @param t
-     *            The tempo of this sequence.
-     */
-    public void setTempo(double t) {
-        tempo = t;
-    }
-
-    /**
-     * Set the note extensions.
-     * @param exts An array holding the new extension values
-     * @throws IllegalArgumentException if the array to assign is the wrong length
-     */
-    public void setNoteExtensions(boolean[] exts) {
-    	if (exts.length != noteExtensions.length) {
-    		throw new IllegalArgumentException("setNoteExtensions expects an array of length " + noteExtensions.length);
-    	}
-    	
-    	for (int i = 0; i < noteExtensions.length; i++) {
-    		noteExtensions[i] = exts[i];
-    	}
-    }
-
-    /** @return The bitfield denoting which notes are extended. */
-    public boolean[] getNoteExtensions() {
-        return noteExtensions;
-    }
-
-    public void setTimeSignature(TimeSignature t) {
-        this.timeSignature = t;
-    }
-
-    /** @return The time signature of this sequence. */
-    public TimeSignature getTimeSignature() {
-        return timeSignature;
-    }
-
-	/**
-	 * Sets the soundset for this sequence which should be loaded with the
-	 * sequence.
-	 * @since v1.1.2
-	 */
-	public void setSoundset(String soundset) {
-		soundsetBinding = soundset;
-    }
-
-	/**
-	 * @return The soundset bound to this sequence.
-	 * @since v1.1.2
-	 */
-	public String getSoundset() {
-		return soundsetBinding;
     }
     
     @Override
