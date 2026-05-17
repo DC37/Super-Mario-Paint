@@ -65,7 +65,8 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
             String st = inputFile.getParent() + File.separatorChar + sp + "]MarioPaint.txt";
             File f = new File(st);
             StaffSequence seq = Decoder.MPC_SEQUENCE_DECODER.decode(f);
-            theArr.add(seq, f);
+            theArr.getTheSequences().add(seq);
+            theArr.getTheSequenceFiles().add(f);
             theArr.getTheSequenceNames().add(sp);
         }
         return theArr;

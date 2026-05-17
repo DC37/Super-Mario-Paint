@@ -398,7 +398,8 @@ public class Staff {
     
         StateMachine.setArrModified(true);
         theArrangementList.getItems().add(StateMachine.getCurrentSongName());
-        theArrangement.add(theSequence, theSequenceFile);
+        theArrangement.getTheSequences().add(theSequence);
+        theArrangement.getTheSequenceFiles().add(theSequenceFile);
         soundPlayer.storeInCache();
     }
     
@@ -441,7 +442,8 @@ public class Staff {
             if (moveTo < 0)
                 moveTo = 0;
             l.add(moveTo, s);
-            theArrangement.add(moveTo, ss, f);
+            theArrangement.getTheSequences().add(moveTo, ss);
+            theArrangement.getTheSequenceFiles().add(moveTo, f);
             theArrangementList.getSelectionModel()
             .select(moveTo);
         }

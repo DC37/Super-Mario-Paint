@@ -31,35 +31,6 @@ public class StaffArrangement {
     }
 
     /**
-     * Adds a sequence to this arrangement.
-     *
-     * @param s
-     *            The sequence to add.
-     * @param f
-     *            The file associated with the sequence.
-     */
-    public void add(StaffSequence s, File f) {
-        theSequences.add(s);
-        theSequenceFiles.add(f);
-    }
-
-    /**
-     * Adds a sequence to this arrangement at index <code>i</code>.
-     *
-     * @param i
-     *            The index to add at.
-     * @param s
-     *            The <code>StaffSequence</code> that we are adding.
-     * @param f
-     *            The file associated with the sequence.
-     */
-    public void add(int i, StaffSequence s, File f)
-            throws IndexOutOfBoundsException {
-        theSequences.add(i, s);
-        theSequenceFiles.add(i, f);
-    }
-
-    /**
      * Removes the sequence at index i of the list. This returns and object
      * array of size 2 with the first element as the <code>StaffSequence</code>
      * that has been removed and the second element as the File location of the
