@@ -4,6 +4,24 @@ Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
 Bugfix = No new features added, but addresses some bugs.
 
+v1.5.2
+Fixed the SPACE key binding to start or interrupt playback
+Playback can't be started when already active
+
+v1.5.1
+Starting with 1.5.1 the program will be released as standalone executables for Windows, Linux and macOS
+Gradle setup for build automation
+Filter instruments binding changed to Ctrl+click
+Ctrl+N, Ctrl+O are working again
+Measure subdivisions counted from 1
+Bars and bar numbers visibility can be toggled off
+Corrected Red Mushroom sprite
+Most buttons activate on click release
+Fixed alignment of the filter image for instrument buttons
+Individual notes and accidentals won't "freeze" on the staff
+Fixed instrument icon used for the main window
+Preloader progress bar made more accurate
+
 v1.5.0
 Time signatures
 Deployment as runtime image---users don't need Java anymore
