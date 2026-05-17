@@ -387,9 +387,6 @@ public class Staff {
     }
     
     public void addSongToArrangement() {
-        if (StateMachine.isPlaybackActive())
-            return;
-    
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
 
@@ -404,9 +401,6 @@ public class Staff {
     }
     
     public void deleteSongFromArrangement() {
-        if (StateMachine.isPlaybackActive())
-            return;
-        
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Delete song");
         
@@ -421,9 +415,6 @@ public class Staff {
     }
     
     public void moveSongInArrangement(int moveAmt) {
-        if (StateMachine.isPlaybackActive())
-            return;
-
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Move song " + moveAmt);
         
