@@ -140,16 +140,10 @@ public class StaffSequence {
      * is greater than the current length.
      * @param i The index of the line to get (first index 0)
      * @return The line at index i
+     * @throws IndexOutOfBoundsException if i < 0
      */
     public StaffNoteLine getLine(int i) {
-    	if (i < 0) {
-    		/* Out of bounds in a bad way, add one to size, 
-               then get the last element
-               Should be an empty line... */
-    		resize(theLines.size() + 1);
-    		return theLines.get(theLines.size() - 1);
-    		
-    	} else if (i >= theLines.size()) {
+    	if (i >= theLines.size()) {
             resize(i + 1);
             return theLines.get(i);
     		
