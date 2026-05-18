@@ -317,14 +317,6 @@ public class Staff {
         theSequenceFile = other;
     }
 
-    /**
-     * @return This is the location of the sequence that we are currently
-     *         editing. It is <b>null</b> if it hasn't been saved yet.
-     */
-    public File getSequenceFile() {
-        return theSequenceFile;
-    }
-
     /** @return The current arrangement that we are displaying. */
     public ListView<String> getArrangementList() {
         return theArrangementList;
