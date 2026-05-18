@@ -900,7 +900,7 @@ public class SMPFXController {
         try {
             StaffSequence loaded = null;
             loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
-            String fname = Utilities.populateStaff(loaded, inputFile, false, staff, this);
+            String fname = Utilities.populateStaff(loaded, inputFile, staff, this);
             getNameTextField().setText(fname);
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);

@@ -93,7 +93,7 @@ public class Utilities {
             }
             StaffSequence loaded = null;
             loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
-            populateStaff(loaded, inputFile, false, theStaff, controller);
+            populateStaff(loaded, inputFile, theStaff, controller);
             return loaded;
 
         } catch (ClassCastException | EOFException | StreamCorruptedException
@@ -119,11 +119,8 @@ public class Utilities {
 	 *            The loaded sequence.
 	 * @param inputFile
 	 *            The input file.
-	 * @param mpc
-	 *            Whether this is an MPC file.
 	 */
-    public static String populateStaff(StaffSequence loaded, File inputFile,
-            boolean mpc, Staff theStaff, SMPFXController controller) {
+    public static String populateStaff(StaffSequence loaded, File inputFile, Staff theStaff, SMPFXController controller) {
         loaded.normalize();
         theStaff.setSequence(loaded);
         theStaff.setTimeSignature(loaded.getTimeSignature());
@@ -133,10 +130,7 @@ public class Utilities {
         theStaff.resetLocation();
         String fname = inputFile.getName();
         try {
-            if (mpc)
-                fname = fname.substring(0, fname.lastIndexOf(']'));
-            else
-                fname = fname.substring(0, fname.lastIndexOf("."));
+            fname = fname.substring(0, fname.lastIndexOf("."));
         } catch (IndexOutOfBoundsException e) {
             // Do nothing
         }
