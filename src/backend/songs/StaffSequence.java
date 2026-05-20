@@ -20,9 +20,6 @@ public class StaffSequence {
      */
     private double tempo = Values.DEFAULT_TEMPO;
 
-    /** These are all of the lines on the staff. */
-    final private List<StaffNoteLine> theLines;
-
     /** This tells us which notes are extended (green highlight) or not. */
     final private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
@@ -31,6 +28,9 @@ public class StaffSequence {
     
     /** The soundset bound to and should be loaded for this sequence. */
     private String soundsetBinding = "";
+
+    /** These are all of the lines on the staff. */
+    final private List<StaffNoteLine> theLines;
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
@@ -72,10 +72,6 @@ public class StaffSequence {
      */
     public void setTempo(double t) {
         tempo = t;
-    }
-    
-    public int getLength() {
-        return theLines.size();
     }
 
     /** @return The bitfield denoting which notes are extended. */
@@ -122,6 +118,10 @@ public class StaffSequence {
 	 */
 	public void setSoundset(String soundset) {
 		soundsetBinding = soundset;
+    }
+    
+    public int getLength() {
+        return theLines.size();
     }
     
     /**
