@@ -125,20 +125,6 @@ public class StaffSequence {
     }
     
     /**
-     * <p>Add empty lines to set the length of the sequence.</p>
-     * 
-     * <p>Without effect if the length is already greater or equal.</p>
-     * 
-     * @param n the desired length
-     */
-    public void resize(int n) {
-        int currentSize = theLines.size();
-        for (int i = 0; i < n - currentSize; i++) {
-            theLines.add(new StaffNoteLine());
-        }   
-    }
-    
-    /**
      * <p>Compute the index of the line marking the end of this sequence,
      * <i>i.e.</i> the first line that should <b>not</b> be played.</p>
      * 
@@ -261,6 +247,20 @@ public class StaffSequence {
         out.append("Extensions = " + noteExtensions + "\n");
         out.append(theLines.toString() + "\n");
         return out.toString();
+    }
+    
+    /**
+     * <p>Add empty lines to set the length of the sequence.</p>
+     * 
+     * <p>Without effect if the length is already greater or equal.</p>
+     * 
+     * @param n the desired length
+     */
+    private void resize(int n) {
+        int currentSize = theLines.size();
+        for (int i = 0; i < n - currentSize; i++) {
+            theLines.add(new StaffNoteLine());
+        }   
     }
 
 }
