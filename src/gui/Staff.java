@@ -199,8 +199,7 @@ public class Staff {
         
         if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == StateMachine.getMaxLine()) {
             int newSize = StateMachine.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
-            theSequence.resize(newSize);
-            StateMachine.setMaxLine(theSequence.getLength());
+            StateMachine.setMaxLine(newSize);
         }
         
         setLocation(newLoc);
