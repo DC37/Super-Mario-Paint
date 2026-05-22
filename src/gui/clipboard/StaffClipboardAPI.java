@@ -185,7 +185,7 @@ public class StaffClipboardAPI {
 
         theStaff.redraw();
         commandManager.record();
-        StateMachine.setMaxLine(theStaff.getSequence().getLength());
+        StateMachine.setMaxLine(theStaff.getSequence().getEndlineIndex());
 	}
 
 	/**

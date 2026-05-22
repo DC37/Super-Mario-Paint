@@ -493,7 +493,7 @@ public class Staff {
                 int endLine = theSequence.getEndlineIndex();
                 
                 theSequence.normalize();
-                StateMachine.setMaxLine(theSequence.getLength());
+                StateMachine.setMaxLine(endLine);
 
                 queue = 0;
                 
@@ -612,7 +612,7 @@ public class Staff {
                     StateMachine.setNoteExtensions(
                             theSequence.getNoteExtensions());
                     StateMachine.setTempo(theSequence.getTempo());
-                    StateMachine.setMaxLine(theSequence.getLength());
+                    StateMachine.setMaxLine(endLine);
                     
                     index = 0;
                     advance = false;

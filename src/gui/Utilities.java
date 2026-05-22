@@ -126,7 +126,7 @@ public class Utilities {
         theStaff.setTimeSignature(loaded.getTimeSignature());
         theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
-        StateMachine.setMaxLine(loaded.getLength());
+        StateMachine.setMaxLine(loaded.getEndlineIndex());
         theStaff.resetLocation();
         String fname = inputFile.getName();
         try {
