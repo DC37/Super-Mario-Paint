@@ -206,12 +206,18 @@ public class StaffSequence {
         if (n < 2 || theLines.isEmpty())
             return;
         
-        int sz = theLines.size();
-        for (int i = 0; i < sz; i++) {
-            int idx = (i * n) + 1;
-            for (int j = 0; j < n - 1; j++)
-                theLines.add(idx, new StaffNoteLine());
+        int sz = getEndlineIndex();
+        for (int i = sz; i > 0; i--) {
+        	moveLine(i, n * i);
         }
+    }
+    
+    private void moveLine(int from, int to) {
+    	StaffNoteLine lineFrom = getLine(from);
+    	StaffNoteLine lineTo = getLine(to);
+    	lineTo.getNotes().clear();
+    	lineTo.getNotes().addAll(lineFrom.getNotes());
+    	lineFrom.getNotes().clear();
     }
     
     /**
@@ -222,21 +228,9 @@ public class StaffSequence {
         if (n < 2 || theLines.isEmpty())
             return;
         
-        int sz = theLines.size();
-        // Check there is no error before modifying the list
-        for (int i = 0; i < sz; i++) {
-            if (i % n == 0)
-                continue;
-            
-            if (!theLines.get(i).getNotes().isEmpty())
-                throw new IllegalArgumentException("Can't undo Multiply Tempo");
-        }
-        
-        for (int i = sz - 1; i >= 0; i--) {
-            if (i % n == 0)
-                continue;
-            
-            theLines.remove(i);
+        int sz = getEndlineIndex();
+        for (int i = 1; i < sz; i++) {
+        	moveLine(n * i, i);
         }
     }
     
