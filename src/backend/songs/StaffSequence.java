@@ -132,11 +132,14 @@ public class StaffSequence {
      */
     public int getEndlineIndex() {
         int lastNonempty = theLines.size() - 1;
+        
         while (lastNonempty >= 0 && theLines.get(lastNonempty).getNotes().isEmpty()) {
             lastNonempty--;
         }
+        
         if (lastNonempty < 0) {
             return 0;
+            
         } else {
             int barLength = timeSignature.top();
             // return first multiple of barLength that is > lastNonempty
