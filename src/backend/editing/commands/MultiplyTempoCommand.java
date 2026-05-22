@@ -1,6 +1,7 @@
 package backend.editing.commands;
 
 import backend.editing.CommandInterface;
+import backend.songs.StaffNoteLine;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.Staff;
@@ -27,7 +28,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	@Override
 	public void redo() {
 	    StaffSequence seq = theStaff.getSequence();
-	    seq.expand(theMultiplyAmount);
+	    expand(seq, theMultiplyAmount);
 	    seq.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
         StateMachine.setMaxLine(seq.getLength());
@@ -37,11 +38,39 @@ public class MultiplyTempoCommand implements CommandInterface {
 	@Override
 	public void undo() {
 	    StaffSequence seq = theStaff.getSequence();
-	    seq.retract(theMultiplyAmount);
+	    retract(seq, theMultiplyAmount);
 	    seq.setTempo(previousTempo);
         StateMachine.setTempo(previousTempo);
         StateMachine.setMaxLine(seq.getLength());
         theStaff.setTimeSignature(previousTimesig);
 	}
+    
+    public void expand(StaffSequence seq, int n) {
+        if (n < 2)
+            return;
+        
+        int sz = seq.getEndlineIndex();
+        for (int i = sz; i > 0; i--) {
+        	moveLine(seq, i, n * i);
+        }
+    }
+    
+    public void retract(StaffSequence seq, int n) throws IllegalArgumentException {
+        if (n < 2)
+            return;
+        
+        int sz = seq.getEndlineIndex();
+        for (int i = 1; i < sz; i++) {
+        	moveLine(seq, n * i, i);
+        }
+    }
+    
+    private void moveLine(StaffSequence seq, int from, int to) {
+    	StaffNoteLine lineFrom = seq.getLine(from);
+    	StaffNoteLine lineTo = seq.getLine(to);
+    	lineTo.getNotes().clear();
+    	lineTo.getNotes().addAll(lineFrom.getNotes());
+    	lineFrom.getNotes().clear();
+    }
 
 }

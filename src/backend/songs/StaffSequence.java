@@ -199,41 +199,6 @@ public class StaffSequence {
         }
     }
     
-    /**
-     * <p>Insert empty lines to implement the "Multiply Tempo" feature.</p>
-     */
-    public void expand(int n) {
-        if (n < 2 || theLines.isEmpty())
-            return;
-        
-        int sz = getEndlineIndex();
-        for (int i = sz; i > 0; i--) {
-        	moveLine(i, n * i);
-        }
-    }
-    
-    private void moveLine(int from, int to) {
-    	StaffNoteLine lineFrom = getLine(from);
-    	StaffNoteLine lineTo = getLine(to);
-    	lineTo.getNotes().clear();
-    	lineTo.getNotes().addAll(lineFrom.getNotes());
-    	lineFrom.getNotes().clear();
-    }
-    
-    /**
-     * <p>Remove the empty lines resulting from {@link expand}.</p>
-     * @throws IllegalArgumentException when attempting to remove a non empty line.
-     */
-    public void retract(int n) throws IllegalArgumentException {
-        if (n < 2 || theLines.isEmpty())
-            return;
-        
-        int sz = getEndlineIndex();
-        for (int i = 1; i < sz; i++) {
-        	moveLine(n * i, i);
-        }
-    }
-    
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();

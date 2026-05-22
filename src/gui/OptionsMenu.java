@@ -9,8 +9,8 @@ import java.nio.file.StandardCopyOption;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
+import backend.editing.CommandInterface;
 import backend.editing.commands.MultiplyTempoCommand;
-import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -291,20 +291,16 @@ public class OptionsMenu {
         if (num <= 1)
             return;
         
-        StaffSequence seq = staff.getSequence();
         double currTempo = StateMachine.getTempo();
         double newTempo = currTempo * num;
         
         TimeSignature currTimesig = StateMachine.getTimeSignature();
         TimeSignature newTimesig = TimeSignature.multiply(currTimesig, num);
         
-        seq.expand(num);
-        seq.setTempo(newTempo);
-        StateMachine.setTempo(newTempo);
-        StateMachine.setMaxLine(seq.getLength());
-        staff.setTimeSignature(newTimesig);
+        CommandInterface cmd = new MultiplyTempoCommand(staff, num, currTempo, newTempo, currTimesig, newTimesig);
+        cmd.redo();
         
-        controller.getModifySongManager().execute(new MultiplyTempoCommand(staff, num, currTempo, newTempo, currTimesig, newTimesig));
+        controller.getModifySongManager().execute(cmd);
         controller.getModifySongManager().record();
     }
     
