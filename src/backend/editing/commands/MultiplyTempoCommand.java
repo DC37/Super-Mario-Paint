@@ -31,7 +31,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    expand(seq, theMultiplyAmount);
 	    seq.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
-        StateMachine.setMaxLine(seq.getEndlineIndex());
+        StateMachine.setMaxLine(seq.getLength());
         theStaff.setTimeSignature(newTimesig);
 	}
 
@@ -41,7 +41,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    retract(seq, theMultiplyAmount);
 	    seq.setTempo(previousTempo);
         StateMachine.setTempo(previousTempo);
-        StateMachine.setMaxLine(seq.getEndlineIndex());
+        StateMachine.setMaxLine(seq.getLength());
         theStaff.setTimeSignature(previousTimesig);
 	}
     
@@ -49,7 +49,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         if (n < 2)
             return;
         
-        int sz = seq.getEndlineIndex();
+        int sz = seq.getLength();
         for (int i = sz; i > 0; i--) {
         	moveLine(seq, i, n * i);
         }
@@ -59,7 +59,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         if (n < 2)
             return;
         
-        int sz = seq.getEndlineIndex();
+        int sz = seq.getLength();
         for (int i = 1; i < sz; i++) {
         	moveLine(seq, n * i, i);
         }

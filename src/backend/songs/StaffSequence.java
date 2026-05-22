@@ -119,18 +119,14 @@ public class StaffSequence {
 	public void setSoundset(String soundset) {
 		soundsetBinding = soundset;
     }
-    
+	
+	/**
+	 * The length of the sequence is defined as the number of note lines that
+	 * must be played in order to play the full sequence. It is guaranteed to
+	 * be a multiple of {@code this.getTimeSignature().barLength()}.
+	 * @return the number of playable lines in this sequence
+	 */
     public int getLength() {
-        return theLines.size();
-    }
-    
-    /**
-     * <p>Compute the index of the line marking the end of this sequence,
-     * <i>i.e.</i> the first line that should <b>not</b> be played.</p>
-     * 
-     * <p>Takes into account the time signature (length of a bar).</p>
-     */
-    public int getEndlineIndex() {
         int lastNonempty = theLines.size() - 1;
         
         while (lastNonempty >= 0 && theLines.get(lastNonempty).getNotes().isEmpty()) {
@@ -163,7 +159,7 @@ public class StaffSequence {
      * </ul>
      */
     public void normalize() {
-        int endline = getEndlineIndex();
+        int endline = getLength();
         int barLength = timeSignature.top();
         
         int screenWidth = Values.NOTELINES_IN_THE_WINDOW;

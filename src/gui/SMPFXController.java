@@ -783,7 +783,7 @@ public class SMPFXController {
         pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", seq.getTempo(),
                 Utilities.longFromBool(seq.getNoteExtensions()), t, seq.getSoundset());
         
-        for (int i = 0; i < seq.getEndlineIndex(); i++) {
+        for (int i = 0; i < seq.getLength(); i++) {
             if (seq.getLine(i).getNotes().isEmpty()) {
                 continue;
             }

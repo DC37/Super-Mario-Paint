@@ -490,7 +490,7 @@ public class Staff {
             protected Staff call() throws Exception {
                 int counter = StateMachine.getMeasureLineNum();
                 boolean zero = false;
-                int endLine = theSequence.getEndlineIndex();
+                int endLine = theSequence.getLength();
                 
                 theSequence.normalize();
                 StateMachine.setMaxLine(endLine);
@@ -606,7 +606,7 @@ public class Staff {
                     setSoundset(theSequence.getSoundset());
                     setTempo(theSequence.getTempo());
                     setTimeSignature(theSequence.getTimeSignature());
-                    endLine = theSequence.getEndlineIndex();
+                    endLine = theSequence.getLength();
                     
                     StateMachine.setArrangementSongIndex(i);
                     StateMachine.setNoteExtensions(
