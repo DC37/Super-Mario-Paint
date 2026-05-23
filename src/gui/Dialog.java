@@ -27,6 +27,7 @@ public class Dialog {
     private static <T> StageWithReturn<T> initDialogStage(Window owner) {
         StageWithReturn<T> stage = new StageWithReturn<T>();
         stage.setResizable(false);
+        stage.getIcons().add(SuperMarioPaint.headerIcon);
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
         // setting this style seems to be blocking everything
