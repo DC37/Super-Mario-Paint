@@ -3,12 +3,8 @@ package backend.songs;
 import java.util.Arrays;
 
 /**
- * Time signatures determine the length of a bar and how bar lines should be counted
- * and displayed on the staff.
- *
- * @author RehdBlob
- * @author rozlynd
- * @since 2013.06.28
+ * Time signatures determine the length of a bar and how bar lines should be
+ * counted and displayed on the staff.
  */
 public class TimeSignature {
 
