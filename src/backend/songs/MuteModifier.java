@@ -7,7 +7,7 @@ package backend.songs;
 public enum MuteModifier {
 	
 	/**
-	 * Note a mute note; just a regular note.
+	 * Not a mute note; just a regular note.
 	 */
 	REGULAR,
 	
