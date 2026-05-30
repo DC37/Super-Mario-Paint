@@ -191,11 +191,9 @@ public class StaffSequence {
     public StaffNoteLine getLine(int i) {
     	if (i >= theLines.size()) {
             resize(i + 1);
-            return theLines.get(i);
-    		
-    	} else {
-    		return theLines.get(i);
-        }
+    	}
+    	
+    	return theLines.get(i);
     }
     
     @Override
