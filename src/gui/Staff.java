@@ -539,7 +539,13 @@ public class Staff {
              */
             protected void playNextLine() {
                 int currentLoc = StateMachine.getMeasureLineNum();
-                runUI(currentLoc, index, advance);
+                
+                if (advance) {
+                    int loc = currentLoc + Values.NOTELINES_IN_THE_WINDOW;
+                    setLocation(loc);
+                }
+                
+                runUI(currentLoc, index);
                 
                 advance = index >= Values.NOTELINES_IN_THE_WINDOW - 1;
                 index = advance ? 0 : (index + 1);
@@ -552,10 +558,8 @@ public class Staff {
              *            The list of the measure highlights.
              * @param index
              *            The current index of the measure that we're on.
-             * @param advance
-             *            Whether we need to move the staff by some bit.
              */
-            private void runUI(final int currentLoc, final int index, final boolean advance) {
+            private void runUI(final int currentLoc, final int index) {
                 // In principle it's not necessary to send this job to the FXAT,
                 // but for some reason the program is more stable that way
                 // Leaving things as they are until someone can figure it out --rozlyn
@@ -563,10 +567,6 @@ public class Staff {
 
                     @Override
                     public void run() {
-                        if (advance) {
-                            int loc = currentLoc + Values.NOTELINES_IN_THE_WINDOW;
-                            setLocation(loc);
-                        }
                         playSoundLine(index);
                         queue--;
                     }
