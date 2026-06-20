@@ -6,6 +6,7 @@ import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
 import gui.Staff;
 import gui.StateMachine;
+import gui.Values;
 
 public class MultiplyTempoCommand implements CommandInterface {
 
@@ -31,7 +32,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    expand(seq, theMultiplyAmount);
 	    seq.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
-        StateMachine.setMaxLine(seq.getLength());
+        StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
         theStaff.setTimeSignature(newTimesig);
 	}
 
@@ -41,7 +42,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 	    retract(seq, theMultiplyAmount);
 	    seq.setTempo(previousTempo);
         StateMachine.setTempo(previousTempo);
-        StateMachine.setMaxLine(seq.getLength());
+        StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
         theStaff.setTimeSignature(previousTimesig);
 	}
     

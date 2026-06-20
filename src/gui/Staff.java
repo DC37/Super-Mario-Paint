@@ -199,7 +199,7 @@ public class Staff {
         
         if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == StateMachine.getMaxLine()) {
             int newSize = StateMachine.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
-            StateMachine.setMaxLine(newSize);
+            StateMachine.setMaxLine(Math.max(newSize, Values.DEFAULT_LINES_PER_SONG));
         }
         
         setLocation(newLoc);
@@ -493,7 +493,7 @@ public class Staff {
                 int endLine = theSequence.getLength();
                 
                 theSequence.normalize();
-                StateMachine.setMaxLine(endLine);
+                StateMachine.setMaxLine(Math.max(endLine, Values.DEFAULT_LINES_PER_SONG));
 
                 queue = 0;
                 
@@ -611,7 +611,7 @@ public class Staff {
                     StateMachine.setNoteExtensions(
                             theSequence.getNoteExtensions());
                     StateMachine.setTempo(theSequence.getTempo());
-                    StateMachine.setMaxLine(endLine);
+                    StateMachine.setMaxLine(Math.max(endLine, Values.DEFAULT_LINES_PER_SONG));
                     
                     index = 0;
                     advance = false;
