@@ -400,9 +400,9 @@ public class SMPFXController {
         	if (StateMachine.isPlaybackActive()) {
         		// scrollbar disabled; we give focus elsewhere to be able to handle
         		// key events (hitting space should stop playback)
-        		basePane.requestFocus();
+        		Platform.runLater(basePane::requestFocus);
         	} else {
-        		scrollbar.requestFocus();
+        		Platform.runLater(scrollbar::requestFocus);
         	}
         });
         
