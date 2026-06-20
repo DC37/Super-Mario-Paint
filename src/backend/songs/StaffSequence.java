@@ -15,9 +15,7 @@ import gui.Values;
  */
 public class StaffSequence {
 
-    /**
-     * The tempo of this sequence.
-     */
+    /** The tempo of this sequence. */
     private double tempo = Values.DEFAULT_TEMPO;
 
     /** This tells us which notes are extended (green highlight) or not. */
