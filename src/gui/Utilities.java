@@ -121,7 +121,6 @@ public class Utilities {
 	 *            The input file.
 	 */
     public static String populateStaff(StaffSequence loaded, File inputFile, Staff theStaff, SMPFXController controller) {
-        loaded.normalize();
         theStaff.setSequence(loaded);
         theStaff.setTimeSignature(loaded.getTimeSignature());
         theStaff.setSequenceFile(inputFile);

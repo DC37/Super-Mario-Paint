@@ -119,7 +119,6 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 		}
 
 		StaffSequence loaded = new StaffSequence(lines);
-		loaded.normalize();
 		loaded.setTempo(tempo);
 		loaded.setNoteExtensions(noteExtensions);
 		loaded.setTimeSignature(timeSignature);
