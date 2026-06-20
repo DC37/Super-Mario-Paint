@@ -14,6 +14,9 @@ import gui.Values;
  * @since 2013.08.23
  */
 public class StaffSequence {
+	
+	/** The name of this sequence. */
+	private String name;
 
     /** The tempo of this sequence. */
     private double tempo = Values.DEFAULT_TEMPO;
@@ -55,6 +58,21 @@ public class StaffSequence {
     	this.theLines = lines.stream()
     			.map(StaffNoteLine::new)
     			.collect(Collectors.toList());
+    }
+    
+    /**
+     * Get the name of this song.
+     */
+    public String getName() {
+    	return name;
+    }
+    
+    /**
+     * Set the name of this song.
+     * @param name the new name
+     */
+    public void setName(String name) {
+    	this.name = name;
     }
 
     /** @return The tempo of this sequence. */
