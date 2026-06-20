@@ -719,7 +719,7 @@ public class SMPFXController {
             FileOutputStream f_out = new FileOutputStream(outputFile);
             StaffArrangement out = staff.getArrangement();
             out.getTheSequenceNames().clear();
-            out.setTheSequenceNames(staff.getArrangementList().getItems());
+            out.getTheSequenceNames().addAll(staff.getArrangementList().getItems());
             saveArrTxt(f_out, out);
             f_out.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));

@@ -2,7 +2,6 @@ package backend.songs;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This is an arrangement on the staff, a collection of
@@ -88,13 +87,4 @@ public class StaffArrangement {
     public ArrayList<String> getTheSequenceNames() {
         return theSequenceNames;
     }
-
-    /**
-     * @param list
-     *            The filenames we want to set.
-     */
-    public void setTheSequenceNames(List<String> list) {
-        theSequenceNames.addAll(list);
-    }
-
 }

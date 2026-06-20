@@ -50,7 +50,7 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
 			f = new File(s + ".txt");
 			files.add(f);
 		}
-		loaded.setTheSequenceNames(names);
+		loaded.getTheSequenceNames().addAll(names);
 		loaded.setTheSequenceFiles(files);
 		return loaded;
 	}
