@@ -172,7 +172,7 @@ public class Staff {
      *            is to be displayed.
      */
     public synchronized void setLocation(int num) {
-        int maxVal = StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW;
+        int maxVal = Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0);
         int newLoc = (num < 0) ? 0 : (num > maxVal) ? maxVal : num;
         StateMachine.setMeasureLineNum(newLoc);
     }

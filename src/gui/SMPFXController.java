@@ -389,7 +389,7 @@ public class SMPFXController {
         
         // Setup scrollbar
         scrollbar.maxProperty().bind(Bindings.createIntegerBinding(
-                () -> StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW,
+                () -> Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0),
                 StateMachine.getMaxLineProperty()));
         scrollbar.valueProperty().bindBidirectional(
                 StateMachine.getCurrentLineProperty());
