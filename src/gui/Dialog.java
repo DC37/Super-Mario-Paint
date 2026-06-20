@@ -24,9 +24,10 @@ import javafx.stage.WindowEvent;
  */
 public class Dialog {
     
-    private static <T> StageWithReturn<T> initDialogStage(Window owner) {
+    private static <T> StageWithReturn<T> initDialogStage(String title, Window owner) {
         StageWithReturn<T> stage = new StageWithReturn<T>();
         stage.setResizable(false);
+        stage.setTitle((title != null) ? title : "");
         stage.getIcons().add(SuperMarioPaint.headerIcon);
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
@@ -57,8 +58,8 @@ public class Dialog {
      * Shows a dialog box with the text given to this method.
      * @param txt The text to show.
      */
-    public static void showDialog(String txt, Window owner) {
-        final StageWithReturn<Void> dialog = initDialogStage(owner);
+    public static void showDialog(String title, String txt, Window owner) {
+        final StageWithReturn<Void> dialog = initDialogStage(title, owner);
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -81,8 +82,12 @@ public class Dialog {
 
     }
     
+    public static void showDialog(String title, String txt) {
+        showDialog(title, txt, null);
+    }
+    
     public static void showDialog(String txt) {
-        showDialog(txt, null);
+        showDialog(null, txt, null);
     }
 
     /**
@@ -90,8 +95,8 @@ public class Dialog {
      * Modified it to show an ok / cancel dialog.
      * @param txt The text to show.
      */
-    public static boolean showYesNoDialog(String txt, Window owner) {
-        final StageWithReturn<Boolean> dialog = initDialogStage(owner);
+    public static boolean showYesNoDialog(String title, String txt, Window owner) {
+        final StageWithReturn<Boolean> dialog = initDialogStage(title, owner);
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);
@@ -135,12 +140,20 @@ public class Dialog {
         return dialog.showAndReturn(false);
     }
     
+    public static boolean showYesNoDialog(String title, String txt) {
+        return showYesNoDialog(title, txt, null);
+    }
+    
     public static boolean showYesNoDialog(String txt) {
-        return showYesNoDialog(txt, null);
+        return showYesNoDialog(null, txt, null);
+    }
+    
+    public static String showTextDialog(String title, String txt, Window owner) {
+    	return showTextDialog(title, txt, null, owner, false);
     }
     
     public static String showTextDialog(String txt, Window owner) {
-    	return showTextDialog(txt, null, owner, false);
+    	return showTextDialog(null, txt, null, owner, false);
     }
 
     /**
@@ -148,8 +161,8 @@ public class Dialog {
      * Modified it to show a text dialog.
      * @param txt The text to show.
      */
-    public static String showTextDialog(String txt, String prompt, Window owner, boolean focusOnButton) {
-        final StageWithReturn<String> dialog = initDialogStage(owner);
+    public static String showTextDialog(String title, String txt, String prompt, Window owner, boolean focusOnButton) {
+        final StageWithReturn<String> dialog = initDialogStage(title, owner);
         
         Label label = new Label(txt);
         label.setTextAlignment(TextAlignment.CENTER);

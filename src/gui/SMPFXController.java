@@ -543,7 +543,7 @@ public class SMPFXController {
     
     public void setTimesig_custom(ActionEvent e) {
         Window owner = ((Node) e.getSource()).getScene().getWindow();
-        String str = Dialog.showTextDialog("Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
+        String str = Dialog.showTextDialog(null, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
         if (str.isEmpty())
             return;
         
@@ -651,7 +651,8 @@ public class SMPFXController {
         boolean cont = true;
         if (StateMachine.isSongModified())
             cont = Dialog
-                    .showYesNoDialog("The current song has been modified!\n"
+                    .showYesNoDialog("HOLD IT!",
+                    		"The current song has been modified!\n"
                             + "Create a new song anyway?", owner);
 
         if (cont) {
@@ -669,7 +670,8 @@ public class SMPFXController {
         boolean cont = true;
         if (StateMachine.isArrModified()) {
             cont = Dialog
-                    .showYesNoDialog("The current arrangement has been\n"
+                    .showYesNoDialog("HOLD IT!",
+                    		"The current arrangement has been\n"
                             + "modified! Create a new arrangement\nanyway?", owner);
         }
         if (cont) {
@@ -701,7 +703,7 @@ public class SMPFXController {
     private void saveArrangement(Window owner) {
         String songName = getNameTextField().getText();
         if (!Utilities.legalFileName(songName)) {
-            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^", owner);
+            Dialog.showDialog(null, "Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^", owner);
             return;
         }
         
@@ -743,7 +745,7 @@ public class SMPFXController {
     public void saveSong(Window owner) {
         String songName = getNameTextField().getText();
         if (!Utilities.legalFileName(songName)) {
-            Dialog.showDialog("Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^", owner);
+            Dialog.showDialog(null, "Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^", owner);
             return;
         }
         
@@ -874,7 +876,8 @@ public class SMPFXController {
         boolean cont = true;
         if (StateMachine.isSongModified())
             cont = Dialog
-                    .showYesNoDialog("The current song has been modified!\n"
+                    .showYesNoDialog("HOLD IT!",
+                    		"The current song has been modified!\n"
                             + "Load anyway?", owner);
         File inputFile = null;
         if (cont) {
@@ -891,7 +894,7 @@ public class SMPFXController {
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                 loadSong(inputFile, owner);
             } catch (Exception e) {
-                Dialog.showDialog("Not a valid song file.", owner);
+                Dialog.showDialog(null, "Not a valid song file.", owner);
             }
         }
     }
@@ -906,15 +909,15 @@ public class SMPFXController {
             StateMachine.setSongModified(false);
             
         } catch (FileNotFoundException e) {
-            Dialog.showDialog("File " + inputFile + "not found!", owner);
+            Dialog.showDialog("Error!", "File " + inputFile + "not found!", owner);
             e.printStackTrace();
             
         } catch (IOException e) {
-            Dialog.showDialog("An IO exception occurred while reading file " + inputFile + "!", owner);
+            Dialog.showDialog("Error!", "An IO exception occurred while reading file " + inputFile + "!", owner);
             e.printStackTrace();
             
         } catch (Exception e) {
-            Dialog.showDialog("An error occurred while reading file " + inputFile + "!", owner);
+            Dialog.showDialog("Error!", "An error occurred while reading file " + inputFile + "!", owner);
             e.printStackTrace();
         }
     }
@@ -924,15 +927,18 @@ public class SMPFXController {
         if (StateMachine.isSongModified() || StateMachine.isArrModified()) {
             if (StateMachine.isSongModified() && StateMachine.isArrModified()) {
                 cont = Dialog
-                        .showYesNoDialog("The current song and arrangement\n"
+                        .showYesNoDialog("HOLD IT!",
+                        		"The current song and arrangement\n"
                                 + "have both been modified!\nLoad anyway?", owner);
             } else if (StateMachine.isSongModified()) {
                 cont = Dialog
-                        .showYesNoDialog("The current song has been modified!\n"
+                        .showYesNoDialog("HOLD IT!",
+                        		"The current song has been modified!\n"
                                 + "Load anyway?", owner);
             } else if (StateMachine.isArrModified()) {
                 cont = Dialog
-                        .showYesNoDialog("The current arrangement has been\n"
+                        .showYesNoDialog("HOLD IT!",
+                        		"The current arrangement has been\n"
                                 + "modified! Load anyway?", owner);
             }
         }
@@ -964,7 +970,7 @@ public class SMPFXController {
                     StateMachine.setSongModified(false);
                 } catch (Exception e1) {
                     e1.printStackTrace();
-                    Dialog.showDialog("Not a valid arrangement file.", owner);
+                    Dialog.showDialog(null, "Not a valid arrangement file.", owner);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

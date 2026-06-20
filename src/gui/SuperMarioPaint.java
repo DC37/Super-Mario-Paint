@@ -282,7 +282,7 @@ public class SuperMarioPaint extends Application  {
             return;
         }
     
-        if (Dialog.showYesNoDialog(mssg, primaryStage))
+        if (Dialog.showYesNoDialog("HOLD IT!", mssg, primaryStage))
             stop();
     }
     

@@ -376,7 +376,7 @@ public class OptionsMenu {
 		
 		if (destSf.exists()) {
 		    String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-		    if (!Dialog.showYesNoDialog(mssg, owner))
+		    if (!Dialog.showYesNoDialog("Options", mssg, owner))
 		        return false;
 		}
 		

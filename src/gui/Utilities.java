@@ -98,15 +98,15 @@ public class Utilities {
 
         } catch (ClassCastException | EOFException | StreamCorruptedException
                 | NullPointerException e) {
-            Dialog.showDialog("Not a valid song file.", owner);
+            Dialog.showDialog(null, "Not a valid song file.", owner);
             return null;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Dialog.showDialog("Not a valid song file.", owner);
+            Dialog.showDialog(null, "Not a valid song file.", owner);
             return null;
         } catch (IOException e) {
             e.printStackTrace();
-            Dialog.showDialog("Not a valid song file.", owner);
+            Dialog.showDialog(null, "Not a valid song file.", owner);
             return null;
         }
     }
