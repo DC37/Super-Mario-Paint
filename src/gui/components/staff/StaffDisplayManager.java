@@ -510,11 +510,7 @@ public class StaffDisplayManager {
                 lowA.get(i).setVisible(false);
             }
 
-            if (middleCPresent) {
-                middleC.get(i).setVisible(true);
-            } else{
-                middleC.get(i).setVisible(false);
-            }
+            middleC.get(i).setVisible(middleCPresent);
         }
     }
     
