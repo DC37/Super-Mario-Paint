@@ -2,7 +2,6 @@ package backend.saving.smp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -29,17 +28,16 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 	 *            The file to load from.
 	 * @return A loaded song file. The format is a StaffSequence.
 	 */
-	public StaffSequence decode(File inputFile)
-			throws FileNotFoundException, IOException {
-		FileInputStream f_in = new FileInputStream(inputFile);
-		Scanner sc = new Scanner(f_in);
+	public StaffSequence decode(File inputFile) throws IOException {
+		FileInputStream fIn = new FileInputStream(inputFile);
+		Scanner sc = new Scanner(fIn);
 		List<String> read = new ArrayList<>();
 		while (sc.hasNext()) {
 			read.add(sc.nextLine());
 		}
 		sc.close();
 		StaffSequence loaded = parseText(read);
-		f_in.close();
+		fIn.close();
 		if (loaded == null) {
 			throw new NullPointerException();
 		}

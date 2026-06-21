@@ -1,7 +1,6 @@
 package backend.saving;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
@@ -17,7 +16,7 @@ import backend.songs.StaffSequence;
 
 public interface Decoder<T> {
 	
-	public T decode(File in) throws ParseException, IOException, FileNotFoundException;
+	public T decode(File in) throws ParseException, IOException;
 	
 	/**
 	 * Try several parsers in sequence until one succeeds.
@@ -29,7 +28,7 @@ public interface Decoder<T> {
 	public static <T> CheckedDecoder<Optional<T>> trySequence(Decoder<? extends T> ... parsers) {
 		return new CheckedDecoder<>() {
 			
-			@Override public Optional<T> decode(File in) throws IOException, FileNotFoundException {
+			@Override public Optional<T> decode(File in) throws IOException {
 				for (Decoder<? extends T> p : parsers) {
 					try {
 						T result = p.decode(in);
@@ -66,7 +65,7 @@ public interface Decoder<T> {
 	public static interface CheckedDecoder<T> extends Decoder<T> {
 		
 		@Override
-		public T decode(File in) throws IOException, FileNotFoundException;
+		public T decode(File in) throws IOException;
 		
 	}
 

@@ -2,7 +2,6 @@ package backend.saving.smp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +19,16 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
 	 *            The file to load from.
 	 * @return A loaded arrangement file. The format is StaffArrangement.
 	 */
-	public StaffArrangement decode(File inputFile) throws IOException, FileNotFoundException {
-		FileInputStream f_in = new FileInputStream(inputFile);
-		Scanner sc = new Scanner(f_in);
+	public StaffArrangement decode(File inputFile) throws IOException {
+		FileInputStream fIn = new FileInputStream(inputFile);
+		Scanner sc = new Scanner(fIn);
 		List<String> read = new ArrayList<>();
 		while (sc.hasNext()) {
 			read.add(sc.nextLine());
 		}
 		sc.close();
 		StaffArrangement loaded = parseArrText(read);
-		f_in.close();
+		fIn.close();
 		return loaded;
 	}
 
