@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import utilities.MathUtils;
 
 /**
  * The rubber band is just a rectangle that gets resized by the mouse. It is a
@@ -151,10 +152,10 @@ public class StaffRubberBand extends Rectangle {
 		//note -change because xOrigin moves other way
 		int begPos = scrollOffset + originLine;
 		int endPos = scrollOffset - change + originLine;
-		int xOriginChange = Math.max(0, Math.min(endPos, Values.NOTELINES_IN_THE_WINDOW))
-				- Math.max(0, Math.min(begPos, Values.NOTELINES_IN_THE_WINDOW));
+		int xOriginChange = MathUtils.clamp(endPos, 0, Values.NOTELINES_IN_THE_WINDOW)
+				- MathUtils.clamp(begPos, 0, Values.NOTELINES_IN_THE_WINDOW);
 		
-		xOrigin = Math.max(lineMinBound, Math.min(xOrigin + lineSpacing * xOriginChange, lineMaxBound));
+		xOrigin = MathUtils.clamp(xOrigin + lineSpacing * xOriginChange, lineMinBound, lineMaxBound);
 		
 		//if xOrigin moves out of bounds still, set min and max bound positioning
 		if(xOriginChange == 0) {
