@@ -22,7 +22,7 @@ public class StaffSequence {
     private double tempo = Values.DEFAULT_TEMPO;
 
     /** This tells us which notes are extended (green highlight) or not. */
-    private final boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+    private final boolean[] noteExtensions = new boolean[Values.NUM_INSTRUMENTS];
 
     /** The time signature of this sequence. */
     private TimeSignature timeSignature = TimeSignature.FOUR_FOUR;

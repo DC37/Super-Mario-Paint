@@ -20,7 +20,7 @@ public class Values {
     public static double VERSION = 0.90;
 
     /** The number of instruments. */
-    public static int NUMINSTRUMENTS = 31;
+    public static final int NUM_INSTRUMENTS = 31;
 
     /**
      * The largest value that a note velocity can be; a note played at this will
@@ -45,7 +45,7 @@ public class Values {
      * The smallest value that a note velocity can be; a note will basically be
      * silent if played at this.
      */
-    public static int MIN_VELOCITY = 0;
+    public static final int MIN_VELOCITY = 0;
 
     /**
      * The default volume that we will be playing notes at. This can be changed
@@ -57,55 +57,55 @@ public class Values {
      * The number of distinct steps of notes in a note line on the staff. This
      * number is typically 18.
      */
-    public static int NOTES_IN_A_LINE = 29;
+    public static final int NOTES_IN_A_LINE = 29;
     
     /**
      * If there are more notes than this number at the same location on the screen,
      * excess notes will not be displayed.
      */
-    public static int MAX_STACKABLE_NOTES = 32;
+    public static final int MAX_STACKABLE_NOTES = 32;
 
     /** Location of the high C note. */
-    public static int highC = 28;
+    public static final int HIGH_C = 28;
 
     /** Location of the high A note. */
-    public static int highA = 26;
+    public static final int HIGH_A = 26;
 
     /** Location of the middle C note. */
-    public static int middleC = 14;
+    public static final int MIDDLE_C = 14;
 
     /** Location of the low C note. */
-    public static int lowC = 2;
+    public static final int LOW_C = 2;
 
     /** Location of the low A note. */
-    public static int lowA = 0;
+    public static final int LOW_A = 0;
 
     /**
      * The number of distinct lines of notes that exist on the staff. This
      * number is typically 10.
      */
-    public static int NOTELINES_IN_THE_WINDOW = 13;
+    public static final int NOTELINES_IN_THE_WINDOW = 13;
 
     /**
      * The number of lines in the staff, by default. This number is typically
      * 400.
      */
-    public static int DEFAULT_LINES_PER_SONG = 400;
+    public static final int DEFAULT_LINES_PER_SONG = 400;
 
     /** The default speed. */
-    public static int DEFAULT_TEMPO = 400;
+    public static final int DEFAULT_TEMPO = 400;
     
     /** Pitch to play when an instrument is selected */
-    public static int DEFAULT_NOTE = Pitch.DEFAULT.getValue();
+    public static final int DEFAULT_NOTE = Pitch.DEFAULT.getValue();
 
     /**
      * The amount of time the mouse must be held before we start repeating
      * clicks.
      */
-    public static int HOLDTIME = 250;
+    public static final int HOLD_TIME = 250;
 
     /** The amount of time between the repetition of two mouse click events. */
-    public static int REPEATTIME = 40;
+    public static final int REPEAT_TIME = 40;
 
     /**
      * This is the default song folder that we will check for arrangement song

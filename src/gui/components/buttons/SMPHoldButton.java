@@ -73,7 +73,7 @@ public class SMPHoldButton extends SMPButton {
                     @Override public void run() { getOnHold().handle(e); };
                 };
                 getOnHold().handle(e);
-                repeatOnHoldTimer.schedule(task, Values.HOLDTIME, Values.REPEATTIME);
+                repeatOnHoldTimer.schedule(task, Values.HOLD_TIME, Values.REPEAT_TIME);
                 
             } else if (repeatOnHoldTimer != null) {
                 repeatOnHoldTimer.cancel();

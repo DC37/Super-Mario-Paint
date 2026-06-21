@@ -53,8 +53,8 @@ public class Utilities {
 	 * @return A boolean array based on the long integer that we have loaded.
 	 */
 	public static boolean[] boolFromLong(long parseLong) {
-		boolean[] loaded = new boolean[Values.NUMINSTRUMENTS];
-		for (int i = 0; i < Values.NUMINSTRUMENTS; i++) {
+		boolean[] loaded = new boolean[Values.NUM_INSTRUMENTS];
+		for (int i = 0; i < Values.NUM_INSTRUMENTS; i++) {
 			loaded[i] = ((1 << i) & parseLong) != 0;
 		}
 		return loaded;
