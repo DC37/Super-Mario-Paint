@@ -2,7 +2,8 @@ package gui;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
@@ -68,7 +69,7 @@ public class SuperMarioPaint extends Application  {
     
     private RunnableFuture<Map<ImageIndex, Image>> imagesHolderFuture;
     
-    private Map<SMPCursorType, ImageCursor> cursorImages = new HashMap<>();
+    private Map<SMPCursorType, ImageCursor> cursorImages = new EnumMap<>(SMPCursorType.class);
 
     /**
      * Loads the soundfonts that will be used in Super Mario Paint.
@@ -151,7 +152,7 @@ public class SuperMarioPaint extends Application  {
     
     private void doStart() {
         try {
-            primaryStage.setTitle("Super Mario Paint " + Settings.version);
+            primaryStage.setTitle("Super Mario Paint " + Settings.VERSION);
             primaryStage.setOnCloseRequest(event -> {
                 handleCloseRequest();
                 event.consume(); // Keep the window from closing
@@ -163,7 +164,7 @@ public class SuperMarioPaint extends Application  {
             primaryStage.setScene(primaryScene);
             
             primaryStage.focusedProperty().addListener(
-                    new ChangeListener<Boolean>() {
+                    new ChangeListener<>() {
                         @Override
                         public void changed(ObservableValue<? extends Boolean> ov,
                                 Boolean t, Boolean t1) {
@@ -289,11 +290,11 @@ public class SuperMarioPaint extends Application  {
     private void makeMouseEventHandlers() {
         primaryScene.addEventHandler(MouseEvent.ANY, controller.getStaffMouseEventHandler());
         
-        ArrayList<MouseButton> mouseButtons = new ArrayList<MouseButton>();
+        List<MouseButton> mouseButtons = new ArrayList<>();
         
         // Just a temporary thing to change mouse until i (or someone else) can find out where to put it =P -- seymour
         primaryScene.addEventHandler(MouseEvent.MOUSE_PRESSED,
-                new EventHandler<MouseEvent>() {
+                new EventHandler<>() {
                     
                     @Override
                     public void handle(MouseEvent m) {
@@ -311,7 +312,7 @@ public class SuperMarioPaint extends Application  {
                     }
         });
         primaryScene.addEventHandler(MouseEvent.MOUSE_RELEASED,
-                new EventHandler<MouseEvent>() {
+                new EventHandler<>() {
             
                     @Override
                     public void handle(MouseEvent m) {

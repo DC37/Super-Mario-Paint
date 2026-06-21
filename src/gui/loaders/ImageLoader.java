@@ -32,7 +32,7 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
      */
     @Override
     public Map<ImageIndex, Image> call() {
-    	Map<ImageIndex, Image> spritesFX = new Hashtable<ImageIndex, javafx.scene.image.Image>();
+    	Map<ImageIndex, Image> spritesFX = new Hashtable<>();
         ImageIndex [] ind = ImageIndex.values();
         
         for (ImageIndex i : ind) {

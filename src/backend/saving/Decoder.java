@@ -46,19 +46,19 @@ public interface Decoder<T> {
 		};
 	}
 
-	public final static Decoder<StaffSequence> MPC_SEQUENCE_DECODER = new MPCDecoder();
-	public final static Decoder<StaffSequence> AMS_SEQUENCE_DECODER = new AMSDecoder();
-	public final static Decoder<StaffSequence> SMP_SEQUENCE_DECODER = new SMPDecoder();
+	public static final Decoder<StaffSequence> MPC_SEQUENCE_DECODER = new MPCDecoder();
+	public static final Decoder<StaffSequence> AMS_SEQUENCE_DECODER = new AMSDecoder();
+	public static final Decoder<StaffSequence> SMP_SEQUENCE_DECODER = new SMPDecoder();
 	
-	public final static Decoder<StaffArrangement> MPC_ARRANGEMENT_DECODER = new MPCArrangementDecoder();
-	public final static Decoder<StaffArrangement> AMS_ARRANGEMENT_DECODER = new AMSArrangementDecoder();
-	public final static Decoder<StaffArrangement> SMP_ARRANGEMENT_DECODER = new SMPArrangementDecoder();
+	public static final Decoder<StaffArrangement> MPC_ARRANGEMENT_DECODER = new MPCArrangementDecoder();
+	public static final Decoder<StaffArrangement> AMS_ARRANGEMENT_DECODER = new AMSArrangementDecoder();
+	public static final Decoder<StaffArrangement> SMP_ARRANGEMENT_DECODER = new SMPArrangementDecoder();
 	
 	// TODO Add AMS parsers when they are implemented
 	// On wrong inputs, the SMP decoder tends to return empty songs instead of throwing exceptions
 	// ... This is why we try it last
-	public final static CheckedDecoder<Optional<StaffSequence>> SEQUENCE_DECODER = Decoder.trySequence(MPC_SEQUENCE_DECODER, SMP_SEQUENCE_DECODER);
-	public final static CheckedDecoder<Optional<StaffArrangement>> ARRANGEMENT_DECODER = Decoder.trySequence(MPC_ARRANGEMENT_DECODER, SMP_ARRANGEMENT_DECODER);
+	public static final CheckedDecoder<Optional<StaffSequence>> SEQUENCE_DECODER = Decoder.trySequence(MPC_SEQUENCE_DECODER, SMP_SEQUENCE_DECODER);
+	public static final CheckedDecoder<Optional<StaffArrangement>> ARRANGEMENT_DECODER = Decoder.trySequence(MPC_ARRANGEMENT_DECODER, SMP_ARRANGEMENT_DECODER);
 	
 	/**
 	 * Parsers whose implementation does not throw {@link ParseException}.

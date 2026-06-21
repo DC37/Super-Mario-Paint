@@ -26,7 +26,7 @@ public class SMPHoldButton extends SMPButton {
     private ObjectProperty<EventHandler<ActionEvent>> onHold;
     public ObjectProperty<EventHandler<ActionEvent>> onHold() {
         if (onHold == null) {
-            onHold = new SimpleObjectProperty<EventHandler<ActionEvent>>(this, "onHold", null);
+            onHold = new SimpleObjectProperty<>(this, "onHold", null);
         }
         return onHold;
     }

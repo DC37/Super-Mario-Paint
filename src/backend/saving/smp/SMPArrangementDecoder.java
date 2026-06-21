@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import backend.saving.Decoder;
@@ -22,7 +23,7 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
 	public StaffArrangement decode(File inputFile) throws IOException, FileNotFoundException {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		Scanner sc = new Scanner(f_in);
-		ArrayList<String> read = new ArrayList<String>();
+		List<String> read = new ArrayList<>();
 		while (sc.hasNext()) {
 			read.add(sc.nextLine());
 		}
@@ -40,11 +41,11 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
 	 *            <code>ArrayList</code> of filenames and paths.
 	 * @return Hopefully, a decoded <code>StaffArrangement</code>
 	 */
-	private static StaffArrangement parseArrText(ArrayList<String> read) {
+	private static StaffArrangement parseArrText(List<String> read) {
 		StaffArrangement loaded = new StaffArrangement();
 		File f = null;
-		ArrayList<File> files = new ArrayList<File>();
-		ArrayList<String> names = new ArrayList<String>();
+		List<File> files = new ArrayList<>();
+		List<String> names = new ArrayList<>();
 		for (String s : read) {
 			names.add(s);
 			f = new File(s + ".txt");

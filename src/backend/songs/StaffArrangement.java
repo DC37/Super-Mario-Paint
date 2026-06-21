@@ -14,19 +14,19 @@ import java.util.ArrayList;
 public class StaffArrangement {
 
     /** This is the list of <code>StaffSequence</code> objects. */
-    private transient ArrayList<StaffSequence> theSequences;
+    private transient List<StaffSequence> theSequences;
 
     /** This is the list of <code>StaffSequence</code> file locations. */
-    private ArrayList<File> theSequenceFiles;
+    private List<File> theSequenceFiles;
 
     /** This is the list of sequence / song names. */
-    private ArrayList<String> theSequenceNames;
+    private List<String> theSequenceNames;
 
     /** Default constructor. Creates two empty lists. */
     public StaffArrangement() {
-        theSequences = new ArrayList<StaffSequence>();
-        theSequenceFiles = new ArrayList<File>();
-        theSequenceNames = new ArrayList<String>();
+        theSequences = new ArrayList<>();
+        theSequenceFiles = new ArrayList<>();
+        theSequenceNames = new ArrayList<>();
     }
 
     /**
@@ -54,7 +54,7 @@ public class StaffArrangement {
     /**
      * @return The list of sequence files.
      */
-    public ArrayList<StaffSequence> getTheSequences() {
+    public List<StaffSequence> getTheSequences() {
         return theSequences;
     }
 
@@ -62,14 +62,14 @@ public class StaffArrangement {
      * @param t
      *            The list of sequence files to set.
      */
-    public void setTheSequences(ArrayList<StaffSequence> t) {
+    public void setTheSequences(List<StaffSequence> t) {
         theSequences = t;
     }
 
     /**
      * @return The list of file locations for the sequence files.
      */
-    public ArrayList<File> getTheSequenceFiles() {
+    public List<File> getTheSequenceFiles() {
         return theSequenceFiles;
     }
 
@@ -77,14 +77,14 @@ public class StaffArrangement {
      * @param tsf
      *            The list of file locations to set.
      */
-    public void setTheSequenceFiles(ArrayList<File> tsf) {
+    public void setTheSequenceFiles(List<File> tsf) {
         theSequenceFiles = tsf;
     }
 
     /**
      * @return the The names of the files in this arrangement.
      */
-    public ArrayList<String> getTheSequenceNames() {
+    public List<String> getTheSequenceNames() {
         return theSequenceNames;
     }
 }

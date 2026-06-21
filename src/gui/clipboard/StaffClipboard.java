@@ -2,6 +2,8 @@ package gui.clipboard;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import backend.songs.StaffNoteLine;
 import gui.SMPFXController;
@@ -39,13 +41,13 @@ public class StaffClipboard {
 	private StaffClipboardAPI theAPI;
 	
 	/** The list that keeps track of all the selections' bounds made by the user */
-	private HashMap<Integer, StaffNoteLine> selection;
+	private Map<Integer, StaffNoteLine> selection;
 	
 	/** The list that will keep track of copied notes (and volumes) */
-	private HashMap<Integer, StaffNoteLine> copiedData;
+	private Map<Integer, StaffNoteLine> copiedData;
 
 	/** Volumes aren't node references so we keep track of the volumes' lines */
-	private HashSet<Integer> highlightedVolumes;
+	private Set<Integer> highlightedVolumes;
 	
 	/**
 	 * The listener that will update which volume bars are highlighted every
@@ -91,7 +93,7 @@ public class StaffClipboard {
 	            ));
 
 		highlightedVolumes = new HashSet<>();
-		highlightedVolumesRedrawer = new ChangeListener<Number>() {
+		highlightedVolumesRedrawer = new ChangeListener<>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -194,15 +196,15 @@ public class StaffClipboard {
 		rbeh.setScrollBarResizable(controller.getScrollbar());
 	}
 	
-	public HashMap<Integer, StaffNoteLine> getSelection() {
+	public Map<Integer, StaffNoteLine> getSelection() {
 		return selection;
 	}
 	
-	public HashMap<Integer, StaffNoteLine> getCopiedData() {
+	public Map<Integer, StaffNoteLine> getCopiedData() {
 		return copiedData;
 	}
 	
-	public HashSet<Integer> getHighlightedVolumes() {
+	public Set<Integer> getHighlightedVolumes() {
 		return highlightedVolumes;
 	}
 	

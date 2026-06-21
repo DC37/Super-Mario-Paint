@@ -22,23 +22,23 @@ class NoteTracker {
      * This is the list of lists, arranged by channel, of notes that are
      * playing.
      */
-    private ArrayList<ArrayList<PlayingNote>> notesOn;
+    private List<List<PlayingNote>> notesOn;
 
     /** This tells us which channels are currently playing notes. */
-    private ArrayList<Boolean> channelOn;
+    private List<Boolean> channelOn;
     
-    final private SoundPlayer soundPlayer;
+    private final SoundPlayer soundPlayer;
 
     /**
      * Creates a new <code>NoteTracker</code> object and initializes
      * a list that is linked to each channel of sound.
      */
     public NoteTracker(SoundPlayer soundPlayer) {
-        channelOn = new ArrayList<Boolean>();
-        notesOn = new ArrayList<ArrayList<PlayingNote>>();
+        channelOn = new ArrayList<>();
+        notesOn = new ArrayList<>();
         for (int i = 0; i < InstrumentIndex.values().length; i++) {
             channelOn.add(false);
-            notesOn.add(new ArrayList<PlayingNote>());
+            notesOn.add(new ArrayList<>());
         }
         this.soundPlayer = soundPlayer;
     }
@@ -58,7 +58,7 @@ class NoteTracker {
         for (int i = 0; i < turnOff.length; i++) {
         	int j = (i == 15) ? 16 : (i == 16) ? 15 : i; // swap coin and piranha
             if (turnOff[i] && isChannelOn(i) && !ext[j]) {
-                ArrayList<PlayingNote> pna = getNotesPlaying(i);
+                List<PlayingNote> pna = getNotesPlaying(i);
                 for (PlayingNote pn : pna)
                     stopSound(pn);
                 pna.clear();
@@ -103,7 +103,7 @@ class NoteTracker {
      * @param channel The channel we want to get playing notes from.
      * @return A list of notes that are currently playing from that channel.
      */
-    private ArrayList<PlayingNote> getNotesPlaying(int channel) {
+    private List<PlayingNote> getNotesPlaying(int channel) {
         return notesOn.get(channel);
     }
 
@@ -122,7 +122,7 @@ class NoteTracker {
      */
     public void stopInstrument(InstrumentIndex inst) {
         int i = inst.getChannel() - 1;
-        ArrayList<PlayingNote> pna = getNotesPlaying(i);
+        List<PlayingNote> pna = getNotesPlaying(i);
         for (PlayingNote pn : pna)
             stopSound(pn);
         pna.clear();

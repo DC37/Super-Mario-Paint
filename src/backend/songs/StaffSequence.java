@@ -22,7 +22,7 @@ public class StaffSequence {
     private double tempo = Values.DEFAULT_TEMPO;
 
     /** This tells us which notes are extended (green highlight) or not. */
-    final private boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+    private final boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
 
     /** The time signature of this sequence. */
     private TimeSignature timeSignature = TimeSignature.FOUR_FOUR;
@@ -31,7 +31,7 @@ public class StaffSequence {
     private String soundsetBinding = "";
 
     /** These are all of the lines on the staff. */
-    final private List<StaffNoteLine> theLines;
+    private final List<StaffNoteLine> theLines;
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
@@ -43,7 +43,7 @@ public class StaffSequence {
      * @param length The initial length
      */
     public StaffSequence(int length) {
-        theLines = new ArrayList<StaffNoteLine>();
+        theLines = new ArrayList<>();
         
         for (int i = 0; i < length; i++) {
             theLines.add(new StaffNoteLine());

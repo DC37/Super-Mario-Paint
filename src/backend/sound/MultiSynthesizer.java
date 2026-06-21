@@ -1,6 +1,7 @@
 package backend.sound;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class MultiSynthesizer implements Synthesizer {
      * fails.
      */
     public MultiSynthesizer() throws MidiUnavailableException {
-        theSynths = new ArrayList<Synthesizer>();
+        theSynths = new ArrayList<>();
         addDefaultSynthesizer();
         initialized = true;
 
@@ -167,7 +168,7 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public int getMaxReceivers() {
-        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        ArrayList<Integer> numbers = new ArrayList<>();
         for (Synthesizer s : theSynths)
             numbers.add(s.getMaxReceivers());
         Collections.sort(numbers);
@@ -181,7 +182,7 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public int getMaxTransmitters() {
-        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        ArrayList<Integer> numbers = new ArrayList<>();
         for (Synthesizer s : theSynths)
             numbers.add(s.getMaxTransmitters());
         Collections.sort(numbers);
@@ -204,7 +205,7 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public List<Receiver> getReceivers() {
-        ArrayList<Receiver> all = new ArrayList<Receiver>();
+        ArrayList<Receiver> all = new ArrayList<>();
         for (Synthesizer s : theSynths)
             all.addAll(s.getReceivers());
         return all;
@@ -230,7 +231,7 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public List<Transmitter> getTransmitters() {
-        ArrayList<Transmitter> all = new ArrayList<Transmitter>();
+        ArrayList<Transmitter> all = new ArrayList<>();
         for (Synthesizer s : theSynths)
             all.addAll(s.getTransmitters());
         return all;
@@ -242,7 +243,7 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public int getMaxPolyphony() {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
+        ArrayList<Integer> nums = new ArrayList<>();
         for (Synthesizer s : theSynths)
             nums.add(s.getMaxPolyphony());
         Collections.sort(nums);
@@ -255,7 +256,7 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public long getLatency() {
-        ArrayList<Long> nums = new ArrayList<Long>();
+        ArrayList<Long> nums = new ArrayList<>();
         for (Synthesizer s : theSynths)
             nums.add(s.getLatency());
         Collections.sort(nums);
@@ -268,7 +269,7 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public MidiChannel[] getChannels() {
-        ArrayList<MidiChannel> all = new ArrayList<MidiChannel>();
+        ArrayList<MidiChannel> all = new ArrayList<>();
         if (theSynths.size() == 1)
             return theSynths.get(0).getChannels();
         else {

@@ -54,7 +54,7 @@ public class SoundPlayer {
 	private Map<String, Soundbank> bankCache = new HashMap<>();
 
     /** This keeps track of which notes are actually playing. */
-    final private NoteTracker tracker = new NoteTracker(this);
+    private final NoteTracker tracker = new NoteTracker(this);
     
     public SoundPlayer(SMPSynthesizer synthesizer, Soundbank bank, MidiChannel[] chan) {
     	this.synthesizer = synthesizer;
