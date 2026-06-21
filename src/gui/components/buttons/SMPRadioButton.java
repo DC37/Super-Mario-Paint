@@ -22,7 +22,7 @@ public class SMPRadioButton extends RadioButton implements SMPButtonInterface {
     private ObjectProperty<Image> imageReleased;
     public ObjectProperty<Image> imageReleased() {
         if (imageReleased == null) {
-            imageReleased = new SimpleObjectProperty<Image>(this, "imageReleased", null);
+            imageReleased = new SimpleObjectProperty<>(this, "imageReleased", null);
         }
         return imageReleased;
     }
@@ -35,7 +35,7 @@ public class SMPRadioButton extends RadioButton implements SMPButtonInterface {
     private ObjectProperty<Image> imagePressed;
     public ObjectProperty<Image> imagePressed() {
         if (imagePressed == null) {
-            imagePressed = new SimpleObjectProperty<Image>(this, "imagePressed", null);
+            imagePressed = new SimpleObjectProperty<>(this, "imagePressed", null);
         }
         return imagePressed;
     }
@@ -65,12 +65,12 @@ public class SMPRadioButton extends RadioButton implements SMPButtonInterface {
     
     public SMPRadioButton() {
         super();
-        initialize();
+        setUp();
     }
     
     public SMPRadioButton(String text) {
         super(text);
-        initialize();
+        setUp();
     }
     
     public SMPRadioButton(String text, Image imageReleased) {
@@ -79,12 +79,12 @@ public class SMPRadioButton extends RadioButton implements SMPButtonInterface {
     
     public SMPRadioButton(String text, Image imageReleased, Image imagePressed) {
         super(text);
-        initialize();
+        setUp();
         setImageReleased(imageReleased);
         setImagePressed(imagePressed);
     }
     
-    private void initialize() {
+    private void setUp() {
         getStyleClass().add(STYLE_CLASS_IMAGE_BUTTON);
     }
     

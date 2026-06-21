@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -312,8 +311,8 @@ public class SMPFXController {
             
             int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
             if (songIndex != -1) {
-                ArrayList<StaffSequence> seq = staff.getArrangement().getTheSequences();
-                ArrayList<File> files = staff.getArrangement().getTheSequenceFiles();
+                List<StaffSequence> seq = staff.getArrangement().getTheSequences();
+                List<File> files = staff.getArrangement().getTheSequenceFiles();
                 Window owner = arrangementList.getScene().getWindow();
                 Utilities.loadSequenceFromArrangement(files.get(songIndex), staff, SMPFXController.this, owner);
                 seq.set(songIndex, staff.getSequence());
@@ -803,7 +802,7 @@ public class SMPFXController {
         Task<Void> soundsetsTaskSave = new Task<Void>() {
             @Override
             public Void call() {
-                ArrayList<String> seqNames = staff.getArrangement().getTheSequenceNames();
+                List<String> seqNames = staff.getArrangement().getTheSequenceNames();
                 String currSeqName = getNameTextField().getText();
                 for (String seqName : seqNames) 
                     if (seqName.equals(currSeqName)) {
@@ -819,7 +818,7 @@ public class SMPFXController {
     
     private static String noteToString(StaffNote note) {
     	String instName = note.getInstrument().toString();
-        String noteName = Values.staffNoteNames[note.getVerticalPosition()];
+        String noteName = Values.STAFF_NOTE_NAMES[note.getVerticalPosition()];
         String noteAcc = accidentalToString(note.getAccidental());
         String muteName = muteModifierToString(note.getMuteModifier());
         return instName + " " + noteName + noteAcc + muteName;

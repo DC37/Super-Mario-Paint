@@ -83,19 +83,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
             
             soundPlayer = new SoundPlayer(theSynthesizer, bank, chan);
             
-        } catch (MidiUnavailableException e) {
-            // Can't recover.
-            e.printStackTrace();
-            System.exit(0);
-        } catch (InvalidMidiDataException e) {
-            // Can't recover.
-            e.printStackTrace();
-            System.exit(0);
-        } catch (IOException e) {
-            // Can't recover.
-            e.printStackTrace();
-            System.exit(0);
-        } catch (NullPointerException e) {
+        } catch (MidiUnavailableException | InvalidMidiDataException | IOException | NullPointerException e) {
             // Can't recover.
             e.printStackTrace();
             System.exit(0);

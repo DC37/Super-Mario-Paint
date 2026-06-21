@@ -37,7 +37,7 @@ public class SongNameController {
 		controller = ct;
 
 		// click somewhere to unfocus only if the mouse exited
-		unfocusMouseEventHandler = new EventHandler<MouseEvent>() {
+		unfocusMouseEventHandler = new EventHandler<>() {
 
 			@Override
 			public void handle(MouseEvent event) {
@@ -48,7 +48,7 @@ public class SongNameController {
 
 		// when we get focused, prepare for the unfocusing mouse press event
 		// when we get unfocused, clean up the event filter
-		songName.focusedProperty().addListener(new ChangeListener<Boolean>() {
+		songName.focusedProperty().addListener(new ChangeListener<>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue,
 					Boolean newPropertyValue) {
@@ -61,7 +61,7 @@ public class SongNameController {
 		});
 
 		// mouse enters thus mouse has not exited, we cannot unfocus
-		songName.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+		songName.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<>() {
 
 			@Override
 			public void handle(MouseEvent mouseEvent) {
@@ -70,7 +70,7 @@ public class SongNameController {
 		});
 		
 		// mouse exited, we can unfocus
-		songName.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+		songName.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<>() {
 
 			@Override
 			public void handle(MouseEvent mouseEvent) {

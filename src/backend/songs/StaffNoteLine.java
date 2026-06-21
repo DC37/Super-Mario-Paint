@@ -27,7 +27,7 @@ public class StaffNoteLine {
     /**
      * The notes on this line.
      */
-    final private List<StaffNote> notes;
+    private final List<StaffNote> notes;
 
     /**
      * Create an empty line of notes at the default volume.
@@ -42,7 +42,7 @@ public class StaffNoteLine {
      * @param volume The volume
      */
     public StaffNoteLine(int volume) {
-        this.notes = new ArrayList<StaffNote>();
+        this.notes = new ArrayList<>();
         this.volume = (checkVolumeValue(volume)) ? volume : Values.DEFAULT_VELOCITY;
     }
     

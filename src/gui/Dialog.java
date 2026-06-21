@@ -25,7 +25,7 @@ import javafx.stage.WindowEvent;
 public class Dialog {
     
     private static <T> StageWithReturn<T> initDialogStage(String title, Window owner) {
-        StageWithReturn<T> stage = new StageWithReturn<T>();
+        StageWithReturn<T> stage = new StageWithReturn<>();
         stage.setResizable(false);
         stage.setTitle((title != null) ? title : "");
         stage.getIcons().add(SuperMarioPaint.headerIcon);
@@ -127,9 +127,10 @@ public class Dialog {
         dialog.addEventHandler(WindowEvent.ANY, event -> {
             if (event.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST
                     || event.getEventType() == WindowEvent.WINDOW_HIDDEN
-                    || event.getEventType() == WindowEvent.WINDOW_HIDING)
+                    || event.getEventType() == WindowEvent.WINDOW_HIDING) {
                 dialog.close();
                 return;
+            }
         });
         
         Parent buttons = makeRow(okButton, cancelButton);

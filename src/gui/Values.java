@@ -13,6 +13,8 @@ import backend.songs.TimeSignature;
  * @since 2012.08.14
  */
 public class Values {
+	
+	private Values() {}
 
     /** The current version number of the program. */
     public static double VERSION = 0.90;
@@ -145,7 +147,7 @@ public class Values {
     public static final int DRUMCHANNEL = 10;
 
     /** Array of notes that we can see on the staff. */
-    public static final Pitch[] staffNotes = {
+    public static final Pitch[] STAFF_NOTES = {
     		Pitch.valueOf(36), Pitch.valueOf(38), Pitch.valueOf(40),
     		Pitch.valueOf(41), Pitch.valueOf(43), Pitch.valueOf(45),
     		Pitch.valueOf(47), Pitch.valueOf(48), Pitch.valueOf(50),
@@ -157,7 +159,7 @@ public class Values {
             Pitch.valueOf(77), Pitch.valueOf(79), Pitch.valueOf(81),
             Pitch.valueOf(83), Pitch.valueOf(84) };
     
-    public static final String[] staffNoteNames = {
+    public static final String[] STAFF_NOTE_NAMES = {
     		"C2", "D2", "E2", "F2", "G2", "A2", "B2",
     		"C3", "D3", "E3", "F3", "G3", "A3", "B3",
     		"C4", "D4", "E4", "F4", "G4", "A4", "B4",

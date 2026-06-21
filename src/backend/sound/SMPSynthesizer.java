@@ -34,12 +34,11 @@ public class SMPSynthesizer extends MultiSynthesizer {
     @Override
     public MidiChannel[] getChannels() {
         MidiChannel[] oldC = super.getChannels();
-        ArrayList<MidiChannel> rem = new ArrayList<MidiChannel>();
+        ArrayList<MidiChannel> rem = new ArrayList<>();
         int ordinal = 1;
         for (MidiChannel m : oldC) {
             if (ordinal == Values.DRUMCHANNEL) {
                 ordinal++;
-                continue;
             } else {
                 rem.add(m);
                 ordinal++;

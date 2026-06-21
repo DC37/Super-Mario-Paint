@@ -55,16 +55,16 @@ public enum InstrumentIndex {
     private ImageIndex image;
     
     /** Image to use for instrument buttons (sustained off) */
-    private ImageIndex image_sm;
+    private ImageIndex imageSM;
     
     /** Image to use for instrument buttons (sustained on) */
-    private ImageIndex image_sma;
+    private ImageIndex imageSMA;
 
-    private InstrumentIndex(int channel, ImageIndex image, ImageIndex image_sm, ImageIndex image_sma) {
+    private InstrumentIndex(int channel, ImageIndex image, ImageIndex imageSM, ImageIndex imageSMA) {
         this.channel = channel;
         this.image = image;
-        this.image_sm = image_sm;
-        this.image_sma = image_sma;
+        this.imageSM = imageSM;
+        this.imageSMA = imageSMA;
     }
 
     public int getChannel() {
@@ -76,11 +76,11 @@ public enum InstrumentIndex {
     }
     
     public ImageIndex smImageIndex() {
-    	return image_sm;
+    	return imageSM;
     }
     
     public ImageIndex smaImageIndex() {
-    	return image_sma;
+    	return imageSMA;
     }
 
 }

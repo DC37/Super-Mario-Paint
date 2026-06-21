@@ -68,7 +68,7 @@ public class SMPInstrumentButton extends SMPButton {
     private ObjectProperty<Image> imageSustainOff;
     public ObjectProperty<Image> imageSustainOff() {
         if (imageSustainOff == null) {
-            imageSustainOff = new SimpleObjectProperty<Image>(this, "imageSustainOff", null);
+            imageSustainOff = new SimpleObjectProperty<>(this, "imageSustainOff", null);
         }
         return imageSustainOff;
     }
@@ -81,7 +81,7 @@ public class SMPInstrumentButton extends SMPButton {
     private ObjectProperty<Image> imageSustainOn;
     public ObjectProperty<Image> imageSustainOn() {
         if (imageSustainOn == null) {
-            imageSustainOn = new SimpleObjectProperty<Image>(this, "imageSustainOn", null);
+            imageSustainOn = new SimpleObjectProperty<>(this, "imageSustainOn", null);
         }
         return imageSustainOn;
     }
@@ -94,7 +94,7 @@ public class SMPInstrumentButton extends SMPButton {
     private ObjectProperty<Image> imageFiltered;
     public ObjectProperty<Image> imageFiltered() {
         if (imageFiltered == null) {
-        	imageFiltered = new SimpleObjectProperty<Image>(this, "imageFiltered", null);
+        	imageFiltered = new SimpleObjectProperty<>(this, "imageFiltered", null);
         }
         return imageFiltered;
     }
@@ -174,7 +174,7 @@ public class SMPInstrumentButton extends SMPButton {
     }
     
     // Synchronize animations for all buttons in this group
-    final private SMPInstrumentButtonGroup buttonsGroup = DEFAULT_GROUP;
+    private final SMPInstrumentButtonGroup buttonsGroup = DEFAULT_GROUP;
     
     private static SMPInstrumentButtonGroup DEFAULT_GROUP = new SMPInstrumentButtonGroup();
     

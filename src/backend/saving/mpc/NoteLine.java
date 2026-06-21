@@ -2,6 +2,7 @@ package backend.saving.mpc;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class that denotes a line of notes on the MPC staff. Pulled from
@@ -18,14 +19,14 @@ public class NoteLine {
     private static final int NOTESIZE = 6;
 
     /** List of notes in this line. */
-    private ArrayList<String> notes;
+    private List<String> notes;
 
     /** A character (a-q) denoting what volume that this note is played at. */
     private char vol;
 
     /** Makes a new note line without anything in it. */
     public NoteLine() {
-        notes = new ArrayList<String>();
+        notes = new ArrayList<>();
         vol = 'q';
     }
 
@@ -35,7 +36,7 @@ public class NoteLine {
      */
     public NoteLine(String parse) throws ParseException {
         if (parse.length() < NOTESIZE + 1) {
-            notes = new ArrayList<String>();
+            notes = new ArrayList<>();
             for (int i = 0; i < NOTESIZE; i++)
                 notes.add("");
             vol = 'q';
@@ -59,7 +60,7 @@ public class NoteLine {
     /**
      * @return The list of notes that this note line has.
      */
-    public ArrayList<String> notes() {
+    public List<String> notes() {
         return notes;
     }
 

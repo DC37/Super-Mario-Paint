@@ -32,9 +32,10 @@ public class AMSDecoder implements Decoder<StaffSequence> {
         if (!isValid(in)) {
             throw new ParseException("Invalid File", 0);
         }
-        String timeSig = null, tempo = null;
+        String timeSig = null;
+        String tempo = null;
         SMPSoundfont soundfont = null;
-        ArrayList<String> data = new ArrayList<String>();
+        ArrayList<String> data = new ArrayList<>();
         return populateSequence(timeSig, soundfont, data, tempo);
     }
 

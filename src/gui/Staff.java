@@ -2,7 +2,7 @@ package gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
@@ -70,7 +70,7 @@ public class Staff {
     private File theArrangementFile = null;
 
     /** This is the SoundPlayer object that we will invoke to set parameters. */
-    final private SoundPlayer soundPlayer;
+    private final SoundPlayer soundPlayer;
 
     /**
      * This is a service that will help run the animation and sound of playing a
@@ -235,8 +235,8 @@ public class Staff {
 
     /** Starts an arrangement. */
     public synchronized void startArrangement() {
-        ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
-        ArrayList<File> files = theArrangement.getTheSequenceFiles();
+        List<StaffSequence> seq = theArrangement.getTheSequences();
+        List<File> files = theArrangement.getTheSequenceFiles();
         resetLocation();
         for (int i = 0; i < seq.size(); i++) {
             File f = files.get(i);
@@ -590,8 +590,8 @@ public class Staff {
             @Override
             protected Staff call() throws Exception {
                 StateMachine.setArrangementSongIndex(0);
-                ArrayList<StaffSequence> seq = theArrangement.getTheSequences();
-                ArrayList<File> files = theArrangement.getTheSequenceFiles();
+                List<StaffSequence> seq = theArrangement.getTheSequences();
+                List<File> files = theArrangement.getTheSequenceFiles();
                 int endLine;
 
                 queue = 0;

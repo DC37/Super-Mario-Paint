@@ -74,7 +74,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
         if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
             throw new ParseException("Invalid Text File.", 0);
         }
-        ArrayList<String> everything = chop(clean(in));
+        List<String> everything = chop(clean(in));
         String timeSig = in.substring(0, in.indexOf('*'));
         String tempo = in.substring(in.indexOf('%') + 1);
         return populateSequence(timeSig, everything, tempo);
@@ -95,7 +95,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      *         program.
      */
     private StaffSequence populateSequence(String timeSig,
-            ArrayList<String> songData, String tempo) {
+            List<String> songData, String tempo) {
     	List<StaffNoteLine> lines = new ArrayList<>(Values.LINES_PER_MPC_SONG);
 
         for (String s : songData) {
@@ -104,7 +104,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
             	lines.addLast(sl);
                 continue;
             }
-            ArrayList<String> inst = dice(s);
+            List<String> inst = dice(s);
             int vol = parseVolume(s.charAt(s.length() - 2));
             for (String note : inst) {
                 if (note.isEmpty())

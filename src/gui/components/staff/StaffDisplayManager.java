@@ -44,16 +44,16 @@ import javafx.scene.text.Text;
  */
 public class StaffDisplayManager {
     
-    final private HBox staffVolumeBars;
-    final private Pane staffFrame;
+    private final HBox staffVolumeBars;
+    private final Pane staffFrame;
     
-    final private NoteMatrix matrix;
+    private final NoteMatrix matrix;
     
-    final private ModifySongManager commandManager;
+    private final ModifySongManager commandManager;
     
-    final protected int width;
-    final protected int height;
-    final protected int depth;
+    protected final int width;
+    protected final int height;
+    protected final int depth;
     
     /**
      * The ArrayList that holds the ImageView objects that the measure lines
@@ -162,7 +162,7 @@ public class StaffDisplayManager {
      * Initializes the volume bars in the program.
      */
     private void initializeVolumeBars() {
-        volumeBarHandlers = new ArrayList<StaffVolumeEventHandler>();
+        volumeBarHandlers = new ArrayList<>();
         
         for (int i = 0; i < width; i++) {
             StackPane stack = new StackPane();
@@ -334,7 +334,7 @@ public class StaffDisplayManager {
         staffMeasureLines.setLayoutY(24);
         staffMeasureLines.setPadding(new Insets(0, 0, 0, 144));
         
-        measureLines = new ArrayList<ImageView>();
+        measureLines = new ArrayList<>();
         
         for (int i = 0; i < width; i++) {
             ImageView iv = new ImageView();
@@ -359,7 +359,7 @@ public class StaffDisplayManager {
         staffMeasureNums.setLayoutY(5);
         staffMeasureNums.setPadding(new Insets(0, 0, 0, 124));
         
-        measureNums = new ArrayList<Text>();
+        measureNums = new ArrayList<>();
         
         for (int i = 0; i < width; i++) {
             HBox box = new HBox();
@@ -431,11 +431,11 @@ public class StaffDisplayManager {
     private Node[] initializeStaffLedgerLines() {
         HBox[] staffLedgerLines = new HBox[5];
 
-        highC = new ArrayList<Node>();
-        highA = new ArrayList<Node>();
-        middleC = new ArrayList<Node>();
-        lowC = new ArrayList<Node>();
-        lowA = new ArrayList<Node>();
+        highC = new ArrayList<>();
+        highA = new ArrayList<>();
+        middleC = new ArrayList<>();
+        lowC = new ArrayList<>();
+        lowA = new ArrayList<>();
 
         int[] layoutY = {-2, 31, 223, 415, 447};
         ArrayList<?>[] all = { highC, highA, middleC, lowC, lowA };
@@ -581,9 +581,9 @@ public class StaffDisplayManager {
      */
     protected class StaffNoteCoordinate {
     	
-    	final public int col;
-    	final public int row;
-    	final public int dep; // special value -1 refers to the layer for silhouettes (dep is irrelevant)
+    	public final int col;
+    	public final int row;
+    	public final int dep; // special value -1 refers to the layer for silhouettes (dep is irrelevant)
     	
     	public StaffNoteCoordinate(int col, int row, int dep) {
     		this.col = col;

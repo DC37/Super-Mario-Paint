@@ -33,7 +33,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 			throws FileNotFoundException, IOException {
 		FileInputStream f_in = new FileInputStream(inputFile);
 		Scanner sc = new Scanner(f_in);
-		ArrayList<String> read = new ArrayList<String>();
+		List<String> read = new ArrayList<>();
 		while (sc.hasNext()) {
 			read.add(sc.nextLine());
 		}
@@ -54,7 +54,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 	 *            <code>ArrayList</code> of notes and parameters.
 	 * @return Hopefully, a decoded <code>StaffSequence</code>
 	 */
-	private StaffSequence parseText(ArrayList<String> read) {
+	private StaffSequence parseText(List<String> read) {
 		List<StaffNoteLine> lines = new ArrayList<>();
 		double tempo = Values.DEFAULT_TEMPO;
 		boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
@@ -146,8 +146,8 @@ public class SMPDecoder implements Decoder<StaffSequence> {
             throw new ParseException("Invalid note", 0);
         }
         theInstrument = InstrumentIndex.valueOf(sp[0]);
-        for (int i = 0; i < Values.staffNotes.length; i++) {
-            if (sp[1].contains(Values.staffNoteNames[i])) {
+        for (int i = 0; i < Values.STAFF_NOTES.length; i++) {
+            if (sp[1].contains(Values.STAFF_NOTE_NAMES[i])) {
                 verticalPosition = i;
             }
         }

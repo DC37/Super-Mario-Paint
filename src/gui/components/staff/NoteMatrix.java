@@ -31,16 +31,16 @@ import javafx.scene.image.ImageView;
  */
 class NoteMatrix {
     
-    final private StaffDisplayManager disp;
+    private final StaffDisplayManager disp;
 
-    final private List<ImageView> matrix;
-    final private List<ImageView> accMatrix;
+    private final List<ImageView> matrix;
+    private final List<ImageView> accMatrix;
     
-    final private List<ImageView> silMatrix;
-    final private List<ImageView> accSilMatrix;
+    private final List<ImageView> silMatrix;
+    private final List<ImageView> accSilMatrix;
     
     /** Pointer to the image loader object. */
-    final private transient Map<ImageIndex, Image> imagesHolder;
+    private final transient Map<ImageIndex, Image> imagesHolder;
     
     /**
      * A silhouette note to display where the cursor is.
@@ -56,10 +56,10 @@ class NoteMatrix {
         int notesCapacity = disp.width * disp.height * disp.depth;
         int silCapacity = disp.width * disp.height;
         
-        matrix = new Vector<ImageView>(notesCapacity);
-        accMatrix = new Vector<ImageView>(notesCapacity);
-        silMatrix = new Vector<ImageView>(silCapacity);
-        accSilMatrix = new Vector<ImageView>(silCapacity);
+        matrix = new Vector<>(notesCapacity);
+        accMatrix = new Vector<>(notesCapacity);
+        silMatrix = new Vector<>(silCapacity);
+        accSilMatrix = new Vector<>(silCapacity);
         
         ((Vector<?>) matrix).setSize(notesCapacity);
         ((Vector<?>) accMatrix).setSize(notesCapacity);

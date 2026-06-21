@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
@@ -26,6 +27,9 @@ import javafx.stage.Window;
  * @since 2012.08.20
  */
 public class Utilities {
+	
+	private Utilities() {}
+	
     /**
      * Find the window owning an event. Useful for events that trigger a popup window.
      * Returns {@code null} if the owner cannot be found.
@@ -51,7 +55,7 @@ public class Utilities {
 	public static boolean[] boolFromLong(long parseLong) {
 		boolean[] loaded = new boolean[Values.NUMINSTRUMENTS];
 		for (int i = 0; i < Values.NUMINSTRUMENTS; i++) {
-			loaded[i] = ((1 << i) & parseLong) != 0 ? true : false;
+			loaded[i] = ((1 << i) & parseLong) != 0;
 		}
 		return loaded;
 	}
@@ -267,8 +271,8 @@ public class Utilities {
         theStaff.getArrangementList().getItems()
                 .addAll(loaded.getTheSequenceNames());
 
-        ArrayList<File> files = loaded.getTheSequenceFiles();
-        final ArrayList<StaffSequence> seq = new ArrayList<StaffSequence>();
+        List<File> files = loaded.getTheSequenceFiles();
+        final List<StaffSequence> seq = new ArrayList<>();
         for (int i = 0; i < files.size(); i++) {
             try {
                 seq.add(Decoder.SEQUENCE_DECODER.decode(files.get(i)).orElseThrow(IOException::new));

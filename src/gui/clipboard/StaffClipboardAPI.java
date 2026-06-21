@@ -1,6 +1,5 @@
 package gui.clipboard;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +134,7 @@ public class StaffClipboardAPI {
 	 */
 	public void paste(int lineMoveTo) {
 
-		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
+		Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		
 		for (Map.Entry<Integer, StaffNoteLine> lineCopy : copiedData.entrySet()) {
 			int line = lineMoveTo + lineCopy.getKey();
@@ -229,7 +228,7 @@ public class StaffClipboardAPI {
 	 */
 	public void clearSelection() {
 		//unhighlight notes
-		HashMap<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
+		Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
 		for(StaffNoteLine line : selection.values()) 
 			for(StaffNote note : line.getNotes())
 				highlightNote(note, false);
@@ -277,7 +276,7 @@ public class StaffClipboardAPI {
 	 */
 	public void copyNote(int line, StaffNote note) {
 		StaffNote newNote = new StaffNote(note);
-		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
+		Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		if(!copiedData.containsKey(line))
 			copiedData.put(line, new StaffNoteLine());
 		copiedData.get(line).getNotes().add(newNote);
@@ -292,7 +291,7 @@ public class StaffClipboardAPI {
 	 *            that will be placed into selection
 	 */
 	public void selectNote(int line, StaffNote note) {
-		HashMap<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
+		Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
 		if(!selection.containsKey(line))
 			selection.put(line, new StaffNoteLine());
 		selection.get(line).getNotes().add(note);
@@ -307,14 +306,14 @@ public class StaffClipboardAPI {
 	}
 	
 	public void copyVolume(int line, int volume) {
-		HashMap<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
+		Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
 		if(!copiedData.containsKey(line))
 			copiedData.put(line, new StaffNoteLine());
 		copiedData.get(line).setVolume(volume);
 	}
 	
 	public void selectVolume(int line, int volume) {
-		HashMap<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
+		Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
 		if(!selection.containsKey(line))
 			selection.put(line, new StaffNoteLine());
 		selection.get(line).setVolume(volume);

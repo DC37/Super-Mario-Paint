@@ -16,15 +16,17 @@ import gui.resources.SMPResourceUtil;
  * @since 2012.08.28
  */
 public class Settings {
+	
+	private Settings() {}
 
     /** The current version number of this program. */
-    public final static String version = "v%s".formatted(SMPResourceUtil.getProperty("gradle.bridge.properties", "version"));
+    public static final String VERSION = "v%s".formatted(SMPResourceUtil.getProperty("gradle.bridge.properties", "version"));
 
     /** The name of the file that we write to. */
     private final static String settingsFile = "settings.data";
 
     /** Change this to true for old functionality of serializing objects. */
-    public final static boolean SAVE_OBJECTS = false;
+    public static final boolean SAVE_OBJECTS = false;
 
     /**
      * Classic debug on/off. 32-bit field
