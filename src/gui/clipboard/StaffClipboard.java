@@ -29,7 +29,7 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("unused")
 public class StaffClipboard {
 
-	public static Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
+	public static final Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
 	
 	private Staff theStaff;
 	private SMPFXController controller;

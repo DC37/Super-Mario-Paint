@@ -412,7 +412,7 @@ public class StaffDisplayManager {
                 
             } else if (k > 0) {
                 currImage.setImage(imagesHolder.get(ImageIndex.STAFF_SLINE));
-                String txt = String.valueOf(currentBarIndex + 1) + "." + String.valueOf(k + 1);
+                String txt = String.valueOf(currentBarIndex + 1) + "." + (k + 1);
                 double fontSize = Font.getDefault().getSize() * .75;
                 currText.setText(txt);
                 currText.setFont(new Font(fontSize));

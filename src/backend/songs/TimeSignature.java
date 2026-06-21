@@ -145,8 +145,8 @@ public class TimeSignature {
         return new TimeSignature(newDivs);
     }
     
-    public static TimeSignature FOUR_FOUR = new TimeSignature(4, 4);
-    public static TimeSignature THREE_FOUR = new TimeSignature(3, 4);
-    public static TimeSignature SIX_EIGHT = new TimeSignature(new int[] { 3, 3 }, 8);
+    public static final TimeSignature FOUR_FOUR = new TimeSignature(4, 4);
+    public static final TimeSignature THREE_FOUR = new TimeSignature(3, 4);
+    public static final TimeSignature SIX_EIGHT = new TimeSignature(new int[] { 3, 3 }, 8);
 
 }

@@ -193,7 +193,7 @@ public class SuperMarioPaint extends Application  {
 
     /** Explicitly create constructor without arguments. */
     public SuperMarioPaint() {
-
+    	// Intentionally left empty.
     }
 
     /**

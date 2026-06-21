@@ -23,6 +23,8 @@ import javafx.stage.WindowEvent;
  * @since 2013.12.23
  */
 public class Dialog {
+	
+	private Dialog() {}
     
     private static <T> StageWithReturn<T> initDialogStage(String title, Window owner) {
         StageWithReturn<T> stage = new StageWithReturn<>();

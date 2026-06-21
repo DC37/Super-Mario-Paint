@@ -108,15 +108,6 @@ public class Values {
     /** The amount of time between the repetition of two mouse click events. */
     public static final int REPEAT_TIME = 40;
 
-    /**
-     * This is the default song folder that we will check for arrangement song
-     * files.
-     * We're not using this anymore, since we are better than hardcoding
-     * specific directories.
-     * @deprecated
-     */
-    public static String SONGFOLDER = "./Prefs/";
-    
     /** This is the number of lines in a Mario Paint Composer song. */
     public static final int LINES_PER_MPC_SONG = 384;
 
