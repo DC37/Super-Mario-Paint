@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
+import utilities.MathUtils;
 
 /**
  * The staff on which notes go. The staff keeps track of notes in terms of
@@ -173,7 +174,7 @@ public class Staff {
      */
     public synchronized void setLocation(int num) {
         int maxVal = Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0);
-        int newLoc = (num < 0) ? 0 : (num > maxVal) ? maxVal : num;
+        int newLoc = MathUtils.clamp(num, 0, maxVal);
         StateMachine.setMeasureLineNum(newLoc);
     }
     
