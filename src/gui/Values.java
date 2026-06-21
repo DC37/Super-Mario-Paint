@@ -4,6 +4,7 @@ import java.io.File;
 
 import backend.songs.Pitch;
 import backend.songs.TimeSignature;
+import gui.resources.SMPResourceUtil;
 
 /**
  * A "constants" file for holding things like default window size, default
@@ -17,7 +18,7 @@ public class Values {
 	private Values() {}
 
     /** The current version number of the program. */
-    public static double VERSION = 0.90;
+    public static final String VERSION = SMPResourceUtil.getProperty("gradle.bridge.properties", "version");
 
     /** The number of instruments. */
     public static final int NUM_INSTRUMENTS = 31;
