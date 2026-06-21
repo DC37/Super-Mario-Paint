@@ -726,8 +726,6 @@ public class SMPFXController {
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             staff.setArrangementFile(outputFile);
             StateMachine.setArrModified(false);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -767,8 +765,6 @@ public class SMPFXController {
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             staff.setSequenceFile(outputFile);
             StateMachine.setSongModified(false);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

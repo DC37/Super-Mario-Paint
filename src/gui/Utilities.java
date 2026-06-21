@@ -2,7 +2,6 @@ package gui;
 
 import java.io.EOFException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
@@ -104,10 +103,6 @@ public class Utilities {
                 | NullPointerException e) {
             Dialog.showDialog(null, "Not a valid song file.", owner);
             return null;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Dialog.showDialog(null, "Not a valid song file.", owner);
-            return null;
         } catch (IOException e) {
             e.printStackTrace();
             Dialog.showDialog(null, "Not a valid song file.", owner);
@@ -161,10 +156,9 @@ public class Utilities {
      *            The location in which this arrangement was found.
      * @throws IOException
      * @throws NullPointerException
-     * @throws FileNotFoundException
      */
     public static void normalizeArrangement(StaffArrangement loaded,
-            File filePath) throws FileNotFoundException, IOException {
+            File filePath) throws IOException {
         String basePath = filePath.getParent() + File.separatorChar;
         int sz1 = loaded.getTheSequenceFiles().size();
         int sz2 = loaded.getTheSequences().size();
@@ -278,9 +272,6 @@ public class Utilities {
                 seq.add(Decoder.SEQUENCE_DECODER.decode(files.get(i)).orElseThrow(IOException::new));
             } catch (ClassCastException | EOFException
                     | StreamCorruptedException | NullPointerException e) {
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return;
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
