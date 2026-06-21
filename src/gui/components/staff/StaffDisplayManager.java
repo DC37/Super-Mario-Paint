@@ -483,15 +483,15 @@ public class StaffDisplayManager {
                     high = nt;
                 if (nt <= low)
                     low = nt;
-                if (nt == Values.middleC) {
+                if (nt == Values.MIDDLE_C) {
                     middleCPresent = true;
                 }
             }
             
-            if (high >= Values.highC) {
+            if (high >= Values.HIGH_C) {
                 highC.get(i).setVisible(true);
                 highA.get(i).setVisible(true);
-            } else if (high >= Values.highA) {
+            } else if (high >= Values.HIGH_A) {
                 highC.get(i).setVisible(false);
                 highA.get(i).setVisible(true);
             } else {
@@ -499,10 +499,10 @@ public class StaffDisplayManager {
                 highA.get(i).setVisible(false);
             }
 
-            if (low <= Values.lowA) {
+            if (low <= Values.LOW_A) {
                 lowC.get(i).setVisible(true);
                 lowA.get(i).setVisible(true);
-            } else if (low <= Values.lowC) {
+            } else if (low <= Values.LOW_C) {
                 lowC.get(i).setVisible(true);
                 lowA.get(i).setVisible(false);
             } else {

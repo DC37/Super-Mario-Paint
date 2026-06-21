@@ -48,7 +48,7 @@ class NoteTracker {
      * @param s The StaffNoteLine.
      */
     public void stopNotes(StaffNoteLine s) {
-        boolean[] turnOff = new boolean[Values.NUMINSTRUMENTS];
+        boolean[] turnOff = new boolean[Values.NUM_INSTRUMENTS];
         List<StaffNote> theNotes = s.getNotes();
         for(StaffNote sn : theNotes)
             turnOff[sn.getInstrument().getChannel() - 1] = true;

@@ -57,7 +57,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
 	private StaffSequence parseText(List<String> read) {
 		List<StaffNoteLine> lines = new ArrayList<>();
 		double tempo = Values.DEFAULT_TEMPO;
-		boolean[] noteExtensions = new boolean[Values.NUMINSTRUMENTS];
+		boolean[] noteExtensions = new boolean[Values.NUM_INSTRUMENTS];
 		TimeSignature timeSignature = Values.DEFAULT_TIME_SIGNATURE;
 		String soundset = Values.DEFAULT_SOUNDFONT;
 		
