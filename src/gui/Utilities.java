@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -28,6 +29,13 @@ import javafx.stage.Window;
 public class Utilities {
 	
 	private Utilities() {}
+	
+	private static final List<Character> ILLEGAL_CHARS = new ArrayList<>();
+	
+	static {
+		ILLEGAL_CHARS.addAll(Arrays.asList(
+				'<', '>', '/', '\\', ':', '?', '|', '*', '"', '^'));
+	}
 	
     /**
      * Find the window owning an event. Useful for events that trigger a popup window.
@@ -206,25 +214,8 @@ public class Utilities {
      */
     public static boolean legalFileName(String s) {
         for (char c : s.toCharArray()) {
-            if (!legalCharacter(c))
+        	if (ILLEGAL_CHARS.contains(c))
                 return false;
-        }
-        return true;
-    }
-    
-    private static boolean legalCharacter(char c) {
-        switch (c) {
-        case '<':
-        case '>':
-        case '/':
-        case '\\':
-        case ':':
-        case '?':
-        case '|':
-        case '*':
-        case '"':
-        case '^':
-            return false;
         }
         return true;
     }
