@@ -105,9 +105,7 @@ public class StaffSequence {
     		throw new IllegalArgumentException("setNoteExtensions expects an array of length " + noteExtensions.length);
     	}
     	
-    	for (int i = 0; i < noteExtensions.length; i++) {
-    		noteExtensions[i] = exts[i];
-    	}
+    	System.arraycopy(exts, 0, noteExtensions, 0, noteExtensions.length);
     }
 
     /** @return The time signature of this sequence. */
