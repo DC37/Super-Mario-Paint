@@ -299,10 +299,7 @@ public class StaffClipboardAPI {
 	}
 	
 	public void highlightNote(StaffNote note, boolean highlight) {
-		if(highlight)
-			note.setSelected(true);
-		else
-			note.setSelected(false);
+		note.setSelected(highlight);
 	}
 	
 	public void copyVolume(int line, int volume) {
