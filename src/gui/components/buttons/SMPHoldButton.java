@@ -70,7 +70,7 @@ public class SMPHoldButton extends SMPButton {
                 ActionEvent e = new ActionEvent();
                 repeatOnHoldTimer = new Timer();
                 TimerTask task = new TimerTask() {
-                    @Override public void run() { getOnHold().handle(e); };
+                    @Override public void run() { getOnHold().handle(e); }
                 };
                 getOnHold().handle(e);
                 repeatOnHoldTimer.schedule(task, Values.HOLD_TIME, Values.REPEAT_TIME);

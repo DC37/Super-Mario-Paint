@@ -330,10 +330,10 @@ public class MultiSynthesizer implements Synthesizer {
      */
     @Override
     public boolean loadInstrument(Instrument instrument) {
-        boolean isLoadedCorrectly = true;;
+        boolean isLoadedCorrectly = true;
         for (Synthesizer s : theSynths)
             if (!s.loadInstrument(instrument))
-                isLoadedCorrectly = false;;
+                isLoadedCorrectly = false;
                 return isLoadedCorrectly;
     }
 

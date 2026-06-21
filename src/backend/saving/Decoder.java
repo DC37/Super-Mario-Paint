@@ -34,9 +34,8 @@ public interface Decoder<T> {
 					try {
 						T result = p.decode(in);
 						return Optional.of(result);
-						
 					} catch (ParseException e) {
-						continue;
+						// Continue.
 					}
 				}
 				

@@ -26,6 +26,8 @@ import java.util.Properties;
  */
 public class SMPResourceUtil {
 
+	private SMPResourceUtil() {}
+	
 	/**
 	 * <p>Access a SMP resource. The strategy parameter determines where the
 	 * resource is taken from and whether a copy of it is made on the user

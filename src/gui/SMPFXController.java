@@ -774,9 +774,9 @@ public class SMPFXController {
         }
     }
 
-    public void saveSongTxt(FileOutputStream f_out, StaffSequence seq)
+    public void saveSongTxt(FileOutputStream fOut, StaffSequence seq)
             throws IOException {
-        PrintStream pr = new PrintStream(f_out);
+        PrintStream pr = new PrintStream(fOut);
         TimeSignature t = seq.getTimeSignature();
         if (t == null) {
             t = TimeSignature.FOUR_FOUR;

@@ -135,13 +135,13 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     /** Called whenever the mouse is dragged. */
     @SuppressWarnings({ "unused" })
     private void mouseDragStart() {
-    	
+    	// Intentionally left empty.
     }
 
     /** Called whenever we finish dragging the mouse. */
     @SuppressWarnings({ "unused" })
     private void mouseDragEnd() {
-
+    	// Intentionally left empty.
     }
 
     /**
@@ -204,7 +204,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * Updates the volume display on this volume displayer.
      */
     public void updateVolume() {
-        setVolumeDisplay(((double) theLine.getVolume()) * stp.getHeight() / Values.MAX_VELOCITY);
+        setVolumeDisplay(theLine.getVolume() * stp.getHeight() / Values.MAX_VELOCITY);
         if (theLine.getVolume() == 0 || theLine.getNotes().isEmpty()) {
             setVolumeVisible(false);
         }

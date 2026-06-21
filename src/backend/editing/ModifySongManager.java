@@ -9,11 +9,13 @@ public class ModifySongManager extends CommandManager {
 		this.refreshDisplay = refreshDisplay;
 	}
 	
+	@Override
 	public void redo() {
 		super.redo();
 		refreshDisplay.run();
 	}
 	
+	@Override
 	public void undo() {
 		super.undo();
         refreshDisplay.run();

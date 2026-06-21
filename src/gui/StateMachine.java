@@ -118,11 +118,8 @@ public class StateMachine {
      * several classes may check the overall state of the program, so there
      * should only ever be just the class and its static variables and methods
      * around.
-     *
-     * @deprecated
      */
-    private StateMachine() {
-    }
+    private StateMachine() {}
     
     public static ReadOnlyBooleanProperty ctrlPressed() {
     	return ctrlPressed;
@@ -193,7 +190,7 @@ public class StateMachine {
     }
 
     public static void setTimeSignature(TimeSignature t) {
-        currentTimeSignature.set(t);;
+        currentTimeSignature.set(t);
     }
 
     /**
