@@ -1,7 +1,7 @@
 package gui.loaders;
 
 import java.net.URL;
-import java.util.Hashtable;
+import java.util.EnumMap;
 import java.util.Map;
 
 import gui.Settings;
@@ -32,7 +32,7 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
      */
     @Override
     public Map<ImageIndex, Image> call() {
-    	Map<ImageIndex, Image> spritesFX = new Hashtable<>();
+    	Map<ImageIndex, Image> spritesFX = new EnumMap<>(ImageIndex.class);
         ImageIndex [] ind = ImageIndex.values();
         
         for (ImageIndex i : ind) {
