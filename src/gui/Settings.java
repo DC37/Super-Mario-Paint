@@ -23,7 +23,7 @@ public class Settings {
     public static final String VERSION = "v%s".formatted(SMPResourceUtil.getProperty("gradle.bridge.properties", "version"));
 
     /** The name of the file that we write to. */
-    private final static String settingsFile = "settings.data";
+    private static final String SETTINGS_FILE = "settings.data";
 
     /** Change this to true for old functionality of serializing objects. */
     public static final boolean SAVE_OBJECTS = false;
@@ -160,14 +160,10 @@ public class Settings {
      * @throws IOException If we can't write the object.
      */
     public static void save() throws IOException {
-        FileOutputStream f_out = new
-                FileOutputStream(settingsFile);
-        ObjectOutputStream o_out = new
-                ObjectOutputStream(f_out);
-        SettingsSaver s = new SettingsSaver();
-        o_out.writeObject(s);
-        o_out.close();
-        f_out.close();
+    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SETTINGS_FILE))) {
+    		SettingsSaver s = new SettingsSaver();
+            oos.writeObject(s);
+    	}
     }
 
     /**
@@ -179,24 +175,21 @@ public class Settings {
      */
     public static void load()
             throws IOException, ClassNotFoundException {
-        FileInputStream f_in = new
-                FileInputStream (settingsFile);
-        ObjectInputStream o_in = new
-                ObjectInputStream(f_in);
-        SettingsSaver loaded = (SettingsSaver) o_in.readObject();
-        advModeUnlocked  = loaded.set[0];
-        LIM_NOTESPERLINE = loaded.set[1];
-        LIM_96_MEASURES  = loaded.set[2];
-        LIM_VOLUME_LINE  = loaded.set[3];
-        LIM_LOWA         = loaded.set[4];
-        LIM_HIGHD        = loaded.set[5];
-        LOW_A_ON         = loaded.set[6];
-        NEG_TEMPO_FUN    = loaded.set[7];
-        LIM_TEMPO_GAPS   = loaded.set[8];
-        RESIZE_WIN       = loaded.set[9];
-        ADV_MODE         = loaded.set[10];
-        o_in.close();
-        f_in.close();
+    	try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SETTINGS_FILE))) {
+    		SettingsSaver loaded = (SettingsSaver) ois.readObject();
+    		
+            advModeUnlocked  = loaded.set[0];
+            LIM_NOTESPERLINE = loaded.set[1];
+            LIM_96_MEASURES  = loaded.set[2];
+            LIM_VOLUME_LINE  = loaded.set[3];
+            LIM_LOWA         = loaded.set[4];
+            LIM_HIGHD        = loaded.set[5];
+            LOW_A_ON         = loaded.set[6];
+            NEG_TEMPO_FUN    = loaded.set[7];
+            LIM_TEMPO_GAPS   = loaded.set[8];
+            RESIZE_WIN       = loaded.set[9];
+            ADV_MODE         = loaded.set[10];
+    	}
     }
 
     /**

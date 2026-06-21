@@ -47,17 +47,17 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      * @throws IOException
      *             IF some error occurs during the decoding process.
      */
-    public StaffSequence decode(File f) throws ParseException,
-            IOException {
-        BufferedReader bf = new BufferedReader(new FileReader(f));
-        String line = "";
-        String str = "";
-        do {
-            str += line;
-            line = bf.readLine();
-        } while (line != null);
-        bf.close();
-        return decode(str);
+    public StaffSequence decode(File f) throws ParseException, IOException {
+    	StringBuilder sb = new StringBuilder();
+    	
+    	try (BufferedReader bf = new BufferedReader(new FileReader(f))) {
+    		String line = "";
+    		while ((line = bf.readLine()) != null) {
+    			sb.append(line);
+    		}
+    	}
+        
+        return decode(sb.toString());
     }
 
     /**
