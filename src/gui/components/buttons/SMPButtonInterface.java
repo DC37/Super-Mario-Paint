@@ -75,7 +75,7 @@ public interface SMPButtonInterface {
         Binding<Image> imageBinding = imageBinding(conditionPressed, button.imageReleased(), button.imagePressed());
         imageProperty.bind(imageBinding);
         
-        return () -> imageProperty.unbind();
+        return imageProperty::unbind;
     }
     
     /**
@@ -102,7 +102,7 @@ public interface SMPButtonInterface {
         return subscribeImageProperty(button, conditionPressed, imageProperty)
         		.and(() -> imageView.fitHeightProperty().unbind())
         		.and(() -> imageView.fitWidthProperty().unbind())
-                .and(() -> imageViewProperty.unbind());
+                .and(imageViewProperty::unbind);
     }
     
     private static Binding<Image> imageBinding(

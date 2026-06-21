@@ -150,10 +150,6 @@ public class SMPDecoder implements Decoder<StaffSequence> {
             }
         }
         switch (sp[1].length()) {
-        case 2:
-            accidental = Accidental.NATURAL;
-            muteMod = MuteModifier.REGULAR;
-            break;
         case 3:
             accidental = decodeAccidental(sp[1].charAt(2));
             muteMod = MuteModifier.REGULAR;
@@ -166,6 +162,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
             accidental = decodeAccidental(sp[1].charAt(2));
             muteMod = muteModifierFromInt(Integer.parseInt("" + sp[1].charAt(sp[1].length() - 1)));
             break;
+        case 2:
         default:
             accidental = Accidental.NATURAL;
             muteMod = MuteModifier.REGULAR;
