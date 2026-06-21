@@ -313,9 +313,9 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
     @Override
     public String toString() {
-        String out = "Line: " + (StateMachine.getMeasureLineNum() + line)
-                + "\nPosition: " + position + "\nAccidental: " + acc;
-        return out;
+    	return String.format("Line: %d%nPosition: %d%nAccidental: %s",
+    			StateMachine.getMeasureLineNum() + line,
+    			position, acc);
     }
     
     /**
