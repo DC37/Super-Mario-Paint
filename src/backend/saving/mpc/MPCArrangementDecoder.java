@@ -55,7 +55,7 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
      */
     private StaffArrangement parseFiles(String str, File inputFile)
             throws ParseException, IOException {
-        if (str.isEmpty() || str == null) {
+        if (str == null || str.isEmpty()) {
             throw new ParseException("Invalid Arr File.", 0);
         }
         StaffArrangement theArr = new StaffArrangement();

@@ -71,7 +71,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      *             If someone tries to feed this method an invalid text file.
      */
     private StaffSequence decode(String in) throws ParseException {
-        if (in.indexOf('*') == -1 || in.isEmpty() || in == null) {
+        if (in == null || in.isEmpty() || in.indexOf('*') == -1) {
             throw new ParseException("Invalid Text File.", 0);
         }
         List<String> everything = chop(clean(in));
