@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 
@@ -105,6 +106,11 @@ public class SuperMarioPaint extends Application  {
      */
     static Image headerIcon;
 
+    /**
+     * Random number generator (RNG) for icon selection.
+     */
+    private static final Random RNG = new Random();
+    
     /**
      * This should hopefully get something up on the screen quickly. This is
      * taken from http://docs.oracle.com/javafx/2/deployment/preloaders.htm
@@ -370,7 +376,8 @@ public class SuperMarioPaint extends Application  {
 
     // selects the default icon 9 times out of 10, otherwise a random instrument
     static void setHeaderIcon() {
-        int randValue = (int) Math.floor(Math.random() * 10 * InstrumentIndex.values().length);
+    	int randValue = RNG.nextInt(10 * InstrumentIndex.values().length);
+        
         String iconFile = (randValue < InstrumentIndex.values().length) ?
         	InstrumentIndex.values()[randValue].name() :
         	"ICON";
