@@ -1,5 +1,8 @@
 package backend.saving.mpc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import gui.InstrumentIndex;
 
 /**
@@ -9,26 +12,44 @@ import gui.InstrumentIndex;
  * @since 2012.09.11
  */
 public enum MPCInstrumentIndex {
-    a (InstrumentIndex.MARIO),
-    b (InstrumentIndex.MUSHROOM),
-    c (InstrumentIndex.YOSHI),
-    d (InstrumentIndex.STAR),
-    e (InstrumentIndex.FLOWER),
-    f (InstrumentIndex.GAMEBOY),
-    g (InstrumentIndex.DOG),
-    h (InstrumentIndex.CAT),
-    i (InstrumentIndex.PIG),
-    j (InstrumentIndex.SWAN),
-    k (InstrumentIndex.FACE),
-    l (InstrumentIndex.PLANE),
-    m (InstrumentIndex.BOAT),
-    n (InstrumentIndex.CAR),
-    o (InstrumentIndex.HEART),
-    p (InstrumentIndex.COIN),
-    q (InstrumentIndex.PIRANHA),
-    r (InstrumentIndex.SHYGUY),
-    s (InstrumentIndex.BOO);
+	UNKNOWN('?', null),
+    A ('a', InstrumentIndex.MARIO),
+    B ('b', InstrumentIndex.MUSHROOM),
+    C ('c', InstrumentIndex.YOSHI),
+    D ('d', InstrumentIndex.STAR),
+    E ('e', InstrumentIndex.FLOWER),
+    F ('f', InstrumentIndex.GAMEBOY),
+    G ('g', InstrumentIndex.DOG),
+    H ('h', InstrumentIndex.CAT),
+    I ('i', InstrumentIndex.PIG),
+    J ('j', InstrumentIndex.SWAN),
+    K ('k', InstrumentIndex.FACE),
+    L ('l', InstrumentIndex.PLANE),
+    M ('m', InstrumentIndex.BOAT),
+    N ('n', InstrumentIndex.CAR),
+    O ('o', InstrumentIndex.HEART),
+    P ('p', InstrumentIndex.COIN),
+    Q ('q', InstrumentIndex.PIRANHA),
+    R ('r', InstrumentIndex.SHYGUY),
+    S ('s', InstrumentIndex.BOO);
+	
+	/**
+	 * A map that transforms character codes to <code>MPCInstrumentIndex</code>es.
+	 */
+	private static final Map<Character, MPCInstrumentIndex> CODE_MAPPINGS = new HashMap<>();
+	
+	static {
+		for (MPCInstrumentIndex ind: values()) {
+			CODE_MAPPINGS.put(ind.getCode(), ind);
+		}
+	}
 
+	/**
+	 * The code character that represents the MPCInstrumentIndex
+	 * in a Mario Paint Composer song.
+	 */
+	private char code;
+	
     /**
      * The <code>InstrumentIndex</code> that the MPCInstrumentIndex
      * should be linked to.
@@ -36,13 +57,23 @@ public enum MPCInstrumentIndex {
     private InstrumentIndex ind;
 
     /**
-     * Makes a new MPCInstrumentIndex with an InstrumentIndex.
+     * Makes a new MPCInstrumentIndex with a code and an InstrumentIndex.
+     * @param c The code character that represents the instrument.
      * @param i The InstrumentIndex that is to be linked to the letter.
      */
-    private MPCInstrumentIndex(InstrumentIndex i) {
+    private MPCInstrumentIndex(char c, InstrumentIndex i) {
+    	code = c;
         ind = i;
     }
 
+    /**
+     * @return The code character that this MPCInstrumentIndex uses
+     * inside a Mario Paint Composer song.
+     */
+    public char getCode() {
+    	return code;
+    }
+    
     /**
      * @return The InstrumentIndex that this MPCInstrumentIndex happens
      * to be linked to.
@@ -56,9 +87,7 @@ public enum MPCInstrumentIndex {
      * @return The <code>InstrumentIndex</code> of the letter.
      */
     public static InstrumentIndex valueOf(char c) {
-        String str = "" + c;
-        return MPCInstrumentIndex.valueOf(str).getInstrument();
+    	return CODE_MAPPINGS.getOrDefault(c, UNKNOWN).getInstrument();
     }
-
-
+    
 }
