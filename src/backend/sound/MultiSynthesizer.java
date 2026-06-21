@@ -274,9 +274,7 @@ public class MultiSynthesizer implements Synthesizer {
             return theSynths.get(0).getChannels();
         else {
             for (Synthesizer s : theSynths) {
-                MidiChannel[] temp = s.getChannels();
-                for (MidiChannel m : temp)
-                    all.add(m);
+                all.addAll(Arrays.asList(s.getChannels()));
             }
         }
         MidiChannel[] ret = new MidiChannel[all.size()];
