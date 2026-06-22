@@ -41,13 +41,13 @@ public class TimeSignature {
         if (divs.length == 0)
             throw new IllegalArgumentException("TimeSignature constructor expects positive number(s)");
         
-        int top = 0;
+        int computedTop = 0;
         for (int d : divs) {
             if (d <= 0)
                 throw new IllegalArgumentException("TimeSignature constructor expects positive number(s)");
-            top += d;
+            computedTop += d;
         }
-        this.top = top;
+        this.top = computedTop;
         
         this.divs = Arrays.copyOf(divs, divs.length);
         
