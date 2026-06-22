@@ -138,7 +138,7 @@ public class OptionsMenu {
     private ComboBox<String> makeSoundfontsComboBox(Window owner) {
         
         // Populate combobox list with soundfonts in AppData
-        final ComboBox<String> soundfontsMenu = new ComboBox<>();
+        final ComboBox<String> availableSoundfonts = new ComboBox<>();
         String[] listOfFiles;
         try {
             listOfFiles = getSoundfontsList();
@@ -147,15 +147,15 @@ public class OptionsMenu {
             listOfFiles = new String[0];
         }
         for (String filename : listOfFiles) {
-            soundfontsMenu.getItems().add(filename);
+            availableSoundfonts.getItems().add(filename);
 
             if (filename.equals(StateMachine.getCurrentSoundset()))
-                soundfontsMenu.getSelectionModel().selectLast();
+                availableSoundfonts.getSelectionModel().selectLast();
         }
 
-        soundfontsMenu.setPrefWidth(150);
-        soundfontsMenu.getItems().add("Add Soundfont...");
-        soundfontsMenu.valueProperty().addListener(new ChangeListener<String>() {
+        availableSoundfonts.setPrefWidth(150);
+        availableSoundfonts.getItems().add("Add Soundfont...");
+        availableSoundfonts.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> obsv, String oldVal, String newValue) {
                 if(newValue.equals("Add Soundfont...")) {
@@ -171,16 +171,16 @@ public class OptionsMenu {
                         @Override
                         public void run() {
                             if (sf == null) {
-                                soundfontsMenu.getSelectionModel().selectPrevious();
+                                availableSoundfonts.getSelectionModel().selectPrevious();
                                 return;
                             }
                             
                             if(!addSoundfont(sf, owner)) {
-                                soundfontsMenu.getSelectionModel().selectPrevious();
+                                availableSoundfonts.getSelectionModel().selectPrevious();
                                 return;
                             }
                             // Add soundfont name, or just pick it
-                            ObservableList<String> soundfonts = soundfontsMenu.getItems();
+                            ObservableList<String> soundfonts = availableSoundfonts.getItems();
                             int i;
                             String sfName = sf.getName();
                             for (i = 0; i < soundfonts.size() - 1; i++) {
@@ -188,11 +188,11 @@ public class OptionsMenu {
                                 if (compare == 0)
                                     break;
                                 else if (compare > 0) {
-                                    soundfontsMenu.getItems().add(i, sfName);
+                                    availableSoundfonts.getItems().add(i, sfName);
                                     break;
                                 }
                             }
-                            soundfontsMenu.getSelectionModel().select(i);
+                            availableSoundfonts.getSelectionModel().select(i);
                         }
                     });
                 } 
@@ -204,28 +204,28 @@ public class OptionsMenu {
             }
         });
         
-        return soundfontsMenu;
+        return availableSoundfonts;
     }
 
 
     private CheckBox makeBindCheckBox() {
-        final CheckBox bindBox = new CheckBox();
-        bindBox.setText("Bind to song");
-        bindBox.setStyle("-fx-font-size: 9;");
-        bindBox.setUserData(staff.getSequence().getSoundset());
+        final CheckBox checkBoxBind = new CheckBox();
+        checkBoxBind.setText("Bind to song");
+        checkBoxBind.setStyle("-fx-font-size: 9;");
+        checkBoxBind.setUserData(staff.getSequence().getSoundset());
         if (soundfontsMenu.getSelectionModel().getSelectedItem().equals(staff.getSequence().getSoundset()))
-            bindBox.setSelected(true);
-        bindBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            checkBoxBind.setSelected(true);
+        checkBoxBind.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean checked) {
                 if(checked) {
-                    bindBox.setUserData(soundfontsMenu.getSelectionModel().getSelectedItem());
+                    checkBoxBind.setUserData(soundfontsMenu.getSelectionModel().getSelectedItem());
                 } else {
-                    bindBox.setUserData("");
+                    checkBoxBind.setUserData("");
                 }
             }
         });
         
-        return bindBox;
+        return checkBoxBind;
     }
     
     /**
