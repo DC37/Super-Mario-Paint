@@ -278,15 +278,19 @@ public class SMPFXController {
         stopButton.setSelected(true);
         timesigButton_4_4.setSelected(true);
         
-        Tooltip.install(clipboardButton, new Tooltip("Click (or Shift+R) to toggle region selection\n"
-                + "Hover over instrument & press F to filter instrument\n"
-                + "Ctrl+A to select all\n"
-                + "Ctrl+C to copy notes\n"
-                + "Ctrl+V to paste notes\n"
-                + "Ctrl+X to cut notes\n"
-                + "Delete to delete notes\n"
-                + "Alt+N to toggle notes selection\n"
-                + "Alt+V to toggle volumes selection"));
+        String[] tooltipLines = {
+    		"Click (or Shift+R) to toggle region selection",
+            "Hover over instrument & press F to filter instrument",
+            "Ctrl+A to select all",
+            "Ctrl+C to copy notes",
+            "Ctrl+V to paste notes",
+            "Ctrl+X to cut notes",
+            "Delete to delete notes",
+            "Alt+N to toggle notes selection",
+            "Alt+V to toggle volumes selection"
+        };
+        
+        Tooltip.install(clipboardButton, new Tooltip(String.join("\n", tooltipLines)));
         
         StateMachine.clipboardPressedProperty().addListener(obs -> {
             if (StateMachine.isClipboardPressed())
@@ -673,10 +677,8 @@ public class SMPFXController {
     public void newArrangement(Window owner) {
         boolean cont = true;
         if (StateMachine.isArrModified()) {
-            cont = Dialog
-                    .showYesNoDialog("HOLD IT!",
-                    		"The current arrangement has been\n"
-                            + "modified! Create a new arrangement\nanyway?", owner);
+            cont = Dialog.showYesNoDialog("HOLD IT!",
+                    "The current arrangement has been\nmodified! Create a new arrangement\nanyway?", owner);
         }
         if (cont) {
             staff.setArrangement(new StaffArrangement());
@@ -926,20 +928,14 @@ public class SMPFXController {
         boolean cont = true;
         if (StateMachine.isSongModified() || StateMachine.isArrModified()) {
             if (StateMachine.isSongModified() && StateMachine.isArrModified()) {
-                cont = Dialog
-                        .showYesNoDialog("HOLD IT!",
-                        		"The current song and arrangement\n"
-                                + "have both been modified!\nLoad anyway?", owner);
+                cont = Dialog.showYesNoDialog("HOLD IT!",
+                        "The current song and arrangement\nhave both been modified!\nLoad anyway?", owner);
             } else if (StateMachine.isSongModified()) {
-                cont = Dialog
-                        .showYesNoDialog("HOLD IT!",
-                        		"The current song has been modified!\n"
-                                + "Load anyway?", owner);
+                cont = Dialog.showYesNoDialog("HOLD IT!",
+                        "The current song has been modified!\nLoad anyway?", owner);
             } else if (StateMachine.isArrModified()) {
-                cont = Dialog
-                        .showYesNoDialog("HOLD IT!",
-                        		"The current arrangement has been\n"
-                                + "modified! Load anyway?", owner);
+                cont = Dialog.showYesNoDialog("HOLD IT!",
+                        "The current arrangement has been\nmodified! Load anyway?", owner);
             }
         }
         File inputFile = null;
