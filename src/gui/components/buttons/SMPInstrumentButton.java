@@ -224,9 +224,9 @@ public class SMPInstrumentButton extends SMPButton {
             }
             
             private Binding<Image> imageSustainBinding() {
-            	return Bindings.createObjectBinding(() -> {
-            		return (isSustainOn()) ? getImageSustainOn() : getImageSustainOff();
-            	}, sustainOn(), imageSustainOff(), imageSustainOn());
+            	return Bindings.createObjectBinding(
+            			() -> (isSustainOn()) ? getImageSustainOn() : getImageSustainOff(),
+            			sustainOn(), imageSustainOff(), imageSustainOn());
             }
             
             private FadeTransition makeTransition(ImageView iv) {
