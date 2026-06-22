@@ -200,11 +200,11 @@ public class Utilities {
         // unused---seems to only be causing problems
         // TODO consider normalizing all file names for saving and loading
 
-        f = f.replaceAll("'", "_");
-        f = f.replaceAll("\\\\", "_");
-        f = f.replaceAll("/", "_");
-        f = f.replaceAll(":", "_");
-        f = f.replaceAll("\\&", "_");
+        f = f.replace("'", "_");
+        f = f.replace("\\", "_");
+        f = f.replace("/", "_");
+        f = f.replace(":", "_");
+        f = f.replace("&", "_");
         
         return f;
     }
