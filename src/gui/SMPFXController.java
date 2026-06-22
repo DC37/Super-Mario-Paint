@@ -202,7 +202,7 @@ public class SMPFXController {
      * Zero-argument constructor (explicitly declared).
      */
     public SMPFXController() {
-
+    	// Intentionally left empty.
     }
 
     /**
@@ -248,7 +248,7 @@ public class SMPFXController {
         // Bidirectional bindings between different types can only be done if one type is String afaik
         Bindings.bindBidirectional(modeText.textProperty(), modeButton.selectedProperty(), new BooleanStringConverter () {
             @Override public String toString(Boolean b) { return b ? "Arr" : "Song"; }
-            @Override public Boolean fromString(String string) { return string.equals("Arr") ? true : false; }
+            @Override public Boolean fromString(String string) { return string.equals("Arr"); }
         });
         
         Bindings.bindBidirectional(modeText.textProperty(), StateMachine.modeProperty(), new StringConverter<SMPMode>() {
@@ -560,7 +560,6 @@ public class SMPFXController {
             
         } catch (IllegalArgumentException ee) {
             Dialog.showDialog(ee.getMessage());
-            return;
         }
     }
     

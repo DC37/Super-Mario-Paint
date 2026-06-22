@@ -250,7 +250,7 @@ public class OptionsMenu {
      */
     private Slider makeVolumeSlider() {
         Slider dV = new Slider();
-        dV.setMax(Values.MAX_VELOCITY + 1);
+        dV.setMax((double) Values.MAX_VELOCITY + 1);
         dV.setMin(0);
         dV.setValue(Values.DEFAULT_VELOCITY);
         dV.setShowTickMarks(true);
