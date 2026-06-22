@@ -12,7 +12,6 @@ import backend.editing.CommandInterface;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -145,7 +144,7 @@ public class OptionsMenu {
 
         availableSoundfonts.setPrefWidth(150);
         availableSoundfonts.getItems().add("Add Soundfont...");
-        availableSoundfonts.valueProperty().addListener((ObservableValue<? extends String> obsv, String oldVal, String newValue) -> {
+        availableSoundfonts.valueProperty().addListener((obsv, oldVal, newValue) -> {
             if (newValue.equals("Add Soundfont...")) {
                 FileChooser f = new FileChooser();
                 f.setInitialDirectory(new File(System.getProperty("user.dir")));
@@ -197,7 +196,7 @@ public class OptionsMenu {
         checkBoxBind.setUserData(staff.getSequence().getSoundset());
         if (soundfontsMenu.getSelectionModel().getSelectedItem().equals(staff.getSequence().getSoundset()))
             checkBoxBind.setSelected(true);
-        checkBoxBind.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean checked) -> {
+        checkBoxBind.selectedProperty().addListener((ov, oldVal, checked) -> {
             if(checked != null && checked.booleanValue()) {
                 checkBoxBind.setUserData(soundfontsMenu.getSelectionModel().getSelectedItem());
             } else {

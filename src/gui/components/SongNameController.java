@@ -1,7 +1,6 @@
 package gui.components;
 
 import gui.SMPFXController;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -43,8 +42,7 @@ public class SongNameController {
 
 		// when we get focused, prepare for the unfocusing mouse press event
 		// when we get unfocused, clean up the event filter
-		songName.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0,
-				Boolean oldPropertyValue, Boolean newPropertyValue) -> {
+		songName.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
 			if (newPropertyValue != null && newPropertyValue.booleanValue()) {
 				songName.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
 			} else {
