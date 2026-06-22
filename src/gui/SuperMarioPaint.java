@@ -21,7 +21,6 @@ import javafx.application.Application;
 import javafx.application.Preloader.ErrorNotification;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
@@ -168,7 +167,7 @@ public class SuperMarioPaint extends Application  {
             primaryStage.setScene(primaryScene);
             
             primaryStage.focusedProperty().addListener(
-            		(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) -> StateMachine.clearKeyPresses());
+            		(ov, t, t1) -> StateMachine.clearKeyPresses());
             
             makeMouseEventHandlers();
             

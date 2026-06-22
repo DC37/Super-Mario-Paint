@@ -212,7 +212,7 @@ public class SMPFXController {
         // Set up command manager (undo and redo)
         commandManager = new ModifySongManager(() -> staff.redraw());
         
-        basePane.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
+        basePane.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
         	if (event.isControlDown())
         		StateMachine.setCtrlPressed(true);
         	if (event.isShiftDown())
@@ -231,7 +231,7 @@ public class SMPFXController {
                 }
         });
         
-        basePane.addEventHandler(KeyEvent.KEY_RELEASED, (event) -> {
+        basePane.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
         	if (!event.isControlDown())
         		StateMachine.setCtrlPressed(false);
         	if (!event.isShiftDown())
@@ -406,7 +406,7 @@ public class SMPFXController {
         });
         
         // Trigger a redraw, editing mode only
-        InvalidationListener doRedraw = (obv) -> staff.redraw();
+        InvalidationListener doRedraw = obv -> staff.redraw();
         
         StateMachine.getCurrentLineProperty().addListener(doRedraw);
         StateMachine.getTimeSignatureProperty().addListener(doRedraw);
