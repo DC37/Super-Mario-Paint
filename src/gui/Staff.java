@@ -255,23 +255,19 @@ public class Staff {
 
     /** Stops the song that is currently playing. */
     public void stopSong() {
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                songPlaying = false;
-                arrPlaying = false;
-                animationService.cancel();
-                switch (animationService.getState()) {
-                case CANCELLED:
-                case FAILED:
-                case READY:
-                case SUCCEEDED:
-                    animationService.reset();
-                    break;
-                default:
-                    break;
-                }
+        Platform.runLater(() -> {
+            songPlaying = false;
+            arrPlaying = false;
+            animationService.cancel();
+            switch (animationService.getState()) {
+            case CANCELLED:
+            case FAILED:
+            case READY:
+            case SUCCEEDED:
+                animationService.reset();
+                break;
+            default:
+                break;
             }
         });
     }

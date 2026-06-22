@@ -2,7 +2,6 @@ package gui.clipboard;
 
 import gui.StateMachine;
 import gui.Values;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
@@ -51,36 +50,29 @@ public class StaffRubberBand extends Rectangle {
 	 */
 	public void setScrollBarResizable(Slider slider) {
 
-		slider.valueProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) {		
-				
-				// only xOrigin will move so we need to get the other x bound that will remain the same	
-			    double sameEndX = 0;
-				if (getTranslateX() < xOrigin) {
-					sameEndX = getTranslateX();
-				} else {// if (rbRef.getTranslateX() == xOrigin)
-					sameEndX = getTranslateX() + getWidth();
-				}
-        		
-				int change = newVal.intValue() - oldVal.intValue();
-				applyScroll(change);
-
-				// resizeBand(sameEndX, getTranslateY()); doesn't work for some reason...
-				// do this instead
-		        if (sameEndX >= xOrigin) {
-		            setTranslateX(xOrigin);
-		            setWidth(sameEndX - xOrigin);
-		        } else {
-		            setTranslateX(sameEndX);
-		            setWidth(xOrigin - sameEndX);
-		        }
-		        
-		        displayBoundsText();
-		        
+		slider.valueProperty().addListener((ObservableValue<? extends Number> arg0, Number oldVal, Number newVal) -> {
+			// only xOrigin will move so we need to get the other x bound that will remain the same	
+		    double sameEndX = 0;
+			if (getTranslateX() < xOrigin) {
+				sameEndX = getTranslateX();
+			} else {// if (rbRef.getTranslateX() == xOrigin)
+				sameEndX = getTranslateX() + getWidth();
 			}
+    		
+			int change = newVal.intValue() - oldVal.intValue();
+			applyScroll(change);
 
+			// resizeBand(sameEndX, getTranslateY()); doesn't work for some reason...
+			// do this instead
+	        if (sameEndX >= xOrigin) {
+	            setTranslateX(xOrigin);
+	            setWidth(sameEndX - xOrigin);
+	        } else {
+	            setTranslateX(sameEndX);
+	            setWidth(xOrigin - sameEndX);
+	        }
+	        
+	        displayBoundsText();
         });
     }
 

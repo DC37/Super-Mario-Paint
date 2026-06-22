@@ -1,7 +1,6 @@
 package gui.components;
 
 import gui.SMPFXController;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
@@ -37,46 +36,27 @@ public class SongNameController {
 		controller = ct;
 
 		// click somewhere to unfocus only if the mouse exited
-		unfocusMouseEventHandler = new EventHandler<>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				if (mouseExited)
+		unfocusMouseEventHandler = (MouseEvent event) -> {
+			if (mouseExited)
 					controller.getScrollbar().requestFocus();
-			}
 		};
 
 		// when we get focused, prepare for the unfocusing mouse press event
 		// when we get unfocused, clean up the event filter
-		songName.focusedProperty().addListener(new ChangeListener<>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue,
-					Boolean newPropertyValue) {
-				if (newPropertyValue) {
-					songName.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
-				} else {
-					songName.getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
-				}
+		songName.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0,
+				Boolean oldPropertyValue, Boolean newPropertyValue) -> {
+			if (newPropertyValue != null && newPropertyValue.booleanValue()) {
+				songName.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
+			} else {
+				songName.getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
 			}
 		});
 
 		// mouse enters thus mouse has not exited, we cannot unfocus
-		songName.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<>() {
-
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-				mouseExited = false;
-			}
-		});
+		songName.addEventFilter(MouseEvent.MOUSE_ENTERED, (MouseEvent mouseEvent) -> mouseExited = false);
 		
 		// mouse exited, we can unfocus
-		songName.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<>() {
-
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-				mouseExited = true;
-			}
-		});
+		songName.addEventFilter(MouseEvent.MOUSE_EXITED, (MouseEvent mouseEvent) -> mouseExited = true);
 		
 	}
 }
