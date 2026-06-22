@@ -35,54 +35,50 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     	rubberBandLayer = basePane;
 
 		// TEMPORARY, should probably be in a dataclipboardeventhandler
-    	basePane.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				switch (event.getCode()) {
-				case A:
-					if (event.isControlDown() && !event.isShiftDown()) {
-						theStaffClipboard.getAPI().clearSelection();
-						theStaffClipboard.getAPI().select(0, 0,
-								(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
-								Values.NOTES_IN_A_LINE);
-					}
-					break;
-				case C:
-					if (event.isControlDown()) {
-						System.out.println("COPY");
-						theStaffClipboard.getAPI().copy();
-						for (StaffNoteLine line : theStaffClipboard.getCopiedData().values()) {
-							if (!line.getNotes().isEmpty())
-								System.out.println(line);
-						}
-					}
-					break;
-				case N:
-					if (event.isAltDown()) {
-						theStaffClipboard.getAPI().selectNotesToggle(!theStaffClipboard.getAPI().isSelectNotesOn());
-					}
-					break;
-				case V:
-					if (event.isAltDown()) {
-						theStaffClipboard.getAPI().selectVolumesToggle(!theStaffClipboard.getAPI().isSelectVolumesOn());
-					} else if (event.isControlDown()) {
-						int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
-						System.out.println("PASTE @ " + currentLine);
-						theStaffClipboard.getAPI().paste(currentLine);
-					}
-					break;
-				case X:
-					if (event.isControlDown()) {
-						theStaffClipboard.getAPI().cut();
-					}
-					break;
-				case DELETE:
-					theStaffClipboard.getAPI().delete();
-					break;
-				default:
-					break;
+    	basePane.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+			switch (event.getCode()) {
+			case A:
+				if (event.isControlDown() && !event.isShiftDown()) {
+					theStaffClipboard.getAPI().clearSelection();
+					theStaffClipboard.getAPI().select(0, 0,
+							(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
+							Values.NOTES_IN_A_LINE);
 				}
+				break;
+			case C:
+				if (event.isControlDown()) {
+					System.out.println("COPY");
+					theStaffClipboard.getAPI().copy();
+					for (StaffNoteLine line : theStaffClipboard.getCopiedData().values()) {
+						if (!line.getNotes().isEmpty())
+							System.out.println(line);
+					}
+				}
+				break;
+			case N:
+				if (event.isAltDown()) {
+					theStaffClipboard.getAPI().selectNotesToggle(!theStaffClipboard.getAPI().isSelectNotesOn());
+				}
+				break;
+			case V:
+				if (event.isAltDown()) {
+					theStaffClipboard.getAPI().selectVolumesToggle(!theStaffClipboard.getAPI().isSelectVolumesOn());
+				} else if (event.isControlDown()) {
+					int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
+					System.out.println("PASTE @ " + currentLine);
+					theStaffClipboard.getAPI().paste(currentLine);
+				}
+				break;
+			case X:
+				if (event.isControlDown()) {
+					theStaffClipboard.getAPI().cut();
+				}
+				break;
+			case DELETE:
+				theStaffClipboard.getAPI().delete();
+				break;
+			default:
+				break;
 			}
 		});
 	}

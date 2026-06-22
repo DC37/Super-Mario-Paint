@@ -93,20 +93,16 @@ public class StaffClipboard {
 	            ));
 
 		highlightedVolumes = new HashSet<>();
-		highlightedVolumesRedrawer = new ChangeListener<>() {
+		highlightedVolumesRedrawer = (ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
 
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+				// we want the actual volumebar image to highlight
+				ImageView curVolBar = (ImageView) ((StackPane) volumeBars.get(i)).getChildren().get(0);
 
-					// we want the actual volumebar image to highlight
-					ImageView theVolBar = (ImageView) ((StackPane) volumeBars.get(i)).getChildren().get(0);
-
-					if (highlightedVolumes.contains(i + newValue.intValue()))
-						theVolBar.setEffect(highlightBlendVolume);
-					else
-						theVolBar.setEffect(null);
-				}
+				if (highlightedVolumes.contains(i + newValue.intValue()))
+					curVolBar.setEffect(highlightBlendVolume);
+				else
+					curVolBar.setEffect(null);
 			}
 		};
 		

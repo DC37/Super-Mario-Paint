@@ -1,7 +1,6 @@
 package gui;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -13,11 +12,9 @@ import backend.editing.CommandInterface;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -76,14 +73,7 @@ public class OptionsMenu {
         defaultVolume = makeVolumeSlider();
         Button okButton = new Button("OK");
 
-        okButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.close();
-            }
-
-        });
+        okButton.setOnAction((ActionEvent event) -> dialog.close());
 
         FlowPane pane = new FlowPane(10, 10);
         pane.setAlignment(Pos.CENTER);
@@ -155,53 +145,45 @@ public class OptionsMenu {
 
         availableSoundfonts.setPrefWidth(150);
         availableSoundfonts.getItems().add("Add Soundfont...");
-        availableSoundfonts.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> obsv, String oldVal, String newValue) {
-                if(newValue.equals("Add Soundfont...")) {
-                    FileChooser f = new FileChooser();
-                    f.setInitialDirectory(new File(System.getProperty("user.dir")));
-                    f.setTitle("Add Soundfont...");
-                    f.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("soundfonts (*.sf2)", "*.sf2"));
-                    final File sf = f.showOpenDialog(null);
-                    
-                    // Any programmed selection triggers the ChangedListener again 
-                    // Wrap in a runLater to avoid a huge stacktrace
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (sf == null) {
-                                availableSoundfonts.getSelectionModel().selectPrevious();
-                                return;
-                            }
-                            
-                            if(!addSoundfont(sf, owner)) {
-                                availableSoundfonts.getSelectionModel().selectPrevious();
-                                return;
-                            }
-                            // Add soundfont name, or just pick it
-                            ObservableList<String> soundfonts = availableSoundfonts.getItems();
-                            int i;
-                            String sfName = sf.getName();
-                            for (i = 0; i < soundfonts.size() - 1; i++) {
-                                int compare = soundfonts.get(i).compareTo(sfName);
-                                if (compare == 0)
-                                    break;
-                                else if (compare > 0) {
-                                    availableSoundfonts.getItems().add(i, sfName);
-                                    break;
-                                }
-                            }
-                            availableSoundfonts.getSelectionModel().select(i);
-                        }
-                    });
-                } 
+        availableSoundfonts.valueProperty().addListener((ObservableValue<? extends String> obsv, String oldVal, String newValue) -> {
+            if (newValue.equals("Add Soundfont...")) {
+                FileChooser f = new FileChooser();
+                f.setInitialDirectory(new File(System.getProperty("user.dir")));
+                f.setTitle("Add Soundfont...");
+                f.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("soundfonts (*.sf2)", "*.sf2"));
+                final File sf = f.showOpenDialog(null);
                 
-                bindBox.setSelected(newValue.equals(staff.getSequence().getSoundset()));
-                /* we don't want to change the state of bindBox's userData so set it back to
-                   theStaff.getSequence().getSoundset() */
-                bindBox.setUserData(staff.getSequence().getSoundset());
-            }
+                // Any programmed selection triggers the ChangedListener again
+                // Wrap in a runLater to avoid a huge stacktrace
+                Platform.runLater(() -> {
+                    if (sf == null) {
+                        availableSoundfonts.getSelectionModel().selectPrevious();
+                        return;
+                    }
+                    
+                    if(!addSoundfont(sf, owner)) {
+                        availableSoundfonts.getSelectionModel().selectPrevious();
+                        return;
+                    }
+                    // Add soundfont name, or just pick it
+                    ObservableList<String> soundfonts = availableSoundfonts.getItems();
+                    int i;
+                    String sfName = sf.getName();
+                    for (i = 0; i < soundfonts.size() - 1; i++) {
+                        int compare = soundfonts.get(i).compareTo(sfName);
+                        if (compare <= 0)
+                            break;
+                        
+                        availableSoundfonts.getItems().add(i, sfName);
+                    }
+                    availableSoundfonts.getSelectionModel().select(i);
+                });
+            } 
+            
+            bindBox.setSelected(newValue.equals(staff.getSequence().getSoundset()));
+            /* we don't want to change the state of bindBox's userData so set it back to
+               theStaff.getSequence().getSoundset() */
+            bindBox.setUserData(staff.getSequence().getSoundset());
         });
         
         return availableSoundfonts;
@@ -215,13 +197,11 @@ public class OptionsMenu {
         checkBoxBind.setUserData(staff.getSequence().getSoundset());
         if (soundfontsMenu.getSelectionModel().getSelectedItem().equals(staff.getSequence().getSoundset()))
             checkBoxBind.setSelected(true);
-        checkBoxBind.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean checked) {
-                if(checked) {
-                    checkBoxBind.setUserData(soundfontsMenu.getSelectionModel().getSelectedItem());
-                } else {
-                    checkBoxBind.setUserData("");
-                }
+        checkBoxBind.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean oldVal, Boolean checked) -> {
+            if(checked != null && checked.booleanValue()) {
+                checkBoxBind.setUserData(soundfontsMenu.getSelectionModel().getSelectedItem());
+            } else {
+                checkBoxBind.setUserData("");
             }
         });
         
@@ -352,12 +332,8 @@ public class OptionsMenu {
 	private static String[] getSoundfontsList() throws IOException {
 		File soundfontsFolder = getSoundfontFolder();
 		
-		return soundfontsFolder.list(new FilenameFilter() {
-		    @Override
-		    public boolean accept(File dir, String name) {
-		        return name.toLowerCase().endsWith(".sf2");
-		    }
-		});
+		return soundfontsFolder.list(
+				(File dir, String name) -> name.toLowerCase().endsWith(".sf2"));
     }
 	
 	/**

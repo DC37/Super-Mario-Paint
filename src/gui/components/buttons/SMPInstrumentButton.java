@@ -237,24 +237,22 @@ public class SMPInstrumentButton extends SMPButton {
             }
             
             private Subscription activateFadeoutSubscription() {
-            	EventHandler<MouseEvent> onEntered = new EventHandler<>() {
-            		@Override public void handle(MouseEvent event) {
-            			if (event.getEventType() == MouseEvent.MOUSE_ENTERED)
-            				for (SMPInstrumentButton b : buttonsGroup) {
-            					if (b.onMouseEntered != null)
-            						b.onMouseEntered.run();
-            				}
-            		}
+            	EventHandler<MouseEvent> onEntered = (MouseEvent event) -> {
+        			if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
+        				for (SMPInstrumentButton b : buttonsGroup) {
+        					if (b.onMouseEntered != null)
+        						b.onMouseEntered.run();
+        				}
+        			}
             	};
             	
-            	EventHandler<MouseEvent> onExited = new EventHandler<>() {
-            		@Override public void handle(MouseEvent event) {
-            			if (event.getEventType() == MouseEvent.MOUSE_EXITED)
-            				for (SMPInstrumentButton b : buttonsGroup) {
-            					if (b.onMouseExited != null)
-            						b.onMouseExited.run();
-            				}
-            		}
+            	EventHandler<MouseEvent> onExited = (MouseEvent event) -> {
+        			if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
+        				for (SMPInstrumentButton b : buttonsGroup) {
+        					if (b.onMouseExited != null)
+        						b.onMouseExited.run();
+        				}
+        			}
             	};
             	
             	onMouseEntered = this::fadeoutReset;
@@ -278,11 +276,9 @@ public class SMPInstrumentButton extends SMPButton {
             	// ~ Dirty hack ~
             	// Normally a mouse press with key modifiers such as Ctrl or Shift does not arm the button
             	// We override this in the only possible way (original implementation is private API)
-            	EventHandler<MouseEvent> onMousePressed = new EventHandler<>() {
-            		@Override public void handle(MouseEvent event) {
-            			if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
-            				b.arm();
-            		}
+            	EventHandler<MouseEvent> onMousePressed = (MouseEvent event) -> {
+        			if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
+        				b.arm();
             	};
             	
             	b.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
