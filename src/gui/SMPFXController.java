@@ -471,22 +471,22 @@ public class SMPFXController {
     		        
     			} else if (StateMachine.isCtrlPressed()) {
     				int flt = StateMachine.getFilteredNotes();
-    				int new_flt;
+    				int newFlt;
     				int mask = ~ ((-1) << InstrumentIndex.values().length);
     				
     				// we go through bitwise computations to only set the property once
     				if ((flt & mask) == mask) {
-    					new_flt = 1 << inst.ordinal();
+    					newFlt = 1 << inst.ordinal();
     					
     				} else {
-    					new_flt = flt ^ (1 << inst.ordinal());
+    					newFlt = flt ^ (1 << inst.ordinal());
     					
-    					if ((new_flt & mask) == 0) {
-    						new_flt = -1;
+    					if ((newFlt & mask) == 0) {
+    						newFlt = -1;
     					}
     				}
     				
-    				StateMachine.setFilteredNotes(new_flt);
+    				StateMachine.setFilteredNotes(newFlt);
     				
     			} else {
     		        MidiChannel[] chan = soundPlayer.getChannels();
@@ -700,8 +700,8 @@ public class SMPFXController {
     }
 
     private void saveArrangement(Window owner) {
-        String songName = getNameTextField().getText();
-        if (!Utilities.legalFileName(songName)) {
+        String chosenSongName = getNameTextField().getText();
+        if (!Utilities.legalFileName(chosenSongName)) {
             Dialog.showDialog(null, "Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^", owner);
             return;
         }
@@ -709,7 +709,7 @@ public class SMPFXController {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(StateMachine.getCurrentDirectory());
-            f.setInitialFileName(songName + ".txt");
+            f.setInitialFileName(chosenSongName + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
@@ -717,12 +717,12 @@ public class SMPFXController {
             outputFile = f.showSaveDialog(owner);
             if (outputFile == null)
                 return;
-            FileOutputStream f_out = new FileOutputStream(outputFile);
+            FileOutputStream fOut = new FileOutputStream(outputFile);
             StaffArrangement out = staff.getArrangement();
             out.getTheSequenceNames().clear();
             out.getTheSequenceNames().addAll(staff.getArrangementList().getItems());
-            saveArrTxt(f_out, out);
-            f_out.close();
+            saveArrTxt(fOut, out);
+            fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             staff.setArrangementFile(outputFile);
             StateMachine.setArrModified(false);
@@ -731,8 +731,8 @@ public class SMPFXController {
         }
     }
 
-    public void saveArrTxt(FileOutputStream f_out, StaffArrangement out) {
-        PrintStream pr = new PrintStream(f_out);
+    public void saveArrTxt(FileOutputStream fOut, StaffArrangement out) {
+        PrintStream pr = new PrintStream(fOut);
         for (String s : out.getTheSequenceNames()) {
             pr.println(s);
         }
@@ -740,8 +740,8 @@ public class SMPFXController {
     }
 
     public void saveSong(Window owner) {
-        String songName = getNameTextField().getText();
-        if (!Utilities.legalFileName(songName)) {
+        String chosenSongName = getNameTextField().getText();
+        if (!Utilities.legalFileName(chosenSongName)) {
             Dialog.showDialog(null, "Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^", owner);
             return;
         }
@@ -749,7 +749,7 @@ public class SMPFXController {
         try {
             FileChooser f = new FileChooser();
             f.setInitialDirectory(StateMachine.getCurrentDirectory());
-            f.setInitialFileName(songName + ".txt");
+            f.setInitialFileName(chosenSongName + ".txt");
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
@@ -757,11 +757,11 @@ public class SMPFXController {
             outputFile = f.showSaveDialog(owner);
             if (outputFile == null)
                 return;
-            FileOutputStream f_out = new FileOutputStream(outputFile);
+            FileOutputStream fOut = new FileOutputStream(outputFile);
             StaffSequence out = staff.getSequence();
             out.setTempo(StateMachine.getTempo());
-            saveSongTxt(f_out, out);
-            f_out.close();
+            saveSongTxt(fOut, out);
+            fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             staff.setSequenceFile(outputFile);
             StateMachine.setSongModified(false);
@@ -1138,8 +1138,7 @@ public class SMPFXController {
             }
 
             ke.consume();
-        }
-                );
+        });
 
         n.addEventHandler(KeyEvent.KEY_RELEASED, ke -> {
             StateMachine.getButtonsPressed().remove(ke.getCode());
