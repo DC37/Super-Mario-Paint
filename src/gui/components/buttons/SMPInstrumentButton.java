@@ -174,9 +174,7 @@ public class SMPInstrumentButton extends SMPButton {
     }
     
     // Synchronize animations for all buttons in this group
-    private final SMPInstrumentButtonGroup buttonsGroup = DEFAULT_GROUP;
-    
-    private static SMPInstrumentButtonGroup DEFAULT_GROUP = new SMPInstrumentButtonGroup();
+    private static final SMPInstrumentButtonGroup BUTTONS_GROUP = new SMPInstrumentButtonGroup();
     
     @Override
     protected Skin<?> createDefaultSkin() {
@@ -208,7 +206,7 @@ public class SMPInstrumentButton extends SMPButton {
             	filter.fitHeightProperty().bind(fitHeight());
             	filter.fitWidthProperty().bind(fitWidth());
             	filter.imageProperty().bind(imageFiltered());
-            	filter.visibleProperty().bind(Bindings.and(active(), Bindings.not(buttonsGroup.allActive())));
+            	filter.visibleProperty().bind(Bindings.and(active(), Bindings.not(BUTTONS_GROUP.allActive())));
             	
             	return () -> {
             		filter.fitHeightProperty().unbind();
@@ -239,7 +237,7 @@ public class SMPInstrumentButton extends SMPButton {
             private Subscription activateFadeoutSubscription() {
             	EventHandler<MouseEvent> onEntered = (MouseEvent event) -> {
         			if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-        				for (SMPInstrumentButton b : buttonsGroup) {
+        				for (SMPInstrumentButton b : BUTTONS_GROUP) {
         					if (b.onMouseEntered != null)
         						b.onMouseEntered.run();
         				}
@@ -248,7 +246,7 @@ public class SMPInstrumentButton extends SMPButton {
             	
             	EventHandler<MouseEvent> onExited = (MouseEvent event) -> {
         			if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-        				for (SMPInstrumentButton b : buttonsGroup) {
+        				for (SMPInstrumentButton b : BUTTONS_GROUP) {
         					if (b.onMouseExited != null)
         						b.onMouseExited.run();
         				}
@@ -287,7 +285,7 @@ public class SMPInstrumentButton extends SMPButton {
             
             @Override
             public void install() {
-            	buttonsGroup.addButton(SMPInstrumentButton.this);
+            	BUTTONS_GROUP.addButton(SMPInstrumentButton.this);
             	ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
             	filterIv = buildFilter();
             	fadeTransition = makeTransition(filterIv);
@@ -301,7 +299,7 @@ public class SMPInstrumentButton extends SMPButton {
                 		.and(activateFadeoutSubscription())
                 		.and(() -> graphicProperty().unbind())
                 		.and(onMousePressedSubscription())
-                		.and(() -> buttonsGroup.removeButton(SMPInstrumentButton.this));
+                		.and(() -> BUTTONS_GROUP.removeButton(SMPInstrumentButton.this));
             }
 
 			private void fadeoutReset() {

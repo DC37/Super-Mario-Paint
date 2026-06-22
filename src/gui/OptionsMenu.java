@@ -257,13 +257,13 @@ public class OptionsMenu {
 
     /** Updates the tempo from the options dialog. */
     private void multiplyTempo() {
-        String txt = tempoField.getText();
-        if (txt == null)
+        String gotTxt = tempoField.getText();
+        if (gotTxt == null)
             return;
     
         int num = 1;
         try {
-            num = Integer.parseInt(txt);
+            num = Integer.parseInt(gotTxt);
         } catch (NumberFormatException e) {
             return;
         }
@@ -300,14 +300,14 @@ public class OptionsMenu {
     }
     
     private void changeTimeSignature() {
-        String txt = timesigField.getText();
+        String gotTxt = timesigField.getText();
         
-        if (txt == null)
+        if (gotTxt == null)
             return;
         
         TimeSignature t;
         try {
-            t = TimeSignature.valueOf(txt);
+            t = TimeSignature.valueOf(gotTxt);
         } catch (IllegalArgumentException e) {
             return;
         }
