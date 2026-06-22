@@ -201,7 +201,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 	//calculate this with line width
 	@Deprecated
 	public void initializeVolumeSpacing(double x) {
-
+		// Intentionally left blank.
 	}
 
 	/**

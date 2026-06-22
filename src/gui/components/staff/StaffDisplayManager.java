@@ -282,8 +282,7 @@ public class StaffDisplayManager {
         
         matrix.initializeNoteDisplay(map, mapAcc);
         
-        Node[] ret = { staffInstruments, staffAccidentals };
-        return ret;
+        return new Node[] { staffInstruments, staffAccidentals };
     }
     
     private static ImageView makeNoteImageView() {
