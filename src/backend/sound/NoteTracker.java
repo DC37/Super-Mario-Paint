@@ -57,13 +57,8 @@ class NoteTracker {
 
         for (int i = 0; i < turnOff.length; i++) {
         	
-        	// swap coin and piranha
-        	int j;
-        	switch (i) {
-        	case 15: j = 16; break;
-        	case 16: j = 15; break;
-        	default: j = i;
-        	}
+        	@SuppressWarnings("java:S3358")
+        	int j = (i == 15) ? 16 : (i == 16) ? 15 : i; // swap coin and piranha
         	
         	if (turnOff[i] && isChannelOn(i) && !ext[j]) {
                 List<PlayingNote> pna = getNotesPlaying(i);
