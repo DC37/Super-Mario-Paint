@@ -27,7 +27,10 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
             throws ParseException, IOException {
     	StringBuilder sb = new StringBuilder();
     	
-        try (BufferedReader bf = new BufferedReader(new FileReader(f))) {
+        try (
+        		FileReader fr = new FileReader(f);
+        		BufferedReader bf = new BufferedReader(fr)
+        ) {
         	String line;
         	while ((line = bf.readLine()) != null) {
 	            sb.append(line).append("\n");

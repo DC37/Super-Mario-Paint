@@ -158,7 +158,10 @@ public class Settings {
      * @throws IOException If we can't write the object.
      */
     public static void save() throws IOException {
-    	try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SETTINGS_FILE))) {
+    	try (
+    			FileOutputStream fos = new FileOutputStream(SETTINGS_FILE);
+    			ObjectOutputStream oos = new ObjectOutputStream(fos)
+    	) {
     		SettingsSaver s = new SettingsSaver();
             oos.writeObject(s);
     	}
@@ -173,7 +176,11 @@ public class Settings {
      */
     public static void load()
             throws IOException, ClassNotFoundException {
-    	try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SETTINGS_FILE))) {
+    	
+    	try (
+    			FileInputStream fis = new FileInputStream(SETTINGS_FILE);
+    			ObjectInputStream ois = new ObjectInputStream(fis)
+    	) {
     		SettingsSaver loaded = (SettingsSaver) ois.readObject();
     		
             advModeUnlocked  = loaded.set[0];
