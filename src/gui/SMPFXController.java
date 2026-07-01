@@ -470,12 +470,8 @@ public class SMPFXController {
     		        boolean ex = StateMachine.getNoteExtension(inst.ordinal());
     		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
     		        
-    		        int i;
-    		        switch (inst.ordinal()) {
-    		        case 15: i = 16; break;
-    		        case 16: i = 15; break;
-    		        default: i = inst.ordinal();
-    		        }
+    		        @SuppressWarnings("java:S3358")
+    		        int i = (inst.ordinal() == 15) ? 16 : (inst.ordinal() == 16) ? 15 : inst.ordinal();
     		        
     		        staff.getSequence().getNoteExtensions()[i] = !ex;
     		        
