@@ -6,14 +6,14 @@ import javafx.scene.image.Image;
  * one for when the button is released and one for when the button is pressed.</p>
  */
 public class SMPButton extends SMPButtonBase {
-	
-	public SMPButton() {
-		this("", null, null);
-	}
-	
-	public SMPButton(String text) {
-		this(text, null, null);
-	}
+    
+    public SMPButton() {
+        this("", null, null);
+    }
+    
+    public SMPButton(String text) {
+        this(text, null, null);
+    }
     
     public SMPButton(String text, Image imageReleased) {
         this(text, imageReleased, null);

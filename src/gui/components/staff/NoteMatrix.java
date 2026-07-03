@@ -71,25 +71,25 @@ class NoteMatrix {
     
     public void initializeNoteDisplay(Map<StaffNoteCoordinate, ImageView> map, Map<StaffNoteCoordinate, ImageView> mapAcc) {        
         for (Map.Entry<StaffNoteCoordinate, ImageView> entry : map.entrySet()) {
-        	StaffNoteCoordinate k = entry.getKey();
-        	ImageView iv = entry.getValue();
-        	
-        	if (k.dep == -1) {
-        		silMatrix.set(k.lin(), iv);
-        	} else {
-        		matrix.set(k.lin(), iv);
-        	}
+            StaffNoteCoordinate k = entry.getKey();
+            ImageView iv = entry.getValue();
+            
+            if (k.dep == -1) {
+                silMatrix.set(k.lin(), iv);
+            } else {
+                matrix.set(k.lin(), iv);
+            }
         }
         
         for (Map.Entry<StaffNoteCoordinate, ImageView> entry : mapAcc.entrySet()) {
-        	StaffNoteCoordinate k = entry.getKey();
-        	ImageView iv = entry.getValue();
-        	
-        	if (k.dep == -1) {
-        		accSilMatrix.set(k.lin(), iv);
-        	} else {
-        		accMatrix.set(k.lin(), iv);
-        	}
+            StaffNoteCoordinate k = entry.getKey();
+            ImageView iv = entry.getValue();
+            
+            if (k.dep == -1) {
+                accSilMatrix.set(k.lin(), iv);
+            } else {
+                accMatrix.set(k.lin(), iv);
+            }
         }
     }
 
@@ -173,10 +173,10 @@ class NoteMatrix {
         
         int row = note.getVerticalPosition();
         StaffNote silhouette = new StaffNote(
-        		note.getInstrument(),
-        		note.getVerticalPosition(),
-        		note.getAccidental(),
-        		MuteModifier.MUTE_THIS_INST);
+                note.getInstrument(),
+                note.getVerticalPosition(),
+                note.getAccidental(),
+                MuteModifier.MUTE_THIS_INST);
         
         currentSilhouetteColumn = col;
         currentSilhouette = silhouette;
@@ -211,7 +211,7 @@ class NoteMatrix {
         case MUTE_THIS_INST:
             return note.getInstrument().imageIndex().silhouette();
         default:
-        	throw new IllegalArgumentException("Unrecognized mute modifier: " + note.getMuteModifier());   
+            throw new IllegalArgumentException("Unrecognized mute modifier: " + note.getMuteModifier());   
         }
     }
     
@@ -224,7 +224,7 @@ class NoteMatrix {
         case MUTE_THIS_INST:
             return theNote.getAccidental().imageIndex().silhouette();
         default:
-        	throw new IllegalArgumentException("Unrecognized mute modifier: " + theNote.getMuteModifier());
+            throw new IllegalArgumentException("Unrecognized mute modifier: " + theNote.getMuteModifier());
         }
     }
 

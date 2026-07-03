@@ -32,7 +32,7 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
      */
     @Override
     public Map<ImageIndex, Image> call() {
-    	Map<ImageIndex, Image> spritesFX = new EnumMap<>(ImageIndex.class);
+        Map<ImageIndex, Image> spritesFX = new EnumMap<>(ImageIndex.class);
         ImageIndex [] ind = ImageIndex.values();
         
         for (ImageIndex i : ind) {
@@ -47,12 +47,12 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
             spritesFX.put(i, temp2);
             
             if ((Settings.debug & 0b01) != 0)
-            	System.out.println(
-            			"Loaded Image: " + i.toString() + extension);
+                System.out.println(
+                        "Loaded Image: " + i.toString() + extension);
             try {
-            	Thread.sleep(1);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
         }
         

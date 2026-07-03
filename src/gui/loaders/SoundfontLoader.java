@@ -30,13 +30,13 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
 
     @Override
     public SoundPlayer call() {
-    	SoundPlayer soundPlayer = null;
-    	SMPSynthesizer theSynthesizer;
-    	Soundbank bank;
-    	MidiChannel[] chan;
-    	
+        SoundPlayer soundPlayer = null;
+        SMPSynthesizer theSynthesizer;
+        Soundbank bank;
+        MidiChannel[] chan;
+        
         try {
-    		URL defaultSoundfontFile = SMPResourceUtil.get(Values.DEFAULT_SOUNDFONT, FetchStrategy.FROM_COPY, Values.SOUNDFONTS_FOLDER);
+            URL defaultSoundfontFile = SMPResourceUtil.get(Values.DEFAULT_SOUNDFONT, FetchStrategy.FROM_COPY, Values.SOUNDFONTS_FOLDER);
             bank = MidiSystem.getSoundbank(defaultSoundfontFile);
             theSynthesizer = new SMPSynthesizer();
             theSynthesizer.open();
@@ -90,6 +90,6 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
         }
         
         return soundPlayer;
-	}
+    }
 
 }

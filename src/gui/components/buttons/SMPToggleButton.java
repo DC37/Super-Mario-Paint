@@ -44,20 +44,20 @@ public class SMPToggleButton extends ToggleButton implements SMPButtonInterface 
     
     private DoubleProperty fitHeight;
     public DoubleProperty fitHeight() {
-    	if (fitHeight == null) {
-    		fitHeight = new SimpleDoubleProperty(this, "fitHeight", 0.0);
-    	}
-    	return fitHeight;
+        if (fitHeight == null) {
+            fitHeight = new SimpleDoubleProperty(this, "fitHeight", 0.0);
+        }
+        return fitHeight;
     }
     public double getFitHeight() { return fitHeight().getValue(); }
     public void setFitHeight(double x) { fitHeight().setValue(x); }
     
     private DoubleProperty fitWidth;
     public DoubleProperty fitWidth() {
-    	if (fitWidth == null) {
-    		fitWidth = new SimpleDoubleProperty(this, "fitWidth", 0.0);
-    	}
-    	return fitWidth;
+        if (fitWidth == null) {
+            fitWidth = new SimpleDoubleProperty(this, "fitWidth", 0.0);
+        }
+        return fitWidth;
     }
     public double getFitWidth() { return fitWidth().getValue(); }
     public void setFitWidth(double x) { fitWidth().setValue(x); }

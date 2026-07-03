@@ -27,16 +27,16 @@ import javafx.stage.Window;
  * @since 2012.08.20
  */
 public class Utilities {
-	
-	private Utilities() {}
-	
-	private static final List<Character> ILLEGAL_CHARS = new ArrayList<>();
-	
-	static {
-		ILLEGAL_CHARS.addAll(Arrays.asList(
-				'<', '>', '/', '\\', ':', '?', '|', '*', '"', '^'));
-	}
-	
+    
+    private Utilities() {}
+    
+    private static final List<Character> ILLEGAL_CHARS = new ArrayList<>();
+    
+    static {
+        ILLEGAL_CHARS.addAll(Arrays.asList(
+                '<', '>', '/', '\\', ':', '?', '|', '*', '"', '^'));
+    }
+    
     /**
      * Find the window owning an event. Useful for events that trigger a popup window.
      * Returns {@code null} if the owner cannot be found.
@@ -52,20 +52,20 @@ public class Utilities {
         return ((Node) src).getScene().getWindow();
     }
 
-	/**
-	 * Creates a boolean array from a parsed long array, from a loaded file.
-	 *
-	 * @param parseLong
-	 *            The long that we want to parse.
-	 * @return A boolean array based on the long integer that we have loaded.
-	 */
-	public static boolean[] boolFromLong(long parseLong) {
-		boolean[] loaded = new boolean[Values.NUM_INSTRUMENTS];
-		for (int i = 0; i < Values.NUM_INSTRUMENTS; i++) {
-			loaded[i] = ((1 << i) & parseLong) != 0;
-		}
-		return loaded;
-	}
+    /**
+     * Creates a boolean array from a parsed long array, from a loaded file.
+     *
+     * @param parseLong
+     *            The long that we want to parse.
+     * @return A boolean array based on the long integer that we have loaded.
+     */
+    public static boolean[] boolFromLong(long parseLong) {
+        boolean[] loaded = new boolean[Values.NUM_INSTRUMENTS];
+        for (int i = 0; i < Values.NUM_INSTRUMENTS; i++) {
+            loaded[i] = ((1 << i) & parseLong) != 0;
+        }
+        return loaded;
+    }
 
     /**
      * Creates a long integer from a parsed boolean array.
@@ -118,15 +118,15 @@ public class Utilities {
         }
     }
 
-	/**
-	 * Populates the staff with the sequence given. Sets the program's soundfont
-	 * to the sequence's.
-	 *
-	 * @param loaded
-	 *            The loaded sequence.
-	 * @param inputFile
-	 *            The input file.
-	 */
+    /**
+     * Populates the staff with the sequence given. Sets the program's soundfont
+     * to the sequence's.
+     *
+     * @param loaded
+     *            The loaded sequence.
+     * @param inputFile
+     *            The input file.
+     */
     public static String populateStaff(StaffSequence loaded, File inputFile, Staff theStaff, SMPFXController controller) {
         theStaff.setSequence(loaded);
         theStaff.setTimeSignature(loaded.getTimeSignature());
@@ -144,10 +144,10 @@ public class Utilities {
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         
         try {
-			theStaff.getSoundPlayer().loadFromAppData(theStaff.getSequence().getSoundset());
-		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-			e.printStackTrace();
-		}
+            theStaff.getSoundPlayer().loadFromAppData(theStaff.getSequence().getSoundset());
+        } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+            e.printStackTrace();
+        }
         
         controller.getModifySongManager().reset();
         
@@ -214,23 +214,23 @@ public class Utilities {
      */
     public static boolean legalFileName(String s) {
         for (char c : s.toCharArray()) {
-        	if (ILLEGAL_CHARS.contains(c))
+            if (ILLEGAL_CHARS.contains(c))
                 return false;
         }
         return true;
     }
 
-	/**
-	 * Populates the staff with the arrangement given. Loads each soundfont
-	 * from each song in the arrangement into cache.
-	 *
-	 * @param loaded
-	 *            The loaded arrangement.
-	 * @param inputFile
-	 *            The input file.
-	 * @param mpc
-	 *            Whether this is an MPC file.
-	 */
+    /**
+     * Populates the staff with the arrangement given. Loads each soundfont
+     * from each song in the arrangement into cache.
+     *
+     * @param loaded
+     *            The loaded arrangement.
+     * @param inputFile
+     *            The input file.
+     * @param mpc
+     *            Whether this is an MPC file.
+     */
     public static void populateStaffArrangement(StaffArrangement loaded,
             File inputFile, boolean mpc, Staff theStaff,
             final SMPFXController controller, Window owner) {
@@ -273,26 +273,26 @@ public class Utilities {
         controller.getNameTextField().setText(fname);
         
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
-        	@Override
+            @Override
             public Void call() {
-        		theStaff.getSoundPlayer().clearCache();
-        		for(StaffSequence s : seq) {
-        			try {
-						theStaff.getSoundPlayer().loadToCache(s.getSoundset());
-					} catch (InvalidMidiDataException | IOException e) {
-						e.printStackTrace();
-					}
-        		}
+                theStaff.getSoundPlayer().clearCache();
+                for(StaffSequence s : seq) {
+                    try {
+                        theStaff.getSoundPlayer().loadToCache(s.getSoundset());
+                    } catch (InvalidMidiDataException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 return null;
             }
         };
         new Thread(soundsetsTaskUtilities).start();
         
         try {
-			theStaff.getSoundPlayer().loadFromAppData(first.getSoundset());
-		} catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-			e.printStackTrace();
-		}
+            theStaff.getSoundPlayer().loadFromAppData(first.getSoundset());
+        } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
 }

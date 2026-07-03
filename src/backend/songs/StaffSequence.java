@@ -14,9 +14,9 @@ import gui.Values;
  * @since 2013.08.23
  */
 public class StaffSequence {
-	
-	/** The name of this sequence. */
-	private String name;
+    
+    /** The name of this sequence. */
+    private String name;
 
     /** The tempo of this sequence. */
     private double tempo = Values.DEFAULT_TEMPO;
@@ -35,7 +35,7 @@ public class StaffSequence {
 
     /** Default constructor. Makes an empty song. */
     public StaffSequence() {
-    	this(Values.DEFAULT_LINES_PER_SONG);
+        this(Values.DEFAULT_LINES_PER_SONG);
     }
     
     /**
@@ -55,16 +55,16 @@ public class StaffSequence {
      * @param lines A list of note lines
      */
     public StaffSequence(List<StaffNoteLine> lines) {
-    	this.theLines = lines.stream()
-    			.map(StaffNoteLine::new)
-    			.collect(Collectors.toList());
+        this.theLines = lines.stream()
+                .map(StaffNoteLine::new)
+                .collect(Collectors.toList());
     }
     
     /**
      * Get the name of this song.
      */
     public String getName() {
-    	return name;
+        return name;
     }
     
     /**
@@ -72,7 +72,7 @@ public class StaffSequence {
      * @param name the new name
      */
     public void setName(String name) {
-    	this.name = name;
+        this.name = name;
     }
 
     /** @return The tempo of this sequence. */
@@ -101,11 +101,11 @@ public class StaffSequence {
      * @throws IllegalArgumentException if the array to assign is the wrong length
      */
     public void setNoteExtensions(boolean[] exts) {
-    	if (exts.length != noteExtensions.length) {
-    		throw new IllegalArgumentException("setNoteExtensions expects an array of length " + noteExtensions.length);
-    	}
-    	
-    	System.arraycopy(exts, 0, noteExtensions, 0, noteExtensions.length);
+        if (exts.length != noteExtensions.length) {
+            throw new IllegalArgumentException("setNoteExtensions expects an array of length " + noteExtensions.length);
+        }
+        
+        System.arraycopy(exts, 0, noteExtensions, 0, noteExtensions.length);
     }
 
     /** @return The time signature of this sequence. */
@@ -117,29 +117,29 @@ public class StaffSequence {
         this.timeSignature = t;
     }
 
-	/**
-	 * @return The soundset bound to this sequence.
-	 * @since v1.1.2
-	 */
-	public String getSoundset() {
-		return soundsetBinding;
+    /**
+     * @return The soundset bound to this sequence.
+     * @since v1.1.2
+     */
+    public String getSoundset() {
+        return soundsetBinding;
     }
 
-	/**
-	 * Sets the soundset for this sequence which should be loaded with the
-	 * sequence.
-	 * @since v1.1.2
-	 */
-	public void setSoundset(String soundset) {
-		soundsetBinding = soundset;
+    /**
+     * Sets the soundset for this sequence which should be loaded with the
+     * sequence.
+     * @since v1.1.2
+     */
+    public void setSoundset(String soundset) {
+        soundsetBinding = soundset;
     }
-	
-	/**
-	 * The length of the sequence is defined as the number of note lines that
-	 * must be played in order to play the full sequence. It is guaranteed to
-	 * be a multiple of {@code this.getTimeSignature().barLength()}.
-	 * @return the number of playable lines in this sequence
-	 */
+    
+    /**
+     * The length of the sequence is defined as the number of note lines that
+     * must be played in order to play the full sequence. It is guaranteed to
+     * be a multiple of {@code this.getTimeSignature().barLength()}.
+     * @return the number of playable lines in this sequence
+     */
     public int getLength() {
         int lastNonempty = theLines.size() - 1;
         
@@ -165,11 +165,11 @@ public class StaffSequence {
      * @throws IndexOutOfBoundsException if i < 0
      */
     public StaffNoteLine getLine(int i) {
-    	if (i >= theLines.size()) {
+        if (i >= theLines.size()) {
             resize(i + 1);
-    	}
-    	
-    	return theLines.get(i);
+        }
+        
+        return theLines.get(i);
     }
     
     @Override

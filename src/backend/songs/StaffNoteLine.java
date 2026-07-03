@@ -19,9 +19,9 @@ import gui.Values;
  */
 public class StaffNoteLine {
 
-	/**
-	 * The volume of this line.
-	 */
+    /**
+     * The volume of this line.
+     */
     private int volume;
 
     /**
@@ -33,7 +33,7 @@ public class StaffNoteLine {
      * Create an empty line of notes at the default volume.
      */
     public StaffNoteLine() {
-    	this(Values.DEFAULT_VELOCITY);
+        this(Values.DEFAULT_VELOCITY);
     }
     
     /**
@@ -51,11 +51,11 @@ public class StaffNoteLine {
      * @param oth Other StaffNoteLine to copy
      */
     public StaffNoteLine(StaffNoteLine oth) {
-    	this.notes = oth.notes.stream()
-    			.map(StaffNote::new)
-    			.collect(Collectors.toList());
-    	
-    	this.volume = oth.volume;
+        this.notes = oth.notes.stream()
+                .map(StaffNote::new)
+                .collect(Collectors.toList());
+        
+        this.volume = oth.volume;
     }
 
     /**
@@ -97,7 +97,7 @@ public class StaffNoteLine {
      * @return True if the value is in the accepted range
      */
     private boolean checkVolumeValue(int volume) {
-    	return volume >= Values.MIN_VELOCITY && volume <= Values.MAX_VELOCITY;
+        return volume >= Values.MIN_VELOCITY && volume <= Values.MAX_VELOCITY;
     }
 
 }

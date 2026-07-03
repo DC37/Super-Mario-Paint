@@ -100,8 +100,8 @@ public interface SMPButtonInterface {
         ObjectProperty<Image> imageProperty = imageView.imageProperty();
         
         return subscribeImageProperty(button, conditionPressed, imageProperty)
-        		.and(imageView.fitHeightProperty()::unbind)
-        		.and(imageView.fitWidthProperty()::unbind)
+                .and(imageView.fitHeightProperty()::unbind)
+                .and(imageView.fitWidthProperty()::unbind)
                 .and(imageViewProperty::unbind);
     }
     

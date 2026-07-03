@@ -28,7 +28,7 @@ public class AMSDecoder implements Decoder<StaffSequence> {
      * text file.
      */
     @SuppressWarnings("unused") // Please remove when the implementation is done
-	private StaffSequence decode(String in) throws ParseException {
+    private StaffSequence decode(String in) throws ParseException {
         if (!isValid(in)) {
             throw new ParseException("Invalid File", 0);
         }

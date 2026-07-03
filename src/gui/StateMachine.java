@@ -28,12 +28,12 @@ import javafx.scene.input.KeyCode;
  * @since 2012.08.07
  */
 public class StateMachine {
-	
-	private static BooleanProperty ctrlPressed = new SimpleBooleanProperty();
-	
-	private static BooleanProperty shiftPressed = new SimpleBooleanProperty();
-	
-	private static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>(InstrumentIndex.MARIO);
+    
+    private static BooleanProperty ctrlPressed = new SimpleBooleanProperty();
+    
+    private static BooleanProperty shiftPressed = new SimpleBooleanProperty();
+    
+    private static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>(InstrumentIndex.MARIO);
 
     /** This tells us whether we have modified the song or not. */
     private static boolean modifiedSong = false;
@@ -44,16 +44,16 @@ public class StateMachine {
     /** This keeps track of whether we have pressed the loop button or not. */
     private static BooleanProperty loopPressed = new SimpleBooleanProperty(false);
 
-	/** This keeps track of whether we have pressed the mute button or not. */
-	private static BooleanProperty mutePressed = new SimpleBooleanProperty(false);
+    /** This keeps track of whether we have pressed the mute button or not. */
+    private static BooleanProperty mutePressed = new SimpleBooleanProperty(false);
 
     /** This keeps track of whether we have pressed the low A mute button or not. */
     private static BooleanProperty muteAPressed = new SimpleBooleanProperty(false);
 
-	/**
-	 * This keeps track of whether we have pressed the clipboard button or not.
-	 */
-	private static BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
+    /**
+     * This keeps track of whether we have pressed the clipboard button or not.
+     */
+    private static BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
 
     /** The list of values denoting which notes should be extended. */
     private static IntegerProperty noteExtensions = new SimpleIntegerProperty(0);
@@ -102,15 +102,15 @@ public class StateMachine {
      */
     private static DoubleProperty tempo = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
 
-	/**
-	 * The current soundset name. This should change when a new soundfont is
-	 * loaded.
-	 */
-	private static String currentSoundset = Values.DEFAULT_SOUNDFONT;
-	
-	private static BooleanProperty cursorOnStaff = new SimpleBooleanProperty();
-	
-	private static StringProperty currentSongName = new SimpleStringProperty("");
+    /**
+     * The current soundset name. This should change when a new soundfont is
+     * loaded.
+     */
+    private static String currentSoundset = Values.DEFAULT_SOUNDFONT;
+    
+    private static BooleanProperty cursorOnStaff = new SimpleBooleanProperty();
+    
+    private static StringProperty currentSongName = new SimpleStringProperty("");
     private static StringProperty currentArrangementName = new SimpleStringProperty("");
 
     /**
@@ -122,39 +122,39 @@ public class StateMachine {
     private StateMachine() {}
     
     public static ReadOnlyBooleanProperty ctrlPressed() {
-    	return ctrlPressed;
+        return ctrlPressed;
     }
     
     protected static void setCtrlPressed(boolean b) {
-    	ctrlPressed.setValue(b);
+        ctrlPressed.setValue(b);
     }
     
     public static boolean isCtrlPressed() {
-    	return ctrlPressed.getValue();
+        return ctrlPressed.getValue();
     }
     
     public static ReadOnlyBooleanProperty shiftPressed() {
-    	return shiftPressed;
+        return shiftPressed;
     }
     
     protected static void setShiftPressed(boolean b) {
-    	shiftPressed.setValue(b);
+        shiftPressed.setValue(b);
     }
     
     public static boolean isShiftPressed() {
-    	return shiftPressed.getValue();
+        return shiftPressed.getValue();
     }
     
     public static ObjectProperty<InstrumentIndex> selectedInstrumentProperty() {
-    	return selectedInstrument;
+        return selectedInstrument;
     }
     
     public static InstrumentIndex getSelectedInstrument() {
-    	return selectedInstrument.get();
+        return selectedInstrument.get();
     }
     
     public static void setSelectedInstrument(InstrumentIndex i) {
-    	selectedInstrument.set(i);
+        selectedInstrument.set(i);
     }
     
     public static ObjectProperty<SMPMode> modeProperty() {
@@ -338,15 +338,15 @@ public class StateMachine {
     }
     
     public static void setClipboardPressed(boolean b) {
-    	clipboardPressed.set(b);
+        clipboardPressed.set(b);
     }
     
     public static boolean isClipboardPressed() {
-    	return clipboardPressed.get();
+        return clipboardPressed.get();
     }
     
     public static IntegerProperty noteExtensionsProperty() {
-    	return noteExtensions;
+        return noteExtensions;
     }
     
     /**
@@ -355,16 +355,16 @@ public class StateMachine {
      * @param b value to set
      */
     public static void setNoteExtension(int idx, boolean b) {
-    	int v = noteExtensions.get();
-    	int m = 1 << idx;
-    	v = b ? v | m : v & (~m);
-    	noteExtensions.set(v);
+        int v = noteExtensions.get();
+        int m = 1 << idx;
+        v = b ? v | m : v & (~m);
+        noteExtensions.set(v);
     }
 
     public static void setNoteExtensions(boolean[] set) {
-    	for (int i = 0; i < set.length; i++) {
-    		setNoteExtension(i, set[i]);
-    	}
+        for (int i = 0; i < set.length; i++) {
+            setNoteExtension(i, set[i]);
+        }
     }
     
     /**
@@ -372,21 +372,21 @@ public class StateMachine {
      * @param idx index of the bit to read, is in interval [0, 31]
      */
     public static boolean getNoteExtension(int idx) {
-    	int m = 1 << idx;
-    	int v = noteExtensions.get();
-    	return (v & m) != 0;
+        int m = 1 << idx;
+        int v = noteExtensions.get();
+        return (v & m) != 0;
     }
 
     public static boolean[] getNoteExtensions() {
-    	boolean[] ret = new boolean[32];
-    	for (int i = 0; i < 32; i++) {
-    		ret[i] = getNoteExtension(i);
-    	}
-    	return ret;
+        boolean[] ret = new boolean[32];
+        for (int i = 0; i < 32; i++) {
+            ret[i] = getNoteExtension(i);
+        }
+        return ret;
     }
     
     public static IntegerProperty filteredNotesProperty() {
-    	return filteredNotes;
+        return filteredNotes;
     }
     
     /**
@@ -395,14 +395,14 @@ public class StateMachine {
      * @param b value to set
      */
     public static void setFilteredNote(int idx, boolean b) {
-    	int v = filteredNotes.get();
-    	int m = 1 << idx;
-    	v = b ? v | m : v & (~m);
-    	filteredNotes.set(v);
+        int v = filteredNotes.get();
+        int m = 1 << idx;
+        v = b ? v | m : v & (~m);
+        filteredNotes.set(v);
     }
 
     public static void setFilteredNotes(int v) {
-    	filteredNotes.set(v);
+        filteredNotes.set(v);
     }
     
     /**
@@ -410,13 +410,13 @@ public class StateMachine {
      * @param idx index of the bit to read, is in interval [0, 31]
      */
     public static boolean getFilteredNote(int idx) {
-    	int m = 1 << idx;
-    	int v = filteredNotes.get();
-    	return (v & m) != 0;
+        int m = 1 << idx;
+        int v = filteredNotes.get();
+        return (v & m) != 0;
     }
 
     public static int getFilteredNotes() {
-    	return filteredNotes.get();
+        return filteredNotes.get();
     }
 
     /**
@@ -444,46 +444,46 @@ public class StateMachine {
         StateMachine.currentDirectory = cDir;
     }
 
-	/**
-	 * @return The current soundset name.
-	 * @since v1.1.2
-	 */
-	public static String getCurrentSoundset() {
-		return currentSoundset;
-	}
-
-	/**
-	 * @param soundset
-	 *            Set current soundset to this.
-	 * @since v1.1.2
-	 */
-	public static void setCurrentSoundset(String soundset) {
-		StateMachine.currentSoundset = soundset;
+    /**
+     * @return The current soundset name.
+     * @since v1.1.2
+     */
+    public static String getCurrentSoundset() {
+        return currentSoundset;
     }
-	
-	public static BooleanProperty getCursorOnStaffProperty() {
-	    return cursorOnStaff;
-	}
-	
-	public static boolean isCursorOnStaff() {
-	    return cursorOnStaff.get();
-	}
-	
-	public static void setCursorOnStaff(boolean b) {
-	    cursorOnStaff.set(b);
-	}
-	
-	public static StringProperty currentSongNameProperty() {
-	    return currentSongName;
-	}
-	
-	public static void setCurrentSongName(String s) {
-	    currentSongName.set(s);
-	}
-	
-	public static String getCurrentSongName() {
-	    return currentSongName.get();
-	}
+
+    /**
+     * @param soundset
+     *            Set current soundset to this.
+     * @since v1.1.2
+     */
+    public static void setCurrentSoundset(String soundset) {
+        StateMachine.currentSoundset = soundset;
+    }
+    
+    public static BooleanProperty getCursorOnStaffProperty() {
+        return cursorOnStaff;
+    }
+    
+    public static boolean isCursorOnStaff() {
+        return cursorOnStaff.get();
+    }
+    
+    public static void setCursorOnStaff(boolean b) {
+        cursorOnStaff.set(b);
+    }
+    
+    public static StringProperty currentSongNameProperty() {
+        return currentSongName;
+    }
+    
+    public static void setCurrentSongName(String s) {
+        currentSongName.set(s);
+    }
+    
+    public static String getCurrentSongName() {
+        return currentSongName.get();
+    }
     
     public static StringProperty currentArrangementNameProperty() {
         return currentArrangementName;

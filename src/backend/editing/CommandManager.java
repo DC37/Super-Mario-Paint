@@ -19,79 +19,79 @@ import gui.Values;
  */
 public class CommandManager {
 
-	protected Deque<List<CommandInterface>> undoStack;
-	protected Deque<List<CommandInterface>> redoStack;
+    protected Deque<List<CommandInterface>> undoStack;
+    protected Deque<List<CommandInterface>> redoStack;
 
-	private List<CommandInterface> nextCommands;
-	
-	public CommandManager() {
-		undoStack = new LinkedBlockingDeque<>(Values.MAX_UNDO_REDO_SIZE);
-		redoStack = new LinkedBlockingDeque<>(Values.MAX_UNDO_REDO_SIZE);
-	}
+    private List<CommandInterface> nextCommands;
+    
+    public CommandManager() {
+        undoStack = new LinkedBlockingDeque<>(Values.MAX_UNDO_REDO_SIZE);
+        redoStack = new LinkedBlockingDeque<>(Values.MAX_UNDO_REDO_SIZE);
+    }
 
-	public void undo() {
-		/* make sure any current action is recorded before undoing */
-		record();
-		
-		if (undoStack.isEmpty())
-			return;
+    public void undo() {
+        /* make sure any current action is recorded before undoing */
+        record();
+        
+        if (undoStack.isEmpty())
+            return;
 
-		List<CommandInterface> commands = undoStack.pop();
-		/* undo needs reverse order on the commands */
-		for(int i = commands.size() - 1; i >= 0; i--) {
-			CommandInterface command = commands.get(i);
-			command.undo();
-		}
+        List<CommandInterface> commands = undoStack.pop();
+        /* undo needs reverse order on the commands */
+        for(int i = commands.size() - 1; i >= 0; i--) {
+            CommandInterface command = commands.get(i);
+            command.undo();
+        }
 
-		redoStack.push(commands);
-		System.out.println("...undo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
-	}
+        redoStack.push(commands);
+        System.out.println("...undo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
+    }
 
-	public void redo() {
-		if (redoStack.isEmpty())
-			return;
+    public void redo() {
+        if (redoStack.isEmpty())
+            return;
 
-		List<CommandInterface> commands = redoStack.pop();
-		for(CommandInterface command : commands) {
-			command.redo();
-		}
+        List<CommandInterface> commands = redoStack.pop();
+        for(CommandInterface command : commands) {
+            command.redo();
+        }
 
-		undoStack.push(commands);
-		System.out.println("...redo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
-	}
+        undoStack.push(commands);
+        System.out.println("...redo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
+    }
 
-	/**
-	 * This does not literally execute the command. It will put the command into
-	 * a list then you can call record() to put the command list onto the
-	 * undoStack.
-	 * 
-	 * @param command
-	 */
-	public void execute(CommandInterface command) {
+    /**
+     * This does not literally execute the command. It will put the command into
+     * a list then you can call record() to put the command list onto the
+     * undoStack.
+     * 
+     * @param command
+     */
+    public void execute(CommandInterface command) {
 
-		if (nextCommands == null)
-			nextCommands = new ArrayList<>();
-		
-		nextCommands.add(command);
-	}
-	
-	/**
-	 * record the commands given to execute()
-	 */
-	public void record() {		
-		if (nextCommands == null)
-			return;
-		if (undoStack.size() >= Values.MAX_UNDO_REDO_SIZE)
-			undoStack.removeLast();
-		
-		undoStack.push(nextCommands);
-		redoStack.clear();
-		
-		nextCommands = null;
-	}
-	
-	public void reset() {
-		undoStack.clear();
-		redoStack.clear();
-	}
+        if (nextCommands == null)
+            nextCommands = new ArrayList<>();
+        
+        nextCommands.add(command);
+    }
+    
+    /**
+     * record the commands given to execute()
+     */
+    public void record() {      
+        if (nextCommands == null)
+            return;
+        if (undoStack.size() >= Values.MAX_UNDO_REDO_SIZE)
+            undoStack.removeLast();
+        
+        undoStack.push(nextCommands);
+        redoStack.clear();
+        
+        nextCommands = null;
+    }
+    
+    public void reset() {
+        undoStack.clear();
+        redoStack.clear();
+    }
 }

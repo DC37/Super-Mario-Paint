@@ -47,19 +47,19 @@ public class SoundPlayer {
      */
     private Soundbank bank;
 
-	/**
-	 * The cache that will contain all soundbanks. Each soundbank is indexed by
-	 * its filename.
-	 */
-	private Map<String, Soundbank> bankCache = new HashMap<>();
+    /**
+     * The cache that will contain all soundbanks. Each soundbank is indexed by
+     * its filename.
+     */
+    private Map<String, Soundbank> bankCache = new HashMap<>();
 
     /** This keeps track of which notes are actually playing. */
     private final NoteTracker tracker = new NoteTracker(this);
     
     public SoundPlayer(SMPSynthesizer synthesizer, Soundbank bank, MidiChannel[] chan) {
-    	this.synthesizer = synthesizer;
-    	this.bank = bank;
-    	this.chan = chan;
+        this.synthesizer = synthesizer;
+        this.bank = bank;
+        this.chan = chan;
     }
 
     /**
@@ -121,114 +121,114 @@ public class SoundPlayer {
      * Turn off all sounds.
      */
     public void stopAllInstruments() {
-    	for (InstrumentIndex inst : InstrumentIndex.values()) {
-    		tracker.stopInstrument(inst);
-    	}
-    	
+        for (InstrumentIndex inst : InstrumentIndex.values()) {
+            tracker.stopInstrument(inst);
+        }
+        
     }
     
-	/**
-	 * Takes in the absolute path of a soundfont file and constructs a new
-	 * soundbank with all the soundfont's instruments loaded in. The
-	 * MultiSynthesizer will then use the new soundbank.
-	 * 
-	 * @param path
-	 *            the soundfont file
-	 * @throws IOException
-	 * @throws InvalidMidiDataException
-	 * @throws MidiUnavailableException
-	 * @since v1.1.2
-	 */
-	private void loadSoundfont(String path) throws InvalidMidiDataException, IOException, MidiUnavailableException {
-		File f = new File(path);
-		if(f.getName().isEmpty())
-			return;
-		if (!f.getName().equals(StateMachine.getCurrentSoundset())) {
-			bank = MidiSystem.getSoundbank(f);
-			synthesizer.loadAllInstruments(bank);
-			StateMachine.setCurrentSoundset(f.getName());
-		}
-	}
-	
-	/**
-	 * Loads the passed-in filename from AppData.
-	 * 
-	 * @param soundset
-	 *            The soundfont name
-	 * @throws InvalidMidiDataException
-	 * @throws IOException
-	 * @throws MidiUnavailableException
-	 * @since v1.1.2
-	 */
-	public void loadFromAppData(String soundset) throws InvalidMidiDataException, IOException, MidiUnavailableException {
-		//TODO: check linux or mac, choose platform-specific folder
-		if(soundset.isEmpty())
-			return;
-		loadSoundfont(Values.SOUNDFONTS_FOLDER + soundset);
-	}
-	
-	/**
-	 * Stores the current soundbank in cache for quick loading. 
-	 * 
-	 * @since v1.1.2
-	 */
-	public void storeInCache() {
-		String currentSoundset = StateMachine.getCurrentSoundset();
-		if(!bankCache.containsKey(currentSoundset))
-			bankCache.put(currentSoundset, bank);
-	}
-	
-	/**
-	 * Loads the soundset from AppData and stores the soundbank in cache for
-	 * quick loading. This will not change the program's current soundbank.
-	 * 
-	 * @param soundset
-	 *            The soundfont name
-	 * @throws IOException 
-	 * @throws InvalidMidiDataException 
-	 * @since v1.1.2
-	 */
-	public void loadToCache(String soundset) throws InvalidMidiDataException, IOException {
-		//TODO: check linux or mac, choose platform-specific folder
-		if(soundset.isEmpty())
-			return;
-		File f = new File(Values.SOUNDFONTS_FOLDER + soundset);
-		if(!bankCache.containsKey(soundset)) {
-			Soundbank sb = MidiSystem.getSoundbank(f);
-			bankCache.put(soundset, sb);
-		}
-	}
+    /**
+     * Takes in the absolute path of a soundfont file and constructs a new
+     * soundbank with all the soundfont's instruments loaded in. The
+     * MultiSynthesizer will then use the new soundbank.
+     * 
+     * @param path
+     *            the soundfont file
+     * @throws IOException
+     * @throws InvalidMidiDataException
+     * @throws MidiUnavailableException
+     * @since v1.1.2
+     */
+    private void loadSoundfont(String path) throws InvalidMidiDataException, IOException, MidiUnavailableException {
+        File f = new File(path);
+        if(f.getName().isEmpty())
+            return;
+        if (!f.getName().equals(StateMachine.getCurrentSoundset())) {
+            bank = MidiSystem.getSoundbank(f);
+            synthesizer.loadAllInstruments(bank);
+            StateMachine.setCurrentSoundset(f.getName());
+        }
+    }
+    
+    /**
+     * Loads the passed-in filename from AppData.
+     * 
+     * @param soundset
+     *            The soundfont name
+     * @throws InvalidMidiDataException
+     * @throws IOException
+     * @throws MidiUnavailableException
+     * @since v1.1.2
+     */
+    public void loadFromAppData(String soundset) throws InvalidMidiDataException, IOException, MidiUnavailableException {
+        //TODO: check linux or mac, choose platform-specific folder
+        if(soundset.isEmpty())
+            return;
+        loadSoundfont(Values.SOUNDFONTS_FOLDER + soundset);
+    }
+    
+    /**
+     * Stores the current soundbank in cache for quick loading. 
+     * 
+     * @since v1.1.2
+     */
+    public void storeInCache() {
+        String currentSoundset = StateMachine.getCurrentSoundset();
+        if(!bankCache.containsKey(currentSoundset))
+            bankCache.put(currentSoundset, bank);
+    }
+    
+    /**
+     * Loads the soundset from AppData and stores the soundbank in cache for
+     * quick loading. This will not change the program's current soundbank.
+     * 
+     * @param soundset
+     *            The soundfont name
+     * @throws IOException 
+     * @throws InvalidMidiDataException 
+     * @since v1.1.2
+     */
+    public void loadToCache(String soundset) throws InvalidMidiDataException, IOException {
+        //TODO: check linux or mac, choose platform-specific folder
+        if(soundset.isEmpty())
+            return;
+        File f = new File(Values.SOUNDFONTS_FOLDER + soundset);
+        if(!bankCache.containsKey(soundset)) {
+            Soundbank sb = MidiSystem.getSoundbank(f);
+            bankCache.put(soundset, sb);
+        }
+    }
 
-	/**
-	 * Loads the Soundbank with the soundset name from bankCache and sets it as
-	 * the program's MultiSynthesizer's current soundfont. This is the fast way
-	 * to set the program's soundfont.
-	 * 
-	 * @param soundset
-	 *            The soundset name (e.g. soundset3.sf2)
-	 * @return if program's current soundset successfully set to soundset
-	 * @since v1.1.2
-	 */
-	public boolean loadFromCache(String soundset) {
-		if(StateMachine.getCurrentSoundset().equals(soundset))
-			return true;
-		if(bankCache.containsKey(soundset)) {
-			bank = bankCache.get(soundset);
-			synthesizer.loadAllInstruments(bank);
-			StateMachine.setCurrentSoundset(soundset);
-			return true;
-		}
-		return false;
-	}
+    /**
+     * Loads the Soundbank with the soundset name from bankCache and sets it as
+     * the program's MultiSynthesizer's current soundfont. This is the fast way
+     * to set the program's soundfont.
+     * 
+     * @param soundset
+     *            The soundset name (e.g. soundset3.sf2)
+     * @return if program's current soundset successfully set to soundset
+     * @since v1.1.2
+     */
+    public boolean loadFromCache(String soundset) {
+        if(StateMachine.getCurrentSoundset().equals(soundset))
+            return true;
+        if(bankCache.containsKey(soundset)) {
+            bank = bankCache.get(soundset);
+            synthesizer.loadAllInstruments(bank);
+            StateMachine.setCurrentSoundset(soundset);
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * Clears the bankCache.
-	 * 
-	 * @since v1.1.2
-	 */
-	public void clearCache() {
-		bankCache.clear();
-	}
+    /**
+     * Clears the bankCache.
+     * 
+     * @since v1.1.2
+     */
+    public void clearCache() {
+        bankCache.clear();
+    }
 
     /**
      * @return An Array of references for MidiChannel objects needed to
@@ -243,13 +243,13 @@ public class SoundPlayer {
     }
 
     public void playSound(InstrumentIndex inst, Pitch pitch, int vel) {
-    	int iChan = inst.getChannel() - 1;
-    	chan[iChan].noteOn(pitch.getValue(), vel);
+        int iChan = inst.getChannel() - 1;
+        chan[iChan].noteOn(pitch.getValue(), vel);
     }
     
     public void stopSound(InstrumentIndex inst, Pitch pitch) {
-    	int iChan = inst.getChannel() - 1;
-    	chan[iChan].noteOff(pitch.getValue());
+        int iChan = inst.getChannel() - 1;
+        chan[iChan].noteOff(pitch.getValue());
     }
 
 }

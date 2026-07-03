@@ -25,16 +25,16 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
      */
     public StaffArrangement decode(File f)
             throws ParseException, IOException {
-    	StringBuilder sb = new StringBuilder();
-    	
+        StringBuilder sb = new StringBuilder();
+        
         try (
-        		FileReader fr = new FileReader(f);
-        		BufferedReader bf = new BufferedReader(fr)
+                FileReader fr = new FileReader(f);
+                BufferedReader bf = new BufferedReader(fr)
         ) {
-        	String line;
-        	while ((line = bf.readLine()) != null) {
-	            sb.append(line).append("\n");
-	        }
+            String line;
+            while ((line = bf.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
         }
         
         return parseFiles(sb.toString(), f);
@@ -62,7 +62,7 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
         StaffArrangement theArr = new StaffArrangement();
 
         for (String s : str.split("\n")) {
-        	String sp = s;
+            String sp = s;
             String st = inputFile.getParent() + File.separatorChar + sp + "]MarioPaint.txt";
             File f = new File(st);
             StaffSequence seq = Decoder.MPC_SEQUENCE_DECODER.decode(f);

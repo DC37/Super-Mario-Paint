@@ -23,8 +23,8 @@ import javafx.stage.WindowEvent;
  * @since 2013.12.23
  */
 public class Dialog {
-	
-	private Dialog() {}
+    
+    private Dialog() {}
     
     private static <T> StageWithReturn<T> initDialogStage(String title, Window owner) {
         StageWithReturn<T> stage = new StageWithReturn<>();
@@ -117,13 +117,13 @@ public class Dialog {
         
         /* @since 1.4.1, ESC to close dialog, Enter to accept */
         dialog.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-        	if (event.getCode() == KeyCode.ESCAPE) {
-        	    dialog.returnValue = false;
+            if (event.getCode() == KeyCode.ESCAPE) {
+                dialog.returnValue = false;
                 dialog.close();
-        	} else if (event.getCode() == KeyCode.ENTER) {
+            } else if (event.getCode() == KeyCode.ENTER) {
                 dialog.returnValue = true;
                 dialog.close();
-        	}
+            }
         });
 
         dialog.addEventHandler(WindowEvent.ANY, event -> {
@@ -152,11 +152,11 @@ public class Dialog {
     }
     
     public static String showTextDialog(String title, String txt, Window owner) {
-    	return showTextDialog(title, txt, null, owner, false);
+        return showTextDialog(title, txt, null, owner, false);
     }
     
     public static String showTextDialog(String txt, Window owner) {
-    	return showTextDialog(null, txt, null, owner, false);
+        return showTextDialog(null, txt, null, owner, false);
     }
 
     /**
@@ -172,7 +172,7 @@ public class Dialog {
         final TextField textfield = new TextField();
         textfield.setPrefColumnCount(12); // rather small; this is only for tempo afaik
         if (prompt != null) {
-        	textfield.setPromptText(prompt);
+            textfield.setPromptText(prompt);
         }
         Button okButton = new Button("OK");
         Button cancelButton = new Button("Cancel");
@@ -189,13 +189,13 @@ public class Dialog {
         
         /* @since 1.4.1, ESC to close dialog, Enter to accept */
         dialog.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-        	if (event.getCode() == KeyCode.ESCAPE) {
-        	    dialog.returnValue = "";
+            if (event.getCode() == KeyCode.ESCAPE) {
+                dialog.returnValue = "";
                 dialog.close();
-        	} else if (event.getCode() == KeyCode.ENTER) {
+            } else if (event.getCode() == KeyCode.ENTER) {
                 dialog.returnValue = textfield.getText();
                 dialog.close();
-        	}
+            }
         });
 
         Parent buttons = makeRow(okButton, cancelButton);
@@ -204,7 +204,7 @@ public class Dialog {
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
         if (focusOnButton) {
-        	okButton.requestFocus(); // little trick to always display prompt
+            okButton.requestFocus(); // little trick to always display prompt
         }
         return dialog.showAndReturn("");
     }

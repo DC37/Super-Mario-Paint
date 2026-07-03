@@ -22,229 +22,229 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     StaffRubberBand rubberBand;
     
     SMPFXController controller;
-	Pane rubberBandLayer;
-	StaffClipboard theStaffClipboard;
-	
+    Pane rubberBandLayer;
+    StaffClipboard theStaffClipboard;
+    
     /** Get line with these */
     private static double mouseX;
     
     public StaffRubberBandEventHandler(StaffRubberBand rb, SMPFXController ct, Pane basePane, StaffClipboard clippy) {
-    	rubberBand = rb;
-    	controller = ct;
-    	theStaffClipboard = clippy;
-    	rubberBandLayer = basePane;
+        rubberBand = rb;
+        controller = ct;
+        theStaffClipboard = clippy;
+        rubberBandLayer = basePane;
 
-		// TEMPORARY, should probably be in a dataclipboardeventhandler
-    	basePane.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-			switch (event.getCode()) {
-			case A:
-				if (event.isControlDown() && !event.isShiftDown()) {
-					theStaffClipboard.getAPI().clearSelection();
-					theStaffClipboard.getAPI().select(0, 0,
-							(int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
-							Values.NOTES_IN_A_LINE);
-				}
-				break;
-			case C:
-				if (event.isControlDown()) {
-					System.out.println("COPY");
-					theStaffClipboard.getAPI().copy();
-					for (StaffNoteLine line : theStaffClipboard.getCopiedData().values()) {
-						if (!line.getNotes().isEmpty())
-							System.out.println(line);
-					}
-				}
-				break;
-			case N:
-				if (event.isAltDown()) {
-					theStaffClipboard.getAPI().selectNotesToggle(!theStaffClipboard.getAPI().isSelectNotesOn());
-				}
-				break;
-			case V:
-				if (event.isAltDown()) {
-					theStaffClipboard.getAPI().selectVolumesToggle(!theStaffClipboard.getAPI().isSelectVolumesOn());
-				} else if (event.isControlDown()) {
-					int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
-					System.out.println("PASTE @ " + currentLine);
-					theStaffClipboard.getAPI().paste(currentLine);
-				}
-				break;
-			case X:
-				if (event.isControlDown()) {
-					theStaffClipboard.getAPI().cut();
-				}
-				break;
-			case DELETE:
-				theStaffClipboard.getAPI().delete();
-				break;
-			default:
-				break;
-			}
-		});
-	}
+        // TEMPORARY, should probably be in a dataclipboardeventhandler
+        basePane.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            switch (event.getCode()) {
+            case A:
+                if (event.isControlDown() && !event.isShiftDown()) {
+                    theStaffClipboard.getAPI().clearSelection();
+                    theStaffClipboard.getAPI().select(0, 0,
+                            (int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
+                            Values.NOTES_IN_A_LINE);
+                }
+                break;
+            case C:
+                if (event.isControlDown()) {
+                    System.out.println("COPY");
+                    theStaffClipboard.getAPI().copy();
+                    for (StaffNoteLine line : theStaffClipboard.getCopiedData().values()) {
+                        if (!line.getNotes().isEmpty())
+                            System.out.println(line);
+                    }
+                }
+                break;
+            case N:
+                if (event.isAltDown()) {
+                    theStaffClipboard.getAPI().selectNotesToggle(!theStaffClipboard.getAPI().isSelectNotesOn());
+                }
+                break;
+            case V:
+                if (event.isAltDown()) {
+                    theStaffClipboard.getAPI().selectVolumesToggle(!theStaffClipboard.getAPI().isSelectVolumesOn());
+                } else if (event.isControlDown()) {
+                    int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
+                    System.out.println("PASTE @ " + currentLine);
+                    theStaffClipboard.getAPI().paste(currentLine);
+                }
+                break;
+            case X:
+                if (event.isControlDown()) {
+                    theStaffClipboard.getAPI().cut();
+                }
+                break;
+            case DELETE:
+                theStaffClipboard.getAPI().delete();
+                break;
+            default:
+                break;
+            }
+        });
+    }
 
-	@Override
+    @Override
     public void handle(MouseEvent mouseEvent) {
         mouseX = mouseEvent.getX();
         // the middlebutton can now bypass the clipboard button @since v1.1.2
-		if(!StateMachine.isClipboardPressed() && !mouseEvent.isMiddleButtonDown()){
-			
-			// for middlebutton handling @since v1.1.2
-			if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
-				if(theStaffClipboard.getAPI().isRubberBandActive())
-					theStaffClipboard.getAPI().endBand();
-			}
-			else if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) 
+        if(!StateMachine.isClipboardPressed() && !mouseEvent.isMiddleButtonDown()){
+            
+            // for middlebutton handling @since v1.1.2
+            if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
+                if(theStaffClipboard.getAPI().isRubberBandActive())
+                    theStaffClipboard.getAPI().endBand();
+            }
+            else if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) 
                 theStaffClipboard.getAPI().clearSelection(); 
-			
-			return;
-		}
+            
+            return;
+        }
         if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) {
-        	
+            
             if(!mouseEvent.isControlDown()) {
                 theStaffClipboard.getAPI().clearSelection(); 
             } 
-        	theStaffClipboard.getAPI().beginBand(mouseEvent.getX(), mouseEvent.getY());
+            theStaffClipboard.getAPI().beginBand(mouseEvent.getX(), mouseEvent.getY());
         } else if (mouseEvent.isPrimaryButtonDown() || mouseEvent.isMiddleButtonDown()) {
-        	theStaffClipboard.getAPI().resizeBand(mouseEvent.getX(), mouseEvent.getY());
+            theStaffClipboard.getAPI().resizeBand(mouseEvent.getX(), mouseEvent.getY());
         } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
-        	theStaffClipboard.getAPI().endBand();
+            theStaffClipboard.getAPI().endBand();
         }
     }
 
     /**
-	 *
-	 * 
-	 * 
-	 * @relevant Values.NOTELINES_IN_THE_WINDOW,
-	 *           StateMachine.getMeasureLineNum()
-	 * 
-	 * @param x
-	 *            mouse pos for entire scene
-	 * @return -1 if out of bounds (x < 128 || x > 784), 0-9 otherwise
-	 */
-	private int getLine(double x) {
-		
-		if (x < 160 || x > 1008) {
-			return -1;
-		}
-		return (((int) x - 165) / 64);
-	}
-	
-	public StaffRubberBand getRubberBand() {
-		return rubberBand;
-	}
-	
-	/**
-	 * ----------------------------------------------------------------------
-	 * Initialization functions for layout. Needed to calculate line and
-	 * position.
-	 * ----------------------------------------------------------------------
-	 */
+     *
+     * 
+     * 
+     * @relevant Values.NOTELINES_IN_THE_WINDOW,
+     *           StateMachine.getMeasureLineNum()
+     * 
+     * @param x
+     *            mouse pos for entire scene
+     * @return -1 if out of bounds (x < 128 || x > 784), 0-9 otherwise
+     */
+    private int getLine(double x) {
+        
+        if (x < 160 || x > 1008) {
+            return -1;
+        }
+        return (((int) x - 165) / 64);
+    }
+    
+    public StaffRubberBand getRubberBand() {
+        return rubberBand;
+    }
+    
+    /**
+     * ----------------------------------------------------------------------
+     * Initialization functions for layout. Needed to calculate line and
+     * position.
+     * ----------------------------------------------------------------------
+     */
 
-	/**
-	 * defines min x bound for rubberband. REQUIRED.
-	 * 
-	 * @param x
-	 *            coord of left edge of the left-most line in the staff frame.
-	 *            Use absolute(window) coordinates
-	 */
-	public void initializeLineMinBound(double x) {
-		rubberBand.setLineMinBound(x);
-	}
+    /**
+     * defines min x bound for rubberband. REQUIRED.
+     * 
+     * @param x
+     *            coord of left edge of the left-most line in the staff frame.
+     *            Use absolute(window) coordinates
+     */
+    public void initializeLineMinBound(double x) {
+        rubberBand.setLineMinBound(x);
+    }
 
-	/**
-	 * defines max x bound for rubberband. REQUIRED
-	 * 
-	 * @param x
-	 *            coord of right edge of the right-most line in the staff frame.
-	 *            Use absolute(window) coordinates
-	 */
-	public void initializeLineMaxBound(double x) {
-		rubberBand.setLineMaxBound(x);
-	}
+    /**
+     * defines max x bound for rubberband. REQUIRED
+     * 
+     * @param x
+     *            coord of right edge of the right-most line in the staff frame.
+     *            Use absolute(window) coordinates
+     */
+    public void initializeLineMaxBound(double x) {
+        rubberBand.setLineMaxBound(x);
+    }
 
-	/**
-	 * defines min y bound for rubberband. REQUIRED. 
-	 * 
-	 * @param y
-	 *            coord of top edge of the top-most position in the staff frame.
-	 *            Use absolute(window) coordinates
-	 */
-	public void initializePositionMinBound(double y) {
-		rubberBand.setPositionMinBound(y);
-	}
+    /**
+     * defines min y bound for rubberband. REQUIRED. 
+     * 
+     * @param y
+     *            coord of top edge of the top-most position in the staff frame.
+     *            Use absolute(window) coordinates
+     */
+    public void initializePositionMinBound(double y) {
+        rubberBand.setPositionMinBound(y);
+    }
 
-	/**
-	 * defines max y bound for rubberband. REQUIRED. 
-	 * 
-	 * @param y
-	 *            coord of bottom edge of the bottom-most position in the staff
-	 *            frame. Use absolute(window) coordinates
-	 */
-	public void initializePositionMaxBound(double y) {
-		rubberBand.setPositionMaxBound(y);
-	}
+    /**
+     * defines max y bound for rubberband. REQUIRED. 
+     * 
+     * @param y
+     *            coord of bottom edge of the bottom-most position in the staff
+     *            frame. Use absolute(window) coordinates
+     */
+    public void initializePositionMaxBound(double y) {
+        rubberBand.setPositionMaxBound(y);
+    }
 
-	/**
-	 * defines extra bound for selecting volume for rubberband. should be >
-	 * positionMaxBound + marginVertical. REQUIRED
-	 * 
-	 * @param y
-	 *            coord of bottom edge of the bottom-most position in the staff
-	 *            frame. Use absolute(window) coordinates
-	 */
-	public void initializeVolumeYMaxCoord(double y) {
-		rubberBand.setVolumeYMaxCoord(y);
-	}
-	
-	//calculate this with line width
-	@Deprecated
-	public void initializeVolumeSpacing(double x) {
-		// Intentionally left blank.
-	}
+    /**
+     * defines extra bound for selecting volume for rubberband. should be >
+     * positionMaxBound + marginVertical. REQUIRED
+     * 
+     * @param y
+     *            coord of bottom edge of the bottom-most position in the staff
+     *            frame. Use absolute(window) coordinates
+     */
+    public void initializeVolumeYMaxCoord(double y) {
+        rubberBand.setVolumeYMaxCoord(y);
+    }
+    
+    //calculate this with line width
+    @Deprecated
+    public void initializeVolumeSpacing(double x) {
+        // Intentionally left blank.
+    }
 
-	/**
-	 * defines width between lines. REQUIRED. 
-	 * 
-	 * @param dx
-	 *            delta x 
-	 */
-	public void initializeLineSpacing(double dx) {
-		rubberBand.setLineSpacing(dx);
-	}
+    /**
+     * defines width between lines. REQUIRED. 
+     * 
+     * @param dx
+     *            delta x 
+     */
+    public void initializeLineSpacing(double dx) {
+        rubberBand.setLineSpacing(dx);
+    }
 
-	/**
-	 * defines height between positions. REQUIRED. 
-	 * 
-	 * @param dy
-	 *            delta y
-	 */
-	public void initializePositionSpacing(double dy) {
-		rubberBand.setPositionSpacing(dy);
-	}
+    /**
+     * defines height between positions. REQUIRED. 
+     * 
+     * @param dy
+     *            delta y
+     */
+    public void initializePositionSpacing(double dy) {
+        rubberBand.setPositionSpacing(dy);
+    }
 
-	/**
-	 * increases top and bottom margins around staff for drawing rubberband.
-	 * default is 0.0.
-	 * 
-	 * @param margin
-	 */
-	public void setMarginVertical(double m) {
-		rubberBand.setMarginVertical(m);
-	}	
-	
-	/**
-	 * increases left and right margins around staff for drawing rubberband.
-	 * default is 0.0.
-	 * 
-	 * @param margin
-	 */
-	public void setMarginHorizontal(double m) {
-		rubberBand.setMarginHorizontal(m);
-	}
-	
-	public void setScrollBarResizable(Slider slider) {
-		rubberBand.setScrollBarResizable(slider);
-	}
+    /**
+     * increases top and bottom margins around staff for drawing rubberband.
+     * default is 0.0.
+     * 
+     * @param margin
+     */
+    public void setMarginVertical(double m) {
+        rubberBand.setMarginVertical(m);
+    }   
+    
+    /**
+     * increases left and right margins around staff for drawing rubberband.
+     * default is 0.0.
+     * 
+     * @param margin
+     */
+    public void setMarginHorizontal(double m) {
+        rubberBand.setMarginHorizontal(m);
+    }
+    
+    public void setScrollBarResizable(Slider slider) {
+        rubberBand.setScrollBarResizable(slider);
+    }
 }

@@ -14,8 +14,8 @@ import gui.resources.SMPResourceUtil;
  * @since 2012.08.14
  */
 public class Values {
-	
-	private Values() {}
+    
+    private Values() {}
 
     /** The current version number of the program. */
     public static final String VERSION = SMPResourceUtil.getProperty("gradle.bridge.properties", "version");
@@ -140,11 +140,11 @@ public class Values {
 
     /** Array of notes that we can see on the staff. */
     public static final Pitch[] STAFF_NOTES = {
-    		Pitch.valueOf(36), Pitch.valueOf(38), Pitch.valueOf(40),
-    		Pitch.valueOf(41), Pitch.valueOf(43), Pitch.valueOf(45),
-    		Pitch.valueOf(47), Pitch.valueOf(48), Pitch.valueOf(50),
-    		Pitch.valueOf(52), Pitch.valueOf(53), Pitch.valueOf(55),
-    		Pitch.valueOf(57), Pitch.valueOf(59), Pitch.valueOf(60),
+            Pitch.valueOf(36), Pitch.valueOf(38), Pitch.valueOf(40),
+            Pitch.valueOf(41), Pitch.valueOf(43), Pitch.valueOf(45),
+            Pitch.valueOf(47), Pitch.valueOf(48), Pitch.valueOf(50),
+            Pitch.valueOf(52), Pitch.valueOf(53), Pitch.valueOf(55),
+            Pitch.valueOf(57), Pitch.valueOf(59), Pitch.valueOf(60),
             Pitch.valueOf(62), Pitch.valueOf(64), Pitch.valueOf(65),
             Pitch.valueOf(67), Pitch.valueOf(69), Pitch.valueOf(71),
             Pitch.valueOf(72), Pitch.valueOf(74), Pitch.valueOf(76),
@@ -152,84 +152,84 @@ public class Values {
             Pitch.valueOf(83), Pitch.valueOf(84) };
     
     public static final String[] STAFF_NOTE_NAMES = {
-    		"C2", "D2", "E2", "F2", "G2", "A2", "B2",
-    		"C3", "D3", "E3", "F3", "G3", "A3", "B3",
-    		"C4", "D4", "E4", "F4", "G4", "A4", "B4",
-    		"C5", "D5", "E5", "F5", "G5", "A5", "B5",
-    		"C6"
+            "C2", "D2", "E2", "F2", "G2", "A2", "B2",
+            "C3", "D3", "E3", "F3", "G3", "A3", "B3",
+            "C4", "D4", "E4", "F4", "G4", "A4", "B4",
+            "C5", "D5", "E5", "F5", "G5", "A5", "B5",
+            "C6"
     };
     
-	/**
-	 * The max undo/redo stack size for recorded commands.
-	 * 
-	 * @since v1.1.1
-	 */
-	public static final int MAX_UNDO_REDO_SIZE = 1000;
+    /**
+     * The max undo/redo stack size for recorded commands.
+     * 
+     * @since v1.1.1
+     */
+    public static final int MAX_UNDO_REDO_SIZE = 1000;
 
-	/**
-	 * This works in lieu of preprocessor directives to define the
-	 * platform-specific folder for AppData. Use like this: 
-	 * 'new PlatformDependency().getPlatformFolder()'
-	 * 
-	 * @author j574y923
-	 * @since v1.1.2
-	 */
-	private static class PlatformDependency {
+    /**
+     * This works in lieu of preprocessor directives to define the
+     * platform-specific folder for AppData. Use like this: 
+     * 'new PlatformDependency().getPlatformFolder()'
+     * 
+     * @author j574y923
+     * @since v1.1.2
+     */
+    private static class PlatformDependency {
 
-		/** the platform specific folder for appdata */
-		private String platformFolder;
-		
-		/**
-		 * Instantiates the platformFolder. Uses if-else statements because
-		 * preprocessor directives are non-existent in Java.
-		 */
-		public PlatformDependency() {
+        /** the platform specific folder for appdata */
+        private String platformFolder;
+        
+        /**
+         * Instantiates the platformFolder. Uses if-else statements because
+         * preprocessor directives are non-existent in Java.
+         */
+        public PlatformDependency() {
 
-			/* cross-platform solution taken from https://stackoverflow.com/a/16660314/9363442 */
-			String os = (System.getProperty("os.name")).toUpperCase();
-			/* if it is some version of Windows */
-			if (os.contains("WIN")) {
-				// it is simply the location of the "AppData" folder
-				platformFolder = System.getenv("AppData")
-				        + File.separatorChar + "Super Mario Paint";
-			}
+            /* cross-platform solution taken from https://stackoverflow.com/a/16660314/9363442 */
+            String os = (System.getProperty("os.name")).toUpperCase();
+            /* if it is some version of Windows */
+            if (os.contains("WIN")) {
+                // it is simply the location of the "AppData" folder
+                platformFolder = System.getenv("AppData")
+                        + File.separatorChar + "Super Mario Paint";
+            }
             /* Otherwise, we assume Linux or Mac */
-			else if (os.contains("MAC")) {
-			    platformFolder = System.getProperty("user.home")
-			            + File.separatorChar + "Library"
-			            + File.separatorChar + "Application Support"
-			            + File.separatorChar + "Super Mario Paint";
-			} else {
-			    /* Assuming we are on Linux */
-			    platformFolder = System.getProperty("user.home")
-			            + File.separatorChar + ".supermariopaint";
-			}
-		}
-		
-		/**
-		 * @return the platform specific folder for appdata
-		 */
-		public String getPlatformFolder() {
-			return platformFolder;
-		}
-	}
-	
-	public static final String SMP_FOLDER = new PlatformDependency().getPlatformFolder();
-	
-	public static final String FXML = "MainWindow.fxml";
-	
-	/**
-	 * This is where we store soundfonts.
-	 */
-	public static final String SOUNDFONTS_FOLDER =
-	        SMP_FOLDER + File.separatorChar + "SoundFonts" + File.separatorChar;
-	
-	public static final String DEFAULT_SOUNDFONT = "soundset3.sf2";
-	
-	/**
-	 * Sprites for the default theme are stored here. Replacing them will change the default
-	 * appearance of the program.
-	 */
-	public static final String SPRITES_FOLDER =
-	        SMP_FOLDER + File.separatorChar + "sprites";
+            else if (os.contains("MAC")) {
+                platformFolder = System.getProperty("user.home")
+                        + File.separatorChar + "Library"
+                        + File.separatorChar + "Application Support"
+                        + File.separatorChar + "Super Mario Paint";
+            } else {
+                /* Assuming we are on Linux */
+                platformFolder = System.getProperty("user.home")
+                        + File.separatorChar + ".supermariopaint";
+            }
+        }
+        
+        /**
+         * @return the platform specific folder for appdata
+         */
+        public String getPlatformFolder() {
+            return platformFolder;
+        }
+    }
+    
+    public static final String SMP_FOLDER = new PlatformDependency().getPlatformFolder();
+    
+    public static final String FXML = "MainWindow.fxml";
+    
+    /**
+     * This is where we store soundfonts.
+     */
+    public static final String SOUNDFONTS_FOLDER =
+            SMP_FOLDER + File.separatorChar + "SoundFonts" + File.separatorChar;
+    
+    public static final String DEFAULT_SOUNDFONT = "soundset3.sf2";
+    
+    /**
+     * Sprites for the default theme are stored here. Replacing them will change the default
+     * appearance of the program.
+     */
+    public static final String SPRITES_FOLDER =
+            SMP_FOLDER + File.separatorChar + "sprites";
 }

@@ -29,111 +29,111 @@ import javafx.scene.paint.Color;
 @SuppressWarnings("unused")
 public class StaffClipboard {
 
-	public static final Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
-	
-	private Staff theStaff;
-	private SMPFXController controller;
-	private Pane rubberBandLayer;
-	private StaffRubberBand rubberBand;
-	private StaffRubberBandEventHandler rbeh;
-	
-	/** The functions class for copy, cut, paste, etc. */
-	private StaffClipboardAPI theAPI;
-	
-	/** The list that keeps track of all the selections' bounds made by the user */
-	private Map<Integer, StaffNoteLine> selection;
-	
-	/** The list that will keep track of copied notes (and volumes) */
-	private Map<Integer, StaffNoteLine> copiedData;
+    public static final Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
+    
+    private Staff theStaff;
+    private SMPFXController controller;
+    private Pane rubberBandLayer;
+    private StaffRubberBand rubberBand;
+    private StaffRubberBandEventHandler rbeh;
+    
+    /** The functions class for copy, cut, paste, etc. */
+    private StaffClipboardAPI theAPI;
+    
+    /** The list that keeps track of all the selections' bounds made by the user */
+    private Map<Integer, StaffNoteLine> selection;
+    
+    /** The list that will keep track of copied notes (and volumes) */
+    private Map<Integer, StaffNoteLine> copiedData;
 
-	/** Volumes aren't node references so we keep track of the volumes' lines */
-	private Set<Integer> highlightedVolumes;
-	
-	/**
-	 * The listener that will update which volume bars are highlighted every
-	 * scrollbar change
-	 */
-	private ChangeListener<Number> highlightedVolumesRedrawer;
+    /** Volumes aren't node references so we keep track of the volumes' lines */
+    private Set<Integer> highlightedVolumes;
+    
+    /**
+     * The listener that will update which volume bars are highlighted every
+     * scrollbar change
+     */
+    private ChangeListener<Number> highlightedVolumesRedrawer;
 
-	public StaffClipboard(StaffRubberBand rb, Staff st, SMPFXController ct) {
+    public StaffClipboard(StaffRubberBand rb, Staff st, SMPFXController ct) {
 
-		rubberBand = rb;
-		theStaff = st;
-		controller = ct;
+        rubberBand = rb;
+        theStaff = st;
+        controller = ct;
 
-		selection = new HashMap<>();
-		copiedData = new HashMap<>();
-		
-		//TODO: merge staffclipboard and staffclipboardapi together
-		theAPI = new StaffClipboardAPI(this, theStaff, ct.getModifySongManager());
+        selection = new HashMap<>();
+        copiedData = new HashMap<>();
+        
+        //TODO: merge staffclipboard and staffclipboardapi together
+        theAPI = new StaffClipboardAPI(this, theStaff, ct.getModifySongManager());
 
-		redrawUI(ct);
-		
-		rubberBandLayer = controller.getBasePane();
-		rbeh = new StaffRubberBandEventHandler(rubberBand, controller, rubberBandLayer, this);
+        redrawUI(ct);
+        
+        rubberBandLayer = controller.getBasePane();
+        rbeh = new StaffRubberBandEventHandler(rubberBand, controller, rubberBandLayer, this);
         initializeRBEH(rbeh, controller);
-		rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
-		
-		initializeHighlightedVolumes(ct);
-	}
+        rubberBandLayer.addEventHandler(MouseEvent.ANY, rbeh);
+        
+        initializeHighlightedVolumes(ct);
+    }
 
-	private void initializeHighlightedVolumes(SMPFXController ct) {
-		
-		final ObservableList<Node> volumeBars = ct.getVolumeBars().getChildren();
-		ImageView theVolBar = (ImageView) ((StackPane)volumeBars.get(0)).getChildren().get(0);
-		final Blend highlightBlendVolume = new Blend(
-	            BlendMode.SRC_OVER,
-	            null,
-	            new ColorInput(
-	            		-theVolBar.getFitWidth(),
-	                    0,
-	                    theVolBar.getFitWidth() * 3,
-	                    theVolBar.getFitHeight(),
-	                    StaffClipboard.HIGHLIGHT_FILL
-	            ));
+    private void initializeHighlightedVolumes(SMPFXController ct) {
+        
+        final ObservableList<Node> volumeBars = ct.getVolumeBars().getChildren();
+        ImageView theVolBar = (ImageView) ((StackPane)volumeBars.get(0)).getChildren().get(0);
+        final Blend highlightBlendVolume = new Blend(
+                BlendMode.SRC_OVER,
+                null,
+                new ColorInput(
+                        -theVolBar.getFitWidth(),
+                        0,
+                        theVolBar.getFitWidth() * 3,
+                        theVolBar.getFitHeight(),
+                        StaffClipboard.HIGHLIGHT_FILL
+                ));
 
-		highlightedVolumes = new HashSet<>();
-		highlightedVolumesRedrawer = (ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
+        highlightedVolumes = new HashSet<>();
+        highlightedVolumesRedrawer = (ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            for(int i = 0; i < Values.NOTELINES_IN_THE_WINDOW; i++) {
 
-				// we want the actual volumebar image to highlight
-				ImageView curVolBar = (ImageView) ((StackPane) volumeBars.get(i)).getChildren().get(0);
+                // we want the actual volumebar image to highlight
+                ImageView curVolBar = (ImageView) ((StackPane) volumeBars.get(i)).getChildren().get(0);
 
-				if (highlightedVolumes.contains(i + newValue.intValue()))
-					curVolBar.setEffect(highlightBlendVolume);
-				else
-					curVolBar.setEffect(null);
-			}
-		};
-		
-		ct.getScrollbar().valueProperty().addListener(highlightedVolumesRedrawer);
-	}
-	
-	/**
-	 * trigger layout pass in basePane and all its children. this will
-	 * initialize the bounds for all UI components.
-	 * 
-	 * components cannot be modified until this function initializes them.
-	 * 
-	 * @param ct
-	 */
-	private void redrawUI(SMPFXController ct) {
-		AnchorPane basePane = ct.getBasePane();
-		basePane.applyCss();//requestLayout??
-		basePane.layout();
-	}
-	
-	/**
-	 * redrawUI before calling this 
-	 * 
-	 * @param rbeh
-	 * @param ct
-	 */
-	private void initializeRBEH(StaffRubberBandEventHandler rbeh, SMPFXController ct) {
-	    // The original code would compute the following values by inspecting certain nodes
-	    // in the scene. Since I want to encapsulate the staff code, and since those values
-	    // are always the same (until we make the staff resizable), I'm hardcoding the values
-	    // until a better solution can be implemented. -rozlyn
+                if (highlightedVolumes.contains(i + newValue.intValue()))
+                    curVolBar.setEffect(highlightBlendVolume);
+                else
+                    curVolBar.setEffect(null);
+            }
+        };
+        
+        ct.getScrollbar().valueProperty().addListener(highlightedVolumesRedrawer);
+    }
+    
+    /**
+     * trigger layout pass in basePane and all its children. this will
+     * initialize the bounds for all UI components.
+     * 
+     * components cannot be modified until this function initializes them.
+     * 
+     * @param ct
+     */
+    private void redrawUI(SMPFXController ct) {
+        AnchorPane basePane = ct.getBasePane();
+        basePane.applyCss();//requestLayout??
+        basePane.layout();
+    }
+    
+    /**
+     * redrawUI before calling this 
+     * 
+     * @param rbeh
+     * @param ct
+     */
+    private void initializeRBEH(StaffRubberBandEventHandler rbeh, SMPFXController ct) {
+        // The original code would compute the following values by inspecting certain nodes
+        // in the scene. Since I want to encapsulate the staff code, and since those values
+        // are always the same (until we make the staff resizable), I'm hardcoding the values
+        // until a better solution can be implemented. -rozlyn
         rbeh.initializeLineMinBound(185);
         rbeh.initializeLineMaxBound(1017);
         rbeh.initializeLineSpacing(64);
@@ -143,89 +143,89 @@ public class StaffClipboard {
         rbeh.initializeVolumeYMaxCoord(591);
         rbeh.setMarginVertical(5);
         rbeh.setMarginHorizontal(183);
-		
-//		//initialize lineMinBound
-//		HBox staffInstruments = ct.getStaffInstruments();
-//		ObservableList<Node> instrumentLines = staffInstruments.getChildren();
-//		VBox firstLine = (VBox) instrumentLines.get(0);
-//		Bounds firstLineBounds = firstLine.localToScene(firstLine.getBoundsInLocal()); 
-//		rbeh.initializeLineMinBound(firstLineBounds.getMinX());
+        
+//      //initialize lineMinBound
+//      HBox staffInstruments = ct.getStaffInstruments();
+//      ObservableList<Node> instrumentLines = staffInstruments.getChildren();
+//      VBox firstLine = (VBox) instrumentLines.get(0);
+//      Bounds firstLineBounds = firstLine.localToScene(firstLine.getBoundsInLocal()); 
+//      rbeh.initializeLineMinBound(firstLineBounds.getMinX());
 //
-//		//initialize lineMaxBound
-//		VBox lastLine = (VBox) instrumentLines.get(instrumentLines.size() - 1);
-//		Bounds lastLineBounds = lastLine.localToScene(lastLine.getBoundsInLocal()); 
-//		rbeh.initializeLineMaxBound(lastLineBounds.getMaxX());
-//		
-//		//initialize lineSpacing
-//		rbeh.initializeLineSpacing(firstLineBounds.getWidth());
-//		
-//		//initialize positionMinBound
-//		ObservableList<Node> positions = firstLine.getChildren();
-//		StackPane firstPosition = (StackPane) positions.get(0);
-//		Bounds firstPositionBounds = firstPosition.localToScene(firstPosition.getBoundsInLocal()); 
-//		rbeh.initializePositionMinBound(firstPositionBounds.getMinY());		
-//		
-//		//initialize positionMaxBound
-//		StackPane lastPosition = (StackPane) positions.get(positions.size() - 1);
-//		Bounds lastPositionBounds = lastPosition.localToScene(lastPosition.getBoundsInLocal());
-//		rbeh.initializePositionMaxBound(lastPositionBounds.getMaxY());
-//	
-//		//initialize positionSpacing
-//		StackPane secondPosition = (StackPane) positions.get(1);
-//		Bounds secondPositionBounds = secondPosition.localToScene(secondPosition.getBoundsInLocal());
-//		rbeh.initializePositionSpacing((secondPositionBounds.getMinY() - firstPositionBounds.getMinY()) * 2);
-//		
-//		//initialize volume YMax coordinate
-//		HBox volumeBars = ct.getVolumeBars();
-//		Bounds volumeBarsBounds = volumeBars.localToScene(volumeBars.getBoundsInLocal());
-//		rbeh.initializeVolumeYMaxCoord(volumeBarsBounds.getMaxY());
-//		
-//		//set margins
-//		StackPane staffPane = ct.getStaffPane();
-//		Bounds staffPaneBounds = staffPane.localToScene(staffPane.getBoundsInLocal());
-//		double marginDeltaX = firstLineBounds.getMinX() - staffPaneBounds.getMinX();
-//		double marginDeltaY = firstPositionBounds.getMinY() - staffPaneBounds.getMinY();
-//		rbeh.setMarginVertical(marginDeltaY);
-//		rbeh.setMarginHorizontal(marginDeltaX);
-		
-		//set scrollbar resizing
-		rbeh.setScrollBarResizable(controller.getScrollbar());
-	}
-	
-	public Map<Integer, StaffNoteLine> getSelection() {
-		return selection;
-	}
-	
-	public Map<Integer, StaffNoteLine> getCopiedData() {
-		return copiedData;
-	}
-	
-	public Set<Integer> getHighlightedVolumes() {
-		return highlightedVolumes;
-	}
-	
-	public ChangeListener<Number> getHighlightedVolumesRedrawer() {
-		return highlightedVolumesRedrawer;
-	}
-	
-	// temp? merge the two classes together?
-	public StaffClipboardAPI getAPI() {
-		return theAPI;
-	}
-	
-	/**
-	 * @return the node the rubberband is added to or removed from
-	 * @since v1.1.2
-	 */
-	public Pane getRubberBandLayer() {
-		return rubberBandLayer;
-	}
-	
-	/**
-	 * @return the rubberband
-	 * @since v1.1.2
-	 */
-	public StaffRubberBand getRubberBand() {
-		return rubberBand;
-	}
+//      //initialize lineMaxBound
+//      VBox lastLine = (VBox) instrumentLines.get(instrumentLines.size() - 1);
+//      Bounds lastLineBounds = lastLine.localToScene(lastLine.getBoundsInLocal()); 
+//      rbeh.initializeLineMaxBound(lastLineBounds.getMaxX());
+//      
+//      //initialize lineSpacing
+//      rbeh.initializeLineSpacing(firstLineBounds.getWidth());
+//      
+//      //initialize positionMinBound
+//      ObservableList<Node> positions = firstLine.getChildren();
+//      StackPane firstPosition = (StackPane) positions.get(0);
+//      Bounds firstPositionBounds = firstPosition.localToScene(firstPosition.getBoundsInLocal()); 
+//      rbeh.initializePositionMinBound(firstPositionBounds.getMinY());     
+//      
+//      //initialize positionMaxBound
+//      StackPane lastPosition = (StackPane) positions.get(positions.size() - 1);
+//      Bounds lastPositionBounds = lastPosition.localToScene(lastPosition.getBoundsInLocal());
+//      rbeh.initializePositionMaxBound(lastPositionBounds.getMaxY());
+//  
+//      //initialize positionSpacing
+//      StackPane secondPosition = (StackPane) positions.get(1);
+//      Bounds secondPositionBounds = secondPosition.localToScene(secondPosition.getBoundsInLocal());
+//      rbeh.initializePositionSpacing((secondPositionBounds.getMinY() - firstPositionBounds.getMinY()) * 2);
+//      
+//      //initialize volume YMax coordinate
+//      HBox volumeBars = ct.getVolumeBars();
+//      Bounds volumeBarsBounds = volumeBars.localToScene(volumeBars.getBoundsInLocal());
+//      rbeh.initializeVolumeYMaxCoord(volumeBarsBounds.getMaxY());
+//      
+//      //set margins
+//      StackPane staffPane = ct.getStaffPane();
+//      Bounds staffPaneBounds = staffPane.localToScene(staffPane.getBoundsInLocal());
+//      double marginDeltaX = firstLineBounds.getMinX() - staffPaneBounds.getMinX();
+//      double marginDeltaY = firstPositionBounds.getMinY() - staffPaneBounds.getMinY();
+//      rbeh.setMarginVertical(marginDeltaY);
+//      rbeh.setMarginHorizontal(marginDeltaX);
+        
+        //set scrollbar resizing
+        rbeh.setScrollBarResizable(controller.getScrollbar());
+    }
+    
+    public Map<Integer, StaffNoteLine> getSelection() {
+        return selection;
+    }
+    
+    public Map<Integer, StaffNoteLine> getCopiedData() {
+        return copiedData;
+    }
+    
+    public Set<Integer> getHighlightedVolumes() {
+        return highlightedVolumes;
+    }
+    
+    public ChangeListener<Number> getHighlightedVolumesRedrawer() {
+        return highlightedVolumesRedrawer;
+    }
+    
+    // temp? merge the two classes together?
+    public StaffClipboardAPI getAPI() {
+        return theAPI;
+    }
+    
+    /**
+     * @return the node the rubberband is added to or removed from
+     * @since v1.1.2
+     */
+    public Pane getRubberBandLayer() {
+        return rubberBandLayer;
+    }
+    
+    /**
+     * @return the rubberband
+     * @since v1.1.2
+     */
+    public StaffRubberBand getRubberBand() {
+        return rubberBand;
+    }
 }
