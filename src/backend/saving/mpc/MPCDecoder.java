@@ -48,17 +48,17 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      *             IF some error occurs during the decoding process.
      */
     public StaffSequence decode(File f) throws ParseException, IOException {
-    	StringBuilder sb = new StringBuilder();
-    	
-    	try (
-    			FileReader fr = new FileReader(f);
-    			BufferedReader bf = new BufferedReader(fr)
-    	) {
-    		String line = "";
-    		while ((line = bf.readLine()) != null) {
-    			sb.append(line);
-    		}
-    	}
+        StringBuilder sb = new StringBuilder();
+        
+        try (
+                FileReader fr = new FileReader(f);
+                BufferedReader bf = new BufferedReader(fr)
+        ) {
+            String line = "";
+            while ((line = bf.readLine()) != null) {
+                sb.append(line);
+            }
+        }
         
         return decode(sb.toString());
     }
@@ -99,12 +99,12 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      */
     private StaffSequence populateSequence(String timeSig,
             List<String> songData, String tempo) {
-    	List<StaffNoteLine> lines = new ArrayList<>(Values.LINES_PER_MPC_SONG);
+        List<StaffNoteLine> lines = new ArrayList<>(Values.LINES_PER_MPC_SONG);
 
         for (String s : songData) {
             StaffNoteLine sl = new StaffNoteLine();
             if (s.length() <= 1) {
-            	lines.addLast(sl);
+                lines.addLast(sl);
                 continue;
             }
             List<String> inst = dice(s);
@@ -132,7 +132,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
                 sl.getNotes().add(sn);
             }
             sl.setVolume(vol);
-        	lines.addLast(sl);
+            lines.addLast(sl);
         }
 
         StaffSequence song = new StaffSequence(lines);

@@ -11,9 +11,9 @@ import gui.Values;
  */
 public class StaffNote {
 
-	/**
-	 * The position of this note in a vertical line.
-	 */
+    /**
+     * The position of this note in a vertical line.
+     */
     private int verticalPosition;
 
     /**
@@ -27,7 +27,7 @@ public class StaffNote {
     private MuteModifier muteModifier;
 
     /**
-	 * The instrument this note belongs to.
+     * The instrument this note belongs to.
      */
     private InstrumentIndex instrument;
     
@@ -123,7 +123,7 @@ public class StaffNote {
      * @return The pitch of this note
      */
     public Pitch getPitch() {
-    	return Pitch.valueOf(Values.STAFF_NOTES[verticalPosition].getValue() + accidental.getOffset());
+        return Pitch.valueOf(Values.STAFF_NOTES[verticalPosition].getValue() + accidental.getOffset());
     }
 
     /**
@@ -138,9 +138,9 @@ public class StaffNote {
         
         StaffNote other = (StaffNote) o;
         return other.verticalPosition == verticalPosition
-        		&& other.instrument == instrument
-        		&& other.accidental == accidental
-        		&& other.muteModifier == muteModifier;
+                && other.instrument == instrument
+                && other.accidental == accidental
+                && other.muteModifier == muteModifier;
     }
 
 }

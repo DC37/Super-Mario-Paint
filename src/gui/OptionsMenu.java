@@ -120,7 +120,7 @@ public class OptionsMenu {
         staff.redraw();
     }
 
-	/**
+    /**
      * @return A ComboBox listing all soundfonts in the AppData folder and an
      *         additional item to "Add Soundfont"
      */
@@ -249,7 +249,7 @@ public class OptionsMenu {
         updateNumVisibility();
     }
 
-	/** Updates the default volume of the program notes. */
+    /** Updates the default volume of the program notes. */
     private void changeDefaultVol() {
         int vol = (int) defaultVolume.getValue();
         Values.DEFAULT_VELOCITY = vol >= 128 ? 127 : vol;
@@ -314,74 +314,74 @@ public class OptionsMenu {
         
         staff.setTimeSignature(t);
     }
-	
-	/**
-	 * Creates the soundfont folder if it does not already exists.
-	 */
-	private static File getSoundfontFolder() throws IOException {
-	    File dir = new File(Values.SOUNDFONTS_FOLDER);
-	    Files.createDirectories(dir.toPath());
-	    return dir;
-	}
     
-	/**
-	 * @return The list of filenames *.sf2 in the soundfonts folder.
-	 * @since v1.1.2
-	 */
-	private static String[] getSoundfontsList() throws IOException {
-		File soundfontsFolder = getSoundfontFolder();
-		
-		return soundfontsFolder.list(
-				(File dir, String name) -> name.toLowerCase().endsWith(".sf2"));
+    /**
+     * Creates the soundfont folder if it does not already exists.
+     */
+    private static File getSoundfontFolder() throws IOException {
+        File dir = new File(Values.SOUNDFONTS_FOLDER);
+        Files.createDirectories(dir.toPath());
+        return dir;
     }
-	
-	/**
-	 * Copies the soundfont file to AppData.
-	 * 
-	 * @param sf
-	 *            The soundfont file.
-	 * @return if soundfont exists in AppData now
-	 * @since v1.1.2
-	 */
-	private static boolean addSoundfont(File sf, Window owner) {
-		String sfName = sf.getName();
-		if(sfName.isEmpty())
-			return false;
-		File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
-		
-		if (destSf.exists()) {
-		    String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-		    if (!Dialog.showYesNoDialog("Options", mssg, owner))
-		        return false;
-		}
-		
-		try {
-			Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
+    
+    /**
+     * @return The list of filenames *.sf2 in the soundfonts folder.
+     * @since v1.1.2
+     */
+    private static String[] getSoundfontsList() throws IOException {
+        File soundfontsFolder = getSoundfontFolder();
+        
+        return soundfontsFolder.list(
+                (File dir, String name) -> name.toLowerCase().endsWith(".sf2"));
+    }
+    
+    /**
+     * Copies the soundfont file to AppData.
+     * 
+     * @param sf
+     *            The soundfont file.
+     * @return if soundfont exists in AppData now
+     * @since v1.1.2
+     */
+    private static boolean addSoundfont(File sf, Window owner) {
+        String sfName = sf.getName();
+        if(sfName.isEmpty())
+            return false;
+        File destSf = new File(Values.SOUNDFONTS_FOLDER + sfName);
+        
+        if (destSf.exists()) {
+            String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
+            if (!Dialog.showYesNoDialog("Options", mssg, owner))
+                return false;
+        }
+        
+        try {
+            Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     private CheckBox makeBarsVisibleCheckbox() {
-		CheckBox box = new CheckBox("Bars visible");
-		box.setSelected(Settings.barsVisible);
-		return box;
-	}
+        CheckBox box = new CheckBox("Bars visible");
+        box.setSelected(Settings.barsVisible);
+        return box;
+    }
 
     private void updateBarVisibility() {
-    	Settings.barsVisible = barsVisibleBox.isSelected();
-	}
+        Settings.barsVisible = barsVisibleBox.isSelected();
+    }
 
     private CheckBox makeNumsVisibleCheckbox() {
-		CheckBox box = new CheckBox("Measure numbers visible");
-		box.setSelected(Settings.numsVisible);
-		return box;
-	}
+        CheckBox box = new CheckBox("Measure numbers visible");
+        box.setSelected(Settings.numsVisible);
+        return box;
+    }
 
     private void updateNumVisibility() {
-    	Settings.numsVisible = numsVisibleBox.isSelected();
-	}
+        Settings.numsVisible = numsVisibleBox.isSelected();
+    }
 
 }

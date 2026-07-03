@@ -97,7 +97,7 @@ public class Staff {
     }
     
     public SoundPlayer getSoundPlayer() {
-    	return soundPlayer;
+        return soundPlayer;
     }
 
     /**
@@ -276,15 +276,15 @@ public class Staff {
     /**
      * Stop all sounds on the staff.
      */
-	public void stopSounds() {
-		soundPlayer.stopAllInstruments();
-		MidiChannel [] chan = soundPlayer.getChannels();
-		for (int ind = 0; ind < InstrumentIndex.values().length; ind++) {
-	        if (chan[ind] != null) {
-	            chan[ind].allSoundOff();
-	        }
-		}
-	}
+    public void stopSounds() {
+        soundPlayer.stopAllInstruments();
+        MidiChannel [] chan = soundPlayer.getChannels();
+        for (int ind = 0; ind < InstrumentIndex.values().length; ind++) {
+            if (chan[ind] != null) {
+                chan[ind].allSoundOff();
+            }
+        }
+    }
 
     /** @return The current song that we are displaying. */
     public synchronized StaffSequence getSequence() {
@@ -560,11 +560,11 @@ public class Staff {
                 // but for some reason the program is more stable that way
                 // Leaving things as they are until someone can figure it out --rozlyn
                 Platform.runLater(() -> {
-                	try {
-                		playSoundLine(index);
-                	} finally {
-                		queue--;
-                	}
+                    try {
+                        playSoundLine(index);
+                    } finally {
+                        queue--;
+                    }
                 });
             }            
 
@@ -573,7 +573,7 @@ public class Staff {
              * @param index Position of the line to play relative to the current position in the sequence
              */
             private void playSoundLine(int index) {
-            	int currentLine = StateMachine.getMeasureLineNum();
+                int currentLine = StateMachine.getMeasureLineNum();
                 soundPlayer.playSoundLine(theSequence.getLine(currentLine + index));
             }
 
@@ -645,12 +645,12 @@ public class Staff {
             }
             
             /**
-			 * Sets the soundset.
-			 *
-			 * @param soundset
-			 *            The soundset.
-			 * @since v1.1.2
-			 */
+             * Sets the soundset.
+             *
+             * @param soundset
+             *            The soundset.
+             * @since v1.1.2
+             */
             private void setSoundset(final String soundset) {
                 if (!soundPlayer.loadFromCache(soundset)) {
                     try {
@@ -660,7 +660,7 @@ public class Staff {
                     }
                     soundPlayer.storeInCache();
                 }
-			}
+            }
         }
     }
 }

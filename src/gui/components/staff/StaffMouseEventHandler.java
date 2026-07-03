@@ -63,20 +63,20 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            linked to.
      * @param ct 
      * @param i
-     * 			  The program's image loader.
+     *            The program's image loader.
      * @param cm
-     * 			  The undo/redo manager.
+     *            The undo/redo manager.
      */
     public StaffMouseEventHandler(Staff s, ModifySongManager cm) {
         theStaff = s;        
         commandManager = cm;
     }
 
-	@Override
-	public void handle(MouseEvent event) {
-	    if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
-	        return;
-    	
+    @Override
+    public void handle(MouseEvent event) {
+        if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
+            return;
+        
         InstrumentIndex theInd = StateMachine.getSelectedInstrument();
         boolean newNote = false;
         int lineTmp = getLine(event.getX());
@@ -91,21 +91,21 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         //new note
         newNote = updateNote(lineTmp, positionTmp);
         acc = computeAccidental();
-    	
+        
         // Drag-add notes, hold e to drag-remove notes
-		if (event.isPrimaryButtonDown() && newNote) {
-			leftMousePressed(theInd, lineTmp);
-			event.consume();
-			StateMachine.setSongModified(true);
-		}
-		// Drag-remove notes
-		else if (event.isSecondaryButtonDown() && newNote) {
-			rightMousePressed(theInd);
-			event.consume();
-			StateMachine.setSongModified(true);
-		}
-		else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			MouseButton b = event.getButton();
+        if (event.isPrimaryButtonDown() && newNote) {
+            leftMousePressed(theInd, lineTmp);
+            event.consume();
+            StateMachine.setSongModified(true);
+        }
+        // Drag-remove notes
+        else if (event.isSecondaryButtonDown() && newNote) {
+            rightMousePressed(theInd);
+            event.consume();
+            StateMachine.setSongModified(true);
+        }
+        else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+            MouseButton b = event.getButton();
             if (b == MouseButton.PRIMARY)
                 leftMousePressed(theInd, lineTmp);
             else if (b == MouseButton.SECONDARY)
@@ -120,41 +120,41 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             event.consume();
         } 
         else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-        	mouseReleased();
+            mouseReleased();
         }
     }
 
-	private void mouseReleased() {
-		commandManager.record();
-	}
+    private void mouseReleased() {
+        commandManager.record();
+    }
 
-	/**
-	 * Takes in a line and position and check if they are valid.
-	 */
-	private boolean validNote(int lineTmp, int positionTmp) {
-		return (lineTmp >= 0 && positionTmp >= 0);
-	}
-	
-	/**
-	 * Updates member variables to new note values.
-	 * 
-	 * @param lineTmp
-	 *            the note's line
-	 * @param positionTmp
-	 *            the note's position
-	 * @return success if we updated note to new line or position
-	 */
-	private boolean updateNote(int lineTmp, int positionTmp) {
-		if(line != lineTmp || position != positionTmp){
-			
-			line = lineTmp;
-			position = positionTmp;
-			
-			return true;
-		}
-		return false;
-	}
-	
+    /**
+     * Takes in a line and position and check if they are valid.
+     */
+    private boolean validNote(int lineTmp, int positionTmp) {
+        return (lineTmp >= 0 && positionTmp >= 0);
+    }
+    
+    /**
+     * Updates member variables to new note values.
+     * 
+     * @param lineTmp
+     *            the note's line
+     * @param positionTmp
+     *            the note's position
+     * @return success if we updated note to new line or position
+     */
+    private boolean updateNote(int lineTmp, int positionTmp) {
+        if(line != lineTmp || position != positionTmp){
+            
+            line = lineTmp;
+            position = positionTmp;
+            
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * The method that is called when the left mouse button is pressed. This is
      * generally the signal to add an instrument to that line.
@@ -288,8 +288,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected.
      */
     private void mouseExited(InstrumentIndex theInd) {
-    	theStaff.getDisplayManager().resetSilhouette();
-    	StateMachine.setCursorOnStaff(false);
+        theStaff.getDisplayManager().resetSilhouette();
+        StateMachine.setCursorOnStaff(false);
     }
 
     /**
@@ -315,9 +315,9 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
     @Override
     public String toString() {
-    	return String.format("Line: %d%nPosition: %d%nAccidental: %s",
-    			StateMachine.getMeasureLineNum() + line,
-    			position, acc);
+        return String.format("Line: %d%nPosition: %d%nAccidental: %s",
+                StateMachine.getMeasureLineNum() + line,
+                position, acc);
     }
     
     /**
@@ -326,9 +326,9 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      * @return line in the current window based on x coord
      */
     private static int getLine(double x){
-    	if(x < 165 || x >= 997)
-    		return -1;
-    	return (((int)x - 165) / 64);
+        if(x < 165 || x >= 997)
+            return -1;
+        return (((int)x - 165) / 64);
     }
     
     /**
@@ -337,9 +337,9 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      * @return note position based on y coord
      */
     private static int getPosition(double y){
-    	if(y < 66 || y >= 526)
-    		return -1;
-    	return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
+        if(y < 66 || y >= 526)
+            return -1;
+        return Values.NOTES_IN_A_LINE - (((int)y - 66) / 16) - 1;
     }
     
 

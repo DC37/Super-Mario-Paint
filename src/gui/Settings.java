@@ -14,8 +14,8 @@ import java.io.Serializable;
  * @since 2012.08.28
  */
 public class Settings {
-	
-	private Settings() {}
+    
+    private Settings() {}
 
     /** The current version number of this program. */
     public static final String VERSION = "v%s".formatted(Values.VERSION);
@@ -158,13 +158,13 @@ public class Settings {
      * @throws IOException If we can't write the object.
      */
     public static void save() throws IOException {
-    	try (
-    			FileOutputStream fos = new FileOutputStream(SETTINGS_FILE);
-    			ObjectOutputStream oos = new ObjectOutputStream(fos)
-    	) {
-    		SettingsSaver s = new SettingsSaver();
+        try (
+                FileOutputStream fos = new FileOutputStream(SETTINGS_FILE);
+                ObjectOutputStream oos = new ObjectOutputStream(fos)
+        ) {
+            SettingsSaver s = new SettingsSaver();
             oos.writeObject(s);
-    	}
+        }
     }
 
     /**
@@ -176,13 +176,13 @@ public class Settings {
      */
     public static void load()
             throws IOException, ClassNotFoundException {
-    	
-    	try (
-    			FileInputStream fis = new FileInputStream(SETTINGS_FILE);
-    			ObjectInputStream ois = new ObjectInputStream(fis)
-    	) {
-    		SettingsSaver loaded = (SettingsSaver) ois.readObject();
-    		
+        
+        try (
+                FileInputStream fis = new FileInputStream(SETTINGS_FILE);
+                ObjectInputStream ois = new ObjectInputStream(fis)
+        ) {
+            SettingsSaver loaded = (SettingsSaver) ois.readObject();
+            
             advModeUnlocked  = loaded.set[0];
             LIM_NOTESPERLINE = loaded.set[1];
             LIM_96_MEASURES  = loaded.set[2];
@@ -194,7 +194,7 @@ public class Settings {
             LIM_TEMPO_GAPS   = loaded.set[8];
             RESIZE_WIN       = loaded.set[9];
             ADV_MODE         = loaded.set[10];
-    	}
+        }
     }
 
     /**

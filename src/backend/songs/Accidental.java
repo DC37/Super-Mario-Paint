@@ -12,7 +12,7 @@ public enum Accidental {
     NATURAL(0, ImageIndex.BLANK),
     SHARP(1, ImageIndex.SHARP),
     DOUBLE_SHARP(2, ImageIndex.DOUBLESHARP);
-	
+    
     private int offset;
     private ImageIndex imageIndex;
     
@@ -26,7 +26,7 @@ public enum Accidental {
      * @param v Integer between {@code -2} and {@code 2}
      * @return Accidental whose offset value is {@code v}
      * @throws IllegalArgumentException if {@code v} is not in the specified
-     * 		range
+     *      range
      */
     public static Accidental valueOf(int v) {
         switch (v) {
@@ -35,7 +35,7 @@ public enum Accidental {
         case -1:
             return FLAT;
         case 0:
-        	return NATURAL;
+            return NATURAL;
         case 1:
             return SHARP;
         case 2:

@@ -5,20 +5,20 @@ package backend.songs;
  * is not to play sounds but to cancel previous notes.
  */
 public enum MuteModifier {
-	
-	/**
-	 * Not a mute note; just a regular note.
-	 */
-	REGULAR,
-	
-	/**
-	 * This note will cancel sounds of that instrument and pitch.
-	 */
-	MUTE_THIS_PITCH,
-	
-	/**
-	 * This note will cancel sounds of that instrument (every pitch).
-	 */
-	MUTE_THIS_INST;
+    
+    /**
+     * Not a mute note; just a regular note.
+     */
+    REGULAR,
+    
+    /**
+     * This note will cancel sounds of that instrument and pitch.
+     */
+    MUTE_THIS_PITCH,
+    
+    /**
+     * This note will cancel sounds of that instrument (every pitch).
+     */
+    MUTE_THIS_INST;
 
 }

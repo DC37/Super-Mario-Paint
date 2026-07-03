@@ -12,7 +12,7 @@ import gui.InstrumentIndex;
  * @since 2012.09.11
  */
 public enum MPCInstrumentIndex {
-	UNKNOWN('?', null),
+    UNKNOWN('?', null),
     A ('a', InstrumentIndex.MARIO),
     B ('b', InstrumentIndex.MUSHROOM),
     C ('c', InstrumentIndex.YOSHI),
@@ -32,24 +32,24 @@ public enum MPCInstrumentIndex {
     Q ('q', InstrumentIndex.PIRANHA),
     R ('r', InstrumentIndex.SHYGUY),
     S ('s', InstrumentIndex.BOO);
-	
-	/**
-	 * A map that transforms character codes to <code>MPCInstrumentIndex</code>es.
-	 */
-	private static final Map<Character, MPCInstrumentIndex> CODE_MAPPINGS = new HashMap<>();
-	
-	static {
-		for (MPCInstrumentIndex ind: values()) {
-			CODE_MAPPINGS.put(ind.getCode(), ind);
-		}
-	}
+    
+    /**
+     * A map that transforms character codes to <code>MPCInstrumentIndex</code>es.
+     */
+    private static final Map<Character, MPCInstrumentIndex> CODE_MAPPINGS = new HashMap<>();
+    
+    static {
+        for (MPCInstrumentIndex ind: values()) {
+            CODE_MAPPINGS.put(ind.getCode(), ind);
+        }
+    }
 
-	/**
-	 * The code character that represents the MPCInstrumentIndex
-	 * in a Mario Paint Composer song.
-	 */
-	private char code;
-	
+    /**
+     * The code character that represents the MPCInstrumentIndex
+     * in a Mario Paint Composer song.
+     */
+    private char code;
+    
     /**
      * The <code>InstrumentIndex</code> that the MPCInstrumentIndex
      * should be linked to.
@@ -62,7 +62,7 @@ public enum MPCInstrumentIndex {
      * @param i The InstrumentIndex that is to be linked to the letter.
      */
     private MPCInstrumentIndex(char c, InstrumentIndex i) {
-    	code = c;
+        code = c;
         ind = i;
     }
 
@@ -71,7 +71,7 @@ public enum MPCInstrumentIndex {
      * inside a Mario Paint Composer song.
      */
     public char getCode() {
-    	return code;
+        return code;
     }
     
     /**
@@ -87,7 +87,7 @@ public enum MPCInstrumentIndex {
      * @return The <code>InstrumentIndex</code> of the letter.
      */
     public static InstrumentIndex valueOf(char c) {
-    	return CODE_MAPPINGS.getOrDefault(c, UNKNOWN).getInstrument();
+        return CODE_MAPPINGS.getOrDefault(c, UNKNOWN).getInstrument();
     }
     
 }

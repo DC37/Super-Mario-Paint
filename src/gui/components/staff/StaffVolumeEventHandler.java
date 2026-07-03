@@ -39,17 +39,17 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     /** The text representing the volume bar the mouse is currently hovering over. */
     private static Text volText;
     
-	/**
-	 * Mouse position. Used for finding which volume bar the mouse is hovering
-	 * over. Note: mouseX is set only to the beginning x coordinate of the
-	 * volume bar's stack pane it hovers over.
-	 */
-	private static double mouseX;
-	private static double mouseY;
+    /**
+     * Mouse position. Used for finding which volume bar the mouse is hovering
+     * over. Note: mouseX is set only to the beginning x coordinate of the
+     * volume bar's stack pane it hovers over.
+     */
+    private static double mouseX;
+    private static double mouseY;
 
-	private ModifySongManager commandManager;
-	
-	/** Makes a new StaffVolumeEventHandler. */
+    private ModifySongManager commandManager;
+    
+    /** Makes a new StaffVolumeEventHandler. */
     public StaffVolumeEventHandler(StackPane st, Map<ImageIndex, Image> imagesHolder, ModifySongManager cm) {
         stp = st;
         theVolBar = (ImageView) st.getChildren().get(0);
@@ -67,36 +67,36 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
 //        } else if (event.getEventType() == DragEvent.DRAG_DONE) {
 //            mouseDragEnd();
 //        }
-    	if(event instanceof MouseEvent && 
-    			((MouseEvent)event).isPrimaryButtonDown()){
-    		mouseX = stp.getBoundsInParent().getMinX();
-    		mouseY = stp.getBoundsInParent().getMinY();
-    		mousePressed((MouseEvent) event);
-    		mouseEntered();
-    	} else if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
-    		mouseX = stp.getBoundsInParent().getMinX();
-    		mouseY = stp.getBoundsInParent().getMinY();
-    		mouseEntered();
-    	} else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
-    		mouseX = -1;
-    		mouseY = -1;
-    		mouseExited();
-    	} else if(event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-    		mouseReleased();
-    	} else {
-    		mouseEntered();
-    	}
+        if(event instanceof MouseEvent && 
+                ((MouseEvent)event).isPrimaryButtonDown()){
+            mouseX = stp.getBoundsInParent().getMinX();
+            mouseY = stp.getBoundsInParent().getMinY();
+            mousePressed((MouseEvent) event);
+            mouseEntered();
+        } else if(event.getEventType() == MouseEvent.MOUSE_ENTERED){
+            mouseX = stp.getBoundsInParent().getMinX();
+            mouseY = stp.getBoundsInParent().getMinY();
+            mouseEntered();
+        } else if(event.getEventType() == MouseEvent.MOUSE_EXITED){
+            mouseX = -1;
+            mouseY = -1;
+            mouseExited();
+        } else if(event.getEventType() == MouseEvent.MOUSE_RELEASED) {
+            mouseReleased();
+        } else {
+            mouseEntered();
+        }
     }
 
     /** Called whenever the mouse is pressed. */
     private void mousePressed(MouseEvent event) {
         if (!theLine.getNotes().isEmpty()) {
 
-        	if(event.getEventType() == MouseEvent.MOUSE_PRESSED)
-        		commandManager.execute(new RemoveVolumeCommand(theLine, theLine.getVolume()));
+            if(event.getEventType() == MouseEvent.MOUSE_PRESSED)
+                commandManager.execute(new RemoveVolumeCommand(theLine, theLine.getVolume()));
 
-        	if(event.getY() < 0 || stp.getHeight() < event.getY())
-        		return;
+            if(event.getY() < 0 || stp.getHeight() < event.getY())
+                return;
             double h = stp.getHeight() - event.getY();
 //            System.out.println("SGH:" + stp.getHeight() + "EGY:" + event.getY());
             setVolumeDisplay(h);
@@ -110,38 +110,38 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     }
     
     private void mouseReleased() {
-    	commandManager.execute(new AddVolumeCommand(theLine, theLine.getVolume()));//.addVolume(theLine, theLine.getVolume());
-    	commandManager.record();
+        commandManager.execute(new AddVolumeCommand(theLine, theLine.getVolume()));//.addVolume(theLine, theLine.getVolume());
+        commandManager.record();
     }
     
     /** Called whenever the mouse enters the area. */
     private void mouseEntered() {
-    	if (!theLine.getNotes().isEmpty()) {
-	        if(volText == null){
-	        	volText = new Text("" + theLine.getVolume());
-	        }
-	        if(!stp.getChildren().contains(volText)){
-	        	stp.getChildren().add(volText);
-	        }
-	        volText.setText("" + theLine.getVolume());
-    	}
+        if (!theLine.getNotes().isEmpty()) {
+            if(volText == null){
+                volText = new Text("" + theLine.getVolume());
+            }
+            if(!stp.getChildren().contains(volText)){
+                stp.getChildren().add(volText);
+            }
+            volText.setText("" + theLine.getVolume());
+        }
     }
     
     /** Called whenever the mouse exits the area. */
     private void mouseExited() {
-    	stp.getChildren().remove(volText);
+        stp.getChildren().remove(volText);
     }
     
     /** Called whenever the mouse is dragged. */
     @SuppressWarnings({ "unused" })
     private void mouseDragStart() {
-    	// Intentionally left empty.
+        // Intentionally left empty.
     }
 
     /** Called whenever we finish dragging the mouse. */
     @SuppressWarnings({ "unused" })
     private void mouseDragEnd() {
-    	// Intentionally left empty.
+        // Intentionally left empty.
     }
 
     /**
@@ -158,9 +158,9 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * between 0 and 1.
      */
     private void setVolumePercent(double y) throws IllegalArgumentException {
-    	if (y >= 0 && y <= 1) {
+        if (y >= 0 && y <= 1) {
             theLine.setVolume((int) (y * Values.MAX_VELOCITY));
-    	}
+        }
     }
 
     /**
@@ -210,8 +210,8 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
         }
 
         if(stpHasMouse()){
-        	mouseExited();
-        	mouseEntered();
+            mouseExited();
+            mouseEntered();
         } 
     }
     
@@ -219,9 +219,9 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * @return Whether the mouse is currently in the volume bar's stack pane.
      */
     private boolean stpHasMouse(){
-    	return mouseX >= stp.getBoundsInParent().getMinX() 
-    			&& mouseX < stp.getBoundsInParent().getMaxX()
-    			&& mouseY >= stp.getBoundsInParent().getMinY();
+        return mouseX >= stp.getBoundsInParent().getMinX() 
+                && mouseX < stp.getBoundsInParent().getMaxX()
+                && mouseY >= stp.getBoundsInParent().getMinY();
     }
 
     @Override

@@ -19,42 +19,42 @@ import javafx.scene.input.MouseEvent;
  */
 public class SongNameController {
 
-	TextField songName;
-	SMPFXController controller;
+    TextField songName;
+    SMPFXController controller;
 
-	/**
-	 * The event handler that will handle unfocusing the TextField and
-	 * refocusing the ScrollBar. 
-	 */
-	EventHandler<MouseEvent> unfocusMouseEventHandler;
+    /**
+     * The event handler that will handle unfocusing the TextField and
+     * refocusing the ScrollBar. 
+     */
+    EventHandler<MouseEvent> unfocusMouseEventHandler;
 
-	boolean mouseExited = false;
+    boolean mouseExited = false;
 
-	public SongNameController(TextField tf, SMPFXController ct) {
-		this.songName = tf;
-		controller = ct;
+    public SongNameController(TextField tf, SMPFXController ct) {
+        this.songName = tf;
+        controller = ct;
 
-		// click somewhere to unfocus only if the mouse exited
-		unfocusMouseEventHandler = (MouseEvent event) -> {
-			if (mouseExited)
-					controller.getScrollbar().requestFocus();
-		};
+        // click somewhere to unfocus only if the mouse exited
+        unfocusMouseEventHandler = (MouseEvent event) -> {
+            if (mouseExited)
+                    controller.getScrollbar().requestFocus();
+        };
 
-		// when we get focused, prepare for the unfocusing mouse press event
-		// when we get unfocused, clean up the event filter
-		songName.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
-			if (newPropertyValue != null && newPropertyValue.booleanValue()) {
-				songName.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
-			} else {
-				songName.getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
-			}
-		});
+        // when we get focused, prepare for the unfocusing mouse press event
+        // when we get unfocused, clean up the event filter
+        songName.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue != null && newPropertyValue.booleanValue()) {
+                songName.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
+            } else {
+                songName.getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, unfocusMouseEventHandler);
+            }
+        });
 
-		// mouse enters thus mouse has not exited, we cannot unfocus
-		songName.addEventFilter(MouseEvent.MOUSE_ENTERED, (MouseEvent mouseEvent) -> mouseExited = false);
-		
-		// mouse exited, we can unfocus
-		songName.addEventFilter(MouseEvent.MOUSE_EXITED, (MouseEvent mouseEvent) -> mouseExited = true);
-		
-	}
+        // mouse enters thus mouse has not exited, we cannot unfocus
+        songName.addEventFilter(MouseEvent.MOUSE_ENTERED, (MouseEvent mouseEvent) -> mouseExited = false);
+        
+        // mouse exited, we can unfocus
+        songName.addEventFilter(MouseEvent.MOUSE_EXITED, (MouseEvent mouseEvent) -> mouseExited = true);
+        
+    }
 }

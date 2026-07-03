@@ -202,7 +202,7 @@ public class SMPFXController {
      * Zero-argument constructor (explicitly declared).
      */
     public SMPFXController() {
-    	// Intentionally left empty.
+        // Intentionally left empty.
     }
 
     /**
@@ -213,11 +213,11 @@ public class SMPFXController {
         commandManager = new ModifySongManager(() -> staff.redraw());
         
         basePane.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-        	if (event.isControlDown())
-        		StateMachine.setCtrlPressed(true);
-        	if (event.isShiftDown())
-        		StateMachine.setShiftPressed(true);
-        	
+            if (event.isControlDown())
+                StateMachine.setCtrlPressed(true);
+            if (event.isShiftDown())
+                StateMachine.setShiftPressed(true);
+            
             if (event.isControlDown())
                 switch (event.getCode()) {
                 case Y:
@@ -232,10 +232,10 @@ public class SMPFXController {
         });
         
         basePane.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-        	if (!event.isControlDown())
-        		StateMachine.setCtrlPressed(false);
-        	if (!event.isShiftDown())
-        		StateMachine.setShiftPressed(false);
+            if (!event.isControlDown())
+                StateMachine.setCtrlPressed(false);
+            if (!event.isShiftDown())
+                StateMachine.setShiftPressed(false);
         });
         
         // Set up staff.
@@ -279,7 +279,7 @@ public class SMPFXController {
         timesigButton_4_4.setSelected(true);
         
         String[] tooltipLines = {
-    		"Click (or Shift+R) to toggle region selection",
+            "Click (or Shift+R) to toggle region selection",
             "Hover over instrument & press F to filter instrument",
             "Ctrl+A to select all",
             "Ctrl+C to copy notes",
@@ -333,8 +333,8 @@ public class SMPFXController {
         populateInstrumentButtons(instLine);
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
-        	InstrumentIndex i = StateMachine.getSelectedInstrument();
-        	return imagesHolder.get(ImageIndex.valueOf(i.toString()));
+            InstrumentIndex i = StateMachine.getSelectedInstrument();
+            return imagesHolder.get(ImageIndex.valueOf(i.toString()));
         }, StateMachine.selectedInstrumentProperty()));
 
         arrangementList.setEditable(true);
@@ -400,13 +400,13 @@ public class SMPFXController {
         scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
         StateMachine.getPlaybackActiveProperty().addListener(obs -> {
-        	if (StateMachine.isPlaybackActive()) {
-        		// scrollbar disabled; we give focus elsewhere to be able to handle
-        		// key events (hitting space should stop playback)
-        		Platform.runLater(basePane::requestFocus);
-        	} else {
-        		Platform.runLater(scrollbar::requestFocus);
-        	}
+            if (StateMachine.isPlaybackActive()) {
+                // scrollbar disabled; we give focus elsewhere to be able to handle
+                // key events (hitting space should stop playback)
+                Platform.runLater(basePane::requestFocus);
+            } else {
+                Platform.runLater(scrollbar::requestFocus);
+            }
         });
         
         // Trigger a redraw, editing mode only
@@ -455,74 +455,74 @@ public class SMPFXController {
     }
     
     private void populateInstrumentButtons(Pane n) {
-    	SMPInstrumentButton[] vs = new SMPInstrumentButton[InstrumentIndex.values().length];
-    	n.getChildren().clear();
-    	
-    	for (InstrumentIndex inst : InstrumentIndex.values()) {
-    		SMPInstrumentButton b = new SMPInstrumentButton(inst.name(), imagesHolder.get(inst.smImageIndex()), imagesHolder.get(inst.smaImageIndex()));
-    		b.setImageFiltered(imagesHolder.get(ImageIndex.FILTER));
-    		b.setFitHeight(28);
-    		b.setFitWidth(26);
-    		b.setFocusTraversable(false);
-    		
-    		b.setOnAction(e -> {
-    			if (StateMachine.isShiftPressed()) {
-    		        boolean ex = StateMachine.getNoteExtension(inst.ordinal());
-    		        StateMachine.setNoteExtension(inst.ordinal(), !ex);
-    		        
-    		        @SuppressWarnings("java:S3358")
-    		        int i = (inst.ordinal() == 15) ? 16 : (inst.ordinal() == 16) ? 15 : inst.ordinal();
-    		        
-    		        staff.getSequence().getNoteExtensions()[i] = !ex;
-    		        
-    			} else if (StateMachine.isCtrlPressed()) {
-    				int flt = StateMachine.getFilteredNotes();
-    				int newFlt;
-    				int mask = ~ ((-1) << InstrumentIndex.values().length);
-    				
-    				// we go through bitwise computations to only set the property once
-    				if ((flt & mask) == mask) {
-    					newFlt = 1 << inst.ordinal();
-    					
-    				} else {
-    					newFlt = flt ^ (1 << inst.ordinal());
-    					
-    					if ((newFlt & mask) == 0) {
-    						newFlt = -1;
-    					}
-    				}
-    				
-    				StateMachine.setFilteredNotes(newFlt);
-    				
-    			} else {
-    		        MidiChannel[] chan = soundPlayer.getChannels();
-    		        if (chan[inst.getChannel() - 1] != null) {
-    		            chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
-    		        }
-    		        
-    		        StateMachine.setSelectedInstrument(inst);
-    			}
-    		});
-    		
-    		vs[inst.ordinal()] = b;
-        	n.getChildren().add(b);
-    	}
+        SMPInstrumentButton[] vs = new SMPInstrumentButton[InstrumentIndex.values().length];
+        n.getChildren().clear();
+        
+        for (InstrumentIndex inst : InstrumentIndex.values()) {
+            SMPInstrumentButton b = new SMPInstrumentButton(inst.name(), imagesHolder.get(inst.smImageIndex()), imagesHolder.get(inst.smaImageIndex()));
+            b.setImageFiltered(imagesHolder.get(ImageIndex.FILTER));
+            b.setFitHeight(28);
+            b.setFitWidth(26);
+            b.setFocusTraversable(false);
+            
+            b.setOnAction(e -> {
+                if (StateMachine.isShiftPressed()) {
+                    boolean ex = StateMachine.getNoteExtension(inst.ordinal());
+                    StateMachine.setNoteExtension(inst.ordinal(), !ex);
+                    
+                    @SuppressWarnings("java:S3358")
+                    int i = (inst.ordinal() == 15) ? 16 : (inst.ordinal() == 16) ? 15 : inst.ordinal();
+                    
+                    staff.getSequence().getNoteExtensions()[i] = !ex;
+                    
+                } else if (StateMachine.isCtrlPressed()) {
+                    int flt = StateMachine.getFilteredNotes();
+                    int newFlt;
+                    int mask = ~ ((-1) << InstrumentIndex.values().length);
+                    
+                    // we go through bitwise computations to only set the property once
+                    if ((flt & mask) == mask) {
+                        newFlt = 1 << inst.ordinal();
+                        
+                    } else {
+                        newFlt = flt ^ (1 << inst.ordinal());
+                        
+                        if ((newFlt & mask) == 0) {
+                            newFlt = -1;
+                        }
+                    }
+                    
+                    StateMachine.setFilteredNotes(newFlt);
+                    
+                } else {
+                    MidiChannel[] chan = soundPlayer.getChannels();
+                    if (chan[inst.getChannel() - 1] != null) {
+                        chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
+                    }
+                    
+                    StateMachine.setSelectedInstrument(inst);
+                }
+            });
+            
+            vs[inst.ordinal()] = b;
+            n.getChildren().add(b);
+        }
         
         StateMachine.noteExtensionsProperty().addListener(obs -> {
-        	for (InstrumentIndex inst : InstrumentIndex.values()) {
-        		vs[inst.ordinal()].setSustainOn(StateMachine.getNoteExtension(inst.ordinal()));
-        	}
+            for (InstrumentIndex inst : InstrumentIndex.values()) {
+                vs[inst.ordinal()].setSustainOn(StateMachine.getNoteExtension(inst.ordinal()));
+            }
         });
         
         StateMachine.filteredNotesProperty().addListener((obs, oldv, newv) -> {
-        	int diff = (int) oldv ^ (int) newv;
-        	for (InstrumentIndex inst : InstrumentIndex.values()) {
-        		if ((diff & 1) == 1) {
-        			boolean ex = StateMachine.getFilteredNote(inst.ordinal());
-            		vs[inst.ordinal()].setActive(ex);
-        		}
-        		diff >>= 1;
-        	}
+            int diff = (int) oldv ^ (int) newv;
+            for (InstrumentIndex inst : InstrumentIndex.values()) {
+                if ((diff & 1) == 1) {
+                    boolean ex = StateMachine.getFilteredNote(inst.ordinal());
+                    vs[inst.ordinal()].setActive(ex);
+                }
+                diff >>= 1;
+            }
         });
     }
     
@@ -656,7 +656,7 @@ public class SMPFXController {
         if (StateMachine.isSongModified())
             cont = Dialog
                     .showYesNoDialog("HOLD IT!",
-                    		"The current song has been modified!\n"
+                            "The current song has been modified!\n"
                             + "Create a new song anyway?", owner);
 
         if (cont) {
@@ -816,7 +816,7 @@ public class SMPFXController {
     }
     
     private static String noteToString(StaffNote note) {
-    	String instName = note.getInstrument().toString();
+        String instName = note.getInstrument().toString();
         String noteName = Values.STAFF_NOTE_NAMES[note.getVerticalPosition()];
         String noteAcc = accidentalToString(note.getAccidental());
         String muteName = muteModifierToString(note.getMuteModifier());
@@ -824,33 +824,33 @@ public class SMPFXController {
     }
     
     private static String accidentalToString(Accidental acc) {
-    	switch (acc) {
-    	case Accidental.DOUBLE_FLAT:
-    		return "B";
-    	case Accidental.FLAT:
-    		return "b";
-    	case Accidental.NATURAL:
-    		return "";
-    	case Accidental.SHARP:
-    		return "#";
-    	case Accidental.DOUBLE_SHARP:
-    		return "X";
-    	default:
-    		throw new IllegalArgumentException("Cannot convert " + acc + " to String");
-    	}
+        switch (acc) {
+        case Accidental.DOUBLE_FLAT:
+            return "B";
+        case Accidental.FLAT:
+            return "b";
+        case Accidental.NATURAL:
+            return "";
+        case Accidental.SHARP:
+            return "#";
+        case Accidental.DOUBLE_SHARP:
+            return "X";
+        default:
+            throw new IllegalArgumentException("Cannot convert " + acc + " to String");
+        }
     }
     
     private static String muteModifierToString(MuteModifier mod) {
-    	switch (mod) {
-    	case MuteModifier.REGULAR:
-    		return "";
-    	case MuteModifier.MUTE_THIS_PITCH:
-    		return "m1";
-    	case MuteModifier.MUTE_THIS_INST:
-    		return "m2";
-    	default:
-    		throw new IllegalArgumentException("Cannot convert " + mod + " to String");
-    	}
+        switch (mod) {
+        case MuteModifier.REGULAR:
+            return "";
+        case MuteModifier.MUTE_THIS_PITCH:
+            return "m1";
+        case MuteModifier.MUTE_THIS_INST:
+            return "m2";
+        default:
+            throw new IllegalArgumentException("Cannot convert " + mod + " to String");
+        }
     }
     
     @FXML
@@ -875,7 +875,7 @@ public class SMPFXController {
         if (StateMachine.isSongModified())
             cont = Dialog
                     .showYesNoDialog("HOLD IT!",
-                    		"The current song has been modified!\n"
+                            "The current song has been modified!\n"
                             + "Load anyway?", owner);
         File inputFile = null;
         if (cont) {
@@ -1064,11 +1064,11 @@ public class SMPFXController {
                     staff.setLocation(0);
                 
                 if (StateMachine.isPlaybackActive()) {
-                	stopButton.setSelected(true);
+                    stopButton.setSelected(true);
                     staff.stop();
                     
                 } else {
-                	playButton.setSelected(true);
+                    playButton.setSelected(true);
                     staff.play();
                 }
 

@@ -19,7 +19,7 @@ import javafx.util.Subscription;
  * is triggered repeatedly when the button is held.</p>
  */
 public class SMPHoldButton extends SMPButton {
-	
+    
     /**
      * If set, this handler will trigger an action to repeat as long as the button is pressed
      */

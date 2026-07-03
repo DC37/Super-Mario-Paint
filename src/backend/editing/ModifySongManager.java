@@ -2,22 +2,22 @@ package backend.editing;
 
 public class ModifySongManager extends CommandManager {
 
-	private Runnable refreshDisplay;
-	
-	public ModifySongManager(Runnable refreshDisplay) {
-		super();
-		this.refreshDisplay = refreshDisplay;
-	}
-	
-	@Override
-	public void redo() {
-		super.redo();
-		refreshDisplay.run();
-	}
-	
-	@Override
-	public void undo() {
-		super.undo();
+    private Runnable refreshDisplay;
+    
+    public ModifySongManager(Runnable refreshDisplay) {
+        super();
+        this.refreshDisplay = refreshDisplay;
+    }
+    
+    @Override
+    public void redo() {
+        super.redo();
         refreshDisplay.run();
-	}
+    }
+    
+    @Override
+    public void undo() {
+        super.undo();
+        refreshDisplay.run();
+    }
 }

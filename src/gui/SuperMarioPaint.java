@@ -167,7 +167,7 @@ public class SuperMarioPaint extends Application  {
             primaryStage.setScene(primaryScene);
             
             primaryStage.focusedProperty().addListener(
-            		(ov, t, t1) -> StateMachine.clearKeyPresses());
+                    (ov, t, t1) -> StateMachine.clearKeyPresses());
             
             makeMouseEventHandlers();
             
@@ -179,7 +179,7 @@ public class SuperMarioPaint extends Application  {
              * Changes the cursor image */
             setCursor(SMPCursorType.HAND_POINTING);
             
-    		primaryStage.getIcons().add(headerIcon);
+            primaryStage.getIcons().add(headerIcon);
             primaryStage.show();
             
         } catch (Exception e) {
@@ -190,7 +190,7 @@ public class SuperMarioPaint extends Application  {
 
     /** Explicitly create constructor without arguments. */
     public SuperMarioPaint() {
-    	// Intentionally left empty.
+        // Intentionally left empty.
     }
 
     /**
@@ -204,8 +204,8 @@ public class SuperMarioPaint extends Application  {
      */
     @Override
     public void init() {
-    	imgLoader = new ImageLoader();
-    	imagesHolderFuture = new FutureTask<>(imgLoader);
+        imgLoader = new ImageLoader();
+        imagesHolderFuture = new FutureTask<>(imgLoader);
         imgLd = new Thread(imagesHolderFuture);
         
         sfLoader = new SoundfontLoader();
@@ -252,7 +252,7 @@ public class SuperMarioPaint extends Application  {
      */
     @Override
     public void stop() {
-//    	Platform.exit();
+//      Platform.exit();
         System.exit(0);
     }
 
@@ -349,19 +349,19 @@ public class SuperMarioPaint extends Application  {
         } catch (Exception e) {
             e.printStackTrace();
         }
-	}
+    }
     
     public void setCursor(SMPCursorType type) {
-    	primaryScene.setCursor(cursorImages.get(type));
+        primaryScene.setCursor(cursorImages.get(type));
     }
 
     // selects the default icon 9 times out of 10, otherwise a random instrument
     static void setHeaderIcon() {
-    	int randValue = RNG.nextInt(10 * InstrumentIndex.values().length);
+        int randValue = RNG.nextInt(10 * InstrumentIndex.values().length);
         
         String iconFile = (randValue < InstrumentIndex.values().length) ?
-        	InstrumentIndex.values()[randValue].name() :
-        	"ICON";
+            InstrumentIndex.values()[randValue].name() :
+            "ICON";
         headerIcon = new Image(SMPResourceUtil.get(iconFile + ".png").toString());
     }
     

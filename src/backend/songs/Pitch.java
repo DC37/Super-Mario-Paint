@@ -5,42 +5,42 @@ package backend.songs;
  * corresponds to the MIDI value for that pitch.
  */
 public class Pitch {
-	
-	private static final int LOWEST_INT = 21;
-	private static final int HIGHEST_INT = 108;
-	private static final int DEFAULT_INT = 57;
-	
-	/**
-	 * Lowest pitch we can play; this is A0 on a piano keyboard.
-	 */
-	public static final Pitch LOWEST = new Pitch(LOWEST_INT);
-	
-	/**
-	 * A default pitch; this is A3 on a piano keyboard.
-	 */
-	public static final Pitch DEFAULT = new Pitch(DEFAULT_INT);
-	
-	/**
-	 * Highest pitch we can play; this is B#7 on a piano keyboard.
-	 */
-	public static final Pitch HIGHEST = new Pitch(HIGHEST_INT);
-	
-	/**
-	 * The integer identifying this pitch in MIDI format.
-	 */
-	private final int value;
+    
+    private static final int LOWEST_INT = 21;
+    private static final int HIGHEST_INT = 108;
+    private static final int DEFAULT_INT = 57;
+    
+    /**
+     * Lowest pitch we can play; this is A0 on a piano keyboard.
+     */
+    public static final Pitch LOWEST = new Pitch(LOWEST_INT);
+    
+    /**
+     * A default pitch; this is A3 on a piano keyboard.
+     */
+    public static final Pitch DEFAULT = new Pitch(DEFAULT_INT);
+    
+    /**
+     * Highest pitch we can play; this is B#7 on a piano keyboard.
+     */
+    public static final Pitch HIGHEST = new Pitch(HIGHEST_INT);
+    
+    /**
+     * The integer identifying this pitch in MIDI format.
+     */
+    private final int value;
 
-	/**
-	 * Base constructor for the Pitch class.
-	 * @param value MIDI value for this pitch
-	 * @throws IllegalArgumentException if the value is not in the accepted
-	 * 		range
-	 */
+    /**
+     * Base constructor for the Pitch class.
+     * @param value MIDI value for this pitch
+     * @throws IllegalArgumentException if the value is not in the accepted
+     *      range
+     */
     private Pitch(int value) {
-    	if (value < LOWEST_INT || value > HIGHEST_INT) {
-    		throw new IllegalArgumentException("Illegal value for Pitch: " + value);
-    	}
-    	
+        if (value < LOWEST_INT || value > HIGHEST_INT) {
+            throw new IllegalArgumentException("Illegal value for Pitch: " + value);
+        }
+        
         this.value = value;
     }
     
@@ -48,11 +48,11 @@ public class Pitch {
      * Create a pitch from a given MIDI value.
      * @param value An integer
      * @return Pitch whose value is the argument
-	 * @throws IllegalArgumentException if the value is not in the accepted
-	 * 		range
+     * @throws IllegalArgumentException if the value is not in the accepted
+     *      range
      */
     public static Pitch valueOf(int value) {
-    	return new Pitch(value);
+        return new Pitch(value);
     }
 
     /**
@@ -70,11 +70,11 @@ public class Pitch {
      */
     @Override
     public boolean equals(Object oth) {
-    	if (!(oth instanceof Pitch)) {
-    		return false;
-    	}
-    	
-    	return this.value == ((Pitch) oth).value;
+        if (!(oth instanceof Pitch)) {
+            return false;
+        }
+        
+        return this.value == ((Pitch) oth).value;
     }
     
     /**
@@ -83,7 +83,7 @@ public class Pitch {
      */
     @Override
     public int hashCode() {
-    	return value;
+        return value;
     }
     
     /**
@@ -92,7 +92,7 @@ public class Pitch {
      */
     @Override
     public String toString() {
-    	return "Pitch [value=" + value + "]";
+        return "Pitch [value=" + value + "]";
     }
 
 }

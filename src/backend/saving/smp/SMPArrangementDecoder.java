@@ -12,47 +12,47 @@ import backend.songs.StaffArrangement;
 
 public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
 
-	/**
-	 * Loads an arrangement from the file specified.
-	 *
-	 * @param inputFile
-	 *            The file to load from.
-	 * @return A loaded arrangement file. The format is StaffArrangement.
-	 */
-	public StaffArrangement decode(File inputFile) throws IOException {
-		FileInputStream fIn = new FileInputStream(inputFile);
-		Scanner sc = new Scanner(fIn);
-		List<String> read = new ArrayList<>();
-		while (sc.hasNext()) {
-			read.add(sc.nextLine());
-		}
-		sc.close();
-		StaffArrangement loaded = parseArrText(read);
-		fIn.close();
-		return loaded;
-	}
+    /**
+     * Loads an arrangement from the file specified.
+     *
+     * @param inputFile
+     *            The file to load from.
+     * @return A loaded arrangement file. The format is StaffArrangement.
+     */
+    public StaffArrangement decode(File inputFile) throws IOException {
+        FileInputStream fIn = new FileInputStream(inputFile);
+        Scanner sc = new Scanner(fIn);
+        List<String> read = new ArrayList<>();
+        while (sc.hasNext()) {
+            read.add(sc.nextLine());
+        }
+        sc.close();
+        StaffArrangement loaded = parseArrText(read);
+        fIn.close();
+        return loaded;
+    }
 
-	/**
-	 * Parses a bunch of text from a save file and makes a
-	 * <code>StaffArrangement</code> out of it.
-	 *
-	 * @param read
-	 *            <code>ArrayList</code> of filenames and paths.
-	 * @return Hopefully, a decoded <code>StaffArrangement</code>
-	 */
-	private static StaffArrangement parseArrText(List<String> read) {
-		StaffArrangement loaded = new StaffArrangement();
-		File f = null;
-		List<File> files = new ArrayList<>();
-		List<String> names = new ArrayList<>();
-		for (String s : read) {
-			names.add(s);
-			f = new File(s + ".txt");
-			files.add(f);
-		}
-		loaded.getTheSequenceNames().addAll(names);
-		loaded.setTheSequenceFiles(files);
-		return loaded;
-	}
+    /**
+     * Parses a bunch of text from a save file and makes a
+     * <code>StaffArrangement</code> out of it.
+     *
+     * @param read
+     *            <code>ArrayList</code> of filenames and paths.
+     * @return Hopefully, a decoded <code>StaffArrangement</code>
+     */
+    private static StaffArrangement parseArrText(List<String> read) {
+        StaffArrangement loaded = new StaffArrangement();
+        File f = null;
+        List<File> files = new ArrayList<>();
+        List<String> names = new ArrayList<>();
+        for (String s : read) {
+            names.add(s);
+            f = new File(s + ".txt");
+            files.add(f);
+        }
+        loaded.getTheSequenceNames().addAll(names);
+        loaded.setTheSequenceFiles(files);
+        return loaded;
+    }
 
 }

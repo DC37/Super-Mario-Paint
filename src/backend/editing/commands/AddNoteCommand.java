@@ -6,22 +6,22 @@ import backend.songs.StaffNoteLine;
 
 public class AddNoteCommand implements CommandInterface {
 
-	private StaffNoteLine theLine;
-	private StaffNote theNote;
+    private StaffNoteLine theLine;
+    private StaffNote theNote;
 
-	public AddNoteCommand(StaffNoteLine line, StaffNote note) {
-		theLine = line;
-		theNote = note;
-	}
-	
-	@Override
-	public void redo() {
-		theLine.getNotes().add(theNote);
-	}
+    public AddNoteCommand(StaffNoteLine line, StaffNote note) {
+        theLine = line;
+        theNote = note;
+    }
+    
+    @Override
+    public void redo() {
+        theLine.getNotes().add(theNote);
+    }
 
-	@Override
-	public void undo() {
-		theLine.getNotes().remove(theNote);
-	}
+    @Override
+    public void undo() {
+        theLine.getNotes().remove(theNote);
+    }
 
 }

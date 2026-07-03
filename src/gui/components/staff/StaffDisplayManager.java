@@ -201,9 +201,9 @@ public class StaffDisplayManager {
      * appear on the staff. This method also sets up sharps, flats, etc.
      */
     private Node[] initializeStaffInstruments() {
-    	Map<StaffNoteCoordinate, ImageView> map = new HashMap<>();
-    	Map<StaffNoteCoordinate, ImageView> mapAcc = new HashMap<>();
-    	
+        Map<StaffNoteCoordinate, ImageView> map = new HashMap<>();
+        Map<StaffNoteCoordinate, ImageView> mapAcc = new HashMap<>();
+        
         HBox staffInstruments = new HBox();
         staffInstruments.setPrefHeight(504);
         staffInstruments.setPrefWidth(982);
@@ -575,31 +575,31 @@ public class StaffDisplayManager {
      * For given maximum values of row and depth, we provide converters to and from int.
      */
     protected class StaffNoteCoordinate {
-    	
-    	public final int col;
-    	public final int row;
-    	public final int dep; // special value -1 refers to the layer for silhouettes (dep is irrelevant)
-    	
-    	public StaffNoteCoordinate(int col, int row, int dep) {
-    		this.col = col;
-    		this.row = row;
-    		this.dep = dep;
-    	}
-    	
-    	public StaffNoteCoordinate(StaffNoteCoordinate oth) {
-    		this.col = oth.col;
-    		this.row = oth.row;
-    		this.dep = oth.dep;
-    	}
-    	
-    	public boolean equals(StaffNoteCoordinate oth) {
-    		return this.col == oth.col && this.row == oth.row && this.dep == oth.dep;
-    	}
-    	
-    	public int lin() {
-    		return (dep == -1) ? (height * col) + row : (depth * ((height * col) + row)) + dep;
-    	}
-    	
+        
+        public final int col;
+        public final int row;
+        public final int dep; // special value -1 refers to the layer for silhouettes (dep is irrelevant)
+        
+        public StaffNoteCoordinate(int col, int row, int dep) {
+            this.col = col;
+            this.row = row;
+            this.dep = dep;
+        }
+        
+        public StaffNoteCoordinate(StaffNoteCoordinate oth) {
+            this.col = oth.col;
+            this.row = oth.row;
+            this.dep = oth.dep;
+        }
+        
+        public boolean equals(StaffNoteCoordinate oth) {
+            return this.col == oth.col && this.row == oth.row && this.dep == oth.dep;
+        }
+        
+        public int lin() {
+            return (dep == -1) ? (height * col) + row : (depth * ((height * col) + row)) + dep;
+        }
+        
     }
 
 }
