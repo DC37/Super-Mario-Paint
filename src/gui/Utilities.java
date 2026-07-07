@@ -242,27 +242,13 @@ public class Utilities {
         theStaff.getArrangementList().getItems()
                 .addAll(loaded.getTheSequenceNames());
 
-        List<File> files = loaded.getTheSequenceFiles();
-        final List<StaffSequence> seq = new ArrayList<>();
-        for (int i = 0; i < files.size(); i++) {
-            try {
-                seq.add(Decoder.SEQUENCE_DECODER.decode(files.get(i)).orElseThrow(IOException::new));
-            } catch (ClassCastException | EOFException
-                    | StreamCorruptedException | NullPointerException e) {
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-        }
-        theStaff.getArrangement().setTheSequences(seq);
-
         controller.getNameTextField().setText(fname);
         
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
             @Override
             public Void call() {
                 theStaff.getSoundPlayer().clearCache();
-                for(StaffSequence s : seq) {
+                for(StaffSequence s : loaded.getTheSequences()) {
                     try {
                         theStaff.getSoundPlayer().loadToCache(s.getSoundset());
                     } catch (InvalidMidiDataException | IOException e) {
