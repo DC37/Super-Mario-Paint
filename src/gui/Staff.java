@@ -588,7 +588,6 @@ public class Staff {
             protected Staff call() throws Exception {
                 StateMachine.setArrangementSongIndex(0);
                 List<StaffSequence> seq = theArrangement.getTheSequences();
-                List<File> files = theArrangement.getTheSequenceFiles();
                 int endLine;
 
                 queue = 0;
@@ -608,7 +607,6 @@ public class Staff {
                     
                     index = 0;
                     advance = false;
-                    theSequenceFile = files.get(i);
                     songPlaying = true;
 
                     resetLocation();
