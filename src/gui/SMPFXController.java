@@ -948,7 +948,6 @@ public class SMPFXController {
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                 StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
-                Utilities.normalizeArrangement(loaded, inputFile);
                 Utilities.populateStaffArrangement(loaded, staff, this, owner);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
@@ -957,7 +956,6 @@ public class SMPFXController {
                 try {
                     StaffArrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                    Utilities.normalizeArrangement(loaded, inputFile);
                     Utilities.populateStaffArrangement(loaded, staff, this, owner);
                     StateMachine.setSongModified(false);
                 } catch (Exception e1) {

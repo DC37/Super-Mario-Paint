@@ -153,42 +153,6 @@ public class Utilities {
         
         return fname;
     }
-
-    /**
-     * Arrangement files might have absolute paths in them. Here's something
-     * that will help a little bit with relative paths.
-     *
-     * @param loaded
-     *            The loaded staff arrangement.
-     * @param filePath
-     *            The location in which this arrangement was found.
-     * @throws IOException
-     * @throws NullPointerException
-     */
-    public static void normalizeArrangement(StaffArrangement loaded,
-            File filePath) throws IOException {
-        String basePath = filePath.getParent() + File.separatorChar;
-        int sz1 = loaded.getTheSequenceFiles().size();
-        int sz2 = loaded.getTheSequences().size();
-        if (sz2 < sz1) {
-            for (int i = 0; i < sz1 - sz2; i++) {
-                loaded.getTheSequences().add(new StaffSequence());
-            }
-        }
-        for (int i = 0; i < loaded.getTheSequenceFiles().size(); i++) {
-            String fName = loaded.getTheSequenceNames().get(i);
-            String newPath = basePath + fName + ".txt";
-            File f2 = new File(newPath);
-            if (!f2.exists()) {
-                fName = fName + "]MarioPaint.txt";
-                newPath = basePath + fName;
-                loaded.getTheSequenceFiles().set(i, new File(newPath));
-                loaded.getTheSequences().set(i, Decoder.SEQUENCE_DECODER.decode(new File(newPath)).orElseThrow(IOException::new));
-                continue;
-            }
-            loaded.getTheSequenceFiles().set(i, new File(newPath));
-        }
-    }
     
     /**
      * Turns out a lot of file names can have bad characters in them.

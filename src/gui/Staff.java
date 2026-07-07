@@ -8,7 +8,6 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
-import backend.saving.Decoder;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffSequence;
 import backend.songs.TimeSignature;
@@ -236,19 +235,7 @@ public class Staff {
 
     /** Starts an arrangement. */
     public synchronized void startArrangement() {
-        List<StaffSequence> seq = theArrangement.getTheSequences();
-        List<File> files = theArrangement.getTheSequenceFiles();
         resetLocation();
-        for (int i = 0; i < seq.size(); i++) {
-            File f = files.get(i);
-            try {
-                seq.set(i, Decoder.SEQUENCE_DECODER.decode(f).orElseThrow(IOException::new));
-            } catch (IOException e) {
-                e.printStackTrace();
-                stopSong();
-                return;
-            }
-        }
         arrPlaying = true;
         animationService.restart();
     }
