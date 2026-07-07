@@ -15,7 +15,7 @@ import java.util.List;
 public class StaffArrangement {
 
     /** This is the list of <code>StaffSequence</code> objects. */
-    private transient List<StaffSequence> theSequences;
+    private List<StaffSequence> theSequences;
 
     /** This is the list of <code>StaffSequence</code> file locations. */
     private List<File> theSequenceFiles;
