@@ -13,6 +13,9 @@ import java.util.List;
  *
  */
 public class StaffArrangement {
+	
+	/** The name of this arrangement */
+	private String name;
 
     /** This is the list of <code>StaffSequence</code> objects. */
     private List<StaffSequence> theSequences;
@@ -28,6 +31,22 @@ public class StaffArrangement {
         theSequences = new ArrayList<>();
         theSequenceFiles = new ArrayList<>();
         theSequenceNames = new ArrayList<>();
+    }
+    
+    /**
+     * Get the name of this arrangement.
+     * @return
+     */
+    public String getName() {
+    	return this.name;
+    }
+    
+    /**
+     * Set the name of this arrangement.
+     * @param name A name
+     */
+    public void setName(String name) {
+    	this.name = name;
     }
 
     /**
