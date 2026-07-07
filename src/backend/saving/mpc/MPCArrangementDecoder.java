@@ -60,6 +60,9 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
             throw new ParseException("Invalid Arr File.", 0);
         }
         StaffArrangement theArr = new StaffArrangement();
+        
+        String inputFileName = inputFile.getName();
+        theArr.setName(inputFileName.substring(0, inputFileName.lastIndexOf(']')));
 
         for (String s : str.split("\n")) {
             String sp = s;

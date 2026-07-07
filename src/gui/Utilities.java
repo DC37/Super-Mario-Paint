@@ -226,30 +226,16 @@ public class Utilities {
      *
      * @param loaded
      *            The loaded arrangement.
-     * @param inputFile
-     *            The input file.
-     * @param mpc
-     *            Whether this is an MPC file.
      */
-    public static void populateStaffArrangement(StaffArrangement loaded,
-            File inputFile, boolean mpc, Staff theStaff,
-            final SMPFXController controller, Window owner) {
+    public static void populateStaffArrangement(StaffArrangement loaded, Staff theStaff, final SMPFXController controller, Window owner) {
         File firstFile = loaded.getTheSequenceFiles().get(0);
         StaffSequence first = loadSequenceFromArrangement(firstFile, theStaff,
                 controller, owner);
-        String fname = inputFile.getName();
+        String fname = loaded.getName();
         boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);
         StateMachine.setNoteExtensions(j);
-
-        try {
-            if (mpc)
-                fname = fname.substring(0, fname.lastIndexOf(']'));
-            else
-                fname = fname.substring(0, fname.lastIndexOf("."));
-        } catch (IndexOutOfBoundsException e) {
-            // Do nothing
-        }
+        
         theStaff.setArrangement(loaded);
         StateMachine.setCurrentArrangementName(fname);
         theStaff.getArrangementList().getItems().clear();

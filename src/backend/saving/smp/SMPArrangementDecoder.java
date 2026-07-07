@@ -28,6 +28,10 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
         }
         sc.close();
         StaffArrangement loaded = parseArrText(read);
+        
+        String inputFileName = inputFile.getName();
+        loaded.setName(inputFileName.substring(0, inputFileName.lastIndexOf('.')));
+        
         fIn.close();
         return loaded;
     }
