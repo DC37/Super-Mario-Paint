@@ -102,8 +102,7 @@ public class Utilities {
                 inputFile = new File(inputFile.getParent() + File.separatorChar
                         + inputFile.getName());
             }
-            StaffSequence loaded = null;
-            loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
+            StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
             populateStaff(loaded, inputFile, theStaff, controller);
             return loaded;
 
