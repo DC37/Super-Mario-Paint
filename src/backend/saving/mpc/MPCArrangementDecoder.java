@@ -65,13 +65,12 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
         theArr.setName(inputFileName.substring(0, inputFileName.lastIndexOf(']')));
 
         for (String s : str.split("\n")) {
-            String sp = s;
-            String st = inputFile.getParent() + File.separatorChar + sp + "]MarioPaint.txt";
+            String st = inputFile.getParent() + File.separatorChar + s + "]MarioPaint.txt";
             File f = new File(st);
             StaffSequence seq = Decoder.MPC_SEQUENCE_DECODER.decode(f);
             theArr.getTheSequences().add(seq);
             theArr.getTheSequenceFiles().add(f);
-            theArr.getTheSequenceNames().add(sp);
+            theArr.getTheSequenceNames().add(s);
         }
         return theArr;
     }
