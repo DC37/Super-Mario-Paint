@@ -45,27 +45,6 @@ public class StaffArrangement {
     }
 
     /**
-     * Removes the sequence at index i of the list. This returns and object
-     * array of size 2 with the first element as the <code>StaffSequence</code>
-     * that has been removed and the second element as the File location of the
-     * StaffSequence that has been removed.
-     *
-     * @param i
-     *            The index to remove from.
-     * @return The removed StaffSequence and file.
-     */
-    public Object[] remove(int i) {
-        Object[] ray = { null };
-        try {
-            theSequences.get(i);
-            ray[0] = theSequences.remove(i);
-            return ray;
-        } catch (IndexOutOfBoundsException e) {
-            return null;
-        }
-    }
-
-    /**
      * @return The list of sequence files.
      */
     public List<StaffSequence> getTheSequences() {

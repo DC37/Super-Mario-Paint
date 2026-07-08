@@ -366,9 +366,9 @@ public class Staff {
         ObservableList<String> l = theArrangementList.getItems();
         int x = theArrangementList.getSelectionModel()
                 .getSelectedIndex();
-        if (x != -1) {
+        if (x >= 0 && x < theArrangement.getTheSequences().size()) {
             StateMachine.setArrModified(true);
-            theArrangement.remove(x);
+            theArrangement.getTheSequences().remove(x);
             l.remove(x);
         }
     }
@@ -380,11 +380,10 @@ public class Staff {
         ObservableList<String> l = theArrangementList.getItems();
         int x = theArrangementList.getSelectionModel()
                 .getSelectedIndex();
-        if (x != -1) {
+        if (x >= 0 && x < theArrangement.getTheSequences().size()) {
             StateMachine.setArrModified(true);
-            Object[] o = theArrangement.remove(x);
+            StaffSequence ss = theArrangement.getTheSequences().remove(x);
             String s = l.remove(x);
-            StaffSequence ss = (StaffSequence) o[0];
             int moveTo = x - moveAmt;
             if (moveTo > l.size())
                 moveTo = l.size();
