@@ -385,7 +385,6 @@ public class Staff {
             Object[] o = theArrangement.remove(x);
             String s = l.remove(x);
             StaffSequence ss = (StaffSequence) o[0];
-            File f = (File) o[1];
             int moveTo = x - moveAmt;
             if (moveTo > l.size())
                 moveTo = l.size();
@@ -393,7 +392,6 @@ public class Staff {
                 moveTo = 0;
             l.add(moveTo, s);
             theArrangement.getTheSequences().add(moveTo, ss);
-            theArrangement.getTheSequenceFiles().add(moveTo, f);
             theArrangementList.getSelectionModel()
             .select(moveTo);
         }

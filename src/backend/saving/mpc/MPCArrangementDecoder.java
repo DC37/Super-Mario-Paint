@@ -69,7 +69,6 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
             File f = new File(st);
             StaffSequence seq = Decoder.MPC_SEQUENCE_DECODER.decode(f);
             theArr.getTheSequences().add(seq);
-            theArr.getTheSequenceFiles().add(f);
             theArr.getTheSequenceNames().add(s);
         }
         return theArr;

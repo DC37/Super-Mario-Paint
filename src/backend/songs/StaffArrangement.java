@@ -1,6 +1,5 @@
 package backend.songs;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +19,12 @@ public class StaffArrangement {
     /** This is the list of <code>StaffSequence</code> objects. */
     private final List<StaffSequence> theSequences;
 
-    /** This is the list of <code>StaffSequence</code> file locations. */
-    private final List<File> theSequenceFiles;
-
     /** This is the list of sequence / song names. */
     private final List<String> theSequenceNames;
 
     /** Default constructor. Creates two empty lists. */
     public StaffArrangement() {
         theSequences = new ArrayList<>();
-        theSequenceFiles = new ArrayList<>();
         theSequenceNames = new ArrayList<>();
     }
     
@@ -60,11 +55,10 @@ public class StaffArrangement {
      * @return The removed StaffSequence and file.
      */
     public Object[] remove(int i) {
-        Object[] ray = { null, null };
+        Object[] ray = { null };
         try {
             theSequences.get(i);
             ray[0] = theSequences.remove(i);
-            ray[1] = theSequenceFiles.remove(i);
             return ray;
         } catch (IndexOutOfBoundsException e) {
             return null;
@@ -76,13 +70,6 @@ public class StaffArrangement {
      */
     public List<StaffSequence> getTheSequences() {
         return theSequences;
-    }
-
-    /**
-     * @return The list of file locations for the sequence files.
-     */
-    public List<File> getTheSequenceFiles() {
-        return theSequenceFiles;
     }
 
     /**
