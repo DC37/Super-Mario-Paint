@@ -349,9 +349,12 @@ public class Staff {
     public void addSongToArrangement() {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
-    
+        
+        if (theSequence.getName() == null)
+        	return;
+        
         StateMachine.setArrModified(true);
-        theArrangementList.getItems().add(StateMachine.getCurrentSongName());
+        theArrangementList.getItems().add(theSequence.getName());
         theArrangement.getTheSequences().add(theSequence);
         soundPlayer.storeInCache();
     }
