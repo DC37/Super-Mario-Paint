@@ -898,8 +898,8 @@ public class SMPFXController {
     private void loadSong(File inputFile, Window owner) {
         try {
             StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
-            String fname = Utilities.populateStaff(loaded, inputFile, staff, this);
-            getNameTextField().setText(fname);
+            Utilities.populateStaff(loaded, staff, this);
+            getNameTextField().setText(loaded.getName());
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);
             

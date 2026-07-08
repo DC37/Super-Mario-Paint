@@ -103,7 +103,7 @@ public class Utilities {
                         + inputFile.getName());
             }
             StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
-            populateStaff(loaded, inputFile, theStaff, controller);
+            populateStaff(loaded, theStaff, controller);
             return loaded;
 
         } catch (ClassCastException | EOFException | StreamCorruptedException
@@ -123,10 +123,8 @@ public class Utilities {
      *
      * @param loaded
      *            The loaded sequence.
-     * @param inputFile
-     *            The input file.
      */
-    public static String populateStaff(StaffSequence loaded, File inputFile, Staff theStaff, SMPFXController controller) {
+    public static void populateStaff(StaffSequence loaded, Staff theStaff, SMPFXController controller) {
         theStaff.setSequence(loaded);
         theStaff.setTimeSignature(loaded.getTimeSignature());
         StateMachine.setTempo(loaded.getTempo());
@@ -142,8 +140,6 @@ public class Utilities {
         }
         
         controller.getModifySongManager().reset();
-        
-        return loaded.getName();
     }
     
     /**
