@@ -38,9 +38,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
         sc.close();
         StaffSequence loaded = parseText(read);
         fIn.close();
-        if (loaded == null) {
-            throw new NullPointerException();
-        }
+
         return loaded;
     }
 
