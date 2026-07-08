@@ -661,7 +661,6 @@ public class SMPFXController {
 
         if (cont) {
             staff.setSequence(new StaffSequence());
-            staff.setSequenceFile(null);
             staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             staff.resetLocation();
             StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
@@ -766,7 +765,6 @@ public class SMPFXController {
             saveSongTxt(fOut, out);
             fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            staff.setSequenceFile(outputFile);
             StateMachine.setSongModified(false);
         } catch (IOException e) {
             e.printStackTrace();

@@ -130,17 +130,10 @@ public class Utilities {
     public static String populateStaff(StaffSequence loaded, File inputFile, Staff theStaff, SMPFXController controller) {
         theStaff.setSequence(loaded);
         theStaff.setTimeSignature(loaded.getTimeSignature());
-        theStaff.setSequenceFile(inputFile);
         StateMachine.setTempo(loaded.getTempo());
         StateMachine.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
         theStaff.resetLocation();
-        String fname = inputFile.getName();
-        try {
-            fname = fname.substring(0, fname.lastIndexOf("."));
-        } catch (IndexOutOfBoundsException e) {
-            // Do nothing
-        }
-        StateMachine.setCurrentSongName(fname);
+        StateMachine.setCurrentSongName(loaded.getName());
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         
         try {
@@ -151,7 +144,7 @@ public class Utilities {
         
         controller.getModifySongManager().reset();
         
-        return fname;
+        return loaded.getName();
     }
     
     /**

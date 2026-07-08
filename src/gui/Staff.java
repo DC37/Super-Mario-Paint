@@ -54,9 +54,6 @@ public class Staff {
     /** This is the current sequence that we have displaying on the staff. */
     private StaffSequence theSequence = new StaffSequence();
 
-    /** This is the location of the sequence that is currently displaying. */
-    private File theSequenceFile = null;
-
     /** This is the current arrangement that we currently have active. */
     private StaffArrangement theArrangement = new StaffArrangement();
 
@@ -288,18 +285,6 @@ public class Staff {
         theSequence = other;
     }
 
-    /**
-     *
-     * @param other
-     *            This is the location of the file that the sequence that we are
-     *            currently editing is located at. Usually, this is set by a
-     *            <code>save</code> operation, but could be set using other
-     *            methods or operations.
-     */
-    public void setSequenceFile(File other) {
-        theSequenceFile = other;
-    }
-
     /** @return The current arrangement that we are displaying. */
     public ListView<String> getArrangementList() {
         return theArrangementList;
@@ -364,14 +349,10 @@ public class Staff {
     public void addSongToArrangement() {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
-
-        if (theSequenceFile == null)
-            return;
     
         StateMachine.setArrModified(true);
         theArrangementList.getItems().add(StateMachine.getCurrentSongName());
         theArrangement.getTheSequences().add(theSequence);
-        theArrangement.getTheSequenceFiles().add(theSequenceFile);
         soundPlayer.storeInCache();
     }
     
