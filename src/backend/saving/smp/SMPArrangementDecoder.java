@@ -60,7 +60,7 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
 			seqs.add(SMPDecoder.SMP_SEQUENCE_DECODER.decode(f));
         }
         loaded.getTheSequenceNames().addAll(names);
-        loaded.setTheSequenceFiles(files);
+        loaded.getTheSequenceFiles().addAll(files);
 		loaded.getTheSequences().addAll(seqs);
         return loaded;
     }

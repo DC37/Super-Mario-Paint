@@ -18,13 +18,13 @@ public class StaffArrangement {
 	private String name;
 
     /** This is the list of <code>StaffSequence</code> objects. */
-    private List<StaffSequence> theSequences;
+    private final List<StaffSequence> theSequences;
 
     /** This is the list of <code>StaffSequence</code> file locations. */
-    private List<File> theSequenceFiles;
+    private final List<File> theSequenceFiles;
 
     /** This is the list of sequence / song names. */
-    private List<String> theSequenceNames;
+    private final List<String> theSequenceNames;
 
     /** Default constructor. Creates two empty lists. */
     public StaffArrangement() {
@@ -79,26 +79,10 @@ public class StaffArrangement {
     }
 
     /**
-     * @param t
-     *            The list of sequence files to set.
-     */
-    public void setTheSequences(List<StaffSequence> t) {
-        theSequences = t;
-    }
-
-    /**
      * @return The list of file locations for the sequence files.
      */
     public List<File> getTheSequenceFiles() {
         return theSequenceFiles;
-    }
-
-    /**
-     * @param tsf
-     *            The list of file locations to set.
-     */
-    public void setTheSequenceFiles(List<File> tsf) {
-        theSequenceFiles = tsf;
     }
 
     /**
