@@ -60,7 +60,12 @@ public class MPCDecoder implements Decoder<StaffSequence> {
             }
         }
         
-        return decode(sb.toString());
+        StaffSequence seq = decode(sb.toString());
+        
+        String fname = f.getName();
+        seq.setName(fname.substring(0, fname.lastIndexOf('.')));
+        
+        return seq;
     }
 
     /**

@@ -37,6 +37,10 @@ public class SMPDecoder implements Decoder<StaffSequence> {
         }
         sc.close();
         StaffSequence loaded = parseText(read);
+        
+        String fname = inputFile.getName();
+        loaded.setName(fname.substring(0, fname.lastIndexOf('.')));
+        
         fIn.close();
 
         return loaded;
