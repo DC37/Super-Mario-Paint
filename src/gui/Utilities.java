@@ -1,9 +1,6 @@
 package gui;
 
-import java.io.EOFException;
-import java.io.File;
 import java.io.IOException;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +8,6 @@ import java.util.List;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import backend.saving.Decoder;
 import backend.songs.StaffArrangement;
 import backend.songs.StaffSequence;
 import javafx.concurrent.Task;
@@ -89,32 +85,9 @@ public class Utilities {
      * Loads a sequence from an input file. Intended usage is in arranger mode.
      * We assume that the input files are located in a folder named "Songs" for
      * now.
-     *
-     * @param inputFile
-     *            This is the input filename.
      */
-    public static StaffSequence loadSequenceFromArrangement(File inputFile,
-            Staff theStaff, SMPFXController controller, Window owner) {
-        try {
-            inputFile = new File(inputFile.getParent() + File.separatorChar
-                    + inputFile.getName());
-            if (!inputFile.exists()) {
-                inputFile = new File(inputFile.getParent() + File.separatorChar
-                        + inputFile.getName());
-            }
-            StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
-            populateStaff(loaded, theStaff, controller);
-            return loaded;
-
-        } catch (ClassCastException | EOFException | StreamCorruptedException
-                | NullPointerException e) {
-            Dialog.showDialog(null, "Not a valid song file.", owner);
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Dialog.showDialog(null, "Not a valid song file.", owner);
-            return null;
-        }
+    public static void loadSequenceFromArrangement(StaffSequence loaded, Staff theStaff, SMPFXController controller, Window owner) {
+    	populateStaff(loaded, theStaff, controller);
     }
 
     /**
@@ -180,9 +153,8 @@ public class Utilities {
      *            The loaded arrangement.
      */
     public static void populateStaffArrangement(StaffArrangement loaded, Staff theStaff, final SMPFXController controller, Window owner) {
-        File firstFile = loaded.getTheSequenceFiles().get(0);
-        StaffSequence first = loadSequenceFromArrangement(firstFile, theStaff,
-                controller, owner);
+    	StaffSequence first = loaded.getTheSequences().getFirst();
+        loadSequenceFromArrangement(first, theStaff, controller, owner);
         String fname = loaded.getName();
         boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);

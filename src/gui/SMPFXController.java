@@ -316,9 +316,8 @@ public class SMPFXController {
             int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
             if (songIndex != -1) {
                 List<StaffSequence> seq = staff.getArrangement().getTheSequences();
-                List<File> files = staff.getArrangement().getTheSequenceFiles();
                 Window owner = arrangementList.getScene().getWindow();
-                Utilities.loadSequenceFromArrangement(files.get(songIndex), staff, SMPFXController.this, owner);
+                Utilities.loadSequenceFromArrangement(seq.get(songIndex), staff, SMPFXController.this, owner);
                 seq.set(songIndex, staff.getSequence());
             }
         });
