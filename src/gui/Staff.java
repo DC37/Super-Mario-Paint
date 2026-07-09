@@ -382,7 +382,6 @@ public class Staff {
         loadSequenceFromArrangement(first, owner);
         String fname = loaded.getName();
         boolean[] j = first.getNoteExtensions();
-        controller.getNameTextField().setText(fname);
         StateMachine.setNoteExtensions(j);
         
         setArrangement(loaded);
