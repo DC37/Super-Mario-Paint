@@ -317,7 +317,7 @@ public class SMPFXController {
             if (songIndex != -1) {
                 List<StaffSequence> seq = staff.getArrangement().getTheSequences();
                 Window owner = arrangementList.getScene().getWindow();
-                staff.loadSequenceFromArrangement(seq.get(songIndex), SMPFXController.this, owner);
+                staff.loadSequenceFromArrangement(seq.get(songIndex), owner);
                 seq.set(songIndex, staff.getSequence());
             }
         });
@@ -902,7 +902,8 @@ public class SMPFXController {
     private void loadSong(File inputFile, Window owner) {
         try {
             StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
-            staff.populateStaff(loaded, this);
+            staff.populateStaff(loaded);
+            getModifySongManager().reset();
             getNameTextField().setText(loaded.getName());
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);

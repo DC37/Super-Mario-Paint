@@ -354,7 +354,7 @@ public class Staff {
      * @param loaded
      *            The loaded sequence.
      */
-    public void populateStaff(StaffSequence loaded, SMPFXController controller) {
+    public void populateStaff(StaffSequence loaded) {
         setSequence(loaded);
         setTimeSignature(loaded.getTimeSignature());
         StateMachine.setTempo(loaded.getTempo());
@@ -368,8 +368,6 @@ public class Staff {
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
             e.printStackTrace();
         }
-        
-        controller.getModifySongManager().reset();
     }
 
     /**
@@ -381,7 +379,7 @@ public class Staff {
      */
     public void populateStaffArrangement(StaffArrangement loaded, final SMPFXController controller, Window owner) {
     	StaffSequence first = loaded.getTheSequences().getFirst();
-        loadSequenceFromArrangement(first, controller, owner);
+        loadSequenceFromArrangement(first, owner);
         String fname = loaded.getName();
         boolean[] j = first.getNoteExtensions();
         controller.getNameTextField().setText(fname);
@@ -422,8 +420,8 @@ public class Staff {
      * We assume that the input files are located in a folder named "Songs" for
      * now.
      */
-    public void loadSequenceFromArrangement(StaffSequence loaded, SMPFXController controller, Window owner) {
-    	populateStaff(loaded, controller);
+    public void loadSequenceFromArrangement(StaffSequence loaded, Window owner) {
+    	populateStaff(loaded);
     }
     
     public void addSongToArrangement() {
