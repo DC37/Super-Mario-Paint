@@ -1,6 +1,5 @@
 package gui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -60,12 +59,6 @@ public class Staff {
 
     /** This is the ListView that holds the current arrangement. */
     private ListView<String> theArrangementList;
-
-    /**
-     * This is the location of the arrangement file that is currently
-     * displaying.
-     */
-    private File theArrangementFile = null;
 
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     private final SoundPlayer soundPlayer;
@@ -304,21 +297,6 @@ public class Staff {
      */
     public void setArrangement(StaffArrangement tA) {
         theArrangement = tA;
-    }
-
-    /**
-     * @return The list of arrangement files.
-     */
-    public File getArrangementFile() {
-        return theArrangementFile;
-    }
-
-    /**
-     * @param tAF
-     *            The list of arrangement files to set.
-     */
-    public void setArrangementFile(File tAF) {
-        theArrangementFile = tAF;
     }
 
     /**

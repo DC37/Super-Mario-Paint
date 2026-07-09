@@ -681,7 +681,6 @@ public class SMPFXController {
         }
         if (cont) {
             staff.setArrangement(new StaffArrangement());
-            staff.setArrangementFile(null);
             getNameTextField().clear();
             staff.getArrangementList().getItems().clear();
             StateMachine.setArrModified(false);
@@ -730,7 +729,6 @@ public class SMPFXController {
             saveArrTxt(fOut, out);
             fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            staff.setArrangementFile(outputFile);
             StateMachine.setArrModified(false);
         } catch (IOException e) {
             e.printStackTrace();
