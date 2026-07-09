@@ -116,25 +116,6 @@ public class Utilities {
     }
     
     /**
-     * Turns out a lot of file names can have bad characters in them.
-     * @param f String to clean
-     * @return String with all apostrophes, backslashes, and forward
-     * slashes replaced with underscores.
-     */
-    public static String cleanName(String f) {
-        // unused---seems to only be causing problems
-        // TODO consider normalizing all file names for saving and loading
-
-        f = f.replace("'", "_");
-        f = f.replace("\\", "_");
-        f = f.replace("/", "_");
-        f = f.replace(":", "_");
-        f = f.replace("&", "_");
-        
-        return f;
-    }
-    
-    /**
      * Check if a string does not contain any illegal character.
      */
     public static boolean legalFileName(String s) {
