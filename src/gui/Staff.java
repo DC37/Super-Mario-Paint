@@ -380,12 +380,9 @@ public class Staff {
     public void populateStaffArrangement(StaffArrangement loaded, Window owner) {
     	StaffSequence first = loaded.getTheSequences().getFirst();
         loadSequenceFromArrangement(first, owner);
-        String fname = loaded.getName();
-        boolean[] j = first.getNoteExtensions();
-        StateMachine.setNoteExtensions(j);
         
         setArrangement(loaded);
-        StateMachine.setCurrentArrangementName(fname);
+        StateMachine.setCurrentArrangementName(loaded.getName());
         getArrangementList().getItems().clear();
         getArrangementList().getItems().addAll(loaded.getTheSequenceNames());
         
