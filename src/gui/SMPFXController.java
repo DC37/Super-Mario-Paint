@@ -317,7 +317,7 @@ public class SMPFXController {
             if (songIndex != -1) {
                 List<StaffSequence> seq = staff.getArrangement().getTheSequences();
                 Window owner = arrangementList.getScene().getWindow();
-                Utilities.loadSequenceFromArrangement(seq.get(songIndex), staff, SMPFXController.this, owner);
+                staff.loadSequenceFromArrangement(seq.get(songIndex), SMPFXController.this, owner);
                 seq.set(songIndex, staff.getSequence());
             }
         });
@@ -902,7 +902,7 @@ public class SMPFXController {
     private void loadSong(File inputFile, Window owner) {
         try {
             StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
-            Utilities.populateStaff(loaded, staff, this);
+            staff.populateStaff(loaded, this);
             getNameTextField().setText(loaded.getName());
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);
@@ -949,7 +949,7 @@ public class SMPFXController {
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                 StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
-                Utilities.populateStaffArrangement(loaded, staff, this, owner);
+                staff.populateStaffArrangement(loaded, this, owner);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
             } catch (ParseException | StreamCorruptedException
@@ -957,7 +957,7 @@ public class SMPFXController {
                 try {
                     StaffArrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                    Utilities.populateStaffArrangement(loaded, staff, this, owner);
+                    staff.populateStaffArrangement(loaded, this, owner);
                     StateMachine.setSongModified(false);
                 } catch (Exception e1) {
                     e1.printStackTrace();

@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
+import javafx.stage.Window;
 import utilities.MathUtils;
 
 /**
@@ -344,6 +345,85 @@ public class Staff {
         delayMillis = (int) mill;
         double nano = (mill - delayMillis) * Math.pow(10, 6);
         delayNanos = (int) nano;
+    }
+
+    /**
+     * Populates the staff with the sequence given. Sets the program's soundfont
+     * to the sequence's.
+     *
+     * @param loaded
+     *            The loaded sequence.
+     */
+    public void populateStaff(StaffSequence loaded, SMPFXController controller) {
+        setSequence(loaded);
+        setTimeSignature(loaded.getTimeSignature());
+        StateMachine.setTempo(loaded.getTempo());
+        StateMachine.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        resetLocation();
+        StateMachine.setCurrentSongName(loaded.getName());
+        StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+        
+        try {
+            getSoundPlayer().loadFromAppData(getSequence().getSoundset());
+        } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+            e.printStackTrace();
+        }
+        
+        controller.getModifySongManager().reset();
+    }
+
+    /**
+     * Populates the staff with the arrangement given. Loads each soundfont
+     * from each song in the arrangement into cache.
+     *
+     * @param loaded
+     *            The loaded arrangement.
+     */
+    public void populateStaffArrangement(StaffArrangement loaded, final SMPFXController controller, Window owner) {
+    	StaffSequence first = loaded.getTheSequences().getFirst();
+        loadSequenceFromArrangement(first, controller, owner);
+        String fname = loaded.getName();
+        boolean[] j = first.getNoteExtensions();
+        controller.getNameTextField().setText(fname);
+        StateMachine.setNoteExtensions(j);
+        
+        setArrangement(loaded);
+        StateMachine.setCurrentArrangementName(fname);
+        getArrangementList().getItems().clear();
+        getArrangementList().getItems().addAll(loaded.getTheSequenceNames());
+
+        controller.getNameTextField().setText(fname);
+        
+        Task<Void> soundsetsTaskUtilities = new Task<Void>() {
+            @Override
+            public Void call() {
+                getSoundPlayer().clearCache();
+                for(StaffSequence s : loaded.getTheSequences()) {
+                    try {
+                        getSoundPlayer().loadToCache(s.getSoundset());
+                    } catch (InvalidMidiDataException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
+            }
+        };
+        new Thread(soundsetsTaskUtilities).start();
+        
+        try {
+            getSoundPlayer().loadFromAppData(first.getSoundset());
+        } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads a sequence from an input file. Intended usage is in arranger mode.
+     * We assume that the input files are located in a folder named "Songs" for
+     * now.
+     */
+    public void loadSequenceFromArrangement(StaffSequence loaded, SMPFXController controller, Window owner) {
+    	populateStaff(loaded, controller);
     }
     
     public void addSongToArrangement() {
