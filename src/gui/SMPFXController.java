@@ -950,7 +950,7 @@ public class SMPFXController {
                     return;
                 StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
                 StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
-                staff.populateStaffArrangement(loaded, this, owner);
+                staff.populateStaffArrangement(loaded, owner);
                 StateMachine.setSongModified(false);
                 StateMachine.setArrModified(false);
             } catch (ParseException | StreamCorruptedException
@@ -958,7 +958,7 @@ public class SMPFXController {
                 try {
                     StaffArrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
                     StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                    staff.populateStaffArrangement(loaded, this, owner);
+                    staff.populateStaffArrangement(loaded, owner);
                     StateMachine.setSongModified(false);
                 } catch (Exception e1) {
                     e1.printStackTrace();

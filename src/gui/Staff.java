@@ -377,7 +377,7 @@ public class Staff {
      * @param loaded
      *            The loaded arrangement.
      */
-    public void populateStaffArrangement(StaffArrangement loaded, final SMPFXController controller, Window owner) {
+    public void populateStaffArrangement(StaffArrangement loaded, Window owner) {
     	StaffSequence first = loaded.getTheSequences().getFirst();
         loadSequenceFromArrangement(first, owner);
         String fname = loaded.getName();
@@ -388,8 +388,6 @@ public class Staff {
         StateMachine.setCurrentArrangementName(fname);
         getArrangementList().getItems().clear();
         getArrangementList().getItems().addAll(loaded.getTheSequenceNames());
-
-        controller.getNameTextField().setText(fname);
         
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
             @Override
