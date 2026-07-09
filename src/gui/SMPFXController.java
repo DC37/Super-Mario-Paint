@@ -372,6 +372,8 @@ public class SMPFXController {
             }
         });
         
+        songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
+        
         // Set up tempo box
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
 
