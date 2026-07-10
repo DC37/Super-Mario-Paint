@@ -478,10 +478,13 @@ public class Staff {
 
         @Override
         protected Task<Staff> createTask() {
-            if (!arrPlaying)
+            switch (StateMachine.getMode()) {
+            case SONG:
                 return new AnimationTask();
-            else
+            case ARRANGEMENT:
+            default:
                 return new ArrangementTask();
+            }
         }
 
         /**
