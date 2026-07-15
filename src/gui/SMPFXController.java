@@ -870,29 +870,29 @@ public class SMPFXController {
     }
 
     private void loadSong(Window owner) {
-        boolean cont = true;
-        if (StateMachine.isSongModified())
-            cont = Dialog
-                    .showYesNoDialog("HOLD IT!",
-                            "The current song has been modified!\n"
-                            + "Load anyway?", owner);
-        File inputFile = null;
-        if (cont) {
-            try {
-                FileChooser f = new FileChooser();
-                FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-                FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
-                f.getExtensionFilters().add(filterTxt);
-                f.getExtensionFilters().add(filterAny);
-                f.setInitialDirectory(StateMachine.getCurrentDirectory());
-                inputFile = f.showOpenDialog(null);
-                if (inputFile == null)
-                    return;
-                StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                loadSong(inputFile, owner);
-            } catch (Exception e) {
-                Dialog.showDialog(null, "Not a valid song file.", owner);
+        if (StateMachine.isSongModified()) {
+            if (!Dialog.showYesNoDialog("HOLD IT!",
+            		"The current song has been modified!\n"
+                    + "Load anyway?", owner)) {
+            	return;
             }
+        }
+
+        try {
+        	FileChooser f = new FileChooser();
+        	FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        	FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
+        	f.getExtensionFilters().add(filterTxt);
+        	f.getExtensionFilters().add(filterAny);
+        	f.setInitialDirectory(StateMachine.getCurrentDirectory());
+        	File inputFile = f.showOpenDialog(null);
+        	if (inputFile == null)
+        		return;
+        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        	loadSong(inputFile, owner);
+        	
+        } catch (Exception e) {
+        	Dialog.showDialog(null, "Not a valid song file.", owner);
         }
     }
 
