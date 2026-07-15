@@ -33,12 +33,6 @@ import utilities.MathUtils;
  */
 public class Staff {
 
-    /** Milliseconds to delay between updating the play bars. */
-    private long delayMillis;
-
-    /** Nanoseconds to delay in addition to the milliseconds delay. */
-    private int delayNanos;
-
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
 
@@ -220,7 +214,6 @@ public class Staff {
     /** Begins animation of the Staff. (Starts a song) */
     public synchronized void startSong() {
         songPlaying = true;
-        setTempo(StateMachine.getTempo());
         animationService.restart();
     }
 
@@ -305,24 +298,6 @@ public class Staff {
      */
     public StaffDisplayManager getDisplayManager() {
         return displayManager;
-    }
-
-    /**
-     * @param tempo
-     *            The tempo we want to set this staff to run at, in BPM. Beats
-     *            per minute * 60 = beats per second <br>
-     *            Beats per second ^ -1 = seconds per beat <br>
-     *            Seconds per beat * 1000 = Milliseconds per beat <br>
-     *            (int) Milliseconds per beat = Milliseconds <br>
-     *            Milliseconds per beat - milliseconds = remainder <br>
-     *            (int) (Remainder * 1e6) = Nanoseconds <br>
-     *
-     */
-    public void setTempo(double tempo) {
-        double mill = (60.0 / tempo) * 1000;
-        delayMillis = (int) mill;
-        double nano = (mill - delayMillis) * Math.pow(10, 6);
-        delayNanos = (int) nano;
     }
 
     /**
@@ -484,6 +459,12 @@ public class Staff {
          */
         class AnimationTask extends Task<Staff> {
 
+            /** Milliseconds to delay between updating the play bars. */
+            protected long delayMillis;
+
+            /** Nanoseconds to delay in addition to the milliseconds delay. */
+            protected int delayNanos;
+
             /**
              * This is the current index of the measure line that we are on on
              * the staff.
@@ -495,11 +476,31 @@ public class Staff {
              */
             protected boolean advance = false;
 
+            /**
+             * @param tempo
+             *            The tempo we want to set this staff to run at, in BPM. Beats
+             *            per minute * 60 = beats per second <br>
+             *            Beats per second ^ -1 = seconds per beat <br>
+             *            Seconds per beat * 1000 = Milliseconds per beat <br>
+             *            (int) Milliseconds per beat = Milliseconds <br>
+             *            Milliseconds per beat - milliseconds = remainder <br>
+             *            (int) (Remainder * 1e6) = Nanoseconds <br>
+             *
+             */
+            protected void computeDelay(double tempo) {
+                double mill = (60.0 / tempo) * 1000;
+                delayMillis = (int) mill;
+                double nano = (mill - delayMillis) * Math.pow(10, 6);
+                delayNanos = (int) nano;
+            }
+
             @Override
             protected Staff call() throws Exception {
                 int counter = StateMachine.getMeasureLineNum();
                 boolean zero = false;
                 int endLine = theSequence.getLength();
+
+                computeDelay(theSequence.getTempo());
                 
                 StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
 
@@ -607,7 +608,7 @@ public class Staff {
                 for (int i = 0; i < seq.size(); i++) {
                     setSequence(seq.get(i));
                     setSoundset(theSequence.getSoundset());
-                    setTempo(theSequence.getTempo());
+                    computeDelay(theSequence.getTempo());
                     setTimeSignature(theSequence.getTimeSignature());
                     endLine = theSequence.getLength();
                     
