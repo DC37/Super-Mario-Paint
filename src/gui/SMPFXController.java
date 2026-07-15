@@ -317,6 +317,15 @@ public class SMPFXController {
             if (songIndex != -1) {
                 List<StaffSequence> seq = staff.getArrangement().getTheSequences();
                 Window owner = arrangementList.getScene().getWindow();
+                
+                if (StateMachine.isSongModified()) {
+                    if (!Dialog.showYesNoDialog("HOLD IT!",
+                    		"The current song has been modified!\n"
+                            + "Load anyway?", owner)) {
+                    	return;
+                    }
+                }
+                
                 staff.populateStaff(seq.get(songIndex));
                 seq.set(songIndex, staff.getSequence());
             }
