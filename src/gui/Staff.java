@@ -357,7 +357,7 @@ public class Staff {
      */
     public void populateStaffArrangement(StaffArrangement loaded, Window owner) {
     	StaffSequence first = loaded.getTheSequences().getFirst();
-        loadSequenceFromArrangement(first, owner);
+        populateStaff(first);
         
         setArrangement(loaded);
         StateMachine.setCurrentArrangementName(loaded.getName());
@@ -385,15 +385,6 @@ public class Staff {
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Loads a sequence from an input file. Intended usage is in arranger mode.
-     * We assume that the input files are located in a folder named "Songs" for
-     * now.
-     */
-    public void loadSequenceFromArrangement(StaffSequence loaded, Window owner) {
-    	populateStaff(loaded);
     }
     
     public void addSongToArrangement() {

@@ -317,7 +317,7 @@ public class SMPFXController {
             if (songIndex != -1) {
                 List<StaffSequence> seq = staff.getArrangement().getTheSequences();
                 Window owner = arrangementList.getScene().getWindow();
-                staff.loadSequenceFromArrangement(seq.get(songIndex), owner);
+                staff.populateStaff(seq.get(songIndex));
                 seq.set(songIndex, staff.getSequence());
             }
         });
