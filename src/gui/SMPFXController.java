@@ -920,50 +920,60 @@ public class SMPFXController {
     }
 
     private void loadArrangement(Window owner) {
-        boolean cont = true;
-        if (StateMachine.isSongModified() || StateMachine.isArrModified()) {
-            if (StateMachine.isSongModified() && StateMachine.isArrModified()) {
-                cont = Dialog.showYesNoDialog("HOLD IT!",
-                        "The current song and arrangement\nhave both been modified!\nLoad anyway?", owner);
-            } else if (StateMachine.isSongModified()) {
-                cont = Dialog.showYesNoDialog("HOLD IT!",
-                        "The current song has been modified!\nLoad anyway?", owner);
-            } else if (StateMachine.isArrModified()) {
-                cont = Dialog.showYesNoDialog("HOLD IT!",
-                        "The current arrangement has been\nmodified! Load anyway?", owner);
-            }
-        }
-        File inputFile = null;
-        if (cont) {
-            try {
-                FileChooser f = new FileChooser();
-                FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-                FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
-                f.getExtensionFilters().add(filterTxt);
-                f.getExtensionFilters().add(filterAny);
-                f.setInitialDirectory(StateMachine.getCurrentDirectory());
-                inputFile = f.showOpenDialog(null);
-                if (inputFile == null)
-                    return;
-                StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
-                staff.populateStaffArrangement(loaded, owner);
-                StateMachine.setSongModified(false);
-                StateMachine.setArrModified(false);
-            } catch (ParseException | StreamCorruptedException
-                    | NullPointerException e) {
-                try {
-                    StaffArrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
-                    StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-                    staff.populateStaffArrangement(loaded, owner);
-                    StateMachine.setSongModified(false);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                    Dialog.showDialog(null, "Not a valid arrangement file.", owner);
+        if (StateMachine.isSongModified()) {
+            if (StateMachine.isArrModified()) {
+                if (!Dialog.showYesNoDialog("HOLD IT!",
+                        "The current song and arrangement\nhave both been modified!\nLoad anyway?", owner)) {
+                	return;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+                
+            } else {
+                if (!Dialog.showYesNoDialog("HOLD IT!",
+                        "The current song has been modified!\nLoad anyway?", owner)) {
+                	return;
+                }
             }
+            
+        } else if (StateMachine.isArrModified()) {
+        	if (!Dialog.showYesNoDialog("HOLD IT!",
+        			"The current arrangement has been\nmodified! Load anyway?", owner)) {
+        		return;
+        	}
+        }
+        
+        File inputFile = null;
+
+        try {
+        	FileChooser f = new FileChooser();
+        	FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        	FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
+        	f.getExtensionFilters().add(filterTxt);
+        	f.getExtensionFilters().add(filterAny);
+        	f.setInitialDirectory(StateMachine.getCurrentDirectory());
+        	inputFile = f.showOpenDialog(null);
+        	if (inputFile == null)
+        		return;
+        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        	StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
+        	staff.populateStaffArrangement(loaded, owner);
+        	StateMachine.setSongModified(false);
+        	StateMachine.setArrModified(false);
+        	
+        } catch (ParseException | StreamCorruptedException
+        		| NullPointerException e) {
+        	try {
+        		StaffArrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
+        		StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        		staff.populateStaffArrangement(loaded, owner);
+        		StateMachine.setSongModified(false);
+        		
+        	} catch (Exception e1) {
+        		e1.printStackTrace();
+        		Dialog.showDialog(null, "Not a valid arrangement file.", owner);
+        	}
+        	
+        } catch (IOException e) {
+        	e.printStackTrace();
         }
     }
     
