@@ -757,8 +757,7 @@ public class SMPFXController {
             f.getExtensionFilters().addAll(
                     new ExtensionFilter("Text file", "*.txt"),
                     new ExtensionFilter("All files", "*"));
-            File outputFile = null;
-            outputFile = f.showSaveDialog(owner);
+            File outputFile = f.showSaveDialog(owner);
             if (outputFile == null)
                 return;
             FileOutputStream fOut = new FileOutputStream(outputFile);
