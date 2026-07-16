@@ -7,30 +7,33 @@ import java.util.stream.Collectors;
 import gui.Values;
 
 /**
- * We might not even need MIDI to do this sequencing stuff. This class keeps
- * track of whatever is displaying on the staff right now.
- *
- * @author RehdBlob
- * @since 2013.08.23
+ * <p>A song is a list of {@link StaffNoteLine}s and a context determining how
+ * the notes should be played: tempo, time signature, sustain flags, soundfont
+ * binding. A song is also given a name.
+ * 
+ * <p>The internal list of note lines is not directly accessible, but a
+ * {@link #getLine} method is provided to access the modifiable
+ * lines. The method will resize the song with empty lines if necessary, making
+ * songs virtually infinite.
  */
 public class StaffSequence {
     
-    /** The name of this sequence. */
+    /** The name of this song. */
     private String name;
 
-    /** The tempo of this sequence. */
+    /** The tempo of this song. */
     private double tempo = Values.DEFAULT_TEMPO;
 
-    /** This tells us which notes are extended (green highlight) or not. */
+    /** The sustain flags for each instrument. */
     private final boolean[] noteExtensions = new boolean[Values.NUM_INSTRUMENTS];
 
-    /** The time signature of this sequence. */
+    /** The time signature of this song. */
     private TimeSignature timeSignature = TimeSignature.FOUR_FOUR;
     
-    /** The soundset bound to and should be loaded for this sequence. */
+    /** The soundset bound to this song (assumed to be loaded). */
     private String soundsetBinding = "";
 
-    /** These are all of the lines on the staff. */
+    /** The note lines in this song. */
     private final List<StaffNoteLine> theLines;
 
     /** Default constructor. Makes an empty song. */
@@ -39,7 +42,7 @@ public class StaffSequence {
     }
     
     /**
-     * Makes an empty song sequence of a specified length.
+     * Makes an empty song of a specified length.
      * @param length The initial length
      */
     public StaffSequence(int length) {
@@ -75,29 +78,32 @@ public class StaffSequence {
         this.name = name;
     }
 
-    /** @return The tempo of this sequence. */
+    /**
+     * Get the tempo of this song.
+     */
     public double getTempo() {
         return tempo;
     }
 
     /**
-     * Sets the tempo of this sequence.
-     *
-     * @param t
-     *            The tempo of this sequence.
+     * Set the tempo of this song.
+     * @param tempo A tempo value
      */
-    public void setTempo(double t) {
-        tempo = t;
+    public void setTempo(double tempo) {
+        this.tempo = tempo;
     }
 
-    /** @return The bitfield denoting which notes are extended. */
+    /**
+     * Get the array holding sustain flags for each instrument in this song.
+     * @return
+     */
     public boolean[] getNoteExtensions() {
         return noteExtensions;
     }
 
     /**
-     * Set the note extensions.
-     * @param exts An array holding the new extension values
+     * Set the sustain flags.
+     * @param exts An array holding the flag values
      * @throws IllegalArgumentException if the array to assign is the wrong length
      */
     public void setNoteExtensions(boolean[] exts) {
@@ -108,37 +114,44 @@ public class StaffSequence {
         System.arraycopy(exts, 0, noteExtensions, 0, noteExtensions.length);
     }
 
-    /** @return The time signature of this sequence. */
+    /**
+     * Get the time signature of this song.
+     */
     public TimeSignature getTimeSignature() {
         return timeSignature;
     }
 
-    public void setTimeSignature(TimeSignature t) {
-        this.timeSignature = t;
+    /**
+     * Set the time signature of this song.
+     * @param timeSignature A time signature
+     */
+    public void setTimeSignature(TimeSignature timeSignature) {
+        this.timeSignature = timeSignature;
     }
 
     /**
-     * @return The soundset bound to this sequence.
-     * @since v1.1.2
+     * Get the soundset bound to this song.
      */
     public String getSoundset() {
         return soundsetBinding;
     }
 
     /**
-     * Sets the soundset for this sequence which should be loaded with the
-     * sequence.
-     * @since v1.1.2
+     * Bind a soundset to this song.
+     * @param soundsetBinding The soundset to bind
      */
-    public void setSoundset(String soundset) {
-        soundsetBinding = soundset;
+    public void setSoundset(String soundsetBinding) {
+        this.soundsetBinding = soundsetBinding;
     }
     
     /**
-     * The length of the sequence is defined as the number of note lines that
-     * must be played in order to play the full sequence. It is guaranteed to
-     * be a multiple of {@code this.getTimeSignature().barLength()}.
-     * @return the number of playable lines in this sequence
+     * <p>Get the length of this song.
+     * 
+     * <p>The length is defined as the number of note lines that must be played
+     * in order to play the full song. It is guaranteed to be a multiple of
+     * {@code this.getTimeSignature().barLength()}.
+     * 
+     * @return the number of playable lines in this song
      */
     public int getLength() {
         int lastNonempty = theLines.size() - 1;
@@ -158,8 +171,11 @@ public class StaffSequence {
     }
 
     /**
-     * This method extends the sequence with new empty lines if the parameter
-     * is greater than the current length.
+     * <p>Get a line of notes in this song.
+     * 
+     * <p>This method extends the song with empty lines if the parameter is
+     * greater than the current length.
+     * 
      * @param i The index of the line to get (first index 0)
      * @return The line at index i
      * @throws IndexOutOfBoundsException if i < 0
@@ -182,7 +198,7 @@ public class StaffSequence {
     }
     
     /**
-     * <p>Add empty lines to set the length of the sequence.</p>
+     * <p>Add empty lines to set the length of the song.</p>
      * 
      * <p>Without effect if the length is already greater or equal.</p>
      * 
