@@ -4,29 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is an arrangement on the staff, a collection of
- * <code>StaffSequence</code>s and their filepaths.
- *
- * @author RehdBlob
- * @since 2014.12.31
- *
+ * <p>An arrangement is a list of {@link StaffSequence}s.
  */
 public class StaffArrangement {
 	
-	/** The name of this arrangement */
+	/** The name of this arrangement. */
 	private String name;
 
-    /** This is the list of <code>StaffSequence</code> objects. */
-    private final List<StaffSequence> theSequences;
+    /** The sequences in this arrangement. */
+    private final List<StaffSequence> sequences;
 
-    /** Default constructor. Creates two empty lists. */
+    /** Default constructor. Makes an empty arrangement. */
     public StaffArrangement() {
-        theSequences = new ArrayList<>();
+        sequences = new ArrayList<>();
     }
     
     /**
      * Get the name of this arrangement.
-     * @return
      */
     public String getName() {
     	return this.name;
@@ -41,9 +35,9 @@ public class StaffArrangement {
     }
 
     /**
-     * @return The list of sequence files.
+     * Get the sequences in this arrangement.
      */
     public List<StaffSequence> getSequences() {
-        return theSequences;
+        return sequences;
     }
 }
