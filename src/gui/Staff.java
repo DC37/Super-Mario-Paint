@@ -374,7 +374,7 @@ public class Staff {
         
         StateMachine.setArrModified(true);
         theArrangementList.getItems().add(theSequence.getName());
-        theArrangement.getSequences().add(theSequence);
+        theArrangement.getSequences().add(new StaffSequence(theSequence));
         soundPlayer.storeInCache();
     }
     
