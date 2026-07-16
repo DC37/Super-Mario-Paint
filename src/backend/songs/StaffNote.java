@@ -6,8 +6,8 @@ import gui.Values;
 /**
  * <p>The representation for a note. All the information required for playing a
  * sound is contained in that class: instrument, position on a vertical line
- * and accidental (determines the pitch, see {@link StaffNote#getPitch}), and
- * whether this is a regular note or a certain mute note.
+ * and accidental (determines the pitch, see {@link #getPitch}), and whether
+ * this is a regular note or a certain mute note.
  */
 public class StaffNote {
 

@@ -12,7 +12,7 @@ import gui.Values;
  * {@link Values#MIN_VELOCITY} and {@link Values#MAX_VELOCITY}.
  * 
  * <p>This is mostly a wrapper around a list of {@link StaffNote}s. The method
- * {@link getNotes} provides a reference to that modifiable list. The order of
+ * {@link #getNotes} provides a reference to that modifiable list. The order of
  * notes in the list determines how they are ultimately displayed; the last
  * element will end up at the front. Typically we want that note to be the most
  * recently-placed.
