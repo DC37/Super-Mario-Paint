@@ -43,7 +43,7 @@ public class StaffArrangement {
     /**
      * @return The list of sequence files.
      */
-    public List<StaffSequence> getTheSequences() {
+    public List<StaffSequence> getSequences() {
         return theSequences;
     }
 }

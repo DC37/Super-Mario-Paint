@@ -331,14 +331,14 @@ public class Staff {
      *            The loaded arrangement.
      */
     public void populateStaffArrangement(StaffArrangement loaded, Window owner) {
-    	StaffSequence first = loaded.getTheSequences().getFirst();
+    	StaffSequence first = loaded.getSequences().getFirst();
         populateStaff(first);
         
         setArrangement(loaded);
         StateMachine.setCurrentArrangementName(loaded.getName());
         
         theArrangementList.getItems().clear();
-        for (StaffSequence seq : loaded.getTheSequences()) {
+        for (StaffSequence seq : loaded.getSequences()) {
         	theArrangementList.getItems().add(seq.getName());
         }
         
@@ -346,7 +346,7 @@ public class Staff {
             @Override
             public Void call() {
                 getSoundPlayer().clearCache();
-                for(StaffSequence s : loaded.getTheSequences()) {
+                for(StaffSequence s : loaded.getSequences()) {
                     try {
                         getSoundPlayer().loadToCache(s.getSoundset());
                     } catch (InvalidMidiDataException | IOException e) {
@@ -374,7 +374,7 @@ public class Staff {
         
         StateMachine.setArrModified(true);
         theArrangementList.getItems().add(theSequence.getName());
-        theArrangement.getTheSequences().add(theSequence);
+        theArrangement.getSequences().add(theSequence);
         soundPlayer.storeInCache();
     }
     
@@ -385,9 +385,9 @@ public class Staff {
         ObservableList<String> l = theArrangementList.getItems();
         int x = theArrangementList.getSelectionModel()
                 .getSelectedIndex();
-        if (x >= 0 && x < theArrangement.getTheSequences().size()) {
+        if (x >= 0 && x < theArrangement.getSequences().size()) {
             StateMachine.setArrModified(true);
-            theArrangement.getTheSequences().remove(x);
+            theArrangement.getSequences().remove(x);
             l.remove(x);
         }
     }
@@ -399,9 +399,9 @@ public class Staff {
         ObservableList<String> l = theArrangementList.getItems();
         int x = theArrangementList.getSelectionModel()
                 .getSelectedIndex();
-        if (x >= 0 && x < theArrangement.getTheSequences().size()) {
+        if (x >= 0 && x < theArrangement.getSequences().size()) {
             StateMachine.setArrModified(true);
-            StaffSequence ss = theArrangement.getTheSequences().remove(x);
+            StaffSequence ss = theArrangement.getSequences().remove(x);
             String s = l.remove(x);
             int moveTo = x - moveAmt;
             if (moveTo > l.size())
@@ -409,7 +409,7 @@ public class Staff {
             if (moveTo < 0)
                 moveTo = 0;
             l.add(moveTo, s);
-            theArrangement.getTheSequences().add(moveTo, ss);
+            theArrangement.getSequences().add(moveTo, ss);
             theArrangementList.getSelectionModel()
             .select(moveTo);
         }
@@ -603,13 +603,13 @@ public class Staff {
             @Override
             protected Staff call() throws Exception {
                 StateMachine.setArrangementSongIndex(0);
-                List<StaffSequence> seq = theArrangement.getTheSequences();
+                List<StaffSequence> seq = theArrangement.getSequences();
                 int endLine;
 
                 queue = 0;
                 
                 for (int i = 0; i < seq.size(); i++) {
-                    setSequence(seq.get(i));
+                    setSequence(theArrangement.getSequences().get(i));
                     setSoundset(theSequence.getSoundset());
                     computeDelay(theSequence.getTempo());
                     setTimeSignature(theSequence.getTimeSignature());

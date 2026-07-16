@@ -55,7 +55,7 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
             f = new File(basePath + s + ".txt");
 			seqs.add(SMPDecoder.SMP_SEQUENCE_DECODER.decode(f));
         }
-		loaded.getTheSequences().addAll(seqs);
+		loaded.getSequences().addAll(seqs);
         return loaded;
     }
 

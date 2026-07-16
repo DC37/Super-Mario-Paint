@@ -315,7 +315,7 @@ public class SMPFXController {
             
             int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
             if (songIndex != -1) {
-                List<StaffSequence> seq = staff.getArrangement().getTheSequences();
+                List<StaffSequence> seq = staff.getArrangement().getSequences();
                 Window owner = arrangementList.getScene().getWindow();
                 
                 if (StateMachine.isSongModified()) {
@@ -734,9 +734,9 @@ public class SMPFXController {
             FileOutputStream fOut = new FileOutputStream(outputFile);
             StaffArrangement out = staff.getArrangement();
             
-            for (int i = 0; i < out.getTheSequences().size(); i++) {
+            for (int i = 0; i < out.getSequences().size(); i++) {
             	String name = staff.getArrangementList().getItems().get(i);
-            	out.getTheSequences().get(i).setName(name);
+            	out.getSequences().get(i).setName(name);
             }
             
             saveArrTxt(fOut, out);
@@ -750,7 +750,7 @@ public class SMPFXController {
 
     public void saveArrTxt(FileOutputStream fOut, StaffArrangement out) {
         PrintStream pr = new PrintStream(fOut);
-        for (StaffSequence seq : out.getTheSequences()) {
+        for (StaffSequence seq : out.getSequences()) {
             pr.println(seq.getName());
         }
         pr.close();
@@ -813,7 +813,7 @@ public class SMPFXController {
         Task<Void> soundsetsTaskSave = new Task<Void>() {
             @Override
             public Void call() {
-                List<StaffSequence> seqs = staff.getArrangement().getTheSequences();
+                List<StaffSequence> seqs = staff.getArrangement().getSequences();
                 String currSeqName = getNameTextField().getText();
                 for (StaffSequence seq : seqs) 
                     if (seq.getName().equals(currSeqName)) {
