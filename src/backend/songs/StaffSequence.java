@@ -64,6 +64,19 @@ public class StaffSequence {
     }
     
     /**
+     * Copy constructor for a song.
+     * @param sequence A song to copy
+     */
+    public StaffSequence(StaffSequence sequence) {
+    	this(sequence.theLines);
+    	this.name = sequence.name;
+    	this.tempo = sequence.tempo;
+        System.arraycopy(sequence.noteExtensions, 0, this.noteExtensions, 0, this.noteExtensions.length);
+    	this.timeSignature = sequence.timeSignature;
+    	this.soundsetBinding = sequence.soundsetBinding;
+    }
+    
+    /**
      * Get the name of this song.
      */
     public String getName() {
