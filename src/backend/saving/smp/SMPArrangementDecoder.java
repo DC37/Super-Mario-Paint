@@ -50,14 +50,11 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
     private static StaffArrangement parseArrText(String basePath, List<String> read) throws ParseException, IOException {
         StaffArrangement loaded = new StaffArrangement();
         File f = null;
-        List<String> names = new ArrayList<>();
 		List<StaffSequence> seqs = new ArrayList<>();
         for (String s : read) {
-            names.add(s);
             f = new File(basePath + s + ".txt");
 			seqs.add(SMPDecoder.SMP_SEQUENCE_DECODER.decode(f));
         }
-        loaded.getTheSequenceNames().addAll(names);
 		loaded.getTheSequences().addAll(seqs);
         return loaded;
     }

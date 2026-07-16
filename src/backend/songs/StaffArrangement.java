@@ -19,13 +19,9 @@ public class StaffArrangement {
     /** This is the list of <code>StaffSequence</code> objects. */
     private final List<StaffSequence> theSequences;
 
-    /** This is the list of sequence / song names. */
-    private final List<String> theSequenceNames;
-
     /** Default constructor. Creates two empty lists. */
     public StaffArrangement() {
         theSequences = new ArrayList<>();
-        theSequenceNames = new ArrayList<>();
     }
     
     /**
@@ -49,12 +45,5 @@ public class StaffArrangement {
      */
     public List<StaffSequence> getTheSequences() {
         return theSequences;
-    }
-
-    /**
-     * @return the The names of the files in this arrangement.
-     */
-    public List<String> getTheSequenceNames() {
-        return theSequenceNames;
     }
 }

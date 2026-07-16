@@ -336,8 +336,11 @@ public class Staff {
         
         setArrangement(loaded);
         StateMachine.setCurrentArrangementName(loaded.getName());
+        
         theArrangementList.getItems().clear();
-        theArrangementList.getItems().addAll(loaded.getTheSequenceNames());
+        for (StaffSequence seq : loaded.getTheSequences()) {
+        	theArrangementList.getItems().add(seq.getName());
+        }
         
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
             @Override

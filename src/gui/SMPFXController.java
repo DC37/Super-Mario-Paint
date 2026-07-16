@@ -733,8 +733,12 @@ public class SMPFXController {
                 return;
             FileOutputStream fOut = new FileOutputStream(outputFile);
             StaffArrangement out = staff.getArrangement();
-            out.getTheSequenceNames().clear();
-            out.getTheSequenceNames().addAll(staff.getArrangementList().getItems());
+            
+            for (int i = 0; i < out.getTheSequences().size(); i++) {
+            	String name = staff.getArrangementList().getItems().get(i);
+            	out.getTheSequences().get(i).setName(name);
+            }
+            
             saveArrTxt(fOut, out);
             fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
@@ -746,8 +750,8 @@ public class SMPFXController {
 
     public void saveArrTxt(FileOutputStream fOut, StaffArrangement out) {
         PrintStream pr = new PrintStream(fOut);
-        for (String s : out.getTheSequenceNames()) {
-            pr.println(s);
+        for (StaffSequence seq : out.getTheSequences()) {
+            pr.println(seq.getName());
         }
         pr.close();
     }
@@ -809,10 +813,10 @@ public class SMPFXController {
         Task<Void> soundsetsTaskSave = new Task<Void>() {
             @Override
             public Void call() {
-                List<String> seqNames = staff.getArrangement().getTheSequenceNames();
+                List<StaffSequence> seqs = staff.getArrangement().getTheSequences();
                 String currSeqName = getNameTextField().getText();
-                for (String seqName : seqNames) 
-                    if (seqName.equals(currSeqName)) {
+                for (StaffSequence seq : seqs) 
+                    if (seq.getName().equals(currSeqName)) {
                         soundPlayer.storeInCache();
                         break;
                     }
