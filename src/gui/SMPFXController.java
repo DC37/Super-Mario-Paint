@@ -35,6 +35,7 @@ import gui.loaders.ImageIndex;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,6 +61,7 @@ import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.NumberStringConverter;
+import utilities.MathUtils;
 
 /**
  * The Controller class for most of the program. This will handle the events
@@ -645,12 +647,28 @@ public class SMPFXController {
     
     @FXML
     public void moveSongUpInArrangement(ActionEvent e) {
-        staff.moveSongInArrangement(1);
+        List<String> l = arrangementList.getItems();
+        int i = arrangementList.getSelectionModel().getSelectedIndex();
+        int moveTo = MathUtils.clamp(i - 1, 0, l.size());
+        
+        if (staff.moveSongInArrangement(i, moveTo)) {
+            String s = l.remove(i);
+            l.add(moveTo, s);
+            arrangementList.getSelectionModel().select(moveTo);
+        }
     }
 
     @FXML
     public void moveSongDownInArrangement(ActionEvent e) {
-        staff.moveSongInArrangement(-1);
+        ObservableList<String> l = arrangementList.getItems();
+        int i = arrangementList.getSelectionModel().getSelectedIndex();
+        int moveTo = MathUtils.clamp(i + 1, 0, l.size());
+        
+        if (staff.moveSongInArrangement(i, moveTo)) {
+            String s = l.remove(i);
+            l.add(moveTo, s);
+            arrangementList.getSelectionModel().select(moveTo);
+        }
     }
     
     @FXML

@@ -376,19 +376,15 @@ public class Staff {
         }
     }
     
-    public void moveSongInArrangement(int moveAmt) {
-        ObservableList<String> l = theArrangementList.getItems();
-        int x = theArrangementList.getSelectionModel()
-                .getSelectedIndex();
-        if (x >= 0 && x < theArrangement.getSequences().size()) {
+    public boolean moveSongInArrangement(int from, int to) {
+        if (from >= 0 && from < theArrangement.getSequences().size()) {
             StateMachine.setArrModified(true);
-            StaffSequence ss = theArrangement.getSequences().remove(x);
-            String s = l.remove(x);
-            int moveTo = MathUtils.clamp(x - moveAmt, 0, l.size());
-            l.add(moveTo, s);
-            theArrangement.getSequences().add(moveTo, ss);
-            theArrangementList.getSelectionModel()
-            .select(moveTo);
+            StaffSequence ss = theArrangement.getSequences().remove(from);
+            theArrangement.getSequences().add(to, ss);
+            return true;
+            
+        } else {
+        	return false;
         }
     }
     
