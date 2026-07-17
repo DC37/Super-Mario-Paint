@@ -633,6 +633,7 @@ public class SMPFXController {
     public void addSongtoArrangement(ActionEvent e) {
         if (staff.addSongToArrangement()) {
             arrangementList.getItems().add(staff.getSequence().getTitle());
+            arrangementList.scrollTo(arrangementList.getItems().size() - 1);
         }
     }
     
@@ -655,6 +656,7 @@ public class SMPFXController {
             String s = l.remove(i);
             l.add(moveTo, s);
             arrangementList.getSelectionModel().select(moveTo);
+            arrangementList.scrollTo(moveTo);
         }
     }
 
@@ -668,6 +670,7 @@ public class SMPFXController {
             String s = l.remove(i);
             l.add(moveTo, s);
             arrangementList.getSelectionModel().select(moveTo);
+            arrangementList.scrollTo(moveTo);
         }
     }
     
