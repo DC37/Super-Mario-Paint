@@ -355,14 +355,14 @@ public class Staff {
         }
     }
     
-    public void addSongToArrangement() {
+    public boolean addSongToArrangement() {
         if (theSequence.getTitle() == null)
-        	return;
+        	return false;
         
         StateMachine.setArrModified(true);
-        theArrangementList.getItems().add(theSequence.getTitle());
         theArrangement.getSequences().add(new StaffSequence(theSequence));
         soundPlayer.storeInCache();
+        return true;
     }
     
     public void deleteSongFromArrangement() {

@@ -629,7 +629,9 @@ public class SMPFXController {
     
     @FXML
     public void addSongtoArrangement(ActionEvent e) {
-        staff.addSongToArrangement();
+        if (staff.addSongToArrangement()) {
+            arrangementList.getItems().add(staff.getSequence().getTitle());
+        }
     }
     
     @FXML
