@@ -365,14 +365,14 @@ public class Staff {
         return true;
     }
     
-    public void deleteSongFromArrangement() {
-        ObservableList<String> l = theArrangementList.getItems();
-        int x = theArrangementList.getSelectionModel()
-                .getSelectedIndex();
-        if (x >= 0 && x < theArrangement.getSequences().size()) {
+    public boolean deleteSongFromArrangement(int i) {
+        if (i >= 0 && i < theArrangement.getSequences().size()) {
             StateMachine.setArrModified(true);
-            theArrangement.getSequences().remove(x);
-            l.remove(x);
+            theArrangement.getSequences().remove(i);
+            return true;
+            
+        } else {
+        	return false;
         }
     }
     

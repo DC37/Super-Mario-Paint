@@ -636,7 +636,11 @@ public class SMPFXController {
     
     @FXML
     public void deleteSongFromArrangement(ActionEvent e) {
-        staff.deleteSongFromArrangement();
+        int i = arrangementList.getSelectionModel().getSelectedIndex();
+        
+        if (staff.deleteSongFromArrangement(i)) {
+        	arrangementList.getItems().remove(i);
+        }
     }
     
     @FXML
