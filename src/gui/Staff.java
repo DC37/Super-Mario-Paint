@@ -13,10 +13,8 @@ import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
 import gui.components.staff.StaffDisplayManager;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.ListView;
 import javafx.stage.Window;
 import utilities.MathUtils;
 
@@ -51,9 +49,6 @@ public class Staff {
     /** This is the current arrangement that we currently have active. */
     private StaffArrangement theArrangement = new StaffArrangement();
 
-    /** This is the ListView that holds the current arrangement. */
-    private ListView<String> theArrangementList;
-
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     private final SoundPlayer soundPlayer;
 
@@ -73,9 +68,8 @@ public class Staff {
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
      */
-    public Staff(StaffDisplayManager display, SoundPlayer soundPlayer, ListView<String> arrList) {
+    public Staff(StaffDisplayManager display, SoundPlayer soundPlayer) {
         displayManager = display;
-        theArrangementList = arrList;
         animationService = new AnimationService();
         this.soundPlayer = soundPlayer;
     }

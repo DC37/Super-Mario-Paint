@@ -242,7 +242,7 @@ public class SMPFXController {
         
         // Set up staff.
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, imagesHolder, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
-        staff = new Staff(displayManager, soundPlayer, arrangementList);
+        staff = new Staff(displayManager, soundPlayer);
         displayManager.initialize();
         makeKeyboardHandlers(basePane);
         
