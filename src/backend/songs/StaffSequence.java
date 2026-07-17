@@ -9,17 +9,14 @@ import gui.Values;
 /**
  * <p>A song is a list of {@link StaffNoteLine}s and a context determining how
  * the notes should be played: tempo, time signature, sustain flags, soundfont
- * binding. A song is also given a name.
+ * binding.
  * 
  * <p>The internal list of note lines is not directly accessible, but a
  * {@link #getLine} method is provided to access the modifiable
  * lines. The method will resize the song with empty lines if necessary, making
  * songs virtually infinite.
  */
-public class StaffSequence {
-    
-    /** The name of this song. */
-    private String name;
+public class StaffSequence extends Sequence {
 
     /** The tempo of this song. */
     private double tempo = Values.DEFAULT_TEMPO;
@@ -58,6 +55,15 @@ public class StaffSequence {
      * @param lines A list of note lines
      */
     public StaffSequence(List<StaffNoteLine> lines) {
+    	this("", lines);
+    }
+    
+    /**
+     * Builds a sequence by making a deep copy of another sequence of note lines.
+     * @param lines A list of note lines
+     */
+    private StaffSequence(String title, List<StaffNoteLine> lines) {
+    	super(title);
         this.theLines = lines.stream()
                 .map(StaffNoteLine::new)
                 .collect(Collectors.toList());
@@ -68,27 +74,11 @@ public class StaffSequence {
      * @param sequence A song to copy
      */
     public StaffSequence(StaffSequence sequence) {
-    	this(sequence.theLines);
-    	this.name = sequence.name;
+    	this(sequence.getName(), sequence.theLines);
     	this.tempo = sequence.tempo;
         System.arraycopy(sequence.noteExtensions, 0, this.noteExtensions, 0, this.noteExtensions.length);
     	this.timeSignature = sequence.timeSignature;
     	this.soundsetBinding = sequence.soundsetBinding;
-    }
-    
-    /**
-     * Get the name of this song.
-     */
-    public String getName() {
-        return name;
-    }
-    
-    /**
-     * Set the name of this song.
-     * @param name the new name
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
