@@ -389,11 +389,7 @@ public class Staff {
             StateMachine.setArrModified(true);
             StaffSequence ss = theArrangement.getSequences().remove(x);
             String s = l.remove(x);
-            int moveTo = x - moveAmt;
-            if (moveTo > l.size())
-                moveTo = l.size();
-            if (moveTo < 0)
-                moveTo = 0;
+            int moveTo = MathUtils.clamp(x - moveAmt, 0, l.size());
             l.add(moveTo, s);
             theArrangement.getSequences().add(moveTo, ss);
             theArrangementList.getSelectionModel()
