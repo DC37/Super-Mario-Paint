@@ -21,7 +21,7 @@ public abstract class Sequence {
 	 * Get the title of this song or arrangement.
 	 * @return The title of this song or arrangement
 	 */
-	public String getName() {
+	public String getTitle() {
 		return title;
 	}
 	
@@ -30,7 +30,7 @@ public abstract class Sequence {
 	 * @param title A new title for this song or arrangement. If {@code null}
 	 * 			then the empty string is used instead.
 	 */
-	public void setName(String title) {
+	public void setTitle(String title) {
 		this.title = emptyIfNull(title);
 	}
 	

@@ -63,7 +63,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
         StaffSequence seq = decode(sb.toString());
         
         String fname = f.getName();
-        seq.setName(fname.substring(0, fname.lastIndexOf('.')));
+        seq.setTitle(fname.substring(0, fname.lastIndexOf('.')));
         
         return seq;
     }

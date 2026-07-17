@@ -62,7 +62,7 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
         StaffArrangement theArr = new StaffArrangement();
         
         String inputFileName = inputFile.getName();
-        theArr.setName(inputFileName.substring(0, inputFileName.lastIndexOf(']')));
+        theArr.setTitle(inputFileName.substring(0, inputFileName.lastIndexOf(']')));
 
         for (String s : str.split("\n")) {
             String st = inputFile.getParent() + File.separatorChar + s + "]MarioPaint.txt";

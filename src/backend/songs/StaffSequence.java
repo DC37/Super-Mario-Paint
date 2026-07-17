@@ -74,7 +74,7 @@ public class StaffSequence extends Sequence {
      * @param sequence A song to copy
      */
     public StaffSequence(StaffSequence sequence) {
-    	this(sequence.getName(), sequence.theLines);
+    	this(sequence.getTitle(), sequence.theLines);
     	this.tempo = sequence.tempo;
         System.arraycopy(sequence.noteExtensions, 0, this.noteExtensions, 0, this.noteExtensions.length);
     	this.timeSignature = sequence.timeSignature;

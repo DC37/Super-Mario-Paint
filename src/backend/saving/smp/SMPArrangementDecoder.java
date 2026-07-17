@@ -33,7 +33,7 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
         StaffArrangement loaded = parseArrText(basePath, read);
         
         String inputFileName = inputFile.getName();
-        loaded.setName(inputFileName.substring(0, inputFileName.lastIndexOf('.')));
+        loaded.setTitle(inputFileName.substring(0, inputFileName.lastIndexOf('.')));
         
         fIn.close();
         return loaded;

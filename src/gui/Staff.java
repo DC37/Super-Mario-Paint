@@ -313,7 +313,7 @@ public class Staff {
         StateMachine.setTempo(loaded.getTempo());
         StateMachine.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
         resetLocation();
-        StateMachine.setCurrentSongName(loaded.getName());
+        StateMachine.setCurrentSongName(loaded.getTitle());
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
         
         try {
@@ -335,11 +335,11 @@ public class Staff {
         populateStaff(first);
         
         setArrangement(loaded);
-        StateMachine.setCurrentArrangementName(loaded.getName());
+        StateMachine.setCurrentArrangementName(loaded.getTitle());
         
         theArrangementList.getItems().clear();
         for (StaffSequence seq : loaded.getSequences()) {
-        	theArrangementList.getItems().add(seq.getName());
+        	theArrangementList.getItems().add(seq.getTitle());
         }
         
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
@@ -369,11 +369,11 @@ public class Staff {
         if ((Settings.debug & 0b100000) != 0)
             System.out.println("Add song");
         
-        if (theSequence.getName() == null)
+        if (theSequence.getTitle() == null)
         	return;
         
         StateMachine.setArrModified(true);
-        theArrangementList.getItems().add(theSequence.getName());
+        theArrangementList.getItems().add(theSequence.getTitle());
         theArrangement.getSequences().add(new StaffSequence(theSequence));
         soundPlayer.storeInCache();
     }

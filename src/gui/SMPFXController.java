@@ -383,8 +383,8 @@ public class SMPFXController {
         
         songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
         
-        StateMachine.currentSongNameProperty().addListener(obs -> staff.getSequence().setName(StateMachine.getCurrentSongName()));
-        StateMachine.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setName(StateMachine.getCurrentArrangementName()));
+        StateMachine.currentSongNameProperty().addListener(obs -> staff.getSequence().setTitle(StateMachine.getCurrentSongName()));
+        StateMachine.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(StateMachine.getCurrentArrangementName()));
         
         // Set up tempo box
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
@@ -736,7 +736,7 @@ public class SMPFXController {
             
             for (int i = 0; i < out.getSequences().size(); i++) {
             	String name = staff.getArrangementList().getItems().get(i);
-            	out.getSequences().get(i).setName(name);
+            	out.getSequences().get(i).setTitle(name);
             }
             
             saveArrTxt(fOut, out);
@@ -751,7 +751,7 @@ public class SMPFXController {
     public void saveArrTxt(FileOutputStream fOut, StaffArrangement out) {
         PrintStream pr = new PrintStream(fOut);
         for (StaffSequence seq : out.getSequences()) {
-            pr.println(seq.getName());
+            pr.println(seq.getTitle());
         }
         pr.close();
     }
@@ -816,7 +816,7 @@ public class SMPFXController {
                 List<StaffSequence> seqs = staff.getArrangement().getSequences();
                 String currSeqName = getNameTextField().getText();
                 for (StaffSequence seq : seqs) 
-                    if (seq.getName().equals(currSeqName)) {
+                    if (seq.getTitle().equals(currSeqName)) {
                         soundPlayer.storeInCache();
                         break;
                     }
@@ -914,7 +914,7 @@ public class SMPFXController {
             StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
             staff.populateStaff(loaded);
             getModifySongManager().reset();
-            getNameTextField().setText(loaded.getName());
+            getNameTextField().setText(loaded.getTitle());
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);
             
