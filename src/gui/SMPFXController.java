@@ -691,7 +691,7 @@ public class SMPFXController {
         if (cont) {
             staff.setArrangement(new StaffArrangement());
             getNameTextField().clear();
-            staff.getArrangementList().getItems().clear();
+            arrangementList.getItems().clear();
             StateMachine.setArrModified(false);
         }
     }
@@ -735,7 +735,7 @@ public class SMPFXController {
             StaffArrangement out = staff.getArrangement();
             
             for (int i = 0; i < out.getSequences().size(); i++) {
-            	String name = staff.getArrangementList().getItems().get(i);
+            	String name = arrangementList.getItems().get(i);
             	out.getSequences().get(i).setTitle(name);
             }
             

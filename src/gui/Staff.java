@@ -272,11 +272,6 @@ public class Staff {
         theSequence = other;
     }
 
-    /** @return The current arrangement that we are displaying. */
-    public ListView<String> getArrangementList() {
-        return theArrangementList;
-    }
-
     /**
      * @return The list of songs in the currently-active arrangement.
      */
