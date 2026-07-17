@@ -361,9 +361,6 @@ public class Staff {
     }
     
     public void addSongToArrangement() {
-        if ((Settings.debug & 0b100000) != 0)
-            System.out.println("Add song");
-        
         if (theSequence.getTitle() == null)
         	return;
         
@@ -374,9 +371,6 @@ public class Staff {
     }
     
     public void deleteSongFromArrangement() {
-        if ((Settings.debug & 0b100000) != 0)
-            System.out.println("Delete song");
-        
         ObservableList<String> l = theArrangementList.getItems();
         int x = theArrangementList.getSelectionModel()
                 .getSelectedIndex();
@@ -388,9 +382,6 @@ public class Staff {
     }
     
     public void moveSongInArrangement(int moveAmt) {
-        if ((Settings.debug & 0b100000) != 0)
-            System.out.println("Move song " + moveAmt);
-        
         ObservableList<String> l = theArrangementList.getItems();
         int x = theArrangementList.getSelectionModel()
                 .getSelectedIndex();
