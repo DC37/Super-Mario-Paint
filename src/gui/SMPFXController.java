@@ -969,6 +969,12 @@ public class SMPFXController {
         	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
         	StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
         	staff.populateStaffArrangement(loaded, owner);
+            
+            arrangementList.getItems().clear();
+            for (StaffSequence seq : loaded.getSequences()) {
+            	arrangementList.getItems().add(seq.getTitle());
+            }
+            
         	StateMachine.setSongModified(false);
         	StateMachine.setArrModified(false);
         	
