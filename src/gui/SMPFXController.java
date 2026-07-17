@@ -648,23 +648,18 @@ public class SMPFXController {
     
     @FXML
     public void moveSongUpInArrangement(ActionEvent e) {
-        List<String> l = arrangementList.getItems();
-        int i = arrangementList.getSelectionModel().getSelectedIndex();
-        int moveTo = MathUtils.clamp(i - 1, 0, l.size());
-        
-        if (staff.moveSongInArrangement(i, moveTo)) {
-            String s = l.remove(i);
-            l.add(moveTo, s);
-            arrangementList.getSelectionModel().select(moveTo);
-            arrangementList.scrollTo(moveTo);
-        }
+    	moveSongInArrangement(e, -1);
     }
 
     @FXML
     public void moveSongDownInArrangement(ActionEvent e) {
+    	moveSongInArrangement(e, 1);
+    }
+    
+    private void moveSongInArrangement(ActionEvent e, int diff) {
         ObservableList<String> l = arrangementList.getItems();
         int i = arrangementList.getSelectionModel().getSelectedIndex();
-        int moveTo = MathUtils.clamp(i + 1, 0, l.size());
+        int moveTo = MathUtils.clamp(i + diff, 0, l.size());
         
         if (staff.moveSongInArrangement(i, moveTo)) {
             String s = l.remove(i);
