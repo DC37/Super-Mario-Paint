@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.SongNameController;
 import gui.components.buttons.SMPButton;
+import gui.components.buttons.SMPButtonInterface;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
@@ -451,22 +453,13 @@ public class SMPFXController {
         });
         
         // Disable buttons while playback is active
-        timesigButton_4_4.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        timesigButton_3_4.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        timesigButton_6_8.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        timesigButtonCustom.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        modeButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        saveButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        loadButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        newButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        optionsButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        tempoPlusButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        tempoMinusButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        addButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        deleteButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        upButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
-        downButton.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        SMPButtonInterface[] btns = {
+        		timesigButton_4_4, timesigButton_3_4, timesigButton_6_8, timesigButtonCustom,
+        		modeButton, saveButton, loadButton, newButton, optionsButton,
+        		tempoPlusButton, tempoMinusButton, addButton, deleteButton, upButton, downButton
+        };
         
+        Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(StateMachine.getPlaybackActiveProperty()));
     }
     
     private void populateInstrumentButtons(Pane n) {

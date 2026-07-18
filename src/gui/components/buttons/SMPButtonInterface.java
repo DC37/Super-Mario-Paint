@@ -2,6 +2,7 @@ package gui.components.buttons;
 import gui.resources.SMPResourceUtil;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -47,6 +48,11 @@ public interface SMPButtonInterface {
     public DoubleProperty fitWidth();
     public double getFitWidth();
     public void setFitWidth(double x);
+    
+    /**
+     * Bound to the {@link Node} property of the same name
+     */
+    public BooleanProperty disableProperty();
     
     /**
      * <p>Utility method to bind some {@link Image} property (typically the image of an {@link ImageView})
