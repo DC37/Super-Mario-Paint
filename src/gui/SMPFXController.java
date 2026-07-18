@@ -948,27 +948,23 @@ public class SMPFXController {
     }
 
     private void loadArrangement(Window owner) {
-        if (StateMachine.isSongModified()) {
-            if (StateMachine.isArrModified()) {
-                if (!Dialog.showYesNoDialog("HOLD IT!",
-                        "The current song and arrangement\nhave both been modified!\nLoad anyway?", owner)) {
-                	return;
-                }
-                
-            } else {
-                if (!Dialog.showYesNoDialog("HOLD IT!",
-                        "The current song has been modified!\nLoad anyway?", owner)) {
-                	return;
-                }
-            }
-            
-        } else if (StateMachine.isArrModified()) {
-        	if (!Dialog.showYesNoDialog("HOLD IT!",
-        			"The current arrangement has been\nmodified! Load anyway?", owner)) {
-        		return;
-        	}
-        }
-        
+    	boolean songModified = StateMachine.isSongModified();
+    	boolean arrModified = StateMachine.isArrModified();
+    	
+    	String whatWasModified = "";
+    	if (songModified && arrModified) {
+    		whatWasModified = "The current song and arrangement\nhave both been modified!\nLoad anyway?";
+    	} else if (songModified) {
+    		whatWasModified = "The current song has been modified!\nLoad anyway?";
+    	} else if (arrModified) {
+    		whatWasModified = "The current arrangement has been\nmodified! Load anyway?";
+    	}
+    	
+    	boolean somethingWasModified = songModified || arrModified;
+    	if (somethingWasModified && !Dialog.showYesNoDialog("HOLD IT!", whatWasModified, owner)) {
+    		return;
+    	}
+    	
         File inputFile = null;
 
         try {
