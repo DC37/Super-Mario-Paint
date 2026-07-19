@@ -1,31 +1,12 @@
 package gui.components.buttons;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import javafx.animation.FadeTransition;
-import javafx.beans.InvalidationListener;
-import javafx.beans.binding.Binding;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Skin;
-import javafx.scene.control.skin.ButtonSkin;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
-import javafx.util.Subscription;
 
 /**
  * <p>A version of {@link SMPButton} used specifically for instrument buttons in the top panel.</p>
@@ -101,6 +82,22 @@ public class SMPInstrumentButton extends SMPButton {
     public Image getImageFiltered() { return imageFiltered().getValue(); }
     public void setImageFiltered(Image imageFiltered) { imageFiltered().setValue(imageFiltered); }
     
+    private Runnable mouseEnterListener = null;
+    public Runnable getMouseEnterListener() {
+    	return mouseEnterListener;
+    }
+    public void setMouseEnterListener(Runnable mouseEnterListener) {
+    	this.mouseEnterListener = mouseEnterListener;
+    }
+    
+    private Runnable mouseExitListener = null;    
+    public Runnable getMouseExitListener() {
+    	return mouseExitListener;
+    }
+    public void setMouseExitListener(Runnable mouseExitListener) {
+    	this.mouseExitListener = mouseExitListener;
+    }
+    
     public SMPInstrumentButton() {
         super();
         initialize();
@@ -128,194 +125,9 @@ public class SMPInstrumentButton extends SMPButton {
     private static final PseudoClass SUSTAINED_PSEUDO_CLASS = PseudoClass.getPseudoClass("sustained");
     private static final PseudoClass FILTERED_PSEUDO_CLASS = PseudoClass.getPseudoClass("filtered");
     
-    private Runnable onMouseEntered = null;
-    private Runnable onMouseExited = null;
-    
-    private static class SMPInstrumentButtonGroup implements Iterable<SMPInstrumentButton> {
-        
-        private Map<SMPInstrumentButton, InvalidationListener> group;
-        private BooleanProperty allActive;
-        
-        public SMPInstrumentButtonGroup() {
-            this.group = new HashMap<>();
-            this.allActive = new SimpleBooleanProperty(true);
-        }
-        
-        public void addButton(SMPInstrumentButton b) {
-            InvalidationListener activeListen = obs -> invalid();
-            b.active().addListener(activeListen);
-            group.put(b, activeListen);
-        }
-        
-        public void removeButton(SMPInstrumentButton b) {
-            InvalidationListener l = group.remove(b);
-            b.active().removeListener(l);
-        }
-        
-        private void invalid() {
-            for (SMPInstrumentButton b : group.keySet()) {
-                if (!b.isActive()) {
-                    allActive.setValue(false);
-                    return;
-                }
-                
-                allActive.setValue(true);
-            }
-        }
-
-        public Iterator<SMPInstrumentButton> iterator() {
-            return group.keySet().iterator();
-        }
-        
-        public ReadOnlyBooleanProperty allActive() {
-            return allActive;
-        }
-        
-    }
-    
-    // Synchronize animations for all buttons in this group
-    private static final SMPInstrumentButtonGroup BUTTONS_GROUP = new SMPInstrumentButtonGroup();
-    
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new ButtonSkin(this) {
-            Subscription mainSubscription;
-            ImageView filterIv;
-            FadeTransition fadeTransition;
-            
-            private Binding<Node> buildGraphic(ObservableValue<Node> button, Node filter) {
-                return Bindings.createObjectBinding(() -> {
-                    if (button == null || button.getValue() == null)
-                        return null;
-                    
-                    StackPane stack = new StackPane();
-                    stack.getChildren().addAll(button.getValue(), filter);
-                    return stack;
-                }, button);
-            }
-            
-            private ImageView buildFilter() {
-                ImageView filter = new ImageView();
-                filter.setPreserveRatio(true);
-                filter.setSmooth(false);
-                filter.setMouseTransparent(true);
-                return filter;
-            }
-            
-            private Subscription filterSubscription(ImageView filter) {
-                filter.fitHeightProperty().bind(fitHeight());
-                filter.fitWidthProperty().bind(fitWidth());
-                filter.imageProperty().bind(imageFiltered());
-                filter.visibleProperty().bind(Bindings.and(active(), Bindings.not(BUTTONS_GROUP.allActive())));
-                
-                return () -> {
-                    filter.fitHeightProperty().unbind();
-                    filter.fitWidthProperty().unbind();
-                    filter.imageProperty().unbind();
-                    filter.visibleProperty().unbind();
-                };
-            }
-            
-            private Subscription imageSustainSubscription() {
-                imageReleased().bind(imageSustainBinding());
-                return (() -> imageReleased().unbind());
-            }
-            
-            private Binding<Image> imageSustainBinding() {
-                return Bindings.createObjectBinding(
-                        () -> (isSustainOn()) ? getImageSustainOn() : getImageSustainOff(),
-                        sustainOn(), imageSustainOff(), imageSustainOn());
-            }
-            
-            private FadeTransition makeTransition(ImageView iv) {
-                FadeTransition ft = new FadeTransition(Duration.millis(2000), iv);
-                ft.setFromValue(1.0);
-                ft.setToValue(0.0);
-                return ft;
-            }
-            
-            private Subscription activateFadeoutSubscription() {
-                EventHandler<MouseEvent> onEntered = (MouseEvent event) -> {
-                    if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                        for (SMPInstrumentButton b : BUTTONS_GROUP) {
-                            if (b.onMouseEntered != null)
-                                b.onMouseEntered.run();
-                        }
-                    }
-                };
-                
-                EventHandler<MouseEvent> onExited = (MouseEvent event) -> {
-                    if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-                        for (SMPInstrumentButton b : BUTTONS_GROUP) {
-                            if (b.onMouseExited != null)
-                                b.onMouseExited.run();
-                        }
-                    }
-                };
-                
-                onMouseEntered = this::fadeoutReset;
-                onMouseExited = this::fadeoutPlay;
-                
-                Button c = getSkinnable();
-                c.addEventHandler(MouseEvent.MOUSE_ENTERED, onEntered);
-                c.addEventHandler(MouseEvent.MOUSE_EXITED, onExited);
-                
-                return () -> {
-                    c.removeEventHandler(MouseEvent.MOUSE_ENTERED, onEntered);
-                    c.removeEventHandler(MouseEvent.MOUSE_EXITED, onExited);
-                    onMouseEntered = null;
-                    onMouseExited = null;
-                };
-            }
-            
-            private Subscription onMousePressedSubscription() {
-                Button b = getSkinnable();
-                
-                // ~ Dirty hack ~
-                // Normally a mouse press with key modifiers such as Ctrl or Shift does not arm the button
-                // We override this in the only possible way (original implementation is private API)
-                EventHandler<MouseEvent> onMousePressed = (MouseEvent event) -> {
-                    if (event.getEventType() == MouseEvent.MOUSE_PRESSED)
-                        b.arm();
-                };
-                
-                b.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
-                return () -> b.removeEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
-            }
-            
-            @Override
-            public void install() {
-                BUTTONS_GROUP.addButton(SMPInstrumentButton.this);
-                ObjectProperty<Node> buttonImageView = new SimpleObjectProperty<>(null);
-                filterIv = buildFilter();
-                fadeTransition = makeTransition(filterIv);
-                ObservableValue<Node> graphic = buildGraphic(buttonImageView, filterIv);
-                graphicProperty().bind(graphic);
-                
-                mainSubscription =
-                        SMPButtonInterface.subscribeNodeProperty(SMPInstrumentButton.this, armedProperty(), buttonImageView)
-                        .and(filterSubscription(filterIv))
-                        .and(imageSustainSubscription())
-                        .and(activateFadeoutSubscription())
-                        .and(() -> graphicProperty().unbind())
-                        .and(onMousePressedSubscription())
-                        .and(() -> BUTTONS_GROUP.removeButton(SMPInstrumentButton.this));
-            }
-
-            private void fadeoutReset() {
-                filterIv.setOpacity(1.0);
-                fadeTransition.pause();
-            }
-            
-            private void fadeoutPlay() {
-                fadeTransition.playFromStart();
-            }
-            
-            @Override
-            public void dispose() {
-                mainSubscription.unsubscribe();
-            }
-        };
+    	return new SMPInstrumentButtonSkin(this);
     }
 
 }

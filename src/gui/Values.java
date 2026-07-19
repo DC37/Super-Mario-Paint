@@ -4,6 +4,7 @@ import java.io.File;
 
 import backend.songs.Pitch;
 import backend.songs.TimeSignature;
+import gui.components.buttons.SMPInstrumentButtonGroup;
 import gui.resources.SMPResourceUtil;
 
 /**
@@ -232,4 +233,8 @@ public class Values {
      */
     public static final String SPRITES_FOLDER =
             SMP_FOLDER + File.separatorChar + "sprites";
+    
+    // Synchronize animations for all buttons in this group
+    public static final SMPInstrumentButtonGroup INSTRUMENT_BTNS_GROUP = new SMPInstrumentButtonGroup();
+    
 }
