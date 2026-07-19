@@ -26,7 +26,6 @@ import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.SongNameController;
 import gui.components.buttons.SMPButton;
-import gui.components.buttons.SMPButtonInterface;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
@@ -442,7 +441,7 @@ public class SMPFXController {
         });
         
         // Disable buttons while playback is active
-        SMPButtonInterface[] btns = {
+        Node[] btns = {
         		timesigButton_4_4, timesigButton_3_4, timesigButton_6_8, timesigButtonCustom,
         		modeButton, saveButton, loadButton, newButton, optionsButton,
         		tempoPlusButton, tempoMinusButton, addButton, deleteButton, upButton, downButton
