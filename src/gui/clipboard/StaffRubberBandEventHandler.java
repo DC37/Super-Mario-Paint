@@ -1,12 +1,10 @@
 package gui.clipboard;
 
-import backend.songs.StaffNoteLine;
 import gui.SMPFXController;
 import gui.StateMachine;
-import gui.Values;
+import gui.events.ClipboardHandlerMaker;
 import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -26,61 +24,15 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     StaffClipboard theStaffClipboard;
     
     /** Get line with these */
-    private static double mouseX;
+    private double mouseX;
     
     public StaffRubberBandEventHandler(StaffRubberBand rb, SMPFXController ct, Pane basePane, StaffClipboard clippy) {
         rubberBand = rb;
         controller = ct;
         theStaffClipboard = clippy;
         rubberBandLayer = basePane;
-
-        // TEMPORARY, should probably be in a dataclipboardeventhandler
-        basePane.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            switch (event.getCode()) {
-            case A:
-                if (event.isControlDown() && !event.isShiftDown()) {
-                    theStaffClipboard.getAPI().clearSelection();
-                    theStaffClipboard.getAPI().select(0, 0,
-                            (int) controller.getScrollbar().getMax() + Values.NOTELINES_IN_THE_WINDOW,
-                            Values.NOTES_IN_A_LINE);
-                }
-                break;
-            case C:
-                if (event.isControlDown()) {
-                    System.out.println("COPY");
-                    theStaffClipboard.getAPI().copy();
-                    for (StaffNoteLine line : theStaffClipboard.getCopiedData().values()) {
-                        if (!line.getNotes().isEmpty())
-                            System.out.println(line);
-                    }
-                }
-                break;
-            case N:
-                if (event.isAltDown()) {
-                    theStaffClipboard.getAPI().selectNotesToggle(!theStaffClipboard.getAPI().isSelectNotesOn());
-                }
-                break;
-            case V:
-                if (event.isAltDown()) {
-                    theStaffClipboard.getAPI().selectVolumesToggle(!theStaffClipboard.getAPI().isSelectVolumesOn());
-                } else if (event.isControlDown()) {
-                    int currentLine = getLine(mouseX) + StateMachine.getMeasureLineNum();
-                    System.out.println("PASTE @ " + currentLine);
-                    theStaffClipboard.getAPI().paste(currentLine);
-                }
-                break;
-            case X:
-                if (event.isControlDown()) {
-                    theStaffClipboard.getAPI().cut();
-                }
-                break;
-            case DELETE:
-                theStaffClipboard.getAPI().delete();
-                break;
-            default:
-                break;
-            }
-        });
+        
+        ClipboardHandlerMaker.of(this).initializeIn(basePane);
     }
 
     @Override
@@ -111,28 +63,21 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
             theStaffClipboard.getAPI().endBand();
         }
     }
-
-    /**
-     *
-     * 
-     * 
-     * @relevant Values.NOTELINES_IN_THE_WINDOW,
-     *           StateMachine.getMeasureLineNum()
-     * 
-     * @param x
-     *            mouse pos for entire scene
-     * @return -1 if out of bounds (x < 128 || x > 784), 0-9 otherwise
-     */
-    private int getLine(double x) {
-        
-        if (x < 160 || x > 1008) {
-            return -1;
-        }
-        return (((int) x - 165) / 64);
-    }
     
     public StaffRubberBand getRubberBand() {
         return rubberBand;
+    }
+    
+    public SMPFXController getController() {
+    	return controller;
+    }
+    
+    public double getMouseX() {
+    	return mouseX;
+    }
+    
+    public StaffClipboard getTheStaffClipboard() {
+    	return theStaffClipboard;
     }
     
     /**
