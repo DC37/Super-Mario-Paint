@@ -32,6 +32,7 @@ import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
+import gui.events.KeyboardHandlerMaker;
 import gui.loaders.ImageIndex;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;

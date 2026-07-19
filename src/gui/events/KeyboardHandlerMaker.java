@@ -1,28 +1,29 @@
-package gui;
+package gui.events;
 
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import backend.songs.Accidental;
+import gui.SMPFXController;
+import gui.Staff;
+import gui.StateMachine;
+import gui.Utilities;
+import gui.Values;
 import gui.components.staff.StaffMouseEventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 
-public class KeyboardHandlerMaker {
+public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
 	
-	private SMPFXController controller;
-
-	private KeyboardHandlerMaker(
-			SMPFXController controller) {
-		
-		this.controller = controller;
+	protected KeyboardHandlerMaker(SMPFXController controller) {
+		super(controller);
 	}
 	
 	public static KeyboardHandlerMaker of(SMPFXController controller) {
 		return new KeyboardHandlerMaker(controller);
 	}
 	
+	@Override
 	public void initializeIn(Node n) {
         n.addEventHandler(KeyEvent.KEY_PRESSED, ke -> {
             switch(ke.getCode()) {
@@ -39,7 +40,7 @@ public class KeyboardHandlerMaker {
                 break;
 
             case END:
-                trySetStaffLocation((int) controller.getScrollbar().getMax(), ke);
+                trySetStaffLocation((int) source.getScrollbar().getMax(), ke);
                 break;
 
             case A:
@@ -64,40 +65,40 @@ public class KeyboardHandlerMaker {
 
             case R:
             	tryPerformFirstMatchingSubaction(ke,
-            			new KeyboardSubaction(KeyEvent::isShiftDown,
+            			new Subaction<>(KeyEvent::isShiftDown,
             					() -> StateMachine.setClipboardPressed(!StateMachine.isClipboardPressed())));
             	break;
                 
             case S:
             	tryPerformFirstMatchingSubaction(ke,
-            			new KeyboardSubaction(KeyEvent::isControlDown,
-            					() -> controller.save(Utilities.getOwner(ke))));
+            			new Subaction<>(KeyEvent::isControlDown,
+            					() -> source.save(Utilities.getOwner(ke))));
                 break;
                 
             case M:
             	tryPerformFirstMatchingSubaction(ke,
-            			new KeyboardSubaction(d -> true,
+            			new Subaction<>(d -> true,
             					() -> StateMachine.setMuteAPressed(!StateMachine.isMuteAPressed())));
                 break;
                 
             case N:
             	tryPerformFirstMatchingSubaction(ke,
-            			new KeyboardSubaction(code -> !code.isControlDown() && !code.isAltDown(),
+            			new Subaction<>(ev -> !ev.isControlDown() && !ev.isAltDown(),
             					() -> StateMachine.setMutePressed(!StateMachine.isMutePressed())),
-            			new KeyboardSubaction(KeyEvent::isControlDown,
-            					() -> controller.newSongOrArrangement(Utilities.getOwner(ke))));
+            			new Subaction<>(KeyEvent::isControlDown,
+            					() -> source.newSongOrArrangement(Utilities.getOwner(ke))));
             	break;
                 
             case O:
             	tryPerformFirstMatchingSubaction(ke,
-            			new KeyboardSubaction(KeyEvent::isControlDown,
-            					() -> controller.load(Utilities.getOwner(ke))));
+            			new Subaction<>(KeyEvent::isControlDown,
+            					() -> source.load(Utilities.getOwner(ke))));
                 break;
                 
             case COMMA:
             	tryPerformFirstMatchingSubaction(ke,
-            			new KeyboardSubaction(KeyEvent::isControlDown,
-            					() -> controller.options(Utilities.getOwner(ke))));
+            			new Subaction<>(KeyEvent::isControlDown,
+            					() -> source.options(Utilities.getOwner(ke))));
                 break;
                 
             default:
@@ -115,11 +116,16 @@ public class KeyboardHandlerMaker {
         n.addEventHandler(ScrollEvent.ANY, this::tryScrollStaff);
     }
 	
+	@Override
+    protected boolean canTryPerformFirstMatchingSubaction() {
+    	return !source.getNameTextField().focusedProperty().get();
+    }
+	
 	private void tryShiftStaff(int noLines) {
     	if (StateMachine.isPlaybackActive())
     		return;
     	
-    	controller.getStaff().shift(noLines);
+    	source.getStaff().shift(noLines);
     }
     
     private void trySetStaffLocation(int pos, KeyEvent ke) {
@@ -127,18 +133,18 @@ public class KeyboardHandlerMaker {
     		return;
     	
     	if (ke.isControlDown())
-    		controller.getStaff().setLocation(pos);
+    		source.getStaff().setLocation(pos);
     }
     
     private void tryJumpStaffTo(Consumer<Staff> fnWhereToJump, KeyEvent ke) {
     	if (StateMachine.isPlaybackActive())
             return;
         
-        if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
+        if (source.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
             return;
         
         if (ke.isControlDown() || ke.isShiftDown())
-        	fnWhereToJump.accept(controller.getStaff());
+        	fnWhereToJump.accept(source.getStaff());
     }
     
     private void tryMoveOrJumpStaffTo(
@@ -149,45 +155,32 @@ public class KeyboardHandlerMaker {
             return;
         
         if (!ke.isControlDown() && !ke.isShiftDown())
-        	fnWhereToMove.accept(controller.getStaff());
+        	fnWhereToMove.accept(source.getStaff());
             
         if ((shouldCheckCtrl && ke.isControlDown()) || ke.isShiftDown())
-        	fnWhereToJump.accept(controller.getStaff());
+        	fnWhereToJump.accept(source.getStaff());
     }
     
     private void tryStartOrStop(KeyEvent ke) {
-    	if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
+    	if (source.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
             return;
 
         if (ke.isControlDown() || ke.isShiftDown())
-            controller.getStaff().setLocation(0);
+            source.getStaff().setLocation(0);
         
         if (StateMachine.isPlaybackActive()) {
-            controller.getStopButton().setSelected(true);
-            controller.getStaff().stop();
-            
+            source.getStopButton().setSelected(true);
+            source.getStaff().stop();
         } else {
-            controller.getPlayButton().setSelected(true);
-            controller.getStaff().play();
+            source.getPlayButton().setSelected(true);
+            source.getStaff().play();
         }
-    }
-    
-    private void tryPerformFirstMatchingSubaction(
-    		KeyEvent ke, KeyboardSubaction... actions) {
-    	
-    	if (controller.getNameTextField().focusedProperty().get())
-            return;
-    	
-    	for (KeyboardSubaction ksa: actions) {
-    		if (ksa.tryTrigger(ke))
-    			return;
-    	}
     }
     
     private void refreshAndConsumeKeyEvent(KeyEvent ke) {
     	if (StateMachine.isCursorOnStaff()) {
             Accidental acc = StaffMouseEventHandler.computeAccidental();
-            controller.getStaff().getDisplayManager().refreshSilhouette(acc);
+            source.getStaff().getDisplayManager().refreshSilhouette(acc);
         }
 
         ke.consume();
@@ -199,42 +192,18 @@ public class KeyboardHandlerMaker {
 
         if (se.getDeltaY() < 0) {
             if (se.isControlDown())
-                controller.getStaff().shift(4);
+            	source.getStaff().shift(4);
             else
-            	controller.getStaff().moveRight();
+            	source.getStaff().moveRight();
             
         } else if (se.getDeltaY() > 0) {
             if (se.isControlDown())
-            	controller.getStaff().shift(-4);
+            	source.getStaff().shift(-4);
             else
-            	controller.getStaff().moveLeft();
+            	source.getStaff().moveLeft();
         }
 
         se.consume();
-    }
-    
-    private static class KeyboardSubaction {
-    	
-    	private Predicate<KeyEvent> fnMatches;
-    	private Runnable fnExecute;
-    	
-    	public KeyboardSubaction(
-    			Predicate<KeyEvent> fnMatches,
-    			Runnable fnExecute) {
-    		
-    		this.fnMatches = fnMatches;
-    		this.fnExecute = fnExecute;
-    	}
-    	
-    	public boolean tryTrigger(KeyEvent ke) {
-    		if (fnMatches.test(ke)) {
-    			fnExecute.run();
-    			return true;
-    		}
-    		
-    		return false;
-    	}
-    	
     }
 	
 }
