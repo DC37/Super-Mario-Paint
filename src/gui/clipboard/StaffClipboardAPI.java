@@ -277,9 +277,7 @@ public class StaffClipboardAPI {
     public void copyNote(int line, StaffNote note) {
         StaffNote newNote = new StaffNote(note);
         Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
-        if(!copiedData.containsKey(line))
-            copiedData.put(line, new StaffNoteLine());
-        copiedData.get(line).getNotes().add(newNote);
+        copiedData.computeIfAbsent(line, l -> new StaffNoteLine()).getNotes().add(newNote);
     }
     
     /**
@@ -292,9 +290,7 @@ public class StaffClipboardAPI {
      */
     public void selectNote(int line, StaffNote note) {
         Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
-        if(!selection.containsKey(line))
-            selection.put(line, new StaffNoteLine());
-        selection.get(line).getNotes().add(note);
+        selection.computeIfAbsent(line, l -> new StaffNoteLine()).getNotes().add(note);
         highlightNote(note, true);
     }
     
@@ -304,16 +300,12 @@ public class StaffClipboardAPI {
     
     public void copyVolume(int line, int volume) {
         Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
-        if(!copiedData.containsKey(line))
-            copiedData.put(line, new StaffNoteLine());
-        copiedData.get(line).setVolume(volume);
+        copiedData.computeIfAbsent(line, l -> new StaffNoteLine()).setVolume(volume);
     }
     
     public void selectVolume(int line, int volume) {
-        Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
-        if(!selection.containsKey(line))
-            selection.put(line, new StaffNoteLine());
-        selection.get(line).setVolume(volume);
+        Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();        
+        selection.computeIfAbsent(line, l -> new StaffNoteLine()).setVolume(volume);
         highlightVolume(line, true);
     }
 
