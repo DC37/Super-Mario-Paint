@@ -266,18 +266,16 @@ public class SMPFXController {
         clipboardButton.selectedProperty().bindBidirectional(StateMachine.clipboardPressedProperty());
         
         ToggleGroup mainRadioToggleGroup = new ToggleGroup();
-        stopButton.setToggleGroup(mainRadioToggleGroup);
-        playButton.setToggleGroup(mainRadioToggleGroup);
+        Utilities.groupToggleBtns(mainRadioToggleGroup,
+        		stopButton, playButton);
         
         ToggleGroup muteToggleGroup = new ToggleGroup();
-        muteButton.setToggleGroup(muteToggleGroup);
-        muteInstButton.setToggleGroup(muteToggleGroup);
+        Utilities.groupToggleBtns(muteToggleGroup,
+        		muteButton, muteInstButton);
         
         ToggleGroup timesigToggleGroup = new ToggleGroup();
-        timesigButton_4_4.setToggleGroup(timesigToggleGroup);
-        timesigButton_3_4.setToggleGroup(timesigToggleGroup);
-        timesigButton_6_8.setToggleGroup(timesigToggleGroup);
-        timesigButtonCustom.setToggleGroup(timesigToggleGroup);
+        Utilities.groupToggleBtns(timesigToggleGroup,
+        		timesigButton_4_4, timesigButton_3_4, timesigButton_6_8, timesigButtonCustom);
         
         stopButton.setSelected(true);
         timesigButton_4_4.setSelected(true);

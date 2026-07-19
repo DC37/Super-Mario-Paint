@@ -6,6 +6,8 @@ import java.util.List;
 
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
 
 /**
@@ -83,6 +85,20 @@ public class Utilities {
                 return false;
         }
         return true;
+    }
+    
+    /**
+     * Group one or more {@link ToggleButton}s together.
+     * 
+     * @param group
+     *            The {@link ToggleGroup} that will contain the buttons. 
+     * @param toggles
+     *            One or more {@link ToggleButton}s to add to the group.
+     */
+    public static void groupToggleBtns(ToggleGroup group, ToggleButton... toggles) {
+    	for (ToggleButton tb: toggles) {
+    		tb.setToggleGroup(group);
+    	}
     }
 
 }
