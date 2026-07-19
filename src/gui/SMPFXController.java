@@ -906,10 +906,9 @@ public class SMPFXController {
 
         try {
         	FileChooser f = new FileChooser();
-        	FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-        	FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
-        	f.getExtensionFilters().add(filterTxt);
-        	f.getExtensionFilters().add(filterAny);
+        	f.getExtensionFilters().addAll(
+        			new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"),
+        			new FileChooser.ExtensionFilter("Any files (*.*)", "*.*"));
         	f.setInitialDirectory(StateMachine.getCurrentDirectory());
         	File inputFile = f.showOpenDialog(null);
         	if (inputFile == null)
@@ -967,10 +966,9 @@ public class SMPFXController {
 
         try {
         	FileChooser f = new FileChooser();
-        	FileChooser.ExtensionFilter filterTxt = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-        	FileChooser.ExtensionFilter filterAny = new FileChooser.ExtensionFilter("Any files (*.*)", "*.*");
-        	f.getExtensionFilters().add(filterTxt);
-        	f.getExtensionFilters().add(filterAny);
+        	f.getExtensionFilters().addAll(
+        			new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"),
+        			new FileChooser.ExtensionFilter("Any files (*.*)", "*.*"));
         	f.setInitialDirectory(StateMachine.getCurrentDirectory());
         	inputFile = f.showOpenDialog(null);
         	if (inputFile == null)
