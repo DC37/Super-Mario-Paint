@@ -316,21 +316,22 @@ public class SMPFXController {
                 return;
             
             int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
-            if (songIndex != -1) {
-                List<StaffSequence> seq = staff.getArrangement().getSequences();
-                Window owner = arrangementList.getScene().getWindow();
-                
-                if (StateMachine.isSongModified()) {
-                    if (!Dialog.showYesNoDialog("HOLD IT!",
-                    		"The current song has been modified!\n"
-                            + "Load anyway?", owner)) {
-                    	return;
-                    }
+            if (songIndex == -1)
+            	return;
+            
+            List<StaffSequence> seq = staff.getArrangement().getSequences();
+            Window owner = arrangementList.getScene().getWindow();
+            
+            if (StateMachine.isSongModified()) {
+                if (!Dialog.showYesNoDialog("HOLD IT!",
+                		"The current song has been modified!\n"
+                        + "Load anyway?", owner)) {
+                	return;
                 }
-                
-                staff.populateStaff(seq.get(songIndex));
-                seq.set(songIndex, staff.getSequence());
             }
+            
+            staff.populateStaff(seq.get(songIndex));
+            seq.set(songIndex, staff.getSequence());
         });
 
         // Set up options menu
@@ -414,15 +415,10 @@ public class SMPFXController {
         
         scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
         
-        StateMachine.getPlaybackActiveProperty().addListener(obs -> {
-            if (StateMachine.isPlaybackActive()) {
-                // scrollbar disabled; we give focus elsewhere to be able to handle
-                // key events (hitting space should stop playback)
-                Platform.runLater(basePane::requestFocus);
-            } else {
-                Platform.runLater(scrollbar::requestFocus);
-            }
-        });
+        // If the scrollbar is disabled, we give focus elsewhere
+    	// to be able to handle key events (hitting space should stop playback)
+        StateMachine.getPlaybackActiveProperty().addListener(obs -> Platform.runLater(
+        		(StateMachine.isPlaybackActive() ? basePane : scrollbar)::requestFocus));
         
         // Trigger a redraw, editing mode only
         InvalidationListener doRedraw = obv -> staff.redraw();
