@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
+import java.util.function.Consumer;
 
 import backend.sound.SoundPlayer;
 import gui.loaders.ImageIndex;
@@ -289,17 +290,21 @@ public class SuperMarioPaint extends Application  {
         
         List<MouseButton> mouseButtons = new ArrayList<>();
         
+        Consumer<MouseEvent> fnSetSpecialCursors = (MouseEvent m) -> {
+        	if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
+	            setCursor(SMPCursorType.HAND_CLOSED);
+	        else if (mouseButtons.contains(MouseButton.PRIMARY))
+	            setCursor(SMPCursorType.HAND_OPEN);
+	        else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
+	            setCursor(SMPCursorType.ERASER);
+	    };
+        
         // Just a temporary thing to change mouse until i (or someone else) can find out where to put it =P -- seymour
         primaryScene.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
             if (!mouseButtons.contains(m.getButton()))
                 mouseButtons.add(m.getButton());
             
-            if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
-                setCursor(SMPCursorType.HAND_CLOSED);
-            else if (mouseButtons.contains(MouseButton.PRIMARY))
-                setCursor(SMPCursorType.HAND_OPEN);
-            else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
-                setCursor(SMPCursorType.ERASER);
+            fnSetSpecialCursors.accept(m);
             
             m.consume();
         });
@@ -307,12 +312,7 @@ public class SuperMarioPaint extends Application  {
             // Added to remove the default cursor appearing while other mouse buttons are held
             mouseButtons.remove(m.getButton());
             
-            if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
-                setCursor(SMPCursorType.HAND_CLOSED);
-            else if (mouseButtons.contains(MouseButton.PRIMARY))
-                setCursor(SMPCursorType.HAND_OPEN);
-            else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
-                setCursor(SMPCursorType.ERASER);
+            fnSetSpecialCursors.accept(m);
             
             if (mouseButtons.isEmpty())
                 setCursor(SMPCursorType.HAND_POINTING);
