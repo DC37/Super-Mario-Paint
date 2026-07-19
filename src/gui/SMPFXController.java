@@ -322,13 +322,8 @@ public class SMPFXController {
             List<StaffSequence> seq = staff.getArrangement().getSequences();
             Window owner = arrangementList.getScene().getWindow();
             
-            if (StateMachine.isSongModified()) {
-                if (!Dialog.showYesNoDialog("HOLD IT!",
-                		"The current song has been modified!\n"
-                        + "Load anyway?", owner)) {
-                	return;
-                }
-            }
+            if (!confirmOperation(owner, "Load anyway?", true, false))
+            	return;
             
             staff.populateStaff(seq.get(songIndex));
             seq.set(songIndex, staff.getSequence());
@@ -530,6 +525,27 @@ public class SMPFXController {
         });
     }
     
+    public boolean confirmOperation(Window owner, String q, boolean checkForSong, boolean checkForArr) {
+    	boolean songModified = checkForSong && StateMachine.isSongModified();
+    	boolean arrModified = checkForArr && StateMachine.isArrModified();
+    	
+    	String whatWasModified = "";
+    	if (songModified && arrModified) {
+    		whatWasModified = "The current song and arrangement\nhave both been modified!";
+    	} else if (songModified) {
+    		whatWasModified = "The current song has been modified!";
+    	} else if (arrModified) {
+    		whatWasModified = "The current arrangement has been modified!";
+    	}
+    	
+    	boolean somethingWasModified = songModified || arrModified;
+    	if (somethingWasModified) {
+    		return Dialog.showYesNoDialog("HOLD IT!", String.format("%s%n%s", whatWasModified, q), owner);
+    	}
+    	
+    	return true;
+    }
+    
     public void play(ActionEvent e) {
         staff.play();
     }
@@ -676,14 +692,7 @@ public class SMPFXController {
     }
     
     public void newSong(Window owner) {
-        boolean cont = true;
-        if (StateMachine.isSongModified())
-            cont = Dialog
-                    .showYesNoDialog("HOLD IT!",
-                            "The current song has been modified!\n"
-                            + "Create a new song anyway?", owner);
-
-        if (cont) {
+        if (confirmOperation(owner, "Create a new song anyway?", true, false)) {
             staff.setSequence(new StaffSequence());
             staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             staff.resetLocation();
@@ -694,12 +703,7 @@ public class SMPFXController {
     }
     
     public void newArrangement(Window owner) {
-        boolean cont = true;
-        if (StateMachine.isArrModified()) {
-            cont = Dialog.showYesNoDialog("HOLD IT!",
-                    "The current arrangement has been\nmodified! Create a new arrangement\nanyway?", owner);
-        }
-        if (cont) {
+        if (confirmOperation(owner, "Create a new arrangement anyway?", false, true)) {
             staff.setArrangement(new StaffArrangement());
             getNameTextField().clear();
             arrangementList.getItems().clear();
@@ -894,14 +898,9 @@ public class SMPFXController {
     }
 
     private void loadSong(Window owner) {
-        if (StateMachine.isSongModified()) {
-            if (!Dialog.showYesNoDialog("HOLD IT!",
-            		"The current song has been modified!\n"
-                    + "Load anyway?", owner)) {
-            	return;
-            }
-        }
-
+    	if (!confirmOperation(owner, "Load anyway?", true, false))
+            return;
+    	
         try {
         	FileChooser f = new FileChooser();
         	f.getExtensionFilters().addAll(
@@ -943,22 +942,8 @@ public class SMPFXController {
     }
 
     private void loadArrangement(Window owner) {
-    	boolean songModified = StateMachine.isSongModified();
-    	boolean arrModified = StateMachine.isArrModified();
-    	
-    	String whatWasModified = "";
-    	if (songModified && arrModified) {
-    		whatWasModified = "The current song and arrangement\nhave both been modified!\nLoad anyway?";
-    	} else if (songModified) {
-    		whatWasModified = "The current song has been modified!\nLoad anyway?";
-    	} else if (arrModified) {
-    		whatWasModified = "The current arrangement has been\nmodified! Load anyway?";
-    	}
-    	
-    	boolean somethingWasModified = songModified || arrModified;
-    	if (somethingWasModified && !Dialog.showYesNoDialog("HOLD IT!", whatWasModified, owner)) {
+    	if (!confirmOperation(owner, "Load anyway?", true, true))
     		return;
-    	}
     	
         File inputFile = null;
 
