@@ -460,6 +460,45 @@ public class SMPFXController {
         Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(StateMachine.getPlaybackActiveProperty()));
     }
     
+    private void onInstrumentButtonAction(InstrumentIndex inst) {
+    	if (StateMachine.isShiftPressed()) {
+            boolean ex = StateMachine.getNoteExtension(inst.ordinal());
+            StateMachine.setNoteExtension(inst.ordinal(), !ex);
+            
+            @SuppressWarnings("java:S3358")
+            int i = (inst.ordinal() == 15) ? 16 : (inst.ordinal() == 16) ? 15 : inst.ordinal();
+            
+            staff.getSequence().getNoteExtensions()[i] = !ex;
+            
+        } else if (StateMachine.isCtrlPressed()) {
+            int flt = StateMachine.getFilteredNotes();
+            int newFlt;
+            int mask = ~ ((-1) << InstrumentIndex.values().length);
+            
+            // we go through bitwise computations to only set the property once
+            if ((flt & mask) == mask) {
+                newFlt = 1 << inst.ordinal();
+                
+            } else {
+                newFlt = flt ^ (1 << inst.ordinal());
+                
+                if ((newFlt & mask) == 0) {
+                    newFlt = -1;
+                }
+            }
+            
+            StateMachine.setFilteredNotes(newFlt);
+            
+        } else {
+            MidiChannel[] chan = soundPlayer.getChannels();
+            if (chan[inst.getChannel() - 1] != null) {
+                chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
+            }
+            
+            StateMachine.setSelectedInstrument(inst);
+        }
+    }
+    
     private void populateInstrumentButtons(Pane n) {
         SMPInstrumentButton[] vs = new SMPInstrumentButton[InstrumentIndex.values().length];
         n.getChildren().clear();
@@ -471,44 +510,7 @@ public class SMPFXController {
             b.setFitWidth(26);
             b.setFocusTraversable(false);
             
-            b.setOnAction(e -> {
-                if (StateMachine.isShiftPressed()) {
-                    boolean ex = StateMachine.getNoteExtension(inst.ordinal());
-                    StateMachine.setNoteExtension(inst.ordinal(), !ex);
-                    
-                    @SuppressWarnings("java:S3358")
-                    int i = (inst.ordinal() == 15) ? 16 : (inst.ordinal() == 16) ? 15 : inst.ordinal();
-                    
-                    staff.getSequence().getNoteExtensions()[i] = !ex;
-                    
-                } else if (StateMachine.isCtrlPressed()) {
-                    int flt = StateMachine.getFilteredNotes();
-                    int newFlt;
-                    int mask = ~ ((-1) << InstrumentIndex.values().length);
-                    
-                    // we go through bitwise computations to only set the property once
-                    if ((flt & mask) == mask) {
-                        newFlt = 1 << inst.ordinal();
-                        
-                    } else {
-                        newFlt = flt ^ (1 << inst.ordinal());
-                        
-                        if ((newFlt & mask) == 0) {
-                            newFlt = -1;
-                        }
-                    }
-                    
-                    StateMachine.setFilteredNotes(newFlt);
-                    
-                } else {
-                    MidiChannel[] chan = soundPlayer.getChannels();
-                    if (chan[inst.getChannel() - 1] != null) {
-                        chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
-                    }
-                    
-                    StateMachine.setSelectedInstrument(inst);
-                }
-            });
+            b.setOnAction(e -> onInstrumentButtonAction(inst));
             
             vs[inst.ordinal()] = b;
             n.getChildren().add(b);
