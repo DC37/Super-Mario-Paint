@@ -487,27 +487,11 @@ public class StaffDisplayManager {
                 }
             }
             
-            if (high >= Values.HIGH_C) {
-                highC.get(i).setVisible(true);
-                highA.get(i).setVisible(true);
-            } else if (high >= Values.HIGH_A) {
-                highC.get(i).setVisible(false);
-                highA.get(i).setVisible(true);
-            } else {
-                highC.get(i).setVisible(false);
-                highA.get(i).setVisible(false);
-            }
-
-            if (low <= Values.LOW_A) {
-                lowC.get(i).setVisible(true);
-                lowA.get(i).setVisible(true);
-            } else if (low <= Values.LOW_C) {
-                lowC.get(i).setVisible(true);
-                lowA.get(i).setVisible(false);
-            } else {
-                lowC.get(i).setVisible(false);
-                lowA.get(i).setVisible(false);
-            }
+            highC.get(i).setVisible(high >= Values.HIGH_C);
+            highA.get(i).setVisible(high >= Values.HIGH_A);
+            
+            lowC.get(i).setVisible(low <= Values.LOW_C);
+            lowA.get(i).setVisible(low <= Values.LOW_A);
 
             middleC.get(i).setVisible(middleCPresent);
         }
