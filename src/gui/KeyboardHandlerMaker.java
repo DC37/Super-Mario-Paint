@@ -134,7 +134,7 @@ public class KeyboardHandlerMaker {
     	if (StateMachine.isPlaybackActive())
             return;
         
-        if (controller.getSongName().focusedProperty().get()) // Don't trigger while typing name
+        if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
             return;
         
         if (ke.isControlDown() || ke.isShiftDown())
@@ -156,7 +156,7 @@ public class KeyboardHandlerMaker {
     }
     
     private void tryStartOrStop(KeyEvent ke) {
-    	if (controller.getSongName().focusedProperty().get()) // Don't trigger while typing name
+    	if (controller.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
             return;
 
         if (ke.isControlDown() || ke.isShiftDown())
@@ -175,7 +175,7 @@ public class KeyboardHandlerMaker {
     private void tryPerformFirstMatchingSubaction(
     		KeyEvent ke, KeyboardSubaction... actions) {
     	
-    	if (controller.getSongName().focusedProperty().get())
+    	if (controller.getNameTextField().focusedProperty().get())
             return;
     	
     	for (KeyboardSubaction ksa: actions) {

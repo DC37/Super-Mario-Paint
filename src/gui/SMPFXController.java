@@ -1020,10 +1020,6 @@ public class SMPFXController {
     	return staff;
     }
     
-    public TextField getSongName() {
-    	return songName;
-    }
-    
     public SMPRadioButton getStopButton() {
     	return stopButton;
     }
