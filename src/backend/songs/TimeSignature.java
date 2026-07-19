@@ -97,6 +97,39 @@ public class TimeSignature {
         return true;
     }
 
+    private static TimeSignature getExisting(String disp, int idxSlash) throws IllegalArgumentException {
+    	// We support time signatures with a bottom number for some cases:
+        // 4/4, 3/4, 6/8... possibly more later
+        
+        String[] divsStrs = disp.substring(0, idxSlash).split("\\+");
+        int[] divs = Arrays.stream(divsStrs).mapToInt(Integer::parseInt).toArray();
+        int bottom = Integer.parseInt(disp.substring(idxSlash + 1));
+        
+        if (bottom == 4 && divs.length == 1) {
+            int top = divs[0];
+            if (top == 3) {
+                return THREE_FOUR;
+            } else if (top == 4) {
+                return FOUR_FOUR;
+            }
+            
+        } else if (bottom == 8 && divs.length == 1) {
+            int top = divs[0];
+            if (top == 6) {
+                return SIX_EIGHT;
+            }
+            
+        } else if (bottom == 8 && divs.length == 2) {
+            int top1 = divs[0];
+            int top2 = divs[1];
+            if (top1 == 3 && top2 == 3) {
+                return SIX_EIGHT;
+            }
+        }
+        
+        throw new IllegalArgumentException("Unrecognized Time Signature Specification: " + disp);
+    }
+    
     public static TimeSignature valueOf(String disp) throws IllegalArgumentException {
         int idxSlash = disp.indexOf("/");
         
@@ -104,38 +137,8 @@ public class TimeSignature {
             String[] divsStrs = disp.split("\\+");
             int[] divs = Arrays.stream(divsStrs).mapToInt(Integer::parseInt).toArray();
             return new TimeSignature(divs);
-            
         } else {
-            // We support time signatures with a bottom number for some cases:
-            // 4/4, 3/4, 6/8... possibly more later
-            
-            String[] divsStrs = disp.substring(0, idxSlash).split("\\+");
-            int[] divs = Arrays.stream(divsStrs).mapToInt(Integer::parseInt).toArray();
-            int bottom = Integer.parseInt(disp.substring(idxSlash + 1));
-            
-            if (bottom == 4 && divs.length == 1) {
-                int top = divs[0];
-                if (top == 3) {
-                    return THREE_FOUR;
-                } else if (top == 4) {
-                    return FOUR_FOUR;
-                }
-                
-            } else if (bottom == 8 && divs.length == 1) {
-                int top = divs[0];
-                if (top == 6) {
-                    return SIX_EIGHT;
-                }
-                
-            } else if (bottom == 8 && divs.length == 2) {
-                int top1 = divs[0];
-                int top2 = divs[1];
-                if (top1 == 3 && top2 == 3) {
-                    return SIX_EIGHT;
-                }
-            }
-            
-            throw new IllegalArgumentException("Unrecognized Time Signature Specification: " + disp);
+        	return getExisting(disp, idxSlash);
         }
     }
     
