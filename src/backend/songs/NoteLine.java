@@ -11,13 +11,13 @@ import gui.Values;
  * volume value, which is guaranteed to be in the range specified by
  * {@link Values#MIN_VELOCITY} and {@link Values#MAX_VELOCITY}.
  * 
- * <p>This is mostly a wrapper around a list of {@link StaffNote}s. The method
+ * <p>This is mostly a wrapper around a list of {@link Note}s. The method
  * {@link #getNotes} provides a reference to that modifiable list. The order of
  * notes in the list determines how they are ultimately displayed; the last
  * element will end up at the front. Typically we want that note to be the most
  * recently-placed.
  */
-public class StaffNoteLine {
+public class NoteLine {
 
     /**
      * The volume of this line.
@@ -27,12 +27,12 @@ public class StaffNoteLine {
     /**
      * The notes on this line.
      */
-    private final List<StaffNote> notes;
+    private final List<Note> notes;
 
     /**
      * Create an empty line of notes at the default volume.
      */
-    public StaffNoteLine() {
+    public NoteLine() {
         this(Values.DEFAULT_VELOCITY);
     }
     
@@ -41,7 +41,7 @@ public class StaffNoteLine {
      * is used if the provided value is not in the adequate range.
      * @param volume The volume
      */
-    public StaffNoteLine(int volume) {
+    public NoteLine(int volume) {
         this.notes = new ArrayList<>();
         this.volume = (checkVolumeValue(volume)) ? volume : Values.DEFAULT_VELOCITY;
     }
@@ -50,9 +50,9 @@ public class StaffNoteLine {
      * Copy constructor. Makes a deep copy of the argument's list of notes.
      * @param oth Other StaffNoteLine to copy
      */
-    public StaffNoteLine(StaffNoteLine oth) {
+    public NoteLine(NoteLine oth) {
         this.notes = oth.notes.stream()
-                .map(StaffNote::new)
+                .map(Note::new)
                 .collect(Collectors.toList());
         
         this.volume = oth.volume;
@@ -62,7 +62,7 @@ public class StaffNoteLine {
      * Get the reference to the list of notes held by this line.
      * @return The list of notes on this line
      */
-    public List<StaffNote> getNotes() {
+    public List<Note> getNotes() {
         return notes;
     }
 

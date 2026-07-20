@@ -1,6 +1,6 @@
 package gui.events;
 
-import backend.songs.StaffNoteLine;
+import backend.songs.NoteLine;
 import gui.StateMachine;
 import gui.Values;
 import gui.clipboard.StaffRubberBandEventHandler;
@@ -95,7 +95,7 @@ public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHand
    private void copy() {
 	   System.out.println("COPY");
        source.getTheStaffClipboard().getAPI().copy();
-       for (StaffNoteLine line : source.getTheStaffClipboard().getCopiedData().values()) {
+       for (NoteLine line : source.getTheStaffClipboard().getCopiedData().values()) {
            if (!line.getNotes().isEmpty())
                System.out.println(line);
        }

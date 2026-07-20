@@ -11,15 +11,15 @@ import java.util.Scanner;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
-import backend.songs.StaffSequence;
+import backend.songs.Note;
+import backend.songs.NoteLine;
+import backend.songs.Song;
 import backend.songs.TimeSignature;
 import gui.InstrumentIndex;
 import gui.Utilities;
 import gui.Values;
 
-public class SMPDecoder implements Decoder<StaffSequence> {
+public class SMPDecoder implements Decoder<Song> {
 
     /**
      * Loads a song from the file specified.
@@ -28,7 +28,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
      *            The file to load from.
      * @return A loaded song file. The format is a StaffSequence.
      */
-    public StaffSequence decode(File inputFile) throws IOException {
+    public Song decode(File inputFile) throws IOException {
         FileInputStream fIn = new FileInputStream(inputFile);
         Scanner sc = new Scanner(fIn);
         List<String> read = new ArrayList<>();
@@ -36,7 +36,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
             read.add(sc.nextLine());
         }
         sc.close();
-        StaffSequence loaded = parseText(read);
+        Song loaded = parseText(read);
         
         String fname = inputFile.getName();
         loaded.setTitle(fname.substring(0, fname.lastIndexOf('.')));
@@ -54,8 +54,8 @@ public class SMPDecoder implements Decoder<StaffSequence> {
      *            <code>ArrayList</code> of notes and parameters.
      * @return Hopefully, a decoded <code>StaffSequence</code>
      */
-    private StaffSequence parseText(List<String> read) {
-        List<StaffNoteLine> lines = new ArrayList<>();
+    private Song parseText(List<String> read) {
+        List<NoteLine> lines = new ArrayList<>();
         double tempo = Values.DEFAULT_TEMPO;
         boolean[] noteExtensions = new boolean[Values.NUM_INSTRUMENTS];
         TimeSignature timeSignature = Values.DEFAULT_TIME_SIGNATURE;
@@ -81,7 +81,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
             } else {
                 String[] sp = s.split(",");
                 int lineNum = 0;
-                StaffNoteLine st = new StaffNoteLine();
+                NoteLine st = new NoteLine();
                 for (String spl : sp) {
                     if (spl.contains(":") && !spl.contains("VOL")) {
                         String[] meas = spl.split(":");
@@ -110,7 +110,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
                     
                 } else {
                     while (lines.size() < lineNum) {
-                        lines.addLast(new StaffNoteLine());
+                        lines.addLast(new NoteLine());
                     }
                     
                     lines.addLast(st);
@@ -118,7 +118,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
             }
         }
 
-        StaffSequence loaded = new StaffSequence(lines);
+        Song loaded = new Song(lines);
         loaded.setTempo(tempo);
         loaded.setNoteExtensions(noteExtensions);
         loaded.setTimeSignature(timeSignature);
@@ -135,7 +135,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
         exts[16] = ext15;
     }
 
-    private static StaffNote parseNote(String spl) throws ParseException {
+    private static Note parseNote(String spl) throws ParseException {
         InstrumentIndex theInstrument;
         int verticalPosition = -1;
         Accidental accidental;
@@ -171,7 +171,7 @@ public class SMPDecoder implements Decoder<StaffSequence> {
             break;
         }
         
-        return new StaffNote(theInstrument, verticalPosition, accidental, muteMod);
+        return new Note(theInstrument, verticalPosition, accidental, muteMod);
     }
     
     private static MuteModifier muteModifierFromInt(int v) {

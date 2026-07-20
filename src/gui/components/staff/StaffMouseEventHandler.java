@@ -10,8 +10,8 @@ import backend.editing.commands.RemoveNoteCommand;
 import backend.editing.commands.RemoveVolumeCommand;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
+import backend.songs.Note;
+import backend.songs.NoteLine;
 import gui.InstrumentIndex;
 import gui.Settings;
 import gui.Staff;
@@ -167,7 +167,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (StateMachine.getButtonsPressed().contains(KeyCode.E)) {
             removeNote();
         } else {        
-            StaffNoteLine s = theStaff.getSequence().getLine(
+            NoteLine s = theStaff.getSequence().getLine(
                 StateMachine.getMeasureLineNum() + lineTmp);
             placeNote(theInd, s.getVolume());
         }
@@ -193,14 +193,14 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         @SuppressWarnings("java:S3358")
         MuteModifier mod = muteA ? MuteModifier.MUTE_THIS_INST : mute ? MuteModifier.MUTE_THIS_PITCH : MuteModifier.REGULAR;
         
-        StaffNote theStaffNote = new StaffNote(theInd, position, acc, mod);
+        Note theStaffNote = new Note(theInd, position, acc, mod);
         
         if (!mute && !muteA)
             theStaff.getSoundPlayer().playSound(theStaffNote, vel);
         
         theStaff.getDisplayManager().resetSilhouette();
 
-        StaffNoteLine temp = theStaff.getSequence().getLine(
+        NoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
 
         if (temp.getNotes().isEmpty()) {
@@ -239,15 +239,15 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private void removeNote() {
         theStaff.getDisplayManager().resetSilhouette();
 
-        StaffNoteLine temp = theStaff.getSequence().getLine(
+        NoteLine temp = theStaff.getSequence().getLine(
                 line + StateMachine.getMeasureLineNum());
 
         if (!temp.getNotes().isEmpty()) {
-            List<StaffNote> nt = temp.getNotes();
+            List<Note> nt = temp.getNotes();
             for (int i = nt.size() - 1; i >= 0; i--) {
-                StaffNote s = nt.get(i);
+                Note s = nt.get(i);
                 if (s.getVerticalPosition() == position) {
-                    StaffNote removedNote = nt.remove(i);
+                    Note removedNote = nt.remove(i);
                     commandManager.execute(new RemoveNoteCommand(temp, removedNote));
                     break;
                 }
@@ -272,7 +272,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected.
      */
     private void mouseEntered(InstrumentIndex theInd) {
-        StaffNote sil = new StaffNote(theInd, position, acc);
+        Note sil = new Note(theInd, position, acc);
         theStaff.getDisplayManager().updateSilhouette(line, sil);
         StateMachine.setCursorOnStaff(true);
     }

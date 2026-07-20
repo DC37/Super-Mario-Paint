@@ -8,8 +8,8 @@ import backend.editing.commands.AddNoteCommand;
 import backend.editing.commands.AddVolumeCommand;
 import backend.editing.commands.RemoveNoteCommand;
 import backend.editing.commands.RemoveVolumeCommand;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
+import backend.songs.Note;
+import backend.songs.NoteLine;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
@@ -70,11 +70,11 @@ public class StaffClipboardAPI {
         if(!theStaffClipboard.getSelection().isEmpty() && (selectNotesFlag || selectVolumesFlag))
             clearCopiedData();
 
-        for (Map.Entry<Integer, StaffNoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
+        for (Map.Entry<Integer, NoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
             int line = noteLine.getKey();
-            List<StaffNote> ntList = noteLine.getValue().getNotes();
+            List<Note> ntList = noteLine.getValue().getNotes();
             if (selectNotesFlag)
-                for(StaffNote note : ntList) 
+                for(Note note : ntList) 
                     //relative index
                     copyNote(line - selectionLineBegin, note);
             
@@ -99,13 +99,13 @@ public class StaffClipboardAPI {
      */
     public void delete() {
 
-        for (Map.Entry<Integer, StaffNoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
+        for (Map.Entry<Integer, NoteLine> noteLine : theStaffClipboard.getSelection().entrySet()) {
             int line = noteLine.getKey();
-            List<StaffNote> ntList = noteLine.getValue().getNotes();
+            List<Note> ntList = noteLine.getValue().getNotes();
             
-            StaffNoteLine lineDest = theStaff.getSequence().getLine(line);
+            NoteLine lineDest = theStaff.getSequence().getLine(line);
             
-            for(StaffNote note : ntList){
+            for(Note note : ntList){
                 lineDest.getNotes().remove(note);
                 StateMachine.setSongModified(true);
                 commandManager.execute(new RemoveNoteCommand(lineDest, note));
@@ -134,17 +134,17 @@ public class StaffClipboardAPI {
      */
     public void paste(int lineMoveTo) {
 
-        Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
+        Map<Integer, NoteLine> copiedData = theStaffClipboard.getCopiedData();
         
-        for (Map.Entry<Integer, StaffNoteLine> lineCopy : copiedData.entrySet()) {
+        for (Map.Entry<Integer, NoteLine> lineCopy : copiedData.entrySet()) {
             int line = lineMoveTo + lineCopy.getKey();
             
-            StaffNoteLine lineDest = theStaff.getSequence().getLine(line);
-            StaffNoteLine lineSrc = lineCopy.getValue();
-            for(StaffNote note : lineSrc.getNotes()) {
+            NoteLine lineDest = theStaff.getSequence().getLine(line);
+            NoteLine lineSrc = lineCopy.getValue();
+            for(Note note : lineSrc.getNotes()) {
                 
                 // see StaffInstrumentEventHandler's placeNote function
-                StaffNote theStaffNote = new StaffNote(note);
+                Note theStaffNote = new Note(note);
 
                 if (lineDest.getNotes().isEmpty()) {
                     lineDest.setVolume(Values.DEFAULT_VELOCITY);
@@ -200,10 +200,10 @@ public class StaffClipboardAPI {
      */
     public void select(int lineBegin, int positionBegin, int lineEnd, int positionEnd) {
         for (int line = lineBegin; line <= lineEnd; line++) {
-            StaffNoteLine lineSrc = theStaff.getSequence().getLine(line);
+            NoteLine lineSrc = theStaff.getSequence().getLine(line);
 
-            List<StaffNote> ntList = lineSrc.getNotes();
-            for (StaffNote note : ntList) {
+            List<Note> ntList = lineSrc.getNotes();
+            for (Note note : ntList) {
                 if (positionBegin <= note.getVerticalPosition() && note.getVerticalPosition() <= positionEnd
                         && StateMachine.getFilteredNote(note.getInstrument().ordinal())) {
                     // store the copied note at the relative line
@@ -228,9 +228,9 @@ public class StaffClipboardAPI {
      */
     public void clearSelection() {
         //unhighlight notes
-        Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
-        for(StaffNoteLine line : selection.values()) 
-            for(StaffNote note : line.getNotes())
+        Map<Integer, NoteLine> selection = theStaffClipboard.getSelection();
+        for(NoteLine line : selection.values()) 
+            for(Note note : line.getNotes())
                 highlightNote(note, false);
 
         //unhighlight volumes
@@ -274,10 +274,10 @@ public class StaffClipboardAPI {
      * @param note
      *            info to be copied
      */
-    public void copyNote(int line, StaffNote note) {
-        StaffNote newNote = new StaffNote(note);
-        Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
-        copiedData.computeIfAbsent(line, l -> new StaffNoteLine()).getNotes().add(newNote);
+    public void copyNote(int line, Note note) {
+        Note newNote = new Note(note);
+        Map<Integer, NoteLine> copiedData = theStaffClipboard.getCopiedData();
+        copiedData.computeIfAbsent(line, l -> new NoteLine()).getNotes().add(newNote);
     }
     
     /**
@@ -288,24 +288,24 @@ public class StaffClipboardAPI {
      * @param note
      *            that will be placed into selection
      */
-    public void selectNote(int line, StaffNote note) {
-        Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();
-        selection.computeIfAbsent(line, l -> new StaffNoteLine()).getNotes().add(note);
+    public void selectNote(int line, Note note) {
+        Map<Integer, NoteLine> selection = theStaffClipboard.getSelection();
+        selection.computeIfAbsent(line, l -> new NoteLine()).getNotes().add(note);
         highlightNote(note, true);
     }
     
-    public void highlightNote(StaffNote note, boolean highlight) {
+    public void highlightNote(Note note, boolean highlight) {
         note.setSelected(highlight);
     }
     
     public void copyVolume(int line, int volume) {
-        Map<Integer, StaffNoteLine> copiedData = theStaffClipboard.getCopiedData();
-        copiedData.computeIfAbsent(line, l -> new StaffNoteLine()).setVolume(volume);
+        Map<Integer, NoteLine> copiedData = theStaffClipboard.getCopiedData();
+        copiedData.computeIfAbsent(line, l -> new NoteLine()).setVolume(volume);
     }
     
     public void selectVolume(int line, int volume) {
-        Map<Integer, StaffNoteLine> selection = theStaffClipboard.getSelection();        
-        selection.computeIfAbsent(line, l -> new StaffNoteLine()).setVolume(volume);
+        Map<Integer, NoteLine> selection = theStaffClipboard.getSelection();        
+        selection.computeIfAbsent(line, l -> new NoteLine()).setVolume(volume);
         highlightVolume(line, true);
     }
 
@@ -325,13 +325,13 @@ public class StaffClipboardAPI {
         selectNotesFlag = selectNotes;
         if(selectNotesFlag) {
             //highlight notes
-            for(StaffNoteLine line : theStaffClipboard.getSelection().values()) 
-                for(StaffNote note : line.getNotes())
+            for(NoteLine line : theStaffClipboard.getSelection().values()) 
+                for(Note note : line.getNotes())
                     highlightNote(note, true);
         } else {
             //unhighlight notes
-            for(StaffNoteLine line : theStaffClipboard.getSelection().values()) 
-                for(StaffNote note : line.getNotes())
+            for(NoteLine line : theStaffClipboard.getSelection().values()) 
+                for(Note note : line.getNotes())
                     highlightNote(note, false);
         }
         theStaff.redraw();

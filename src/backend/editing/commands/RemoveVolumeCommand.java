@@ -1,14 +1,14 @@
 package backend.editing.commands;
 
 import backend.editing.CommandInterface;
-import backend.songs.StaffNoteLine;
+import backend.songs.NoteLine;
 
 public class RemoveVolumeCommand implements CommandInterface {
 
-    StaffNoteLine theLine;
+    NoteLine theLine;
     int theOldVolume;
     
-    public RemoveVolumeCommand(StaffNoteLine line, int oldVolume) {
+    public RemoveVolumeCommand(NoteLine line, int oldVolume) {
         theLine = line;
         theOldVolume = oldVolume;
     }

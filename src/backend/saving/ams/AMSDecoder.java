@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import backend.saving.Decoder;
-import backend.songs.StaffSequence;
+import backend.songs.Song;
 import backend.sound.SMPSoundfont;
 
 /**
@@ -13,9 +13,9 @@ import backend.sound.SMPSoundfont;
  * @author RehdBlob
  * @since 2012.09.10
  */
-public class AMSDecoder implements Decoder<StaffSequence> {
+public class AMSDecoder implements Decoder<Song> {
 
-    public StaffSequence decode(File file) {
+    public Song decode(File file) {
         // TODO: Fix this.
         return null;
     }
@@ -28,7 +28,7 @@ public class AMSDecoder implements Decoder<StaffSequence> {
      * text file.
      */
     @SuppressWarnings("unused") // Please remove when the implementation is done
-    private StaffSequence decode(String in) throws ParseException {
+    private Song decode(String in) throws ParseException {
         if (!isValid(in)) {
             throw new ParseException("Invalid File", 0);
         }
@@ -61,7 +61,7 @@ public class AMSDecoder implements Decoder<StaffSequence> {
      * @return A new Super Mario Paint sequence that is to be loaded
      * immediately upon creation.
      */
-    private StaffSequence populateSequence(String timeSig,
+    private Song populateSequence(String timeSig,
             SMPSoundfont soundfont, ArrayList<String> data,
             String tempo) {
         return null;

@@ -1,14 +1,14 @@
 package backend.editing.commands;
 
 import backend.editing.CommandInterface;
-import backend.songs.StaffNoteLine;
+import backend.songs.NoteLine;
 
 public class AddVolumeCommand implements CommandInterface {
 
-    StaffNoteLine theLine;
+    NoteLine theLine;
     int theNewVolume;
     
-    public AddVolumeCommand(StaffNoteLine line, int newVolume) {
+    public AddVolumeCommand(NoteLine line, int newVolume) {
         theLine = line;
         theNewVolume = newVolume;
     }

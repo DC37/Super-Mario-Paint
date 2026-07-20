@@ -6,9 +6,9 @@ import java.util.Vector;
 
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
-import backend.songs.StaffSequence;
+import backend.songs.Note;
+import backend.songs.NoteLine;
+import backend.songs.Song;
 import gui.components.staff.StaffDisplayManager.StaffNoteCoordinate;
 import gui.loaders.ImageIndex;
 import javafx.scene.image.Image;
@@ -46,7 +46,7 @@ class NoteMatrix {
      * A silhouette note to display where the cursor is.
      * Set to {@code null} if no silhouette is displayed.
      */
-    private StaffNote currentSilhouette;
+    private Note currentSilhouette;
     private int currentSilhouetteColumn;
 
     public NoteMatrix(Map<ImageIndex, Image> imagesHolder, StaffDisplayManager disp) {
@@ -107,7 +107,7 @@ class NoteMatrix {
     /**
      * Repopulates the note display on the staff.
      */
-    public void populateNoteDisplay(StaffSequence seq, int currentPosition) {
+    public void populateNoteDisplay(Song seq, int currentPosition) {
         // No order is assumed in StaffNoteLine so we keep track of how many
         // stacked notes we already treated for each row
         int[] stackedAmounts = new int[disp.height];
@@ -119,10 +119,10 @@ class NoteMatrix {
                 accStackedAmounts[row] = 0;
             }
             
-            StaffNoteLine stl = seq.getLine(currentPosition + col);
-            List<StaffNote> st = stl.getNotes();
+            NoteLine stl = seq.getLine(currentPosition + col);
+            List<Note> st = stl.getNotes();
             
-            for (StaffNote s : st) {
+            for (Note s : st) {
                 int row = s.getVerticalPosition();
                 
                 int d = stackedAmounts[row];
@@ -165,14 +165,14 @@ class NoteMatrix {
      * The silhouette is processing separately from regular notes because it
      * needs to be refreshed more often.
      */
-    public void updateSilhouette(int col, StaffNote note) {
+    public void updateSilhouette(int col, Note note) {
         if (note == null)
             return;
         
         resetSilhouette();
         
         int row = note.getVerticalPosition();
-        StaffNote silhouette = new StaffNote(
+        Note silhouette = new Note(
                 note.getInstrument(),
                 note.getVerticalPosition(),
                 note.getAccidental(),
@@ -197,12 +197,12 @@ class NoteMatrix {
      */
     public void refreshSilhouette(Accidental acc) {
         if (currentSilhouette != null && currentSilhouette.getAccidental() != acc) {
-            StaffNote sil = new StaffNote(currentSilhouette.getInstrument(), currentSilhouette.getVerticalPosition(), acc);
+            Note sil = new Note(currentSilhouette.getInstrument(), currentSilhouette.getVerticalPosition(), acc);
             updateSilhouette(currentSilhouetteColumn, sil);
         }
     }
     
-    public ImageIndex noteImageIndex(StaffNote note) {
+    public ImageIndex noteImageIndex(Note note) {
         switch (note.getMuteModifier()) {
         case REGULAR:
             return note.getInstrument().imageIndex();
@@ -215,7 +215,7 @@ class NoteMatrix {
         }
     }
     
-    public ImageIndex accImageIndex(StaffNote theNote) {
+    public ImageIndex accImageIndex(Note theNote) {
         switch (theNote.getMuteModifier()) {
         case REGULAR:
             return theNote.getAccidental().imageIndex();

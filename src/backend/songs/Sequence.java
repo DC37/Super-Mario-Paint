@@ -2,7 +2,7 @@ package backend.songs;
 
 /**
  * <p>Abstract class encompassing common functionalities of
- * {@link StaffSequence} and {@link StaffArrangement}.
+ * {@link Song} and {@link Arrangement}.
  */
 public abstract class Sequence {
 	

@@ -7,9 +7,9 @@ import java.util.Map;
 
 import backend.editing.ModifySongManager;
 import backend.songs.Accidental;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
-import backend.songs.StaffSequence;
+import backend.songs.Note;
+import backend.songs.NoteLine;
+import backend.songs.Song;
 import gui.Settings;
 import gui.Staff;
 import gui.Values;
@@ -178,7 +178,7 @@ public class StaffDisplayManager {
             stack.getChildren().add(iv);
             
             StaffVolumeEventHandler handler = new StaffVolumeEventHandler(stack, imagesHolder, commandManager);
-            handler.setStaffNoteLine(new StaffNoteLine());
+            handler.setStaffNoteLine(new NoteLine());
             stack.addEventHandler(Event.ANY, handler);
             
             staffVolumeBars.getChildren().add(stack);
@@ -186,10 +186,10 @@ public class StaffDisplayManager {
         }
     }
     
-    public void updateVolumeBars(StaffSequence seq, int currLine) {
+    public void updateVolumeBars(Song seq, int currLine) {
         for (int i = 0; i < width; i++) {
             StaffVolumeEventHandler sveh = volumeBarHandlers.get(i);
-            StaffNoteLine stl = seq.getLine(currLine + i);
+            NoteLine stl = seq.getLine(currLine + i);
             
             sveh.setStaffNoteLine(stl);
             sveh.updateVolume();
@@ -316,7 +316,7 @@ public class StaffDisplayManager {
                     )
             );
     
-    public void updateNoteDisplay(StaffSequence seq, int currLine) {
+    public void updateNoteDisplay(Song seq, int currLine) {
         matrix.clearNoteDisplay();
         matrix.populateNoteDisplay(seq, currLine);
     }
@@ -469,14 +469,14 @@ public class StaffDisplayManager {
         return staffLedgerLines;
     }
     
-    public void updateStaffLedgerLines(StaffSequence seq, int currLine) {
+    public void updateStaffLedgerLines(Song seq, int currLine) {
         for (int i = 0; i < width; i++) {
-            StaffNoteLine stl = seq.getLine(currLine + i);
+            NoteLine stl = seq.getLine(currLine + i);
 
             int high = 0;
             int low = height;
             boolean middleCPresent = false;
-            for (StaffNote n : stl.getNotes()) {
+            for (Note n : stl.getNotes()) {
                 int nt = n.getVerticalPosition();
                 if (nt >= high)
                     high = nt;
@@ -501,7 +501,7 @@ public class StaffDisplayManager {
         matrix.resetSilhouette();
     }
     
-    public void updateSilhouette(int line, StaffNote sil) {
+    public void updateSilhouette(int line, Note sil) {
         matrix.updateSilhouette(line, sil);
     }
     

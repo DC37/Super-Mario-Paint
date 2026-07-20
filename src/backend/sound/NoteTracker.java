@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import backend.songs.Pitch;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
+import backend.songs.Note;
+import backend.songs.NoteLine;
 import gui.InstrumentIndex;
 import gui.StateMachine;
 import gui.Values;
@@ -47,10 +47,10 @@ class NoteTracker {
      * Stops the instruments contained in theNotes.
      * @param s The StaffNoteLine.
      */
-    public void stopNotes(StaffNoteLine s) {
+    public void stopNotes(NoteLine s) {
         boolean[] turnOff = new boolean[Values.NUM_INSTRUMENTS];
-        List<StaffNote> theNotes = s.getNotes();
-        for(StaffNote sn : theNotes)
+        List<Note> theNotes = s.getNotes();
+        for(Note sn : theNotes)
             turnOff[sn.getInstrument().getChannel() - 1] = true;
 
         boolean[] ext = StateMachine.getNoteExtensions();

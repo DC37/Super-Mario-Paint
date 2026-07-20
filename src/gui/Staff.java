@@ -7,8 +7,8 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
-import backend.songs.StaffArrangement;
-import backend.songs.StaffSequence;
+import backend.songs.Arrangement;
+import backend.songs.Song;
 import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
 import gui.components.staff.StaffDisplayManager;
@@ -44,10 +44,10 @@ public class Staff {
     private StaffDisplayManager displayManager;
 
     /** This is the current sequence that we have displaying on the staff. */
-    private StaffSequence theSequence = new StaffSequence();
+    private Song theSequence = new Song();
 
     /** This is the current arrangement that we currently have active. */
-    private StaffArrangement theArrangement = new StaffArrangement();
+    private Arrangement theArrangement = new Arrangement();
 
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     private final SoundPlayer soundPlayer;
@@ -252,7 +252,7 @@ public class Staff {
     }
 
     /** @return The current song that we are displaying. */
-    public synchronized StaffSequence getSequence() {
+    public synchronized Song getSequence() {
         return theSequence;
     }
 
@@ -262,14 +262,14 @@ public class Staff {
      * @param other
      *            This is the other sequence.
      */
-    public synchronized void setSequence(StaffSequence other) {
+    public synchronized void setSequence(Song other) {
         theSequence = other;
     }
 
     /**
      * @return The list of songs in the currently-active arrangement.
      */
-    public StaffArrangement getArrangement() {
+    public Arrangement getArrangement() {
         return theArrangement;
     }
 
@@ -277,7 +277,7 @@ public class Staff {
      * @param tA
      *            The arrangement file to set.
      */
-    public void setArrangement(StaffArrangement tA) {
+    public void setArrangement(Arrangement tA) {
         theArrangement = tA;
     }
 
@@ -296,7 +296,7 @@ public class Staff {
      * @param loaded
      *            The loaded sequence.
      */
-    public void populateStaff(StaffSequence loaded) {
+    public void populateStaff(Song loaded) {
         setSequence(loaded);
         setTimeSignature(loaded.getTimeSignature());
         StateMachine.setTempo(loaded.getTempo());
@@ -319,8 +319,8 @@ public class Staff {
      * @param loaded
      *            The loaded arrangement.
      */
-    public void populateStaffArrangement(StaffArrangement loaded, Window owner) {
-    	StaffSequence first = loaded.getSequences().getFirst();
+    public void populateStaffArrangement(Arrangement loaded, Window owner) {
+    	Song first = loaded.getSequences().getFirst();
         populateStaff(first);
         
         setArrangement(loaded);
@@ -330,7 +330,7 @@ public class Staff {
             @Override
             public Void call() {
                 getSoundPlayer().clearCache();
-                for(StaffSequence s : loaded.getSequences()) {
+                for(Song s : loaded.getSequences()) {
                     try {
                         getSoundPlayer().loadToCache(s.getSoundset());
                     } catch (InvalidMidiDataException | IOException e) {
@@ -354,7 +354,7 @@ public class Staff {
         	return false;
         
         StateMachine.setArrModified(true);
-        theArrangement.getSequences().add(new StaffSequence(theSequence));
+        theArrangement.getSequences().add(new Song(theSequence));
         soundPlayer.storeInCache();
         return true;
     }
@@ -373,7 +373,7 @@ public class Staff {
     public boolean moveSongInArrangement(int from, int to) {
         if (from >= 0 && from < theArrangement.getSequences().size()) {
             StateMachine.setArrModified(true);
-            StaffSequence ss = theArrangement.getSequences().remove(from);
+            Song ss = theArrangement.getSequences().remove(from);
             theArrangement.getSequences().add(to, ss);
             return true;
             
@@ -570,7 +570,7 @@ public class Staff {
             @Override
             protected Staff call() throws Exception {
                 StateMachine.setArrangementSongIndex(0);
-                List<StaffSequence> seq = theArrangement.getSequences();
+                List<Song> seq = theArrangement.getSequences();
                 int endLine;
 
                 queue = 0;

@@ -14,8 +14,8 @@ import javax.sound.midi.Soundbank;
 
 import backend.songs.MuteModifier;
 import backend.songs.Pitch;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
+import backend.songs.Note;
+import backend.songs.NoteLine;
 import gui.InstrumentIndex;
 import gui.StateMachine;
 import gui.Values;
@@ -66,12 +66,12 @@ public class SoundPlayer {
      * Play a line of notes on the staff, applying mute notes if there are any.
      * @param s A line of notes
      */
-    public void playSoundLine(StaffNoteLine s) {
-        List<StaffNote> theNotes = s.getNotes();
+    public void playSoundLine(NoteLine s) {
+        List<Note> theNotes = s.getNotes();
         
         tracker.stopNotes(s);
         
-        for (StaffNote sn : theNotes) {
+        for (Note sn : theNotes) {
             if (sn.getMuteModifier().equals(MuteModifier.MUTE_THIS_PITCH))
                 stopSound(sn);
             
@@ -79,7 +79,7 @@ public class SoundPlayer {
                 stopInstrument(sn.getInstrument());
         }
         
-        for (StaffNote sn : theNotes) {
+        for (Note sn : theNotes) {
             if (sn.getMuteModifier().equals(MuteModifier.REGULAR))
                 playSound(sn, s.getVolume());
         }
@@ -93,7 +93,7 @@ public class SoundPlayer {
      * @param s
      *            The StaffNoteLine.
      */
-    public void playSound(StaffNote sn, int vel) {
+    public void playSound(Note sn, int vel) {
         playSound(sn.getInstrument(), sn.getPitch(), vel);
         tracker.addNotePlaying(sn.getInstrument(), sn.getPitch());
     }
@@ -104,7 +104,7 @@ public class SoundPlayer {
      * @param sn
      *            The StaffNote.
      */
-    private void stopSound(StaffNote sn) {
+    private void stopSound(Note sn) {
         stopSound(sn.getInstrument(), sn.getPitch());
     }
 

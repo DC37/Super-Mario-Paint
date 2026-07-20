@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import backend.saving.Decoder;
-import backend.songs.StaffArrangement;
-import backend.songs.StaffSequence;
+import backend.songs.Arrangement;
+import backend.songs.Song;
 
-public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
+public class MPCArrangementDecoder implements Decoder<Arrangement> {
 
     /**
      * Opens a file and decodes Mario Paint Composer arrangement data from it.
@@ -23,7 +23,7 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
      * @throws IOException
      *             If the file is not readable.
      */
-    public StaffArrangement decode(File f)
+    public Arrangement decode(File f)
             throws ParseException, IOException {
         StringBuilder sb = new StringBuilder();
         
@@ -54,12 +54,12 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
      * @throws IOException
      *             If something goes wrong while attempting to read the files.
      */
-    private StaffArrangement parseFiles(String str, File inputFile)
+    private Arrangement parseFiles(String str, File inputFile)
             throws ParseException, IOException {
         if (str == null || str.isEmpty()) {
             throw new ParseException("Invalid Arr File.", 0);
         }
-        StaffArrangement theArr = new StaffArrangement();
+        Arrangement theArr = new Arrangement();
         
         String inputFileName = inputFile.getName();
         theArr.setTitle(inputFileName.substring(0, inputFileName.lastIndexOf(']')));
@@ -67,7 +67,7 @@ public class MPCArrangementDecoder implements Decoder<StaffArrangement> {
         for (String s : str.split("\n")) {
             String st = inputFile.getParent() + File.separatorChar + s + "]MarioPaint.txt";
             File f = new File(st);
-            StaffSequence seq = Decoder.MPC_SEQUENCE_DECODER.decode(f);
+            Song seq = Decoder.MPC_SEQUENCE_DECODER.decode(f);
             theArr.getSequences().add(seq);
         }
         return theArr;

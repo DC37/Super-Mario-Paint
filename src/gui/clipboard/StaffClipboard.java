@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import backend.songs.StaffNoteLine;
+import backend.songs.NoteLine;
 import gui.SMPFXController;
 import gui.Staff;
 import gui.Values;
@@ -41,10 +41,10 @@ public class StaffClipboard {
     private StaffClipboardAPI theAPI;
     
     /** The list that keeps track of all the selections' bounds made by the user */
-    private Map<Integer, StaffNoteLine> selection;
+    private Map<Integer, NoteLine> selection;
     
     /** The list that will keep track of copied notes (and volumes) */
-    private Map<Integer, StaffNoteLine> copiedData;
+    private Map<Integer, NoteLine> copiedData;
 
     /** Volumes aren't node references so we keep track of the volumes' lines */
     private Set<Integer> highlightedVolumes;
@@ -126,11 +126,11 @@ public class StaffClipboard {
         basePane.layout();
     }
     
-    public Map<Integer, StaffNoteLine> getSelection() {
+    public Map<Integer, NoteLine> getSelection() {
         return selection;
     }
     
-    public Map<Integer, StaffNoteLine> getCopiedData() {
+    public Map<Integer, NoteLine> getCopiedData() {
         return copiedData;
     }
     

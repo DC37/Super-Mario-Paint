@@ -11,8 +11,8 @@ import backend.saving.mpc.MPCArrangementDecoder;
 import backend.saving.mpc.MPCDecoder;
 import backend.saving.smp.SMPArrangementDecoder;
 import backend.saving.smp.SMPDecoder;
-import backend.songs.StaffArrangement;
-import backend.songs.StaffSequence;
+import backend.songs.Arrangement;
+import backend.songs.Song;
 
 public interface Decoder<T> {
     
@@ -44,19 +44,19 @@ public interface Decoder<T> {
         };
     }
 
-    public static final Decoder<StaffSequence> MPC_SEQUENCE_DECODER = new MPCDecoder();
-    public static final Decoder<StaffSequence> AMS_SEQUENCE_DECODER = new AMSDecoder();
-    public static final Decoder<StaffSequence> SMP_SEQUENCE_DECODER = new SMPDecoder();
+    public static final Decoder<Song> MPC_SEQUENCE_DECODER = new MPCDecoder();
+    public static final Decoder<Song> AMS_SEQUENCE_DECODER = new AMSDecoder();
+    public static final Decoder<Song> SMP_SEQUENCE_DECODER = new SMPDecoder();
     
-    public static final Decoder<StaffArrangement> MPC_ARRANGEMENT_DECODER = new MPCArrangementDecoder();
-    public static final Decoder<StaffArrangement> AMS_ARRANGEMENT_DECODER = new AMSArrangementDecoder();
-    public static final Decoder<StaffArrangement> SMP_ARRANGEMENT_DECODER = new SMPArrangementDecoder();
+    public static final Decoder<Arrangement> MPC_ARRANGEMENT_DECODER = new MPCArrangementDecoder();
+    public static final Decoder<Arrangement> AMS_ARRANGEMENT_DECODER = new AMSArrangementDecoder();
+    public static final Decoder<Arrangement> SMP_ARRANGEMENT_DECODER = new SMPArrangementDecoder();
     
     // TODO Add AMS parsers when they are implemented
     // On wrong inputs, the SMP decoder tends to return empty songs instead of throwing exceptions
     // ... This is why we try it last
-    public static final CheckedDecoder<Optional<StaffSequence>> SEQUENCE_DECODER = Decoder.trySequence(MPC_SEQUENCE_DECODER, SMP_SEQUENCE_DECODER);
-    public static final CheckedDecoder<Optional<StaffArrangement>> ARRANGEMENT_DECODER = Decoder.trySequence(MPC_ARRANGEMENT_DECODER, SMP_ARRANGEMENT_DECODER);
+    public static final CheckedDecoder<Optional<Song>> SEQUENCE_DECODER = Decoder.trySequence(MPC_SEQUENCE_DECODER, SMP_SEQUENCE_DECODER);
+    public static final CheckedDecoder<Optional<Arrangement>> ARRANGEMENT_DECODER = Decoder.trySequence(MPC_ARRANGEMENT_DECODER, SMP_ARRANGEMENT_DECODER);
     
     /**
      * Parsers whose implementation does not throw {@link ParseException}.

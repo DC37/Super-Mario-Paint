@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import gui.Values;
 
 /**
- * <p>A song is a list of {@link StaffNoteLine}s and a context determining how
+ * <p>A song is a list of {@link NoteLine}s and a context determining how
  * the notes should be played: tempo, time signature, sustain flags, soundfont
  * binding.
  * 
@@ -16,7 +16,7 @@ import gui.Values;
  * lines. The method will resize the song with empty lines if necessary, making
  * songs virtually infinite.
  */
-public class StaffSequence extends Sequence {
+public class Song extends Sequence {
 
     /** The tempo of this song. */
     private double tempo = Values.DEFAULT_TEMPO;
@@ -31,10 +31,10 @@ public class StaffSequence extends Sequence {
     private String soundsetBinding = "";
 
     /** The note lines in this song. */
-    private final List<StaffNoteLine> theLines;
+    private final List<NoteLine> theLines;
 
     /** Default constructor. Makes an empty song. */
-    public StaffSequence() {
+    public Song() {
         this(Values.DEFAULT_LINES_PER_SONG);
     }
     
@@ -42,11 +42,11 @@ public class StaffSequence extends Sequence {
      * Makes an empty song of a specified length.
      * @param length The initial length
      */
-    public StaffSequence(int length) {
+    public Song(int length) {
         theLines = new ArrayList<>();
         
         for (int i = 0; i < length; i++) {
-            theLines.add(new StaffNoteLine());
+            theLines.add(new NoteLine());
         }
     }
     
@@ -54,7 +54,7 @@ public class StaffSequence extends Sequence {
      * Builds a sequence by making a deep copy of another sequence of note lines.
      * @param lines A list of note lines
      */
-    public StaffSequence(List<StaffNoteLine> lines) {
+    public Song(List<NoteLine> lines) {
     	this("", lines);
     }
     
@@ -62,10 +62,10 @@ public class StaffSequence extends Sequence {
      * Builds a sequence by making a deep copy of another sequence of note lines.
      * @param lines A list of note lines
      */
-    private StaffSequence(String title, List<StaffNoteLine> lines) {
+    private Song(String title, List<NoteLine> lines) {
     	super(title);
         this.theLines = lines.stream()
-                .map(StaffNoteLine::new)
+                .map(NoteLine::new)
                 .collect(Collectors.toList());
     }
     
@@ -73,7 +73,7 @@ public class StaffSequence extends Sequence {
      * Copy constructor for a song.
      * @param sequence A song to copy
      */
-    public StaffSequence(StaffSequence sequence) {
+    public Song(Song sequence) {
     	this(sequence.getTitle(), sequence.theLines);
     	this.tempo = sequence.tempo;
         System.arraycopy(sequence.noteExtensions, 0, this.noteExtensions, 0, this.noteExtensions.length);
@@ -183,7 +183,7 @@ public class StaffSequence extends Sequence {
      * @return The line at index i
      * @throws IndexOutOfBoundsException if i < 0
      */
-    public StaffNoteLine getLine(int i) {
+    public NoteLine getLine(int i) {
         if (i >= theLines.size()) {
             resize(i + 1);
         }
@@ -210,7 +210,7 @@ public class StaffSequence extends Sequence {
     private void resize(int n) {
         int currentSize = theLines.size();
         for (int i = 0; i < n - currentSize; i++) {
-            theLines.add(new StaffNoteLine());
+            theLines.add(new NoteLine());
         }   
     }
 

@@ -9,7 +9,7 @@ import gui.Values;
  * and accidental (determines the pitch, see {@link #getPitch}), and whether
  * this is a regular note or a certain mute note.
  */
-public class StaffNote {
+public class Note {
 
     /**
      * The position of this note in a vertical line.
@@ -43,7 +43,7 @@ public class StaffNote {
      * @param verticalPosition The position
      * @param accidental The accidental
      */
-    public StaffNote(InstrumentIndex instrument, int verticalPosition, Accidental accidental) {
+    public Note(InstrumentIndex instrument, int verticalPosition, Accidental accidental) {
         this(instrument, verticalPosition, accidental, MuteModifier.REGULAR);
     }
 
@@ -55,7 +55,7 @@ public class StaffNote {
      * @param accidental The accidental
      * @param muteModifier The modifier (regular, mute pitch, mute instrument)
      */
-    public StaffNote(InstrumentIndex instrument, int verticalPosition, Accidental accidental, MuteModifier muteModifier) {
+    public Note(InstrumentIndex instrument, int verticalPosition, Accidental accidental, MuteModifier muteModifier) {
         this.instrument = instrument;
         this.accidental = accidental;
         this.verticalPosition = verticalPosition;
@@ -66,7 +66,7 @@ public class StaffNote {
      * Creates a copy of another note.
      * @param note The note to copy
      */
-    public StaffNote(StaffNote note) {
+    public Note(Note note) {
         this(note.instrument, note.verticalPosition, note.accidental, note.muteModifier);
     }
 
@@ -132,11 +132,11 @@ public class StaffNote {
      */
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof StaffNote)) {
+        if (!(o instanceof Note)) {
             return false;
         }
         
-        StaffNote other = (StaffNote) o;
+        Note other = (Note) o;
         return other.verticalPosition == verticalPosition
                 && other.instrument == instrument
                 && other.accidental == accidental

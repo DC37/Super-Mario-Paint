@@ -1,8 +1,8 @@
 package backend.editing.commands;
 
 import backend.editing.CommandInterface;
-import backend.songs.StaffNoteLine;
-import backend.songs.StaffSequence;
+import backend.songs.NoteLine;
+import backend.songs.Song;
 import backend.songs.TimeSignature;
 import gui.Staff;
 import gui.StateMachine;
@@ -28,7 +28,7 @@ public class MultiplyTempoCommand implements CommandInterface {
     
     @Override
     public void redo() {
-        StaffSequence seq = theStaff.getSequence();
+        Song seq = theStaff.getSequence();
         expand(seq, theMultiplyAmount);
         seq.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
@@ -38,7 +38,7 @@ public class MultiplyTempoCommand implements CommandInterface {
 
     @Override
     public void undo() {
-        StaffSequence seq = theStaff.getSequence();
+        Song seq = theStaff.getSequence();
         retract(seq, theMultiplyAmount);
         seq.setTempo(previousTempo);
         StateMachine.setTempo(previousTempo);
@@ -46,7 +46,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         theStaff.setTimeSignature(previousTimesig);
     }
     
-    public void expand(StaffSequence seq, int n) {
+    public void expand(Song seq, int n) {
         if (n < 2)
             return;
         
@@ -56,7 +56,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         }
     }
     
-    public void retract(StaffSequence seq, int n) throws IllegalArgumentException {
+    public void retract(Song seq, int n) throws IllegalArgumentException {
         if (n < 2)
             return;
         
@@ -66,9 +66,9 @@ public class MultiplyTempoCommand implements CommandInterface {
         }
     }
     
-    private void moveLine(StaffSequence seq, int from, int to) {
-        StaffNoteLine lineFrom = seq.getLine(from);
-        StaffNoteLine lineTo = seq.getLine(to);
+    private void moveLine(Song seq, int from, int to) {
+        NoteLine lineFrom = seq.getLine(from);
+        NoteLine lineTo = seq.getLine(to);
         lineTo.getNotes().clear();
         lineTo.getNotes().addAll(lineFrom.getNotes());
         lineFrom.getNotes().clear();

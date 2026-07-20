@@ -5,7 +5,7 @@ import java.util.Map;
 import backend.editing.ModifySongManager;
 import backend.editing.commands.AddVolumeCommand;
 import backend.editing.commands.RemoveVolumeCommand;
-import backend.songs.StaffNoteLine;
+import backend.songs.NoteLine;
 import gui.Values;
 import gui.loaders.ImageIndex;
 import javafx.event.Event;
@@ -34,7 +34,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     private ImageView theVolBar;
 
     /** The StaffNoteLine that this event handler is associated with. */
-    private StaffNoteLine theLine;
+    private NoteLine theLine;
     
     /** The text representing the volume bar the mouse is currently hovering over. */
     private static Text volText;
@@ -189,14 +189,14 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
      * @param s The StaffNoteLine that this handler is controlling
      * at the moment.
      */
-    public void setStaffNoteLine(StaffNoteLine s) {
+    public void setStaffNoteLine(NoteLine s) {
         theLine = s;
     }
 
     /**
      * @return The StaffNoteLine that this handler is currently controlling.
      */
-    public StaffNoteLine getStaffNoteLine() {
+    public NoteLine getStaffNoteLine() {
         return theLine;
     }
 

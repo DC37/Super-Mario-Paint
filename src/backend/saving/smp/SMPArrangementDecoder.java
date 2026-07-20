@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import backend.saving.Decoder;
-import backend.songs.StaffArrangement;
-import backend.songs.StaffSequence;
+import backend.songs.Arrangement;
+import backend.songs.Song;
 
-public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
+public class SMPArrangementDecoder implements Decoder<Arrangement> {
 
     /**
      * Loads an arrangement from the file specified.
@@ -21,7 +21,7 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
      *            The file to load from.
      * @return A loaded arrangement file. The format is StaffArrangement.
      */
-    public StaffArrangement decode(File inputFile) throws IOException, ParseException {
+    public Arrangement decode(File inputFile) throws IOException, ParseException {
     	String basePath = inputFile.getParent() + File.separatorChar;
         FileInputStream fIn = new FileInputStream(inputFile);
         Scanner sc = new Scanner(fIn);
@@ -30,7 +30,7 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
             read.add(sc.nextLine());
         }
         sc.close();
-        StaffArrangement loaded = parseArrText(basePath, read);
+        Arrangement loaded = parseArrText(basePath, read);
         
         String inputFileName = inputFile.getName();
         loaded.setTitle(inputFileName.substring(0, inputFileName.lastIndexOf('.')));
@@ -47,10 +47,10 @@ public class SMPArrangementDecoder implements Decoder<StaffArrangement> {
      *            <code>ArrayList</code> of filenames and paths.
      * @return Hopefully, a decoded <code>StaffArrangement</code>
      */
-    private static StaffArrangement parseArrText(String basePath, List<String> read) throws ParseException, IOException {
-        StaffArrangement loaded = new StaffArrangement();
+    private static Arrangement parseArrText(String basePath, List<String> read) throws ParseException, IOException {
+        Arrangement loaded = new Arrangement();
         File f = null;
-		List<StaffSequence> seqs = new ArrayList<>();
+		List<Song> seqs = new ArrayList<>();
         for (String s : read) {
             f = new File(basePath + s + ".txt");
 			seqs.add(Decoder.SMP_SEQUENCE_DECODER.decode(f));

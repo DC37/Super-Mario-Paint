@@ -17,9 +17,9 @@ import backend.editing.ModifySongManager;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
-import backend.songs.StaffArrangement;
-import backend.songs.StaffNote;
-import backend.songs.StaffSequence;
+import backend.songs.Arrangement;
+import backend.songs.Note;
+import backend.songs.Song;
 import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
 import gui.clipboard.StaffClipboard;
@@ -319,7 +319,7 @@ public class SMPFXController {
             if (songIndex == -1)
             	return;
             
-            List<StaffSequence> seq = staff.getArrangement().getSequences();
+            List<Song> seq = staff.getArrangement().getSequences();
             Window owner = arrangementList.getScene().getWindow();
             
             if (!confirmOperation(owner, "Load anyway?", true, false))
@@ -693,7 +693,7 @@ public class SMPFXController {
     
     public void newSong(Window owner) {
         if (confirmOperation(owner, "Create a new song anyway?", true, false)) {
-            staff.setSequence(new StaffSequence());
+            staff.setSequence(new Song());
             staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             staff.resetLocation();
             StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
@@ -704,7 +704,7 @@ public class SMPFXController {
     
     public void newArrangement(Window owner) {
         if (confirmOperation(owner, "Create a new arrangement anyway?", false, true)) {
-            staff.setArrangement(new StaffArrangement());
+            staff.setArrangement(new Arrangement());
             getNameTextField().clear();
             arrangementList.getItems().clear();
             StateMachine.setArrModified(false);
@@ -747,7 +747,7 @@ public class SMPFXController {
             if (outputFile == null)
                 return;
             FileOutputStream fOut = new FileOutputStream(outputFile);
-            StaffArrangement out = staff.getArrangement();
+            Arrangement out = staff.getArrangement();
             
             for (int i = 0; i < out.getSequences().size(); i++) {
             	String name = arrangementList.getItems().get(i);
@@ -763,9 +763,9 @@ public class SMPFXController {
         }
     }
 
-    public void saveArrTxt(FileOutputStream fOut, StaffArrangement out) {
+    public void saveArrTxt(FileOutputStream fOut, Arrangement out) {
         PrintStream pr = new PrintStream(fOut);
-        for (StaffSequence seq : out.getSequences()) {
+        for (Song seq : out.getSequences()) {
             pr.println(seq.getTitle());
         }
         pr.close();
@@ -789,7 +789,7 @@ public class SMPFXController {
             if (outputFile == null)
                 return;
             FileOutputStream fOut = new FileOutputStream(outputFile);
-            StaffSequence out = staff.getSequence();
+            Song out = staff.getSequence();
             out.setTempo(StateMachine.getTempo());
             saveSongTxt(fOut, out);
             fOut.close();
@@ -800,7 +800,7 @@ public class SMPFXController {
         }
     }
 
-    public void saveSongTxt(FileOutputStream fOut, StaffSequence seq)
+    public void saveSongTxt(FileOutputStream fOut, Song seq)
             throws IOException {
         PrintStream pr = new PrintStream(fOut);
         TimeSignature t = seq.getTimeSignature();
@@ -815,7 +815,7 @@ public class SMPFXController {
                 continue;
             }
             pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
-            List<StaffNote> line = seq.getLine(i).getNotes();
+            List<Note> line = seq.getLine(i).getNotes();
             for (int j = 0; j < line.size(); j++) {
                 pr.print(noteToString(line.get(j)) + ",");
             }
@@ -828,9 +828,9 @@ public class SMPFXController {
         Task<Void> soundsetsTaskSave = new Task<Void>() {
             @Override
             public Void call() {
-                List<StaffSequence> seqs = staff.getArrangement().getSequences();
+                List<Song> seqs = staff.getArrangement().getSequences();
                 String currSeqName = getNameTextField().getText();
-                for (StaffSequence seq : seqs) 
+                for (Song seq : seqs) 
                     if (seq.getTitle().equals(currSeqName)) {
                         soundPlayer.storeInCache();
                         break;
@@ -842,7 +842,7 @@ public class SMPFXController {
         new Thread(soundsetsTaskSave).start();
     }
     
-    private static String noteToString(StaffNote note) {
+    private static String noteToString(Note note) {
         String instName = note.getInstrument().toString();
         String noteName = Values.STAFF_NOTE_NAMES[note.getVerticalPosition()];
         String noteAcc = accidentalToString(note.getAccidental());
@@ -920,7 +920,7 @@ public class SMPFXController {
 
     private void loadSong(File inputFile, Window owner) {
         try {
-            StaffSequence loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
+            Song loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
             staff.populateStaff(loaded);
             getModifySongManager().reset();
             getNameTextField().setText(loaded.getTitle());
@@ -957,11 +957,11 @@ public class SMPFXController {
         	if (inputFile == null)
         		return;
         	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-        	StaffArrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
+        	Arrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
         	staff.populateStaffArrangement(loaded, owner);
             
             arrangementList.getItems().clear();
-            for (StaffSequence seq : loaded.getSequences()) {
+            for (Song seq : loaded.getSequences()) {
             	arrangementList.getItems().add(seq.getTitle());
             }
             
@@ -971,7 +971,7 @@ public class SMPFXController {
         } catch (ParseException | StreamCorruptedException
         		| NullPointerException e) {
         	try {
-        		StaffArrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
+        		Arrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
         		StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
         		staff.populateStaffArrangement(loaded, owner);
         		StateMachine.setSongModified(false);

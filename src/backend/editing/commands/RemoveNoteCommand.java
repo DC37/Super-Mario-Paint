@@ -1,15 +1,15 @@
 package backend.editing.commands;
 
 import backend.editing.CommandInterface;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
+import backend.songs.Note;
+import backend.songs.NoteLine;
 
 public class RemoveNoteCommand implements CommandInterface {
 
-    private StaffNoteLine theLine;
-    private StaffNote theNote;
+    private NoteLine theLine;
+    private Note theNote;
     
-    public RemoveNoteCommand(StaffNoteLine line, StaffNote note) {
+    public RemoveNoteCommand(NoteLine line, Note note) {
         theLine = line;
         theNote = note;
     }

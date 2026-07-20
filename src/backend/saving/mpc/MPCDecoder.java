@@ -18,9 +18,9 @@ import java.util.List;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
-import backend.songs.StaffNote;
-import backend.songs.StaffNoteLine;
-import backend.songs.StaffSequence;
+import backend.songs.Note;
+import backend.songs.NoteLine;
+import backend.songs.Song;
 import gui.InstrumentIndex;
 import gui.Values;
 
@@ -30,7 +30,7 @@ import gui.Values;
  * @author RehdBlob
  * @since 2012.09.01
  */
-public class MPCDecoder implements Decoder<StaffSequence> {
+public class MPCDecoder implements Decoder<Song> {
 
     /**
      * Opens a file and decodes the Mario Paint Composer song data from it,
@@ -47,7 +47,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      * @throws IOException
      *             IF some error occurs during the decoding process.
      */
-    public StaffSequence decode(File f) throws ParseException, IOException {
+    public Song decode(File f) throws ParseException, IOException {
         StringBuilder sb = new StringBuilder();
         
         try (
@@ -60,7 +60,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
             }
         }
         
-        StaffSequence seq = decode(sb.toString());
+        Song seq = decode(sb.toString());
         
         String fname = f.getName();
         seq.setTitle(fname.substring(0, fname.lastIndexOf('.')));
@@ -78,7 +78,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      * @throws ParseException
      *             If someone tries to feed this method an invalid text file.
      */
-    private StaffSequence decode(String in) throws ParseException {
+    private Song decode(String in) throws ParseException {
         if (in == null || in.isEmpty() || in.indexOf('*') == -1) {
             throw new ParseException("Invalid Text File.", 0);
         }
@@ -102,12 +102,12 @@ public class MPCDecoder implements Decoder<StaffSequence> {
      * @return A new <code>StaffSequence</code> that is to be loaded by the main
      *         program.
      */
-    private StaffSequence populateSequence(String timeSig,
+    private Song populateSequence(String timeSig,
             List<String> songData, String tempo) {
-        List<StaffNoteLine> lines = new ArrayList<>(Values.LINES_PER_MPC_SONG);
+        List<NoteLine> lines = new ArrayList<>(Values.LINES_PER_MPC_SONG);
 
         for (String s : songData) {
-            StaffNoteLine sl = new StaffNoteLine();
+            NoteLine sl = new NoteLine();
             if (s.length() <= 1) {
                 lines.addLast(sl);
                 continue;
@@ -122,7 +122,7 @@ public class MPCDecoder implements Decoder<StaffSequence> {
                 Accidental acc = Accidental.NATURAL;
                 if (note.length() == 3) {
                     if (note.substring(1).equals("17")) {
-                        StaffNote mn = new StaffNote(in, pos, acc, MuteModifier.MUTE_THIS_INST);
+                        Note mn = new Note(in, pos, acc, MuteModifier.MUTE_THIS_INST);
                         sl.getNotes().add(mn);
                         continue;
                     } else {
@@ -133,14 +133,14 @@ public class MPCDecoder implements Decoder<StaffSequence> {
                     pos = parsePosition(note.charAt(1));
                     acc = Accidental.NATURAL;
                 }
-                StaffNote sn = new StaffNote(in, pos, acc);
+                Note sn = new Note(in, pos, acc);
                 sl.getNotes().add(sn);
             }
             sl.setVolume(vol);
             lines.addLast(sl);
         }
 
-        StaffSequence song = new StaffSequence(lines);
+        Song song = new Song(lines);
         song.setTempo(Double.parseDouble(tempo));
         return song;
     }
