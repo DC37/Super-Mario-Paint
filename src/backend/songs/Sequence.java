@@ -9,11 +9,11 @@ public abstract class Sequence {
 	/** The title of this sequence; cannot be {@code null}. */
 	private String title;
 	
-	public Sequence() {
+	protected Sequence() {
 		this("");
 	}
 	
-	public Sequence(String title) {
+	protected Sequence(String title) {
 		this.title = emptyIfNull(title);
 	}
 	
