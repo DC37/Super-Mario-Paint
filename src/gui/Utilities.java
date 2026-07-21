@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
@@ -18,6 +21,8 @@ import javafx.stage.Window;
  * @since 2012.08.20
  */
 public class Utilities {
+    
+    private static final Logger log = LoggerFactory.getLogger(Utilities.class);
     
     private Utilities() {}
     
@@ -99,6 +104,20 @@ public class Utilities {
     	for (ToggleButton tb: toggles) {
     		tb.setToggleGroup(group);
     	}
+    }
+    
+    /**
+     * Try waiting for approximately `millis` milliseconds.
+     * 
+     * @param millis
+     *            The number of milliseconds to try to wait for.
+     */
+    public static void tryWait(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            log.error("An exception occurred!", e);
+        }
     }
 
 }
