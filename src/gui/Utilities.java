@@ -104,17 +104,29 @@ public class Utilities {
     }
     
     /**
+     * Try waiting for approximately `millis`.`nanos` milliseconds.
+     * 
+     * @param millis
+     *            The number of milliseconds to try to wait for.
+     * @param nanos
+     *            The number of additional nanoseconds to try to wait for.
+     */
+    public static void tryWait(long millis, int nanos) {
+    	try {
+            Thread.sleep(millis, nanos);
+        } catch (InterruptedException e) {
+            log.error("An exception occurred!", e);
+        }
+    }
+    
+    /**
      * Try waiting for approximately `millis` milliseconds.
      * 
      * @param millis
      *            The number of milliseconds to try to wait for.
      */
     public static void tryWait(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            log.error("An exception occurred!", e);
-        }
+    	tryWait(millis, 0);
     }
-
+    
 }
