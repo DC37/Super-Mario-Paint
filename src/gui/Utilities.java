@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A somewhat useful utilities class for images and such. Not so much use right
@@ -20,9 +18,8 @@ import javafx.stage.Window;
  * @author RehdBlob
  * @since 2012.08.20
  */
+@Slf4j
 public class Utilities {
-    
-    private static final Logger log = LoggerFactory.getLogger(Utilities.class);
     
     private Utilities() {}
     

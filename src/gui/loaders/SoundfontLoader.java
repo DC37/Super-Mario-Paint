@@ -10,9 +10,6 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
 import gui.InstrumentIndex;
@@ -21,6 +18,7 @@ import gui.Utilities;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Loads the soundfonts that will be used to play sounds.
@@ -30,10 +28,9 @@ import gui.resources.SMPResourceUtil;
  * @author j574y923
  * @since 2012.08.14
  */
+@Slf4j
 public class SoundfontLoader extends LoaderBase<SoundPlayer> {
     
-    private static final Logger log = LoggerFactory.getLogger(SoundfontLoader.class);
-
     @Override
     public SoundPlayer call() {
         SoundPlayer soundPlayer = null;

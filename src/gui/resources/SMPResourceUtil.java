@@ -9,8 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>This class contains static methods to access <i>Super Mario Paint</i>
@@ -27,10 +26,9 @@ import org.slf4j.LoggerFactory;
  * 
  * <p>See the fields in {@link FetchStrategy} for specification details.
  */
+@Slf4j
 public class SMPResourceUtil {
     
-    private static final Logger log = LoggerFactory.getLogger(SMPResourceUtil.class);
-
     private SMPResourceUtil() {}
     
     /**

@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backend.saving.Decoder;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
@@ -21,11 +18,11 @@ import backend.songs.TimeSignature;
 import gui.InstrumentIndex;
 import gui.Utilities;
 import gui.Values;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SMPDecoder implements Decoder<Song> {
     
-    private static final Logger log = LoggerFactory.getLogger(SMPDecoder.class);
-
     /**
      * Loads a song from the file specified.
      *

@@ -13,9 +13,6 @@ import java.util.Map;
 
 import javax.sound.midi.MidiChannel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backend.editing.ModifySongManager;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
@@ -66,6 +63,7 @@ import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.NumberStringConverter;
+import lombok.extern.slf4j.Slf4j;
 import utilities.MathUtils;
 
 /**
@@ -75,10 +73,9 @@ import utilities.MathUtils;
  * @author RehdBlob
  * @since 2012.08.16
  */
+@Slf4j
 public class SMPFXController {
     
-    private static final Logger log = LoggerFactory.getLogger(SMPFXController.class);
-
     /**
      * The image that shows the selected instrument.
      */

@@ -10,9 +10,6 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backend.sound.SoundPlayer;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
@@ -34,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Super Mario Paint <br>
@@ -62,10 +60,9 @@ import javafx.stage.Stage;
  * @since 2012.08.16
  * @version 1.4.4
  */
+@Slf4j
 public class SuperMarioPaint extends Application  {
     
-    private static final Logger log = LoggerFactory.getLogger(SuperMarioPaint.class);
-
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
      */

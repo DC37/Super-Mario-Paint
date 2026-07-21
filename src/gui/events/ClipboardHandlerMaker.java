@@ -1,20 +1,17 @@
 package gui.events;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backend.songs.NoteLine;
 import gui.StateMachine;
 import gui.Values;
 import gui.clipboard.StaffRubberBandEventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHandler> {
     
-    private static final Logger log = LoggerFactory.getLogger(ClipboardHandlerMaker.class);
-
-	protected ClipboardHandlerMaker(StaffRubberBandEventHandler eventHandler) {
+    protected ClipboardHandlerMaker(StaffRubberBandEventHandler eventHandler) {
 		super(eventHandler);
 	}
 	

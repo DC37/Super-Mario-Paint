@@ -2,9 +2,6 @@ package gui;
 
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import gui.resources.SMPResourceUtil;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
@@ -13,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Splash screen for Super Mario Paint. For some reason, Mac OSX doesn't like it
@@ -26,10 +24,9 @@ import javafx.stage.Stage;
  * @author seymour
  * @since 2014.12.30
  */
+@Slf4j
 public class SplashScreen extends Preloader {
     
-    private static final Logger log = LoggerFactory.getLogger(SplashScreen.class);
-
     /** Basic progress bar. */
     ProgressBar bar;
     
