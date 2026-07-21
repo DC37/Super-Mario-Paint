@@ -5,10 +5,8 @@ import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import gui.Values;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A command manager responsible for recording commands, undoing, and redoing
@@ -20,10 +18,9 @@ import gui.Values;
  * @author J
  *
  */
+@Slf4j
 public class CommandManager {
     
-    private static final Logger log = LoggerFactory.getLogger(CommandManager.class);
-
     protected Deque<List<CommandInterface>> undoStack;
     protected Deque<List<CommandInterface>> redoStack;
 

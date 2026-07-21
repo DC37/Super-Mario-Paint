@@ -10,6 +10,7 @@ module smp {
     requires org.slf4j;
     requires ch.qos.logback.core;
     requires ch.qos.logback.classic;
+    requires lombok;
     
     exports gui;
     exports gui.clipboard;
