@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 
-import gui.Settings;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
@@ -48,14 +47,12 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
             Image temp2 = new Image(url.toString());
             spritesFX.put(i, temp2);
             
-            if ((Settings.debug & 0b01) != 0)
-                System.out.println(
-                        "Loaded Image: " + i.toString() + extension);
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 log.error("Exception:", e);
             }
+            log.debug("Loaded image: {}{}", i.toString(), extension);
         }
         
         setLoadStatus(1);

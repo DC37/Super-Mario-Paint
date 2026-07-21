@@ -323,22 +323,9 @@ public class SuperMarioPaint extends Application  {
      * Launches the application.
      *
      * @param args
-     *            Sets debug options on or off.
+     *            Program arguments.
      */
     public static void main(String[] args) {
-        if (args.length > 0 && (args[0].equals("--debug") || args[0].equals("--d"))) {
-            if (args.length > 1) {
-                try {
-                    Integer i = Integer.parseInt(args[1]);
-                    Settings.setDebug(i >= 0 ? i : -1);
-                } catch (NumberFormatException e) {
-                    Settings.setDebug(0);
-                }
-            } else {
-                Settings.setDebug(Integer.MIN_VALUE);
-            }   
-        }
-        
         setHeaderIcon();
             
         try {
