@@ -10,6 +10,9 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Soundbank;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
 import gui.InstrumentIndex;
@@ -27,6 +30,8 @@ import gui.resources.SMPResourceUtil;
  * @since 2012.08.14
  */
 public class SoundfontLoader extends LoaderBase<SoundPlayer> {
+    
+    private static final Logger log = LoggerFactory.getLogger(SoundfontLoader.class);
 
     @Override
     public SoundPlayer call() {
@@ -68,13 +73,13 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
                 chan[ordinal].programChange(ordinal);
                 chan[ordinal].controlChange(Values.REVERB, 0);
                 ordinal++;
-                System.out.println("Initialized Instrument: "
-                        + i.toString());
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                
+                log.info("Initialized Instrument: {}", i);
             }
             if ((Settings.debug & 0b01) != 0)
                 System.out.println(
@@ -85,7 +90,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
             
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException | NullPointerException e) {
             // Can't recover.
-            e.printStackTrace();
+            log.error("An exception occurred!", e);
             System.exit(0);
         }
         

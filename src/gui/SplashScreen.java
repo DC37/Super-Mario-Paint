@@ -2,6 +2,9 @@ package gui;
 
 import java.net.URL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import gui.resources.SMPResourceUtil;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
@@ -24,6 +27,8 @@ import javafx.stage.Stage;
  * @since 2014.12.30
  */
 public class SplashScreen extends Preloader {
+    
+    private static final Logger log = LoggerFactory.getLogger(SplashScreen.class);
 
     /** Basic progress bar. */
     ProgressBar bar;
@@ -116,7 +121,7 @@ public class SplashScreen extends Preloader {
     @Override
     public boolean handleErrorNotification(ErrorNotification en) {
         Dialog.showDialog("Super Mario Paint has encountered the following error:\n" + en.getCause().getMessage());
-        en.getCause().printStackTrace();
+        log.error("Exception cause:", en.getCause());
         return false;
     }
 }

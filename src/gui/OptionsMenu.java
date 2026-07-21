@@ -8,6 +8,9 @@ import java.nio.file.StandardCopyOption;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backend.editing.CommandInterface;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
@@ -32,6 +35,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class OptionsMenu {
+    
+    private static final Logger log = LoggerFactory.getLogger(OptionsMenu.class);
 
     /** This is the text that labels the slider. */
     private String txt = "Default Note Volume";
@@ -179,7 +184,7 @@ public class OptionsMenu {
         try {
             listOfFiles = getSoundfontsList();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error while trying to get soundfonts list!", e);
             listOfFiles = new String[0];
         }
         for (String filename : listOfFiles) {
@@ -297,7 +302,7 @@ public class OptionsMenu {
         try {
             staff.getSoundPlayer().loadFromAppData(selectedSoundfont);
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-            e.printStackTrace();
+            log.error("Error while changing soundfont!", e);
         }
         
         String newSoundset = (String) bindBox.getUserData();
@@ -366,7 +371,7 @@ public class OptionsMenu {
         try {
             Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error while trying to add soundfont!", e);
             return false;
         }
         return true;

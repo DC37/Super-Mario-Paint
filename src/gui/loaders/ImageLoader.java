@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import gui.Settings;
 import gui.Values;
 import gui.resources.FetchStrategy;
@@ -18,6 +21,8 @@ import javafx.scene.image.Image;
  * @since 2012.08.14
  */
 public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
+    
+    private static final Logger log = LoggerFactory.getLogger(ImageLoader.class);
 
     /**
      * The extension of the image files that we are to be loading. An advantage of
@@ -52,7 +57,7 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Exception:", e);
             }
         }
         

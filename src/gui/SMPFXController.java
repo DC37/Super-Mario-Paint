@@ -13,6 +13,9 @@ import java.util.Map;
 
 import javax.sound.midi.MidiChannel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backend.editing.ModifySongManager;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
@@ -73,6 +76,8 @@ import utilities.MathUtils;
  * @since 2012.08.16
  */
 public class SMPFXController {
+    
+    private static final Logger log = LoggerFactory.getLogger(SMPFXController.class);
 
     /**
      * The image that shows the selected instrument.
@@ -767,7 +772,7 @@ public class SMPFXController {
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             StateMachine.setArrModified(false);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error in saveArrangement:", e);
         }
     }
 
@@ -804,7 +809,7 @@ public class SMPFXController {
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
             StateMachine.setSongModified(false);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error in saveSong:", e);
         }
     }
 
@@ -937,15 +942,15 @@ public class SMPFXController {
             
         } catch (FileNotFoundException e) {
             Dialog.showDialog("Error!", "File " + inputFile + "not found!", owner);
-            e.printStackTrace();
+            log.error("File not found error in loadSong:", e);
             
         } catch (IOException e) {
             Dialog.showDialog("Error!", "An IO exception occurred while reading file " + inputFile + "!", owner);
-            e.printStackTrace();
+            log.error("IO error in loadSong:", e);
             
         } catch (Exception e) {
             Dialog.showDialog("Error!", "An error occurred while reading file " + inputFile + "!", owner);
-            e.printStackTrace();
+            log.error("Error in loadSong:", e);
         }
     }
 
@@ -985,12 +990,12 @@ public class SMPFXController {
         		StateMachine.setSongModified(false);
         		
         	} catch (Exception e1) {
-        		e1.printStackTrace();
+        	    log.error("Error in loadArrangement:", e1);
         		Dialog.showDialog(null, "Not a valid arrangement file.", owner);
         	}
         	
         } catch (IOException e) {
-        	e.printStackTrace();
+            log.error("Error during loadArrangement:", e);
         }
     }
     

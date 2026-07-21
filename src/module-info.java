@@ -7,6 +7,10 @@ module smp {
     requires transitive javafx.fxml;
     requires transitive javafx.graphics;
     
+    requires org.slf4j;
+    requires ch.qos.logback.core;
+    requires ch.qos.logback.classic;
+    
     exports gui;
     exports gui.clipboard;
     exports gui.components;
