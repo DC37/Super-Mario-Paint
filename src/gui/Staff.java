@@ -504,11 +504,7 @@ public class Staff {
                         }
                     }
                     
-                    try {
-                        Thread.sleep(delayMillis, delayNanos);
-                    } catch (InterruptedException e) {
-                        // Do nothing
-                    }
+                    Utilities.tryWait(delayMillis, delayNanos);
                 }
                 
                 StateMachine.setPlaybackActive(false);
@@ -611,11 +607,7 @@ public class Staff {
                             songPlaying = false;
                         }
                         
-                        try {
-                            Thread.sleep(delayMillis, delayNanos);
-                        } catch (InterruptedException e) {
-                            // Do nothing
-                        }
+                        Utilities.tryWait(delayMillis, delayNanos);
                     }
                     
                     if (!arrPlaying)
