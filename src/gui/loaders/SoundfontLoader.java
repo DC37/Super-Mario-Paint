@@ -54,12 +54,10 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
             theSynthesizer.loadAllInstruments(bank);
             setLoadStatus(0.3);
 
-            if ((Settings.debug & 0b01) != 0){
-                System.out.println("Loaded Instruments: ");
-                for (Instrument j : theSynthesizer.getLoadedInstruments())
-                    System.out.println(j.getName());
-            }
-
+            log.debug("Loaded instruments:");
+            for (Instrument j: theSynthesizer.getLoadedInstruments())
+            	log.debug("{}", j.getName());
+            
             int ordinal = 0;
             chan = theSynthesizer.getChannels();
             for (SMPInstrument i : SMPInstrument.values()) {
@@ -73,9 +71,9 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
                 
                 Utilities.tryWait(1);
             }
-            if ((Settings.debug & 0b01) != 0)
-                System.out.println(
-                        "Synth Latency: " + theSynthesizer.getLatency());
+            
+            log.debug("Synth Latency: {}", theSynthesizer.getLatency());
+            
             setLoadStatus(1);
             
             soundPlayer = new SoundPlayer(theSynthesizer, bank, chan);
