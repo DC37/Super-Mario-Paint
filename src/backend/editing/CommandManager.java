@@ -5,6 +5,9 @@ import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import gui.Values;
 
 /**
@@ -18,6 +21,8 @@ import gui.Values;
  *
  */
 public class CommandManager {
+    
+    private static final Logger log = LoggerFactory.getLogger(CommandManager.class);
 
     protected Deque<List<CommandInterface>> undoStack;
     protected Deque<List<CommandInterface>> redoStack;
@@ -44,7 +49,7 @@ public class CommandManager {
         }
 
         redoStack.push(commands);
-        System.out.println("...undo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
+        log.info("...undo...{}/{}", undoStack.size(), (undoStack.size() + redoStack.size()));
     }
 
     public void redo() {
@@ -57,7 +62,7 @@ public class CommandManager {
         }
 
         undoStack.push(commands);
-        System.out.println("...redo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
+        log.info("...redo...{}/{}", undoStack.size(), (undoStack.size() + redoStack.size()));
     }
 
     /**

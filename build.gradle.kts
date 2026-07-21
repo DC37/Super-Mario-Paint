@@ -28,6 +28,9 @@ repositories {
 }
 
 dependencies {
+	implementation("org.slf4j:slf4j-api:2.0.+")
+	implementation("ch.qos.logback:logback-core:1.5.+")
+	implementation("ch.qos.logback:logback-classic:1.5.+")
 }
 
 sourceSets {
