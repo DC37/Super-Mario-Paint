@@ -18,7 +18,7 @@
 	-fx-padding: 0px;
 }
 
-.button.smp-arranger-button,
+.smp-arranger .button.smp-button,
 .button.smp-tempo-box-button,
 .button.smp-scroll-arrow-button {
 	-fx-padding: 0px;
