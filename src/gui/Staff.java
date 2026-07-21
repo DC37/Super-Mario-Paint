@@ -7,9 +7,6 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backend.songs.Arrangement;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
@@ -21,6 +18,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 import utilities.MathUtils;
 
 /**
@@ -34,10 +32,9 @@ import utilities.MathUtils;
  * @author seymour
  * @since 2012.08.13
  */
+@Slf4j
 public class Staff {
     
-    private static final Logger log = LoggerFactory.getLogger(Staff.class);
-
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
 

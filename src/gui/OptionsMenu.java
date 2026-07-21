@@ -8,9 +8,6 @@ import java.nio.file.StandardCopyOption;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import backend.editing.CommandInterface;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
@@ -33,11 +30,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class OptionsMenu {
     
-    private static final Logger log = LoggerFactory.getLogger(OptionsMenu.class);
-
     /** This is the text that labels the slider. */
     private String txt = "Default Note Volume";
 

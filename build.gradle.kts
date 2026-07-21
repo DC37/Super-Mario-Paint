@@ -10,6 +10,7 @@ plugins {
     id("application")
     id("org.openjfx.javafxplugin") version "0.1.0" apply false
     id("org.beryx.jlink") version "4.0.0"
+    id("io.freefair.lombok") version "9.5.0"
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

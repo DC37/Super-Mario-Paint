@@ -4,14 +4,12 @@ import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import gui.Settings;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
 import javafx.scene.image.Image;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A class that loads all the necessary images for the program to function when
@@ -20,10 +18,9 @@ import javafx.scene.image.Image;
  * @author RehdBlob
  * @since 2012.08.14
  */
+@Slf4j
 public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
     
-    private static final Logger log = LoggerFactory.getLogger(ImageLoader.class);
-
     /**
      * The extension of the image files that we are to be loading. An advantage of
      * .png files is that they can have transparent pixels.
