@@ -1013,10 +1013,6 @@ public class SMPFXController {
     public Slider getScrollbar() {
         return scrollbar;
     }
-    
-    public Parent getArrangerView() {
-        return arrangerView;
-    }
 
     /** @return The text area that contains the song name. */
     public TextField getNameTextField() {
