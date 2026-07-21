@@ -12,6 +12,8 @@ module smp {
     requires ch.qos.logback.classic;
     requires lombok;
     
+    requires org.apache.commons.lang3;
+    
     exports gui;
     exports gui.clipboard;
     exports gui.components;
