@@ -124,11 +124,7 @@ public class SuperMarioPaint extends Application  {
         imgLd.start();
         
         do {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utilities.tryWait(1);
             
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();

@@ -17,6 +17,7 @@ import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
 import gui.SMPInstrument;
 import gui.Settings;
+import gui.Utilities;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceType;
@@ -50,11 +51,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
             theSynthesizer.ensureCapacity(45);
             for (Instrument i : theSynthesizer.getLoadedInstruments()) {
                 theSynthesizer.unloadInstrument(i);
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utilities.tryWait(1);
             }
             setLoadStatus(0.2);
             theSynthesizer.loadAllInstruments(bank);
@@ -74,13 +71,10 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
                 chan[ordinal].programChange(ordinal);
                 chan[ordinal].controlChange(Values.REVERB, 0);
                 ordinal++;
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 
                 log.info("Initialized Instrument: {}", i);
+                
+                Utilities.tryWait(1);
             }
             if ((Settings.debug & 0b01) != 0)
                 System.out.println(
