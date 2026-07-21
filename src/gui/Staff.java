@@ -7,6 +7,9 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiUnavailableException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backend.songs.Arrangement;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
@@ -32,6 +35,8 @@ import utilities.MathUtils;
  * @since 2012.08.13
  */
 public class Staff {
+    
+    private static final Logger log = LoggerFactory.getLogger(Staff.class);
 
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
@@ -310,7 +315,7 @@ public class Staff {
         try {
             getSoundPlayer().loadFromAppData(getSequence().getSoundset());
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-            e.printStackTrace();
+            log.error("Error in populateStaff:", e);
         }
     }
 
@@ -336,7 +341,7 @@ public class Staff {
                     try {
                         getSoundPlayer().loadToCache(s.getSoundset());
                     } catch (InvalidMidiDataException | IOException e) {
-                        e.printStackTrace();
+                        log.error("Error while trying to load soundset!", e);
                     }
                 }
                 return null;
@@ -347,7 +352,7 @@ public class Staff {
         try {
             getSoundPlayer().loadFromAppData(first.getSoundset());
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-            e.printStackTrace();
+            log.error("Error in populateStaffArrangement:", e);
         }
     }
     
@@ -639,7 +644,7 @@ public class Staff {
                     try {
                         soundPlayer.loadFromAppData(soundset);
                     } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-                        e.printStackTrace();
+                        log.error("Error while setting the soundset!", e);
                     }
                     soundPlayer.storeInCache();
                 }

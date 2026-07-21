@@ -1,5 +1,8 @@
 package gui.events;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import backend.songs.NoteLine;
 import gui.StateMachine;
 import gui.Values;
@@ -8,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 
 public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHandler> {
+    
+    private static final Logger log = LoggerFactory.getLogger(ClipboardHandlerMaker.class);
 
 	protected ClipboardHandlerMaker(StaffRubberBandEventHandler eventHandler) {
 		super(eventHandler);
@@ -93,17 +98,17 @@ public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHand
    }
    
    private void copy() {
-	   System.out.println("COPY");
+       log.info("COPY");
        source.getTheStaffClipboard().getAPI().copy();
        for (NoteLine line : source.getTheStaffClipboard().getCopiedData().values()) {
            if (!line.getNotes().isEmpty())
-               System.out.println(line);
+               log.info("{}", line);
        }
    }
    
    private void paste() {
 	   int currentLine = getLine(source.getMouseX()) + StateMachine.getMeasureLineNum();
-       System.out.println("PASTE @ " + currentLine);
+	   log.info("PASTE @ {}", currentLine);
        source.getTheStaffClipboard().getAPI().paste(currentLine);
    }
    
