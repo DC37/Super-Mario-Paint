@@ -354,7 +354,6 @@ public class SMPFXController {
             return imagesHolder.get(ImageIndex.valueOf(i.toString()));
         }, StateMachine.selectedInstrumentProperty()));
 
-        arrangementList.setEditable(true);
         arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
         
         // Set up clipboard.
