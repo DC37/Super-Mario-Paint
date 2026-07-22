@@ -43,6 +43,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -160,7 +161,7 @@ public class SMPFXController {
     private Parent arrangerView;
     
     @FXML
-    private ListView<String> arrangementList;
+    private ListView<Song> arrangementList;
 
     /** This is the text that displays the current tempo of the song. */
     @FXML
@@ -328,6 +329,16 @@ public class SMPFXController {
             staff.populateStaff(seq.get(songIndex));
             seq.set(songIndex, staff.getSequence());
         });
+        
+        arrangementList.setCellFactory(list -> new ListCell<>() {
+        	@Override
+        	public void updateItem(Song song, boolean empty) {
+        		super.updateItem(song, empty);
+        		
+        		setGraphic(null);
+        		setText(empty || song == null ? null : song.getTitle());
+        	}
+        });
 
         // Set up options menu
         optionsMenu = new OptionsMenu(this, staff);
@@ -429,7 +440,7 @@ public class SMPFXController {
             arrangementList.getSelectionModel().select(idx);
             if (idx != -1)
                 Platform.runLater(() -> arrangementList.scrollTo(idx));
-            StateMachine.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem());
+            StateMachine.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem().getTitle());
         });
         
         // Cleanup after a song or arrangement had finished running
@@ -637,7 +648,7 @@ public class SMPFXController {
     @FXML
     public void addSongtoArrangement(ActionEvent e) {
         if (staff.addSongToArrangement()) {
-            arrangementList.getItems().add(staff.getSequence().getTitle());
+            arrangementList.getItems().add(staff.getSequence());
             arrangementList.scrollTo(arrangementList.getItems().size() - 1);
         }
     }
@@ -662,12 +673,12 @@ public class SMPFXController {
     }
     
     private void moveSongInArrangement(ActionEvent e, int diff) {
-        ObservableList<String> l = arrangementList.getItems();
+        ObservableList<Song> l = arrangementList.getItems();
         int i = arrangementList.getSelectionModel().getSelectedIndex();
         int moveTo = MathUtils.clamp(i + diff, 0, l.size());
         
         if (staff.moveSongInArrangement(i, moveTo)) {
-            String s = l.remove(i);
+            Song s = l.remove(i);
             l.add(moveTo, s);
             arrangementList.getSelectionModel().select(moveTo);
             arrangementList.scrollTo(moveTo);
@@ -750,7 +761,7 @@ public class SMPFXController {
             Arrangement out = staff.getArrangement();
             
             for (int i = 0; i < out.getSequences().size(); i++) {
-            	String name = arrangementList.getItems().get(i);
+            	String name = arrangementList.getItems().get(i).getTitle();
             	out.getSequences().get(i).setTitle(name);
             }
             
@@ -962,7 +973,7 @@ public class SMPFXController {
             
             arrangementList.getItems().clear();
             for (Song seq : loaded.getSequences()) {
-            	arrangementList.getItems().add(seq.getTitle());
+            	arrangementList.getItems().add(seq);
             }
             
         	StateMachine.setSongModified(false);
