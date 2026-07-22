@@ -13,6 +13,8 @@ import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
 import gui.components.staff.StaffDisplayManager;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.stage.Window;
@@ -44,10 +46,10 @@ public class Staff {
     private StaffDisplayManager displayManager;
 
     /** This is the current sequence that we have displaying on the staff. */
-    private Song theSequence = new Song();
+    private ObjectProperty<Song> theSequence = new SimpleObjectProperty<>(new Song());
 
     /** This is the current arrangement that we currently have active. */
-    private Arrangement theArrangement = new Arrangement();
+    private ObjectProperty<Arrangement> theArrangement = new SimpleObjectProperty<>(new Arrangement());
 
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     private final SoundPlayer soundPlayer;
@@ -107,8 +109,8 @@ public class Staff {
      * Jump to the next colored line
      */
     public void jumpToNext() {
-        int barLength = theSequence.getTimeSignature().barLength();
-        int[] barDivs = theSequence.getTimeSignature().divs();
+        int barLength = getSequence().getTimeSignature().barLength();
+        int[] barDivs = getSequence().getTimeSignature().divs();
         int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
         
         int subLength = 0;
@@ -124,8 +126,8 @@ public class Staff {
     }
     
     public void jumpToPrevious() {
-        int barLength = theSequence.getTimeSignature().barLength();
-        int[] barDivs = theSequence.getTimeSignature().divs();
+        int barLength = getSequence().getTimeSignature().barLength();
+        int[] barDivs = getSequence().getTimeSignature().divs();
         int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
         
         if (relativeLoc == 0)
@@ -185,7 +187,7 @@ public class Staff {
     }
     
     public synchronized void setTimeSignature(TimeSignature t) {
-        theSequence.setTimeSignature(t);
+        getSequence().setTimeSignature(t);
         StateMachine.setTimeSignature(t);
     }
 
@@ -199,10 +201,10 @@ public class Staff {
         
         int[] barDivs = StateMachine.getTimeSignature().divs();
         
-        displayManager.updateNoteDisplay(theSequence, idx);
-        displayManager.updateVolumeBars(theSequence, idx);
+        displayManager.updateNoteDisplay(getSequence(), idx);
+        displayManager.updateVolumeBars(getSequence(), idx);
         displayManager.updateStaffMeasureLines(idx, barDivs);
-        displayManager.updateStaffLedgerLines(theSequence, idx);
+        displayManager.updateStaffLedgerLines(getSequence(), idx);
     }
 
     /** Begins animation of the Staff. (Starts a song) */
@@ -253,7 +255,7 @@ public class Staff {
 
     /** @return The current song that we are displaying. */
     public synchronized Song getSequence() {
-        return theSequence;
+        return theSequence.getValue();
     }
 
     /**
@@ -263,14 +265,14 @@ public class Staff {
      *            This is the other sequence.
      */
     public synchronized void setSequence(Song other) {
-        theSequence = other;
+        theSequence.setValue(other);
     }
 
     /**
      * @return The list of songs in the currently-active arrangement.
      */
     public Arrangement getArrangement() {
-        return theArrangement;
+        return theArrangement.getValue();
     }
 
     /**
@@ -278,7 +280,7 @@ public class Staff {
      *            The arrangement file to set.
      */
     public void setArrangement(Arrangement tA) {
-        theArrangement = tA;
+        theArrangement.setValue(tA);
     }
 
     /**
@@ -350,19 +352,19 @@ public class Staff {
     }
     
     public boolean addSongToArrangement() {
-        if (theSequence.getTitle() == null)
+        if (getSequence().getTitle() == null)
         	return false;
         
         StateMachine.setArrModified(true);
-        theArrangement.getSequences().add(new Song(theSequence));
+        getArrangement().getSequences().add(new Song(getSequence()));
         soundPlayer.storeInCache();
         return true;
     }
     
     public boolean deleteSongFromArrangement(int i) {
-        if (i >= 0 && i < theArrangement.getSequences().size()) {
+        if (i >= 0 && i < getArrangement().getSequences().size()) {
             StateMachine.setArrModified(true);
-            theArrangement.getSequences().remove(i);
+            getArrangement().getSequences().remove(i);
             return true;
             
         } else {
@@ -371,10 +373,10 @@ public class Staff {
     }
     
     public boolean moveSongInArrangement(int from, int to) {
-        if (from >= 0 && from < theArrangement.getSequences().size()) {
+        if (from >= 0 && from < getArrangement().getSequences().size()) {
             StateMachine.setArrModified(true);
-            Song ss = theArrangement.getSequences().remove(from);
-            theArrangement.getSequences().add(to, ss);
+            Song ss = getArrangement().getSequences().remove(from);
+            getArrangement().getSequences().add(to, ss);
             return true;
             
         } else {
@@ -468,9 +470,9 @@ public class Staff {
             protected Staff call() throws Exception {
                 int counter = StateMachine.getMeasureLineNum();
                 boolean zero = false;
-                int endLine = theSequence.getLength();
+                int endLine = getSequence().getLength();
 
-                computeDelay(theSequence.getTempo());
+                computeDelay(getSequence().getTempo());
                 
                 StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
 
@@ -557,7 +559,7 @@ public class Staff {
              */
             private void playSoundLine(int index) {
                 int currentLine = StateMachine.getMeasureLineNum();
-                soundPlayer.playSoundLine(theSequence.getLine(currentLine + index));
+                soundPlayer.playSoundLine(getSequence().getLine(currentLine + index));
             }
 
         }
@@ -570,22 +572,22 @@ public class Staff {
             @Override
             protected Staff call() throws Exception {
                 StateMachine.setArrangementSongIndex(0);
-                List<Song> seq = theArrangement.getSequences();
+                List<Song> seq = getArrangement().getSequences();
                 int endLine;
 
                 queue = 0;
                 
                 for (int i = 0; i < seq.size(); i++) {
-                    setSequence(theArrangement.getSequences().get(i));
-                    setSoundset(theSequence.getSoundset());
-                    computeDelay(theSequence.getTempo());
-                    setTimeSignature(theSequence.getTimeSignature());
-                    endLine = theSequence.getLength();
+                    setSequence(getArrangement().getSequences().get(i));
+                    setSoundset(getSequence().getSoundset());
+                    computeDelay(getSequence().getTempo());
+                    setTimeSignature(getSequence().getTimeSignature());
+                    endLine = getSequence().getLength();
                     
                     StateMachine.setArrangementSongIndex(i);
                     StateMachine.setNoteExtensions(
-                            theSequence.getNoteExtensions());
-                    StateMachine.setTempo(theSequence.getTempo());
+                            getSequence().getNoteExtensions());
+                    StateMachine.setTempo(getSequence().getTempo());
                     StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
                     
                     index = 0;
