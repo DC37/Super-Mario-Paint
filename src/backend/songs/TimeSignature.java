@@ -19,6 +19,7 @@ public class TimeSignature {
     /** We only use the bottom number to display time sigs as "4/4" or "12/8"
      * for example, but it's not used for anything.
      * Kept as a legacy feature, as some song files may use this notation.
+     * @deprecated
      */
     @Deprecated
     private final int bottom;
