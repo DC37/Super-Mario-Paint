@@ -11,6 +11,7 @@ import javax.sound.midi.MidiUnavailableException;
 import backend.editing.CommandInterface;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
+import gui.components.FileChooserManager;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -26,7 +27,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -131,12 +131,8 @@ public class OptionsMenu {
     	if (!newValue.equals("Add Soundfont..."))
     		return;
     	
-        FileChooser f = new FileChooser();
-        f.setInitialDirectory(new File(System.getProperty("user.dir")));
-        f.setTitle("Add Soundfont...");
-        f.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("soundfonts (*.sf2)", "*.sf2"));
-        final File sf = f.showOpenDialog(null);
-        
+    	final File sf = FileChooserManager.openSoundfont(null);
+    	
         // Any programmed selection triggers the ChangedListener again
         // Wrap in a runLater to avoid a huge stacktrace
         Platform.runLater(() -> {

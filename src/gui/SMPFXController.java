@@ -24,6 +24,7 @@ import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
+import gui.components.FileChooserManager;
 import gui.components.SongNameController;
 import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPHoldButton;
@@ -57,8 +58,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.util.converter.BooleanStringConverter;
@@ -746,14 +745,7 @@ public class SMPFXController {
         }
         
         try {
-            FileChooser f = new FileChooser();
-            f.setInitialDirectory(StateMachine.getCurrentDirectory());
-            f.setInitialFileName(chosenSongName + ".txt");
-            f.getExtensionFilters().addAll(
-                    new ExtensionFilter("Text file", "*.txt"),
-                    new ExtensionFilter("All files", "*"));
-            File outputFile = null;
-            outputFile = f.showSaveDialog(owner);
+        	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
             if (outputFile == null)
                 return;
             FileOutputStream fOut = new FileOutputStream(outputFile);
@@ -789,13 +781,7 @@ public class SMPFXController {
         }
         
         try {
-            FileChooser f = new FileChooser();
-            f.setInitialDirectory(StateMachine.getCurrentDirectory());
-            f.setInitialFileName(chosenSongName + ".txt");
-            f.getExtensionFilters().addAll(
-                    new ExtensionFilter("Text file", "*.txt"),
-                    new ExtensionFilter("All files", "*"));
-            File outputFile = f.showSaveDialog(owner);
+        	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
             if (outputFile == null)
                 return;
             FileOutputStream fOut = new FileOutputStream(outputFile);
@@ -912,12 +898,7 @@ public class SMPFXController {
             return;
     	
         try {
-        	FileChooser f = new FileChooser();
-        	f.getExtensionFilters().addAll(
-        			new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"),
-        			new FileChooser.ExtensionFilter("Any files (*.*)", "*.*"));
-        	f.setInitialDirectory(StateMachine.getCurrentDirectory());
-        	File inputFile = f.showOpenDialog(null);
+        	File inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
         	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
@@ -958,12 +939,7 @@ public class SMPFXController {
         File inputFile = null;
 
         try {
-        	FileChooser f = new FileChooser();
-        	f.getExtensionFilters().addAll(
-        			new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"),
-        			new FileChooser.ExtensionFilter("Any files (*.*)", "*.*"));
-        	f.setInitialDirectory(StateMachine.getCurrentDirectory());
-        	inputFile = f.showOpenDialog(null);
+        	inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
         	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
