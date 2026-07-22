@@ -353,8 +353,6 @@ public class SMPFXController {
             InstrumentIndex i = StateMachine.getSelectedInstrument();
             return imagesHolder.get(ImageIndex.valueOf(i.toString()));
         }, StateMachine.selectedInstrumentProperty()));
-
-        arrangementList.setStyle("-fx-font: 8pt \"Arial\";");
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();

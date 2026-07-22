@@ -23,3 +23,7 @@
 .button.smp-scroll-arrow-button {
 	-fx-padding: 0px;
 }
+
+.smp-arranger .list-view {
+	-fx-font: 8pt "Arial";
+}
