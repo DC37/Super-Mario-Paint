@@ -80,7 +80,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     	return theStaffClipboard;
     }
     
-    /**
+    /*
      * ----------------------------------------------------------------------
      * Initialization functions for layout. Needed to calculate line and
      * position.
