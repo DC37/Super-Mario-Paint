@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import gui.Values;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A command manager responsible for recording commands, undoing, and redoing
@@ -17,8 +18,9 @@ import gui.Values;
  * @author J
  *
  */
+@Slf4j
 public class CommandManager {
-
+    
     protected Deque<List<CommandInterface>> undoStack;
     protected Deque<List<CommandInterface>> redoStack;
 
@@ -44,7 +46,7 @@ public class CommandManager {
         }
 
         redoStack.push(commands);
-        System.out.println("...undo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
+        log.info("...undo...{}/{}", undoStack.size(), (undoStack.size() + redoStack.size()));
     }
 
     public void redo() {
@@ -57,7 +59,7 @@ public class CommandManager {
         }
 
         undoStack.push(commands);
-        System.out.println("...redo..." + undoStack.size() + "/" + (undoStack.size() + redoStack.size()));
+        log.info("...redo...{}/{}", undoStack.size(), (undoStack.size() + redoStack.size()));
     }
 
     /**

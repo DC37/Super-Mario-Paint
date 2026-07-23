@@ -231,6 +231,7 @@ public class StaffRubberBand extends Rectangle {
     }
     
     /**
+     * @deprecated
      * Second call this to redraw the rubber band to a new size. Alters only x 
      * dimension.
      *
@@ -255,6 +256,7 @@ public class StaffRubberBand extends Rectangle {
     }
     
     /**
+     * @deprecated
      * Second call this to redraw the rubber band to a new size. Alters only y 
      * dimension.
      *

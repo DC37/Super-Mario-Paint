@@ -80,7 +80,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     	return theStaffClipboard;
     }
     
-    /**
+    /*
      * ----------------------------------------------------------------------
      * Initialization functions for layout. Needed to calculate line and
      * position.
@@ -143,7 +143,10 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
         rubberBand.setVolumeYMaxCoord(y);
     }
     
-    //calculate this with line width
+    /**
+     * calculate this with line width
+     * @deprecated
+     */
     @Deprecated
     public void initializeVolumeSpacing(double x) {
         // Intentionally left blank.

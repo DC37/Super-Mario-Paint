@@ -192,6 +192,7 @@ public class MultiSynthesizer implements Synthesizer {
     /**
      * @return The Receiver of the first Synthesizer in the list of
      * Synthesizers. Not useful in the context of multiple Synthesizers.
+     * @deprecated
      */
     @Deprecated
     @Override
@@ -216,6 +217,7 @@ public class MultiSynthesizer implements Synthesizer {
      * Synthesizers. Not useful in the context of multiple Synthesizers.
      * @throws MidiUnavailableException If the MultiSynthesizer is not open
      * or if something goes wrong in getting the Trasnmitter.
+     * @deprecated
      */
     @Deprecated
     @Override

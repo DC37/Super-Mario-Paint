@@ -10,6 +10,7 @@ plugins {
     id("application")
     id("org.openjfx.javafxplugin") version "0.1.0" apply false
     id("org.beryx.jlink") version "4.0.0"
+    id("io.freefair.lombok") version "9.5.0"
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -28,6 +29,10 @@ repositories {
 }
 
 dependencies {
+	implementation("org.slf4j:slf4j-api:2.0.+")
+	implementation("ch.qos.logback:logback-core:1.5.+")
+	implementation("ch.qos.logback:logback-classic:1.5.+")
+	implementation("org.apache.commons:commons-lang3:3.+")
 }
 
 sourceSets {

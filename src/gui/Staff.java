@@ -18,6 +18,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 import utilities.MathUtils;
 
 /**
@@ -31,8 +32,9 @@ import utilities.MathUtils;
  * @author seymour
  * @since 2012.08.13
  */
+@Slf4j
 public class Staff {
-
+    
     /** Whether we are playing a song. */
     private boolean songPlaying = false;
 
@@ -310,7 +312,7 @@ public class Staff {
         try {
             getSoundPlayer().loadFromAppData(getSequence().getSoundset());
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-            e.printStackTrace();
+            log.error("Error in populateStaff:", e);
         }
     }
 
@@ -336,7 +338,7 @@ public class Staff {
                     try {
                         getSoundPlayer().loadToCache(s.getSoundset());
                     } catch (InvalidMidiDataException | IOException e) {
-                        e.printStackTrace();
+                        log.error("Error while trying to load soundset!", e);
                     }
                 }
                 return null;
@@ -347,7 +349,7 @@ public class Staff {
         try {
             getSoundPlayer().loadFromAppData(first.getSoundset());
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-            e.printStackTrace();
+            log.error("Error in populateStaffArrangement:", e);
         }
     }
     
@@ -502,11 +504,7 @@ public class Staff {
                         }
                     }
                     
-                    try {
-                        Thread.sleep(delayMillis, delayNanos);
-                    } catch (InterruptedException e) {
-                        // Do nothing
-                    }
+                    Utilities.tryWait(delayMillis, delayNanos);
                 }
                 
                 StateMachine.setPlaybackActive(false);
@@ -609,11 +607,7 @@ public class Staff {
                             songPlaying = false;
                         }
                         
-                        try {
-                            Thread.sleep(delayMillis, delayNanos);
-                        } catch (InterruptedException e) {
-                            // Do nothing
-                        }
+                        Utilities.tryWait(delayMillis, delayNanos);
                     }
                     
                     if (!arrPlaying)
@@ -639,7 +633,7 @@ public class Staff {
                     try {
                         soundPlayer.loadFromAppData(soundset);
                     } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-                        e.printStackTrace();
+                        log.error("Error while setting the soundset!", e);
                     }
                     soundPlayer.storeInCache();
                 }

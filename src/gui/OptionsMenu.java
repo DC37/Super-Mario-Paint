@@ -11,6 +11,7 @@ import javax.sound.midi.MidiUnavailableException;
 import backend.editing.CommandInterface;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
+import gui.components.FileChooserManager;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -26,13 +27,14 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class OptionsMenu {
-
+    
     /** This is the text that labels the slider. */
     private String txt = "Default Note Volume";
 
@@ -129,12 +131,8 @@ public class OptionsMenu {
     	if (!newValue.equals("Add Soundfont..."))
     		return;
     	
-        FileChooser f = new FileChooser();
-        f.setInitialDirectory(new File(System.getProperty("user.dir")));
-        f.setTitle("Add Soundfont...");
-        f.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("soundfonts (*.sf2)", "*.sf2"));
-        final File sf = f.showOpenDialog(null);
-        
+    	final File sf = FileChooserManager.openSoundfont(null);
+    	
         // Any programmed selection triggers the ChangedListener again
         // Wrap in a runLater to avoid a huge stacktrace
         Platform.runLater(() -> {
@@ -179,7 +177,7 @@ public class OptionsMenu {
         try {
             listOfFiles = getSoundfontsList();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error while trying to get soundfonts list!", e);
             listOfFiles = new String[0];
         }
         for (String filename : listOfFiles) {
@@ -297,7 +295,7 @@ public class OptionsMenu {
         try {
             staff.getSoundPlayer().loadFromAppData(selectedSoundfont);
         } catch (InvalidMidiDataException | IOException | MidiUnavailableException e) {
-            e.printStackTrace();
+            log.error("Error while changing soundfont!", e);
         }
         
         String newSoundset = (String) bindBox.getUserData();
@@ -366,7 +364,7 @@ public class OptionsMenu {
         try {
             Files.copy(sf.toPath(), destSf.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error while trying to add soundfont!", e);
             return false;
         }
         return true;

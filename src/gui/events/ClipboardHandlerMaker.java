@@ -6,10 +6,12 @@ import gui.Values;
 import gui.clipboard.StaffRubberBandEventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHandler> {
-
-	protected ClipboardHandlerMaker(StaffRubberBandEventHandler eventHandler) {
+    
+    protected ClipboardHandlerMaker(StaffRubberBandEventHandler eventHandler) {
 		super(eventHandler);
 	}
 	
@@ -93,17 +95,17 @@ public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHand
    }
    
    private void copy() {
-	   System.out.println("COPY");
+       log.info("COPY");
        source.getTheStaffClipboard().getAPI().copy();
        for (NoteLine line : source.getTheStaffClipboard().getCopiedData().values()) {
            if (!line.getNotes().isEmpty())
-               System.out.println(line);
+               log.info("{}", line);
        }
    }
    
    private void paste() {
 	   int currentLine = getLine(source.getMouseX()) + StateMachine.getMeasureLineNum();
-       System.out.println("PASTE @ " + currentLine);
+	   log.info("PASTE @ {}", currentLine);
        source.getTheStaffClipboard().getAPI().paste(currentLine);
    }
    

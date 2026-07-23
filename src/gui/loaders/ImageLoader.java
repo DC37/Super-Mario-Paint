@@ -4,11 +4,12 @@ import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 
-import gui.Settings;
+import gui.Utilities;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
 import javafx.scene.image.Image;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A class that loads all the necessary images for the program to function when
@@ -17,8 +18,9 @@ import javafx.scene.image.Image;
  * @author RehdBlob
  * @since 2012.08.14
  */
+@Slf4j
 public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
-
+    
     /**
      * The extension of the image files that we are to be loading. An advantage of
      * .png files is that they can have transparent pixels.
@@ -46,14 +48,9 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
             Image temp2 = new Image(url.toString());
             spritesFX.put(i, temp2);
             
-            if ((Settings.debug & 0b01) != 0)
-                System.out.println(
-                        "Loaded Image: " + i.toString() + extension);
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            log.debug("Loaded image: {}{}", i.toString(), extension);
+            
+            Utilities.tryWait(1);
         }
         
         setLoadStatus(1);

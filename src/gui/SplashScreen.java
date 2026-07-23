@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Splash screen for Super Mario Paint. For some reason, Mac OSX doesn't like it
@@ -23,8 +24,9 @@ import javafx.stage.Stage;
  * @author seymour
  * @since 2014.12.30
  */
+@Slf4j
 public class SplashScreen extends Preloader {
-
+    
     /** Basic progress bar. */
     ProgressBar bar;
     
@@ -116,7 +118,7 @@ public class SplashScreen extends Preloader {
     @Override
     public boolean handleErrorNotification(ErrorNotification en) {
         Dialog.showDialog("Super Mario Paint has encountered the following error:\n" + en.getCause().getMessage());
-        en.getCause().printStackTrace();
+        log.error("Exception cause:", en.getCause());
         return false;
     }
 }

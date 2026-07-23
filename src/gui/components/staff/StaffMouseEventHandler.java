@@ -13,7 +13,6 @@ import backend.songs.MuteModifier;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.InstrumentIndex;
-import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
@@ -21,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
@@ -38,6 +38,7 @@ import javafx.scene.input.MouseEvent;
  * @author j574y923
  * @since 2013.07.27 (2017.06.22)
  */
+@Slf4j
 public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
     /** The line number of this note, on the screen. */
@@ -187,8 +188,10 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (vel <= 0 || vel >= 128)
             vel = Values.DEFAULT_VELOCITY;
 
-        if ((Settings.debug & 0b10000) != 0)
-            System.out.println("Index: " + theInd + "\nPosition: "+ position + "\nAcc: " + acc + "\nVel: " + vel);
+        log.debug("Index: {}", theInd);
+        log.debug("Position: {}", position);
+        log.debug("Acc: {}", acc);
+        log.debug("Vel: {}", vel);
         
         @SuppressWarnings("java:S3358")
         MuteModifier mod = muteA ? MuteModifier.MUTE_THIS_INST : mute ? MuteModifier.MUTE_THIS_PITCH : MuteModifier.REGULAR;

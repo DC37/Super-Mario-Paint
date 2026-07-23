@@ -18,9 +18,11 @@ import backend.songs.TimeSignature;
 import gui.InstrumentIndex;
 import gui.Utilities;
 import gui.Values;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SMPDecoder implements Decoder<Song> {
-
+    
     /**
      * Loads a song from the file specified.
      *
@@ -99,7 +101,7 @@ public class SMPDecoder implements Decoder<Song> {
                             try {
                                 st.getNotes().add(parseNote(spl));
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                log.error("Exception:", e);
                             }
                         }
                     }

@@ -27,20 +27,6 @@ public class Settings {
     public static final boolean SAVE_OBJECTS = false;
 
     /**
-     * Classic debug on/off. 32-bit field
-     * 2^06 - Print placements of notes
-     * 2^05 - Print arranger actions (add, delete, move) 
-     * 2^04 - Print staff value every time it changes.
-     * 2^03 -
-     * 2^02 -
-     * 2^01 - Print sound output of instrument line
-     * 2^00 - Print all output of loaders
-     * 0    - No further verbose debug output
-     * Set to -1 (or anything < 0) for max debug.
-     */
-    public static int debug = 0;
-
-    /**
      * If Advanced mode is unlocked, this is set to <b>true</b>
      */
     private static boolean advModeUnlocked = false;
@@ -113,14 +99,6 @@ public class Settings {
      * Visibility of measure numbers on the staff
      */
     public static boolean numsVisible = true;
-
-    /**
-     * Sets whether we want to see debug mode or not.
-     * @param b Debug level.
-     */
-    public static void setVerbose(int b) {
-        debug = b;
-    }
 
     /** Used to save settings via object serialization. */
     private static class SettingsSaver implements Serializable {
@@ -196,15 +174,6 @@ public class Settings {
             ADV_MODE         = loaded.set[10];
         }
     }
-
-    /**
-     * Sets the debug switch on or off.
-     * @param b Debug level.
-     */
-    public static void setDebug(int b) {
-        debug = b;
-    }
-
 
 }
 

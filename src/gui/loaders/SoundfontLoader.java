@@ -13,10 +13,11 @@ import javax.sound.midi.Soundbank;
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
 import gui.InstrumentIndex;
-import gui.Settings;
+import gui.Utilities;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Loads the soundfonts that will be used to play sounds.
@@ -26,8 +27,9 @@ import gui.resources.SMPResourceUtil;
  * @author j574y923
  * @since 2012.08.14
  */
+@Slf4j
 public class SoundfontLoader extends LoaderBase<SoundPlayer> {
-
+    
     @Override
     public SoundPlayer call() {
         SoundPlayer soundPlayer = null;
@@ -44,22 +46,16 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
             theSynthesizer.ensureCapacity(45);
             for (Instrument i : theSynthesizer.getLoadedInstruments()) {
                 theSynthesizer.unloadInstrument(i);
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utilities.tryWait(1);
             }
             setLoadStatus(0.2);
             theSynthesizer.loadAllInstruments(bank);
             setLoadStatus(0.3);
 
-            if ((Settings.debug & 0b01) != 0){
-                System.out.println("Loaded Instruments: ");
-                for (Instrument j : theSynthesizer.getLoadedInstruments())
-                    System.out.println(j.getName());
-            }
-
+            log.debug("Loaded instruments:");
+            for (Instrument j: theSynthesizer.getLoadedInstruments())
+            	log.debug("{}", j.getName());
+            
             int ordinal = 0;
             chan = theSynthesizer.getChannels();
             for (InstrumentIndex i : InstrumentIndex.values()) {
@@ -68,24 +64,21 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
                 chan[ordinal].programChange(ordinal);
                 chan[ordinal].controlChange(Values.REVERB, 0);
                 ordinal++;
-                System.out.println("Initialized Instrument: "
-                        + i.toString());
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                
+                log.info("Initialized Instrument: {}", i);
+                
+                Utilities.tryWait(1);
             }
-            if ((Settings.debug & 0b01) != 0)
-                System.out.println(
-                        "Synth Latency: " + theSynthesizer.getLatency());
+            
+            log.debug("Synth Latency: {}", theSynthesizer.getLatency());
+            
             setLoadStatus(1);
             
             soundPlayer = new SoundPlayer(theSynthesizer, bank, chan);
             
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException | NullPointerException e) {
             // Can't recover.
-            e.printStackTrace();
+            log.error("An exception occurred!", e);
             System.exit(0);
         }
         

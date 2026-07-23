@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * A somewhat useful utilities class for images and such. Not so much use right
@@ -17,6 +18,7 @@ import javafx.stage.Window;
  * @author RehdBlob
  * @since 2012.08.20
  */
+@Slf4j
 public class Utilities {
     
     private Utilities() {}
@@ -100,5 +102,31 @@ public class Utilities {
     		tb.setToggleGroup(group);
     	}
     }
-
+    
+    /**
+     * Try waiting for approximately `millis`.`nanos` milliseconds.
+     * 
+     * @param millis
+     *            The number of milliseconds to try to wait for.
+     * @param nanos
+     *            The number of additional nanoseconds to try to wait for.
+     */
+    public static void tryWait(long millis, int nanos) {
+    	try {
+            Thread.sleep(millis, nanos);
+        } catch (InterruptedException e) {
+            log.error("An exception occurred!", e);
+        }
+    }
+    
+    /**
+     * Try waiting for approximately `millis` milliseconds.
+     * 
+     * @param millis
+     *            The number of milliseconds to try to wait for.
+     */
+    public static void tryWait(long millis) {
+    	tryWait(millis, 0);
+    }
+    
 }

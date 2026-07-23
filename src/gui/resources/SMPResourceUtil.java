@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * <p>This class contains static methods to access <i>Super Mario Paint</i>
  * resources. Resources are files that are essential to the normal functioning
@@ -24,8 +26,9 @@ import java.util.Properties;
  * 
  * <p>See the fields in {@link FetchStrategy} for specification details.
  */
+@Slf4j
 public class SMPResourceUtil {
-
+    
     private SMPResourceUtil() {}
     
     /**
@@ -59,7 +62,7 @@ public class SMPResourceUtil {
                     return ret;
                 }
                 
-                System.err.println("Overwriting file " + copyFile + " anyway...");
+                log.warn("Overwriting file {} anyway...", copyFile);
             }
             
             return copyInto(name, copyFile);
@@ -157,8 +160,8 @@ public class SMPResourceUtil {
             return (ret != null) ? ret : get(name);
             
         } catch (IOException e) {
-            System.err.println("An error occured while copying resource " + name + " into file :" + dest);
-            e.printStackTrace();
+            log.error("An error occurred while copying resource {} into file: {}", name, dest);
+            log.error("Exception:", e);
         }
         
         return url;
@@ -174,8 +177,8 @@ public class SMPResourceUtil {
             return f.toURI().toURL();
             
         } catch (MalformedURLException e) {
-            System.err.println("Could not get URL from file: " + f);
-            e.printStackTrace();
+            log.error("Could not get URL from file: {}", f);
+            log.error("Exception:", e);
             return null;
         }
     }

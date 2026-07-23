@@ -31,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Super Mario Paint <br>
@@ -59,8 +60,9 @@ import javafx.stage.Stage;
  * @since 2012.08.16
  * @version 1.4.4
  */
+@Slf4j
 public class SuperMarioPaint extends Application  {
-
+    
     /**
      * Loads all the sprites that will be used in Super Mario Paint.
      */
@@ -118,11 +120,7 @@ public class SuperMarioPaint extends Application  {
         imgLd.start();
         
         do {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utilities.tryWait(1);
             
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();
@@ -184,7 +182,7 @@ public class SuperMarioPaint extends Application  {
             primaryStage.show();
             
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error in doStart:", e);
             System.exit(1);
         }
     }
@@ -325,29 +323,16 @@ public class SuperMarioPaint extends Application  {
      * Launches the application.
      *
      * @param args
-     *            Sets debug options on or off.
+     *            Program arguments.
      */
     public static void main(String[] args) {
-        if (args.length > 0 && (args[0].equals("--debug") || args[0].equals("--d"))) {
-            if (args.length > 1) {
-                try {
-                    Integer i = Integer.parseInt(args[1]);
-                    Settings.setDebug(i >= 0 ? i : -1);
-                } catch (NumberFormatException e) {
-                    Settings.setDebug(0);
-                }
-            } else {
-                Settings.setDebug(Integer.MIN_VALUE);
-            }   
-        }
-        
         setHeaderIcon();
             
         try {
             System.setProperty("javafx.preloader", SplashScreen.class.getName());
             Application.launch(SuperMarioPaint.class, args);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("General error:", e);
         }
     }
     

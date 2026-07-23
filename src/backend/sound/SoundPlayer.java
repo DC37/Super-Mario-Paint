@@ -19,6 +19,7 @@ import backend.songs.NoteLine;
 import gui.InstrumentIndex;
 import gui.StateMachine;
 import gui.Values;
+import utilities.DataTypeUtils;
 
 /**
  *
@@ -174,8 +175,7 @@ public class SoundPlayer {
      */
     public void storeInCache() {
         String currentSoundset = StateMachine.getCurrentSoundset();
-        if(!bankCache.containsKey(currentSoundset))
-            bankCache.put(currentSoundset, bank);
+        bankCache.computeIfAbsent(currentSoundset, cs -> bank);
     }
     
     /**
@@ -193,10 +193,8 @@ public class SoundPlayer {
         if(soundset.isEmpty())
             return;
         File f = new File(Values.SOUNDFONTS_FOLDER + soundset);
-        if(!bankCache.containsKey(soundset)) {
-            Soundbank sb = MidiSystem.getSoundbank(f);
-            bankCache.put(soundset, sb);
-        }
+        bankCache.computeIfAbsent(soundset,
+        		ss -> DataTypeUtils.rethrowAsUnchecked(MidiSystem::getSoundbank, f));
     }
 
     /**
