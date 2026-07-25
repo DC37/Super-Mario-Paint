@@ -26,14 +26,13 @@ import java.util.Properties;
  */
 public class SMPResourceUtil {
 
-    private SMPResourceUtil() {}
-    
     /**
      * <p>Access a SMP resource. The strategy parameter determines where the
      * resource is taken from and whether a copy of it is made on the user
      * file system. If this method successfully returns a URL it is
      * guaranteed to be non-null.
      * @param name Name of the resource matching its file's name
+     * @param type The type of resource being retrieved
      * @param strategy How to retrieve the resource
      * @param copyDir Where to look for/copy the resource (irrelevant if the
      *   strategy is {@code INTERNAL})
@@ -41,13 +40,13 @@ public class SMPResourceUtil {
      * @throws NullPointerException if the resource couldn't be retrieved for
      *   some reason
      */
-    public static URL get(String name, FetchStrategy strategy, String copyDir) {
+    public static URL get(String name, SMPResourceType type, FetchStrategy strategy, String copyDir) {
         switch (strategy) {
         case INTERNAL:
-            return get(name);
+            return get(name, type);
             
         case COPY_INTERNAL:
-            return get(name, copyDir);
+            return get(name, type, copyDir);
             
         case FROM_COPY:
         default:
@@ -62,23 +61,25 @@ public class SMPResourceUtil {
                 System.err.println("Overwriting file " + copyFile + " anyway...");
             }
             
-            return copyInto(name, copyFile);
+            return copyInto(name, type, copyFile);
         }
     }
     
     /**
      * <p>Access a SMP resource from its internal file (packaged with the
-     * distribution). This is the same as {@link #get(String, FetchStrategy, String)}
+     * distribution). This is the same as {@link #get(String, SMPResourceType, FetchStrategy, String)}
      * with {@code INTERNAL} as second argument.
      * @param name Name of the resource matching its file's name
+     * @param type The type of resource being retrieved
      * @return A non-null URL pointing to the resource
      * @throws NullPointerException if the resource couldn't be retrieved for
      *   some reason
      */
-    public static URL get(String name) {
-        URL url = SMPResourceUtil.class.getClassLoader().getResource(name);
+    public static URL get(String name, SMPResourceType type) {
+        String fullName = String.format("%s/%s", type.getPrefix(), name);
+        URL url = SMPResourceUtil.class.getClassLoader().getResource(fullName);
         if (url == null)
-            throw new NullPointerException("Cannot load resource: " + name);
+            throw new NullPointerException("Cannot load resource: " + name + " of type " + type);
         
         return url;
     }
@@ -87,14 +88,16 @@ public class SMPResourceUtil {
      * <p>Access a SMP resource from its internal file (packaged with the
      * distribution), and retrieves its {@link InputStream}.
      * @param name Name of the resource matching its file's name
+     * @param type The type of resource being retrieved
      * @return A non-null {@link InputStream} pointing to the resource
      * @throws NullPointerException if the resource couldn't be retrieved for
      *   some reason
      */
-    public static InputStream getStream(String name) {
-        InputStream inStream = SMPResourceUtil.class.getClassLoader().getResourceAsStream(name);
+    public static InputStream getStream(String name, SMPResourceType type) {
+        String fullName = String.format("%s/%s", type.getPrefix(), name);
+        InputStream inStream = SMPResourceUtil.class.getClassLoader().getResourceAsStream(fullName);
         if (inStream == null)
-            throw new NullPointerException("Cannot load resource: " + name);
+            throw new NullPointerException("Cannot load resource: " + name + " of type " + type);
         
         return inStream;
     }
@@ -103,15 +106,16 @@ public class SMPResourceUtil {
      * <p>Get a resource properties string stored as an internal file
      * (packaged with the distribution).
      * @param propsFileName Name of the properties file to get information from
+     * @param propsType The type of resource the properties file belongs to
      * @param propName Name of the property to retrieve
      * @return The property value, or <b>null</b> if the resource cannot be read
      */
-    public static String getProperty(String propsFileName, String propName) {
+    public static String getProperty(String propsFileName, SMPResourceType propsType, String propName) {
         String valueRead;
         
         try {
             Properties props = new Properties();
-            props.load(SMPResourceUtil.getStream(propsFileName));
+            props.load(SMPResourceUtil.getStream(propsFileName, propsType));
             valueRead = props.getProperty(propName);
         } catch (IOException | NullPointerException e) {
             valueRead = null;
@@ -122,19 +126,19 @@ public class SMPResourceUtil {
     
     /**
      * <p>Access a SMP resource and make a copy of it on the user file system.
-     * This is the same as {@link #get(String, FetchStrategy, String)} with
+     * This is the same as {@link #get(String, SMPResourceType, FetchStrategy, String)} with
      * {@code COPY_INTERNAL} as second argument. If the copy fails the result
      * is returned anyway.
      * @param name Name of the resource matching its file's name
-     * @param strategy How to retrieve the resource
+     * @param type The type of resource being retrieved
      * @param copyDir Where to copy the resource
      * @return A non-null URL pointing to the resource
      * @throws NullPointerException if the resource couldn't be retrieved for
      *   some reason
      */
-    public static URL get(String name, String copyDir) {
+    public static URL get(String name, SMPResourceType type, String copyDir) {
         File dest = new File(copyDir, name);
-        return copyInto(name, dest);
+        return copyInto(name, type, dest);
     }
     
     /**
@@ -142,19 +146,20 @@ public class SMPResourceUtil {
      * contents of the file are replaced. If writing the file fails a URL is
      * returned anyway.
      * @param name Name of the resource matching its file's name
+     * @param type The type of resource being retrieved
      * @param dest The file to (over)write
      * @return A non-null URL pointing to the resource
      * @throws NullPointerException if the resource couldn't be retrieved for
      *   some reason
      */
-    private static URL copyInto(String name, File dest) {
-        URL url = get(name);
+    private static URL copyInto(String name, SMPResourceType type, File dest) {
+        URL url = get(name, type);
         
         try {
             Files.createDirectories(dest.getParentFile().toPath());
             Files.copy(url.openStream(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
             URL ret = fromFile(dest);
-            return (ret != null) ? ret : get(name);
+            return (ret != null) ? ret : get(name, type);
             
         } catch (IOException e) {
             System.err.println("An error occured while copying resource " + name + " into file :" + dest);

@@ -2,6 +2,7 @@ package gui;
 
 import java.net.URL;
 
+import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
@@ -46,7 +47,7 @@ public class SplashScreen extends Preloader {
         BorderPane p = new BorderPane();
         p.setCenter(bar);
         /* @since 1.4, to spice up the load screen. why not? - seymour */
-        URL loadingGif = SMPResourceUtil.get("LOADING_ANIM.gif", Values.SPRITES_FOLDER);
+        URL loadingGif = SMPResourceUtil.get("LOADING_ANIM.gif", SMPResourceType.UI, Values.SPRITES_FOLDER);
         imageview = new ImageView();
         imageview.setImage(new Image(loadingGif.toString()));
         imageview.setFitWidth(236);

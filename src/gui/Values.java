@@ -5,6 +5,7 @@ import java.io.File;
 import backend.songs.Pitch;
 import backend.songs.TimeSignature;
 import gui.components.buttons.SMPInstrumentButtonGroup;
+import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 
 /**
@@ -19,7 +20,7 @@ public class Values {
     private Values() {}
 
     /** The current version number of the program. */
-    public static final String VERSION = SMPResourceUtil.getProperty("gradle.bridge.properties", "version");
+    public static final String VERSION = SMPResourceUtil.getProperty("gradle.bridge.properties", SMPResourceType.UNCATEGORIZED, "version");
 
     /** The number of instruments. */
     public static final int NUM_INSTRUMENTS = 31;

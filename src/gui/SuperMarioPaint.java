@@ -17,6 +17,7 @@ import gui.loaders.Loader;
 import gui.loaders.SMPCursorType;
 import gui.loaders.SoundfontLoader;
 import gui.resources.FetchStrategy;
+import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 import javafx.application.Application;
 import javafx.application.Preloader.ErrorNotification;
@@ -147,7 +148,7 @@ public class SuperMarioPaint extends Application  {
         // We *have* to copy the FXML onto the user file system because it expects a sprites/ folder
         // But also, we may update it regularly as we develop, so we want to always use our internal version
         FetchStrategy fxmlFetchStrategy = FetchStrategy.COPY_INTERNAL;
-        URL fxml = SMPResourceUtil.get(Values.FXML, fxmlFetchStrategy, Values.SMP_FOLDER);
+        URL fxml = SMPResourceUtil.get(Values.FXML, SMPResourceType.UI, fxmlFetchStrategy, Values.SMP_FOLDER);
         loader.setLocation(fxml);
         
         root = (Parent) loader.load();
@@ -163,7 +164,7 @@ public class SuperMarioPaint extends Application  {
             });
             primaryStage.setResizable(false);
             primaryScene = new Scene(root);
-            primaryScene.getStylesheets().add(SMPResourceUtil.get("style.css").toString());
+            primaryScene.getStylesheets().add(SMPResourceUtil.get("style.css", SMPResourceType.STYLE).toString());
             
             primaryStage.setScene(primaryScene);
             
@@ -359,10 +360,18 @@ public class SuperMarioPaint extends Application  {
     static void setHeaderIcon() {
         int randValue = RNG.nextInt(10 * InstrumentIndex.values().length);
         
-        String iconFile = (randValue < InstrumentIndex.values().length) ?
-            InstrumentIndex.values()[randValue].name() :
-            "ICON";
-        headerIcon = new Image(SMPResourceUtil.get(iconFile + ".png").toString());
+        String iconName;
+        SMPResourceType iconType;
+        
+        if (randValue < InstrumentIndex.values().length) {
+            iconName = InstrumentIndex.values()[randValue].name();
+            iconType = SMPResourceType.UNCATEGORIZED;
+        } else {
+            iconName = "ICON";
+            iconType = SMPResourceType.UI;
+        }
+        
+        headerIcon = new Image(SMPResourceUtil.get(iconName + ".png", iconType).toString());
     }
     
 }
