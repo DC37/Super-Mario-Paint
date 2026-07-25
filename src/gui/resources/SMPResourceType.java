@@ -8,6 +8,7 @@ public enum SMPResourceType {
     SOUNDFONT("soundfonts"),
     INSTRUMENT("instruments/normal"),
     INSTRUMENT_SUSTAINED_OFF("instruments/sustained_off"),
+    INSTRUMENT_SUSTAINED_ON("instruments/sustained_on"),
     INSTRUMENT_GRAY("instruments/gray"),
     INSTRUMENT_SILHOUETTE("instruments/silhouettes");
     
