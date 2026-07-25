@@ -356,7 +356,14 @@ public class SuperMarioPaint extends Application  {
         primaryScene.setCursor(cursorImages.get(type));
     }
 
-    // selects the default icon 9 times out of 10, otherwise a random instrument
+    /**
+     * Selects the header icon to use as Application Icon in the Window Title Bar.
+     * 
+     * <p>It sets the default icon 9 times out of 10, or a random instrument otherwise.
+     * 
+     * @implNote This cannot use the {@link ImageLoader} infrastructure, as images
+     * are loaded through it <i>after</i> the application starts the JavaFX scaffolding.
+     */
     static void setHeaderIcon() {
         int randValue = RNG.nextInt(10 * SMPInstrument.values().length);
         
