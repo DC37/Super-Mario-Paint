@@ -7,7 +7,8 @@ public enum SMPResourceType {
     UI("ui"),
     SOUNDFONT("soundfonts"),
     INSTRUMENT("instruments/normal"),
-    INSTRUMENT_GRAY("instruments/gray");
+    INSTRUMENT_GRAY("instruments/gray"),
+    INSTRUMENT_SILHOUETTE("instruments/silhouettes");
     
     private String prefix;
     
