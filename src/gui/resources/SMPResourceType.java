@@ -5,7 +5,8 @@ public enum SMPResourceType {
     UNCATEGORIZED("."),
     STYLE("styles"),
     UI("ui"),
-    SOUNDFONT("soundfonts");
+    SOUNDFONT("soundfonts"),
+    INSTRUMENT("instruments/normal");
     
     private String prefix;
     

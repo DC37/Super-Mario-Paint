@@ -372,7 +372,7 @@ public class SuperMarioPaint extends Application  {
         
         if (randValue < SMPInstrument.values().length) {
             iconName = SMPInstrument.values()[randValue].name();
-            iconType = SMPResourceType.UNCATEGORIZED;
+            iconType = SMPResourceType.INSTRUMENT;
         } else {
             iconName = "ICON";
             iconType = SMPResourceType.UI;
