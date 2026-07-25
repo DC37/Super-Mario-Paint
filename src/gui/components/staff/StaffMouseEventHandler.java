@@ -12,7 +12,7 @@ import backend.songs.Accidental;
 import backend.songs.MuteModifier;
 import backend.songs.Note;
 import backend.songs.NoteLine;
-import gui.InstrumentIndex;
+import gui.SMPInstrument;
 import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
@@ -77,7 +77,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
             return;
         
-        InstrumentIndex theInd = StateMachine.getSelectedInstrument();
+        SMPInstrument theInd = StateMachine.getSelectedInstrument();
         boolean newNote = false;
         int lineTmp = getLine(event.getX());
         int positionTmp = getPosition(event.getY());
@@ -163,7 +163,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            The InstrumentIndex corresponding to what instrument is
      *            currently selected.
      */
-    private void leftMousePressed(InstrumentIndex theInd, int lineTmp) {
+    private void leftMousePressed(SMPInstrument theInd, int lineTmp) {
         if (StateMachine.getButtonsPressed().contains(KeyCode.E)) {
             removeNote();
         } else {        
@@ -180,7 +180,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            The <code>InstrumentIndex</code> that we are going to use to
      *            place this note.
      */
-    private void placeNote(InstrumentIndex theInd, int vel) {
+    private void placeNote(SMPInstrument theInd, int vel) {
         boolean mute = StateMachine.isMutePressed();
         boolean muteA = StateMachine.isMuteAPressed();
         
@@ -227,7 +227,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected. (currently not actually used, but can be
      *            extended later to selectively remove instruments.
      */
-    private void rightMousePressed(InstrumentIndex theInd) {
+    private void rightMousePressed(SMPInstrument theInd) {
 
         removeNote();
 
@@ -271,7 +271,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            The InstrumentIndex corresponding to what instrument is
      *            currently selected.
      */
-    private void mouseEntered(InstrumentIndex theInd) {
+    private void mouseEntered(SMPInstrument theInd) {
         Note sil = new Note(theInd, position, acc);
         theStaff.getDisplayManager().updateSilhouette(line, sil);
         StateMachine.setCursorOnStaff(true);
@@ -287,7 +287,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            The InstrumentIndex corresponding to what instrument is
      *            currently selected.
      */
-    private void mouseExited(InstrumentIndex theInd) {
+    private void mouseExited(SMPInstrument theInd) {
         theStaff.getDisplayManager().resetSilhouette();
         StateMachine.setCursorOnStaff(false);
     }

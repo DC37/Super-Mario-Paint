@@ -1,6 +1,6 @@
 package backend.songs;
 
-import gui.InstrumentIndex;
+import gui.SMPInstrument;
 import gui.Values;
 
 /**
@@ -29,7 +29,7 @@ public class Note {
     /**
      * The instrument this note belongs to.
      */
-    private InstrumentIndex instrument;
+    private SMPInstrument instrument;
     
     /**
      * True if this note is currently selected with the clipboard.
@@ -43,7 +43,7 @@ public class Note {
      * @param verticalPosition The position
      * @param accidental The accidental
      */
-    public Note(InstrumentIndex instrument, int verticalPosition, Accidental accidental) {
+    public Note(SMPInstrument instrument, int verticalPosition, Accidental accidental) {
         this(instrument, verticalPosition, accidental, MuteModifier.REGULAR);
     }
 
@@ -55,7 +55,7 @@ public class Note {
      * @param accidental The accidental
      * @param muteModifier The modifier (regular, mute pitch, mute instrument)
      */
-    public Note(InstrumentIndex instrument, int verticalPosition, Accidental accidental, MuteModifier muteModifier) {
+    public Note(SMPInstrument instrument, int verticalPosition, Accidental accidental, MuteModifier muteModifier) {
         this.instrument = instrument;
         this.accidental = accidental;
         this.verticalPosition = verticalPosition;
@@ -98,7 +98,7 @@ public class Note {
      * Get the instrument of this note.
      * @return The instrument of this note
      */
-    public InstrumentIndex getInstrument() {
+    public SMPInstrument getInstrument() {
         return instrument;
     }
     

@@ -13,6 +13,7 @@ module smp {
     exports gui.components.buttons;
     exports gui.components.staff;
     exports gui.loaders;
+    exports gui.resources;
     
     exports backend.editing;
     exports backend.editing.commands;

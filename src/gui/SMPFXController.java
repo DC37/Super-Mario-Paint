@@ -350,8 +350,8 @@ public class SMPFXController {
         populateInstrumentButtons(instLine);
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
-            InstrumentIndex i = StateMachine.getSelectedInstrument();
-            return imagesHolder.get(ImageIndex.valueOf(i.toString()));
+        	SMPInstrument i = StateMachine.getSelectedInstrument();
+        	return imagesHolder.get(i.getImageIndex());
         }, StateMachine.selectedInstrumentProperty()));
         
         // Set up clipboard.
@@ -459,7 +459,7 @@ public class SMPFXController {
         Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(StateMachine.getPlaybackActiveProperty()));
     }
     
-    private void onInstrumentButtonAction(InstrumentIndex inst) {
+    private void onInstrumentButtonAction(SMPInstrument inst) {
     	if (StateMachine.isShiftPressed()) {
             boolean ex = StateMachine.getNoteExtension(inst.ordinal());
             StateMachine.setNoteExtension(inst.ordinal(), !ex);
@@ -472,7 +472,7 @@ public class SMPFXController {
         } else if (StateMachine.isCtrlPressed()) {
             int flt = StateMachine.getFilteredNotes();
             int newFlt;
-            int mask = ~ ((-1) << InstrumentIndex.values().length);
+            int mask = ~ ((-1) << SMPInstrument.values().length);
             
             // we go through bitwise computations to only set the property once
             if ((flt & mask) == mask) {
@@ -499,11 +499,12 @@ public class SMPFXController {
     }
     
     private void populateInstrumentButtons(Pane n) {
-        SMPInstrumentButton[] vs = new SMPInstrumentButton[InstrumentIndex.values().length];
+        SMPInstrumentButton[] vs = new SMPInstrumentButton[SMPInstrument.values().length];
         n.getChildren().clear();
         
-        for (InstrumentIndex inst : InstrumentIndex.values()) {
-            SMPInstrumentButton b = new SMPInstrumentButton(inst.name(), imagesHolder.get(inst.smImageIndex()), imagesHolder.get(inst.smaImageIndex()));
+        for (SMPInstrument inst : SMPInstrument.values()) {
+            SMPInstrumentButton b = new SMPInstrumentButton(inst.name(),
+            		imagesHolder.get(inst.getImgIdxSustainOff()), imagesHolder.get(inst.getImgIdxSustainOn()));
             b.setImageFiltered(imagesHolder.get(ImageIndex.FILTER));
             b.setFitHeight(28);
             b.setFitWidth(26);
@@ -516,14 +517,14 @@ public class SMPFXController {
         }
         
         StateMachine.noteExtensionsProperty().addListener(obs -> {
-            for (InstrumentIndex inst : InstrumentIndex.values()) {
+            for (SMPInstrument inst : SMPInstrument.values()) {
                 vs[inst.ordinal()].setSustainOn(StateMachine.getNoteExtension(inst.ordinal()));
             }
         });
         
         StateMachine.filteredNotesProperty().addListener((obs, oldv, newv) -> {
             int diff = (int) oldv ^ (int) newv;
-            for (InstrumentIndex inst : InstrumentIndex.values()) {
+            for (SMPInstrument inst : SMPInstrument.values()) {
                 if ((diff & 1) == 1) {
                     boolean ex = StateMachine.getFilteredNote(inst.ordinal());
                     vs[inst.ordinal()].setActive(ex);

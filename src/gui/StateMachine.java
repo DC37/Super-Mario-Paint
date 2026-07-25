@@ -33,7 +33,7 @@ public class StateMachine {
     
     private static BooleanProperty shiftPressed = new SimpleBooleanProperty();
     
-    private static ObjectProperty<InstrumentIndex> selectedInstrument = new SimpleObjectProperty<>(InstrumentIndex.MARIO);
+    private static ObjectProperty<SMPInstrument> selectedInstrument = new SimpleObjectProperty<>(SMPInstrument.MARIO);
 
     /** This tells us whether we have modified the song or not. */
     private static boolean modifiedSong = false;
@@ -145,15 +145,15 @@ public class StateMachine {
         return shiftPressed.getValue();
     }
     
-    public static ObjectProperty<InstrumentIndex> selectedInstrumentProperty() {
+    public static ObjectProperty<SMPInstrument> selectedInstrumentProperty() {
         return selectedInstrument;
     }
     
-    public static InstrumentIndex getSelectedInstrument() {
+    public static SMPInstrument getSelectedInstrument() {
         return selectedInstrument.get();
     }
     
-    public static void setSelectedInstrument(InstrumentIndex i) {
+    public static void setSelectedInstrument(SMPInstrument i) {
         selectedInstrument.set(i);
     }
     

@@ -5,7 +5,7 @@ import java.util.List;
 import backend.songs.Pitch;
 import backend.songs.Note;
 import backend.songs.NoteLine;
-import gui.InstrumentIndex;
+import gui.SMPInstrument;
 import gui.StateMachine;
 import gui.Values;
 
@@ -36,7 +36,7 @@ class NoteTracker {
     public NoteTracker(SoundPlayer soundPlayer) {
         channelOn = new ArrayList<>();
         notesOn = new ArrayList<>();
-        for (int i = 0; i < InstrumentIndex.values().length; i++) {
+        for (int i = 0; i < SMPInstrument.values().length; i++) {
             channelOn.add(false);
             notesOn.add(new ArrayList<>());
         }
@@ -96,7 +96,7 @@ class NoteTracker {
      * @param instrument The instrument of the note that is playing.
      * @param pitch The pitchof the note that is playing.
      */
-    public void addNotePlaying(InstrumentIndex instrument, Pitch pitch) {
+    public void addNotePlaying(SMPInstrument instrument, Pitch pitch) {
         notesOn.get(instrument.getChannel() - 1).add(
                 new PlayingNote(instrument, pitch));
         setChannelOn(instrument.getChannel() - 1);
@@ -123,7 +123,7 @@ class NoteTracker {
      * Stops the sound of a set of instruments.
      * @param inst The instrument to stop
      */
-    public void stopInstrument(InstrumentIndex inst) {
+    public void stopInstrument(SMPInstrument inst) {
         int i = inst.getChannel() - 1;
         List<PlayingNote> pna = getNotesPlaying(i);
         for (PlayingNote pn : pna)
@@ -141,7 +141,7 @@ class NoteTracker {
     class PlayingNote {
 
         /** The instrument of the note that is playing. */
-        private InstrumentIndex instrument;
+        private SMPInstrument instrument;
 
         /** The pitch of the note that is playing. */
         private Pitch pitch;
@@ -149,10 +149,10 @@ class NoteTracker {
         /**
          * Makes a PlayingNote object, which keeps track of which notes
          * are playing when.
-         * @param ins The InstrumentIndex.
+         * @param ins The SMPInstrument.
          * @param acc The pitch.
          */
-        public PlayingNote(InstrumentIndex ins, Pitch pitch) {
+        public PlayingNote(SMPInstrument ins, Pitch pitch) {
             this.instrument = ins;
             this.pitch = pitch;
         }
@@ -160,7 +160,7 @@ class NoteTracker {
         /**
          * @return The instrument of the note that is playing.
          */
-        public InstrumentIndex instrument() {
+        public SMPInstrument instrument() {
             return instrument;
         }
 

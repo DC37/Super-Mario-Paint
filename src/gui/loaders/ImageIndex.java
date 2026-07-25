@@ -15,7 +15,7 @@ public enum ImageIndex {
     NONE,
 
     /** Blank image. */
-    BLANK (NONE, NONE),
+    BLANK,
     
     /** Cursor images */
     CURSOR_0, CURSOR_1, CURSOR_2, CURSOR_3,
@@ -29,7 +29,6 @@ public enum ImageIndex {
     SHYGUY_GRAY, BOO_GRAY, LUIGI_GRAY, PEACH_GRAY, FEATHER_GRAY, BULLETBILL_GRAY,
     GOOMBA_GRAY, BOBOMB_GRAY, SPINY_GRAY, FRUIT_GRAY, ONEUP_GRAY, MOON_GRAY,
     EGG_GRAY, GNOME_GRAY,
-    
 
     SHARP_GRAY, FLAT_GRAY, DOUBLESHARP_GRAY, DOUBLEFLAT_GRAY,
 
@@ -55,73 +54,22 @@ public enum ImageIndex {
     /*
      * Instruments.
      */
-    MARIO       (MARIO_GRAY, MARIO_SIL),
-    MUSHROOM    (MUSHROOM_GRAY, MUSHROOM_SIL),
-    YOSHI       (YOSHI_GRAY, YOSHI_SIL),
-    STAR        (STAR_GRAY, STAR_SIL),
-    FLOWER      (FLOWER_GRAY, FLOWER_SIL),
-    GAMEBOY     (GAMEBOY_GRAY, GAMEBOY_SIL),
-    DOG         (DOG_GRAY, DOG_SIL),
-    CAT         (CAT_GRAY, CAT_SIL),
-    PIG         (PIG_GRAY, PIG_SIL),
-    SWAN        (SWAN_GRAY, SWAN_SIL),
-    FACE        (FACE_GRAY, FACE_SIL),
-    PLANE       (PLANE_GRAY, PLANE_SIL),
-    BOAT        (BOAT_GRAY, BOAT_SIL),
-    CAR         (CAR_GRAY, CAR_SIL),
-    HEART       (HEART_GRAY, HEART_SIL),
-    PIRANHA     (PIRANHA_GRAY, PIRANHA_SIL),
-    COIN        (COIN_GRAY, COIN_SIL),
-    SHYGUY      (SHYGUY_GRAY, SHYGUY_SIL),
-    BOO         (BOO_GRAY, BOO_SIL),
-    LUIGI       (LUIGI_GRAY, LUIGI_SIL),
-    PEACH       (PEACH_GRAY, PEACH_SIL),
-    FEATHER     (FEATHER_GRAY, FEATHER_SIL),
-    BULLETBILL  (BULLETBILL_GRAY, BULLETBILL_SIL),
-    GOOMBA      (GOOMBA_GRAY, GOOMBA_SIL),
-    BOBOMB      (BOBOMB_GRAY, BOBOMB_SIL),
-    SPINY       (SPINY_GRAY, SPINY_SIL),
-    FRUIT       (FRUIT_GRAY, FRUIT_SIL),
-    ONEUP       (ONEUP_GRAY, ONEUP_SIL),
-    MOON        (MOON_GRAY, MOON_SIL),
-    EGG         (EGG_GRAY, EGG_SIL),
-    GNOME       (GNOME_GRAY, GNOME_SIL),
-    SHARP       (SHARP_GRAY, SHARP_SIL),
-    FLAT        (FLAT_GRAY, FLAT_SIL),
-    DOUBLESHARP (DOUBLESHARP_GRAY, DOUBLESHARP_SIL),
-    DOUBLEFLAT  (DOUBLEFLAT_GRAY, DOUBLEFLAT_SIL),
-
-    MARIO_SM        (MARIO_SMA, NONE),
-    MUSHROOM_SM     (MUSHROOM_SMA, NONE),
-    YOSHI_SM        (YOSHI_SMA, NONE),
-    STAR_SM         (STAR_SMA, NONE),
-    FLOWER_SM       (FLOWER_SMA, NONE),
-    GAMEBOY_SM      (GAMEBOY_SMA, NONE),
-    DOG_SM          (DOG_SMA, NONE),
-    CAT_SM          (CAT_SMA, NONE),
-    PIG_SM          (PIG_SMA, NONE),
-    SWAN_SM         (SWAN_SMA, NONE),
-    FACE_SM         (FACE_SMA, NONE),
-    PLANE_SM        (PLANE_SMA, NONE),
-    BOAT_SM         (BOAT_SMA, NONE),
-    CAR_SM          (CAR_SMA, NONE),
-    HEART_SM        (HEART_SMA, NONE),
-    PIRANHA_SM      (PIRANHA_SMA, NONE),
-    COIN_SM         (COIN_SMA, NONE),
-    SHYGUY_SM       (SHYGUY_SMA, NONE),
-    BOO_SM          (BOO_SMA, NONE),
-    LUIGI_SM        (LUIGI_SMA, NONE),
-    PEACH_SM        (PEACH_SMA, NONE),
-    FEATHER_SM      (FEATHER_SMA, NONE),
-    BULLETBILL_SM   (BULLETBILL_SMA, NONE),
-    GOOMBA_SM       (GOOMBA_SMA, NONE),
-    BOBOMB_SM       (BOBOMB_SMA, NONE),
-    SPINY_SM        (SPINY_SMA, NONE),
-    FRUIT_SM        (FRUIT_SMA, NONE),
-    ONEUP_SM        (ONEUP_SMA, NONE),
-    MOON_SM         (MOON_SMA, NONE),
-    EGG_SM          (EGG_SMA, NONE),
-    GNOME_SM        (GNOME_SMA, NONE),
+    MARIO, MUSHROOM, YOSHI, STAR, FLOWER,
+    GAMEBOY, DOG, CAT, PIG, SWAN, FACE,
+    PLANE, BOAT, CAR, HEART, PIRANHA, COIN,
+    SHYGUY, BOO, LUIGI, PEACH, FEATHER, BULLETBILL,
+    GOOMBA, BOBOMB, SPINY, FRUIT, ONEUP, MOON,
+    EGG, GNOME,
+    
+    SHARP, FLAT, DOUBLESHARP, DOUBLEFLAT,
+    
+    MARIO_SM, MUSHROOM_SM, YOSHI_SM, STAR_SM, FLOWER_SM,
+    GAMEBOY_SM, DOG_SM, CAT_SM, PIG_SM, SWAN_SM, FACE_SM,
+    PLANE_SM, BOAT_SM, CAR_SM, HEART_SM, PIRANHA_SM, COIN_SM,
+    SHYGUY_SM, BOO_SM, LUIGI_SM, PEACH_SM, FEATHER_SM, BULLETBILL_SM,
+    GOOMBA_SM, BOBOMB_SM, SPINY_SM, FRUIT_SM, ONEUP_SM, MOON_SM,
+    EGG_SM, GNOME_SM,
+    
     FILTER,
 
     /*
@@ -195,7 +143,12 @@ public enum ImageIndex {
     MUTE_PRESSED, MUTE_RELEASED, MUTE_LABEL,
     MUTE_A_PRESSED, MUTE_A_RELEASED, MUTE_A_LABEL,
     CLIPBOARD_PRESSED, CLIPBOARD_RELEASED, CLIPBOARD_LABEL,
-    TIMESIG_4_4_PRESSED, TIMESIG_4_4_RELEASED, TIMESIG_3_4_PRESSED, TIMESIG_3_4_RELEASED, TIMESIG_6_8_PRESSED, TIMESIG_6_8_RELEASED, TIMESIG_CUSTOM_PRESSED, TIMESIG_CUSTOM_RELEASED, TIMESIG_LABEL,
+    
+    TIMESIG_4_4_PRESSED, TIMESIG_4_4_RELEASED,
+    TIMESIG_3_4_PRESSED, TIMESIG_3_4_RELEASED,
+    TIMESIG_6_8_PRESSED, TIMESIG_6_8_RELEASED,
+    TIMESIG_CUSTOM_PRESSED, TIMESIG_CUSTOM_RELEASED,
+    TIMESIG_LABEL,
 
     SCROLLBAR_LEFT1, SCROLLBAR_LEFT2,
     SCROLLBAR_LEFT1_PRESSED, SCROLLBAR_LEFT2_PRESSED,
@@ -206,38 +159,5 @@ public enum ImageIndex {
      * Tempo stuff.
      */
     TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL;
-
-
-    /** The alt version of this sprite. It can be null. */
-    private ImageIndex alternate = null;
-
-    /** The silhouette version of this sprite. It can be null. */
-    private ImageIndex silhouette = null;
-
-    /**
-     * @param alt The alternate version of this sprite.
-     * @param sil The silhouette version of this sprite.
-     */
-    private ImageIndex(ImageIndex alt, ImageIndex sil) {
-        alternate = alt;
-        silhouette = sil;
-    }
-
-    /**
-     * Default constructor.
-     */
-    private ImageIndex() {
-
-    }
-
-    /** @return The <code>ImageIndex</code> of the alternate figure. */
-    public ImageIndex alt() {
-        return alternate;
-    }
-
-    /** @return The <code>ImageIndex</code> of the silhouette figure. */
-    public ImageIndex silhouette() {
-        return silhouette;
-    }
 
 }
