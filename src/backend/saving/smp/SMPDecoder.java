@@ -15,7 +15,7 @@ import backend.songs.Note;
 import backend.songs.NoteLine;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
-import gui.InstrumentIndex;
+import gui.SMPInstrument;
 import gui.Utilities;
 import gui.Values;
 
@@ -136,7 +136,7 @@ public class SMPDecoder implements Decoder<Song> {
     }
 
     private static Note parseNote(String spl) throws ParseException {
-        InstrumentIndex theInstrument;
+    	SMPInstrument theInstrument;
         int verticalPosition = -1;
         Accidental accidental;
         MuteModifier muteMod;
@@ -145,7 +145,7 @@ public class SMPDecoder implements Decoder<Song> {
         if (sp.length != 2) {
             throw new ParseException("Invalid note", 0);
         }
-        theInstrument = InstrumentIndex.valueOf(sp[0]);
+        theInstrument = SMPInstrument.valueOf(sp[0]);
         for (int i = 0; i < Values.STAFF_NOTES.length; i++) {
             if (sp[1].contains(Values.STAFF_NOTE_NAMES[i])) {
                 verticalPosition = i;

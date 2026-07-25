@@ -205,11 +205,11 @@ class NoteMatrix {
     public ImageIndex noteImageIndex(Note note) {
         switch (note.getMuteModifier()) {
         case REGULAR:
-            return note.getInstrument().imageIndex();
+            return note.getInstrument().getImageIndex();
         case MUTE_THIS_PITCH:
-            return note.getInstrument().imageIndex().alt();
+            return note.getInstrument().getImgIdxGray();
         case MUTE_THIS_INST:
-            return note.getInstrument().imageIndex().silhouette();
+            return note.getInstrument().getImgIdxSilhouette();
         default:
             throw new IllegalArgumentException("Unrecognized mute modifier: " + note.getMuteModifier());   
         }
@@ -218,11 +218,11 @@ class NoteMatrix {
     public ImageIndex accImageIndex(Note theNote) {
         switch (theNote.getMuteModifier()) {
         case REGULAR:
-            return theNote.getAccidental().imageIndex();
+            return theNote.getAccidental().getImageIndex();
         case MUTE_THIS_PITCH:
-            return theNote.getAccidental().imageIndex().alt();
+            return theNote.getAccidental().getImgIdxGray();
         case MUTE_THIS_INST:
-            return theNote.getAccidental().imageIndex().silhouette();
+            return theNote.getAccidental().getImgIdxSilhouette();
         default:
             throw new IllegalArgumentException("Unrecognized mute modifier: " + theNote.getMuteModifier());
         }

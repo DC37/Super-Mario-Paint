@@ -358,13 +358,13 @@ public class SuperMarioPaint extends Application  {
 
     // selects the default icon 9 times out of 10, otherwise a random instrument
     static void setHeaderIcon() {
-        int randValue = RNG.nextInt(10 * InstrumentIndex.values().length);
+        int randValue = RNG.nextInt(10 * SMPInstrument.values().length);
         
         String iconName;
         SMPResourceType iconType;
         
-        if (randValue < InstrumentIndex.values().length) {
-            iconName = InstrumentIndex.values()[randValue].name();
+        if (randValue < SMPInstrument.values().length) {
+            iconName = SMPInstrument.values()[randValue].name();
             iconType = SMPResourceType.UNCATEGORIZED;
         } else {
             iconName = "ICON";

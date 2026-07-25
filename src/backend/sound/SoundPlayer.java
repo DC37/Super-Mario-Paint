@@ -16,7 +16,7 @@ import backend.songs.MuteModifier;
 import backend.songs.Pitch;
 import backend.songs.Note;
 import backend.songs.NoteLine;
-import gui.InstrumentIndex;
+import gui.SMPInstrument;
 import gui.StateMachine;
 import gui.Values;
 
@@ -112,7 +112,7 @@ public class SoundPlayer {
      * Stops a full set of instruments from playing sounds.
      * @param sn The instrument to stop
      */
-    private void stopInstrument(InstrumentIndex inst) {
+    private void stopInstrument(SMPInstrument inst) {
         tracker.stopInstrument(inst);
     }
 
@@ -121,7 +121,7 @@ public class SoundPlayer {
      * Turn off all sounds.
      */
     public void stopAllInstruments() {
-        for (InstrumentIndex inst : InstrumentIndex.values()) {
+        for (SMPInstrument inst : SMPInstrument.values()) {
             tracker.stopInstrument(inst);
         }
         
@@ -238,16 +238,16 @@ public class SoundPlayer {
         return chan;
     }
 
-    public void playSound(InstrumentIndex inst, Pitch pitch) {
+    public void playSound(SMPInstrument inst, Pitch pitch) {
         playSound(inst, pitch, Values.MAX_VELOCITY);
     }
 
-    public void playSound(InstrumentIndex inst, Pitch pitch, int vel) {
+    public void playSound(SMPInstrument inst, Pitch pitch, int vel) {
         int iChan = inst.getChannel() - 1;
         chan[iChan].noteOn(pitch.getValue(), vel);
     }
     
-    public void stopSound(InstrumentIndex inst, Pitch pitch) {
+    public void stopSound(SMPInstrument inst, Pitch pitch) {
         int iChan = inst.getChannel() - 1;
         chan[iChan].noteOff(pitch.getValue());
     }

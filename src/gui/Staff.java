@@ -246,7 +246,7 @@ public class Staff {
     public void stopSounds() {
         soundPlayer.stopAllInstruments();
         MidiChannel [] chan = soundPlayer.getChannels();
-        for (int ind = 0; ind < InstrumentIndex.values().length; ind++) {
+        for (int ind = 0; ind < SMPInstrument.values().length; ind++) {
             if (chan[ind] != null) {
                 chan[ind].allSoundOff();
             }

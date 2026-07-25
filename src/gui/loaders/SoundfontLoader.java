@@ -12,7 +12,7 @@ import javax.sound.midi.Soundbank;
 
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
-import gui.InstrumentIndex;
+import gui.SMPInstrument;
 import gui.Settings;
 import gui.Values;
 import gui.resources.FetchStrategy;
@@ -63,9 +63,9 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
 
             int ordinal = 0;
             chan = theSynthesizer.getChannels();
-            for (InstrumentIndex i : InstrumentIndex.values()) {
+            for (SMPInstrument i : SMPInstrument.values()) {
                 setLoadStatus(0.3 + 0.7
-                        * ordinal / InstrumentIndex.values().length);
+                        * ordinal / SMPInstrument.values().length);
                 chan[ordinal].programChange(ordinal);
                 chan[ordinal].controlChange(Values.REVERB, 0);
                 ordinal++;

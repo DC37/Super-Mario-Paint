@@ -21,7 +21,7 @@ import backend.songs.MuteModifier;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import backend.songs.Song;
-import gui.InstrumentIndex;
+import gui.SMPInstrument;
 import gui.Values;
 
 /**
@@ -117,7 +117,7 @@ public class MPCDecoder implements Decoder<Song> {
             for (String note : inst) {
                 if (note.isEmpty())
                     continue;
-                InstrumentIndex in = MPCInstrumentIndex.valueOf(note.charAt(0));
+                SMPInstrument in = MPCInstrumentIndex.valueOf(note.charAt(0));
                 int pos = 0;
                 Accidental acc = Accidental.NATURAL;
                 if (note.length() == 3) {

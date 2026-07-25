@@ -7,18 +7,24 @@ import gui.loaders.ImageIndex;
  */
 public enum Accidental {
     
-    DOUBLE_FLAT(-2, ImageIndex.DOUBLEFLAT),
-    FLAT(-1, ImageIndex.FLAT),
-    NATURAL(0, ImageIndex.BLANK),
-    SHARP(1, ImageIndex.SHARP),
-    DOUBLE_SHARP(2, ImageIndex.DOUBLESHARP);
+    DOUBLE_FLAT(-2, ImageIndex.DOUBLEFLAT, ImageIndex.DOUBLEFLAT_GRAY, ImageIndex.DOUBLEFLAT_SIL),
+    FLAT(-1, ImageIndex.FLAT, ImageIndex.FLAT_GRAY, ImageIndex.FLAT_SIL),
+    NATURAL(0, ImageIndex.BLANK, ImageIndex.BLANK, ImageIndex.BLANK),
+    SHARP(1, ImageIndex.SHARP, ImageIndex.SHARP_GRAY, ImageIndex.SHARP_SIL),
+    DOUBLE_SHARP(2, ImageIndex.DOUBLESHARP, ImageIndex.DOUBLESHARP_GRAY, ImageIndex.DOUBLESHARP_SIL);
     
     private int offset;
     private ImageIndex imageIndex;
+    private ImageIndex imgIdxGray;
+    private ImageIndex imgIdxSilhouette;
     
-    private Accidental(int value, ImageIndex imageIndex) {
+    private Accidental(int value, ImageIndex imageIndex,
+    		ImageIndex imgIdxGray, ImageIndex imgIdxSilhouette) {
+    	
         this.offset = value;
         this.imageIndex = imageIndex;
+        this.imgIdxGray = imgIdxGray;
+        this.imgIdxSilhouette = imgIdxSilhouette;
     }
     
     /**
@@ -55,11 +61,27 @@ public enum Accidental {
     }
     
     /**
-     * Index of the image associated with this accidental
+     * Index of the default image associated with this accidental
      * @return Image index of this accidental
      */
-    public ImageIndex imageIndex() {
-        return this.imageIndex;
+    public ImageIndex getImageIndex() {
+        return imageIndex;
+    }
+    
+    /**
+     * Index of the gray image associated with this accidental
+     * @return Image index of this accidental
+     */
+    public ImageIndex getImgIdxGray() {
+    	return imgIdxGray;
+    }
+    
+    /**
+     * Index of the silhouette image associated with this accidental
+     * @return Image index of this accidental
+     */
+    public ImageIndex getImgIdxSilhouette() {
+    	return imgIdxSilhouette;
     }
 
 }
