@@ -21,4 +21,29 @@ public enum MuteModifier {
      */
     MUTE_THIS_INST;
 
+	/**
+	 * Retrieves the {@link MuteModifier} that corresponds to the
+	 * given mute instrument/pitch flags.
+	 * 
+	 * <p>Specifically:
+	 * 
+	 * <ul>
+	 * <li>If {@code muteInstrument} is true, regardless of the value of
+	 *     {@code mutePitch}, it returns {@link MUTE_THIS_INST}.</li>
+	 * <li>If {@code muteInstrument} is false and {@code mutePitch} is true,
+	 *     it returns {@link MUTE_THIS_PITCH}.</li>
+	 * <li>If both {@code muteInstrument} and {@code mutePitch} are false,
+	 *     it returns {@link GENERAL}.</li>
+	 * </ul>
+	 * 
+	 * @param muteInstrument Whether the instrument should be muted at every pitch
+	 * @param mutePitch Whether the instrument should be muted at the specific pitch
+	 * @return A {@link MuteModifier} that corresponds to the selection
+	 */
+	public static MuteModifier givenFlags(boolean muteInstrument, boolean mutePitch) {
+		if (muteInstrument) return MUTE_THIS_INST;
+		if (mutePitch) return MUTE_THIS_PITCH;
+		return REGULAR;
+	}
+	
 }

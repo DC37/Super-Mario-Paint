@@ -190,8 +190,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if ((Settings.debug & 0b10000) != 0)
             System.out.println("Index: " + theInd + "\nPosition: "+ position + "\nAcc: " + acc + "\nVel: " + vel);
         
-        @SuppressWarnings("java:S3358")
-        MuteModifier mod = muteA ? MuteModifier.MUTE_THIS_INST : mute ? MuteModifier.MUTE_THIS_PITCH : MuteModifier.REGULAR;
+        MuteModifier mod = MuteModifier.givenFlags(muteA, mute);
         
         Note theStaffNote = new Note(theInd, position, acc, mod);
         
