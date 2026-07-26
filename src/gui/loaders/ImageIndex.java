@@ -13,13 +13,13 @@ public enum ImageIndex {
 
     // SPLASHSCREEN,
 
-    /** No image */
+    /* No image */
     NONE,
 
-    /** Blank image. */
+    /* Blank image. */
     BLANK,
     
-    /** Cursor images */
+    /* Cursor images */
     CURSOR_0 (SMPResourceType.CURSOR),
     CURSOR_1 (SMPResourceType.CURSOR),
     CURSOR_2 (SMPResourceType.CURSOR),
@@ -216,72 +216,79 @@ public enum ImageIndex {
     
     /* ACCIDENTALS END HERE */
     
-    VOL_BAR, VOL_BAR2,
-    FILTER,
-
-    /*
-     * Clefs.
-     */
-    TREBLE_CLEF, BASS_CLEF,
-
-    /*
-     * Staff elements
-     */
-    /**
-     * The frame that encloses the staff.
-     */
-    STAFF_FRAME, INST_BACKGROUND,
-
-    /**
-     * The background of the staff, which contains a treble clef.
-     */
-    STAFF_BG, STAFF_BG_TREBLEBASS,
-
-    /**
-     * Each one of these lines indicates a "beat"
-     */
-    STAFF_LINE,
-
-    /** Each one of these lines indicates a measure. */
-    STAFF_MLINE,
+    /* STAFF ELEMENTS START HERE */
     
-    /** Subdivisions in a measure */
-    STAFF_SLINE,
-
-    /**
-     * This is the MPCv1 play bar that goes across the screen.
-     */
-    PLAY_BAR,
-
-    /**
-     * This is the bar that goes across the screen when one hits play.
-     */
-    PLAY_BAR1,
-
-    /** This is an empty play bar. */
-    PLAY_BAR_EMPTY,
-
-    /**
-     * This is a horizontal line that appears when someone tries to go
-     * above or below the middle five lines of the staff.
-     */
-    STAFF_HLINE,
+    // Enclosing frame
+    STAFF_FRAME (SMPResourceType.STAFF),
+    INST_BACKGROUND (SMPResourceType.STAFF),
     
-    /**
-     * The image that is displayed behind the currently selected intrument.
-     */
-    SEL_INST_SM,
-
-    /**
-     * Controls elements
-     */
-    CONTROLS_LEFT, CONTROLS_MID, CONTROLS_RIGHT,
-    SAVE, LOAD, NEW_SONG, OPTIONS,
-    VOL_LABEL,
-    ADD, DELETE, UP, DOWN,
-    BOTTOM_BAR, MODE,
-
-    /** BUTTONS START HERE */
+    // Background (includes clefs)
+    STAFF_BG (SMPResourceType.STAFF),
+    STAFF_BG_TREBLEBASS (SMPResourceType.STAFF),
+    
+    // Standalone clefs
+    TREBLE_CLEF (SMPResourceType.STAFF),
+    BASS_CLEF (SMPResourceType.STAFF),
+    
+    // Lines: Beat, Measure, Measure subdivision
+    STAFF_LINE (SMPResourceType.STAFF),
+    STAFF_MLINE (SMPResourceType.STAFF),
+    STAFF_SLINE (SMPResourceType.STAFF),
+    
+    // Play bars: MPCv1, during play, empty
+    PLAY_BAR (SMPResourceType.STAFF),
+    PLAY_BAR1 (SMPResourceType.STAFF),
+    PLAY_BAR_EMPTY (SMPResourceType.STAFF), 
+    
+    // Horizontal line that appears above/below standard staff lines
+    STAFF_HLINE (SMPResourceType.STAFF),
+    
+    /* STAFF ELEMENTS END HERE */
+    
+    /* CONTROLS START HERE */
+    
+    // Enclosing frame
+    CONTROLS_LEFT (SMPResourceType.CONTROL),
+    CONTROLS_MID (SMPResourceType.CONTROL),
+    CONTROLS_RIGHT (SMPResourceType.CONTROL),
+    
+    // Dividers
+    BOTTOM_BAR (SMPResourceType.CONTROL),
+    
+    // Volume bars
+    VOL_BAR (SMPResourceType.CONTROL),
+    VOL_BAR2 (SMPResourceType.CONTROL),
+    VOL_LABEL (SMPResourceType.CONTROL),
+    
+    // Filter
+    FILTER (SMPResourceType.CONTROL),
+    
+    // Selected instrument background
+    SEL_INST_SM (SMPResourceType.CONTROL),
+    
+    // File operations
+    SAVE (SMPResourceType.CONTROL),
+    LOAD (SMPResourceType.CONTROL),
+    NEW_SONG (SMPResourceType.CONTROL),
+    
+    // Arrangement operations
+    ADD (SMPResourceType.CONTROL),
+    DELETE (SMPResourceType.CONTROL),
+    UP (SMPResourceType.CONTROL),
+    DOWN (SMPResourceType.CONTROL),
+    
+    // Tempo
+    TEMPO_PLUS (SMPResourceType.CONTROL),
+    TEMPO_MINUS (SMPResourceType.CONTROL),
+    TEMPO_LABEL (SMPResourceType.CONTROL),
+    
+    // Other
+    OPTIONS (SMPResourceType.CONTROL),
+    MODE (SMPResourceType.CONTROL),
+    
+    /* CONTROLS END HERE */
+    
+    /* BUTTONS START HERE */
     
     STOP_PRESSED (SMPResourceType.BUTTON_PRESSED),
     STOP_RELEASED (SMPResourceType.BUTTON),
@@ -332,15 +339,11 @@ public enum ImageIndex {
     
     SCROLLBAR_RIGHT2 (SMPResourceType.BUTTON),
     SCROLLBAR_RIGHT2_PRESSED (SMPResourceType.BUTTON_PRESSED),
+    ;
 
-    /** BUTTONS END HERE */
+    /* BUTTONS END HERE */
     
-    /*
-     * Tempo stuff.
-     */
-    TEMPO_PLUS, TEMPO_MINUS, TEMPO_LABEL;
-	
-	/** The resource type this image belongs to. */
+    /** The resource type this image belongs to. */
 	private SMPResourceType type;
 	
 	private ImageIndex(SMPResourceType type) {
