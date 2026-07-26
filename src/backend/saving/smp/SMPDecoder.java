@@ -14,10 +14,12 @@ import backend.songs.MuteModifier;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import backend.songs.Song;
+import backend.songs.SongProperties;
 import backend.songs.TimeSignature;
 import gui.SMPInstrument;
 import gui.Utilities;
 import gui.Values;
+import utilities.CollectionUtils;
 
 public class SMPDecoder implements Decoder<Song> {
 
@@ -47,92 +49,91 @@ public class SMPDecoder implements Decoder<Song> {
     }
 
     /**
-     * Parses a bunch of text from a save file and makes a
-     * <code>StaffSequence</code> out of it.
-     *
-     * @param read
-     *            <code>ArrayList</code> of notes and parameters.
-     * @return Hopefully, a decoded <code>StaffSequence</code>
+     * Initializes a {@link SongProperties} with the values read from the save file.
+     * 
+     * @param props The {@link SongProperties} to initialize
+     * @param sp The list of parameters
      */
-    private Song parseText(List<String> read) {
-        List<NoteLine> lines = new ArrayList<>();
-        double tempo = Values.DEFAULT_TEMPO;
-        boolean[] noteExtensions = new boolean[Values.NUM_INSTRUMENTS];
-        TimeSignature timeSignature = Values.DEFAULT_TIME_SIGNATURE;
-        String soundset = Values.DEFAULT_SOUNDFONT;
-        
-        for (String s : read) {
-            if (s.contains("TEMPO") || s.contains("EXT") || s.contains("TIME") || s.contains("SOUNDSET")) {
-                String[] sp = s.split(",");
-                for (String spl : sp) {
-                    String num = spl.substring(spl.indexOf(":") + 1);
-                    if (spl.contains("TEMPO")) {
-                        tempo = Double.parseDouble(num.trim());
-                    } else if (spl.contains("EXT")) {
-                        noteExtensions = Utilities.boolFromLong(Long
-                                .parseLong(num.trim()));
-                        swap15And16(noteExtensions);
-                    } else if (spl.contains("TIME")) {
-                        timeSignature = TimeSignature.valueOf(num.trim());
-                    } else if (spl.contains("SOUNDSET")) {
-                        soundset = num.trim();
-                    }
+    private void initializeSongProperties(SongProperties props, String[] sp) {
+        for (String spl : sp) {
+            String num = spl.substring(spl.indexOf(":") + 1);
+            if (spl.contains("TEMPO")) {
+                props.setTempo(
+                        Double.parseDouble(num.trim()));
+            } else if (spl.contains("EXT")) {
+                // Coin and piranha used to be swapped, so we unswap the note extensions
+                // found in sequences files to conform with existing files
+                props.setNoteExtensions(
+                        Utilities.boolFromLong(Long.parseLong(num.trim())),
+                        exts -> CollectionUtils.swapItems(exts, 15, 16));
+            } else if (spl.contains("TIME")) {
+                props.setTimeSignature(
+                        TimeSignature.valueOf(num.trim()));
+            } else if (spl.contains("SOUNDSET")) {
+                props.setSoundset(
+                        num.trim());
+            }
+        }
+    }
+    
+    /**
+     * Initializes the lines of a {@link Song}.
+     * 
+     * @param lines The lines container to be initialized.
+     * @param sp The list of parameters
+     * @param timeSignature The time signature to use.
+     */
+    private void initializeSongLines(List<NoteLine> lines, String[] sp, TimeSignature timeSignature) {
+        int lineNum = 0;
+        NoteLine st = new NoteLine();
+        for (String spl : sp) {
+            if (spl.contains(":") && !spl.contains("VOL")) {
+                String[] meas = spl.split(":");
+                if (meas.length != 2) {
+                    continue;
                 }
-            } else {
-                String[] sp = s.split(",");
-                int lineNum = 0;
-                NoteLine st = new NoteLine();
-                for (String spl : sp) {
-                    if (spl.contains(":") && !spl.contains("VOL")) {
-                        String[] meas = spl.split(":");
-                        if (meas.length != 2) {
-                            continue;
-                        }
-                        lineNum = (Integer.parseInt(meas[0]) - 1)
-                                * timeSignature.top()
-                                + Integer.parseInt(meas[1]);
-                    } else {
-                        if (spl.contains("VOL")) {
-                            st.setVolume(Integer.parseInt(spl.substring(
-                                    spl.indexOf(":") + 1).trim()));
-                        } else {
-                            try {
-                                st.getNotes().add(parseNote(spl));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
+                lineNum = (Integer.parseInt(meas[0]) - 1)
+                        * timeSignature.top()
+                        + Integer.parseInt(meas[1]);
                 
-                if (lineNum < lines.size()) {
-                    lines.set(lineNum, st);
-                    
-                } else {
-                    while (lines.size() < lineNum) {
-                        lines.addLast(new NoteLine());
-                    }
-                    
-                    lines.addLast(st);
+            } else if (spl.contains("VOL")) {
+                st.setVolume(Integer.parseInt(spl.substring(
+                        spl.indexOf(":") + 1).trim()));
+            } else {
+                try {
+                    st.getNotes().add(parseNote(spl));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             }
         }
-
-        Song loaded = new Song(lines);
-        loaded.setTempo(tempo);
-        loaded.setNoteExtensions(noteExtensions);
-        loaded.setTimeSignature(timeSignature);
-        loaded.setSoundset(soundset);
         
-        return loaded;
+        CollectionUtils.addFillerThenElement(lines, st, lineNum, NoteLine::new);
     }
     
-    // Coin and piranha used to be swapped, so we unswap the note extensions
-    // found in sequences files to conform with existing files
-    private void swap15And16(boolean[] exts) {
-        boolean ext15 = exts[15];
-        exts[15] = exts[16];
-        exts[16] = ext15;
+    /**
+     * Parses a bunch of text from a save file and makes a
+     * <code>Song</code> out of it.
+     *
+     * @param read
+     *            <code>List</code> of notes and parameters.
+     * @return Hopefully, a decoded <code>Song</code>
+     */
+    private Song parseText(List<String> read) {
+        List<NoteLine> lines = new ArrayList<>();
+        SongProperties songProps = new SMPSongProperties();
+        
+        for (String s : read) {
+            String[] sp = s.split(",");
+            
+            if (CollectionUtils.containsAny(s, "TEMPO", "EXT", "TIME", "SOUNDSET")) {
+                initializeSongProperties(songProps, sp);
+            } else {
+                initializeSongLines(lines, sp, songProps.getTimeSignature());
+            }
+        }
+
+        return new Song(lines, songProps);
     }
 
     private static Note parseNote(String spl) throws ParseException {
