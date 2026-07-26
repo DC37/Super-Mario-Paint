@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.sound.midi.MidiChannel;
 
+import backend.BackendUtils;
 import backend.editing.ModifySongManager;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
@@ -464,8 +465,7 @@ public class SMPFXController {
             boolean ex = StateMachine.getNoteExtension(inst.ordinal());
             StateMachine.setNoteExtension(inst.ordinal(), !ex);
             
-            @SuppressWarnings("java:S3358")
-            int i = (inst.ordinal() == 15) ? 16 : (inst.ordinal() == 16) ? 15 : inst.ordinal();
+            int i = BackendUtils.swapCoinPiranhaInstrumentIdxs(inst.ordinal());
             
             staff.getSequence().getNoteExtensions()[i] = !ex;
             
