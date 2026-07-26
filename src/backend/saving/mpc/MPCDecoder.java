@@ -1,12 +1,5 @@
 package backend.saving.mpc;
 
-import static backend.saving.mpc.TextUtil.chop;
-import static backend.saving.mpc.TextUtil.clean;
-import static backend.saving.mpc.TextUtil.dice;
-import static backend.saving.mpc.TextUtil.parseAccidental;
-import static backend.saving.mpc.TextUtil.parsePosition;
-import static backend.saving.mpc.TextUtil.parseVolume;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -82,66 +75,84 @@ public class MPCDecoder implements Decoder<Song> {
         if (in == null || in.isEmpty() || in.indexOf('*') == -1) {
             throw new ParseException("Invalid Text File.", 0);
         }
-        List<String> everything = chop(clean(in));
+        List<String> everything = TextUtil.chop(TextUtil.clean(in));
         String timeSig = in.substring(0, in.indexOf('*'));
         String tempo = in.substring(in.indexOf('%') + 1);
         return populateSequence(timeSig, everything, tempo);
     }
 
     /**
-     * Creates a new Super Mario Paint sequence from the input Mario Paint
-     * Composer text data.
+     * Parses the notes of a processed note line given its instruments.
+     * 
+     * @param sl The note line to deposit the parsing results into
+     * @param inst The list of instruments
+     */
+    private void parseNotes(NoteLine sl, List<String> inst) {
+    	for (String note : inst) {
+            if (note.isEmpty())
+                continue;
+            
+            SMPInstrument in = MPCInstrumentIndex.valueOf(note.charAt(0));
+            int pos = 0;
+            Accidental acc = Accidental.NATURAL;
+            MuteModifier mod = MuteModifier.REGULAR;
+            
+            if (note.length() == 3) {
+                if (note.substring(1).equals("17")) {
+                	mod = MuteModifier.MUTE_THIS_INST;
+                } else {
+                    pos = TextUtil.parsePosition(note.charAt(1));
+                    acc = TextUtil.parseAccidental(note.charAt(2));
+                }
+            } else if (note.length() == 2) {
+                pos = TextUtil.parsePosition(note.charAt(1));
+            }
+            
+            Note sn = new Note(in, pos, acc, mod);
+            sl.getNotes().add(sn);
+        }
+    }
+    
+    /**
+     * Creates a new Super Mario Paint song from the
+     * Mario Paint Composer text data input.
      *
      * @param timeSig
      *            The time signature of the Mario Paint Composer song.
      * @param songData
-     *            The text data of the Mario Paint Composer song. This defines
-     *            the notes and instruments on each note line.
+     *            The text data of the Mario Paint Composer song.
+     *            This defines the notes and instruments on each note line.
      * @param tempo
      *            The tempo at which this should be played at.
-     * @return A new <code>StaffSequence</code> that is to be loaded by the main
+     * @return A new <code>Song</code> that is to be loaded by the main
      *         program.
      */
-    private Song populateSequence(String timeSig,
-            List<String> songData, String tempo) {
+    private Song populateSequence(String timeSig, List<String> songData, String tempo) {
+    	
         List<NoteLine> lines = new ArrayList<>(Values.LINES_PER_MPC_SONG);
 
         for (String s : songData) {
             NoteLine sl = new NoteLine();
             if (s.length() <= 1) {
-                lines.addLast(sl);
+                lines.add(sl);
                 continue;
             }
-            List<String> inst = dice(s);
-            int vol = parseVolume(s.charAt(s.length() - 2));
-            for (String note : inst) {
-                if (note.isEmpty())
-                    continue;
-                SMPInstrument in = MPCInstrumentIndex.valueOf(note.charAt(0));
-                int pos = 0;
-                Accidental acc = Accidental.NATURAL;
-                if (note.length() == 3) {
-                    if (note.substring(1).equals("17")) {
-                        Note mn = new Note(in, pos, acc, MuteModifier.MUTE_THIS_INST);
-                        sl.getNotes().add(mn);
-                        continue;
-                    } else {
-                        pos = parsePosition(note.charAt(1));
-                        acc = parseAccidental(note.charAt(2));
-                    }
-                } else if (note.length() == 2) {
-                    pos = parsePosition(note.charAt(1));
-                    acc = Accidental.NATURAL;
-                }
-                Note sn = new Note(in, pos, acc);
-                sl.getNotes().add(sn);
-            }
+
+            List<String> inst = TextUtil.dice(s);
+            int vol = TextUtil.parseVolume(s.charAt(s.length() - 2));
+            
+            parseNotes(sl, inst);
+            
             sl.setVolume(vol);
-            lines.addLast(sl);
+            lines.add(sl);
         }
 
         Song song = new Song(lines);
         song.setTempo(Double.parseDouble(tempo));
+        
+        // TODO: Check if this is valid for MPC files.
+        // song.setTimeSignature(TimeSignature.valueOf(timeSig));
+        
         return song;
     }
 
