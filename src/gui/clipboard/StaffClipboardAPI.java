@@ -128,12 +128,44 @@ public class StaffClipboardAPI {
     }
 
     /**
+     * Paste copied notes.
+     * 
+     * @param lineSrc The notes line to copy
+     * @param lineDest The notes line where the copy will be received
+     * @param line The line number
+     */
+    private void pasteNotes(NoteLine lineSrc, NoteLine lineDest, int line) {
+    	for (Note note : lineSrc.getNotes()) {
+            
+            // see StaffInstrumentEventHandler's placeNote function
+            Note theStaffNote = new Note(note);
+
+            if (lineDest.getNotes().isEmpty()) {
+                lineDest.setVolume(Values.DEFAULT_VELOCITY);
+                
+                if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+                    StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
+                            .getVolHandler(line - StateMachine.getMeasureLineNum());
+                    sveh.updateVolume();
+                }
+
+                commandManager.execute(new AddVolumeCommand(lineDest, Values.DEFAULT_VELOCITY));
+            }
+
+            if (!lineDest.getNotes().contains(theStaffNote)) {
+                lineDest.getNotes().add(theStaffNote);
+                StateMachine.setSongModified(true);
+                commandManager.execute(new AddNoteCommand(lineDest, theStaffNote));
+            }
+        }
+    }
+    
+    /**
      * Paste copied notes and volumes.
      * 
      * @param lineMoveTo starting line to paste data at
      */
     public void paste(int lineMoveTo) {
-
         Map<Integer, NoteLine> copiedData = theStaffClipboard.getCopiedData();
         
         for (Map.Entry<Integer, NoteLine> lineCopy : copiedData.entrySet()) {
@@ -141,32 +173,12 @@ public class StaffClipboardAPI {
             
             NoteLine lineDest = theStaff.getSequence().getLine(line);
             NoteLine lineSrc = lineCopy.getValue();
-            for(Note note : lineSrc.getNotes()) {
-                
-                // see StaffInstrumentEventHandler's placeNote function
-                Note theStaffNote = new Note(note);
-
-                if (lineDest.getNotes().isEmpty()) {
-                    lineDest.setVolume(Values.DEFAULT_VELOCITY);
-                    
-                    if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
-                        StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
-                                .getVolHandler(line - StateMachine.getMeasureLineNum());
-                        sveh.updateVolume();
-                    }
-
-                    commandManager.execute(new AddVolumeCommand(lineDest, Values.DEFAULT_VELOCITY));
-                }
-
-                if (!lineDest.getNotes().contains(theStaffNote)) {
-                    lineDest.getNotes().add(theStaffNote);
-                    StateMachine.setSongModified(true);
-                    commandManager.execute(new AddNoteCommand(lineDest, theStaffNote));
-                }
-            }
             
-            // paste volume
-            if(!ignoreVolumesFlag) {
+            // Paste notes
+            pasteNotes(lineSrc, lineDest, line);
+            
+            // Paste volume
+            if (!ignoreVolumesFlag) {
                 commandManager.execute(new RemoveVolumeCommand(lineDest, lineDest.getVolume()));
                 lineDest.setVolume(lineSrc.getVolume());
                 commandManager.execute(new AddVolumeCommand(lineDest, lineDest.getVolume()));
@@ -176,8 +188,8 @@ public class StaffClipboardAPI {
                             .getVolHandler(line - StateMachine.getMeasureLineNum());
                     sveh.updateVolume();
                 }
-                StateMachine.setSongModified(true);
                 
+                StateMachine.setSongModified(true);
             }
             
         }
