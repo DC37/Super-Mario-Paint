@@ -130,8 +130,8 @@ public interface SMPButtonInterface {
         }, conditionPressed, imageReleased, imagePressed);
     }
     
-    public static Image DEFAULT_IMAGE_RELEASED = new Image(SMPResourceUtil.getStream("GENERIC_BUTTON_RELEASED.png", SMPResourceType.UI));
-    public static Image DEFAULT_IMAGE_PRESSED = new Image(SMPResourceUtil.getStream("GENERIC_BUTTON_PRESSED.png", SMPResourceType.UI));
+    public static Image DEFAULT_IMAGE_RELEASED = new Image(SMPResourceUtil.getStream("GENERIC_BUTTON_RELEASED.png", SMPResourceType.BUTTON));
+    public static Image DEFAULT_IMAGE_PRESSED = new Image(SMPResourceUtil.getStream("GENERIC_BUTTON_PRESSED.png", SMPResourceType.BUTTON_PRESSED));
     
     public static String STYLE_CLASS_IMAGE_BUTTON = "smp-button";
     public static String STYLE_CLASS_IMAGE_INSTRUMENT_BUTTON = "smp-instrument-button";
