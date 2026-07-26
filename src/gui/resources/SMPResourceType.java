@@ -6,6 +6,8 @@ public enum SMPResourceType {
     STYLE("styles"),
     UI("ui"),
     CURSOR("ui/cursors"),
+    STAFF("ui/staff"),
+    CONTROL("ui/controls"),
     BUTTON("ui/buttons/released"),
     BUTTON_PRESSED("ui/buttons/pressed"),
     BUTTON_LABEL("ui/buttons/labels"),
