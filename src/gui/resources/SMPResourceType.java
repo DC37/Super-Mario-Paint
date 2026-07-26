@@ -10,7 +10,10 @@ public enum SMPResourceType {
     INSTRUMENT_SUSTAINED_OFF("instruments/sustained_off"),
     INSTRUMENT_SUSTAINED_ON("instruments/sustained_on"),
     INSTRUMENT_GRAY("instruments/gray"),
-    INSTRUMENT_SILHOUETTE("instruments/silhouettes");
+    INSTRUMENT_SILHOUETTE("instruments/silhouettes"),
+    ACCIDENTAL("accidentals/normal"),
+    ACCIDENTAL_GRAY("accidentals/gray"),
+    ACCIDENTAL_SILHOUETTE("accidentals/silhouettes");
     
     private String prefix;
     
