@@ -70,6 +70,16 @@ public class Song extends Sequence {
     }
     
     /**
+     * Builds a sequence with a list of note lines and a set of properties.
+     * @param lines A list of note lines
+     * @param props The properties to set to the song
+     */
+    public Song(List<NoteLine> lines, SongProperties props) {
+        this(lines);
+        setSongProperties(props);
+    }
+    
+    /**
      * Copy constructor for a song.
      * @param sequence A song to copy
      */
@@ -79,6 +89,13 @@ public class Song extends Sequence {
         System.arraycopy(sequence.noteExtensions, 0, this.noteExtensions, 0, this.noteExtensions.length);
     	this.timeSignature = sequence.timeSignature;
     	this.soundsetBinding = sequence.soundsetBinding;
+    }
+    
+    private void setSongProperties(SongProperties props) {
+        this.setTempo(props.getTempo());
+        this.setNoteExtensions(props.getNoteExtensions());
+        this.setTimeSignature(props.getTimeSignature());
+        this.setSoundset(props.getSoundset());
     }
 
     /**
