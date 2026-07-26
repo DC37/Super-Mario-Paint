@@ -20,7 +20,10 @@ public enum ImageIndex {
     BLANK,
     
     /** Cursor images */
-    CURSOR_0, CURSOR_1, CURSOR_2, CURSOR_3,
+    CURSOR_0 (SMPResourceType.CURSOR),
+    CURSOR_1 (SMPResourceType.CURSOR),
+    CURSOR_2 (SMPResourceType.CURSOR),
+    CURSOR_3 (SMPResourceType.CURSOR),
     
     /* INSTRUMENTS START HERE */
     

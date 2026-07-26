@@ -5,6 +5,7 @@ public enum SMPResourceType {
     UNCATEGORIZED("."),
     STYLE("styles"),
     UI("ui"),
+    CURSOR("ui/cursors"),
     SOUNDFONT("soundfonts"),
     INSTRUMENT("instruments/normal"),
     INSTRUMENT_SUSTAINED_OFF("instruments/sustained_off"),
