@@ -372,12 +372,12 @@ public class OptionsMenu {
 
     private CheckBox makeBarsVisibleCheckbox() {
         CheckBox box = new CheckBox("Bars visible");
-        box.setSelected(Settings.barsVisible);
+        box.setSelected(Settings.areBarsVisible());
         return box;
     }
 
     private void updateBarVisibility() {
-        Settings.barsVisible = barsVisibleBox.isSelected();
+    	Settings.setBarsVisibility(barsVisibleBox.isSelected());
     }
 
     private CheckBox makeNumsVisibleCheckbox() {
