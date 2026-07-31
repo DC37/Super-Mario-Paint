@@ -13,7 +13,6 @@ import javax.sound.midi.Soundbank;
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
 import gui.SMPInstrument;
-import gui.Settings;
 import gui.Utilities;
 import gui.Values;
 import gui.resources.FetchStrategy;

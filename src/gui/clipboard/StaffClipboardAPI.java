@@ -141,7 +141,7 @@ public class StaffClipboardAPI {
             Note theStaffNote = new Note(note);
 
             if (lineDest.getNotes().isEmpty()) {
-                lineDest.setVolume(Values.DEFAULT_VELOCITY);
+                lineDest.setVolume(Values.getDefaultVolume());
                 
                 if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
                     StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
@@ -149,7 +149,7 @@ public class StaffClipboardAPI {
                     sveh.updateVolume();
                 }
 
-                commandManager.execute(new AddVolumeCommand(lineDest, Values.DEFAULT_VELOCITY));
+                commandManager.execute(new AddVolumeCommand(lineDest, Values.getDefaultVolume()));
             }
 
             if (!lineDest.getNotes().contains(theStaffNote)) {
