@@ -145,7 +145,7 @@ public class Settings {
         private static final long serialVersionUID = -3844082395768911493L;
 
         /** The number of setting types that we have. */
-        private final transient int NUM_SETTINGS = 11;
+        private static final transient int NUM_SETTINGS = 11;
 
         /** The array of settings that we are going to initialize. */
         public boolean[] set = new boolean[NUM_SETTINGS];
