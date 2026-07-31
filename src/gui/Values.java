@@ -1,7 +1,10 @@
 package gui;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
+import backend.songs.NoteInfo;
 import backend.songs.Pitch;
 import backend.songs.TimeSignature;
 import gui.components.buttons.SMPInstrumentButtonGroup;
@@ -141,24 +144,17 @@ public class Values {
     public static final int DRUMCHANNEL = 10;
 
     /** Array of notes that we can see on the staff. */
-    public static final Pitch[] STAFF_NOTES = {
-            Pitch.valueOf(36), Pitch.valueOf(38), Pitch.valueOf(40),
-            Pitch.valueOf(41), Pitch.valueOf(43), Pitch.valueOf(45),
-            Pitch.valueOf(47), Pitch.valueOf(48), Pitch.valueOf(50),
-            Pitch.valueOf(52), Pitch.valueOf(53), Pitch.valueOf(55),
-            Pitch.valueOf(57), Pitch.valueOf(59), Pitch.valueOf(60),
-            Pitch.valueOf(62), Pitch.valueOf(64), Pitch.valueOf(65),
-            Pitch.valueOf(67), Pitch.valueOf(69), Pitch.valueOf(71),
-            Pitch.valueOf(72), Pitch.valueOf(74), Pitch.valueOf(76),
-            Pitch.valueOf(77), Pitch.valueOf(79), Pitch.valueOf(81),
-            Pitch.valueOf(83), Pitch.valueOf(84) };
-    
-    public static final String[] STAFF_NOTE_NAMES = {
-            "C2", "D2", "E2", "F2", "G2", "A2", "B2",
-            "C3", "D3", "E3", "F3", "G3", "A3", "B3",
-            "C4", "D4", "E4", "F4", "G4", "A4", "B4",
-            "C5", "D5", "E5", "F5", "G5", "A5", "B5",
-            "C6"
+    private static final NoteInfo[] STAFF_NOTES = {
+    		NoteInfo.of(36, "C2"), NoteInfo.of(38, "D2"), NoteInfo.of(40, "E2"),
+        	NoteInfo.of(41, "F2"), NoteInfo.of(43, "G2"), NoteInfo.of(45, "A2"),
+        	NoteInfo.of(47, "B2"), NoteInfo.of(48, "C3"), NoteInfo.of(50, "D3"),
+        	NoteInfo.of(52, "E3"), NoteInfo.of(53, "F3"), NoteInfo.of(55, "G3"),
+        	NoteInfo.of(57, "A3"), NoteInfo.of(59, "B3"), NoteInfo.of(60, "C4"),
+        	NoteInfo.of(62, "D4"), NoteInfo.of(64, "E4"), NoteInfo.of(65, "F4"),
+        	NoteInfo.of(67, "G4"), NoteInfo.of(69, "A4"), NoteInfo.of(71, "B4"),
+        	NoteInfo.of(72, "C5"), NoteInfo.of(74, "D5"), NoteInfo.of(76, "E5"),
+        	NoteInfo.of(77, "F5"), NoteInfo.of(79, "G5"), NoteInfo.of(81, "A5"),
+        	NoteInfo.of(83, "B5"), NoteInfo.of(84, "C6")
     };
     
     /**
@@ -237,7 +233,7 @@ public class Values {
     
     // Synchronize animations for all buttons in this group
     public static final SMPInstrumentButtonGroup INSTRUMENT_BTNS_GROUP = new SMPInstrumentButtonGroup();
-    
+        
     /**
      * Gets the current default volume value.
      * 
@@ -254,6 +250,39 @@ public class Values {
      */
     public static void setDefaultVolume(int vol) {
     	Values.DEFAULT_VELOCITY = vol;
+    }
+    
+    /**
+     * Get a {@link Pitch} note given its vertical staff bar position,
+     * optionally altered by an accidental offset. 
+     * 
+     * @param verticalPosition The vertical staff bar position of the base note.
+     * @param accidentalOffset Amount of offset to add due to accidentals.
+     * @return The {@link Pitch} representing the obtained note.
+     */
+    public static Pitch getNotePitch(int verticalPosition, int accidentalOffset) {
+    	return Pitch.valueOf(Values.STAFF_NOTES[verticalPosition].getValue() + accidentalOffset);
+    }
+    
+    /**
+     * Get the name associated to the note
+     * in the vertical staff bar position.
+     * 
+     * @param verticalPosition The vertical staff bar position of the note.
+     * @return The name of the note.
+     */
+    public static String getNoteName(int verticalPosition) {
+    	return Values.STAFF_NOTES[verticalPosition].getName();
+    }
+    
+    /**
+     * Get the staff notes as a {@link List}.
+     * 
+     * @return The staff notes described as a
+     *         {@link List} of {@link NodeInfo} objects.
+     */
+    public static List<NoteInfo> getNotes() {
+    	return Arrays.asList(Values.STAFF_NOTES);
     }
     
 }

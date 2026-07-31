@@ -841,7 +841,7 @@ public class SMPFXController {
     
     private static String noteToString(Note note) {
         String instName = note.getInstrument().toString();
-        String noteName = Values.STAFF_NOTE_NAMES[note.getVerticalPosition()];
+        String noteName = Values.getNoteName(note.getVerticalPosition());
         String noteAcc = accidentalToString(note.getAccidental());
         String muteName = muteModifierToString(note.getMuteModifier());
         return instName + " " + noteName + noteAcc + muteName;
