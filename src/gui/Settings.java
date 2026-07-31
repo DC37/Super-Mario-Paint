@@ -93,7 +93,7 @@ public class Settings {
     /**
      * Visibility of the vertical bars on the staff
      */
-    public static boolean barsVisible = true;
+    private static boolean barsVisible = true;
     
     /**
      * Visibility of measure numbers on the staff
@@ -173,6 +173,24 @@ public class Settings {
             RESIZE_WIN       = loaded.set[9];
             ADV_MODE         = loaded.set[10];
         }
+    }
+    
+    /**
+     * Checks whether vertical bars on the staff should be visible.
+     * 
+     * @return A flag denoting the current visibility setting.
+     */
+    public static boolean areBarsVisible() {
+    	return Settings.barsVisible;
+    }
+    
+    /**
+     * Sets whether vertical bars on the staff should be visible.
+     * 
+     * @param visibility The visibility flag setting to use.
+     */
+    public static void setBarsVisibility(boolean visibility) {
+    	Settings.barsVisible = visibility;
     }
 
 }
