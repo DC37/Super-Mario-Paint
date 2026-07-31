@@ -98,7 +98,7 @@ public class Settings {
     /**
      * Visibility of measure numbers on the staff
      */
-    public static boolean numsVisible = true;
+    private static boolean numsVisible = true;
 
     /** Used to save settings via object serialization. */
     private static class SettingsSaver implements Serializable {
@@ -191,6 +191,24 @@ public class Settings {
      */
     public static void setBarsVisibility(boolean visibility) {
     	Settings.barsVisible = visibility;
+    }
+    
+    /**
+     * Checks whether measure numbers on the staff should be visible.
+     * 
+     * @return A flag denoting the current visibility setting.
+     */
+    public static boolean areNumbersVisible() {
+    	return Settings.numsVisible;
+    }
+    
+    /**
+     * Sets whether measure numbers on the staff should be visible.
+     * 
+     * @param visibility The visibility flag setting to use.
+     */
+    public static void setNumbersVisibility(boolean visibility) {
+    	Settings.numsVisible = visibility;
     }
 
 }

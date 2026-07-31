@@ -394,7 +394,7 @@ public class StaffDisplayManager {
             Text currText = measureNums.get(i);
             
             currImage.setVisible(Settings.areBarsVisible());
-            currText.setVisible(Settings.numsVisible);
+            currText.setVisible(Settings.areNumbersVisible());
 
             int currentIndex = currLine + i;
             int currentBarIndex = currentIndex / barLength;
