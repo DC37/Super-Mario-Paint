@@ -382,12 +382,12 @@ public class OptionsMenu {
 
     private CheckBox makeNumsVisibleCheckbox() {
         CheckBox box = new CheckBox("Measure numbers visible");
-        box.setSelected(Settings.numsVisible);
+        box.setSelected(Settings.areNumbersVisible());
         return box;
     }
 
     private void updateNumVisibility() {
-        Settings.numsVisible = numsVisibleBox.isSelected();
+    	Settings.setNumbersVisibility(numsVisibleBox.isSelected());
     }
 
 }
