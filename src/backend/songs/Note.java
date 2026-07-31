@@ -123,7 +123,7 @@ public class Note {
      * @return The pitch of this note
      */
     public Pitch getPitch() {
-        return Pitch.valueOf(Values.STAFF_NOTES[verticalPosition].getValue() + accidental.getOffset());
+    	return Values.getNotePitch(verticalPosition, accidental.getOffset());
     }
 
     /**

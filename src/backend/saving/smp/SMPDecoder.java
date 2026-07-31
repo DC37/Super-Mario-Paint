@@ -150,8 +150,8 @@ public class SMPDecoder implements Decoder<Song> {
             throw new ParseException("Invalid note", 0);
         }
         theInstrument = SMPInstrument.valueOf(sp[0]);
-        for (int i = 0; i < Values.STAFF_NOTES.length; i++) {
-            if (sp[1].contains(Values.STAFF_NOTE_NAMES[i])) {
+        for (int i = 0; i < Values.getNotes().size(); i++) {
+            if (sp[1].contains(Values.getNotes().get(i).getName())) {
                 verticalPosition = i;
             }
         }
