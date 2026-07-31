@@ -54,7 +54,7 @@ public class Values {
      * The default volume that we will be playing notes at. This can be changed
      * over the course of the use of this program.
      */
-    public static int DEFAULT_VELOCITY = 96;
+    private static int DEFAULT_VELOCITY = 96;
 
     /**
      * The number of distinct steps of notes in a note line on the staff. This
@@ -237,5 +237,23 @@ public class Values {
     
     // Synchronize animations for all buttons in this group
     public static final SMPInstrumentButtonGroup INSTRUMENT_BTNS_GROUP = new SMPInstrumentButtonGroup();
+    
+    /**
+     * Gets the current default volume value.
+     * 
+     * @return An {@code int} representing the current default volume.
+     */
+    public static int getDefaultVolume() {
+    	return Values.DEFAULT_VELOCITY;
+    }
+    
+    /**
+     * Sets the current default volume value.
+     * 
+     * @param vol The volume amount to set as default.
+     */
+    public static void setDefaultVolume(int vol) {
+    	Values.DEFAULT_VELOCITY = vol;
+    }
     
 }

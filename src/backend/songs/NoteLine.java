@@ -33,7 +33,7 @@ public class NoteLine {
      * Create an empty line of notes at the default volume.
      */
     public NoteLine() {
-        this(Values.DEFAULT_VELOCITY);
+        this(Values.getDefaultVolume());
     }
     
     /**
@@ -43,7 +43,7 @@ public class NoteLine {
      */
     public NoteLine(int volume) {
         this.notes = new ArrayList<>();
-        this.volume = (checkVolumeValue(volume)) ? volume : Values.DEFAULT_VELOCITY;
+        this.volume = (checkVolumeValue(volume)) ? volume : Values.getDefaultVolume();
     }
     
     /**

@@ -492,7 +492,7 @@ public class SMPFXController {
         } else {
             MidiChannel[] chan = soundPlayer.getChannels();
             if (chan[inst.getChannel() - 1] != null) {
-                chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.DEFAULT_VELOCITY);
+                chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.getDefaultVolume());
             }
             
             StateMachine.setSelectedInstrument(inst);

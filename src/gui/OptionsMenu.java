@@ -237,7 +237,7 @@ public class OptionsMenu {
         Slider dV = new Slider();
         dV.setMax((double) Values.MAX_VELOCITY + 1);
         dV.setMin(0);
-        dV.setValue(Values.DEFAULT_VELOCITY);
+        dV.setValue(Values.getDefaultVolume());
         dV.setShowTickMarks(true);
         dV.setShowTickLabels(true);
         dV.setSnapToTicks(true);
@@ -258,7 +258,7 @@ public class OptionsMenu {
     /** Updates the default volume of the program notes. */
     private void changeDefaultVol() {
         int vol = (int) defaultVolume.getValue();
-        Values.DEFAULT_VELOCITY = vol >= 128 ? 127 : vol;
+        Values.setDefaultVolume(vol >= 128 ? 127 : vol);
     }
 
     /** Updates the tempo from the options dialog. */

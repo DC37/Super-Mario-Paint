@@ -13,7 +13,6 @@ import backend.songs.MuteModifier;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.SMPInstrument;
-import gui.Settings;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
@@ -187,7 +186,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         boolean muteA = StateMachine.isMuteAPressed();
         
         if (vel <= 0 || vel >= 128)
-            vel = Values.DEFAULT_VELOCITY;
+            vel = Values.getDefaultVolume();
 
         log.debug("Index: {}", theInd);
         log.debug("Position: {}", position);
@@ -207,8 +206,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
                 line + StateMachine.getMeasureLineNum());
 
         if (temp.getNotes().isEmpty()) {
-            temp.setVolume(Values.DEFAULT_VELOCITY);
-            commandManager.execute(new AddVolumeCommand(temp, Values.DEFAULT_VELOCITY));
+            temp.setVolume(Values.getDefaultVolume());
+            commandManager.execute(new AddVolumeCommand(temp, Values.getDefaultVolume()));
         }
 
         if (!temp.getNotes().contains(theStaffNote)) {
@@ -262,7 +261,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
                     .getVolHandler(line);
             sveh.setVolumeVisible(false);
             commandManager.execute(new RemoveVolumeCommand(temp, temp.getVolume()));
-            temp.setVolume(Values.DEFAULT_VELOCITY);
+            temp.setVolume(Values.getDefaultVolume());
         }
         theStaff.redraw();
     }
