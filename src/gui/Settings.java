@@ -100,6 +100,42 @@ public class Settings {
      */
     private static boolean numsVisible = true;
 
+    /**
+     * Checks whether vertical bars on the staff should be visible.
+     * 
+     * @return A flag denoting the current visibility setting.
+     */
+    public static boolean areBarsVisible() {
+    	return Settings.barsVisible;
+    }
+    
+    /**
+     * Sets whether vertical bars on the staff should be visible.
+     * 
+     * @param visibility The visibility flag setting to use.
+     */
+    public static void setBarsVisibility(boolean visibility) {
+    	Settings.barsVisible = visibility;
+    }
+    
+    /**
+     * Checks whether measure numbers on the staff should be visible.
+     * 
+     * @return A flag denoting the current visibility setting.
+     */
+    public static boolean areNumbersVisible() {
+    	return Settings.numsVisible;
+    }
+    
+    /**
+     * Sets whether measure numbers on the staff should be visible.
+     * 
+     * @param visibility The visibility flag setting to use.
+     */
+    public static void setNumbersVisibility(boolean visibility) {
+    	Settings.numsVisible = visibility;
+    }
+    
     /** Used to save settings via object serialization. */
     private static class SettingsSaver implements Serializable {
 
@@ -173,42 +209,6 @@ public class Settings {
             RESIZE_WIN       = loaded.set[9];
             ADV_MODE         = loaded.set[10];
         }
-    }
-    
-    /**
-     * Checks whether vertical bars on the staff should be visible.
-     * 
-     * @return A flag denoting the current visibility setting.
-     */
-    public static boolean areBarsVisible() {
-    	return Settings.barsVisible;
-    }
-    
-    /**
-     * Sets whether vertical bars on the staff should be visible.
-     * 
-     * @param visibility The visibility flag setting to use.
-     */
-    public static void setBarsVisibility(boolean visibility) {
-    	Settings.barsVisible = visibility;
-    }
-    
-    /**
-     * Checks whether measure numbers on the staff should be visible.
-     * 
-     * @return A flag denoting the current visibility setting.
-     */
-    public static boolean areNumbersVisible() {
-    	return Settings.numsVisible;
-    }
-    
-    /**
-     * Sets whether measure numbers on the staff should be visible.
-     * 
-     * @param visibility The visibility flag setting to use.
-     */
-    public static void setNumbersVisibility(boolean visibility) {
-    	Settings.numsVisible = visibility;
     }
 
 }
