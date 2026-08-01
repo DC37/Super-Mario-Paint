@@ -17,7 +17,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 import utilities.MathUtils;
 
@@ -323,7 +322,7 @@ public class Staff {
      * @param loaded
      *            The loaded arrangement.
      */
-    public void populateStaffArrangement(Arrangement loaded, Window owner) {
+    public void populateStaffArrangement(Arrangement loaded) {
     	Song first = loaded.getSequences().getFirst();
         populateStaff(first);
         
