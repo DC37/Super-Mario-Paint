@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
@@ -413,7 +414,7 @@ public class Staff {
     class AnimationService extends Service<Staff> {
 
         /** Number of lines queued up to play. */
-        protected volatile int queue = 0;
+    	protected AtomicInteger queue = new AtomicInteger(0);
 
         @Override
         protected Task<Staff> createTask() {
@@ -477,18 +478,18 @@ public class Staff {
                 
                 StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
 
-                queue = 0;
+                queue.set(0);
                 
                 while (songPlaying) {
                     displayManager.updatePlayBars(index);
                     
                     if (zero) {
                         resetLocation();
-                        while (queue > 0);
+                        while (queue.get() > 0);
                         zero = false;
                     }
                     
-                    queue++;
+                    queue.incrementAndGet();
                     playNextLine();
                     counter++;
                     
@@ -523,7 +524,7 @@ public class Staff {
                     setLocation(loc);
                 }
                 
-                runUI(currentLoc, index);
+                runUI(index);
                 
                 advance = index >= Values.NOTELINES_IN_THE_WINDOW - 1;
                 index = advance ? 0 : (index + 1);
@@ -543,7 +544,7 @@ public class Staff {
                     try {
                         playSoundLine(index);
                     } finally {
-                        queue--;
+                    	queue.decrementAndGet();
                     }
                 });
             }            
@@ -570,7 +571,7 @@ public class Staff {
                 List<Song> seq = getArrangement().getSequences();
                 int endLine;
 
-                queue = 0;
+                queue.set(0);
                 
                 for (int i = 0; i < seq.size(); i++) {
                     setSequence(getArrangement().getSequences().get(i));
@@ -596,7 +597,7 @@ public class Staff {
                     while (songPlaying && arrPlaying) {
                         displayManager.updatePlayBars(index);
 
-                        queue++;
+                        queue.incrementAndGet();
                         playNextLine();
                         
                         counter++;
@@ -611,7 +612,7 @@ public class Staff {
                         break;
 
                     /* Force emptying of queue before changing songs. */
-                    while (queue > 0);
+                    while (queue.get() > 0);
                 }
                 
                 StateMachine.setPlaybackActive(false);
