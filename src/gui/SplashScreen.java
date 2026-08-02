@@ -98,21 +98,21 @@ public class SplashScreen extends Preloader {
     }
 
     @Override
-    public void handleApplicationNotification(PreloaderNotification pn) {
-        if (pn instanceof ProgressNotification) {
+    public void handleApplicationNotification(PreloaderNotification notif) {
+    	if (notif instanceof ProgressNotification pn) {
             /* expect application to send us progress notifications
                with progress ranging from 0 to 1.0 */
-            double v = ((ProgressNotification) pn).getProgress();
+            double v = pn.getProgress();
             bar.setProgress(v);
             
-        } else if (pn instanceof StateChangeNotification) {
+        } else if (notif instanceof StateChangeNotification) {
             /* hide after get any state update from application */
             stage.hide();
             
-        } else if (pn instanceof ErrorNotification) {
-            if (!handleErrorNotification((ErrorNotification)pn)) {
-                stage.close();
-            }
+        } else if (notif instanceof ErrorNotification en
+        		&& !handleErrorNotification(en)) {
+        	
+            stage.close();
         }
     }
     
