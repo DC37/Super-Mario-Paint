@@ -16,12 +16,11 @@ public class TimeSignature {
      */
     private final int[] divs;
 
-    /** We only use the bottom number to display time sigs as "4/4" or "12/8"
-     * for example, but it's not used for anything.
+    /**
+     * We only use the bottom number to display time sigs as "4/4" or "12/8"
+     * for example, but it's not used for anything else beyond that.
      * Kept as a legacy feature, as some song files may use this notation.
-     * @deprecated
      */
-    @Deprecated
     private final int bottom;
     
     public TimeSignature(int barLength) throws IllegalArgumentException {
@@ -65,10 +64,6 @@ public class TimeSignature {
 
     public int top() {
         return top;
-    }
-
-    public int bottom() {
-        return bottom;
     }
     
     public int[] divs() {
