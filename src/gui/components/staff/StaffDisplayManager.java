@@ -226,13 +226,13 @@ public class StaffDisplayManager {
                 for (int d = 0; d < depth; d++) {
                     ImageView iv = makeNoteImageView();
                     stack.getChildren().add(iv);
-                    StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, d);
+                    StaffNoteCoordinate coord = new StaffNoteCoordinate(this, col, row, d);
                     map.put(coord, iv);
                 }
                 
                 ImageView silIv = makeNoteImageView();
                 stack.getChildren().add(silIv);
-                StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, -1);
+                StaffNoteCoordinate coord = new StaffNoteCoordinate(this, col, row, -1);
                 map.put(coord, silIv);
                 
                 vBox.getChildren().add(0, stack);
@@ -265,13 +265,13 @@ public class StaffDisplayManager {
                 for (int d = 0; d < depth; d++) {
                     ImageView iv = makeAccidentalImageView();
                     stack.getChildren().add(iv);
-                    StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, d);
+                    StaffNoteCoordinate coord = new StaffNoteCoordinate(this, col, row, d);
                     mapAcc.put(coord, iv);
                 }
                 
                 ImageView silIv = makeAccidentalImageView();
                 stack.getChildren().add(silIv);
-                StaffNoteCoordinate coord = new StaffNoteCoordinate(col, row, -1);
+                StaffNoteCoordinate coord = new StaffNoteCoordinate(this, col, row, -1);
                 mapAcc.put(coord, silIv);
                 
                 vBox.getChildren().add(0, stack);
@@ -552,38 +552,6 @@ public class StaffDisplayManager {
         
         playbars[position].setVisible(true);
         activePlaybar = position;
-    }
-    
-    /**
-     * Immutable object providing the representation for a coordinate on the staff: column, row, and depth
-     * For given maximum values of row and depth, we provide converters to and from int.
-     */
-    protected class StaffNoteCoordinate {
-        
-        public final int col;
-        public final int row;
-        public final int dep; // special value -1 refers to the layer for silhouettes (dep is irrelevant)
-        
-        public StaffNoteCoordinate(int col, int row, int dep) {
-            this.col = col;
-            this.row = row;
-            this.dep = dep;
-        }
-        
-        public StaffNoteCoordinate(StaffNoteCoordinate oth) {
-            this.col = oth.col;
-            this.row = oth.row;
-            this.dep = oth.dep;
-        }
-        
-        public boolean equals(StaffNoteCoordinate oth) {
-            return this.col == oth.col && this.row == oth.row && this.dep == oth.dep;
-        }
-        
-        public int lin() {
-            return (dep == -1) ? (height * col) + row : (depth * ((height * col) + row)) + dep;
-        }
-        
     }
 
 }

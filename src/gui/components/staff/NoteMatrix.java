@@ -9,7 +9,6 @@ import backend.songs.MuteModifier;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import backend.songs.Song;
-import gui.components.staff.StaffDisplayManager.StaffNoteCoordinate;
 import gui.loaders.ImageIndex;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -128,7 +127,7 @@ class NoteMatrix {
                 int d = stackedAmounts[row];
                 if (d < disp.depth) {
                     stackedAmounts[row] = d + 1;
-                    ImageView iv = matrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
+                    ImageView iv = matrix.get(new StaffNoteCoordinate(disp, col, row, d).lin());
                     iv.setImage(imagesHolder.get(noteImageIndex(s)));
                     iv.setEffect(s.isSelected() ? StaffDisplayManager.highlightBlend : null);
                     iv.setVisible(true);
@@ -137,7 +136,7 @@ class NoteMatrix {
                 d = accStackedAmounts[row];
                 if (d < disp.depth) {
                     accStackedAmounts[row] = d + 1;
-                    ImageView iv = accMatrix.get(disp.new StaffNoteCoordinate(col, row, d).lin());
+                    ImageView iv = accMatrix.get(new StaffNoteCoordinate(disp, col, row, d).lin());
                     iv.setImage(imagesHolder.get(accImageIndex(s)));
                     iv.setVisible(true);
                 }
@@ -152,10 +151,10 @@ class NoteMatrix {
         int col = currentSilhouetteColumn;
         int row = currentSilhouette.getVerticalPosition();
         
-        silMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin()).setVisible(false);
+        silMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin()).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
-            accSilMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin()).setVisible(false);
+            accSilMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin()).setVisible(false);
         }
         
         currentSilhouette = null;
@@ -181,12 +180,12 @@ class NoteMatrix {
         currentSilhouetteColumn = col;
         currentSilhouette = silhouette;
         
-        ImageView iv = silMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
+        ImageView iv = silMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin());
         iv.setImage(imagesHolder.get(noteImageIndex(silhouette)));
         iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
-            ImageView acciv = accSilMatrix.get(disp.new StaffNoteCoordinate(col, row, -1).lin());
+            ImageView acciv = accSilMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin());
             acciv.setImage(imagesHolder.get(accImageIndex(silhouette)));
             acciv.setVisible(true);
         }
