@@ -217,31 +217,8 @@ public class SMPFXController {
         // Set up command manager (undo and redo)
         commandManager = new ModifySongManager(() -> staff.redraw());
         
-        basePane.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            if (event.isControlDown())
-                StateMachine.setCtrlPressed(true);
-            if (event.isShiftDown())
-                StateMachine.setShiftPressed(true);
-            
-            if (event.isControlDown())
-                switch (event.getCode()) {
-                case Y:
-                    commandManager.redo();
-                    break;
-                case Z:
-                    commandManager.undo();
-                    break;
-                default:
-                    break;
-                }
-        });
-        
-        basePane.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            if (!event.isControlDown())
-                StateMachine.setCtrlPressed(false);
-            if (!event.isShiftDown())
-                StateMachine.setShiftPressed(false);
-        });
+        basePane.addEventHandler(KeyEvent.KEY_PRESSED, this::manageShiftCtrlPresses);
+        basePane.addEventHandler(KeyEvent.KEY_RELEASED, this::manageShiftCtrlPresses);
         
         // Set up staff.
         StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, imagesHolder, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
@@ -456,6 +433,26 @@ public class SMPFXController {
         };
         
         Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(StateMachine.getPlaybackActiveProperty()));
+    }
+    
+    private void manageShiftCtrlPresses(KeyEvent event) {
+    	boolean ctrlPressed = event.isControlDown();
+    	
+    	StateMachine.setCtrlPressed(ctrlPressed);
+    	StateMachine.setShiftPressed(event.isShiftDown());
+    	
+    	if (ctrlPressed) {
+            switch (event.getCode()) {
+            case Y:
+                commandManager.redo();
+                break;
+            case Z:
+                commandManager.undo();
+                break;
+            default:
+                break;
+            }
+        }
     }
     
     private void onInstrumentButtonAction(SMPInstrument inst) {
