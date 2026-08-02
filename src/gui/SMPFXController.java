@@ -27,6 +27,7 @@ import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
 import gui.components.SongNameController;
+import gui.components.ModeTypeStringConverter;
 import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
@@ -60,8 +61,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
-import javafx.util.StringConverter;
-import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
 import utilities.MathUtils;
@@ -253,15 +252,13 @@ public class SMPFXController {
         
         // We leverage the StringProperty modeText to bind the properties of the button and the mode in both direction
         // Bidirectional bindings between different types can only be done if one type is String afaik
-        Bindings.bindBidirectional(modeText.textProperty(), modeButton.selectedProperty(), new BooleanStringConverter () {
-            @Override public String toString(Boolean b) { return b ? "Arr" : "Song"; }
-            @Override public Boolean fromString(String string) { return string.equals("Arr"); }
-        });
+        Bindings.bindBidirectional(modeText.textProperty(), modeButton.selectedProperty(),
+        		new ModeTypeStringConverter<>(b -> b != null && b.booleanValue(), isArr -> isArr));
         
-        Bindings.bindBidirectional(modeText.textProperty(), StateMachine.modeProperty(), new StringConverter<SMPMode>() {
-            @Override public String toString(SMPMode mode) { return mode.equals(SMPMode.ARRANGEMENT) ? "Arr" : "Song"; }
-            @Override public SMPMode fromString(String string) { return string.equals("Arr") ? SMPMode.ARRANGEMENT : SMPMode.SONG; }
-        });
+        Bindings.bindBidirectional(modeText.textProperty(), StateMachine.modeProperty(),
+        		new ModeTypeStringConverter<>(
+        				mode -> mode.equals(SMPMode.ARRANGEMENT),
+        				isArr -> (isArr != null && isArr.booleanValue()) ? SMPMode.ARRANGEMENT : SMPMode.SONG));
         
         loopButton.selectedProperty().bindBidirectional(StateMachine.loopPressedProperty());
         muteButton.selectedProperty().bindBidirectional(StateMachine.mutePressedProperty());
