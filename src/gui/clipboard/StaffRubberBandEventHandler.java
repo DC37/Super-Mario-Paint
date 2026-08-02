@@ -142,15 +142,6 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     public void initializeVolumeYMaxCoord(double y) {
         rubberBand.setVolumeYMaxCoord(y);
     }
-    
-    /**
-     * calculate this with line width
-     * @deprecated
-     */
-    @Deprecated
-    public void initializeVolumeSpacing(double x) {
-        // Intentionally left blank.
-    }
 
     /**
      * defines width between lines. REQUIRED. 

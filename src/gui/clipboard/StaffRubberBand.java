@@ -232,42 +232,6 @@ public class StaffRubberBand extends Rectangle {
     }
     
     /**
-     * @deprecated
-     * Second call this to redraw the rubber band to a new size. Alters only x 
-     * dimension.
-     *
-     * @param x x-coord to resize to
-     */
-    @Deprecated
-    public void resizeX(double x) {
-        if (x >= xOrigin) {
-            this.setTranslateX(xOrigin);
-            this.setWidth(x - xOrigin);
-        } else {
-            this.setTranslateX(x);
-            this.setWidth(xOrigin - x);
-        }
-    }
-    
-    /**
-     * @deprecated
-     * Second call this to redraw the rubber band to a new size. Alters only y 
-     * dimension.
-     *
-     * @param y y-coord to resize to
-     */
-    @Deprecated
-    public void resizeY(double y) {
-        if (y >= yOrigin) {
-            this.setTranslateY(yOrigin);
-            this.setHeight(y - yOrigin);
-        } else {
-            this.setTranslateY(y);
-            this.setHeight(yOrigin - y);
-        }
-    }
-
-    /**
      * Ends drawing the rubber band and hide it. Sets rubber band invisible.
      * Lastly call this.
      */
