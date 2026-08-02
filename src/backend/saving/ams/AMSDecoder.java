@@ -16,7 +16,7 @@ import backend.sound.SMPSoundfont;
 public class AMSDecoder implements Decoder<Song> {
 
     public Song decode(File file) {
-        // TODO: Fix this.
+    	// TODO: Implement reading for AMS songs.
         return null;
     }
 
@@ -48,7 +48,7 @@ public class AMSDecoder implements Decoder<Song> {
      * otherwise.
      */
     private boolean isValid(String in) {
-        // TODO Auto-generated method stub
+        // This is currently unimplemented; any file is thus invalid.
         return false;
     }
 
