@@ -286,7 +286,7 @@ public class OptionsMenu {
         cmd.redo();
         
         controller.getModifySongManager().execute(cmd);
-        controller.getModifySongManager().record();
+        controller.getModifySongManager().doRecord();
     }
     
     /** Updates the program's soundfont, bind to song if checked. */

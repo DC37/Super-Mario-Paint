@@ -33,7 +33,7 @@ public class CommandManager {
 
     public void undo() {
         /* make sure any current action is recorded before undoing */
-        record();
+        doRecord();
         
         if (undoStack.isEmpty())
             return;
@@ -80,7 +80,7 @@ public class CommandManager {
     /**
      * record the commands given to execute()
      */
-    public void record() {      
+    public void doRecord() {
         if (nextCommands == null)
             return;
         if (undoStack.size() >= Values.MAX_UNDO_REDO_SIZE)

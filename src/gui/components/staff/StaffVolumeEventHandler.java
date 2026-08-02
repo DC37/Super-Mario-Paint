@@ -109,7 +109,7 @@ public class StaffVolumeEventHandler implements EventHandler<Event> {
     
     private void mouseReleased() {
         commandManager.execute(new AddVolumeCommand(theLine, theLine.getVolume()));
-        commandManager.record();
+        commandManager.doRecord();
     }
     
     /** Called whenever the mouse enters the area. */

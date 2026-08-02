@@ -126,7 +126,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     }
 
     private void mouseReleased() {
-        commandManager.record();
+        commandManager.doRecord();
     }
 
     /**

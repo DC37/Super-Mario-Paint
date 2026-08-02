@@ -124,7 +124,7 @@ public class StaffClipboardAPI {
         }
         
         clearSelection();
-        commandManager.record();
+        commandManager.doRecord();
     }
 
     /**
@@ -195,7 +195,7 @@ public class StaffClipboardAPI {
         }
 
         theStaff.redraw();
-        commandManager.record();
+        commandManager.doRecord();
         StateMachine.setMaxLine(Math.max(theStaff.getSequence().getLength(), Values.DEFAULT_LINES_PER_SONG));
     }
 
