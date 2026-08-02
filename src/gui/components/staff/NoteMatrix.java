@@ -151,10 +151,12 @@ class NoteMatrix {
         int col = currentSilhouetteColumn;
         int row = currentSilhouette.getVerticalPosition();
         
-        silMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin()).setVisible(false);
+        StaffNoteCoordinate snc = new StaffNoteCoordinate(disp, col, row, -1);
+        
+        silMatrix.get(snc.lin()).setVisible(false);
         
         if (currentSilhouette.getAccidental() != Accidental.NATURAL) {
-            accSilMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin()).setVisible(false);
+            accSilMatrix.get(snc.lin()).setVisible(false);
         }
         
         currentSilhouette = null;
@@ -180,12 +182,14 @@ class NoteMatrix {
         currentSilhouetteColumn = col;
         currentSilhouette = silhouette;
         
-        ImageView iv = silMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin());
+        StaffNoteCoordinate snc = new StaffNoteCoordinate(disp, col, row, -1);
+        
+        ImageView iv = silMatrix.get(snc.lin());
         iv.setImage(imagesHolder.get(noteImageIndex(silhouette)));
         iv.setVisible(true);
         
         if (silhouette.getAccidental() != Accidental.NATURAL) {
-            ImageView acciv = accSilMatrix.get(new StaffNoteCoordinate(disp, col, row, -1).lin());
+            ImageView acciv = accSilMatrix.get(snc.lin());
             acciv.setImage(imagesHolder.get(accImageIndex(silhouette)));
             acciv.setVisible(true);
         }
