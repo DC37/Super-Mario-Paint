@@ -15,7 +15,8 @@ import javax.sound.midi.MidiChannel;
 
 import backend.BackendUtils;
 import backend.editing.ModifySongManager;
-import backend.saving.Decoder;
+import backend.saving.ArrangementDecoders;
+import backend.saving.SequenceDecoders;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
 import backend.songs.Arrangement;
@@ -917,7 +918,7 @@ public class SMPFXController {
 
     private void loadSong(File inputFile, Window owner) {
         try {
-            Song loaded = Decoder.SEQUENCE_DECODER.decode(inputFile).orElseThrow(IOException::new);
+            Song loaded = SequenceDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
             staff.populateStaff(loaded);
             getModifySongManager().reset();
             getNameTextField().setText(loaded.getTitle());
@@ -949,7 +950,7 @@ public class SMPFXController {
         	if (inputFile == null)
         		return;
         	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-        	Arrangement loaded = Decoder.SMP_ARRANGEMENT_DECODER.decode(inputFile);
+        	Arrangement loaded = ArrangementDecoders.SMP.getDecoder().decode(inputFile);
         	staff.populateStaffArrangement(loaded);
             
             arrangementList.getItems().clear();
@@ -963,7 +964,7 @@ public class SMPFXController {
         } catch (ParseException | StreamCorruptedException
         		| NullPointerException e) {
         	try {
-        		Arrangement loaded = Decoder.MPC_ARRANGEMENT_DECODER.decode(inputFile);
+        		Arrangement loaded = ArrangementDecoders.MPC.getDecoder().decode(inputFile);
         		StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
         		staff.populateStaffArrangement(loaded);
         		StateMachine.setSongModified(false);

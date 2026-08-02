@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import backend.saving.Decoder;
+import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
 import backend.songs.Song;
 
@@ -53,7 +54,7 @@ public class SMPArrangementDecoder implements Decoder<Arrangement> {
 		List<Song> seqs = new ArrayList<>();
         for (String s : read) {
             f = new File(basePath + s + ".txt");
-			seqs.add(Decoder.SMP_SEQUENCE_DECODER.decode(f));
+			seqs.add(SequenceDecoders.SMP.getDecoder().decode(f));
         }
 		loaded.getSequences().addAll(seqs);
         return loaded;

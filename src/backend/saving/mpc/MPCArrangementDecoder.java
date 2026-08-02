@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import backend.saving.Decoder;
+import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
 import backend.songs.Song;
 
@@ -67,7 +68,7 @@ public class MPCArrangementDecoder implements Decoder<Arrangement> {
         for (String s : str.split("\n")) {
             String st = inputFile.getParent() + File.separatorChar + s + "]MarioPaint.txt";
             File f = new File(st);
-            Song seq = Decoder.MPC_SEQUENCE_DECODER.decode(f);
+            Song seq = SequenceDecoders.MPC.getDecoder().decode(f);
             theArr.getSequences().add(seq);
         }
         return theArr;
