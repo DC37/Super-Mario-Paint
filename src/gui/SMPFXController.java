@@ -277,16 +277,9 @@ public class SMPFXController {
         });
 
         // Set up arranger view
-        arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(() -> {
-            switch (StateMachine.getMode()) {
-            case SONG:
-                return false;
-            case ARRANGEMENT:
-                return true;
-            default:
-                return false;
-            }
-        }, StateMachine.modeProperty()));
+        arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(
+        		() -> StateMachine.getMode() == SMPMode.ARRANGEMENT,
+        		StateMachine.modeProperty()));
         
         arrangementList.getSelectionModel().selectedItemProperty().addListener(obs -> {
             if (StateMachine.isPlaybackActive())
