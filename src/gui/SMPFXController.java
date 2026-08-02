@@ -77,6 +77,9 @@ import utilities.MathUtils;
 @Slf4j
 public class SMPFXController {
     
+	private static final String PROMPT_LOAD_CONFIRM = "Load anyway?";
+	private static final String PROMPT_ERROR = "Error!";
+	
     /**
      * The image that shows the selected instrument.
      */
@@ -399,7 +402,7 @@ public class SMPFXController {
         List<Song> seq = staff.getArrangement().getSequences();
         Window owner = arrangementList.getScene().getWindow();
         
-        if (!confirmOperation(owner, "Load anyway?", true, false))
+        if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, false))
         	return;
         
         staff.populateStaff(seq.get(songIndex));
@@ -897,7 +900,7 @@ public class SMPFXController {
     }
 
     private void loadSong(Window owner) {
-    	if (!confirmOperation(owner, "Load anyway?", true, false))
+    	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, false))
             return;
     	
         try {
@@ -922,21 +925,21 @@ public class SMPFXController {
             StateMachine.setSongModified(false);
             
         } catch (FileNotFoundException e) {
-            Dialog.showDialog("Error!", "File " + inputFile + "not found!", owner);
+            Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
             log.error("File not found error in loadSong:", e);
             
         } catch (IOException e) {
-            Dialog.showDialog("Error!", "An IO exception occurred while reading file " + inputFile + "!", owner);
+            Dialog.showDialog(PROMPT_ERROR, "An IO exception occurred while reading file " + inputFile + "!", owner);
             log.error("IO error in loadSong:", e);
             
         } catch (Exception e) {
-            Dialog.showDialog("Error!", "An error occurred while reading file " + inputFile + "!", owner);
+            Dialog.showDialog(PROMPT_ERROR, "An error occurred while reading file " + inputFile + "!", owner);
             log.error("Error in loadSong:", e);
         }
     }
 
     private void loadArrangement(Window owner) {
-    	if (!confirmOperation(owner, "Load anyway?", true, true))
+    	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, true))
     		return;
     	
         File inputFile = null;
