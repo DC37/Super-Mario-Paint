@@ -229,10 +229,7 @@ public class Staff {
             arrPlaying = false;
             animationService.cancel();
             switch (animationService.getState()) {
-            case CANCELLED:
-            case FAILED:
-            case READY:
-            case SUCCEEDED:
+            case CANCELLED, FAILED, READY, SUCCEEDED:
                 animationService.reset();
                 break;
             default:
