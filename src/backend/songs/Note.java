@@ -1,5 +1,7 @@
 package backend.songs;
 
+import java.util.Objects;
+
 import gui.SMPInstrument;
 import gui.Values;
 
@@ -141,6 +143,11 @@ public class Note {
                 && other.instrument == instrument
                 && other.accidental == accidental
                 && other.muteModifier == muteModifier;
+    }
+    
+    @Override
+    public int hashCode() {
+    	return Objects.hash(verticalPosition, instrument, accidental, muteModifier);
     }
 
 }

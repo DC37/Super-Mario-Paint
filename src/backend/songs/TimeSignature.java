@@ -92,6 +92,11 @@ public class TimeSignature {
         
         return true;
     }
+    
+    @Override
+    public int hashCode() {
+    	return Arrays.hashCode(divs);
+    }
 
     private static TimeSignature getExisting(String disp, int idxSlash) throws IllegalArgumentException {
     	// We support time signatures with a bottom number for some cases:
