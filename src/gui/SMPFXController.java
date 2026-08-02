@@ -39,6 +39,7 @@ import gui.events.KeyboardHandlerMaker;
 import gui.loaders.ImageIndex;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -55,6 +56,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -281,33 +283,9 @@ public class SMPFXController {
         		() -> StateMachine.getMode() == SMPMode.ARRANGEMENT,
         		StateMachine.modeProperty()));
         
-        arrangementList.getSelectionModel().selectedItemProperty().addListener(obs -> {
-            if (StateMachine.isPlaybackActive())
-                return;
-            
-            int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
-            if (songIndex == -1)
-            	return;
-            
-            List<Song> seq = staff.getArrangement().getSequences();
-            Window owner = arrangementList.getScene().getWindow();
-            
-            if (!confirmOperation(owner, "Load anyway?", true, false))
-            	return;
-            
-            staff.populateStaff(seq.get(songIndex));
-            seq.set(songIndex, staff.getSequence());
-        });
+        arrangementList.getSelectionModel().selectedItemProperty().addListener(this::onArrangementListSelectionChanged);
         
-        arrangementList.setCellFactory(list -> new ListCell<>() {
-        	@Override
-        	public void updateItem(Song song, boolean empty) {
-        		super.updateItem(song, empty);
-        		
-        		setGraphic(null);
-        		setText(empty || song == null ? null : song.getTitle());
-        	}
-        });
+        arrangementList.setCellFactory(this::createArrangementSongListCell);
 
         // Set up options menu
         optionsMenu = new OptionsMenu(this, staff);
@@ -331,30 +309,11 @@ public class SMPFXController {
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
-        songName.promptTextProperty().bind(Bindings.createStringBinding(() -> {
-            switch (StateMachine.getMode() ) {
-            case SONG:
-                return "Song Name:";
-            case ARRANGEMENT:
-                return "Arrangement Name:";
-            default:
-                return "";
-            }
-        }, StateMachine.modeProperty()));
+        songName.promptTextProperty().bind(Bindings.createStringBinding(
+        		this::getItemNamePromptText, StateMachine.modeProperty()));
         
         // Changing mode binds the bottom text to a different name property
-        StateMachine.modeProperty().addListener(obs -> {
-            switch (StateMachine.getMode()) {
-            case SONG:
-                songName.textProperty().unbindBidirectional(StateMachine.currentArrangementNameProperty());
-                songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
-                break;
-            case ARRANGEMENT:
-                songName.textProperty().unbindBidirectional(StateMachine.currentSongNameProperty());
-                songName.textProperty().bindBidirectional(StateMachine.currentArrangementNameProperty());
-                break;
-            }
-        });
+        StateMachine.modeProperty().addListener(this::onModeTypeChanged);
         
         songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
         
@@ -363,20 +322,7 @@ public class SMPFXController {
         
         // Set up tempo box
         tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
-
-        tempoBox.setOnMousePressed(evt -> {
-            try {
-                if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
-                    Window owner = Utilities.getOwner(evt);
-                    String tempo = Dialog.showTextDialog("Tempo", owner);
-                    StateMachine.setTempo(Double.parseDouble(tempo));
-                    tempo = tempo.trim();
-                }
-            } catch (NumberFormatException e) {
-                // Do nothing.
-            }
-            evt.consume();
-        });
+        tempoBox.setOnMousePressed(this::onTempoBoxMousePressed);
         
         // Setup scrollbar
         scrollbar.maxProperty().bind(Bindings.createIntegerBinding(
@@ -401,13 +347,7 @@ public class SMPFXController {
         StateMachine.setMeasureLineNum(0);
         
         // Setup arrangement listview
-        StateMachine.getArrangementSongIndexProperty().addListener(obv -> {
-            int idx = StateMachine.getArrangementSongIndex();
-            arrangementList.getSelectionModel().select(idx);
-            if (idx != -1)
-                Platform.runLater(() -> arrangementList.scrollTo(idx));
-            StateMachine.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem().getTitle());
-        });
+        StateMachine.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);
         
         // Cleanup after a song or arrangement had finished running
         StateMachine.getPlaybackActiveProperty().addListener(obv -> {
@@ -446,6 +386,81 @@ public class SMPFXController {
                 break;
             }
         }
+    }
+    
+    private void onArrangementListSelectionChanged(Observable obs) {
+    	if (StateMachine.isPlaybackActive())
+            return;
+        
+        int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
+        if (songIndex == -1)
+        	return;
+        
+        List<Song> seq = staff.getArrangement().getSequences();
+        Window owner = arrangementList.getScene().getWindow();
+        
+        if (!confirmOperation(owner, "Load anyway?", true, false))
+        	return;
+        
+        staff.populateStaff(seq.get(songIndex));
+        seq.set(songIndex, staff.getSequence());
+    }
+    
+    private ListCell<Song> createArrangementSongListCell(ListView<Song> list) {
+    	return (new ListCell<>() {
+        	@Override
+        	public void updateItem(Song song, boolean empty) {
+        		super.updateItem(song, empty);
+        		
+        		setGraphic(null);
+        		setText(empty || song == null ? null : song.getTitle());
+        	}
+        });
+    }
+    
+    private String getItemNamePromptText() {
+        switch (StateMachine.getMode()) {
+        case SONG:
+            return "Song Name:";
+        case ARRANGEMENT:
+            return "Arrangement Name:";
+        default:
+            return "";
+        }
+    }
+    
+    private void onModeTypeChanged(Observable obs) {
+    	switch (StateMachine.getMode()) {
+        case SONG:
+            songName.textProperty().unbindBidirectional(StateMachine.currentArrangementNameProperty());
+            songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
+            break;
+        case ARRANGEMENT:
+            songName.textProperty().unbindBidirectional(StateMachine.currentSongNameProperty());
+            songName.textProperty().bindBidirectional(StateMachine.currentArrangementNameProperty());
+            break;
+        }
+    }
+    
+    private void onTempoBoxMousePressed(MouseEvent evt) {
+    	try {
+            if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
+                Window owner = Utilities.getOwner(evt);
+                String tempo = Dialog.showTextDialog("Tempo", owner);
+                StateMachine.setTempo(Double.parseDouble(tempo.trim()));
+            }
+        } catch (NumberFormatException e) {
+            // Do nothing.
+        }
+        evt.consume();
+    }
+    
+    private void onArrangementSongIndexChanged(Observable obv) {
+    	int idx = StateMachine.getArrangementSongIndex();
+        arrangementList.getSelectionModel().select(idx);
+        if (idx != -1)
+            Platform.runLater(() -> arrangementList.scrollTo(idx));
+        StateMachine.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem().getTitle());
     }
     
     private void onInstrumentButtonAction(SMPInstrument inst) {
