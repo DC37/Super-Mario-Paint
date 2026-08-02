@@ -188,20 +188,29 @@ public class Values {
             /* if it is some version of Windows */
             if (os.contains("WIN")) {
                 // it is simply the location of the "AppData" folder
-                platformFolder = System.getenv("AppData")
-                        + File.separatorChar + "Super Mario Paint";
+            	platformFolder = preparePath(
+            			System.getenv("AppData"), "Super Mario Paint");
             }
             /* Otherwise, we assume Linux or Mac */
             else if (os.contains("MAC")) {
-                platformFolder = System.getProperty("user.home")
-                        + File.separatorChar + "Library"
-                        + File.separatorChar + "Application Support"
-                        + File.separatorChar + "Super Mario Paint";
+            	platformFolder = preparePath(
+            			System.getProperty("user.home"),
+            			"Library", "Application Support", "Super Mario Paint");
             } else {
                 /* Assuming we are on Linux */
-                platformFolder = System.getProperty("user.home")
-                        + File.separatorChar + ".supermariopaint";
+            	platformFolder = preparePath(
+            			System.getProperty("user.home"), ".supermariopaint");
             }
+        }
+        
+        /**
+         * Convenience method to build a path given its parts.
+         * 
+         * @param parts One or more paths to join together.
+         * @return The joined path as a {@link String}.
+         */
+        private String preparePath(String... parts) {
+        	return String.join(File.separator, parts);
         }
         
         /**
