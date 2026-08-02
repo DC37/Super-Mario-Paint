@@ -162,9 +162,9 @@ public class SoundPlayer {
      * @since v1.1.2
      */
     public void loadFromAppData(String soundset) throws InvalidMidiDataException, IOException, MidiUnavailableException {
-        //TODO: check linux or mac, choose platform-specific folder
-        if(soundset.isEmpty())
+        if (soundset.isEmpty())
             return;
+        
         loadSoundfont(Values.SOUNDFONTS_FOLDER + soundset);
     }
     
@@ -189,9 +189,9 @@ public class SoundPlayer {
      * @since v1.1.2
      */
     public void loadToCache(String soundset) throws InvalidMidiDataException, IOException {
-        //TODO: check linux or mac, choose platform-specific folder
-        if(soundset.isEmpty())
+        if (soundset.isEmpty())
             return;
+        
         File f = new File(Values.SOUNDFONTS_FOLDER + soundset);
         bankCache.computeIfAbsent(soundset,
         		ss -> DataTypeUtils.rethrowAsUnchecked(MidiSystem::getSoundbank, f));
