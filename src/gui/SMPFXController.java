@@ -117,16 +117,16 @@ public class SMPFXController {
     private SMPToggleButton clipboardButton;
     
     @FXML
-    private SMPRadioButton timesigButton_4_4;
+    private SMPRadioButton timeSigBtnFourFour;
     
     @FXML
-    private SMPRadioButton timesigButton_3_4;
+    private SMPRadioButton timeSigBtnThreeFour;
     
     @FXML
-    private SMPRadioButton timesigButton_6_8;
+    private SMPRadioButton timeSigBtnSixEight;
     
     @FXML
-    private SMPRadioButton timesigButtonCustom;
+    private SMPRadioButton timeSigBtnCustom;
     
     @FXML
     private SMPButton saveButton;
@@ -275,10 +275,10 @@ public class SMPFXController {
         
         ToggleGroup timesigToggleGroup = new ToggleGroup();
         Utilities.groupToggleBtns(timesigToggleGroup,
-        		timesigButton_4_4, timesigButton_3_4, timesigButton_6_8, timesigButtonCustom);
+        		timeSigBtnFourFour, timeSigBtnThreeFour, timeSigBtnSixEight, timeSigBtnCustom);
         
         stopButton.setSelected(true);
-        timesigButton_4_4.setSelected(true);
+        timeSigBtnFourFour.setSelected(true);
         
         String[] tooltipLines = {
             "Click (or Shift+R) to toggle region selection",
@@ -450,7 +450,7 @@ public class SMPFXController {
         
         // Disable buttons while playback is active
         Node[] btns = {
-        		timesigButton_4_4, timesigButton_3_4, timesigButton_6_8, timesigButtonCustom,
+        		timeSigBtnFourFour, timeSigBtnThreeFour, timeSigBtnSixEight, timeSigBtnCustom,
         		modeButton, saveButton, loadButton, newButton, optionsButton,
         		tempoPlusButton, tempoMinusButton, addButton, deleteButton, upButton, downButton
         };
@@ -561,19 +561,19 @@ public class SMPFXController {
         staff.stop();
     }
     
-    public void setTimesig_4_4(ActionEvent e) {
+    public void setTimeSigFourFour(ActionEvent e) {
         staff.setTimeSignature(TimeSignature.FOUR_FOUR);
     }
     
-    public void setTimesig_3_4(ActionEvent e) {
+    public void setTimeSigThreeFour(ActionEvent e) {
         staff.setTimeSignature(TimeSignature.THREE_FOUR);
     }
     
-    public void setTimesig_6_8(ActionEvent e) {
+    public void setTimeSigSixEight(ActionEvent e) {
         staff.setTimeSignature(TimeSignature.SIX_EIGHT);
     }
     
-    public void setTimesig_custom(ActionEvent e) {
+    public void setTimeSigCustom(ActionEvent e) {
         Window owner = ((Node) e.getSource()).getScene().getWindow();
         String str = Dialog.showTextDialog(null, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
         if (str.isEmpty())
@@ -584,11 +584,11 @@ public class SMPFXController {
             staff.setTimeSignature(t);
             
             if (t.equals(TimeSignature.FOUR_FOUR)) {
-                timesigButton_4_4.setSelected(true);
+                timeSigBtnFourFour.setSelected(true);
             } else if (t.equals(TimeSignature.THREE_FOUR)) {
-                timesigButton_3_4.setSelected(true);
+                timeSigBtnThreeFour.setSelected(true);
             } else if (t.equals(TimeSignature.SIX_EIGHT)) {
-                timesigButton_6_8.setSelected(true);
+                timeSigBtnSixEight.setSelected(true);
             }
             
         } catch (IllegalArgumentException ee) {

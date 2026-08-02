@@ -251,7 +251,7 @@
                                 </ImageView>
                                 
                                 <HBox alignment="CENTER" spacing="2.0">
-                                  <SMPRadioButton fx:id="timesigButton_4_4" onAction="#setTimesig_4_4" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButton fx:id="timeSigBtnFourFour" onAction="#setTimeSigFourFour" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_4_4_PRESSED.png"/>
                                     </imagePressed>
@@ -260,7 +260,7 @@
                                     </imageReleased>
                                   </SMPRadioButton>
                                   
-                                  <SMPRadioButton fx:id="timesigButton_3_4" onAction="#setTimesig_3_4" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButton fx:id="timeSigBtnThreeFour" onAction="#setTimeSigThreeFour" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_3_4_PRESSED.png"/>
                                     </imagePressed>
@@ -269,7 +269,7 @@
                                     </imageReleased>
                                   </SMPRadioButton>
                                   
-                                  <SMPRadioButton fx:id="timesigButton_6_8" onAction="#setTimesig_6_8" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButton fx:id="timeSigBtnSixEight" onAction="#setTimeSigSixEight" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_6_8_PRESSED.png"/>
                                     </imagePressed>
@@ -278,7 +278,7 @@
                                     </imageReleased>
                                   </SMPRadioButton>
                                   
-                                  <SMPRadioButton fx:id="timesigButtonCustom" onAction="#setTimesig_custom" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButton fx:id="timeSigBtnCustom" onAction="#setTimeSigCustom" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_CUSTOM_PRESSED.png"/>
                                     </imagePressed>
