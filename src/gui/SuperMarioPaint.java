@@ -1,11 +1,13 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 import java.util.function.Consumer;
@@ -116,7 +118,7 @@ public class SuperMarioPaint extends Application  {
      * This should hopefully get something up on the screen quickly. This is
      * taken from http://docs.oracle.com/javafx/2/deployment/preloaders.htm
      */
-    private void longStart() throws Exception {
+    private void longStart() throws ExecutionException, InterruptedException, IOException {
         sfLd.start();
         imgLd.start();
         
