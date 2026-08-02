@@ -192,9 +192,10 @@ public class MultiSynthesizer implements Synthesizer {
     /**
      * @return The Receiver of the first Synthesizer in the list of
      * Synthesizers. Not useful in the context of multiple Synthesizers.
-     * @deprecated
+     * 
+     * @deprecated This method should not be invoked.
      */
-    @Deprecated
+    @Deprecated(since = "2012-08-27")
     @Override
     public Receiver getReceiver() throws MidiUnavailableException {
         return theSynths.get(0).getReceiver();
@@ -216,10 +217,11 @@ public class MultiSynthesizer implements Synthesizer {
      * @return the Transmitter of the first Synthesizer in the list of
      * Synthesizers. Not useful in the context of multiple Synthesizers.
      * @throws MidiUnavailableException If the MultiSynthesizer is not open
-     * or if something goes wrong in getting the Trasnmitter.
-     * @deprecated
+     * or if something goes wrong in getting the Transmitter.
+     * 
+     * @deprecated This method should not be invoked.
      */
-    @Deprecated
+    @Deprecated(since = "2012-08-27")
     @Override
     public Transmitter getTransmitter() throws MidiUnavailableException {
         if (!initialized)
