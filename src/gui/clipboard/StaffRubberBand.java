@@ -55,8 +55,9 @@ public class StaffRubberBand extends Rectangle {
             double sameEndX = 0;
             if (getTranslateX() < xOrigin) {
                 sameEndX = getTranslateX();
-            } else {// if (rbRef.getTranslateX() == xOrigin)
-                sameEndX = getTranslateX() + getWidth();
+            } else {
+                // If the value equals "xOrigin"
+            	sameEndX = getTranslateX() + getWidth();
             }
             
             int change = newVal.intValue() - oldVal.intValue();
@@ -238,14 +239,7 @@ public class StaffRubberBand extends Rectangle {
      * @param x x-coord to resize to
      */
     @Deprecated
-    public void resizeX(double x){
-        
-//        if (x > Constants.WIDTH_DEFAULT) {
-//            x = Constants.WIDTH_DEFAULT;
-//        } else if (x < 0) {
-//            x = 0;
-//        }
-
+    public void resizeX(double x) {
         if (x >= xOrigin) {
             this.setTranslateX(xOrigin);
             this.setWidth(x - xOrigin);
@@ -263,14 +257,7 @@ public class StaffRubberBand extends Rectangle {
      * @param y y-coord to resize to
      */
     @Deprecated
-    public void resizeY(double y){
-
-//        if (y > Constants.HEIGHT_DEFAULT) {
-//            y = Constants.HEIGHT_DEFAULT;
-//        } else if (y < 0) {
-//            y = 0;
-//        }
-        
+    public void resizeY(double y) {
         if (y >= yOrigin) {
             this.setTranslateY(yOrigin);
             this.setHeight(y - yOrigin);
@@ -278,7 +265,6 @@ public class StaffRubberBand extends Rectangle {
             this.setTranslateY(y);
             this.setHeight(yOrigin - y);
         }
-        
     }
 
     /**
@@ -348,7 +334,7 @@ public class StaffRubberBand extends Rectangle {
             return 0;//-1;
         } else {
             
-            double firstPosY = positionMinBound;// + positionSpacing / 2;
+            double firstPosY = positionMinBound;
             //this is half because positions overlap one another
             double positionHalfSpacing = positionSpacing / 2;
             return Values.NOTES_IN_A_LINE - (int)((bandBottomPosY - firstPosY) / positionHalfSpacing);// - 1;
@@ -364,7 +350,7 @@ public class StaffRubberBand extends Rectangle {
             return 0;//0;
         } else {
             
-            double firstPosY = positionMinBound;// + positionSpacing / 2;
+            double firstPosY = positionMinBound;
             //this is half because positions overlap one another
             double positionHalfSpacing = positionSpacing / 2;
             return Values.NOTES_IN_A_LINE - (int)((bandTopPosY - firstPosY) / positionHalfSpacing) - 1;
