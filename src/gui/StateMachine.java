@@ -10,7 +10,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -28,10 +27,6 @@ import javafx.scene.input.KeyCode;
  * @since 2012.08.07
  */
 public class StateMachine {
-    
-    private static BooleanProperty ctrlPressed = new SimpleBooleanProperty();
-    
-    private static BooleanProperty shiftPressed = new SimpleBooleanProperty();
     
     private static ObjectProperty<SMPInstrument> selectedInstrument = new SimpleObjectProperty<>(SMPInstrument.MARIO);
 
@@ -120,30 +115,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-    
-    public static ReadOnlyBooleanProperty ctrlPressed() {
-        return ctrlPressed;
-    }
-    
-    public static void setCtrlPressed(boolean b) {
-        ctrlPressed.setValue(b);
-    }
-    
-    public static boolean isCtrlPressed() {
-        return ctrlPressed.getValue();
-    }
-    
-    public static ReadOnlyBooleanProperty shiftPressed() {
-        return shiftPressed;
-    }
-    
-    public static void setShiftPressed(boolean b) {
-        shiftPressed.setValue(b);
-    }
-    
-    public static boolean isShiftPressed() {
-        return shiftPressed.getValue();
-    }
     
     public static ObjectProperty<SMPInstrument> selectedInstrumentProperty() {
         return selectedInstrument;

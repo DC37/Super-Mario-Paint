@@ -389,8 +389,8 @@ public class SMPAppViewFXController {
     private void manageShiftCtrlPresses(KeyEvent event) {
     	boolean ctrlPressed = event.isControlDown();
     	
-    	StateMachine.setCtrlPressed(ctrlPressed);
-    	StateMachine.setShiftPressed(event.isShiftDown());
+    	model.setCtrlPressed(ctrlPressed);
+    	model.setShiftPressed(event.isShiftDown());
     	
     	if (ctrlPressed) {
             switch (event.getCode()) {
@@ -482,7 +482,7 @@ public class SMPAppViewFXController {
     }
     
     private void onInstrumentButtonAction(SMPInstrument inst) {
-    	if (StateMachine.isShiftPressed()) {
+    	if (model.isShiftPressed()) {
             boolean ex = StateMachine.getNoteExtension(inst.ordinal());
             StateMachine.setNoteExtension(inst.ordinal(), !ex);
             
@@ -490,7 +490,7 @@ public class SMPAppViewFXController {
             
             staff.getSequence().getNoteExtensions()[i] = !ex;
             
-        } else if (StateMachine.isCtrlPressed()) {
+        } else if (model.isCtrlPressed()) {
             int flt = StateMachine.getFilteredNotes();
             int newFlt;
             int mask = ~ ((-1) << SMPInstrument.values().length);
