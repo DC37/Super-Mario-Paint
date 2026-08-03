@@ -4,6 +4,13 @@ Major = Non-backwards compatible changes made
 Minor = Backwards compatible *new feature* added
 Bugfix = No new features added, but addresses some bugs.
 
+v1.5.3
+The "Add" button in the arranger appends a copy of the current song to the arrangement (edits to the current song will not directly impact the arrangement)
+If the current song has unsaved changes, clicking on a cell in the arranger will prompt the user for confirmation before loading a new song
+Editing a song that was loaded from the arranger will impact the arrangement
+Some prompt windows now have a header title
+Undoing/redoing a "Multiply tempo" operation has been fixed
+
 v1.5.2
 Fixed the SPACE key binding to start or interrupt playback
 Playback can't be started when already active
