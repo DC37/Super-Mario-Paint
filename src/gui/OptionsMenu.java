@@ -31,6 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
 import me.dc37.smp.views.SMPAppViewFXController;
 
 @Slf4j
@@ -63,9 +64,12 @@ public class OptionsMenu {
     SMPAppViewFXController controller;
     Staff staff;
     
-    public OptionsMenu(SMPAppViewFXController controller, Staff staff) {
+    private final SMPAppModel model;
+    
+    public OptionsMenu(SMPAppViewFXController controller, Staff staff, SMPAppModel model) {
         this.controller = controller;
         this.staff = staff;
+        this.model = model;
     }
     
     /** Opens up an options dialog. */
@@ -103,7 +107,7 @@ public class OptionsMenu {
         numsVisibleBox = makeNumsVisibleCheckbox();
 
         // Hide some options while in arranger mode, due to them being impractical (Tempo multiplier, Soundfont binder) - seymour
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
             vBox.getChildren().addAll(label, defaultVolume, timesigLabel, timesigField,

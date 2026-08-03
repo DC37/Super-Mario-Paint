@@ -389,7 +389,7 @@ public class Staff {
     }
     
     public void play() {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             startSong();
             break;
@@ -420,7 +420,7 @@ public class Staff {
 
         @Override
         protected Task<Staff> createTask() {
-            switch (StateMachine.getMode()) {
+            switch (model.getMode()) {
             case SONG:
                 return new AnimationTask();
             case ARRANGEMENT:

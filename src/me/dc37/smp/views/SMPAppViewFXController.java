@@ -252,7 +252,7 @@ public class SMPAppViewFXController {
         Bindings.bindBidirectional(modeText.textProperty(), modeButton.selectedProperty(),
         		new ModeTypeStringConverter<>(b -> b != null && b.booleanValue(), isArr -> isArr));
         
-        Bindings.bindBidirectional(modeText.textProperty(), StateMachine.modeProperty(),
+        Bindings.bindBidirectional(modeText.textProperty(), model.getModeProperty(),
         		new ModeTypeStringConverter<>(
         				mode -> mode.equals(SMPMode.ARRANGEMENT),
         				isArr -> (isArr != null && isArr.booleanValue()) ? SMPMode.ARRANGEMENT : SMPMode.SONG));
@@ -298,15 +298,15 @@ public class SMPAppViewFXController {
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(
-        		() -> StateMachine.getMode() == SMPMode.ARRANGEMENT,
-        		StateMachine.modeProperty()));
+        		() -> model.getMode() == SMPMode.ARRANGEMENT,
+        		model.getModeProperty()));
         
         arrangementList.getSelectionModel().selectedItemProperty().addListener(this::onArrangementListSelectionChanged);
         
         arrangementList.setCellFactory(this::createArrangementSongListCell);
 
         // Set up options menu
-        optionsMenu = new OptionsMenu(this, staff);
+        optionsMenu = new OptionsMenu(this, staff, model);
         
         // HACK
         staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager, model);
@@ -328,10 +328,10 @@ public class SMPAppViewFXController {
         // Fix TextField focus problems.
         new SongNameController(songName, this);
         songName.promptTextProperty().bind(Bindings.createStringBinding(
-        		this::getItemNamePromptText, StateMachine.modeProperty()));
+        		this::getItemNamePromptText, model.getModeProperty()));
         
         // Changing mode binds the bottom text to a different name property
-        StateMachine.modeProperty().addListener(this::onModeTypeChanged);
+        model.getModeProperty().addListener(this::onModeTypeChanged);
         
         songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
         
@@ -437,7 +437,7 @@ public class SMPAppViewFXController {
     }
     
     private String getItemNamePromptText() {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             return "Song Name:";
         case ARRANGEMENT:
@@ -448,7 +448,7 @@ public class SMPAppViewFXController {
     }
     
     private void onModeTypeChanged(Observable obs) {
-    	switch (StateMachine.getMode()) {
+    	switch (model.getMode()) {
         case SONG:
             songName.textProperty().unbindBidirectional(StateMachine.currentArrangementNameProperty());
             songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
@@ -462,7 +462,7 @@ public class SMPAppViewFXController {
     
     private void onTempoBoxMousePressed(MouseEvent evt) {
     	try {
-            if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
+            if (!StateMachine.isPlaybackActive() && model.getMode() == SMPMode.SONG) {
                 Window owner = Utilities.getOwner(evt);
                 String tempo = Dialog.showTextDialog("Tempo", owner);
                 StateMachine.setTempo(Double.parseDouble(tempo.trim()));
@@ -635,13 +635,13 @@ public class SMPAppViewFXController {
         if (StateMachine.isPlaybackActive())
             return;
 
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
-            StateMachine.setMode(SMPMode.ARRANGEMENT);
+            model.setMode(SMPMode.ARRANGEMENT);
             break;
 
         case ARRANGEMENT:
-            StateMachine.setMode(SMPMode.SONG);
+            model.setMode(SMPMode.SONG);
             break;
         }
     }
@@ -712,7 +712,7 @@ public class SMPAppViewFXController {
     }
     
     public void newSongOrArrangement(Window owner) {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             newSong(owner);
             break;
@@ -749,7 +749,7 @@ public class SMPAppViewFXController {
     }
     
     public void save(Window owner) {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             Platform.runLater(() -> saveSong(owner));
             break;
@@ -875,7 +875,7 @@ public class SMPAppViewFXController {
     }
 
     public void load(Window owner) {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             Platform.runLater(() -> loadSong(owner));
             break;

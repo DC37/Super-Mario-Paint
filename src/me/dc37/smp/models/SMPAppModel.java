@@ -1,6 +1,7 @@
 package me.dc37.smp.models;
 
 import gui.SMPInstrument;
+import gui.SMPMode;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -22,6 +23,7 @@ public class SMPAppModel {
     private final BooleanProperty shiftPressed = new SimpleBooleanProperty(false);
     
     private final ObjectProperty<SMPInstrument> selectedInstrument = new SimpleObjectProperty<>(SMPInstrument.MARIO);
+    private final ObjectProperty<SMPMode> mode = new SimpleObjectProperty<>(SMPMode.SONG);
     
     /** This keeps track of whether we have pressed the loop button or not. */
     private final BooleanProperty loopPressed = new SimpleBooleanProperty(false);
@@ -72,6 +74,18 @@ public class SMPAppModel {
 	public void setSelectedInstrument(SMPInstrument selectedInstrument) {
 	    this.selectedInstrument.set(selectedInstrument);
 	}
+	
+	public SMPMode getMode() {
+        return mode.get();
+    }
+	
+	public ObjectProperty<SMPMode> getModeProperty() {
+        return mode;
+    }
+
+    public void setMode(SMPMode m) {
+        mode.set(m);
+    }
 	
 	public boolean isLoopPressed() {
         return loopPressed.get();

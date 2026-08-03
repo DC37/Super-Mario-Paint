@@ -50,8 +50,6 @@ public class StateMachine {
     private static Set<KeyCode> buttonsPressed =
             Collections.synchronizedSet(new HashSet<KeyCode>());
 
-    private static ObjectProperty<SMPMode> mode = new SimpleObjectProperty<>(SMPMode.SONG);
-    
     private static BooleanProperty playbackActive = new SimpleBooleanProperty(false);
 
     /**
@@ -99,18 +97,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-    
-    public static ObjectProperty<SMPMode> modeProperty() {
-        return mode;
-    }
-
-    public static SMPMode getMode() {
-        return mode.get();
-    }
-
-    public static void setMode(SMPMode m) {
-        mode.set(m);
-    }
     
     public static BooleanProperty getPlaybackActiveProperty() {
         return playbackActive;
