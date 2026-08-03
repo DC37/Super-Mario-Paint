@@ -16,17 +16,17 @@ import javafx.concurrent.Task;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import me.dc37.smp.interactors.LoaderWorker;
-import me.dc37.smp.models.SMPAppModel;
+import me.dc37.smp.models.ResourceModel;
 
 public class PreloaderTask extends Task<Void> {
 	
-	private final SMPAppModel model;
+    private final ResourceModel model;
 	private final LoaderWorker<Map<ImageIndex, Image>, ImageLoader> imageLoader;
 	private final LoaderWorker<SoundPlayer, SoundfontLoader> soundfontLoader;
 	private final Consumer<PreloaderNotification> fnNotifyPreloader;
 	
 	public PreloaderTask(
-			SMPAppModel model,
+			ResourceModel model,
 			LoaderWorker<Map<ImageIndex, Image>, ImageLoader> imageLoader,
 			LoaderWorker<SoundPlayer, SoundfontLoader> soundfontLoader,
 			Consumer<PreloaderNotification> fnNotifyPreloader) {

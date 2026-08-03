@@ -16,7 +16,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import me.dc37.smp.models.SMPAppModel;
+import me.dc37.smp.models.ResourceModel;
 
 /**
  * Generates a dialog box, depending on what we do.
@@ -29,12 +29,12 @@ public class Dialog {
     
     private static <T> StageWithReturn<T> initDialogStage(String title, Window owner) {
     	// Hack until this is refactored.
-    	SMPAppModel mwModel = SMPAppModel.getInstance(); 
+    	ResourceModel resModel = ResourceModel.getInstance(); 
     	
     	StageWithReturn<T> stage = new StageWithReturn<>();
         stage.setResizable(false);
         stage.setTitle((title != null) ? title : "");
-        stage.getIcons().add(mwModel.getHeaderIcon());
+        stage.getIcons().add(resModel.getHeaderIcon());
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
         // setting this style seems to be blocking everything

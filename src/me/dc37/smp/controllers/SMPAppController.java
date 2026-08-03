@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import me.dc37.smp.interactors.LoaderWorker;
 import me.dc37.smp.interactors.SMPAppInteractor;
+import me.dc37.smp.models.ResourceModel;
 import me.dc37.smp.models.SMPAppModel;
 import me.dc37.smp.views.SMPAppViewFXController;
 import me.dc37.smp.views.SuperMarioPaintApplication;
@@ -30,11 +31,13 @@ import me.dc37.smp.views.SuperMarioPaintApplication;
 @Slf4j
 public class SMPAppController {
 
-	private final SuperMarioPaintApplication app;
+    private final SuperMarioPaintApplication app;
 	private final SMPAppModel model;
 	
 	@SuppressWarnings("unused")
 	private final SMPAppInteractor interactor;
+	
+	private final ResourceModel resModel;
 	
 	private PreloaderTask preloaderTask;
 	
@@ -53,6 +56,8 @@ public class SMPAppController {
 		
 		model = SMPAppModel.getInstance();
 		interactor = new SMPAppInteractor(model);
+		
+		resModel = ResourceModel.getInstance();
 	}
 	
 	public void prepareLoaders() {
@@ -62,7 +67,7 @@ public class SMPAppController {
 	
 	public void triggerLoad(Stage stage) {
 		preloaderTask = new PreloaderTask(
-				model, imageLoader, soundfontLoader, app::notifyPreloader);
+				resModel, imageLoader, soundfontLoader, app::notifyPreloader);
 		
 		preloaderTask.setOnSucceeded(event -> app.prepareView(stage));
         preloaderTask.setOnFailed(event -> manageLoadFailure());
@@ -94,23 +99,23 @@ public class SMPAppController {
 	}
 	
 	public Map<ImageIndex, Image> getIcons() {
-		return model.getIcons();
+		return resModel.getIcons();
 	}
 	
 	public Optional<Image> getIcon(ImageIndex imgIdx) {
-		return model.getIcon(imgIdx);
+		return resModel.getIcon(imgIdx);
 	}
 	
 	public SoundPlayer getSoundPlayer() {
-		return model.getSoundPlayer();
+		return resModel.getSoundPlayer();
 	}
 	
 	public Image getHeaderIcon() {
-		return model.getHeaderIcon();
+		return resModel.getHeaderIcon();
 	}
 	
 	public Optional<ImageCursor> getCursor(SMPCursorType type) {
-		return model.getCursor(type);
+		return resModel.getCursor(type);
 	}
 	
 }
