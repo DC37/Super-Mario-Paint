@@ -1,9 +1,9 @@
 package gui.clipboard;
 
-import gui.SMPFXController;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 public interface RubberBandEventHandlerInitializer {
 	
-	void initialize(StaffRubberBandEventHandler rbeh, SMPFXController ct);
+	void initialize(StaffRubberBandEventHandler rbeh, SMPAppViewFXController ct);
 	
 }

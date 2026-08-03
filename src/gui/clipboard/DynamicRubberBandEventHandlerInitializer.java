@@ -1,17 +1,17 @@
 package gui.clipboard;
 
-import gui.SMPFXController;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 public class DynamicRubberBandEventHandlerInitializer implements RubberBandEventHandlerInitializer {
 
 	@Override
-	public void initialize(StaffRubberBandEventHandler rbeh, SMPFXController ct) {
+	public void initialize(StaffRubberBandEventHandler rbeh, SMPAppViewFXController ct) {
 		//initialize lineMinBound
 		HBox staffInstruments = null; //ct.getStaffInstruments();
 		ObservableList<Node> instrumentLines = staffInstruments.getChildren();

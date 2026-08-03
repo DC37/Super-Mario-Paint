@@ -58,7 +58,7 @@ tasks.processResources {
 
 application {
     // Define the main class for the application.
-    mainClass = "gui.SuperMarioPaint"
+    mainClass = "me.dc37.smp.Bootstrap"
 }
 
 val javaVersion = JavaVersion.current()

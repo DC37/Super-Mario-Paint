@@ -1,11 +1,11 @@
 package gui.clipboard;
 
-import gui.SMPFXController;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 public class HardcodedRubberBandEventHandlerInitializer implements RubberBandEventHandlerInitializer {
 
 	@Override
-	public void initialize(StaffRubberBandEventHandler rbeh, SMPFXController ct) {
+	public void initialize(StaffRubberBandEventHandler rbeh, SMPAppViewFXController ct) {
 		// The original code would compute the following values by inspecting certain nodes
 		// in the scene. Since I want to encapsulate the staff code, and since those values
 		// are always the same (until we make the staff resizable), I'm hardcoding the values

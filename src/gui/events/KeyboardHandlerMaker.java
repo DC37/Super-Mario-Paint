@@ -3,7 +3,6 @@ package gui.events;
 import java.util.function.Consumer;
 
 import backend.songs.Accidental;
-import gui.SMPFXController;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Utilities;
@@ -12,14 +11,15 @@ import gui.components.staff.StaffMouseEventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
+import me.dc37.smp.views.SMPAppViewFXController;
 
-public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
+public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
 	
-	protected KeyboardHandlerMaker(SMPFXController controller) {
+	protected KeyboardHandlerMaker(SMPAppViewFXController controller) {
 		super(controller);
 	}
 	
-	public static KeyboardHandlerMaker of(SMPFXController controller) {
+	public static KeyboardHandlerMaker of(SMPAppViewFXController controller) {
 		return new KeyboardHandlerMaker(controller);
 	}
 	
