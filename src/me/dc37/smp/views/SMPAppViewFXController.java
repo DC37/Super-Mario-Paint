@@ -70,6 +70,8 @@ import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
 import me.dc37.smp.controllers.SMPAppController;
+import me.dc37.smp.models.ResourceModel;
+import me.dc37.smp.models.SMPAppModel;
 import utilities.MathUtils;
 
 /**
@@ -210,7 +212,8 @@ public class SMPAppViewFXController {
     /** Handles the options menu */
     private OptionsMenu optionsMenu;
     
-    private SMPAppController controller;
+    private ResourceModel resModel;
+    private SMPAppModel model;
     
     /**
      * Constructs a FXML Controller for the Main Window.
@@ -219,8 +222,9 @@ public class SMPAppViewFXController {
      *                   represents the operations available
      *                   to the main window (MVCI).
      */
-    public SMPAppViewFXController(SMPAppController controller) {
-        this.controller = controller;
+    public SMPAppViewFXController(ResourceModel resModel, SMPAppModel model) {
+        this.resModel = resModel;
+        this.model = model;
     }
 
     /**
@@ -235,10 +239,10 @@ public class SMPAppViewFXController {
         
         // Set up staff.
         StaffDisplayManager displayManager = new StaffDisplayManager(
-        		staffFrame, controller.getIcons(), volumeBars, commandManager,
+        		staffFrame, resModel.getIcons(), volumeBars, commandManager,
         		Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         
-        staff = new Staff(displayManager, controller.getSoundPlayer());
+        staff = new Staff(displayManager, resModel.getSoundPlayer());
         displayManager.initialize();
         
         KeyboardHandlerMaker.of(this).initializeIn(basePane);
@@ -312,7 +316,7 @@ public class SMPAppViewFXController {
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
         	SMPInstrument i = StateMachine.getSelectedInstrument();
-        	return controller.getIcon(i.getImageIndex()).orElseThrow();
+        	return resModel.getIcon(i.getImageIndex()).orElseThrow();
         }, StateMachine.selectedInstrumentProperty()));
         
         // Set up clipboard.
@@ -506,7 +510,7 @@ public class SMPAppViewFXController {
             StateMachine.setFilteredNotes(newFlt);
             
         } else {
-            MidiChannel[] chan = controller.getSoundPlayer().getChannels();
+            MidiChannel[] chan = resModel.getSoundPlayer().getChannels();
             if (chan[inst.getChannel() - 1] != null) {
                 chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.getDefaultVolume());
             }
@@ -521,10 +525,10 @@ public class SMPAppViewFXController {
         
         for (SMPInstrument inst : SMPInstrument.values()) {
             SMPInstrumentButton b = new SMPInstrumentButton(inst.name(),
-            		controller.getIcon(inst.getImgIdxSustainOff()).orElseThrow(),
-            		controller.getIcon(inst.getImgIdxSustainOn()).orElseThrow());
+                    resModel.getIcon(inst.getImgIdxSustainOff()).orElseThrow(),
+                    resModel.getIcon(inst.getImgIdxSustainOn()).orElseThrow());
             
-            b.setImageFiltered(controller.getIcon(ImageIndex.FILTER).orElseThrow());
+            b.setImageFiltered(resModel.getIcon(ImageIndex.FILTER).orElseThrow());
             b.setFitHeight(28);
             b.setFitWidth(26);
             b.setFocusTraversable(false);
@@ -847,7 +851,7 @@ public class SMPAppViewFXController {
                 String currSeqName = getNameTextField().getText();
                 for (Song seq : seqs) 
                     if (seq.getTitle().equals(currSeqName)) {
-                        controller.getSoundPlayer().storeInCache();
+                        resModel.getSoundPlayer().storeInCache();
                         break;
                     }
                 return null;

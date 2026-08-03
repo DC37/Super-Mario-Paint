@@ -83,9 +83,9 @@ public class SMPAppController {
         app.notifyPreloader(new ErrorNotification("Unknown", "Unknown", preloaderTask.getException()));
     }
 	
-	public Region getView(SMPAppViewFXController ctrl) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		loader.setController(ctrl);
+	public Region getView(FXMLLoader loader) throws IOException {
+	    SMPAppViewFXController fxCtrl = new SMPAppViewFXController(resModel, model);
+	    loader.setController(fxCtrl);
 		
 		// We have to copy the FXML onto the user file system
 		// because it expects a "sprites" folder.
