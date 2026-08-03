@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
 
 /**
  * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
@@ -55,22 +56,20 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     
     private ModifySongManager commandManager;
     
+    private SMPAppModel model;
+    
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
      * a StackPane and a position on the staff.
      *
-     * @param s
-     *            The pointer to the Staff object that this event handler is
-     *            linked to.
-     * @param ct 
-     * @param i
-     *            The program's image loader.
-     * @param cm
-     *            The undo/redo manager.
+     * @param s The pointer to the Staff object that this event handler is linked to.
+     * @param cm The undo/redo manager.
+     * @param model The model backing the application (MVCI).
      */
-    public StaffMouseEventHandler(Staff s, ModifySongManager cm) {
+    public StaffMouseEventHandler(Staff s, ModifySongManager cm, SMPAppModel model) {
         theStaff = s;        
         commandManager = cm;
+        this.model = model;
     }
 
     @Override
@@ -78,7 +77,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
             return;
         
-        SMPInstrument theInd = StateMachine.getSelectedInstrument();
+        SMPInstrument theInd = model.getSelectedInstrument();
         boolean newNote = false;
         int lineTmp = getLine(event.getX());
         int positionTmp = getPosition(event.getY());

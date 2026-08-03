@@ -1,7 +1,10 @@
 package me.dc37.smp.models;
 
+import gui.SMPInstrument;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class SMPAppModel {
 
@@ -17,6 +20,8 @@ public class SMPAppModel {
 	
 	private final BooleanProperty ctrlPressed = new SimpleBooleanProperty(false);
     private final BooleanProperty shiftPressed = new SimpleBooleanProperty(false);
+    
+    private final ObjectProperty<SMPInstrument> selectedInstrument = new SimpleObjectProperty<>(SMPInstrument.MARIO);
 	
 	private SMPAppModel() {}
 	
@@ -42,6 +47,18 @@ public class SMPAppModel {
 	
 	public void setShiftPressed(boolean shiftPressed) {
 	    this.shiftPressed.set(shiftPressed);
+	}
+	
+	public SMPInstrument getSelectedInstrument() {
+	    return selectedInstrument.get();
+	}
+	
+	public ObjectProperty<SMPInstrument> getSelectedInstrumentProperty() {
+	    return selectedInstrument;
+	}
+	
+	public void setSelectedInstrument(SMPInstrument selectedInstrument) {
+	    this.selectedInstrument.set(selectedInstrument);
 	}
 	
 }

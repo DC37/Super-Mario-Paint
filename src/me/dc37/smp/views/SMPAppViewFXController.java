@@ -309,15 +309,15 @@ public class SMPAppViewFXController {
         optionsMenu = new OptionsMenu(this, staff);
         
         // HACK
-        staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
+        staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager, model);
         
         // Set up top line.
         populateInstrumentButtons(instLine);
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
-        	SMPInstrument i = StateMachine.getSelectedInstrument();
+        	SMPInstrument i = model.getSelectedInstrument();
         	return resModel.getIcon(i.getImageIndex()).orElseThrow();
-        }, StateMachine.selectedInstrumentProperty()));
+        }, model.getSelectedInstrumentProperty()));
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
@@ -515,7 +515,7 @@ public class SMPAppViewFXController {
                 chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.getDefaultVolume());
             }
             
-            StateMachine.setSelectedInstrument(inst);
+            model.setSelectedInstrument(inst);
         }
     }
     
