@@ -1,12 +1,12 @@
 package gui.clipboard;
 
-import gui.SMPFXController;
 import gui.StateMachine;
 import gui.events.ClipboardHandlerMaker;
 import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 /**
  * Event Handler for rubber band which follows mouse movements. Mouse moves and
@@ -19,14 +19,14 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 
     StaffRubberBand rubberBand;
     
-    SMPFXController controller;
+    SMPAppViewFXController controller;
     Pane rubberBandLayer;
     StaffClipboard theStaffClipboard;
     
     /** Get line with these */
     private double mouseX;
     
-    public StaffRubberBandEventHandler(StaffRubberBand rb, SMPFXController ct, Pane basePane, StaffClipboard clippy) {
+    public StaffRubberBandEventHandler(StaffRubberBand rb, SMPAppViewFXController ct, Pane basePane, StaffClipboard clippy) {
         rubberBand = rb;
         controller = ct;
         theStaffClipboard = clippy;
@@ -68,7 +68,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
         return rubberBand;
     }
     
-    public SMPFXController getController() {
+    public SMPAppViewFXController getController() {
     	return controller;
     }
     

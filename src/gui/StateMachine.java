@@ -125,7 +125,7 @@ public class StateMachine {
         return ctrlPressed;
     }
     
-    protected static void setCtrlPressed(boolean b) {
+    public static void setCtrlPressed(boolean b) {
         ctrlPressed.setValue(b);
     }
     
@@ -137,7 +137,7 @@ public class StateMachine {
         return shiftPressed;
     }
     
-    protected static void setShiftPressed(boolean b) {
+    public static void setShiftPressed(boolean b) {
         shiftPressed.setValue(b);
     }
     

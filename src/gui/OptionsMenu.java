@@ -31,6 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 @Slf4j
 public class OptionsMenu {
@@ -59,10 +60,10 @@ public class OptionsMenu {
     /** Make the bars visible */
     private CheckBox numsVisibleBox;
     
-    SMPFXController controller;
+    SMPAppViewFXController controller;
     Staff staff;
     
-    public OptionsMenu(SMPFXController controller, Staff staff) {
+    public OptionsMenu(SMPAppViewFXController controller, Staff staff) {
         this.controller = controller;
         this.staff = staff;
     }

@@ -1,4 +1,4 @@
-package gui;
+package me.dc37.smp.views;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +9,6 @@ import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.sound.midi.MidiChannel;
 
@@ -21,7 +20,14 @@ import backend.songs.Arrangement;
 import backend.songs.Note;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
-import backend.sound.SoundPlayer;
+import gui.Dialog;
+import gui.OptionsMenu;
+import gui.SMPInstrument;
+import gui.SMPMode;
+import gui.Staff;
+import gui.StateMachine;
+import gui.Utilities;
+import gui.Values;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
@@ -52,7 +58,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -64,6 +69,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.controllers.SMPAppController;
 import utilities.MathUtils;
 
 /**
@@ -74,7 +80,7 @@ import utilities.MathUtils;
  * @since 2012.08.16
  */
 @Slf4j
-public class SMPFXController {
+public class SMPAppViewFXController {
     
 	private static final String PROMPT_LOAD_CONFIRM = "Load anyway?";
 	private static final String PROMPT_ERROR = "Error!";
@@ -201,17 +207,20 @@ public class SMPFXController {
     
     private ModifySongManager commandManager;
     
-    private Map<ImageIndex, Image> imagesHolder;
-    private SoundPlayer soundPlayer;
-    
     /** Handles the options menu */
     private OptionsMenu optionsMenu;
     
+    private SMPAppController controller;
+    
     /**
-     * Zero-argument constructor (explicitly declared).
+     * Constructs a FXML Controller for the Main Window.
+     * 
+     * @param controller A {@link SMPAppController} that
+     *                   represents the operations available
+     *                   to the main window (MVCI).
      */
-    public SMPFXController() {
-        // Intentionally left empty.
+    public SMPAppViewFXController(SMPAppController controller) {
+        this.controller = controller;
     }
 
     /**
@@ -225,8 +234,11 @@ public class SMPFXController {
         basePane.addEventHandler(KeyEvent.KEY_RELEASED, this::manageShiftCtrlPresses);
         
         // Set up staff.
-        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, imagesHolder, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
-        staff = new Staff(displayManager, soundPlayer);
+        StaffDisplayManager displayManager = new StaffDisplayManager(
+        		staffFrame, controller.getIcons(), volumeBars, commandManager,
+        		Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
+        
+        staff = new Staff(displayManager, controller.getSoundPlayer());
         displayManager.initialize();
         
         KeyboardHandlerMaker.of(this).initializeIn(basePane);
@@ -300,7 +312,7 @@ public class SMPFXController {
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
         	SMPInstrument i = StateMachine.getSelectedInstrument();
-        	return imagesHolder.get(i.getImageIndex());
+        	return controller.getIcon(i.getImageIndex()).orElseThrow();
         }, StateMachine.selectedInstrumentProperty()));
         
         // Set up clipboard.
@@ -494,7 +506,7 @@ public class SMPFXController {
             StateMachine.setFilteredNotes(newFlt);
             
         } else {
-            MidiChannel[] chan = soundPlayer.getChannels();
+            MidiChannel[] chan = controller.getSoundPlayer().getChannels();
             if (chan[inst.getChannel() - 1] != null) {
                 chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.getDefaultVolume());
             }
@@ -509,8 +521,10 @@ public class SMPFXController {
         
         for (SMPInstrument inst : SMPInstrument.values()) {
             SMPInstrumentButton b = new SMPInstrumentButton(inst.name(),
-            		imagesHolder.get(inst.getImgIdxSustainOff()), imagesHolder.get(inst.getImgIdxSustainOn()));
-            b.setImageFiltered(imagesHolder.get(ImageIndex.FILTER));
+            		controller.getIcon(inst.getImgIdxSustainOff()).orElseThrow(),
+            		controller.getIcon(inst.getImgIdxSustainOn()).orElseThrow());
+            
+            b.setImageFiltered(controller.getIcon(ImageIndex.FILTER).orElseThrow());
             b.setFitHeight(28);
             b.setFitWidth(26);
             b.setFocusTraversable(false);
@@ -833,7 +847,7 @@ public class SMPFXController {
                 String currSeqName = getNameTextField().getText();
                 for (Song seq : seqs) 
                     if (seq.getTitle().equals(currSeqName)) {
-                        soundPlayer.storeInCache();
+                        controller.getSoundPlayer().storeInCache();
                         break;
                     }
                 return null;
@@ -983,15 +997,6 @@ public class SMPFXController {
     /** @return The HBox that holds the volume bars. */
     public HBox getVolumeBars() {
         return volumeBars;
-    }
-
-    public void setImagesHolder(Map<ImageIndex, Image> imagesHolder) {
-        this.imagesHolder = imagesHolder;
-    }
-
-    /** @since v1.1.2 */
-    public void setSoundPlayer(SoundPlayer soundPlayer) {
-        this.soundPlayer = soundPlayer;
     }
     
     public AnchorPane getBasePane() {
