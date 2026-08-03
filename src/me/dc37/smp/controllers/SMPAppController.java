@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import backend.sound.SoundPlayer;
 import gui.Values;
@@ -15,6 +16,7 @@ import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 import javafx.application.Preloader.ErrorNotification;
+import javafx.application.Preloader.PreloaderNotification;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
@@ -26,13 +28,11 @@ import me.dc37.smp.interactors.SMPAppInteractor;
 import me.dc37.smp.models.ResourceModel;
 import me.dc37.smp.models.SMPAppModel;
 import me.dc37.smp.views.SMPAppViewFXController;
-import me.dc37.smp.views.SuperMarioPaintApplication;
 
 @Slf4j
 public class SMPAppController {
 
-    private final SuperMarioPaintApplication app;
-	private final SMPAppModel model;
+    private final SMPAppModel model;
 	
 	@SuppressWarnings("unused")
 	private final SMPAppInteractor interactor;
@@ -51,9 +51,7 @@ public class SMPAppController {
      */
 	private LoaderWorker<SoundPlayer, SoundfontLoader> soundfontLoader;
 	
-	public SMPAppController(SuperMarioPaintApplication app) {
-		this.app = app;
-		
+	public SMPAppController() {
 		model = SMPAppModel.getInstance();
 		interactor = new SMPAppInteractor(model);
 		
@@ -65,22 +63,25 @@ public class SMPAppController {
 		soundfontLoader = new LoaderWorker<>(new SoundfontLoader());
 	}
 	
-	public void triggerLoad(Stage stage) {
+	public void triggerLoad(Stage stage,
+	        Consumer<PreloaderNotification> fnNotifyPreloader,
+	        Consumer<Stage> fnPrepareView) {
+	    
 		preloaderTask = new PreloaderTask(
-				resModel, imageLoader, soundfontLoader, app::notifyPreloader);
+				resModel, imageLoader, soundfontLoader, fnNotifyPreloader::accept);
 		
-		preloaderTask.setOnSucceeded(event -> app.prepareView(stage));
-        preloaderTask.setOnFailed(event -> manageLoadFailure());
+		preloaderTask.setOnSucceeded(event -> fnPrepareView.accept(stage));
+        preloaderTask.setOnFailed(event -> manageLoadFailure(fnNotifyPreloader));
         
         new Thread(preloaderTask).start();
 	}
 	
-	private void manageLoadFailure() {
+	private void manageLoadFailure(Consumer<PreloaderNotification> fnNotifyPreloader) {
         if (preloaderTask == null) {
             return;
         }
         
-        app.notifyPreloader(new ErrorNotification("Unknown", "Unknown", preloaderTask.getException()));
+        fnNotifyPreloader.accept(new ErrorNotification("Unknown", "Unknown", preloaderTask.getException()));
     }
 	
 	public Region getView(FXMLLoader loader) throws IOException {

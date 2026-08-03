@@ -55,8 +55,8 @@ import me.dc37.smp.controllers.SMPAppController;
 @Slf4j
 public class SuperMarioPaintApplication extends Application {
 
-	private final SMPAppController controller = new SMPAppController(this);
     private final FXMLLoader loader = new FXMLLoader();
+	private final SMPAppController controller = new SMPAppController();
 	
     /**
      * Starts two <code>Thread</code>s: one is an <code>ImageLoader</code>,
@@ -80,7 +80,7 @@ public class SuperMarioPaintApplication extends Application {
      */
 	@Override
 	public void start(Stage stage) throws Exception {
-		controller.triggerLoad(stage);
+		controller.triggerLoad(stage, this::notifyPreloader, this::prepareView);
 	}
 	
 	@Override
