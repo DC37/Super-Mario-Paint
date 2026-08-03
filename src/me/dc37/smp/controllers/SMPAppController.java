@@ -1,23 +1,16 @@
 package me.dc37.smp.controllers;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 import backend.sound.SoundPlayer;
-import gui.Values;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.SMPCursorType;
 import gui.loaders.SoundfontLoader;
-import gui.resources.FetchStrategy;
-import gui.resources.SMPResourceType;
-import gui.resources.SMPResourceUtil;
 import javafx.application.Preloader.ErrorNotification;
 import javafx.application.Preloader.PreloaderNotification;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
@@ -27,17 +20,18 @@ import me.dc37.smp.interactors.LoaderWorker;
 import me.dc37.smp.interactors.SMPAppInteractor;
 import me.dc37.smp.models.ResourceModel;
 import me.dc37.smp.models.SMPAppModel;
-import me.dc37.smp.views.SMPAppViewFXController;
+import me.dc37.smp.views.SMPAppViewBuilder;
 
 @Slf4j
 public class SMPAppController {
 
     private final SMPAppModel model;
+    private final ResourceModel resModel;
 	
 	@SuppressWarnings("unused")
 	private final SMPAppInteractor interactor;
 	
-	private final ResourceModel resModel;
+	private final SMPAppViewBuilder viewBuilder;
 	
 	private PreloaderTask preloaderTask;
 	
@@ -53,9 +47,10 @@ public class SMPAppController {
 	
 	public SMPAppController() {
 		model = SMPAppModel.getInstance();
-		interactor = new SMPAppInteractor(model);
-		
 		resModel = ResourceModel.getInstance();
+		
+		interactor = new SMPAppInteractor(model);
+		viewBuilder = new SMPAppViewBuilder(resModel, model);
 	}
 	
 	public void prepareLoaders() {
@@ -84,19 +79,12 @@ public class SMPAppController {
         fnNotifyPreloader.accept(new ErrorNotification("Unknown", "Unknown", preloaderTask.getException()));
     }
 	
-	public Region getView(FXMLLoader loader) throws IOException {
-	    SMPAppViewFXController fxCtrl = new SMPAppViewFXController(resModel, model);
-	    loader.setController(fxCtrl);
-		
-		// We have to copy the FXML onto the user file system
-		// because it expects a "sprites" folder.
-		// But also, we may update it regularly as we develop,
-		// so we want to always use our internal version.
-		URL fxml = SMPResourceUtil.get(Values.FXML, SMPResourceType.UI,
-				FetchStrategy.COPY_INTERNAL, Values.SMP_FOLDER);
-		loader.setLocation(fxml);
-		
-		return loader.load();
+	public Region getView() throws IllegalStateException {
+	    return viewBuilder.build();
+	}
+	
+	public <T> T getFxController() {
+	    return viewBuilder.getFxController();
 	}
 	
 	public Map<ImageIndex, Image> getIcons() {

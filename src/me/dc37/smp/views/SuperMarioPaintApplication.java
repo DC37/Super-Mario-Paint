@@ -15,7 +15,6 @@ import gui.resources.SMPResourceUtil;
 import javafx.application.Application;
 import javafx.application.Preloader.ProgressNotification;
 import javafx.application.Preloader.StateChangeNotification;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
@@ -55,8 +54,7 @@ import me.dc37.smp.controllers.SMPAppController;
 @Slf4j
 public class SuperMarioPaintApplication extends Application {
 
-    private final FXMLLoader loader = new FXMLLoader();
-	private final SMPAppController controller = new SMPAppController();
+    private final SMPAppController controller = new SMPAppController();
 	
     /**
      * Starts two <code>Thread</code>s: one is an <code>ImageLoader</code>,
@@ -97,7 +95,7 @@ public class SuperMarioPaintApplication extends Application {
             });
 			stage.setResizable(false);
 			
-			Scene scene = new Scene(controller.getView(loader));
+			Scene scene = new Scene(controller.getView());
 			scene.getStylesheets().add(SMPResourceUtil.get("style.css", SMPResourceType.STYLE).toString());
 			stage.setScene(scene);
             
@@ -152,7 +150,7 @@ public class SuperMarioPaintApplication extends Application {
     }
     
     private void makeMouseEventHandlers(Scene scene) {
-        SMPAppViewFXController fxCtrl = loader.getController();
+        SMPAppViewFXController fxCtrl = controller.getFxController();
         scene.addEventHandler(MouseEvent.ANY, fxCtrl.getStaffMouseEventHandler());
         
         List<MouseButton> mouseButtons = new ArrayList<>();
