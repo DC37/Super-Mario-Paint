@@ -19,6 +19,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
 import utilities.MathUtils;
 
 /**
@@ -55,6 +56,8 @@ public class Staff {
 
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     private final SoundPlayer soundPlayer;
+    
+    private final SMPAppModel model;
 
     /**
      * This is a service that will help run the animation and sound of playing a
@@ -71,11 +74,13 @@ public class Staff {
      * @param arrList
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
+     * @param model The model backing the application (MVCI).
      */
-    public Staff(StaffDisplayManager display, SoundPlayer soundPlayer) {
+    public Staff(StaffDisplayManager display, SoundPlayer soundPlayer, SMPAppModel model) {
         displayManager = display;
         animationService = new AnimationService();
         this.soundPlayer = soundPlayer;
+        this.model = model;
     }
     
     public SoundPlayer getSoundPlayer() {
@@ -491,7 +496,7 @@ public class Staff {
                     counter++;
                     
                     if (counter >= endLine) {
-                        if (StateMachine.isLoopPressed()) {
+                        if (model.isLoopPressed()) {
                             counter = 0;
                             index = 0;
                             advance = false;

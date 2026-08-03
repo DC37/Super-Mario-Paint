@@ -242,10 +242,10 @@ public class SMPAppViewFXController {
         		staffFrame, resModel.getIcons(), volumeBars, commandManager,
         		Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
         
-        staff = new Staff(displayManager, resModel.getSoundPlayer());
+        staff = new Staff(displayManager, resModel.getSoundPlayer(), model);
         displayManager.initialize();
         
-        KeyboardHandlerMaker.of(this).initializeIn(basePane);
+        KeyboardHandlerMaker.of(this, model).initializeIn(basePane);
         
         // We leverage the StringProperty modeText to bind the properties of the button and the mode in both direction
         // Bidirectional bindings between different types can only be done if one type is String afaik
@@ -257,10 +257,10 @@ public class SMPAppViewFXController {
         				mode -> mode.equals(SMPMode.ARRANGEMENT),
         				isArr -> (isArr != null && isArr.booleanValue()) ? SMPMode.ARRANGEMENT : SMPMode.SONG));
         
-        loopButton.selectedProperty().bindBidirectional(StateMachine.loopPressedProperty());
-        muteButton.selectedProperty().bindBidirectional(StateMachine.mutePressedProperty());
-        muteInstButton.selectedProperty().bindBidirectional(StateMachine.muteAPressedProperty());
-        clipboardButton.selectedProperty().bindBidirectional(StateMachine.clipboardPressedProperty());
+        loopButton.selectedProperty().bindBidirectional(model.getLoopPressedProperty());
+        muteButton.selectedProperty().bindBidirectional(model.getMutePressedProperty());
+        muteInstButton.selectedProperty().bindBidirectional(model.getMuteAPressedProperty());
+        clipboardButton.selectedProperty().bindBidirectional(model.getClipboardPressedProperty());
         
         ToggleGroup mainRadioToggleGroup = new ToggleGroup();
         Utilities.groupToggleBtns(mainRadioToggleGroup,
@@ -291,8 +291,8 @@ public class SMPAppViewFXController {
         
         Tooltip.install(clipboardButton, new Tooltip(String.join("\n", tooltipLines)));
         
-        StateMachine.clipboardPressedProperty().addListener(obs -> {
-            if (StateMachine.isClipboardPressed())
+        model.getClipboardPressedProperty().addListener(obs -> {
+            if (model.isClipboardPressed())
                 displayManager.resetSilhouette();
         });
 
@@ -321,9 +321,9 @@ public class SMPAppViewFXController {
         
         // Set up clipboard.
         rubberBand = new StaffRubberBand();
-        new StaffClipboard(rubberBand, staff, this);
+        new StaffClipboard(rubberBand, staff, this, model);
         
-        volumeBars.mouseTransparentProperty().bind(StateMachine.clipboardPressedProperty());
+        volumeBars.mouseTransparentProperty().bind(model.getClipboardPressedProperty());
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);

@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import me.dc37.smp.models.SMPAppModel;
 import me.dc37.smp.views.SMPAppViewFXController;
 
 @SuppressWarnings("unused")
@@ -55,7 +56,7 @@ public class StaffClipboard {
      */
     private ChangeListener<Number> highlightedVolumesRedrawer;
 
-    public StaffClipboard(StaffRubberBand rb, Staff st, SMPAppViewFXController ct) {
+    public StaffClipboard(StaffRubberBand rb, Staff st, SMPAppViewFXController ct, SMPAppModel model) {
 
         rubberBand = rb;
         theStaff = st;
@@ -70,7 +71,7 @@ public class StaffClipboard {
         redrawUI(ct);
         
         rubberBandLayer = controller.getBasePane();
-        rbeh = new StaffRubberBandEventHandler(rubberBand, controller, rubberBandLayer, this);
+        rbeh = new StaffRubberBandEventHandler(rubberBand, controller, rubberBandLayer, this, model);
         
         // NOTE: Always call redrawUI before calling this!
         new HardcodedRubberBandEventHandlerInitializer().initialize(rbeh, controller);

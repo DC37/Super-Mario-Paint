@@ -2,6 +2,7 @@ package me.dc37.smp.controllers;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import backend.sound.SoundPlayer;
@@ -60,12 +61,12 @@ public class SMPAppController {
 	
 	public void triggerLoad(Stage stage,
 	        Consumer<PreloaderNotification> fnNotifyPreloader,
-	        Consumer<Stage> fnPrepareView) {
+	        BiConsumer<Stage, SMPAppModel> fnPrepareView) {
 	    
 		preloaderTask = new PreloaderTask(
 				resModel, imageLoader, soundfontLoader, fnNotifyPreloader::accept);
 		
-		preloaderTask.setOnSucceeded(event -> fnPrepareView.accept(stage));
+		preloaderTask.setOnSucceeded(event -> fnPrepareView.accept(stage, model));
         preloaderTask.setOnFailed(event -> manageLoadFailure(fnNotifyPreloader));
         
         new Thread(preloaderTask).start();

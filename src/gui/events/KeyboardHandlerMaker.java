@@ -11,16 +11,21 @@ import gui.components.staff.StaffMouseEventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
+import me.dc37.smp.models.SMPAppModel;
 import me.dc37.smp.views.SMPAppViewFXController;
 
 public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
 	
-	protected KeyboardHandlerMaker(SMPAppViewFXController controller) {
+    private final SMPAppModel model;
+    
+	protected KeyboardHandlerMaker(SMPAppViewFXController controller, SMPAppModel model) {
 		super(controller);
+		
+		this.model = model;
 	}
 	
-	public static KeyboardHandlerMaker of(SMPAppViewFXController controller) {
-		return new KeyboardHandlerMaker(controller);
+	public static KeyboardHandlerMaker of(SMPAppViewFXController controller, SMPAppModel model) {
+		return new KeyboardHandlerMaker(controller, model);
 	}
 	
 	@Override
@@ -66,7 +71,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
             case R:
             	tryPerformFirstMatchingSubaction(ke,
             			new Subaction<>(KeyEvent::isShiftDown,
-            					() -> StateMachine.setClipboardPressed(!StateMachine.isClipboardPressed())));
+            					() -> model.setClipboardPressed(!model.isClipboardPressed())));
             	break;
                 
             case S:
@@ -78,13 +83,13 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
             case M:
             	tryPerformFirstMatchingSubaction(ke,
             			new Subaction<>(d -> true,
-            					() -> StateMachine.setMuteAPressed(!StateMachine.isMuteAPressed())));
+            					() -> model.setMuteAPressed(!model.isMuteAPressed())));
                 break;
                 
             case N:
             	tryPerformFirstMatchingSubaction(ke,
             			new Subaction<>(ev -> !ev.isControlDown() && !ev.isAltDown(),
-            					() -> StateMachine.setMutePressed(!StateMachine.isMutePressed())),
+            					() -> model.setMutePressed(!model.isMutePressed())),
             			new Subaction<>(KeyEvent::isControlDown,
             					() -> source.newSongOrArrangement(Utilities.getOwner(ke))));
             	break;

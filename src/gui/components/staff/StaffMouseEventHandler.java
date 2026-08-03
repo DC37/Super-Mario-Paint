@@ -74,7 +74,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
+        if (StateMachine.isPlaybackActive() || model.isClipboardPressed())
             return;
         
         SMPInstrument theInd = model.getSelectedInstrument();
@@ -181,8 +181,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            place this note.
      */
     private void placeNote(SMPInstrument theInd, int vel) {
-        boolean mute = StateMachine.isMutePressed();
-        boolean muteA = StateMachine.isMuteAPressed();
+        boolean mute = model.isMutePressed();
+        boolean muteA = model.isMuteAPressed();
         
         if (vel <= 0 || vel >= 128)
             vel = Values.getDefaultVolume();

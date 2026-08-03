@@ -22,6 +22,18 @@ public class SMPAppModel {
     private final BooleanProperty shiftPressed = new SimpleBooleanProperty(false);
     
     private final ObjectProperty<SMPInstrument> selectedInstrument = new SimpleObjectProperty<>(SMPInstrument.MARIO);
+    
+    /** This keeps track of whether we have pressed the loop button or not. */
+    private final BooleanProperty loopPressed = new SimpleBooleanProperty(false);
+
+    /** This keeps track of whether we have pressed the mute button or not. */
+    private final BooleanProperty mutePressed = new SimpleBooleanProperty(false);
+
+    /** This keeps track of whether we have pressed the low A mute button or not. */
+    private final BooleanProperty muteAPressed = new SimpleBooleanProperty(false);
+
+    /** This keeps track of whether we have pressed the clipboard button or not. */
+    private final BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
 	
 	private SMPAppModel() {}
 	
@@ -60,5 +72,53 @@ public class SMPAppModel {
 	public void setSelectedInstrument(SMPInstrument selectedInstrument) {
 	    this.selectedInstrument.set(selectedInstrument);
 	}
+	
+	public boolean isLoopPressed() {
+        return loopPressed.get();
+    }
+	
+	public BooleanProperty getLoopPressedProperty() {
+        return loopPressed;
+    }
+
+    public void setLoopPressed(boolean b) {
+        loopPressed.set(b);
+    }
+
+    public boolean isMutePressed() {
+        return mutePressed.get();
+    }
+    
+    public BooleanProperty getMutePressedProperty() {
+        return mutePressed;
+    }
+
+    public void setMutePressed(boolean b) {
+        mutePressed.set(b);
+    }
+    
+    public boolean isMuteAPressed() {
+        return muteAPressed.get();
+    }
+
+    public BooleanProperty getMuteAPressedProperty() {
+        return muteAPressed;
+    }
+    
+    public void setMuteAPressed(boolean b) {
+        muteAPressed.set(b);
+    }
+    
+    public boolean isClipboardPressed() {
+        return clipboardPressed.get();
+    }
+
+    public BooleanProperty getClipboardPressedProperty() {
+        return clipboardPressed;
+    }
+    
+    public void setClipboardPressed(boolean b) {
+        clipboardPressed.set(b);
+    }
 	
 }

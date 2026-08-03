@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import me.dc37.smp.controllers.SMPAppController;
+import me.dc37.smp.models.SMPAppModel;
 
 /**
  * Super Mario Paint <br>
@@ -86,7 +87,7 @@ public class SuperMarioPaintApplication extends Application {
 		System.exit(0);
 	}
 	
-	public void prepareView(Stage stage) {
+	public void prepareView(Stage stage, SMPAppModel model) {
 		try {
 			stage.setTitle("Super Mario Paint " + Settings.VERSION);
 			stage.setOnCloseRequest(event -> {
@@ -102,7 +103,7 @@ public class SuperMarioPaintApplication extends Application {
 			stage.focusedProperty().addListener(
                     (ov, t, t1) -> StateMachine.clearKeyPresses());
             
-            makeMouseEventHandlers(scene);
+            makeMouseEventHandlers(scene, model);
             
             notifyPreloader(new ProgressNotification(1));
             notifyPreloader(new StateChangeNotification(
@@ -149,18 +150,18 @@ public class SuperMarioPaintApplication extends Application {
             stop();
     }
     
-    private void makeMouseEventHandlers(Scene scene) {
+    private void makeMouseEventHandlers(Scene scene, SMPAppModel model) {
         SMPAppViewFXController fxCtrl = controller.getFxController();
         scene.addEventHandler(MouseEvent.ANY, fxCtrl.getStaffMouseEventHandler());
         
         List<MouseButton> mouseButtons = new ArrayList<>();
         
         Consumer<MouseEvent> fnSetSpecialCursors = (MouseEvent m) -> {
-        	if (mouseButtons.contains(MouseButton.MIDDLE) || (StateMachine.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
+        	if (mouseButtons.contains(MouseButton.MIDDLE) || (model.isClipboardPressed() && m.getButton() != MouseButton.SECONDARY))
 	            setCursor(scene, SMPCursorType.HAND_CLOSED);
 	        else if (mouseButtons.contains(MouseButton.PRIMARY))
 	            setCursor(scene, SMPCursorType.HAND_OPEN);
-	        else if (mouseButtons.contains(MouseButton.SECONDARY) && !StateMachine.isClipboardPressed())
+	        else if (mouseButtons.contains(MouseButton.SECONDARY) && !model.isClipboardPressed())
 	            setCursor(scene, SMPCursorType.ERASER);
 	    };
         

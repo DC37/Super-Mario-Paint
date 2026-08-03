@@ -1,11 +1,11 @@
 package gui.clipboard;
 
-import gui.StateMachine;
 import gui.events.ClipboardHandlerMaker;
 import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import me.dc37.smp.models.SMPAppModel;
 import me.dc37.smp.views.SMPAppViewFXController;
 
 /**
@@ -23,14 +23,21 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     Pane rubberBandLayer;
     StaffClipboard theStaffClipboard;
     
+    private final SMPAppModel model;
+    
     /** Get line with these */
     private double mouseX;
     
-    public StaffRubberBandEventHandler(StaffRubberBand rb, SMPAppViewFXController ct, Pane basePane, StaffClipboard clippy) {
+    public StaffRubberBandEventHandler(
+            StaffRubberBand rb, SMPAppViewFXController ct,
+            Pane basePane, StaffClipboard clippy, SMPAppModel model) {
+        
         rubberBand = rb;
         controller = ct;
         theStaffClipboard = clippy;
         rubberBandLayer = basePane;
+        
+        this.model = model;
         
         ClipboardHandlerMaker.of(this).initializeIn(basePane);
     }
@@ -39,7 +46,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent mouseEvent) {
         mouseX = mouseEvent.getX();
         // the middlebutton can now bypass the clipboard button @since v1.1.2
-        if(!StateMachine.isClipboardPressed() && !mouseEvent.isMiddleButtonDown()){
+        if(!model.isClipboardPressed() && !mouseEvent.isMiddleButtonDown()){
             
             // for middlebutton handling @since v1.1.2
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {

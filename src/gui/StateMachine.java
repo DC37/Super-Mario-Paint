@@ -34,20 +34,6 @@ public class StateMachine {
     /** This tells us whether we have modified the arrangement or not. */
     private static boolean modifiedArr = false;
 
-    /** This keeps track of whether we have pressed the loop button or not. */
-    private static BooleanProperty loopPressed = new SimpleBooleanProperty(false);
-
-    /** This keeps track of whether we have pressed the mute button or not. */
-    private static BooleanProperty mutePressed = new SimpleBooleanProperty(false);
-
-    /** This keeps track of whether we have pressed the low A mute button or not. */
-    private static BooleanProperty muteAPressed = new SimpleBooleanProperty(false);
-
-    /**
-     * This keeps track of whether we have pressed the clipboard button or not.
-     */
-    private static BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
-
     /** The list of values denoting which notes should be extended. */
     private static IntegerProperty noteExtensions = new SimpleIntegerProperty(0);
     
@@ -222,42 +208,6 @@ public class StateMachine {
         arrangementSongIndex.set(i);
     }
     
-    public static BooleanProperty loopPressedProperty() {
-        return loopPressed;
-    }
-
-    public static void setLoopPressed(boolean b) {
-        loopPressed.set(b);
-    }
-
-    public static boolean isLoopPressed() {
-        return loopPressed.get();
-    }
-    
-    public static BooleanProperty mutePressedProperty() {
-        return mutePressed;
-    }
-
-    public static void setMutePressed(boolean b) {
-        mutePressed.set(b);
-    }
-
-    public static boolean isMutePressed() {
-        return mutePressed.get();
-    }
-
-    public static BooleanProperty muteAPressedProperty() {
-        return muteAPressed;
-    }
-    
-    public static void setMuteAPressed(boolean b) {
-        muteAPressed.set(b);
-    }
-
-    public static boolean isMuteAPressed() {
-        return muteAPressed.get();
-    }
-
     /**
      * Sets the modified flag to true or false.
      *
@@ -288,18 +238,6 @@ public class StateMachine {
      */
     public static boolean isArrModified() {
         return modifiedArr;
-    }
-    
-    public static BooleanProperty clipboardPressedProperty() {
-        return clipboardPressed;
-    }
-    
-    public static void setClipboardPressed(boolean b) {
-        clipboardPressed.set(b);
-    }
-    
-    public static boolean isClipboardPressed() {
-        return clipboardPressed.get();
     }
     
     public static IntegerProperty noteExtensionsProperty() {
