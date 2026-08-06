@@ -89,8 +89,8 @@ public class SMPAppModel {
         return mode;
     }
 
-    public void setMode(SMPMode m) {
-        mode.set(m);
+    public void setMode(SMPMode mode) {
+        this.mode.set(mode);
     }
 	
 	public boolean isLoopPressed() {
@@ -101,8 +101,8 @@ public class SMPAppModel {
         return loopPressed;
     }
 
-    public void setLoopPressed(boolean b) {
-        loopPressed.set(b);
+    public void setLoopPressed(boolean loopPressed) {
+        this.loopPressed.set(loopPressed);
     }
 
     public boolean isMutePressed() {
@@ -113,8 +113,8 @@ public class SMPAppModel {
         return mutePressed;
     }
 
-    public void setMutePressed(boolean b) {
-        mutePressed.set(b);
+    public void setMutePressed(boolean mutePressed) {
+        this.mutePressed.set(mutePressed);
     }
     
     public boolean isMuteAPressed() {
@@ -125,8 +125,8 @@ public class SMPAppModel {
         return muteAPressed;
     }
     
-    public void setMuteAPressed(boolean b) {
-        muteAPressed.set(b);
+    public void setMuteAPressed(boolean muteAPressed) {
+        this.muteAPressed.set(muteAPressed);
     }
     
     public boolean isClipboardPressed() {
@@ -137,8 +137,8 @@ public class SMPAppModel {
         return clipboardPressed;
     }
     
-    public void setClipboardPressed(boolean b) {
-        clipboardPressed.set(b);
+    public void setClipboardPressed(boolean clipboardPressed) {
+        this.clipboardPressed.set(clipboardPressed);
     }
     
     public boolean isPlaybackActive() {
