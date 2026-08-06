@@ -1,6 +1,9 @@
 package me.dc37.smp.models;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import backend.songs.TimeSignature;
 import gui.SMPInstrument;
@@ -16,7 +19,16 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.input.KeyCode;
 
+/**
+ * This class keeps track of what state the main application window is in.
+ * Technically adapted to conform to the MVCI standard.
+ *
+ * @author RehdBlob
+ * @author Aura Lesse Programmer
+ * @since 2012.08.07
+ */
 public class SMPAppModel {
 
 	private static SMPAppModel instance; 
@@ -92,6 +104,9 @@ public class SMPAppModel {
     
     /** The current soundset name. This should change when a new soundfont is loaded. */
     private final StringProperty currentSoundset = new SimpleStringProperty(Values.DEFAULT_SOUNDFONT);
+    
+    /** Set of currently-pressed buttons. */
+    private final Set<KeyCode> buttonsPressed = Collections.synchronizedSet(new HashSet<>());
 	
 	private SMPAppModel() {}
 	
@@ -450,6 +465,41 @@ public class SMPAppModel {
      */
     public void setCurrentSoundset(String currentSoundset) {
         this.currentSoundset.set(currentSoundset);
+    }
+    
+    /**
+     * Determines if the given {@link KeyCode} has been pressed or not.
+     * 
+     * @param keyCode The key code to probe.
+     * @return Whether that key code has been pressed or not.
+     */
+    public boolean isKeyPressed(KeyCode keyCode) {
+        return buttonsPressed.contains(keyCode);
+    }
+    
+    /**
+     * Signals a key, represented by its {@link KeyCode}, as pressed.
+     * 
+     * @param keyCode The key code to signal as pressed.
+     */
+    public void signalKeyPressed(KeyCode keyCode) {
+        buttonsPressed.add(keyCode);
+    }
+    
+    /**
+     * Signals a key, represented by its {@link KeyCode}, as released.
+     * 
+     * @param keyCode The key code to signal as released.
+     */
+    public void signalKeyReleased(KeyCode keyCode) {
+        buttonsPressed.remove(keyCode);
+    }
+    
+    /**
+     * Clears the set of key presses in this program.
+     */
+    public void clearKeyPresses() {
+        buttonsPressed.clear();
     }
 	
 }

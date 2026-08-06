@@ -4,7 +4,6 @@ import java.util.function.Consumer;
 
 import backend.songs.Accidental;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Utilities;
 import gui.Values;
 import gui.components.staff.StaffMouseEventHandler;
@@ -109,12 +108,12 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
             default:
             }
 
-            StateMachine.getButtonsPressed().add(ke.getCode());
+            model.signalKeyPressed(ke.getCode());
             refreshAndConsumeKeyEvent(ke);
         });
 
         n.addEventHandler(KeyEvent.KEY_RELEASED, ke -> {
-            StateMachine.getButtonsPressed().remove(ke.getCode());
+            model.signalKeyReleased(ke.getCode());
             refreshAndConsumeKeyEvent(ke);
         });
 

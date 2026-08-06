@@ -1,7 +1,6 @@
 package gui.components.staff;
 
 import java.util.List;
-import java.util.Set;
 
 import backend.editing.ModifySongManager;
 import backend.editing.commands.AddNoteCommand;
@@ -14,7 +13,6 @@ import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.SMPInstrument;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Values;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
@@ -164,7 +162,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected.
      */
     private void leftMousePressed(SMPInstrument theInd, int lineTmp) {
-        if (StateMachine.getButtonsPressed().contains(KeyCode.E)) {
+        if (model.isKeyPressed(KeyCode.E)) {
             removeNote();
         } else {        
             NoteLine s = theStaff.getSequence().getLine(
@@ -296,11 +294,11 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     /**
      * Updates how much we want to sharp / flat a note.
      */
-    public static Accidental computeAccidental() {        
-        Set<KeyCode> bp = StateMachine.getButtonsPressed();
-        boolean ctrl = bp.contains(KeyCode.CONTROL);
-        boolean shift = bp.contains(KeyCode.SHIFT);
-        boolean alt = bp.contains(KeyCode.ALT) || bp.contains(KeyCode.ALT_GRAPH);
+    public static Accidental computeAccidental() {   
+        SMPAppModel model = SMPAppModel.getInstance();
+        boolean ctrl = model.isKeyPressed(KeyCode.CONTROL);
+        boolean shift = model.isKeyPressed(KeyCode.SHIFT);
+        boolean alt = model.isKeyPressed(KeyCode.ALT) || model.isKeyPressed(KeyCode.ALT_GRAPH);
 
         if (alt && ctrl)
             return Accidental.DOUBLE_FLAT;

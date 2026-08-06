@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 
 import gui.Dialog;
 import gui.Settings;
-import gui.StateMachine;
 import gui.loaders.ImageLoader;
 import gui.loaders.SMPCursorType;
 import gui.loaders.SoundfontLoader;
@@ -101,7 +100,7 @@ public class SuperMarioPaintApplication extends Application {
 			stage.setScene(scene);
             
 			stage.focusedProperty().addListener(
-                    (ov, t, t1) -> StateMachine.clearKeyPresses());
+                    (ov, t, t1) -> model.clearKeyPresses());
             
             makeMouseEventHandlers(scene, model);
             
