@@ -188,7 +188,7 @@ public class OptionsMenu {
         for (String filename : listOfFiles) {
             availableSoundfonts.getItems().add(filename);
 
-            if (filename.equals(StateMachine.getCurrentSoundset()))
+            if (filename.equals(model.getCurrentSoundset()))
                 availableSoundfonts.getSelectionModel().selectLast();
         }
 

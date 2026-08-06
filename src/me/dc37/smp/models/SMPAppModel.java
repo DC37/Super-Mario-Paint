@@ -89,6 +89,9 @@ public class SMPAppModel {
     
     /** The file directory that we are currently located in. We'll start in the user directory. */
     private final ObjectProperty<File> currentDirectory = new SimpleObjectProperty<>(new File(System.getProperty("user.dir")));
+    
+    /** The current soundset name. This should change when a new soundfont is loaded. */
+    private final StringProperty currentSoundset = new SimpleStringProperty(Values.DEFAULT_SOUNDFONT);
 	
 	private SMPAppModel() {}
 	
@@ -431,6 +434,22 @@ public class SMPAppModel {
     /** @param currentDirectory Set current directory to this. */
     public void setCurrentDirectory(File currentDirectory) {
         this.currentDirectory.set(currentDirectory);
+    }
+    
+    /**
+     * @return The current soundset name.
+     * @since v1.1.2
+     */
+    public String getCurrentSoundset() {
+        return currentSoundset.get();
+    }
+
+    /**
+     * @param currentSoundset Set current soundset to this.
+     * @since v1.1.2
+     */
+    public void setCurrentSoundset(String currentSoundset) {
+        this.currentSoundset.set(currentSoundset);
     }
 	
 }

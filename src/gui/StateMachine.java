@@ -21,12 +21,6 @@ public class StateMachine {
             Collections.synchronizedSet(new HashSet<>());
 
     /**
-     * The current soundset name. This should change when a new soundfont is
-     * loaded.
-     */
-    private static String currentSoundset = Values.DEFAULT_SOUNDFONT;
-    
-    /**
      * Do not make an instance of this class! The implementation is such that
      * several classes may check the overall state of the program, so there
      * should only ever be just the class and its static variables and methods
@@ -47,23 +41,6 @@ public class StateMachine {
     public static void clearKeyPresses() {
         buttonsPressed.clear();
 
-    }
-
-    /**
-     * @return The current soundset name.
-     * @since v1.1.2
-     */
-    public static String getCurrentSoundset() {
-        return currentSoundset;
-    }
-
-    /**
-     * @param soundset
-     *            Set current soundset to this.
-     * @since v1.1.2
-     */
-    public static void setCurrentSoundset(String soundset) {
-        StateMachine.currentSoundset = soundset;
     }
 
 }
