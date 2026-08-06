@@ -71,6 +71,8 @@ public class SMPAppModel {
     
     /** The list of values denoting which notes are filtered. */
     private final IntegerProperty filteredNotes = new SimpleIntegerProperty(-1);
+    
+    private final BooleanProperty cursorOnStaff = new SimpleBooleanProperty();
 	
 	private SMPAppModel() {}
 	
@@ -335,6 +337,18 @@ public class SMPAppModel {
 
     public void setFilteredNotes(int v) {
         filteredNotes.set(v);
+    }
+    
+    public boolean isCursorOnStaff() {
+        return cursorOnStaff.get();
+    }
+    
+    public BooleanProperty getCursorOnStaffProperty() {
+        return cursorOnStaff;
+    }
+    
+    public void setCursorOnStaff(boolean cursorOnStaff) {
+        this.cursorOnStaff.set(cursorOnStaff);
     }
 	
 }

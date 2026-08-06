@@ -183,7 +183,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
     }
     
     private void refreshAndConsumeKeyEvent(KeyEvent ke) {
-    	if (StateMachine.isCursorOnStaff()) {
+    	if (model.isCursorOnStaff()) {
             Accidental acc = StaffMouseEventHandler.computeAccidental();
             source.getStaff().getDisplayManager().refreshSilhouette(acc);
         }

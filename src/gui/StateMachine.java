@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
@@ -42,8 +40,6 @@ public class StateMachine {
      * loaded.
      */
     private static String currentSoundset = Values.DEFAULT_SOUNDFONT;
-    
-    private static BooleanProperty cursorOnStaff = new SimpleBooleanProperty();
     
     private static StringProperty currentSongName = new SimpleStringProperty("");
     private static StringProperty currentArrangementName = new SimpleStringProperty("");
@@ -128,18 +124,6 @@ public class StateMachine {
      */
     public static void setCurrentSoundset(String soundset) {
         StateMachine.currentSoundset = soundset;
-    }
-    
-    public static BooleanProperty getCursorOnStaffProperty() {
-        return cursorOnStaff;
-    }
-    
-    public static boolean isCursorOnStaff() {
-        return cursorOnStaff.get();
-    }
-    
-    public static void setCursorOnStaff(boolean b) {
-        cursorOnStaff.set(b);
     }
     
     public static StringProperty currentSongNameProperty() {

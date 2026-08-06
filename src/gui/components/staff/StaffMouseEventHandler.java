@@ -275,7 +275,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private void mouseEntered(SMPInstrument theInd) {
         Note sil = new Note(theInd, position, acc);
         theStaff.getDisplayManager().updateSilhouette(line, sil);
-        StateMachine.setCursorOnStaff(true);
+        model.setCursorOnStaff(true);
     }
 
     /**
@@ -290,7 +290,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      */
     private void mouseExited(SMPInstrument theInd) {
         theStaff.getDisplayManager().resetSilhouette();
-        StateMachine.setCursorOnStaff(false);
+        model.setCursorOnStaff(false);
     }
 
     /**
