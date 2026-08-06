@@ -12,6 +12,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class SMPAppModel {
 
@@ -73,6 +75,9 @@ public class SMPAppModel {
     private final IntegerProperty filteredNotes = new SimpleIntegerProperty(-1);
     
     private final BooleanProperty cursorOnStaff = new SimpleBooleanProperty();
+    
+    private final StringProperty currentSongName = new SimpleStringProperty("");
+    private final StringProperty currentArrangementName = new SimpleStringProperty("");
 	
 	private SMPAppModel() {}
 	
@@ -349,6 +354,30 @@ public class SMPAppModel {
     
     public void setCursorOnStaff(boolean cursorOnStaff) {
         this.cursorOnStaff.set(cursorOnStaff);
+    }
+    
+    public String getCurrentSongName() {
+        return currentSongName.get();
+    }
+    
+    public StringProperty currentSongNameProperty() {
+        return currentSongName;
+    }
+    
+    public void setCurrentSongName(String currentSongName) {
+        this.currentSongName.set(currentSongName);
+    }
+    
+    public String getCurrentArrangementName() {
+        return currentArrangementName.get();
+    }
+    
+    public StringProperty currentArrangementNameProperty() {
+        return currentArrangementName;
+    }
+    
+    public void setCurrentArrangementName(String currentArrangementName) {
+        this.currentArrangementName.set(currentArrangementName);
     }
 	
 }

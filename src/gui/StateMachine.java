@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -41,9 +39,6 @@ public class StateMachine {
      */
     private static String currentSoundset = Values.DEFAULT_SOUNDFONT;
     
-    private static StringProperty currentSongName = new SimpleStringProperty("");
-    private static StringProperty currentArrangementName = new SimpleStringProperty("");
-
     /**
      * Do not make an instance of this class! The implementation is such that
      * several classes may check the overall state of the program, so there
@@ -124,30 +119,6 @@ public class StateMachine {
      */
     public static void setCurrentSoundset(String soundset) {
         StateMachine.currentSoundset = soundset;
-    }
-    
-    public static StringProperty currentSongNameProperty() {
-        return currentSongName;
-    }
-    
-    public static void setCurrentSongName(String s) {
-        currentSongName.set(s);
-    }
-    
-    public static String getCurrentSongName() {
-        return currentSongName.get();
-    }
-    
-    public static StringProperty currentArrangementNameProperty() {
-        return currentArrangementName;
-    }
-    
-    public static void setCurrentArrangementName(String s) {
-        currentArrangementName.set(s);
-    }
-    
-    public static String getCurrentArrangementName() {
-        return currentArrangementName.get();
     }
 
 }

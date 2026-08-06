@@ -308,7 +308,7 @@ public class Staff {
         model.setTempo(loaded.getTempo());
         model.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
         resetLocation();
-        StateMachine.setCurrentSongName(loaded.getTitle());
+        model.setCurrentSongName(loaded.getTitle());
         model.setNoteExtensions(loaded.getNoteExtensions());
         
         try {
@@ -330,7 +330,7 @@ public class Staff {
         populateStaff(first);
         
         setArrangement(loaded);
-        StateMachine.setCurrentArrangementName(loaded.getTitle());
+        model.setCurrentArrangementName(loaded.getTitle());
         
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
             @Override

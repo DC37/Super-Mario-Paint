@@ -333,10 +333,10 @@ public class SMPAppViewFXController {
         // Changing mode binds the bottom text to a different name property
         model.getModeProperty().addListener(this::onModeTypeChanged);
         
-        songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
+        songName.textProperty().bindBidirectional(model.currentSongNameProperty());
         
-        StateMachine.currentSongNameProperty().addListener(obs -> staff.getSequence().setTitle(StateMachine.getCurrentSongName()));
-        StateMachine.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(StateMachine.getCurrentArrangementName()));
+        model.currentSongNameProperty().addListener(obs -> staff.getSequence().setTitle(model.getCurrentSongName()));
+        model.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(model.getCurrentArrangementName()));
         
         // Set up tempo box
         tempoIndicator.textProperty().bindBidirectional(model.getTempoProperty(), new NumberStringConverter());
@@ -450,12 +450,12 @@ public class SMPAppViewFXController {
     private void onModeTypeChanged(Observable obs) {
     	switch (model.getMode()) {
         case SONG:
-            songName.textProperty().unbindBidirectional(StateMachine.currentArrangementNameProperty());
-            songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
+            songName.textProperty().unbindBidirectional(model.currentArrangementNameProperty());
+            songName.textProperty().bindBidirectional(model.currentSongNameProperty());
             break;
         case ARRANGEMENT:
-            songName.textProperty().unbindBidirectional(StateMachine.currentSongNameProperty());
-            songName.textProperty().bindBidirectional(StateMachine.currentArrangementNameProperty());
+            songName.textProperty().unbindBidirectional(model.currentSongNameProperty());
+            songName.textProperty().bindBidirectional(model.currentArrangementNameProperty());
             break;
         }
     }
@@ -478,7 +478,7 @@ public class SMPAppViewFXController {
         arrangementList.getSelectionModel().select(idx);
         if (idx != -1)
             Platform.runLater(() -> arrangementList.scrollTo(idx));
-        StateMachine.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem().getTitle());
+        model.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem().getTitle());
     }
     
     private void onInstrumentButtonAction(SMPInstrument inst) {
