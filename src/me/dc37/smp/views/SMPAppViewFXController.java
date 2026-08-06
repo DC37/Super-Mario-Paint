@@ -483,8 +483,8 @@ public class SMPAppViewFXController {
     
     private void onInstrumentButtonAction(SMPInstrument inst) {
     	if (model.isShiftPressed()) {
-            boolean ex = StateMachine.getNoteExtension(inst.ordinal());
-            StateMachine.setNoteExtension(inst.ordinal(), !ex);
+            boolean ex = model.getNoteExtension(inst.ordinal());
+            model.setNoteExtension(inst.ordinal(), !ex);
             
             int i = BackendUtils.swapCoinPiranhaInstrumentIdxs(inst.ordinal());
             
@@ -539,9 +539,9 @@ public class SMPAppViewFXController {
             n.getChildren().add(b);
         }
         
-        StateMachine.noteExtensionsProperty().addListener(obs -> {
+        model.noteExtensionsProperty().addListener(obs -> {
             for (SMPInstrument inst : SMPInstrument.values()) {
-                vs[inst.ordinal()].setSustainOn(StateMachine.getNoteExtension(inst.ordinal()));
+                vs[inst.ordinal()].setSustainOn(model.getNoteExtension(inst.ordinal()));
             }
         });
         
@@ -908,7 +908,7 @@ public class SMPAppViewFXController {
             staff.populateStaff(loaded);
             getModifySongManager().reset();
             getNameTextField().setText(loaded.getTitle());
-            StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+            model.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);
             
         } catch (FileNotFoundException e) {

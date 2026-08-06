@@ -65,6 +65,9 @@ public class SMPAppModel {
     
     /** Currently selected song in arranger mode. Set to -1 while in song mode. */
     private final IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
+    
+    /** The list of values denoting which notes should be extended. */
+    private final IntegerProperty noteExtensions = new SimpleIntegerProperty(0);
 	
 	private SMPAppModel() {}
 	
@@ -255,6 +258,46 @@ public class SMPAppModel {
     
     public void setArrangementSongIndex(int arrangementSongIndex) {
         this.arrangementSongIndex.set(arrangementSongIndex);
+    }
+    
+    /**
+     * Get specific note extension bit
+     * @param idx index of the bit to read, is in interval [0, 31]
+     */
+    public boolean getNoteExtension(int idx) {
+        int m = 1 << idx;
+        int v = noteExtensions.get();
+        return (v & m) != 0;
+    }
+
+    public boolean[] getNoteExtensions() {
+        boolean[] ret = new boolean[32];
+        for (int i = 0; i < 32; i++) {
+            ret[i] = getNoteExtension(i);
+        }
+        return ret;
+    }
+    
+    public IntegerProperty noteExtensionsProperty() {
+        return noteExtensions;
+    }
+    
+    /**
+     * Set specific note extension bit
+     * @param idx index of the bit to modify, is in interval [0, 31]
+     * @param b value to set
+     */
+    public void setNoteExtension(int idx, boolean b) {
+        int v = noteExtensions.get();
+        int m = 1 << idx;
+        v = b ? v | m : v & (~m);
+        noteExtensions.set(v);
+    }
+    
+    public void setNoteExtensions(boolean[] set) {
+        for (int i = 0; i < set.length; i++) {
+            setNoteExtension(i, set[i]);
+        }
     }
 	
 }

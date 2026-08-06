@@ -19,6 +19,7 @@ import backend.songs.NoteLine;
 import gui.SMPInstrument;
 import gui.StateMachine;
 import gui.Values;
+import me.dc37.smp.models.SMPAppModel;
 import utilities.DataTypeUtils;
 
 /**
@@ -55,9 +56,10 @@ public class SoundPlayer {
     private Map<String, Soundbank> bankCache = new HashMap<>();
 
     /** This keeps track of which notes are actually playing. */
-    private final NoteTracker tracker = new NoteTracker(this);
+    private final NoteTracker tracker;
     
-    public SoundPlayer(SMPSynthesizer synthesizer, Soundbank bank, MidiChannel[] chan) {
+    public SoundPlayer(SMPAppModel model, SMPSynthesizer synthesizer, Soundbank bank, MidiChannel[] chan) {
+        tracker = new NoteTracker(model, this);
         this.synthesizer = synthesizer;
         this.bank = bank;
         this.chan = chan;

@@ -1,4 +1,5 @@
 package backend.sound;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,8 @@ import backend.BackendUtils;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.SMPInstrument;
-import gui.StateMachine;
 import gui.Values;
+import me.dc37.smp.models.SMPAppModel;
 
 /**
  * This is a class that keeps track of the different channels in Super
@@ -19,6 +20,8 @@ import gui.Values;
  */
 class NoteTracker {
 
+    private final SMPAppModel model;
+    
     /**
      * This is the list of lists, arranged by channel, of notes that are
      * playing.
@@ -34,14 +37,16 @@ class NoteTracker {
      * Creates a new <code>NoteTracker</code> object and initializes
      * a list that is linked to each channel of sound.
      */
-    public NoteTracker(SoundPlayer soundPlayer) {
+    public NoteTracker(SMPAppModel model, SoundPlayer soundPlayer) {
+        this.model = model;
+        this.soundPlayer = soundPlayer;
+        
         channelOn = new ArrayList<>();
         notesOn = new ArrayList<>();
         for (int i = 0; i < SMPInstrument.values().length; i++) {
             channelOn.add(false);
             notesOn.add(new ArrayList<>());
         }
-        this.soundPlayer = soundPlayer;
     }
 
     /**
@@ -54,7 +59,7 @@ class NoteTracker {
         for(Note sn : theNotes)
             turnOff[sn.getInstrument().getChannel() - 1] = true;
 
-        boolean[] ext = StateMachine.getNoteExtensions();
+        boolean[] ext = model.getNoteExtensions();
 
         for (int i = 0; i < turnOff.length; i++) {
         	int j = BackendUtils.swapCoinPiranhaInstrumentIdxs(i);

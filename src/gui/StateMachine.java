@@ -29,9 +29,6 @@ public class StateMachine {
     /** This tells us whether we have modified the arrangement or not. */
     private static boolean modifiedArr = false;
 
-    /** The list of values denoting which notes should be extended. */
-    private static IntegerProperty noteExtensions = new SimpleIntegerProperty(0);
-    
     /** The list of values denoting which notes are filtered. */
     private static IntegerProperty filteredNotes = new SimpleIntegerProperty(-1);
     
@@ -94,46 +91,6 @@ public class StateMachine {
      */
     public static boolean isArrModified() {
         return modifiedArr;
-    }
-    
-    public static IntegerProperty noteExtensionsProperty() {
-        return noteExtensions;
-    }
-    
-    /**
-     * Set specific bit
-     * @param idx index of the bit to modify, is in interval [0, 31]
-     * @param b value to set
-     */
-    public static void setNoteExtension(int idx, boolean b) {
-        int v = noteExtensions.get();
-        int m = 1 << idx;
-        v = b ? v | m : v & (~m);
-        noteExtensions.set(v);
-    }
-
-    public static void setNoteExtensions(boolean[] set) {
-        for (int i = 0; i < set.length; i++) {
-            setNoteExtension(i, set[i]);
-        }
-    }
-    
-    /**
-     * Get specific bit
-     * @param idx index of the bit to read, is in interval [0, 31]
-     */
-    public static boolean getNoteExtension(int idx) {
-        int m = 1 << idx;
-        int v = noteExtensions.get();
-        return (v & m) != 0;
-    }
-
-    public static boolean[] getNoteExtensions() {
-        boolean[] ret = new boolean[32];
-        for (int i = 0; i < 32; i++) {
-            ret[i] = getNoteExtension(i);
-        }
-        return ret;
     }
     
     public static IntegerProperty filteredNotesProperty() {

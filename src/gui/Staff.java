@@ -309,7 +309,7 @@ public class Staff {
         model.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
         resetLocation();
         StateMachine.setCurrentSongName(loaded.getTitle());
-        StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+        model.setNoteExtensions(loaded.getNoteExtensions());
         
         try {
             getSoundPlayer().loadFromAppData(getSequence().getSoundset());
@@ -583,8 +583,7 @@ public class Staff {
                     endLine = getSequence().getLength();
                     
                     model.setArrangementSongIndex(i);
-                    StateMachine.setNoteExtensions(
-                            getSequence().getNoteExtensions());
+                    model.setNoteExtensions(getSequence().getNoteExtensions());
                     model.setTempo(getSequence().getTempo());
                     model.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
                     
