@@ -50,8 +50,6 @@ public class StateMachine {
     private static Set<KeyCode> buttonsPressed =
             Collections.synchronizedSet(new HashSet<KeyCode>());
 
-    private static BooleanProperty playbackActive = new SimpleBooleanProperty(false);
-
     /**
      * The default time signature that we start out with is 4/4 time.
      */
@@ -97,18 +95,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-    
-    public static BooleanProperty getPlaybackActiveProperty() {
-        return playbackActive;
-    }
-
-    public static boolean isPlaybackActive() {
-        return playbackActive.get();
-    }
-    
-    public static void setPlaybackActive(boolean b) {
-        playbackActive.set(b);
-    }
     
     public static ObjectProperty<TimeSignature> getTimeSignatureProperty() {
         return currentTimeSignature;

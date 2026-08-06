@@ -36,6 +36,8 @@ public class SMPAppModel {
 
     /** This keeps track of whether we have pressed the clipboard button or not. */
     private final BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
+    
+    private final BooleanProperty playbackActive = new SimpleBooleanProperty(false);
 	
 	private SMPAppModel() {}
 	
@@ -133,6 +135,18 @@ public class SMPAppModel {
     
     public void setClipboardPressed(boolean b) {
         clipboardPressed.set(b);
+    }
+    
+    public boolean isPlaybackActive() {
+        return playbackActive.get();
+    }
+    
+    public BooleanProperty getPlaybackActiveProperty() {
+        return playbackActive;
+    }
+    
+    public void setPlaybackActive(boolean playbackActive) {
+        this.playbackActive.set(playbackActive);
     }
 	
 }

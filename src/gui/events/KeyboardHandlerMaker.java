@@ -127,14 +127,14 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
     }
 	
 	private void tryShiftStaff(int noLines) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
     		return;
     	
     	source.getStaff().shift(noLines);
     }
     
     private void trySetStaffLocation(int pos, KeyEvent ke) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
     		return;
     	
     	if (ke.isControlDown())
@@ -142,7 +142,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
     }
     
     private void tryJumpStaffTo(Consumer<Staff> fnWhereToJump, KeyEvent ke) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
         
         if (source.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
@@ -156,7 +156,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
     		Consumer<Staff> fnWhereToMove, Consumer<Staff> fnWhereToJump,
     		boolean shouldCheckCtrl, KeyEvent ke) {
     	
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
         
         if (!ke.isControlDown() && !ke.isShiftDown())
@@ -173,7 +173,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
         if (ke.isControlDown() || ke.isShiftDown())
             source.getStaff().setLocation(0);
         
-        if (StateMachine.isPlaybackActive()) {
+        if (model.isPlaybackActive()) {
             source.getStopButton().setSelected(true);
             source.getStaff().stop();
         } else {
@@ -192,7 +192,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
     }
     
     private void tryScrollStaff(ScrollEvent se) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
 
         if (se.getDeltaY() < 0) {

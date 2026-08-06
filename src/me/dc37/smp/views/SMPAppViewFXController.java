@@ -349,12 +349,12 @@ public class SMPAppViewFXController {
         scrollbar.valueProperty().bindBidirectional(
                 StateMachine.getCurrentLineProperty());
         
-        scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        scrollbar.disableProperty().bind(model.getPlaybackActiveProperty());
         
         // If the scrollbar is disabled, we give focus elsewhere
     	// to be able to handle key events (hitting space should stop playback)
-        StateMachine.getPlaybackActiveProperty().addListener(obs -> Platform.runLater(
-        		(StateMachine.isPlaybackActive() ? basePane : scrollbar)::requestFocus));
+        model.getPlaybackActiveProperty().addListener(obs -> Platform.runLater(
+        		(model.isPlaybackActive() ? basePane : scrollbar)::requestFocus));
         
         // Trigger a redraw, editing mode only
         InvalidationListener doRedraw = obv -> staff.redraw();
@@ -368,8 +368,8 @@ public class SMPAppViewFXController {
         StateMachine.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);
         
         // Cleanup after a song or arrangement had finished running
-        StateMachine.getPlaybackActiveProperty().addListener(obv -> {
-            if (!StateMachine.isPlaybackActive()) {
+        model.getPlaybackActiveProperty().addListener(obv -> {
+            if (!model.isPlaybackActive()) {
                 StateMachine.setArrangementSongIndex(-1);
                 stopButton.setSelected(true);
                 displayManager.resetPlayBars();
@@ -383,7 +383,7 @@ public class SMPAppViewFXController {
         		tempoPlusButton, tempoMinusButton, addButton, deleteButton, upButton, downButton
         };
         
-        Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(StateMachine.getPlaybackActiveProperty()));
+        Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(model.getPlaybackActiveProperty()));
     }
     
     private void manageShiftCtrlPresses(KeyEvent event) {
@@ -407,7 +407,7 @@ public class SMPAppViewFXController {
     }
     
     private void onArrangementListSelectionChanged(Observable obs) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
         
         int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
@@ -462,7 +462,7 @@ public class SMPAppViewFXController {
     
     private void onTempoBoxMousePressed(MouseEvent evt) {
     	try {
-            if (!StateMachine.isPlaybackActive() && model.getMode() == SMPMode.SONG) {
+            if (!model.isPlaybackActive() && model.getMode() == SMPMode.SONG) {
                 Window owner = Utilities.getOwner(evt);
                 String tempo = Dialog.showTextDialog("Tempo", owner);
                 StateMachine.setTempo(Double.parseDouble(tempo.trim()));
@@ -632,7 +632,7 @@ public class SMPAppViewFXController {
     }
     
     public void switchMode() {
-        if (StateMachine.isPlaybackActive())
+        if (model.isPlaybackActive())
             return;
 
         switch (model.getMode()) {

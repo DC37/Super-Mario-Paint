@@ -74,7 +74,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (StateMachine.isPlaybackActive() || model.isClipboardPressed())
+        if (model.isPlaybackActive() || model.isClipboardPressed())
             return;
         
         SMPInstrument theInd = model.getSelectedInstrument();

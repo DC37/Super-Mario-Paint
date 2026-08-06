@@ -175,7 +175,7 @@ public class Staff {
     }
     
     public void bumpStaff(int skipAmount) {
-        if (StateMachine.isPlaybackActive())
+        if (model.isPlaybackActive())
             return;
         
         int currLoc = StateMachine.getMeasureLineNum();
@@ -400,13 +400,13 @@ public class Staff {
         }
         
         displayManager.resetSilhouette();
-        StateMachine.setPlaybackActive(true);
+        model.setPlaybackActive(true);
     }
     
     public void stop() {
         stopSounds();
         stopSong();
-        StateMachine.setPlaybackActive(false);
+        model.setPlaybackActive(false);
     }
     
 
@@ -509,7 +509,7 @@ public class Staff {
                     Utilities.tryWait(delayMillis, delayNanos);
                 }
                 
-                StateMachine.setPlaybackActive(false);
+                model.setPlaybackActive(false);
                 return Staff.this;
             }
 
@@ -617,7 +617,7 @@ public class Staff {
                     while (queue.get() > 0);
                 }
                 
-                StateMachine.setPlaybackActive(false);
+                model.setPlaybackActive(false);
                 return Staff.this;
             }
             
