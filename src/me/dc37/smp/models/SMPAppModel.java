@@ -6,9 +6,11 @@ import gui.SMPMode;
 import gui.Values;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class SMPAppModel {
@@ -48,6 +50,12 @@ public class SMPAppModel {
     
     /** This is the current tempo that the program is running at. */
     private final DoubleProperty tempo = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
+    
+    /**
+     * The current measure line number. Set to -1 as a special
+     * "uninitialized" value, to force the initial redraw.
+     */
+    private final IntegerProperty currentLine = new SimpleIntegerProperty(-1);
 	
 	private SMPAppModel() {}
 	
@@ -190,6 +198,30 @@ public class SMPAppModel {
      */
     public void setTempo(double tempo) {
         this.tempo.set(tempo);
+    }
+    
+    /**
+     * Gets the current line number that we're on. Typically a value between 0
+     * and 383 for most files unless you've done fun stuff and removed the
+     * 96-measure limit.
+     *
+     * @return The current line number (left justify)
+     */
+    public int getCurrentLine() {
+        return currentLine.get();
+    }
+    
+    public IntegerProperty getCurrentLineProperty() {
+        return currentLine;
+    }
+    
+    /**
+     * Sets the current line number to whatever is given to this method.
+     *
+     * @param currentLine The number that we're trying to set our current line number to.
+     */
+    public void setCurrentLine(int currentLine) {
+        this.currentLine.set(currentLine);
     }
 	
 }

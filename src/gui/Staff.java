@@ -104,12 +104,12 @@ public class Staff {
     /**
      * Shifts the staff by <code>num</code> spaces.
      *
-     * @param num
-     *            The number of spaces to shift. Positive values indicate an
+     * @param num The number of spaces to shift.
+     *            Positive values indicate an
      *            increasing measure number.
      */
     public void shift(int num) {
-        setLocation(num + StateMachine.getMeasureLineNum());
+        setLocation(num + model.getCurrentLine());
     }
     
     /**
@@ -118,7 +118,7 @@ public class Staff {
     public void jumpToNext() {
         int barLength = getSequence().getTimeSignature().barLength();
         int[] barDivs = getSequence().getTimeSignature().divs();
-        int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
+        int relativeLoc = model.getCurrentLine() % barLength;
         
         int subLength = 0;
         
@@ -135,7 +135,7 @@ public class Staff {
     public void jumpToPrevious() {
         int barLength = getSequence().getTimeSignature().barLength();
         int[] barDivs = getSequence().getTimeSignature().divs();
-        int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
+        int relativeLoc = model.getCurrentLine() % barLength;
         
         if (relativeLoc == 0)
             relativeLoc = barLength;
@@ -162,7 +162,7 @@ public class Staff {
     public synchronized void setLocation(int num) {
         int maxVal = Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0);
         int newLoc = MathUtils.clamp(num, 0, maxVal);
-        StateMachine.setMeasureLineNum(newLoc);
+        model.setCurrentLine(newLoc);
     }
     
     /**
@@ -170,7 +170,7 @@ public class Staff {
      * will force a redraw if the current line is already 0.
      */
     public synchronized void resetLocation() {
-        StateMachine.setMeasureLineNum(-1);
+        model.setCurrentLine(-1);
         setLocation(0);
     }
     
@@ -178,7 +178,7 @@ public class Staff {
         if (model.isPlaybackActive())
             return;
         
-        int currLoc = StateMachine.getMeasureLineNum();
+        int currLoc = model.getCurrentLine();
         int newLoc = currLoc + skipAmount;
         
         // Deal with integer overflow
@@ -202,7 +202,7 @@ public class Staff {
      * Force re-draws the staff.
      */
     public synchronized void redraw() {
-        int idx = StateMachine.getMeasureLineNum();
+        int idx = model.getCurrentLine();
         if (idx == -1)
             return;
         
@@ -472,7 +472,7 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
-                int counter = StateMachine.getMeasureLineNum();
+                int counter = model.getCurrentLine();
                 boolean zero = false;
                 int endLine = getSequence().getLength();
 
@@ -519,7 +519,7 @@ public class Staff {
              * just play things as they are.
              */
             protected void playNextLine() {
-                int currentLoc = StateMachine.getMeasureLineNum();
+                int currentLoc = model.getCurrentLine();
                 
                 if (advance) {
                     int loc = currentLoc + Values.NOTELINES_IN_THE_WINDOW;
@@ -556,7 +556,7 @@ public class Staff {
              * @param index Position of the line to play relative to the current position in the sequence
              */
             private void playSoundLine(int index) {
-                int currentLine = StateMachine.getMeasureLineNum();
+                int currentLine = model.getCurrentLine();
                 soundPlayer.playSoundLine(getSequence().getLine(currentLine + index));
             }
 

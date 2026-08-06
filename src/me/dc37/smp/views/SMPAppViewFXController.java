@@ -320,7 +320,7 @@ public class SMPAppViewFXController {
         }, model.getSelectedInstrumentProperty()));
         
         // Set up clipboard.
-        rubberBand = new StaffRubberBand();
+        rubberBand = new StaffRubberBand(model);
         new StaffClipboard(rubberBand, staff, this, model);
         
         volumeBars.mouseTransparentProperty().bind(model.getClipboardPressedProperty());
@@ -347,7 +347,7 @@ public class SMPAppViewFXController {
                 () -> Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0),
                 StateMachine.getMaxLineProperty()));
         scrollbar.valueProperty().bindBidirectional(
-                StateMachine.getCurrentLineProperty());
+                model.getCurrentLineProperty());
         
         scrollbar.disableProperty().bind(model.getPlaybackActiveProperty());
         
@@ -359,10 +359,10 @@ public class SMPAppViewFXController {
         // Trigger a redraw, editing mode only
         InvalidationListener doRedraw = obv -> staff.redraw();
         
-        StateMachine.getCurrentLineProperty().addListener(doRedraw);
+        model.getCurrentLineProperty().addListener(doRedraw);
         model.getTimeSignatureProperty().addListener(doRedraw);
         
-        StateMachine.setMeasureLineNum(0);
+        model.setCurrentLine(0);
         
         // Setup arrangement listview
         StateMachine.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);

@@ -168,7 +168,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             removeNote();
         } else {        
             NoteLine s = theStaff.getSequence().getLine(
-                StateMachine.getMeasureLineNum() + lineTmp);
+                model.getCurrentLine() + lineTmp);
             placeNote(theInd, s.getVolume());
         }
     }
@@ -202,7 +202,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         theStaff.getDisplayManager().resetSilhouette();
 
         NoteLine temp = theStaff.getSequence().getLine(
-                line + StateMachine.getMeasureLineNum());
+                line + model.getCurrentLine());
 
         if (temp.getNotes().isEmpty()) {
             temp.setVolume(Values.getDefaultVolume());
@@ -241,7 +241,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         theStaff.getDisplayManager().resetSilhouette();
 
         NoteLine temp = theStaff.getSequence().getLine(
-                line + StateMachine.getMeasureLineNum());
+                line + model.getCurrentLine());
 
         if (!temp.getNotes().isEmpty()) {
             List<Note> nt = temp.getNotes();
@@ -317,7 +317,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     @Override
     public String toString() {
         return String.format("Line: %d%nPosition: %d%nAccidental: %s",
-                StateMachine.getMeasureLineNum() + line,
+                model.getCurrentLine() + line,
                 position, acc);
     }
     

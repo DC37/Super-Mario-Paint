@@ -6,10 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -48,12 +46,6 @@ public class StateMachine {
             Collections.synchronizedSet(new HashSet<KeyCode>());
 
     /**
-     * The current measure line number. Set to -1 as a special "uninitialized" value,
-     * to force the initial redraw.
-     */
-    private static IntegerProperty currentLine = new SimpleIntegerProperty(-1);
-    
-    /**
      * The furthest you can reach by scrolling to the end of the sequence.
      * Technically this is the first line that cannot be displayed.
      */
@@ -82,32 +74,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-    
-    public static IntegerProperty getCurrentLineProperty() {
-        return currentLine;
-    }
-
-    /**
-     * Gets the current line number that we're on. Typically a value between 0
-     * and 383 for most files unless you've done fun stuff and removed the
-     * 96-measure limit.
-     *
-     * @return The current line number (left justify)
-     */
-    public static int getMeasureLineNum() {
-        return currentLine.get();
-    }
-
-    /**
-     * Sets the current line number to whatever is given to this method.
-     *
-     * @param num
-     *            The number that we're trying to set our current line number
-     *            to.
-     */
-    public static void setMeasureLineNum(int num) {
-        currentLine.set(num);
-    }
     
     public static IntegerProperty getMaxLineProperty() {
         return maxLine;

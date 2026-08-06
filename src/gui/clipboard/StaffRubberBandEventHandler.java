@@ -39,7 +39,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
         
         this.model = model;
         
-        ClipboardHandlerMaker.of(this).initializeIn(basePane);
+        ClipboardHandlerMaker.of(this, model).initializeIn(basePane);
     }
 
     @Override
