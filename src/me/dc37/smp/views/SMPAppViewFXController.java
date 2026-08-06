@@ -344,8 +344,8 @@ public class SMPAppViewFXController {
         
         // Setup scrollbar
         scrollbar.maxProperty().bind(Bindings.createIntegerBinding(
-                () -> Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0),
-                StateMachine.getMaxLineProperty()));
+                () -> Math.max(model.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0),
+                model.getMaxLineProperty()));
         scrollbar.valueProperty().bindBidirectional(
                 model.getCurrentLineProperty());
         
@@ -728,7 +728,7 @@ public class SMPAppViewFXController {
             staff.setSequence(new Song());
             staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             staff.resetLocation();
-            StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
+            model.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
             getNameTextField().clear();
             StateMachine.setSongModified(false);
         }

@@ -5,7 +5,6 @@ import backend.songs.NoteLine;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Values;
 import me.dc37.smp.models.SMPAppModel;
 
@@ -40,7 +39,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         expand(seq, theMultiplyAmount);
         seq.setTempo(newTempo);
         model.setTempo(newTempo);
-        StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
         theStaff.setTimeSignature(newTimesig);
     }
 
@@ -50,7 +49,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         retract(seq, theMultiplyAmount);
         seq.setTempo(previousTempo);
         model.setTempo(previousTempo);
-        StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
         theStaff.setTimeSignature(previousTimesig);
     }
     

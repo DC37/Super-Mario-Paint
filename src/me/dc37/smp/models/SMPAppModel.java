@@ -56,6 +56,12 @@ public class SMPAppModel {
      * "uninitialized" value, to force the initial redraw.
      */
     private final IntegerProperty currentLine = new SimpleIntegerProperty(-1);
+    
+    /**
+     * The furthest you can reach by scrolling to the end of the sequence.
+     * Technically this is the first line that cannot be displayed.
+     */
+    private final IntegerProperty maxLine = new SimpleIntegerProperty(Values.DEFAULT_LINES_PER_SONG);
 	
 	private SMPAppModel() {}
 	
@@ -222,6 +228,18 @@ public class SMPAppModel {
      */
     public void setCurrentLine(int currentLine) {
         this.currentLine.set(currentLine);
+    }
+    
+    public int getMaxLine() {
+        return maxLine.get();
+    }
+    
+    public IntegerProperty getMaxLineProperty() {
+        return maxLine;
+    }
+    
+    public void setMaxLine(int maxLine) {
+        this.maxLine.set(maxLine);
     }
 	
 }

@@ -201,7 +201,7 @@ public class StaffClipboardAPI {
 
         theStaff.redraw();
         commandManager.doRecord();
-        StateMachine.setMaxLine(Math.max(theStaff.getSequence().getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setMaxLine(Math.max(theStaff.getSequence().getLength(), Values.DEFAULT_LINES_PER_SONG));
     }
 
     /**
