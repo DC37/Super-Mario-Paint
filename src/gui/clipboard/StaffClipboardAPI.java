@@ -11,7 +11,6 @@ import backend.editing.commands.RemoveVolumeCommand;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Values;
 import gui.components.staff.StaffVolumeEventHandler;
 import me.dc37.smp.models.SMPAppModel;
@@ -112,7 +111,7 @@ public class StaffClipboardAPI {
             
             for(Note note : ntList){
                 lineDest.getNotes().remove(note);
-                StateMachine.setSongModified(true);
+                model.setSongModified(true);
                 commandManager.execute(new RemoveNoteCommand(lineDest, note));
 
                 if (lineDest.getNotes().isEmpty() && 0 <= line - model.getCurrentLine()
@@ -159,7 +158,7 @@ public class StaffClipboardAPI {
 
             if (!lineDest.getNotes().contains(theStaffNote)) {
                 lineDest.getNotes().add(theStaffNote);
-                StateMachine.setSongModified(true);
+                model.setSongModified(true);
                 commandManager.execute(new AddNoteCommand(lineDest, theStaffNote));
             }
         }
@@ -194,7 +193,7 @@ public class StaffClipboardAPI {
                     sveh.updateVolume();
                 }
                 
-                StateMachine.setSongModified(true);
+                model.setSongModified(true);
             }
             
         }

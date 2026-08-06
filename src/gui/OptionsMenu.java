@@ -306,7 +306,7 @@ public class OptionsMenu {
         String newSoundset = (String) bindBox.getUserData();
         if(!staff.getSequence().getSoundset().equals(newSoundset)) {
             staff.getSequence().setSoundset(newSoundset);
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         }
     }
     

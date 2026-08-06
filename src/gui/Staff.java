@@ -359,7 +359,7 @@ public class Staff {
         if (getSequence().getTitle() == null)
         	return false;
         
-        StateMachine.setArrModified(true);
+        model.setArrangementModified(true);
         getArrangement().getSequences().add(new Song(getSequence()));
         soundPlayer.storeInCache();
         return true;
@@ -367,7 +367,7 @@ public class Staff {
     
     public boolean deleteSongFromArrangement(int i) {
         if (i >= 0 && i < getArrangement().getSequences().size()) {
-            StateMachine.setArrModified(true);
+            model.setArrangementModified(true);
             getArrangement().getSequences().remove(i);
             return true;
             
@@ -378,7 +378,7 @@ public class Staff {
     
     public boolean moveSongInArrangement(int from, int to) {
         if (from >= 0 && from < getArrangement().getSequences().size()) {
-            StateMachine.setArrModified(true);
+            model.setArrangementModified(true);
             Song ss = getArrangement().getSequences().remove(from);
             getArrangement().getSequences().add(to, ss);
             return true;

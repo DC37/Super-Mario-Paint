@@ -96,13 +96,13 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (event.isPrimaryButtonDown() && newNote) {
             leftMousePressed(theInd, lineTmp);
             event.consume();
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         }
         // Drag-remove notes
         else if (event.isSecondaryButtonDown() && newNote) {
             rightMousePressed(theInd);
             event.consume();
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         }
         else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             MouseButton b = event.getButton();
@@ -111,7 +111,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             else if (b == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
             event.consume();
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
             mouseEntered(theInd);
             event.consume();

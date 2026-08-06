@@ -17,12 +17,6 @@ import javafx.scene.input.KeyCode;
  */
 public class StateMachine {
     
-    /** This tells us whether we have modified the song or not. */
-    private static boolean modifiedSong = false;
-
-    /** This tells us whether we have modified the arrangement or not. */
-    private static boolean modifiedArr = false;
-
     /**
      * The file directory that we are currently located in. We'll start in the
      * user directory.
@@ -31,7 +25,7 @@ public class StateMachine {
 
     /** Set of currently-pressed buttons. */
     private static Set<KeyCode> buttonsPressed =
-            Collections.synchronizedSet(new HashSet<KeyCode>());
+            Collections.synchronizedSet(new HashSet<>());
 
     /**
      * The current soundset name. This should change when a new soundfont is
@@ -46,38 +40,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-    
-    /**
-     * Sets the modified flag to true or false.
-     *
-     * @param b
-     *            Whether we have modified a song or not.
-     */
-    public static void setSongModified(boolean b) {
-        modifiedSong = b;
-    }
-
-    /**
-     * @return Whether we have modified the current song or not.
-     */
-    public static boolean isSongModified() {
-        return modifiedSong;
-    }
-
-    /**
-     * @param b
-     *            Whether we have modified an arrangement or not.
-     */
-    public static void setArrModified(boolean b) {
-        modifiedArr = b;
-    }
-
-    /**
-     * @return Whether we have modified the current arrangement or not.
-     */
-    public static boolean isArrModified() {
-        return modifiedArr;
-    }
     
     /**
      * @return Set of currently-pressed buttons.

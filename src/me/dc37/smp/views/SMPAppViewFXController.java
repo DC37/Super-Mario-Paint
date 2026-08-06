@@ -558,8 +558,8 @@ public class SMPAppViewFXController {
     }
     
     public boolean confirmOperation(Window owner, String q, boolean checkForSong, boolean checkForArr) {
-    	boolean songModified = checkForSong && StateMachine.isSongModified();
-    	boolean arrModified = checkForArr && StateMachine.isArrModified();
+    	boolean songModified = checkForSong && model.isSongModified();
+    	boolean arrModified = checkForArr && model.isArrangementModified();
     	
     	String whatWasModified = "";
     	if (songModified && arrModified) {
@@ -730,7 +730,7 @@ public class SMPAppViewFXController {
             staff.resetLocation();
             model.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
             getNameTextField().clear();
-            StateMachine.setSongModified(false);
+            model.setSongModified(false);
         }
     }
     
@@ -739,7 +739,7 @@ public class SMPAppViewFXController {
             staff.setArrangement(new Arrangement());
             getNameTextField().clear();
             arrangementList.getItems().clear();
-            StateMachine.setArrModified(false);
+            model.setArrangementModified(false);
         }
     }
     
@@ -782,7 +782,7 @@ public class SMPAppViewFXController {
             saveArrTxt(fOut, out);
             fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            StateMachine.setArrModified(false);
+            model.setArrangementModified(false);
         } catch (IOException e) {
             log.error("Error in saveArrangement:", e);
         }
@@ -813,7 +813,7 @@ public class SMPAppViewFXController {
             saveSongTxt(fOut, out);
             fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            StateMachine.setSongModified(false);
+            model.setSongModified(false);
         } catch (IOException e) {
             log.error("Error in saveSong:", e);
         }
@@ -909,7 +909,7 @@ public class SMPAppViewFXController {
             getModifySongManager().reset();
             getNameTextField().setText(loaded.getTitle());
             model.setNoteExtensions(loaded.getNoteExtensions());
-            StateMachine.setSongModified(false);
+            model.setSongModified(false);
             
         } catch (FileNotFoundException e) {
             Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
@@ -944,8 +944,8 @@ public class SMPAppViewFXController {
             	arrangementList.getItems().add(seq);
             }
             
-        	StateMachine.setSongModified(false);
-        	StateMachine.setArrModified(false);
+        	model.setSongModified(false);
+        	model.setArrangementModified(false);
         	
         } catch (ParseException | StreamCorruptedException
         		| NullPointerException e) {
@@ -953,7 +953,7 @@ public class SMPAppViewFXController {
         		Arrangement loaded = ArrangementDecoders.MPC.getDecoder().decode(inputFile);
         		StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
         		staff.populateStaffArrangement(loaded);
-        		StateMachine.setSongModified(false);
+        		model.setSongModified(false);
         		
         	} catch (Exception e1) {
         	    log.error("Error in loadArrangement:", e1);

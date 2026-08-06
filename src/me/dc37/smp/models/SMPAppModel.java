@@ -78,6 +78,13 @@ public class SMPAppModel {
     
     private final StringProperty currentSongName = new SimpleStringProperty("");
     private final StringProperty currentArrangementName = new SimpleStringProperty("");
+    
+    /** This tells us whether we have modified the song or not. */
+    private final BooleanProperty songModified = new SimpleBooleanProperty(false);
+    
+    /** This tells us whether we have modified the arrangement or not. */
+    private final BooleanProperty arrangementModified = new SimpleBooleanProperty(false);
+    
 	
 	private SMPAppModel() {}
 	
@@ -378,6 +385,38 @@ public class SMPAppModel {
     
     public void setCurrentArrangementName(String currentArrangementName) {
         this.currentArrangementName.set(currentArrangementName);
+    }
+    
+    /**
+     * @return Whether we have modified the current song or not.
+     */
+    public boolean isSongModified() {
+        return songModified.get();
+    }
+    
+    /**
+     * Sets whether the current song is modified.
+     *
+     * @param songModified Whether we have modified the song or not.
+     */
+    public void setSongModified(boolean songModified) {
+        this.songModified.set(songModified);
+    }
+    
+    /**
+     * @return Whether we have modified the current arrangement or not.
+     */
+    public boolean isArrangementModified() {
+        return arrangementModified.get();
+    }
+
+    /**
+     * Sets whether the current arrangement is modified.
+     * 
+     * @param arrangementModified Whether we have modified the arrangement or not.
+     */
+    public void setArrangementModified(boolean arrangementModified) {
+        this.arrangementModified.set(arrangementModified);
     }
 	
 }

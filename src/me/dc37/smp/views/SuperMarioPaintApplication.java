@@ -91,7 +91,7 @@ public class SuperMarioPaintApplication extends Application {
 		try {
 			stage.setTitle("Super Mario Paint " + Settings.VERSION);
 			stage.setOnCloseRequest(event -> {
-                handleCloseRequest(stage);
+                handleCloseRequest(stage, model);
                 event.consume(); // Keep the window from closing
             });
 			stage.setResizable(false);
@@ -128,17 +128,17 @@ public class SuperMarioPaintApplication extends Application {
      * currently needs some work, so we're not going to include it in the alpha
      * release.
      */
-    private void handleCloseRequest(Stage stage) {
+    private void handleCloseRequest(Stage stage, SMPAppModel model) {
         String mssg;
         
-        if (StateMachine.isSongModified()
-                && StateMachine.isArrModified()) {
+        if (model.isSongModified()
+                && model.isArrangementModified()) {
             mssg = "The song and arrangement have\n"
                     + "both not been saved! Really exit?";
-        } else if (StateMachine.isSongModified()) {
+        } else if (model.isSongModified()) {
             mssg = "The song has not been saved! "
                     + "Really exit?";
-        } else if (StateMachine.isArrModified()) {
+        } else if (model.isArrangementModified()) {
             mssg = "The arrangement has not been saved! "
                     + "Really exit?";
         } else {
