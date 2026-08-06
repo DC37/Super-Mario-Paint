@@ -62,6 +62,9 @@ public class SMPAppModel {
      * Technically this is the first line that cannot be displayed.
      */
     private final IntegerProperty maxLine = new SimpleIntegerProperty(Values.DEFAULT_LINES_PER_SONG);
+    
+    /** Currently selected song in arranger mode. Set to -1 while in song mode. */
+    private final IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
 	
 	private SMPAppModel() {}
 	
@@ -240,6 +243,18 @@ public class SMPAppModel {
     
     public void setMaxLine(int maxLine) {
         this.maxLine.set(maxLine);
+    }
+    
+    public int getArrangementSongIndex() {
+        return arrangementSongIndex.get();
+    }
+    
+    public IntegerProperty getArrangementSongIndexProperty() {
+        return arrangementSongIndex;
+    }
+    
+    public void setArrangementSongIndex(int arrangementSongIndex) {
+        this.arrangementSongIndex.set(arrangementSongIndex);
     }
 	
 }

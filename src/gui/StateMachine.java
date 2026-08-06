@@ -46,11 +46,6 @@ public class StateMachine {
             Collections.synchronizedSet(new HashSet<KeyCode>());
 
     /**
-     * Currently selected song in arranger mode. Set to -1 while in song mode.
-     */
-    private static IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
-
-    /**
      * The current soundset name. This should change when a new soundfont is
      * loaded.
      */
@@ -68,18 +63,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-    
-    public static IntegerProperty getArrangementSongIndexProperty() {
-        return arrangementSongIndex;
-    }
-    
-    public static int getArrangementSongIndex() {
-        return arrangementSongIndex.get();
-    }
-    
-    public static void setArrangementSongIndex(int i) {
-        arrangementSongIndex.set(i);
-    }
     
     /**
      * Sets the modified flag to true or false.
