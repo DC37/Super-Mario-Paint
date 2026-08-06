@@ -1,5 +1,7 @@
 package me.dc37.smp.models;
 
+import java.io.File;
+
 import backend.songs.TimeSignature;
 import gui.SMPInstrument;
 import gui.SMPMode;
@@ -85,6 +87,8 @@ public class SMPAppModel {
     /** This tells us whether we have modified the arrangement or not. */
     private final BooleanProperty arrangementModified = new SimpleBooleanProperty(false);
     
+    /** The file directory that we are currently located in. We'll start in the user directory. */
+    private final ObjectProperty<File> currentDirectory = new SimpleObjectProperty<>(new File(System.getProperty("user.dir")));
 	
 	private SMPAppModel() {}
 	
@@ -417,6 +421,16 @@ public class SMPAppModel {
      */
     public void setArrangementModified(boolean arrangementModified) {
         this.arrangementModified.set(arrangementModified);
+    }
+    
+    /** @return Last directory we accessed. */
+    public File getCurrentDirectory() {
+        return currentDirectory.get();
+    }
+
+    /** @param currentDirectory Set current directory to this. */
+    public void setCurrentDirectory(File currentDirectory) {
+        this.currentDirectory.set(currentDirectory);
     }
 	
 }

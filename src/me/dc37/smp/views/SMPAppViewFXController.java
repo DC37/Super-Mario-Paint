@@ -25,7 +25,6 @@ import gui.OptionsMenu;
 import gui.SMPInstrument;
 import gui.SMPMode;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Utilities;
 import gui.Values;
 import gui.clipboard.StaffClipboard;
@@ -781,7 +780,7 @@ public class SMPAppViewFXController {
             
             saveArrTxt(fOut, out);
             fOut.close();
-            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
+            model.setCurrentDirectory(new File(outputFile.getParent()));
             model.setArrangementModified(false);
         } catch (IOException e) {
             log.error("Error in saveArrangement:", e);
@@ -812,7 +811,7 @@ public class SMPAppViewFXController {
             out.setTempo(model.getTempo());
             saveSongTxt(fOut, out);
             fOut.close();
-            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
+            model.setCurrentDirectory(new File(outputFile.getParent()));
             model.setSongModified(false);
         } catch (IOException e) {
             log.error("Error in saveSong:", e);
@@ -894,7 +893,7 @@ public class SMPAppViewFXController {
         	File inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
-        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        	model.setCurrentDirectory(new File(inputFile.getParent()));
         	loadSong(inputFile, owner);
         	
         } catch (Exception e) {
@@ -935,7 +934,7 @@ public class SMPAppViewFXController {
         	inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
-        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        	model.setCurrentDirectory(new File(inputFile.getParent()));
         	Arrangement loaded = ArrangementDecoders.SMP.getDecoder().decode(inputFile);
         	staff.populateStaffArrangement(loaded);
             
@@ -951,7 +950,7 @@ public class SMPAppViewFXController {
         		| NullPointerException e) {
         	try {
         		Arrangement loaded = ArrangementDecoders.MPC.getDecoder().decode(inputFile);
-        		StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        		model.setCurrentDirectory(new File(inputFile.getParent()));
         		staff.populateStaffArrangement(loaded);
         		model.setSongModified(false);
         		

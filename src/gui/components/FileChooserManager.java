@@ -2,9 +2,9 @@ package gui.components;
 
 import java.io.File;
 
-import gui.StateMachine;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import me.dc37.smp.models.SMPAppModel;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
@@ -18,9 +18,10 @@ public class FileChooserManager {
 	private FileChooserManager() {}
 	
 	private static FileChooser buildMainDialog() {
+	    SMPAppModel model = SMPAppModel.getInstance();
 		FileChooser f = new FileChooser();
         
-		f.setInitialDirectory(StateMachine.getCurrentDirectory());
+		f.setInitialDirectory(model.getCurrentDirectory());
         f.getExtensionFilters().addAll(
                 new ExtensionFilter("Text files (*.txt)", "*.txt"),
                 new ExtensionFilter("All files (*.*)", "*.*"));
