@@ -6,9 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
@@ -29,9 +27,6 @@ public class StateMachine {
     /** This tells us whether we have modified the arrangement or not. */
     private static boolean modifiedArr = false;
 
-    /** The list of values denoting which notes are filtered. */
-    private static IntegerProperty filteredNotes = new SimpleIntegerProperty(-1);
-    
     /**
      * The file directory that we are currently located in. We'll start in the
      * user directory.
@@ -93,40 +88,6 @@ public class StateMachine {
         return modifiedArr;
     }
     
-    public static IntegerProperty filteredNotesProperty() {
-        return filteredNotes;
-    }
-    
-    /**
-     * Set specific bit
-     * @param idx index of the bit to modify, is in interval [0, 31]
-     * @param b value to set
-     */
-    public static void setFilteredNote(int idx, boolean b) {
-        int v = filteredNotes.get();
-        int m = 1 << idx;
-        v = b ? v | m : v & (~m);
-        filteredNotes.set(v);
-    }
-
-    public static void setFilteredNotes(int v) {
-        filteredNotes.set(v);
-    }
-    
-    /**
-     * Get specific bit
-     * @param idx index of the bit to read, is in interval [0, 31]
-     */
-    public static boolean getFilteredNote(int idx) {
-        int m = 1 << idx;
-        int v = filteredNotes.get();
-        return (v & m) != 0;
-    }
-
-    public static int getFilteredNotes() {
-        return filteredNotes.get();
-    }
-
     /**
      * @return Set of currently-pressed buttons.
      */

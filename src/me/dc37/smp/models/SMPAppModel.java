@@ -68,6 +68,9 @@ public class SMPAppModel {
     
     /** The list of values denoting which notes should be extended. */
     private final IntegerProperty noteExtensions = new SimpleIntegerProperty(0);
+    
+    /** The list of values denoting which notes are filtered. */
+    private final IntegerProperty filteredNotes = new SimpleIntegerProperty(-1);
 	
 	private SMPAppModel() {}
 	
@@ -298,6 +301,40 @@ public class SMPAppModel {
         for (int i = 0; i < set.length; i++) {
             setNoteExtension(i, set[i]);
         }
+    }
+    
+    /**
+     * Get specific filtered note bit
+     * @param idx index of the bit to read, is in interval [0, 31]
+     */
+    public boolean getFilteredNote(int idx) {
+        int m = 1 << idx;
+        int v = filteredNotes.get();
+        return (v & m) != 0;
+    }
+
+    public int getFilteredNotes() {
+        return filteredNotes.get();
+    }
+    
+    public IntegerProperty filteredNotesProperty() {
+        return filteredNotes;
+    }
+    
+    /**
+     * Set specific filtered note bit
+     * @param idx index of the bit to modify, is in interval [0, 31]
+     * @param b value to set
+     */
+    public void setFilteredNote(int idx, boolean b) {
+        int v = filteredNotes.get();
+        int m = 1 << idx;
+        v = b ? v | m : v & (~m);
+        filteredNotes.set(v);
+    }
+
+    public void setFilteredNotes(int v) {
+        filteredNotes.set(v);
     }
 	
 }

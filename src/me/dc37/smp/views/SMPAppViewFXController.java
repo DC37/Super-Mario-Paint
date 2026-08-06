@@ -491,7 +491,7 @@ public class SMPAppViewFXController {
             staff.getSequence().getNoteExtensions()[i] = !ex;
             
         } else if (model.isCtrlPressed()) {
-            int flt = StateMachine.getFilteredNotes();
+            int flt = model.getFilteredNotes();
             int newFlt;
             int mask = ~ ((-1) << SMPInstrument.values().length);
             
@@ -507,7 +507,7 @@ public class SMPAppViewFXController {
                 }
             }
             
-            StateMachine.setFilteredNotes(newFlt);
+            model.setFilteredNotes(newFlt);
             
         } else {
             MidiChannel[] chan = resModel.getSoundPlayer().getChannels();
@@ -545,11 +545,11 @@ public class SMPAppViewFXController {
             }
         });
         
-        StateMachine.filteredNotesProperty().addListener((obs, oldv, newv) -> {
+        model.filteredNotesProperty().addListener((obs, oldv, newv) -> {
             int diff = (int) oldv ^ (int) newv;
             for (SMPInstrument inst : SMPInstrument.values()) {
                 if ((diff & 1) == 1) {
-                    boolean ex = StateMachine.getFilteredNote(inst.ordinal());
+                    boolean ex = model.getFilteredNote(inst.ordinal());
                     vs[inst.ordinal()].setActive(ex);
                 }
                 diff >>= 1;
