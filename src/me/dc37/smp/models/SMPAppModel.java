@@ -1,5 +1,6 @@
 package me.dc37.smp.models;
 
+import backend.songs.TimeSignature;
 import gui.SMPInstrument;
 import gui.SMPMode;
 import javafx.beans.property.BooleanProperty;
@@ -38,6 +39,9 @@ public class SMPAppModel {
     private final BooleanProperty clipboardPressed = new SimpleBooleanProperty(false);
     
     private final BooleanProperty playbackActive = new SimpleBooleanProperty(false);
+    
+    /** The default time signature that we start out with is 4/4 time. */
+    private final ObjectProperty<TimeSignature> timeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
 	
 	private SMPAppModel() {}
 	
@@ -147,6 +151,18 @@ public class SMPAppModel {
     
     public void setPlaybackActive(boolean playbackActive) {
         this.playbackActive.set(playbackActive);
+    }
+    
+    public TimeSignature getTimeSignature() {
+        return timeSignature.get();
+    }
+    
+    public ObjectProperty<TimeSignature> getTimeSignatureProperty() {
+        return timeSignature;
+    }
+    
+    public void setTimeSignature(TimeSignature timeSignature) {
+        this.timeSignature.set(timeSignature);
     }
 	
 }

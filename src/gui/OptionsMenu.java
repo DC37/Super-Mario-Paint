@@ -284,7 +284,7 @@ public class OptionsMenu {
         double currTempo = StateMachine.getTempo();
         double newTempo = currTempo * num;
         
-        TimeSignature currTimesig = StateMachine.getTimeSignature();
+        TimeSignature currTimesig = model.getTimeSignature();
         TimeSignature newTimesig = TimeSignature.multiply(currTimesig, num);
         
         CommandInterface cmd = new MultiplyTempoCommand(staff, num, currTempo, newTempo, currTimesig, newTimesig);

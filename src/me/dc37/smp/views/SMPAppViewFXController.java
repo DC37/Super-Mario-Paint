@@ -360,7 +360,7 @@ public class SMPAppViewFXController {
         InvalidationListener doRedraw = obv -> staff.redraw();
         
         StateMachine.getCurrentLineProperty().addListener(doRedraw);
-        StateMachine.getTimeSignatureProperty().addListener(doRedraw);
+        model.getTimeSignatureProperty().addListener(doRedraw);
         
         StateMachine.setMeasureLineNum(0);
         

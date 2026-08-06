@@ -195,7 +195,7 @@ public class Staff {
     
     public synchronized void setTimeSignature(TimeSignature t) {
         getSequence().setTimeSignature(t);
-        StateMachine.setTimeSignature(t);
+        model.setTimeSignature(t);
     }
 
     /**
@@ -206,7 +206,7 @@ public class Staff {
         if (idx == -1)
             return;
         
-        int[] barDivs = StateMachine.getTimeSignature().divs();
+        int[] barDivs = model.getTimeSignature().divs();
         
         displayManager.updateNoteDisplay(getSequence(), idx);
         displayManager.updateVolumeBars(getSequence(), idx);

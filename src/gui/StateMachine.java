@@ -51,11 +51,6 @@ public class StateMachine {
             Collections.synchronizedSet(new HashSet<KeyCode>());
 
     /**
-     * The default time signature that we start out with is 4/4 time.
-     */
-    private static ObjectProperty<TimeSignature> currentTimeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
-
-    /**
      * The current measure line number. Set to -1 as a special "uninitialized" value,
      * to force the initial redraw.
      */
@@ -95,18 +90,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-    
-    public static ObjectProperty<TimeSignature> getTimeSignatureProperty() {
-        return currentTimeSignature;
-    }
-
-    public static TimeSignature getTimeSignature() {
-        return currentTimeSignature.get();
-    }
-
-    public static void setTimeSignature(TimeSignature t) {
-        currentTimeSignature.set(t);
-    }
 
     /**
      * @return The tempo that this program is running at.
