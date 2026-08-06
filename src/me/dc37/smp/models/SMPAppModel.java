@@ -288,7 +288,7 @@ public class SMPAppModel {
         return ret;
     }
     
-    public IntegerProperty noteExtensionsProperty() {
+    public IntegerProperty getNoteExtensionsProperty() {
         return noteExtensions;
     }
     
@@ -324,7 +324,7 @@ public class SMPAppModel {
         return filteredNotes.get();
     }
     
-    public IntegerProperty filteredNotesProperty() {
+    public IntegerProperty getFilteredNotesProperty() {
         return filteredNotes;
     }
     
@@ -360,7 +360,7 @@ public class SMPAppModel {
         return currentSongName.get();
     }
     
-    public StringProperty currentSongNameProperty() {
+    public StringProperty getCurrentSongNameProperty() {
         return currentSongName;
     }
     
@@ -372,7 +372,7 @@ public class SMPAppModel {
         return currentArrangementName.get();
     }
     
-    public StringProperty currentArrangementNameProperty() {
+    public StringProperty getCurrentArrangementNameProperty() {
         return currentArrangementName;
     }
     

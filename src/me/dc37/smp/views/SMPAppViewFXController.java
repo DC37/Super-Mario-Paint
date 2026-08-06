@@ -333,10 +333,10 @@ public class SMPAppViewFXController {
         // Changing mode binds the bottom text to a different name property
         model.getModeProperty().addListener(this::onModeTypeChanged);
         
-        songName.textProperty().bindBidirectional(model.currentSongNameProperty());
+        songName.textProperty().bindBidirectional(model.getCurrentSongNameProperty());
         
-        model.currentSongNameProperty().addListener(obs -> staff.getSequence().setTitle(model.getCurrentSongName()));
-        model.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(model.getCurrentArrangementName()));
+        model.getCurrentSongNameProperty().addListener(obs -> staff.getSequence().setTitle(model.getCurrentSongName()));
+        model.getCurrentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(model.getCurrentArrangementName()));
         
         // Set up tempo box
         tempoIndicator.textProperty().bindBidirectional(model.getTempoProperty(), new NumberStringConverter());
@@ -450,12 +450,12 @@ public class SMPAppViewFXController {
     private void onModeTypeChanged(Observable obs) {
     	switch (model.getMode()) {
         case SONG:
-            songName.textProperty().unbindBidirectional(model.currentArrangementNameProperty());
-            songName.textProperty().bindBidirectional(model.currentSongNameProperty());
+            songName.textProperty().unbindBidirectional(model.getCurrentArrangementNameProperty());
+            songName.textProperty().bindBidirectional(model.getCurrentSongNameProperty());
             break;
         case ARRANGEMENT:
-            songName.textProperty().unbindBidirectional(model.currentSongNameProperty());
-            songName.textProperty().bindBidirectional(model.currentArrangementNameProperty());
+            songName.textProperty().unbindBidirectional(model.getCurrentSongNameProperty());
+            songName.textProperty().bindBidirectional(model.getCurrentArrangementNameProperty());
             break;
         }
     }
@@ -539,13 +539,13 @@ public class SMPAppViewFXController {
             n.getChildren().add(b);
         }
         
-        model.noteExtensionsProperty().addListener(obs -> {
+        model.getNoteExtensionsProperty().addListener(obs -> {
             for (SMPInstrument inst : SMPInstrument.values()) {
                 vs[inst.ordinal()].setSustainOn(model.getNoteExtension(inst.ordinal()));
             }
         });
         
-        model.filteredNotesProperty().addListener((obs, oldv, newv) -> {
+        model.getFilteredNotesProperty().addListener((obs, oldv, newv) -> {
             int diff = (int) oldv ^ (int) newv;
             for (SMPInstrument inst : SMPInstrument.values()) {
                 if ((diff & 1) == 1) {
