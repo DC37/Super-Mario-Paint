@@ -5,15 +5,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import backend.songs.TimeSignature;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
@@ -68,11 +65,6 @@ public class StateMachine {
     private static IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
 
     /**
-     * This is the current tempo that the program is running at.
-     */
-    private static DoubleProperty tempo = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
-
-    /**
      * The current soundset name. This should change when a new soundfont is
      * loaded.
      */
@@ -90,28 +82,6 @@ public class StateMachine {
      * around.
      */
     private StateMachine() {}
-
-    /**
-     * @return The tempo that this program is running at.
-     */
-    public static double getTempo() {
-        return tempo.get();
-    }
-    
-    public static DoubleProperty getTempoProperty() {
-        return tempo;
-    }
-
-    /**
-     * Sets the tempo to what we give it here.
-     *
-     * @param num
-     *            The tempo we want to set the program to run at.
-     * @return The current tempo.
-     */
-    public static void setTempo(double num) {
-        tempo.set(num);
-    }
     
     public static IntegerProperty getCurrentLineProperty() {
         return currentLine;

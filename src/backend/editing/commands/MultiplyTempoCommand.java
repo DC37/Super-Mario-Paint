@@ -7,9 +7,11 @@ import backend.songs.TimeSignature;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
+import me.dc37.smp.models.SMPAppModel;
 
 public class MultiplyTempoCommand implements CommandInterface {
 
+    private final SMPAppModel model;
     Staff theStaff;
     int theMultiplyAmount;
     double previousTempo;
@@ -17,7 +19,13 @@ public class MultiplyTempoCommand implements CommandInterface {
     TimeSignature previousTimesig;
     TimeSignature newTimesig;
     
-    public MultiplyTempoCommand(Staff staff, int num, double previousTempo, double newTempo, TimeSignature previousTimesig, TimeSignature newTimesig) {
+    public MultiplyTempoCommand(
+            SMPAppModel model,
+            Staff staff, int num,
+            double previousTempo, double newTempo,
+            TimeSignature previousTimesig, TimeSignature newTimesig) {
+        
+        this.model = model;
         theStaff = staff;
         this.theMultiplyAmount = num;
         this.previousTempo = previousTempo;
@@ -31,7 +39,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         Song seq = theStaff.getSequence();
         expand(seq, theMultiplyAmount);
         seq.setTempo(newTempo);
-        StateMachine.setTempo(newTempo);
+        model.setTempo(newTempo);
         StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
         theStaff.setTimeSignature(newTimesig);
     }
@@ -41,7 +49,7 @@ public class MultiplyTempoCommand implements CommandInterface {
         Song seq = theStaff.getSequence();
         retract(seq, theMultiplyAmount);
         seq.setTempo(previousTempo);
-        StateMachine.setTempo(previousTempo);
+        model.setTempo(previousTempo);
         StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
         theStaff.setTimeSignature(previousTimesig);
     }

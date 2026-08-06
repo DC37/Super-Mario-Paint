@@ -281,13 +281,13 @@ public class OptionsMenu {
         if (num <= 1)
             return;
         
-        double currTempo = StateMachine.getTempo();
+        double currTempo = model.getTempo();
         double newTempo = currTempo * num;
         
         TimeSignature currTimesig = model.getTimeSignature();
         TimeSignature newTimesig = TimeSignature.multiply(currTimesig, num);
         
-        CommandInterface cmd = new MultiplyTempoCommand(staff, num, currTempo, newTempo, currTimesig, newTimesig);
+        CommandInterface cmd = new MultiplyTempoCommand(model, staff, num, currTempo, newTempo, currTimesig, newTimesig);
         cmd.redo();
         
         controller.getModifySongManager().execute(cmd);

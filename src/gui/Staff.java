@@ -305,7 +305,7 @@ public class Staff {
     public void populateStaff(Song loaded) {
         setSequence(loaded);
         setTimeSignature(loaded.getTimeSignature());
-        StateMachine.setTempo(loaded.getTempo());
+        model.setTempo(loaded.getTempo());
         StateMachine.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
         resetLocation();
         StateMachine.setCurrentSongName(loaded.getTitle());
@@ -476,7 +476,7 @@ public class Staff {
                 boolean zero = false;
                 int endLine = getSequence().getLength();
 
-                computeDelay(StateMachine.getTempo());
+                computeDelay(model.getTempo());
                 
                 StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
 
@@ -578,14 +578,14 @@ public class Staff {
                 for (int i = 0; i < seq.size(); i++) {
                     setSequence(getArrangement().getSequences().get(i));
                     setSoundset(getSequence().getSoundset());
-                    computeDelay(StateMachine.getTempo());
+                    computeDelay(model.getTempo());
                     setTimeSignature(getSequence().getTimeSignature());
                     endLine = getSequence().getLength();
                     
                     StateMachine.setArrangementSongIndex(i);
                     StateMachine.setNoteExtensions(
                             getSequence().getNoteExtensions());
-                    StateMachine.setTempo(getSequence().getTempo());
+                    model.setTempo(getSequence().getTempo());
                     StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
                     
                     index = 0;

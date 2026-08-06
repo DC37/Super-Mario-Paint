@@ -3,9 +3,12 @@ package me.dc37.smp.models;
 import backend.songs.TimeSignature;
 import gui.SMPInstrument;
 import gui.SMPMode;
+import gui.Values;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class SMPAppModel {
@@ -42,6 +45,9 @@ public class SMPAppModel {
     
     /** The default time signature that we start out with is 4/4 time. */
     private final ObjectProperty<TimeSignature> timeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
+    
+    /** This is the current tempo that the program is running at. */
+    private final DoubleProperty tempo = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
 	
 	private SMPAppModel() {}
 	
@@ -163,6 +169,27 @@ public class SMPAppModel {
     
     public void setTimeSignature(TimeSignature timeSignature) {
         this.timeSignature.set(timeSignature);
+    }
+    
+    /**
+     * @return The tempo that this program is running at.
+     */
+    public double getTempo() {
+        return tempo.get();
+    }
+    
+    public DoubleProperty getTempoProperty() {
+        return tempo;
+    }
+    
+    /**
+     * Sets the tempo to what we give it here.
+     *
+     * @param num The tempo we want to set the program to run at.
+     * @return The current tempo.
+     */
+    public void setTempo(double tempo) {
+        this.tempo.set(tempo);
     }
 	
 }

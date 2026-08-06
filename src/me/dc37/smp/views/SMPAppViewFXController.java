@@ -339,7 +339,7 @@ public class SMPAppViewFXController {
         StateMachine.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(StateMachine.getCurrentArrangementName()));
         
         // Set up tempo box
-        tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
+        tempoIndicator.textProperty().bindBidirectional(model.getTempoProperty(), new NumberStringConverter());
         tempoBox.setOnMousePressed(this::onTempoBoxMousePressed);
         
         // Setup scrollbar
@@ -465,7 +465,7 @@ public class SMPAppViewFXController {
             if (!model.isPlaybackActive() && model.getMode() == SMPMode.SONG) {
                 Window owner = Utilities.getOwner(evt);
                 String tempo = Dialog.showTextDialog("Tempo", owner);
-                StateMachine.setTempo(Double.parseDouble(tempo.trim()));
+                model.setTempo(Double.parseDouble(tempo.trim()));
             }
         } catch (NumberFormatException e) {
             // Do nothing.
@@ -623,12 +623,12 @@ public class SMPAppViewFXController {
     
     @FXML
     public void tempoUp(ActionEvent e) {
-        StateMachine.setTempo(StateMachine.getTempo() + 1);
+        model.setTempo(model.getTempo() + 1);
     }
     
     @FXML
     public void tempoDown(ActionEvent e) {
-        StateMachine.setTempo(StateMachine.getTempo() - 1);
+        model.setTempo(model.getTempo() - 1);
     }
     
     public void switchMode() {
@@ -809,7 +809,7 @@ public class SMPAppViewFXController {
                 return;
             FileOutputStream fOut = new FileOutputStream(outputFile);
             Song out = staff.getSequence();
-            out.setTempo(StateMachine.getTempo());
+            out.setTempo(model.getTempo());
             saveSongTxt(fOut, out);
             fOut.close();
             StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
