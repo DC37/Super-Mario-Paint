@@ -9,6 +9,7 @@ import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.sound.midi.MidiChannel;
 
@@ -17,7 +18,6 @@ import backend.editing.ModifySongManager;
 import backend.saving.ArrangementDecoders;
 import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
-import backend.songs.Note;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
 import gui.Dialog;
@@ -46,7 +46,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -69,6 +68,7 @@ import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
 import me.dc37.smp.controllers.SMPAppController;
+import me.dc37.smp.domain.SaveSongParameters;
 import me.dc37.smp.models.ResourceModel;
 import me.dc37.smp.models.SMPAppModel;
 import utilities.MathUtils;
@@ -213,6 +213,7 @@ public class SMPAppViewFXController {
     
     private ResourceModel resModel;
     private SMPAppModel model;
+    private Consumer<SaveSongParameters> fnSaveSong;
     
     /**
      * Constructs a FXML Controller for the Main Window.
@@ -221,9 +222,13 @@ public class SMPAppViewFXController {
      *                   represents the operations available
      *                   to the main window (MVCI).
      */
-    public SMPAppViewFXController(ResourceModel resModel, SMPAppModel model) {
+    public SMPAppViewFXController(
+            ResourceModel resModel, SMPAppModel model,
+            Consumer<SaveSongParameters> fnSaveSong) {
+        
         this.resModel = resModel;
         this.model = model;
+        this.fnSaveSong = fnSaveSong;
     }
 
     /**
@@ -802,70 +807,20 @@ public class SMPAppViewFXController {
             return;
         }
         
-        try {
-        	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
-            if (outputFile == null)
-                return;
-            FileOutputStream fOut = new FileOutputStream(outputFile);
-            Song out = staff.getSequence();
-            out.setTempo(model.getTempo());
-            saveSongTxt(fOut, out);
-            fOut.close();
-            model.setCurrentDirectory(new File(outputFile.getParent()));
-            model.setSongModified(false);
-        } catch (IOException e) {
-            log.error("Error in saveSong:", e);
-        }
-    }
-
-    public void saveSongTxt(FileOutputStream fOut, Song seq)
-            throws IOException {
-        PrintStream pr = new PrintStream(fOut);
-        TimeSignature t = seq.getTimeSignature();
-        if (t == null) {
-            t = TimeSignature.FOUR_FOUR;
-        }
-        pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", seq.getTempo(),
-                Utilities.longFromBool(seq.getNoteExtensions()), t, seq.getSoundset());
+    	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
+        if (outputFile == null)
+            return;
         
-        for (int i = 0; i < seq.getLength(); i++) {
-            if (seq.getLine(i).getNotes().isEmpty()) {
-                continue;
-            }
-            pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
-            List<Note> line = seq.getLine(i).getNotes();
-            for (int j = 0; j < line.size(); j++) {
-                pr.print(noteToString(line.get(j)) + ",");
-            }
-            pr.printf("VOL: %d\r\n", seq.getLine(i).getVolume());
-        }
-        pr.close();
-
-        // when we change the soundfont for a song in the arr, we should store
-        // the new soundfont in cache
-        Task<Void> soundsetsTaskSave = new Task<Void>() {
-            @Override
-            public Void call() {
-                List<Song> seqs = staff.getArrangement().getSequences();
-                String currSeqName = getNameTextField().getText();
-                for (Song seq : seqs) 
-                    if (seq.getTitle().equals(currSeqName)) {
-                        resModel.getSoundPlayer().storeInCache();
-                        break;
-                    }
-                return null;
-            }
-        };
+        Song song = staff.getSequence();
+        song.setTempo(model.getTempo());
         
-        new Thread(soundsetsTaskSave).start();
-    }
-    
-    private static String noteToString(Note note) {
-        String instName = note.getInstrument().toString();
-        String noteName = Values.getNoteName(note.getVerticalPosition());
-        String noteAcc = note.getAccidental().getToken();
-        String muteName = note.getMuteModifier().getToken();
-        return instName + " " + noteName + noteAcc + muteName;
+        fnSaveSong.accept(new SaveSongParameters(
+                outputFile, song,
+                staff.getArrangement().getSequences(),
+                chosenSongName));
+        
+        model.setCurrentDirectory(new File(outputFile.getParent()));
+        model.setSongModified(false);
     }
     
     @FXML

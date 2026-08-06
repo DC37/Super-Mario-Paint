@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.domain.SaveSongParameters;
 import me.dc37.smp.interactors.LoaderWorker;
 import me.dc37.smp.interactors.SMPAppInteractor;
 import me.dc37.smp.models.ResourceModel;
@@ -28,13 +29,11 @@ public class SMPAppController {
 
     private final SMPAppModel model;
     private final ResourceModel resModel;
-	
-	@SuppressWarnings("unused")
 	private final SMPAppInteractor interactor;
-	
 	private final SMPAppViewBuilder viewBuilder;
 	
 	private PreloaderTask preloaderTask;
+	private SoundsetSaveTask soundsetSaveTask;
 	
 	/**
      * Loads all the sprites that will be used in Super Mario Paint.
@@ -49,9 +48,8 @@ public class SMPAppController {
 	public SMPAppController() {
 		model = SMPAppModel.getInstance();
 		resModel = ResourceModel.getInstance();
-		
 		interactor = new SMPAppInteractor(model);
-		viewBuilder = new SMPAppViewBuilder(resModel, model);
+		viewBuilder = new SMPAppViewBuilder(resModel, model, this::saveSong);
 	}
 	
 	public void prepareLoaders() {
@@ -106,6 +104,16 @@ public class SMPAppController {
 	
 	public Optional<ImageCursor> getCursor(SMPCursorType type) {
 		return resModel.getCursor(type);
+	}
+	
+	public void saveSong(SaveSongParameters params) {
+	    if (!interactor.saveSong(params.getFile(), params.getSong()))
+	        return;
+	    
+	    soundsetSaveTask = new SoundsetSaveTask(resModel,
+	            params.getSongName(), params.getArrangementSongs());
+	    
+	    new Thread(soundsetSaveTask).start();
 	}
 	
 }

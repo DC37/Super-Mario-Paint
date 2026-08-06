@@ -32,6 +32,7 @@ module smp {
     opens gui to javafx.fxml;
     
     exports me.dc37.smp;
+    exports me.dc37.smp.domain;
     exports me.dc37.smp.controllers;
     exports me.dc37.smp.models;
     exports me.dc37.smp.views;

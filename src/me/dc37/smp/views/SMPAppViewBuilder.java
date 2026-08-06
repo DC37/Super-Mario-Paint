@@ -2,6 +2,7 @@ package me.dc37.smp.views;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.function.Consumer;
 
 import gui.Values;
 import gui.resources.FetchStrategy;
@@ -10,6 +11,7 @@ import gui.resources.SMPResourceUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 import javafx.util.Builder;
+import me.dc37.smp.domain.SaveSongParameters;
 import me.dc37.smp.models.ResourceModel;
 import me.dc37.smp.models.SMPAppModel;
 
@@ -19,15 +21,20 @@ public class SMPAppViewBuilder implements Builder<Region> {
     
     private final ResourceModel resModel;
     private final SMPAppModel model;
+    private final Consumer<SaveSongParameters> fnSaveSong;
     
-    public SMPAppViewBuilder(ResourceModel resModel, SMPAppModel model) {
+    public SMPAppViewBuilder(
+            ResourceModel resModel, SMPAppModel model,
+            Consumer<SaveSongParameters> fnSaveSong) {
+        
         this.resModel = resModel;
         this.model = model;
+        this.fnSaveSong = fnSaveSong;
     }
     
     @Override
     public Region build() {
-        SMPAppViewFXController fxCtrl = new SMPAppViewFXController(resModel, model);
+        SMPAppViewFXController fxCtrl = new SMPAppViewFXController(resModel, model, fnSaveSong);
         loader.setController(fxCtrl);
         
         // We have to copy the FXML onto the user file system
