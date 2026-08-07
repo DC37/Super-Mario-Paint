@@ -17,8 +17,6 @@ import backend.BackendUtils;
 import backend.editing.ModifySongManager;
 import backend.saving.ArrangementDecoders;
 import backend.saving.SequenceDecoders;
-import backend.songs.Accidental;
-import backend.songs.MuteModifier;
 import backend.songs.Arrangement;
 import backend.songs.Note;
 import backend.songs.Song;
@@ -27,8 +25,8 @@ import backend.sound.SoundPlayer;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
-import gui.components.SongNameController;
 import gui.components.ModeTypeStringConverter;
+import gui.components.SongNameController;
 import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
@@ -848,39 +846,9 @@ public class SMPFXController {
     private static String noteToString(Note note) {
         String instName = note.getInstrument().toString();
         String noteName = Values.getNoteName(note.getVerticalPosition());
-        String noteAcc = accidentalToString(note.getAccidental());
-        String muteName = muteModifierToString(note.getMuteModifier());
+        String noteAcc = note.getAccidental().getToken();
+        String muteName = note.getMuteModifier().getToken();
         return instName + " " + noteName + noteAcc + muteName;
-    }
-    
-    private static String accidentalToString(Accidental acc) {
-        switch (acc) {
-        case Accidental.DOUBLE_FLAT:
-            return "B";
-        case Accidental.FLAT:
-            return "b";
-        case Accidental.NATURAL:
-            return "";
-        case Accidental.SHARP:
-            return "#";
-        case Accidental.DOUBLE_SHARP:
-            return "X";
-        default:
-            throw new IllegalArgumentException("Cannot convert " + acc + " to String");
-        }
-    }
-    
-    private static String muteModifierToString(MuteModifier mod) {
-        switch (mod) {
-        case MuteModifier.REGULAR:
-            return "";
-        case MuteModifier.MUTE_THIS_PITCH:
-            return "m1";
-        case MuteModifier.MUTE_THIS_INST:
-            return "m2";
-        default:
-            throw new IllegalArgumentException("Cannot convert " + mod + " to String");
-        }
     }
     
     @FXML

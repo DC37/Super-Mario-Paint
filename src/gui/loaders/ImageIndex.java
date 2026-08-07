@@ -1,5 +1,8 @@
 package gui.loaders;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import gui.resources.SMPResourceType;
 
 /**
@@ -342,6 +345,45 @@ public enum ImageIndex {
     ;
 
     /* BUTTONS END HERE */
+	
+	private static final Map<String, ImageIndex> ITEM_LOOKUP_BY_NAME = new HashMap<>();
+	private static final Map<String, ImageIndex> INSTRUMENT_SUSTAINED_OFF_LOOKUP_BY_NAME = new HashMap<>();
+	private static final Map<String, ImageIndex> INSTRUMENT_SUSTAINED_ON_LOOKUP_BY_NAME = new HashMap<>();
+	private static final Map<String, ImageIndex> ITEM_GRAY_LOOKUP_BY_NAME = new HashMap<>();
+	private static final Map<String, ImageIndex> ITEM_SILHOUETTE_LOOKUP_BY_NAME = new HashMap<>();
+	
+	static {
+		for (ImageIndex imgIdx : ImageIndex.values()) {
+			Map<String, ImageIndex> mapToUse;
+			String keyToUse = imgIdx.toString();
+			
+			switch (imgIdx.getType()) {
+			case INSTRUMENT, ACCIDENTAL:
+				mapToUse = ITEM_LOOKUP_BY_NAME;
+				break;
+			case INSTRUMENT_SUSTAINED_OFF:
+				mapToUse = INSTRUMENT_SUSTAINED_OFF_LOOKUP_BY_NAME;
+				keyToUse = keyToUse.replace("_SM", "");
+				break;
+			case INSTRUMENT_SUSTAINED_ON:
+				mapToUse = INSTRUMENT_SUSTAINED_ON_LOOKUP_BY_NAME;
+				keyToUse = keyToUse.replace("_SMA", "");
+				break;
+			case INSTRUMENT_GRAY, ACCIDENTAL_GRAY:
+				mapToUse = ITEM_GRAY_LOOKUP_BY_NAME;
+				keyToUse = keyToUse.replace("_GRAY", "");
+				break;
+			case INSTRUMENT_SILHOUETTE, ACCIDENTAL_SILHOUETTE:
+				mapToUse = ITEM_SILHOUETTE_LOOKUP_BY_NAME;
+				keyToUse = keyToUse.replace("_SIL", "");
+				break;
+			default:
+				continue;
+			}
+			
+			mapToUse.put(keyToUse, imgIdx);
+		}
+	}
     
     /** The resource type this image belongs to. */
 	private SMPResourceType type;
@@ -361,6 +403,26 @@ public enum ImageIndex {
 	 */
 	public SMPResourceType getType() {
 		return type;
+	}
+	
+	public static ImageIndex ofItem(String name) {
+		return ITEM_LOOKUP_BY_NAME.getOrDefault(name, NONE);
+	}
+	
+	public static ImageIndex ofInstrumentSustainedOff(String name) {
+		return INSTRUMENT_SUSTAINED_OFF_LOOKUP_BY_NAME.getOrDefault(name, NONE);
+	}
+	
+	public static ImageIndex ofInstrumentSustainedOn(String name) {
+		return INSTRUMENT_SUSTAINED_ON_LOOKUP_BY_NAME.getOrDefault(name, NONE);
+	}
+	
+	public static ImageIndex ofItemGray(String name) {
+		return ITEM_GRAY_LOOKUP_BY_NAME.getOrDefault(name, NONE);
+	}
+	
+	public static ImageIndex ofItemSilhouette(String name) {
+		return ITEM_SILHOUETTE_LOOKUP_BY_NAME.getOrDefault(name, NONE);
 	}
 
 }

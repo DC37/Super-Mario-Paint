@@ -1,5 +1,7 @@
 package backend.songs;
 
+import java.util.function.Function;
+
 import gui.loaders.ImageIndex;
 
 /**
@@ -7,24 +9,18 @@ import gui.loaders.ImageIndex;
  */
 public enum Accidental {
     
-    DOUBLE_FLAT(-2, ImageIndex.DOUBLEFLAT, ImageIndex.DOUBLEFLAT_GRAY, ImageIndex.DOUBLEFLAT_SIL),
-    FLAT(-1, ImageIndex.FLAT, ImageIndex.FLAT_GRAY, ImageIndex.FLAT_SIL),
-    NATURAL(0, ImageIndex.BLANK, ImageIndex.BLANK, ImageIndex.BLANK),
-    SHARP(1, ImageIndex.SHARP, ImageIndex.SHARP_GRAY, ImageIndex.SHARP_SIL),
-    DOUBLE_SHARP(2, ImageIndex.DOUBLESHARP, ImageIndex.DOUBLESHARP_GRAY, ImageIndex.DOUBLESHARP_SIL);
+    DOUBLE_FLAT(-2, "B"),
+    FLAT(-1, "b"),
+    NATURAL(0, ""),
+    SHARP(1, "#"),
+    DOUBLE_SHARP(2, "X");
     
     private int offset;
-    private ImageIndex imageIndex;
-    private ImageIndex imgIdxGray;
-    private ImageIndex imgIdxSilhouette;
+    private String token;
     
-    private Accidental(int value, ImageIndex imageIndex,
-    		ImageIndex imgIdxGray, ImageIndex imgIdxSilhouette) {
-    	
+    private Accidental(int value, String token) {
         this.offset = value;
-        this.imageIndex = imageIndex;
-        this.imgIdxGray = imgIdxGray;
-        this.imgIdxSilhouette = imgIdxSilhouette;
+        this.token = token;
     }
     
     /**
@@ -57,7 +53,24 @@ public enum Accidental {
      * @return The pitch offset
      */
     public int getOffset() {
-        return this.offset;
+        return offset;
+    }
+    
+    /**
+     * Get the representation of this {@link Accidental} as viewed when written in a file.
+     * @return The representation as a {@link String}.
+     */
+    public String getToken() {
+    	return token;
+    }
+    
+    private ImageIndex getImageIndexAs(
+    		Function<String, ImageIndex> fnGetImgIdx) {
+    	
+    	if ("NATURAL".equals(toString()))
+    		return ImageIndex.BLANK;
+    	
+    	return fnGetImgIdx.apply(toString());
     }
     
     /**
@@ -65,7 +78,7 @@ public enum Accidental {
      * @return Image index of this accidental
      */
     public ImageIndex getImageIndex() {
-        return imageIndex;
+    	return getImageIndexAs(ImageIndex::ofItem);
     }
     
     /**
@@ -73,7 +86,7 @@ public enum Accidental {
      * @return Image index of this accidental
      */
     public ImageIndex getImgIdxGray() {
-    	return imgIdxGray;
+    	return getImageIndexAs(ImageIndex::ofItemGray);
     }
     
     /**
@@ -81,7 +94,7 @@ public enum Accidental {
      * @return Image index of this accidental
      */
     public ImageIndex getImgIdxSilhouette() {
-    	return imgIdxSilhouette;
+    	return getImageIndexAs(ImageIndex::ofItemSilhouette);
     }
 
 }
