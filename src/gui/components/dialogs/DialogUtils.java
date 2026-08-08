@@ -13,10 +13,10 @@ public class DialogUtils {
 	private DialogUtils() {}
 	
 	public static void showInfo(String title, String body) {
-		Alert dialog = new Alert(AlertType.INFORMATION);
+		Alert dialog = new Alert(
+				AlertType.INFORMATION, body);
 		
 		dialog.setTitle(title);
-		dialog.setContentText(body);
 		
 		dialog.showAndWait();
 	}
@@ -26,10 +26,11 @@ public class DialogUtils {
 	}
 	
 	public static boolean showQuestion(String title, String body) {
-		Alert dialog = new Alert(AlertType.CONFIRMATION);
+		Alert dialog = new Alert(
+				AlertType.CONFIRMATION, body,
+				ButtonType.YES, ButtonType.NO);
 		
 		dialog.setTitle(title);
-		dialog.setContentText(body);
 		
 		Optional<ButtonType> result = dialog.showAndWait();
 		
