@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -225,6 +226,9 @@ public class SuperMarioPaint extends Application  {
      */
     @Override
     public void start(Stage ps) {
+    	// Force English to keep the application consistent.
+    	Locale.setDefault(Locale.ENGLISH);
+    	
         primaryStage = ps;
 
         preloaderTask = new Task<Void>() {
