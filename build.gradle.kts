@@ -49,10 +49,19 @@ sourceSets {
 }
 
 tasks.processResources {
-    val projectVersion = project.version
+	val projectVersion = project.version
     inputs.property("version", projectVersion)
+    
+    val displayName = project.property("smp.name")
+    inputs.property("smp.name", displayName)
+    
     filesMatching("gradle.bridge.properties") {
-        expand("projectVersion" to projectVersion)
+    	expand(
+    		mapOf(
+    			"projectVersion" to projectVersion,
+    			"displayName" to displayName
+    		)
+    	)
     }
 }
 

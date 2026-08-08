@@ -22,6 +22,9 @@ public class Values {
     
     private Values() {}
 
+    /** The program name. */
+    public static final String PROGRAM_NAME = SMPResourceUtil.getProperty("gradle.bridge.properties", SMPResourceType.UNCATEGORIZED, "name");
+    
     /** The current version number of the program. */
     public static final String VERSION = SMPResourceUtil.getProperty("gradle.bridge.properties", SMPResourceType.UNCATEGORIZED, "version");
 
