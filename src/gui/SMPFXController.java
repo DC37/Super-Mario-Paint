@@ -446,7 +446,7 @@ public class SMPFXController {
     	try {
             if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
                 Window owner = Utilities.getOwner(evt);
-                String tempo = Dialog.showTextDialog("Tempo", owner);
+                String tempo = DialogUtils.requestInput("Tempo");
                 StateMachine.setTempo(Double.parseDouble(tempo.trim()));
             }
         } catch (NumberFormatException e) {
@@ -583,7 +583,7 @@ public class SMPFXController {
     
     public void setTimeSigCustom(ActionEvent e) {
         Window owner = ((Node) e.getSource()).getScene().getWindow();
-        String str = Dialog.showTextDialog(null, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
+        String str = DialogUtils.requestInput(Values.PROGRAM_NAME, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...");
         if (str.isEmpty())
             return;
         
