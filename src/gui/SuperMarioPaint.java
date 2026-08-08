@@ -14,6 +14,7 @@ import java.util.concurrent.RunnableFuture;
 import java.util.function.Consumer;
 
 import backend.sound.SoundPlayer;
+import gui.components.dialogs.DialogUtils;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
 import gui.loaders.Loader;
@@ -287,7 +288,7 @@ public class SuperMarioPaint extends Application  {
             return;
         }
     
-        if (Dialog.showYesNoDialog("HOLD IT!", mssg, primaryStage))
+        if (DialogUtils.showQuestion("HOLD IT!", mssg))
             stop();
     }
     

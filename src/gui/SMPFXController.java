@@ -555,7 +555,7 @@ public class SMPFXController {
     	
     	boolean somethingWasModified = songModified || arrModified;
     	if (somethingWasModified) {
-    		return Dialog.showYesNoDialog("HOLD IT!", String.format("%s%n%s", whatWasModified, q), owner);
+    		return DialogUtils.showQuestion("HOLD IT!", String.format("%s%n%s", whatWasModified, q));
     	}
     	
     	return true;
