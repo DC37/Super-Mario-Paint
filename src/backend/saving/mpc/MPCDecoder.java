@@ -14,6 +14,7 @@ import backend.songs.MuteModifier;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import backend.songs.Song;
+import backend.songs.TimeSignature;
 import gui.SMPInstrument;
 import gui.Values;
 
@@ -150,8 +151,8 @@ public class MPCDecoder implements Decoder<Song> {
         Song song = new Song(lines);
         song.setTempo(Double.parseDouble(tempo));
         
-        // TODO: Check if this is valid for MPC files.
-        // song.setTimeSignature(TimeSignature.valueOf(timeSig));
+        // Ensure the passed time signature is used in the loaded song.
+        song.setTimeSignature(TimeSignature.valueOf(timeSig));
         
         return song;
     }
