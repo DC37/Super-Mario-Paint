@@ -1,6 +1,5 @@
 package me.dc37.smp.views;
 
-import gui.Dialog;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -83,7 +82,9 @@ public class SplashScreen extends Preloader {
 	
 	@Override
 	public boolean handleErrorNotification(ErrorNotification en) {
-		Dialog.showDialog("Super Mario Paint has encountered the following error:\n" + en.getCause().getMessage());
+	    DialogUtils.showInfo(String.format(
+	            "Super Mario Paint has encountered the following error:%n%s",
+	            en.getCause().getMessage()));
         log.error("Exception cause:", en.getCause());
         return false;
 	}

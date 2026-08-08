@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import gui.Dialog;
 import gui.Settings;
 import gui.loaders.ImageLoader;
 import gui.loaders.SMPCursorType;
@@ -144,8 +143,8 @@ public class SuperMarioPaintApplication extends Application {
             stop();
             return;
         }
-    
-        if (Dialog.showYesNoDialog("HOLD IT!", mssg, stage))
+        
+        if (DialogUtils.showQuestion("HOLD IT!", mssg))
             stop();
     }
     

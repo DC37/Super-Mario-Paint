@@ -20,7 +20,6 @@ import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
-import gui.Dialog;
 import gui.OptionsMenu;
 import gui.SMPInstrument;
 import gui.SMPMode;
@@ -467,8 +466,7 @@ public class SMPAppViewFXController {
     private void onTempoBoxMousePressed(MouseEvent evt) {
     	try {
             if (!model.isPlaybackActive() && model.getMode() == SMPMode.SONG) {
-                Window owner = Utilities.getOwner(evt);
-                String tempo = Dialog.showTextDialog("Tempo", owner);
+                String tempo = DialogUtils.showInput("Tempo");
                 model.setTempo(Double.parseDouble(tempo.trim()));
             }
         } catch (NumberFormatException e) {
@@ -576,7 +574,8 @@ public class SMPAppViewFXController {
     	
     	boolean somethingWasModified = songModified || arrModified;
     	if (somethingWasModified) {
-    		return Dialog.showYesNoDialog("HOLD IT!", String.format("%s%n%s", whatWasModified, q), owner);
+    	    return DialogUtils.showQuestion(
+    	            "HOLD IT!", String.format("%s%n%s", whatWasModified, q));
     	}
     	
     	return true;
@@ -603,8 +602,7 @@ public class SMPAppViewFXController {
     }
     
     public void setTimeSigCustom(ActionEvent e) {
-        Window owner = ((Node) e.getSource()).getScene().getWindow();
-        String str = Dialog.showTextDialog(null, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
+        String str = DialogUtils.showInput(Values.PROGRAM_NAME, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...");
         if (str.isEmpty())
             return;
         
@@ -621,7 +619,7 @@ public class SMPAppViewFXController {
             }
             
         } catch (IllegalArgumentException ee) {
-            Dialog.showDialog(ee.getMessage());
+            DialogUtils.showInfo(ee.getMessage());
         }
     }
     
@@ -767,7 +765,7 @@ public class SMPAppViewFXController {
     private void saveArrangement(Window owner) {
         String chosenSongName = getNameTextField().getText();
         if (!Utilities.legalFileName(chosenSongName)) {
-        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
+            DialogUtils.showInfo(Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"));
             return;
         }
         
@@ -803,7 +801,7 @@ public class SMPAppViewFXController {
     public void saveSong(Window owner) {
         String chosenSongName = getNameTextField().getText();
         if (!Utilities.legalFileName(chosenSongName)) {
-        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
+            DialogUtils.showInfo(Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"));
             return;
         }
         
@@ -852,7 +850,7 @@ public class SMPAppViewFXController {
         	loadSong(inputFile, owner);
         	
         } catch (Exception e) {
-        	Dialog.showDialog(null, "Not a valid song file.", owner);
+            DialogUtils.showInfo("Not a valid song file.");
         }
     }
 
@@ -866,15 +864,15 @@ public class SMPAppViewFXController {
             model.setSongModified(false);
             
         } catch (FileNotFoundException e) {
-            Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
+            DialogUtils.showInfo(PROMPT_ERROR, String.format("File %s not found!", inputFile));
             log.error("File not found error in loadSong:", e);
             
         } catch (IOException e) {
-            Dialog.showDialog(PROMPT_ERROR, "An IO exception occurred while reading file " + inputFile + "!", owner);
+            DialogUtils.showInfo(PROMPT_ERROR, String.format("An IO exception occurred while reading file %s!", inputFile));
             log.error("IO error in loadSong:", e);
             
         } catch (Exception e) {
-            Dialog.showDialog(PROMPT_ERROR, "An error occurred while reading file " + inputFile + "!", owner);
+            DialogUtils.showInfo(PROMPT_ERROR, String.format("An error occurred while reading file %s!", inputFile));
             log.error("Error in loadSong:", e);
         }
     }
@@ -911,7 +909,7 @@ public class SMPAppViewFXController {
         		
         	} catch (Exception e1) {
         	    log.error("Error in loadArrangement:", e1);
-        		Dialog.showDialog(null, "Not a valid arrangement file.", owner);
+        	    DialogUtils.showInfo("Not a valid arrangement file.");
         	}
         	
         } catch (IOException e) {

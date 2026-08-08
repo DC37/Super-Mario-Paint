@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 import me.dc37.smp.models.SMPAppModel;
+import me.dc37.smp.views.DialogUtils;
 import me.dc37.smp.views.SMPAppViewFXController;
 
 @Slf4j
@@ -362,7 +363,7 @@ public class OptionsMenu {
         
         if (destSf.exists()) {
             String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-            if (!Dialog.showYesNoDialog("Options", mssg, owner))
+            if (!DialogUtils.showQuestion("Options", mssg))
                 return false;
         }
         
