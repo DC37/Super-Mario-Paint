@@ -138,20 +138,14 @@ public class Dialog {
         dialog.setScene(scene);
         return dialog.showAndReturn(false);
     }
-    
-    public static String showTextDialog(String title, String txt, Window owner) {
-        return showTextDialog(title, txt, null, owner, false);
-    }
-    
-    public static String showTextDialog(String txt, Window owner) {
-        return showTextDialog(null, txt, null, owner, false);
-    }
 
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show a text dialog.
      * @param txt The text to show.
+     * @deprecated
      */
+    @Deprecated(forRemoval = true)
     public static String showTextDialog(String title, String txt, String prompt, Window owner, boolean focusOnButton) {
         final StageWithReturn<String> dialog = initDialogStage(title, owner);
         
@@ -197,8 +191,4 @@ public class Dialog {
         return dialog.showAndReturn("");
     }
     
-    public static String showTextDialog(String txt) {
-        return showTextDialog(txt, null);
-    }
-
 }

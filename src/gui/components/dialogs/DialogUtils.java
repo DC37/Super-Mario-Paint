@@ -6,6 +6,7 @@ import gui.Values;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 
 public class DialogUtils {
 
@@ -40,6 +41,26 @@ public class DialogUtils {
 	
 	public static boolean showQuestion(String body) {
 		return showQuestion(Values.PROGRAM_NAME, body);
+	}
+	
+	public static String requestInput(String title, String body, String placeholder) {
+		TextInputDialog dialog = new TextInputDialog("");
+		
+		dialog.setTitle(title);
+		dialog.setContentText(body);
+		
+		if (placeholder != null)
+			dialog.getEditor().setPromptText(placeholder);
+		
+		return dialog.showAndWait().orElse("");
+	}
+	
+	public static String requestInput(String title, String body) {
+		return requestInput(title, body, null);
+	}
+	
+	public static String requestInput(String body) {
+		return requestInput(Values.PROGRAM_NAME, body);
 	}
 	
 }
