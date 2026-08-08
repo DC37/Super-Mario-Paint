@@ -142,7 +142,7 @@ public class OptionsMenu {
                 return;
             }
             
-            if(!addSoundfont(sf, owner)) {
+            if(!addSoundfont(sf)) {
                 availableSoundfonts.getSelectionModel().selectPrevious();
                 return;
             }
@@ -350,7 +350,7 @@ public class OptionsMenu {
      * @return if soundfont exists in AppData now
      * @since v1.1.2
      */
-    private static boolean addSoundfont(File sf, Window owner) {
+    private static boolean addSoundfont(File sf) {
         String sfName = sf.getName();
         if(sfName.isEmpty())
             return false;
