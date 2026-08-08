@@ -12,6 +12,7 @@ import backend.editing.SMPCommand;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
 import gui.components.FileChooserManager;
+import gui.components.dialogs.DialogUtils;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -357,7 +358,7 @@ public class OptionsMenu {
         
         if (destSf.exists()) {
             String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-            if (!Dialog.showYesNoDialog("Options", mssg, owner))
+            if (!DialogUtils.showQuestion("Options", mssg))
                 return false;
         }
         

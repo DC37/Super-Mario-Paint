@@ -90,7 +90,9 @@ public class Dialog {
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show an ok / cancel dialog.
      * @param txt The text to show.
+     * @deprecated
      */
+    @Deprecated(forRemoval = true)
     public static boolean showYesNoDialog(String title, String txt, Window owner) {
         final StageWithReturn<Boolean> dialog = initDialogStage(title, owner);
         
@@ -135,14 +137,6 @@ public class Dialog {
         Scene scene = new Scene(layout);
         dialog.setScene(scene);
         return dialog.showAndReturn(false);
-    }
-    
-    public static boolean showYesNoDialog(String title, String txt) {
-        return showYesNoDialog(title, txt, null);
-    }
-    
-    public static boolean showYesNoDialog(String txt) {
-        return showYesNoDialog(null, txt, null);
     }
     
     public static String showTextDialog(String title, String txt, Window owner) {
