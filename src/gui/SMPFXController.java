@@ -16,9 +16,9 @@ import javax.sound.midi.MidiChannel;
 import backend.BackendUtils;
 import backend.editing.ModifySongManager;
 import backend.saving.ArrangementDecoders;
+import backend.saving.FileService;
 import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
-import backend.songs.Note;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
 import backend.sound.SoundPlayer;
@@ -64,7 +64,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
-import utilities.DataTypeUtils;
 import utilities.MathUtils;
 import utilities.StringUtils;
 
@@ -787,45 +786,23 @@ public class SMPFXController {
             return;
         }
         
-        try {
-        	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
-            if (outputFile == null)
-                return;
-            FileOutputStream fOut = new FileOutputStream(outputFile);
-            Song out = staff.getSequence();
-            out.setTempo(StateMachine.getTempo());
-            saveSongTxt(fOut, out);
-            fOut.close();
-            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            StateMachine.setSongModified(false);
-        } catch (IOException e) {
-            log.error("Error in saveSong:", e);
-        }
+        File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
+        if (outputFile == null)
+            return;
+        
+        Song out = staff.getSequence();
+        out.setTempo(StateMachine.getTempo());
+        
+        saveSongTxt(outputFile, out);
+        
+        StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
+        StateMachine.setSongModified(false);
     }
 
-    public void saveSongTxt(FileOutputStream fOut, Song seq)
-            throws IOException {
-        PrintStream pr = new PrintStream(fOut);
-        TimeSignature t = seq.getTimeSignature();
-        if (t == null) {
-            t = TimeSignature.FOUR_FOUR;
-        }
-        pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", seq.getTempo(),
-                DataTypeUtils.packBits(seq.getNoteExtensions()), t, seq.getSoundset());
-        
-        for (int i = 0; i < seq.getLength(); i++) {
-            if (seq.getLine(i).getNotes().isEmpty()) {
-                continue;
-            }
-            pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
-            List<Note> line = seq.getLine(i).getNotes();
-            for (int j = 0; j < line.size(); j++) {
-                pr.print(noteToString(line.get(j)) + ",");
-            }
-            pr.printf("VOL: %d\r\n", seq.getLine(i).getVolume());
-        }
-        pr.close();
-
+    private void saveSongTxt(File fOut, Song seq) {
+    	if (!FileService.trySaveSong(fOut, seq))
+    		return;
+    	
         // when we change the soundfont for a song in the arr, we should store
         // the new soundfont in cache
         Task<Void> soundsetsTaskSave = new Task<Void>() {
@@ -843,14 +820,6 @@ public class SMPFXController {
         };
         
         new Thread(soundsetsTaskSave).start();
-    }
-    
-    private static String noteToString(Note note) {
-        String instName = note.getInstrument().toString();
-        String noteName = Values.getNoteName(note.getVerticalPosition());
-        String noteAcc = note.getAccidental().getToken();
-        String muteName = note.getMuteModifier().getToken();
-        return instName + " " + noteName + noteAcc + muteName;
     }
     
     @FXML
