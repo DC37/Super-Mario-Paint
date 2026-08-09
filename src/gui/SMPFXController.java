@@ -2,9 +2,7 @@ package gui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -750,33 +748,24 @@ public class SMPFXController {
             return;
         }
         
-        try {
-        	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
-            if (outputFile == null)
-                return;
-            FileOutputStream fOut = new FileOutputStream(outputFile);
-            Arrangement out = staff.getArrangement();
-            
-            for (int i = 0; i < out.getSongs().size(); i++) {
-            	String name = arrangementList.getItems().get(i).getTitle();
-            	out.getSongs().get(i).setTitle(name);
-            }
-            
-            saveArrTxt(fOut, out);
-            fOut.close();
-            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            StateMachine.setArrModified(false);
-        } catch (IOException e) {
-            log.error("Error in saveArrangement:", e);
+        File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
+        if (outputFile == null)
+            return;
+        
+        Arrangement out = staff.getArrangement();
+        for (int i = 0; i < out.getSongs().size(); i++) {
+        	String name = arrangementList.getItems().get(i).getTitle();
+        	out.getSongs().get(i).setTitle(name);
         }
+        
+        saveArrTxt(outputFile, out);
+        
+        StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
+        StateMachine.setArrModified(false);
     }
 
-    public void saveArrTxt(FileOutputStream fOut, Arrangement out) {
-        PrintStream pr = new PrintStream(fOut);
-        for (Song seq : out.getSongs()) {
-            pr.println(seq.getTitle());
-        }
-        pr.close();
+    public void saveArrTxt(File fOut, Arrangement out) {
+    	FileService.trySaveArrangement(fOut, out);
     }
 
     public void saveSong(Window owner) {

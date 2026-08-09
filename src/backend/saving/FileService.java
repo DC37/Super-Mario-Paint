@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Optional;
 
+import backend.songs.Arrangement;
 import backend.songs.Note;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
@@ -69,6 +70,27 @@ public class FileService {
         String muteName = note.getMuteModifier().getToken();
         
         return String.format("%s %s%s%s", instName, noteName, noteAcc, muteName);
+    }
+    
+    public static boolean trySaveArrangement(File f, Arrangement arrangement) {
+    	boolean successful = true;
+    	
+    	try (FileOutputStream fos = new FileOutputStream(f)) {
+    		
+    		PrintStream pr = new PrintStream(fos);
+    		
+            for (Song seq : arrangement.getSongs()) {
+                pr.println(seq.getTitle());
+            }
+            
+            pr.close();
+    		
+    	} catch (IOException | IllegalArgumentException e) {
+    		successful = false;
+    		log.error("Error while trying to save the arrangement!", e);
+    	}
+    	
+    	return successful;
     }
 	
 }
