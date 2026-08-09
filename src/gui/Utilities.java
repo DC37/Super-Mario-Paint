@@ -1,10 +1,5 @@
 package gui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
@@ -24,13 +19,6 @@ public class Utilities {
     
     private Utilities() {}
     
-    private static final List<Character> ILLEGAL_CHARS = new ArrayList<>();
-    
-    static {
-        ILLEGAL_CHARS.addAll(Arrays.asList(
-                '<', '>', '/', '\\', ':', '?', '|', '*', '"', '^'));
-    }
-    
     /**
      * Find the window owning an event. Useful for events that trigger a popup window.
      * Returns {@code null} if the owner cannot be found.
@@ -46,34 +34,6 @@ public class Utilities {
         return ((Node) src).getScene().getWindow();
     }
 
-    /**
-     * Prepare a {@link String} for showing in a dialog, with the
-     * list of illegal characters following a given preamble. The
-     * illegal characters are separated by a comma (<code>,</code>).
-     * 
-     * @param preamble The text to precede the list with.
-     * @return The preamble, a newline, and the list of illegal
-     *         characters, each one separated by a comma (<code>,</code>). 
-     */
-    public static String getIllegalCharsDialogText(String preamble) {
-    	String illegalCharsCSL = ILLEGAL_CHARS.stream()
-    			.map(Object::toString)
-    			.collect(Collectors.joining(", "));
-    	
-    	return String.format("%s%n%s", preamble, illegalCharsCSL);
-    }
-    
-    /**
-     * Check if a string does not contain any illegal character.
-     */
-    public static boolean legalFileName(String s) {
-        for (char c : s.toCharArray()) {
-            if (ILLEGAL_CHARS.contains(c))
-                return false;
-        }
-        return true;
-    }
-    
     /**
      * Group one or more {@link ToggleButton}s together.
      * 

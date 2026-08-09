@@ -166,6 +166,11 @@ public class Values {
      * @since v1.1.1
      */
     public static final int MAX_UNDO_REDO_SIZE = 1000;
+    
+    /** The list of illegal characters in a sequence name. */
+    private static final Character[] ILLEGAL_CHARS = new Character[] {
+    		'<', '>', '/', '\\', ':', '?', '|', '*', '"', '^'
+    };
 
     /**
      * This works in lieu of preprocessor directives to define the
@@ -295,6 +300,15 @@ public class Values {
      */
     public static List<NoteInfo> getNotes() {
     	return Arrays.asList(Values.STAFF_NOTES);
+    }
+    
+    /**
+     * Get the list of illegal characters in a sequence name.
+     * 
+     * @return The list of characters. This list cannot be modified.
+     */
+    public static List<Character> getIllegalChars() {
+    	return Arrays.asList(ILLEGAL_CHARS).stream().toList();
     }
     
 }

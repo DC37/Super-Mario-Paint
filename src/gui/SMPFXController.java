@@ -66,6 +66,7 @@ import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
 import utilities.DataTypeUtils;
 import utilities.MathUtils;
+import utilities.StringUtils;
 
 /**
  * The Controller class for most of the program. This will handle the events
@@ -745,8 +746,8 @@ public class SMPFXController {
 
     private void saveArrangement(Window owner) {
         String chosenSongName = getNameTextField().getText();
-        if (!Utilities.legalFileName(chosenSongName)) {
-        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
+        if (StringUtils.contains(chosenSongName, Values.getIllegalChars())) {
+        	Dialog.showDialog(null, StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"), owner);
             return;
         }
         
@@ -781,8 +782,8 @@ public class SMPFXController {
 
     public void saveSong(Window owner) {
         String chosenSongName = getNameTextField().getText();
-        if (!Utilities.legalFileName(chosenSongName)) {
-        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
+        if (StringUtils.contains(chosenSongName, Values.getIllegalChars())) {
+        	Dialog.showDialog(null, StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"), owner);
             return;
         }
         
