@@ -17,9 +17,9 @@ import gui.Values;
  * @since MPCTxtTools 1.05 / MPCTxtTools 1.07a
  * @since 2011.09.02
  */
-public class TextUtil {
+public class MPCUtils {
 
-    private TextUtil() {}
+    private MPCUtils() {}
     
     /**
      * This is the regex pattern that denotes a note in an MPC text file. It

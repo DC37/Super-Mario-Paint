@@ -11,7 +11,7 @@ import java.util.List;
  * @since MPCTxtTools 1.07
  * @since 2013.04.08
  */
-public class NoteLine {
+public class MPCNoteLine {
 
     /** THe number of notes in an MPC song line. There are actually 6 even though
      * MPC itself can only play 5 at a time.
@@ -25,7 +25,7 @@ public class NoteLine {
     private char vol;
 
     /** Makes a new note line without anything in it. */
-    public NoteLine() {
+    public MPCNoteLine() {
         notes = new ArrayList<>();
         vol = 'q';
     }
@@ -34,7 +34,7 @@ public class NoteLine {
      * Makes a new note line from a String that we assume to be a note line.
      * @param parse This is the String that we are attempting to parse.
      */
-    public NoteLine(String parse) throws ParseException {
+    public MPCNoteLine(String parse) throws ParseException {
         if (parse.length() < NOTESIZE + 1) {
             notes = new ArrayList<>();
             for (int i = 0; i < NOTESIZE; i++)
@@ -42,7 +42,7 @@ public class NoteLine {
             vol = 'q';
             return;
         }
-        notes = TextUtil.dice(parse);
+        notes = MPCUtils.dice(parse);
         vol = parse.charAt(parse.length() - 2);
         if (!(vol >= 'a' && vol <= 'q'))
             vol = 'q';

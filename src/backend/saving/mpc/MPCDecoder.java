@@ -76,7 +76,7 @@ public class MPCDecoder implements Decoder<Song> {
         if (in == null || in.isEmpty() || in.indexOf('*') == -1) {
             throw new ParseException("Invalid Text File.", 0);
         }
-        List<String> everything = TextUtil.chop(TextUtil.clean(in));
+        List<String> everything = MPCUtils.chop(MPCUtils.clean(in));
         String timeSig = in.substring(0, in.indexOf('*'));
         String tempo = in.substring(in.indexOf('%') + 1);
         return populateSequence(timeSig, everything, tempo);
@@ -102,11 +102,11 @@ public class MPCDecoder implements Decoder<Song> {
                 if (note.substring(1).equals("17")) {
                 	mod = MuteModifier.MUTE_THIS_INST;
                 } else {
-                    pos = TextUtil.parsePosition(note.charAt(1));
-                    acc = TextUtil.parseAccidental(note.charAt(2));
+                    pos = MPCUtils.parsePosition(note.charAt(1));
+                    acc = MPCUtils.parseAccidental(note.charAt(2));
                 }
             } else if (note.length() == 2) {
-                pos = TextUtil.parsePosition(note.charAt(1));
+                pos = MPCUtils.parsePosition(note.charAt(1));
             }
             
             Note sn = new Note(in, pos, acc, mod);
@@ -139,8 +139,8 @@ public class MPCDecoder implements Decoder<Song> {
                 continue;
             }
 
-            List<String> inst = TextUtil.dice(s);
-            int vol = TextUtil.parseVolume(s.charAt(s.length() - 2));
+            List<String> inst = MPCUtils.dice(s);
+            int vol = MPCUtils.parseVolume(s.charAt(s.length() - 2));
             
             parseNotes(sl, inst);
             
