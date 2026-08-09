@@ -3,34 +3,51 @@ package gui.components.dialogs;
 import java.util.Optional;
 
 import gui.Values;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextInputDialog;
 
 public class DialogUtils {
 
 	private DialogUtils() {}
 	
-	public static void showInfo(String title, String body) {
-		Alert dialog = new Alert(
-				AlertType.INFORMATION, body);
+	private static void show(AlertType type, String title, String body) {
+		SMPInfoDialog dialog = new SMPInfoDialog(type);
 		
 		dialog.setTitle(title);
+		dialog.setContentText(body);
 		
 		dialog.showAndWait();
+	}
+	
+	public static void showInfo(String title, String body) {
+		show(AlertType.INFORMATION, title, body);
 	}
 	
 	public static void showInfo(String body) {
 		showInfo(Values.PROGRAM_NAME, body);
 	}
 	
+	public static void showWarning(String title, String body) {
+		show(AlertType.WARNING, title, body);
+	}
+	
+	public static void showWarning(String body) {
+		showWarning(Values.PROGRAM_NAME, body);
+	}
+	
+	public static void showError(String title, String body) {
+		show(AlertType.ERROR, title, body);
+	}
+	
+	public static void showError(String body) {
+		showError(Values.PROGRAM_NAME, body);
+	}
+	
 	public static boolean showQuestion(String title, String body) {
-		Alert dialog = new Alert(
-				AlertType.CONFIRMATION, body,
-				ButtonType.YES, ButtonType.NO);
+		SMPQuestionDialog dialog = new SMPQuestionDialog();
 		
 		dialog.setTitle(title);
+		dialog.setContentText(body);
 		
 		Optional<ButtonType> result = dialog.showAndWait();
 		
@@ -45,13 +62,11 @@ public class DialogUtils {
 	}
 	
 	public static String requestInput(String title, String body, String placeholder) {
-		TextInputDialog dialog = new TextInputDialog("");
+		SMPTextInputDialog dialog = new SMPTextInputDialog();
 		
 		dialog.setTitle(title);
 		dialog.setContentText(body);
-		
-		if (placeholder != null)
-			dialog.getEditor().setPromptText(placeholder);
+		dialog.setPlaceholderText(placeholder);
 		
 		return dialog.showAndWait().orElse("");
 	}
