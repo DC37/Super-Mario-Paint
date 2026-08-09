@@ -747,7 +747,7 @@ public class SMPFXController {
     private void saveArrangement(Window owner) {
         String chosenSongName = getNameTextField().getText();
         if (!Utilities.legalFileName(chosenSongName)) {
-            Dialog.showDialog(null, "Illegal file name!\nPlease avoid those characters:\n/, \\, <, >, :, |, *, \", ?, ^", owner);
+        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
             return;
         }
         
@@ -783,7 +783,7 @@ public class SMPFXController {
     public void saveSong(Window owner) {
         String chosenSongName = getNameTextField().getText();
         if (!Utilities.legalFileName(chosenSongName)) {
-            Dialog.showDialog(null, "Illegal file name!\nPlease avoid those characters:\n /, \\, <, >, :, |, *, \", ?, ^", owner);
+        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
             return;
         }
         

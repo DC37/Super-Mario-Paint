@@ -3,6 +3,7 @@ package gui;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.event.Event;
 import javafx.scene.Node;
@@ -76,6 +77,23 @@ public class Utilities {
             }
         }
         return parsed;
+    }
+    
+    /**
+     * Prepare a {@link String} for showing in a dialog, with the
+     * list of illegal characters following a given preamble. The
+     * illegal characters are separated by a comma (<code>,</code>).
+     * 
+     * @param preamble The text to precede the list with.
+     * @return The preamble, a newline, and the list of illegal
+     *         characters, each one separated by a comma (<code>,</code>). 
+     */
+    public static String getIllegalCharsDialogText(String preamble) {
+    	String illegalCharsCSL = ILLEGAL_CHARS.stream()
+    			.map(Object::toString)
+    			.collect(Collectors.joining(", "));
+    	
+    	return String.format("%s%n%s", preamble, illegalCharsCSL);
     }
     
     /**
