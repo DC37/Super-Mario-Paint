@@ -794,30 +794,31 @@ public class SMPFXController {
     }
 
     public void load(Window owner) {
-        switch (StateMachine.getMode()) {
-        case SONG:
-            Platform.runLater(() -> loadSong(owner));
-            break;
-            
-        case ARRANGEMENT:
-            Platform.runLater(() -> loadArrangement(owner));
-            break;
-        }
+    	Platform.runLater(() -> load(owner, StateMachine.getMode()));
     }
-
-    private void loadSong(Window owner) {
-    	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, false))
+    
+    private void load(Window owner, SMPMode mode) {
+    	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, mode == SMPMode.ARRANGEMENT))
             return;
     	
-        try {
+    	try {
         	File inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
         	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-        	loadSong(inputFile, owner);
+        	
+        	switch (mode) {
+        	case SONG:
+        		loadSong(inputFile, owner);
+        		break;
+        		
+        	case ARRANGEMENT:
+        		loadArrangement(inputFile, owner);
+        		break;
+        	}
         	
         } catch (Exception e) {
-        	Dialog.showDialog(null, "Not a valid song file.", owner);
+        	Dialog.showDialog(null, String.format("Not a valid %s file.", mode.toString().toLowerCase()), owner);
         }
     }
 
@@ -841,22 +842,6 @@ public class SMPFXController {
         } catch (Exception e) {
             Dialog.showDialog(PROMPT_ERROR, "An error occurred while reading file " + inputFile + "!", owner);
             log.error("Error in loadSong:", e);
-        }
-    }
-
-    private void loadArrangement(Window owner) {
-    	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, true))
-    		return;
-    	
-        try {
-        	File inputFile = FileChooserManager.open(null);
-        	if (inputFile == null)
-        		return;
-        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-        	loadArrangement(inputFile, owner);
-        	
-        } catch (Exception e) {
-        	Dialog.showDialog(null, "Not a valid arrangement file.", owner);
         }
     }
     
