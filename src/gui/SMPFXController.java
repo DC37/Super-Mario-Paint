@@ -28,6 +28,7 @@ import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
+import gui.components.dialogs.DialogUtils;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.events.KeyboardHandlerMaker;
@@ -599,7 +600,7 @@ public class SMPFXController {
             }
             
         } catch (IllegalArgumentException ee) {
-            Dialog.showDialog(ee.getMessage());
+        	DialogUtils.showInfo(ee.getMessage());
         }
     }
     
@@ -735,7 +736,7 @@ public class SMPFXController {
         	
         	String msg = String.format("%s%n%nTechnical reason:%n%s", errMsg, e.getMessage());
         	
-        	Dialog.showDialog(PROMPT_ERROR, msg, owner);
+        	DialogUtils.showInfo(PROMPT_ERROR, msg);
         }
     }
     
@@ -751,7 +752,7 @@ public class SMPFXController {
     private void save(Window owner, SMPMode mode) {
     	String chosenName = getNameTextField().getText();
         if (StringUtils.containsAny(chosenName, Values.getIllegalChars())) {
-        	Dialog.showDialog(null, StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"), owner);
+        	DialogUtils.showInfo(StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"));
             return;
         }
         

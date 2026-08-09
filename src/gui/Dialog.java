@@ -59,7 +59,9 @@ public class Dialog {
     /**
      * Shows a dialog box with the text given to this method.
      * @param txt The text to show.
+     * @deprecated
      */
+    @Deprecated(forRemoval = true)
     public static void showDialog(String title, String txt, Window owner) {
         final StageWithReturn<Void> dialog = initDialogStage(title, owner);
         
@@ -84,14 +86,6 @@ public class Dialog {
 
     }
     
-    public static void showDialog(String title, String txt) {
-        showDialog(title, txt, null);
-    }
-    
-    public static void showDialog(String txt) {
-        showDialog(null, txt, null);
-    }
-
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show an ok / cancel dialog.
