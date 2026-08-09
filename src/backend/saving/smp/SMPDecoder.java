@@ -17,10 +17,9 @@ import backend.songs.Song;
 import backend.songs.SongProperties;
 import backend.songs.TimeSignature;
 import gui.SMPInstrument;
-import gui.Utilities;
 import gui.Values;
 import utilities.CollectionUtils;
-
+import utilities.DataTypeUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -67,7 +66,8 @@ public class SMPDecoder implements Decoder<Song> {
                 // Coin and piranha used to be swapped, so we unswap the note extensions
                 // found in sequences files to conform with existing files
                 props.setNoteExtensions(
-                        Utilities.boolFromLong(Long.parseLong(num.trim())),
+                        DataTypeUtils.unpackBits(
+                        		Long.parseLong(num.trim()), Values.NUM_INSTRUMENTS),
                         exts -> CollectionUtils.swapItems(exts, 15, 16));
             } else if (spl.contains("TIME")) {
                 props.setTimeSignature(

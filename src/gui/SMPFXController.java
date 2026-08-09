@@ -64,6 +64,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
+import utilities.DataTypeUtils;
 import utilities.MathUtils;
 
 /**
@@ -809,7 +810,7 @@ public class SMPFXController {
             t = TimeSignature.FOUR_FOUR;
         }
         pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", seq.getTempo(),
-                Utilities.longFromBool(seq.getNoteExtensions()), t, seq.getSoundset());
+                DataTypeUtils.packBits(seq.getNoteExtensions()), t, seq.getSoundset());
         
         for (int i = 0; i < seq.getLength(); i++) {
             if (seq.getLine(i).getNotes().isEmpty()) {

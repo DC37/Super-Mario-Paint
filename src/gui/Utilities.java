@@ -47,39 +47,6 @@ public class Utilities {
     }
 
     /**
-     * Creates a boolean array from a parsed long array, from a loaded file.
-     *
-     * @param parseLong
-     *            The long that we want to parse.
-     * @return A boolean array based on the long integer that we have loaded.
-     */
-    public static boolean[] boolFromLong(long parseLong) {
-        boolean[] loaded = new boolean[Values.NUM_INSTRUMENTS];
-        for (int i = 0; i < Values.NUM_INSTRUMENTS; i++) {
-            loaded[i] = ((1 << i) & parseLong) != 0;
-        }
-        return loaded;
-    }
-
-    /**
-     * Creates a long integer from a parsed boolean array.
-     *
-     * @param parseBool
-     *            The boolean array that we want to parse.
-     * @return A long integer that is a bitfield that represents the boolean
-     *         array.
-     */
-    public static long longFromBool(boolean[] parseBool) {
-        long parsed = 0;
-        for (int i = 0; i < parseBool.length; i++) {
-            if (parseBool[i]) {
-                parsed |= (1 << i);
-            }
-        }
-        return parsed;
-    }
-    
-    /**
      * Prepare a {@link String} for showing in a dialog, with the
      * list of illegal characters following a given preamble. The
      * illegal characters are separated by a comma (<code>,</code>).
