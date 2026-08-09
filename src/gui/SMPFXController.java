@@ -3,7 +3,6 @@ package gui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
@@ -849,39 +848,42 @@ public class SMPFXController {
     	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, true))
     		return;
     	
-        File inputFile = null;
-
         try {
-        	inputFile = FileChooserManager.open(null);
+        	File inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
         	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-        	Arrangement loaded = ArrangementDecoders.SMP.getDecoder().decode(inputFile);
-        	staff.populateStaffArrangement(loaded);
+        	loadArrangement(inputFile, owner);
+        	
+        } catch (Exception e) {
+        	Dialog.showDialog(null, "Not a valid arrangement file.", owner);
+        }
+    }
+    
+    private void loadArrangement(File inputFile, Window owner) {
+    	try {
+            Arrangement loaded = ArrangementDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
+            staff.populateStaffArrangement(loaded);
             
             arrangementList.getItems().clear();
             for (Song seq : loaded.getSongs()) {
             	arrangementList.getItems().add(seq);
             }
             
-        	StateMachine.setSongModified(false);
+            StateMachine.setSongModified(false);
         	StateMachine.setArrModified(false);
-        	
-        } catch (ParseException | StreamCorruptedException
-        		| NullPointerException e) {
-        	try {
-        		Arrangement loaded = ArrangementDecoders.MPC.getDecoder().decode(inputFile);
-        		StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-        		staff.populateStaffArrangement(loaded);
-        		StateMachine.setSongModified(false);
-        		
-        	} catch (Exception e1) {
-        	    log.error("Error in loadArrangement:", e1);
-        		Dialog.showDialog(null, "Not a valid arrangement file.", owner);
-        	}
-        	
-        } catch (IOException e) {
-            log.error("Error during loadArrangement:", e);
+            
+        } catch (FileNotFoundException e) {
+            Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
+            log.error("File not found error in loadArrangement:", e);
+            
+        } catch (ParseException | IOException e) {
+            Dialog.showDialog(PROMPT_ERROR, "An IO exception occurred while reading file " + inputFile + "!", owner);
+            log.error("IO error in loadArrangement:", e);
+            
+        } catch (Exception e) {
+            Dialog.showDialog(PROMPT_ERROR, "An error occurred while reading file " + inputFile + "!", owner);
+            log.error("Error in loadArrangement:", e);
         }
     }
     

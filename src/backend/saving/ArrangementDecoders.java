@@ -24,9 +24,9 @@ public enum ArrangementDecoders {
 	}
 	
 	public static Decoder<Optional<Arrangement>> getAllTryable() {
-		// On wrong inputs, the SMP decoder tends to return empty songs
-		// instead of throwing exceptions. This is why we try it last.
-		return CheckedDecoder.of(MPC.getDecoder(), SMP.getDecoder());
+		// When loading an arrangement, it is assumed to be SMP first.
+		// If it doesn't work, it is then processed as an MPC file.
+		return CheckedDecoder.of(SMP.getDecoder(), MPC.getDecoder());
 	}
 	
 }
