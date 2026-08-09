@@ -19,6 +19,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
 import utilities.MathUtils;
 
 /**
@@ -55,6 +56,8 @@ public class Staff {
 
     /** This is the SoundPlayer object that we will invoke to set parameters. */
     private final SoundPlayer soundPlayer;
+    
+    private final SMPAppModel model;
 
     /**
      * This is a service that will help run the animation and sound of playing a
@@ -71,11 +74,13 @@ public class Staff {
      * @param arrList
      *            This is the arrangement list object that displays song names,
      *            which is actually a <code>ListView</code> object.
+     * @param model The model backing the application (MVCI).
      */
-    public Staff(StaffDisplayManager display, SoundPlayer soundPlayer) {
+    public Staff(StaffDisplayManager display, SoundPlayer soundPlayer, SMPAppModel model) {
         displayManager = display;
         animationService = new AnimationService();
         this.soundPlayer = soundPlayer;
+        this.model = model;
     }
     
     public SoundPlayer getSoundPlayer() {
@@ -99,12 +104,12 @@ public class Staff {
     /**
      * Shifts the staff by <code>num</code> spaces.
      *
-     * @param num
-     *            The number of spaces to shift. Positive values indicate an
+     * @param num The number of spaces to shift.
+     *            Positive values indicate an
      *            increasing measure number.
      */
     public void shift(int num) {
-        setLocation(num + StateMachine.getMeasureLineNum());
+        setLocation(num + model.getCurrentLine());
     }
     
     /**
@@ -113,7 +118,7 @@ public class Staff {
     public void jumpToNext() {
         int barLength = getSequence().getTimeSignature().barLength();
         int[] barDivs = getSequence().getTimeSignature().divs();
-        int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
+        int relativeLoc = model.getCurrentLine() % barLength;
         
         int subLength = 0;
         
@@ -130,7 +135,7 @@ public class Staff {
     public void jumpToPrevious() {
         int barLength = getSequence().getTimeSignature().barLength();
         int[] barDivs = getSequence().getTimeSignature().divs();
-        int relativeLoc = StateMachine.getMeasureLineNum() % barLength;
+        int relativeLoc = model.getCurrentLine() % barLength;
         
         if (relativeLoc == 0)
             relativeLoc = barLength;
@@ -155,9 +160,9 @@ public class Staff {
      *            is to be displayed.
      */
     public synchronized void setLocation(int num) {
-        int maxVal = Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0);
+        int maxVal = Math.max(model.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0);
         int newLoc = MathUtils.clamp(num, 0, maxVal);
-        StateMachine.setMeasureLineNum(newLoc);
+        model.setCurrentLine(newLoc);
     }
     
     /**
@@ -165,24 +170,24 @@ public class Staff {
      * will force a redraw if the current line is already 0.
      */
     public synchronized void resetLocation() {
-        StateMachine.setMeasureLineNum(-1);
+        model.setCurrentLine(-1);
         setLocation(0);
     }
     
     public void bumpStaff(int skipAmount) {
-        if (StateMachine.isPlaybackActive())
+        if (model.isPlaybackActive())
             return;
         
-        int currLoc = StateMachine.getMeasureLineNum();
+        int currLoc = model.getCurrentLine();
         int newLoc = currLoc + skipAmount;
         
         // Deal with integer overflow
         if (skipAmount > 0 && newLoc < 0)
             newLoc = Integer.MAX_VALUE;
         
-        if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == StateMachine.getMaxLine()) {
-            int newSize = StateMachine.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
-            StateMachine.setMaxLine(Math.max(newSize, Values.DEFAULT_LINES_PER_SONG));
+        if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == model.getMaxLine()) {
+            int newSize = model.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
+            model.setMaxLine(Math.max(newSize, Values.DEFAULT_LINES_PER_SONG));
         }
         
         setLocation(newLoc);
@@ -190,18 +195,18 @@ public class Staff {
     
     public synchronized void setTimeSignature(TimeSignature t) {
         getSequence().setTimeSignature(t);
-        StateMachine.setTimeSignature(t);
+        model.setTimeSignature(t);
     }
 
     /**
      * Force re-draws the staff.
      */
     public synchronized void redraw() {
-        int idx = StateMachine.getMeasureLineNum();
+        int idx = model.getCurrentLine();
         if (idx == -1)
             return;
         
-        int[] barDivs = StateMachine.getTimeSignature().divs();
+        int[] barDivs = model.getTimeSignature().divs();
         
         displayManager.updateNoteDisplay(getSequence(), idx);
         displayManager.updateVolumeBars(getSequence(), idx);
@@ -300,11 +305,11 @@ public class Staff {
     public void populateStaff(Song loaded) {
         setSequence(loaded);
         setTimeSignature(loaded.getTimeSignature());
-        StateMachine.setTempo(loaded.getTempo());
-        StateMachine.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setTempo(loaded.getTempo());
+        model.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
         resetLocation();
-        StateMachine.setCurrentSongName(loaded.getTitle());
-        StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+        model.setCurrentSongName(loaded.getTitle());
+        model.setNoteExtensions(loaded.getNoteExtensions());
         
         try {
             getSoundPlayer().loadFromAppData(getSequence().getSoundset());
@@ -325,7 +330,7 @@ public class Staff {
         populateStaff(first);
         
         setArrangement(loaded);
-        StateMachine.setCurrentArrangementName(loaded.getTitle());
+        model.setCurrentArrangementName(loaded.getTitle());
         
         Task<Void> soundsetsTaskUtilities = new Task<Void>() {
             @Override
@@ -354,7 +359,7 @@ public class Staff {
         if (getSequence().getTitle() == null)
         	return false;
         
-        StateMachine.setArrModified(true);
+        model.setArrangementModified(true);
         getArrangement().getSequences().add(new Song(getSequence()));
         soundPlayer.storeInCache();
         return true;
@@ -362,7 +367,7 @@ public class Staff {
     
     public boolean deleteSongFromArrangement(int i) {
         if (i >= 0 && i < getArrangement().getSequences().size()) {
-            StateMachine.setArrModified(true);
+            model.setArrangementModified(true);
             getArrangement().getSequences().remove(i);
             return true;
             
@@ -373,7 +378,7 @@ public class Staff {
     
     public boolean moveSongInArrangement(int from, int to) {
         if (from >= 0 && from < getArrangement().getSequences().size()) {
-            StateMachine.setArrModified(true);
+            model.setArrangementModified(true);
             Song ss = getArrangement().getSequences().remove(from);
             getArrangement().getSequences().add(to, ss);
             return true;
@@ -384,7 +389,7 @@ public class Staff {
     }
     
     public void play() {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             startSong();
             break;
@@ -395,13 +400,13 @@ public class Staff {
         }
         
         displayManager.resetSilhouette();
-        StateMachine.setPlaybackActive(true);
+        model.setPlaybackActive(true);
     }
     
     public void stop() {
         stopSounds();
         stopSong();
-        StateMachine.setPlaybackActive(false);
+        model.setPlaybackActive(false);
     }
     
 
@@ -415,7 +420,7 @@ public class Staff {
 
         @Override
         protected Task<Staff> createTask() {
-            switch (StateMachine.getMode()) {
+            switch (model.getMode()) {
             case SONG:
                 return new AnimationTask();
             case ARRANGEMENT:
@@ -467,13 +472,13 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
-                int counter = StateMachine.getMeasureLineNum();
+                int counter = model.getCurrentLine();
                 boolean zero = false;
                 int endLine = getSequence().getLength();
 
-                computeDelay(StateMachine.getTempo());
+                computeDelay(model.getTempo());
                 
-                StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
+                model.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
 
                 queue.set(0);
                 
@@ -491,7 +496,7 @@ public class Staff {
                     counter++;
                     
                     if (counter >= endLine) {
-                        if (StateMachine.isLoopPressed()) {
+                        if (model.isLoopPressed()) {
                             counter = 0;
                             index = 0;
                             advance = false;
@@ -504,7 +509,7 @@ public class Staff {
                     Utilities.tryWait(delayMillis, delayNanos);
                 }
                 
-                StateMachine.setPlaybackActive(false);
+                model.setPlaybackActive(false);
                 return Staff.this;
             }
 
@@ -514,7 +519,7 @@ public class Staff {
              * just play things as they are.
              */
             protected void playNextLine() {
-                int currentLoc = StateMachine.getMeasureLineNum();
+                int currentLoc = model.getCurrentLine();
                 
                 if (advance) {
                     int loc = currentLoc + Values.NOTELINES_IN_THE_WINDOW;
@@ -551,7 +556,7 @@ public class Staff {
              * @param index Position of the line to play relative to the current position in the sequence
              */
             private void playSoundLine(int index) {
-                int currentLine = StateMachine.getMeasureLineNum();
+                int currentLine = model.getCurrentLine();
                 soundPlayer.playSoundLine(getSequence().getLine(currentLine + index));
             }
 
@@ -564,7 +569,7 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
-                StateMachine.setArrangementSongIndex(0);
+                model.setArrangementSongIndex(0);
                 List<Song> seq = getArrangement().getSequences();
                 int endLine;
 
@@ -573,15 +578,14 @@ public class Staff {
                 for (int i = 0; i < seq.size(); i++) {
                     setSequence(getArrangement().getSequences().get(i));
                     setSoundset(getSequence().getSoundset());
-                    computeDelay(StateMachine.getTempo());
+                    computeDelay(model.getTempo());
                     setTimeSignature(getSequence().getTimeSignature());
                     endLine = getSequence().getLength();
                     
-                    StateMachine.setArrangementSongIndex(i);
-                    StateMachine.setNoteExtensions(
-                            getSequence().getNoteExtensions());
-                    StateMachine.setTempo(getSequence().getTempo());
-                    StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
+                    model.setArrangementSongIndex(i);
+                    model.setNoteExtensions(getSequence().getNoteExtensions());
+                    model.setTempo(getSequence().getTempo());
+                    model.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
                     
                     index = 0;
                     advance = false;
@@ -612,7 +616,7 @@ public class Staff {
                     while (queue.get() > 0);
                 }
                 
-                StateMachine.setPlaybackActive(false);
+                model.setPlaybackActive(false);
                 return Staff.this;
             }
             

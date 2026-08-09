@@ -17,8 +17,8 @@ import backend.songs.Pitch;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.SMPInstrument;
-import gui.StateMachine;
 import gui.Values;
+import me.dc37.smp.models.SMPAppModel;
 import utilities.DataTypeUtils;
 
 /**
@@ -33,6 +33,8 @@ import utilities.DataTypeUtils;
  */
 public class SoundPlayer {
 
+    private final SMPAppModel model;
+    
     /**
      * The sound synthesizer used to hold as many instruments as needed.
      */
@@ -55,12 +57,15 @@ public class SoundPlayer {
     private Map<String, Soundbank> bankCache = new HashMap<>();
 
     /** This keeps track of which notes are actually playing. */
-    private final NoteTracker tracker = new NoteTracker(this);
+    private final NoteTracker tracker;
     
-    public SoundPlayer(SMPSynthesizer synthesizer, Soundbank bank, MidiChannel[] chan) {
+    public SoundPlayer(SMPAppModel model, SMPSynthesizer synthesizer, Soundbank bank, MidiChannel[] chan) {
+        this.model = model;
         this.synthesizer = synthesizer;
         this.bank = bank;
         this.chan = chan;
+        
+        tracker = new NoteTracker(model, this);
     }
 
     /**
@@ -144,10 +149,10 @@ public class SoundPlayer {
         File f = new File(path);
         if(f.getName().isEmpty())
             return;
-        if (!f.getName().equals(StateMachine.getCurrentSoundset())) {
+        if (!f.getName().equals(model.getCurrentSoundset())) {
             bank = MidiSystem.getSoundbank(f);
             synthesizer.loadAllInstruments(bank);
-            StateMachine.setCurrentSoundset(f.getName());
+            model.setCurrentSoundset(f.getName());
         }
     }
     
@@ -174,7 +179,7 @@ public class SoundPlayer {
      * @since v1.1.2
      */
     public void storeInCache() {
-        String currentSoundset = StateMachine.getCurrentSoundset();
+        String currentSoundset = model.getCurrentSoundset();
         bankCache.computeIfAbsent(currentSoundset, cs -> bank);
     }
     
@@ -208,12 +213,12 @@ public class SoundPlayer {
      * @since v1.1.2
      */
     public boolean loadFromCache(String soundset) {
-        if(StateMachine.getCurrentSoundset().equals(soundset))
+        if(model.getCurrentSoundset().equals(soundset))
             return true;
         if(bankCache.containsKey(soundset)) {
             bank = bankCache.get(soundset);
             synthesizer.loadAllInstruments(bank);
-            StateMachine.setCurrentSoundset(soundset);
+            model.setCurrentSoundset(soundset);
             return true;
         }
         return false;

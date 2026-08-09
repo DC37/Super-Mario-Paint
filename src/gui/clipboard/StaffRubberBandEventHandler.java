@@ -1,12 +1,12 @@
 package gui.clipboard;
 
-import gui.SMPFXController;
-import gui.StateMachine;
 import gui.events.ClipboardHandlerMaker;
 import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import me.dc37.smp.models.SMPAppModel;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 /**
  * Event Handler for rubber band which follows mouse movements. Mouse moves and
@@ -19,27 +19,34 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
 
     StaffRubberBand rubberBand;
     
-    SMPFXController controller;
+    SMPAppViewFXController controller;
     Pane rubberBandLayer;
     StaffClipboard theStaffClipboard;
+    
+    private final SMPAppModel model;
     
     /** Get line with these */
     private double mouseX;
     
-    public StaffRubberBandEventHandler(StaffRubberBand rb, SMPFXController ct, Pane basePane, StaffClipboard clippy) {
+    public StaffRubberBandEventHandler(
+            StaffRubberBand rb, SMPAppViewFXController ct,
+            Pane basePane, StaffClipboard clippy, SMPAppModel model) {
+        
         rubberBand = rb;
         controller = ct;
         theStaffClipboard = clippy;
         rubberBandLayer = basePane;
         
-        ClipboardHandlerMaker.of(this).initializeIn(basePane);
+        this.model = model;
+        
+        ClipboardHandlerMaker.of(this, model).initializeIn(basePane);
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
         mouseX = mouseEvent.getX();
         // the middlebutton can now bypass the clipboard button @since v1.1.2
-        if(!StateMachine.isClipboardPressed() && !mouseEvent.isMiddleButtonDown()){
+        if(!model.isClipboardPressed() && !mouseEvent.isMiddleButtonDown()){
             
             // for middlebutton handling @since v1.1.2
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
@@ -68,7 +75,7 @@ public class StaffRubberBandEventHandler implements EventHandler<MouseEvent> {
         return rubberBand;
     }
     
-    public SMPFXController getController() {
+    public SMPAppViewFXController getController() {
     	return controller;
     }
     

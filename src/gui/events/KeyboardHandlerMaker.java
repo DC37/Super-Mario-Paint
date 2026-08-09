@@ -3,24 +3,28 @@ package gui.events;
 import java.util.function.Consumer;
 
 import backend.songs.Accidental;
-import gui.SMPFXController;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Utilities;
 import gui.Values;
 import gui.components.staff.StaffMouseEventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
+import me.dc37.smp.models.SMPAppModel;
+import me.dc37.smp.views.SMPAppViewFXController;
 
-public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
+public class KeyboardHandlerMaker extends HandlerMaker<SMPAppViewFXController> {
 	
-	protected KeyboardHandlerMaker(SMPFXController controller) {
+    private final SMPAppModel model;
+    
+	protected KeyboardHandlerMaker(SMPAppViewFXController controller, SMPAppModel model) {
 		super(controller);
+		
+		this.model = model;
 	}
 	
-	public static KeyboardHandlerMaker of(SMPFXController controller) {
-		return new KeyboardHandlerMaker(controller);
+	public static KeyboardHandlerMaker of(SMPAppViewFXController controller, SMPAppModel model) {
+		return new KeyboardHandlerMaker(controller, model);
 	}
 	
 	@Override
@@ -66,7 +70,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
             case R:
             	tryPerformFirstMatchingSubaction(ke,
             			new Subaction<>(KeyEvent::isShiftDown,
-            					() -> StateMachine.setClipboardPressed(!StateMachine.isClipboardPressed())));
+            					() -> model.setClipboardPressed(!model.isClipboardPressed())));
             	break;
                 
             case S:
@@ -78,13 +82,13 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
             case M:
             	tryPerformFirstMatchingSubaction(ke,
             			new Subaction<>(d -> true,
-            					() -> StateMachine.setMuteAPressed(!StateMachine.isMuteAPressed())));
+            					() -> model.setMuteAPressed(!model.isMuteAPressed())));
                 break;
                 
             case N:
             	tryPerformFirstMatchingSubaction(ke,
             			new Subaction<>(ev -> !ev.isControlDown() && !ev.isAltDown(),
-            					() -> StateMachine.setMutePressed(!StateMachine.isMutePressed())),
+            					() -> model.setMutePressed(!model.isMutePressed())),
             			new Subaction<>(KeyEvent::isControlDown,
             					() -> source.newSongOrArrangement(Utilities.getOwner(ke))));
             	break;
@@ -104,12 +108,12 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
             default:
             }
 
-            StateMachine.getButtonsPressed().add(ke.getCode());
+            model.signalKeyPressed(ke.getCode());
             refreshAndConsumeKeyEvent(ke);
         });
 
         n.addEventHandler(KeyEvent.KEY_RELEASED, ke -> {
-            StateMachine.getButtonsPressed().remove(ke.getCode());
+            model.signalKeyReleased(ke.getCode());
             refreshAndConsumeKeyEvent(ke);
         });
 
@@ -122,14 +126,14 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
     }
 	
 	private void tryShiftStaff(int noLines) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
     		return;
     	
     	source.getStaff().shift(noLines);
     }
     
     private void trySetStaffLocation(int pos, KeyEvent ke) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
     		return;
     	
     	if (ke.isControlDown())
@@ -137,7 +141,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
     }
     
     private void tryJumpStaffTo(Consumer<Staff> fnWhereToJump, KeyEvent ke) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
         
         if (source.getNameTextField().focusedProperty().get()) // Don't trigger while typing name
@@ -151,7 +155,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
     		Consumer<Staff> fnWhereToMove, Consumer<Staff> fnWhereToJump,
     		boolean shouldCheckCtrl, KeyEvent ke) {
     	
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
         
         if (!ke.isControlDown() && !ke.isShiftDown())
@@ -168,7 +172,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
         if (ke.isControlDown() || ke.isShiftDown())
             source.getStaff().setLocation(0);
         
-        if (StateMachine.isPlaybackActive()) {
+        if (model.isPlaybackActive()) {
             source.getStopButton().setSelected(true);
             source.getStaff().stop();
         } else {
@@ -178,7 +182,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
     }
     
     private void refreshAndConsumeKeyEvent(KeyEvent ke) {
-    	if (StateMachine.isCursorOnStaff()) {
+    	if (model.isCursorOnStaff()) {
             Accidental acc = StaffMouseEventHandler.computeAccidental();
             source.getStaff().getDisplayManager().refreshSilhouette(acc);
         }
@@ -187,7 +191,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
     }
     
     private void tryScrollStaff(ScrollEvent se) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
 
         if (se.getDeltaY() < 0) {

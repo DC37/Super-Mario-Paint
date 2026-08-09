@@ -16,6 +16,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import me.dc37.smp.models.ResourceModel;
 
 /**
  * Generates a dialog box, depending on what we do.
@@ -27,10 +28,13 @@ public class Dialog {
     private Dialog() {}
     
     private static <T> StageWithReturn<T> initDialogStage(String title, Window owner) {
-        StageWithReturn<T> stage = new StageWithReturn<>();
+    	// Hack until this is refactored.
+    	ResourceModel resModel = ResourceModel.getInstance(); 
+    	
+    	StageWithReturn<T> stage = new StageWithReturn<>();
         stage.setResizable(false);
         stage.setTitle((title != null) ? title : "");
-        stage.getIcons().add(SuperMarioPaint.headerIcon);
+        stage.getIcons().add(resModel.getHeaderIcon());
         stage.initOwner(owner);
         stage.initModality(Modality.WINDOW_MODAL);
         // setting this style seems to be blocking everything
@@ -59,7 +63,9 @@ public class Dialog {
     /**
      * Shows a dialog box with the text given to this method.
      * @param txt The text to show.
+     * @deprecated
      */
+    @Deprecated(forRemoval = true)
     public static void showDialog(String title, String txt, Window owner) {
         final StageWithReturn<Void> dialog = initDialogStage(title, owner);
         
@@ -84,19 +90,13 @@ public class Dialog {
 
     }
     
-    public static void showDialog(String title, String txt) {
-        showDialog(title, txt, null);
-    }
-    
-    public static void showDialog(String txt) {
-        showDialog(null, txt, null);
-    }
-
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show an ok / cancel dialog.
      * @param txt The text to show.
+     * @deprecated
      */
+    @Deprecated(forRemoval = true)
     public static boolean showYesNoDialog(String title, String txt, Window owner) {
         final StageWithReturn<Boolean> dialog = initDialogStage(title, owner);
         
@@ -143,27 +143,13 @@ public class Dialog {
         return dialog.showAndReturn(false);
     }
     
-    public static boolean showYesNoDialog(String title, String txt) {
-        return showYesNoDialog(title, txt, null);
-    }
-    
-    public static boolean showYesNoDialog(String txt) {
-        return showYesNoDialog(null, txt, null);
-    }
-    
-    public static String showTextDialog(String title, String txt, Window owner) {
-        return showTextDialog(title, txt, null, owner, false);
-    }
-    
-    public static String showTextDialog(String txt, Window owner) {
-        return showTextDialog(null, txt, null, owner, false);
-    }
-
     /**
      * Got this off of https://community.oracle.com/thread/2247058?tstart=0
      * Modified it to show a text dialog.
      * @param txt The text to show.
+     * @deprecated
      */
+    @Deprecated(forRemoval = true)
     public static String showTextDialog(String title, String txt, String prompt, Window owner, boolean focusOnButton) {
         final StageWithReturn<String> dialog = initDialogStage(title, owner);
         
@@ -207,10 +193,6 @@ public class Dialog {
             okButton.requestFocus(); // little trick to always display prompt
         }
         return dialog.showAndReturn("");
-    }
-    
-    public static String showTextDialog(String txt) {
-        return showTextDialog(txt, null);
     }
 
 }

@@ -1,22 +1,32 @@
 package gui.events;
 
 import backend.songs.NoteLine;
-import gui.StateMachine;
 import gui.Values;
 import gui.clipboard.StaffRubberBandEventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
 
 @Slf4j
 public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHandler> {
     
-    protected ClipboardHandlerMaker(StaffRubberBandEventHandler eventHandler) {
+    private final SMPAppModel model;
+    
+    protected ClipboardHandlerMaker(
+            StaffRubberBandEventHandler eventHandler,
+            SMPAppModel model) {
+        
 		super(eventHandler);
+		
+		this.model = model;
 	}
 	
-	public static ClipboardHandlerMaker of(StaffRubberBandEventHandler eventHandler) {
-		return new ClipboardHandlerMaker(eventHandler);
+	public static ClipboardHandlerMaker of(
+	        StaffRubberBandEventHandler eventHandler,
+	        SMPAppModel model) {
+		
+	    return new ClipboardHandlerMaker(eventHandler, model);
 	}
 	
 	@Override
@@ -104,7 +114,7 @@ public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHand
    }
    
    private void paste() {
-	   int currentLine = getLine(source.getMouseX()) + StateMachine.getMeasureLineNum();
+	   int currentLine = getLine(source.getMouseX()) + model.getCurrentLine();
 	   log.info("PASTE @ {}", currentLine);
        source.getTheStaffClipboard().getAPI().paste(currentLine);
    }

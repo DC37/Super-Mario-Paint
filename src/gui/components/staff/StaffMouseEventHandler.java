@@ -1,7 +1,6 @@
 package gui.components.staff;
 
 import java.util.List;
-import java.util.Set;
 
 import backend.editing.ModifySongManager;
 import backend.editing.commands.AddNoteCommand;
@@ -14,13 +13,13 @@ import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.SMPInstrument;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Values;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
 
 /**
  * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
@@ -55,30 +54,28 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     
     private ModifySongManager commandManager;
     
+    private SMPAppModel model;
+    
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
      * a StackPane and a position on the staff.
      *
-     * @param s
-     *            The pointer to the Staff object that this event handler is
-     *            linked to.
-     * @param ct 
-     * @param i
-     *            The program's image loader.
-     * @param cm
-     *            The undo/redo manager.
+     * @param s The pointer to the Staff object that this event handler is linked to.
+     * @param cm The undo/redo manager.
+     * @param model The model backing the application (MVCI).
      */
-    public StaffMouseEventHandler(Staff s, ModifySongManager cm) {
+    public StaffMouseEventHandler(Staff s, ModifySongManager cm, SMPAppModel model) {
         theStaff = s;        
         commandManager = cm;
+        this.model = model;
     }
 
     @Override
     public void handle(MouseEvent event) {
-        if (StateMachine.isPlaybackActive() || StateMachine.isClipboardPressed())
+        if (model.isPlaybackActive() || model.isClipboardPressed())
             return;
         
-        SMPInstrument theInd = StateMachine.getSelectedInstrument();
+        SMPInstrument theInd = model.getSelectedInstrument();
         boolean newNote = false;
         int lineTmp = getLine(event.getX());
         int positionTmp = getPosition(event.getY());
@@ -97,13 +94,13 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         if (event.isPrimaryButtonDown() && newNote) {
             leftMousePressed(theInd, lineTmp);
             event.consume();
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         }
         // Drag-remove notes
         else if (event.isSecondaryButtonDown() && newNote) {
             rightMousePressed(theInd);
             event.consume();
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         }
         else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
             MouseButton b = event.getButton();
@@ -112,7 +109,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             else if (b == MouseButton.SECONDARY)
                 rightMousePressed(theInd);
             event.consume();
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         } else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
             mouseEntered(theInd);
             event.consume();
@@ -165,11 +162,11 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            currently selected.
      */
     private void leftMousePressed(SMPInstrument theInd, int lineTmp) {
-        if (StateMachine.getButtonsPressed().contains(KeyCode.E)) {
+        if (model.isKeyPressed(KeyCode.E)) {
             removeNote();
         } else {        
             NoteLine s = theStaff.getSequence().getLine(
-                StateMachine.getMeasureLineNum() + lineTmp);
+                model.getCurrentLine() + lineTmp);
             placeNote(theInd, s.getVolume());
         }
     }
@@ -182,8 +179,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      *            place this note.
      */
     private void placeNote(SMPInstrument theInd, int vel) {
-        boolean mute = StateMachine.isMutePressed();
-        boolean muteA = StateMachine.isMuteAPressed();
+        boolean mute = model.isMutePressed();
+        boolean muteA = model.isMuteAPressed();
         
         if (vel <= 0 || vel >= 128)
             vel = Values.getDefaultVolume();
@@ -203,7 +200,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         theStaff.getDisplayManager().resetSilhouette();
 
         NoteLine temp = theStaff.getSequence().getLine(
-                line + StateMachine.getMeasureLineNum());
+                line + model.getCurrentLine());
 
         if (temp.getNotes().isEmpty()) {
             temp.setVolume(Values.getDefaultVolume());
@@ -242,7 +239,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         theStaff.getDisplayManager().resetSilhouette();
 
         NoteLine temp = theStaff.getSequence().getLine(
-                line + StateMachine.getMeasureLineNum());
+                line + model.getCurrentLine());
 
         if (!temp.getNotes().isEmpty()) {
             List<Note> nt = temp.getNotes();
@@ -276,7 +273,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private void mouseEntered(SMPInstrument theInd) {
         Note sil = new Note(theInd, position, acc);
         theStaff.getDisplayManager().updateSilhouette(line, sil);
-        StateMachine.setCursorOnStaff(true);
+        model.setCursorOnStaff(true);
     }
 
     /**
@@ -291,17 +288,17 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
      */
     private void mouseExited(SMPInstrument theInd) {
         theStaff.getDisplayManager().resetSilhouette();
-        StateMachine.setCursorOnStaff(false);
+        model.setCursorOnStaff(false);
     }
 
     /**
      * Updates how much we want to sharp / flat a note.
      */
-    public static Accidental computeAccidental() {        
-        Set<KeyCode> bp = StateMachine.getButtonsPressed();
-        boolean ctrl = bp.contains(KeyCode.CONTROL);
-        boolean shift = bp.contains(KeyCode.SHIFT);
-        boolean alt = bp.contains(KeyCode.ALT) || bp.contains(KeyCode.ALT_GRAPH);
+    public static Accidental computeAccidental() {   
+        SMPAppModel model = SMPAppModel.getInstance();
+        boolean ctrl = model.isKeyPressed(KeyCode.CONTROL);
+        boolean shift = model.isKeyPressed(KeyCode.SHIFT);
+        boolean alt = model.isKeyPressed(KeyCode.ALT) || model.isKeyPressed(KeyCode.ALT_GRAPH);
 
         if (alt && ctrl)
             return Accidental.DOUBLE_FLAT;
@@ -318,7 +315,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     @Override
     public String toString() {
         return String.format("Line: %d%nPosition: %d%nAccidental: %s",
-                StateMachine.getMeasureLineNum() + line,
+                model.getCurrentLine() + line,
                 position, acc);
     }
     

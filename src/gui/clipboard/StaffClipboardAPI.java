@@ -11,9 +11,9 @@ import backend.editing.commands.RemoveVolumeCommand;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Values;
 import gui.components.staff.StaffVolumeEventHandler;
+import me.dc37.smp.models.SMPAppModel;
 
 /**
  * The API will contain functions for <code>StaffClipboard</code>. These include
@@ -26,6 +26,7 @@ import gui.components.staff.StaffVolumeEventHandler;
  */
 public class StaffClipboardAPI {
 
+    private final SMPAppModel model;
     private Staff theStaff;
     private StaffClipboard theStaffClipboard;
     private ModifySongManager commandManager;
@@ -52,7 +53,10 @@ public class StaffClipboardAPI {
      */
     private boolean ignoreVolumesFlag = false;
     
-    public StaffClipboardAPI(StaffClipboard sc, Staff st, ModifySongManager cm) {
+    public StaffClipboardAPI(SMPAppModel model,
+            StaffClipboard sc, Staff st, ModifySongManager cm) {
+        
+        this.model = model;
         theStaffClipboard = sc;
         theStaff = st;
         commandManager = cm;
@@ -107,13 +111,13 @@ public class StaffClipboardAPI {
             
             for(Note note : ntList){
                 lineDest.getNotes().remove(note);
-                StateMachine.setSongModified(true);
+                model.setSongModified(true);
                 commandManager.execute(new RemoveNoteCommand(lineDest, note));
 
-                if (lineDest.getNotes().isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
-                        && line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+                if (lineDest.getNotes().isEmpty() && 0 <= line - model.getCurrentLine()
+                        && line - model.getCurrentLine() < Values.NOTELINES_IN_THE_WINDOW) {
                     StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
-                            .getVolHandler(line - StateMachine.getMeasureLineNum());
+                            .getVolHandler(line - model.getCurrentLine());
                     sveh.setVolumeVisible(false);
                     commandManager.execute(new RemoveVolumeCommand(lineDest, lineDest.getVolume()));
                 }
@@ -143,9 +147,9 @@ public class StaffClipboardAPI {
             if (lineDest.getNotes().isEmpty()) {
                 lineDest.setVolume(Values.getDefaultVolume());
                 
-                if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+                if (line - model.getCurrentLine() < Values.NOTELINES_IN_THE_WINDOW) {
                     StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
-                            .getVolHandler(line - StateMachine.getMeasureLineNum());
+                            .getVolHandler(line - model.getCurrentLine());
                     sveh.updateVolume();
                 }
 
@@ -154,7 +158,7 @@ public class StaffClipboardAPI {
 
             if (!lineDest.getNotes().contains(theStaffNote)) {
                 lineDest.getNotes().add(theStaffNote);
-                StateMachine.setSongModified(true);
+                model.setSongModified(true);
                 commandManager.execute(new AddNoteCommand(lineDest, theStaffNote));
             }
         }
@@ -183,20 +187,20 @@ public class StaffClipboardAPI {
                 lineDest.setVolume(lineSrc.getVolume());
                 commandManager.execute(new AddVolumeCommand(lineDest, lineDest.getVolume()));
                 
-                if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+                if (line - model.getCurrentLine() < Values.NOTELINES_IN_THE_WINDOW) {
                     StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
-                            .getVolHandler(line - StateMachine.getMeasureLineNum());
+                            .getVolHandler(line - model.getCurrentLine());
                     sveh.updateVolume();
                 }
                 
-                StateMachine.setSongModified(true);
+                model.setSongModified(true);
             }
             
         }
 
         theStaff.redraw();
         commandManager.doRecord();
-        StateMachine.setMaxLine(Math.max(theStaff.getSequence().getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setMaxLine(Math.max(theStaff.getSequence().getLength(), Values.DEFAULT_LINES_PER_SONG));
     }
 
     /**
@@ -217,7 +221,7 @@ public class StaffClipboardAPI {
             List<Note> ntList = lineSrc.getNotes();
             for (Note note : ntList) {
                 if (positionBegin <= note.getVerticalPosition() && note.getVerticalPosition() <= positionEnd
-                        && StateMachine.getFilteredNote(note.getInstrument().ordinal())) {
+                        && model.getFilteredNote(note.getInstrument().ordinal())) {
                     // store the copied note at the relative line
                     selectNote(line, note);
                     // store the staffnoteline's volume at the relative line
@@ -247,7 +251,7 @@ public class StaffClipboardAPI {
 
         //unhighlight volumes
         theStaffClipboard.getHighlightedVolumes().clear();
-        theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+        theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, model.getCurrentLine());
 
         selection.clear();
         selectionLineBegin = Integer.MAX_VALUE;
@@ -328,9 +332,9 @@ public class StaffClipboardAPI {
             theStaffClipboard.getHighlightedVolumes().remove(line);
         
         // trigger the ChangeListener that will set the highlight effect
-        if (StateMachine.getMeasureLineNum() <= line
-                && line < StateMachine.getMeasureLineNum() + Values.NOTELINES_IN_THE_WINDOW)
-            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+        if (model.getCurrentLine() <= line
+                && line < model.getCurrentLine() + Values.NOTELINES_IN_THE_WINDOW)
+            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, model.getCurrentLine());
     }
     
     public void selectNotesToggle(boolean selectNotes) {
@@ -357,7 +361,7 @@ public class StaffClipboardAPI {
         } else {
             //unhighlight volumes
             theStaffClipboard.getHighlightedVolumes().clear();
-            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, model.getCurrentLine());
         }
     }
     
@@ -413,9 +417,9 @@ public class StaffClipboardAPI {
         rubberBand.end();
         theStaffClipboard.getRubberBandLayer().getChildren().remove(rubberBand);
 
-        int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();
+        int lb = rubberBand.getLineBegin() + model.getCurrentLine();
         int pb = rubberBand.getPositionBegin();
-        int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();
+        int le = rubberBand.getLineEnd() + model.getCurrentLine();
         int pe = rubberBand.getPositionEnd();
         select(lb, pb, le, pe);
     }

@@ -1,6 +1,5 @@
 package gui.clipboard;
 
-import gui.StateMachine;
 import gui.Values;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
@@ -8,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import me.dc37.smp.models.SMPAppModel;
 import utilities.MathUtils;
 
 /**
@@ -19,6 +19,8 @@ import utilities.MathUtils;
  */
 public class StaffRubberBand extends Rectangle {
 
+    private final SMPAppModel model;
+    
     private double xOrigin;
     private double yOrigin;
  
@@ -36,8 +38,9 @@ public class StaffRubberBand extends Rectangle {
     
     private Text outsideBoundText = new Text();
 
-    public StaffRubberBand() {
+    public StaffRubberBand(SMPAppModel model) {
         super();
+        this.model = model;
         this.setFill(StaffClipboard.HIGHLIGHT_FILL);
         outsideBoundText.setFill(Color.RED);
     }
@@ -99,12 +102,12 @@ public class StaffRubberBand extends Rectangle {
             }
 
             if(relativeScrollOffset < 0){
-                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getMeasureLineNum()) / 4 + 1;
-                int numerator = (relativeScrollOffset + StateMachine.getMeasureLineNum()) % 4 + 1;
+                int outsideBoundLineNum = (relativeScrollOffset + model.getCurrentLine()) / 4 + 1;
+                int numerator = (relativeScrollOffset + model.getCurrentLine()) % 4 + 1;
                 outsideBoundText.setText(outsideBoundLineNum + " " + getFraction(numerator) + " . . .");
             } else {
-                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) / 4 + 1;
-                int numerator = (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) % 4 + 1;
+                int outsideBoundLineNum = (relativeScrollOffset + model.getCurrentLine() - 1) / 4 + 1;
+                int numerator = (relativeScrollOffset + model.getCurrentLine() - 1) % 4 + 1;
                 outsideBoundText.setText(". . . " + outsideBoundLineNum + " " + getFraction(numerator));
             }
 

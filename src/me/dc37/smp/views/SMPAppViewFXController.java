@@ -1,4 +1,4 @@
-package gui;
+package me.dc37.smp.views;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +9,7 @@ import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.sound.midi.MidiChannel;
 
@@ -18,10 +18,14 @@ import backend.editing.ModifySongManager;
 import backend.saving.ArrangementDecoders;
 import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
-import backend.songs.Note;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
-import backend.sound.SoundPlayer;
+import gui.OptionsMenu;
+import gui.SMPInstrument;
+import gui.SMPMode;
+import gui.Staff;
+import gui.Utilities;
+import gui.Values;
 import gui.clipboard.StaffClipboard;
 import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
@@ -41,7 +45,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -52,7 +55,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -64,6 +66,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.controllers.SMPAppController;
+import me.dc37.smp.domain.SaveSongParameters;
+import me.dc37.smp.models.ResourceModel;
+import me.dc37.smp.models.SMPAppModel;
 import utilities.MathUtils;
 
 /**
@@ -74,7 +80,7 @@ import utilities.MathUtils;
  * @since 2012.08.16
  */
 @Slf4j
-public class SMPFXController {
+public class SMPAppViewFXController {
     
 	private static final String PROMPT_LOAD_CONFIRM = "Load anyway?";
 	private static final String PROMPT_ERROR = "Error!";
@@ -201,17 +207,27 @@ public class SMPFXController {
     
     private ModifySongManager commandManager;
     
-    private Map<ImageIndex, Image> imagesHolder;
-    private SoundPlayer soundPlayer;
-    
     /** Handles the options menu */
     private OptionsMenu optionsMenu;
     
+    private ResourceModel resModel;
+    private SMPAppModel model;
+    private Consumer<SaveSongParameters> fnSaveSong;
+    
     /**
-     * Zero-argument constructor (explicitly declared).
+     * Constructs a FXML Controller for the Main Window.
+     * 
+     * @param controller A {@link SMPAppController} that
+     *                   represents the operations available
+     *                   to the main window (MVCI).
      */
-    public SMPFXController() {
-        // Intentionally left empty.
+    public SMPAppViewFXController(
+            ResourceModel resModel, SMPAppModel model,
+            Consumer<SaveSongParameters> fnSaveSong) {
+        
+        this.resModel = resModel;
+        this.model = model;
+        this.fnSaveSong = fnSaveSong;
     }
 
     /**
@@ -225,26 +241,29 @@ public class SMPFXController {
         basePane.addEventHandler(KeyEvent.KEY_RELEASED, this::manageShiftCtrlPresses);
         
         // Set up staff.
-        StaffDisplayManager displayManager = new StaffDisplayManager(staffFrame, imagesHolder, volumeBars, commandManager, Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
-        staff = new Staff(displayManager, soundPlayer);
+        StaffDisplayManager displayManager = new StaffDisplayManager(
+        		staffFrame, resModel.getIcons(), volumeBars, commandManager,
+        		Values.NOTELINES_IN_THE_WINDOW, Values.NOTES_IN_A_LINE, Values.MAX_STACKABLE_NOTES);
+        
+        staff = new Staff(displayManager, resModel.getSoundPlayer(), model);
         displayManager.initialize();
         
-        KeyboardHandlerMaker.of(this).initializeIn(basePane);
+        KeyboardHandlerMaker.of(this, model).initializeIn(basePane);
         
         // We leverage the StringProperty modeText to bind the properties of the button and the mode in both direction
         // Bidirectional bindings between different types can only be done if one type is String afaik
         Bindings.bindBidirectional(modeText.textProperty(), modeButton.selectedProperty(),
         		new ModeTypeStringConverter<>(b -> b != null && b.booleanValue(), isArr -> isArr));
         
-        Bindings.bindBidirectional(modeText.textProperty(), StateMachine.modeProperty(),
+        Bindings.bindBidirectional(modeText.textProperty(), model.getModeProperty(),
         		new ModeTypeStringConverter<>(
         				mode -> mode.equals(SMPMode.ARRANGEMENT),
         				isArr -> (isArr != null && isArr.booleanValue()) ? SMPMode.ARRANGEMENT : SMPMode.SONG));
         
-        loopButton.selectedProperty().bindBidirectional(StateMachine.loopPressedProperty());
-        muteButton.selectedProperty().bindBidirectional(StateMachine.mutePressedProperty());
-        muteInstButton.selectedProperty().bindBidirectional(StateMachine.muteAPressedProperty());
-        clipboardButton.selectedProperty().bindBidirectional(StateMachine.clipboardPressedProperty());
+        loopButton.selectedProperty().bindBidirectional(model.getLoopPressedProperty());
+        muteButton.selectedProperty().bindBidirectional(model.getMutePressedProperty());
+        muteInstButton.selectedProperty().bindBidirectional(model.getMuteAPressedProperty());
+        clipboardButton.selectedProperty().bindBidirectional(model.getClipboardPressedProperty());
         
         ToggleGroup mainRadioToggleGroup = new ToggleGroup();
         Utilities.groupToggleBtns(mainRadioToggleGroup,
@@ -275,86 +294,86 @@ public class SMPFXController {
         
         Tooltip.install(clipboardButton, new Tooltip(String.join("\n", tooltipLines)));
         
-        StateMachine.clipboardPressedProperty().addListener(obs -> {
-            if (StateMachine.isClipboardPressed())
+        model.getClipboardPressedProperty().addListener(obs -> {
+            if (model.isClipboardPressed())
                 displayManager.resetSilhouette();
         });
 
         // Set up arranger view
         arrangerView.visibleProperty().bind(Bindings.createBooleanBinding(
-        		() -> StateMachine.getMode() == SMPMode.ARRANGEMENT,
-        		StateMachine.modeProperty()));
+        		() -> model.getMode() == SMPMode.ARRANGEMENT,
+        		model.getModeProperty()));
         
         arrangementList.getSelectionModel().selectedItemProperty().addListener(this::onArrangementListSelectionChanged);
         
         arrangementList.setCellFactory(this::createArrangementSongListCell);
 
         // Set up options menu
-        optionsMenu = new OptionsMenu(this, staff);
+        optionsMenu = new OptionsMenu(this, staff, model);
         
         // HACK
-        staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager);
+        staffMouseEventHandler = new StaffMouseEventHandler(staff, commandManager, model);
         
         // Set up top line.
         populateInstrumentButtons(instLine);
         
         selectedInst.imageProperty().bind(Bindings.createObjectBinding(() -> {
-        	SMPInstrument i = StateMachine.getSelectedInstrument();
-        	return imagesHolder.get(i.getImageIndex());
-        }, StateMachine.selectedInstrumentProperty()));
+        	SMPInstrument i = model.getSelectedInstrument();
+        	return resModel.getIcon(i.getImageIndex()).orElseThrow();
+        }, model.getSelectedInstrumentProperty()));
         
         // Set up clipboard.
-        rubberBand = new StaffRubberBand();
-        new StaffClipboard(rubberBand, staff, this);
+        rubberBand = new StaffRubberBand(model);
+        new StaffClipboard(rubberBand, staff, this, model);
         
-        volumeBars.mouseTransparentProperty().bind(StateMachine.clipboardPressedProperty());
+        volumeBars.mouseTransparentProperty().bind(model.getClipboardPressedProperty());
         
         // Fix TextField focus problems.
         new SongNameController(songName, this);
         songName.promptTextProperty().bind(Bindings.createStringBinding(
-        		this::getItemNamePromptText, StateMachine.modeProperty()));
+        		this::getItemNamePromptText, model.getModeProperty()));
         
         // Changing mode binds the bottom text to a different name property
-        StateMachine.modeProperty().addListener(this::onModeTypeChanged);
+        model.getModeProperty().addListener(this::onModeTypeChanged);
         
-        songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
+        songName.textProperty().bindBidirectional(model.getCurrentSongNameProperty());
         
-        StateMachine.currentSongNameProperty().addListener(obs -> staff.getSequence().setTitle(StateMachine.getCurrentSongName()));
-        StateMachine.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(StateMachine.getCurrentArrangementName()));
+        model.getCurrentSongNameProperty().addListener(obs -> staff.getSequence().setTitle(model.getCurrentSongName()));
+        model.getCurrentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(model.getCurrentArrangementName()));
         
         // Set up tempo box
-        tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
+        tempoIndicator.textProperty().bindBidirectional(model.getTempoProperty(), new NumberStringConverter());
         tempoBox.setOnMousePressed(this::onTempoBoxMousePressed);
         
         // Setup scrollbar
         scrollbar.maxProperty().bind(Bindings.createIntegerBinding(
-                () -> Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0),
-                StateMachine.getMaxLineProperty()));
+                () -> Math.max(model.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0),
+                model.getMaxLineProperty()));
         scrollbar.valueProperty().bindBidirectional(
-                StateMachine.getCurrentLineProperty());
+                model.getCurrentLineProperty());
         
-        scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        scrollbar.disableProperty().bind(model.getPlaybackActiveProperty());
         
         // If the scrollbar is disabled, we give focus elsewhere
     	// to be able to handle key events (hitting space should stop playback)
-        StateMachine.getPlaybackActiveProperty().addListener(obs -> Platform.runLater(
-        		(StateMachine.isPlaybackActive() ? basePane : scrollbar)::requestFocus));
+        model.getPlaybackActiveProperty().addListener(obs -> Platform.runLater(
+        		(model.isPlaybackActive() ? basePane : scrollbar)::requestFocus));
         
         // Trigger a redraw, editing mode only
         InvalidationListener doRedraw = obv -> staff.redraw();
         
-        StateMachine.getCurrentLineProperty().addListener(doRedraw);
-        StateMachine.getTimeSignatureProperty().addListener(doRedraw);
+        model.getCurrentLineProperty().addListener(doRedraw);
+        model.getTimeSignatureProperty().addListener(doRedraw);
         
-        StateMachine.setMeasureLineNum(0);
+        model.setCurrentLine(0);
         
         // Setup arrangement listview
-        StateMachine.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);
+        model.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);
         
         // Cleanup after a song or arrangement had finished running
-        StateMachine.getPlaybackActiveProperty().addListener(obv -> {
-            if (!StateMachine.isPlaybackActive()) {
-                StateMachine.setArrangementSongIndex(-1);
+        model.getPlaybackActiveProperty().addListener(obv -> {
+            if (!model.isPlaybackActive()) {
+                model.setArrangementSongIndex(-1);
                 stopButton.setSelected(true);
                 displayManager.resetPlayBars();
             }
@@ -367,14 +386,14 @@ public class SMPFXController {
         		tempoPlusButton, tempoMinusButton, addButton, deleteButton, upButton, downButton
         };
         
-        Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(StateMachine.getPlaybackActiveProperty()));
+        Arrays.asList(btns).forEach(btn -> btn.disableProperty().bind(model.getPlaybackActiveProperty()));
     }
     
     private void manageShiftCtrlPresses(KeyEvent event) {
     	boolean ctrlPressed = event.isControlDown();
     	
-    	StateMachine.setCtrlPressed(ctrlPressed);
-    	StateMachine.setShiftPressed(event.isShiftDown());
+    	model.setCtrlPressed(ctrlPressed);
+    	model.setShiftPressed(event.isShiftDown());
     	
     	if (ctrlPressed) {
             switch (event.getCode()) {
@@ -391,7 +410,7 @@ public class SMPFXController {
     }
     
     private void onArrangementListSelectionChanged(Observable obs) {
-    	if (StateMachine.isPlaybackActive())
+    	if (model.isPlaybackActive())
             return;
         
         int songIndex = arrangementList.getSelectionModel().getSelectedIndex();
@@ -421,7 +440,7 @@ public class SMPFXController {
     }
     
     private String getItemNamePromptText() {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             return "Song Name:";
         case ARRANGEMENT:
@@ -432,24 +451,23 @@ public class SMPFXController {
     }
     
     private void onModeTypeChanged(Observable obs) {
-    	switch (StateMachine.getMode()) {
+    	switch (model.getMode()) {
         case SONG:
-            songName.textProperty().unbindBidirectional(StateMachine.currentArrangementNameProperty());
-            songName.textProperty().bindBidirectional(StateMachine.currentSongNameProperty());
+            songName.textProperty().unbindBidirectional(model.getCurrentArrangementNameProperty());
+            songName.textProperty().bindBidirectional(model.getCurrentSongNameProperty());
             break;
         case ARRANGEMENT:
-            songName.textProperty().unbindBidirectional(StateMachine.currentSongNameProperty());
-            songName.textProperty().bindBidirectional(StateMachine.currentArrangementNameProperty());
+            songName.textProperty().unbindBidirectional(model.getCurrentSongNameProperty());
+            songName.textProperty().bindBidirectional(model.getCurrentArrangementNameProperty());
             break;
         }
     }
     
     private void onTempoBoxMousePressed(MouseEvent evt) {
     	try {
-            if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
-                Window owner = Utilities.getOwner(evt);
-                String tempo = Dialog.showTextDialog("Tempo", owner);
-                StateMachine.setTempo(Double.parseDouble(tempo.trim()));
+            if (!model.isPlaybackActive() && model.getMode() == SMPMode.SONG) {
+                String tempo = DialogUtils.showInput("Tempo");
+                model.setTempo(Double.parseDouble(tempo.trim()));
             }
         } catch (NumberFormatException e) {
             // Do nothing.
@@ -458,24 +476,24 @@ public class SMPFXController {
     }
     
     private void onArrangementSongIndexChanged(Observable obv) {
-    	int idx = StateMachine.getArrangementSongIndex();
+    	int idx = model.getArrangementSongIndex();
         arrangementList.getSelectionModel().select(idx);
         if (idx != -1)
             Platform.runLater(() -> arrangementList.scrollTo(idx));
-        StateMachine.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem().getTitle());
+        model.setCurrentSongName(arrangementList.getSelectionModel().getSelectedItem().getTitle());
     }
     
     private void onInstrumentButtonAction(SMPInstrument inst) {
-    	if (StateMachine.isShiftPressed()) {
-            boolean ex = StateMachine.getNoteExtension(inst.ordinal());
-            StateMachine.setNoteExtension(inst.ordinal(), !ex);
+    	if (model.isShiftPressed()) {
+            boolean ex = model.getNoteExtension(inst.ordinal());
+            model.setNoteExtension(inst.ordinal(), !ex);
             
             int i = BackendUtils.swapCoinPiranhaInstrumentIdxs(inst.ordinal());
             
             staff.getSequence().getNoteExtensions()[i] = !ex;
             
-        } else if (StateMachine.isCtrlPressed()) {
-            int flt = StateMachine.getFilteredNotes();
+        } else if (model.isCtrlPressed()) {
+            int flt = model.getFilteredNotes();
             int newFlt;
             int mask = ~ ((-1) << SMPInstrument.values().length);
             
@@ -491,15 +509,15 @@ public class SMPFXController {
                 }
             }
             
-            StateMachine.setFilteredNotes(newFlt);
+            model.setFilteredNotes(newFlt);
             
         } else {
-            MidiChannel[] chan = soundPlayer.getChannels();
+            MidiChannel[] chan = resModel.getSoundPlayer().getChannels();
             if (chan[inst.getChannel() - 1] != null) {
                 chan[inst.getChannel() - 1].noteOn(Values.DEFAULT_NOTE, Values.getDefaultVolume());
             }
             
-            StateMachine.setSelectedInstrument(inst);
+            model.setSelectedInstrument(inst);
         }
     }
     
@@ -509,8 +527,10 @@ public class SMPFXController {
         
         for (SMPInstrument inst : SMPInstrument.values()) {
             SMPInstrumentButton b = new SMPInstrumentButton(inst.name(),
-            		imagesHolder.get(inst.getImgIdxSustainOff()), imagesHolder.get(inst.getImgIdxSustainOn()));
-            b.setImageFiltered(imagesHolder.get(ImageIndex.FILTER));
+                    resModel.getIcon(inst.getImgIdxSustainOff()).orElseThrow(),
+                    resModel.getIcon(inst.getImgIdxSustainOn()).orElseThrow());
+            
+            b.setImageFiltered(resModel.getIcon(ImageIndex.FILTER).orElseThrow());
             b.setFitHeight(28);
             b.setFitWidth(26);
             b.setFocusTraversable(false);
@@ -521,17 +541,17 @@ public class SMPFXController {
             n.getChildren().add(b);
         }
         
-        StateMachine.noteExtensionsProperty().addListener(obs -> {
+        model.getNoteExtensionsProperty().addListener(obs -> {
             for (SMPInstrument inst : SMPInstrument.values()) {
-                vs[inst.ordinal()].setSustainOn(StateMachine.getNoteExtension(inst.ordinal()));
+                vs[inst.ordinal()].setSustainOn(model.getNoteExtension(inst.ordinal()));
             }
         });
         
-        StateMachine.filteredNotesProperty().addListener((obs, oldv, newv) -> {
+        model.getFilteredNotesProperty().addListener((obs, oldv, newv) -> {
             int diff = (int) oldv ^ (int) newv;
             for (SMPInstrument inst : SMPInstrument.values()) {
                 if ((diff & 1) == 1) {
-                    boolean ex = StateMachine.getFilteredNote(inst.ordinal());
+                    boolean ex = model.getFilteredNote(inst.ordinal());
                     vs[inst.ordinal()].setActive(ex);
                 }
                 diff >>= 1;
@@ -540,8 +560,8 @@ public class SMPFXController {
     }
     
     public boolean confirmOperation(Window owner, String q, boolean checkForSong, boolean checkForArr) {
-    	boolean songModified = checkForSong && StateMachine.isSongModified();
-    	boolean arrModified = checkForArr && StateMachine.isArrModified();
+    	boolean songModified = checkForSong && model.isSongModified();
+    	boolean arrModified = checkForArr && model.isArrangementModified();
     	
     	String whatWasModified = "";
     	if (songModified && arrModified) {
@@ -554,7 +574,8 @@ public class SMPFXController {
     	
     	boolean somethingWasModified = songModified || arrModified;
     	if (somethingWasModified) {
-    		return Dialog.showYesNoDialog("HOLD IT!", String.format("%s%n%s", whatWasModified, q), owner);
+    	    return DialogUtils.showQuestion(
+    	            "HOLD IT!", String.format("%s%n%s", whatWasModified, q));
     	}
     	
     	return true;
@@ -581,8 +602,7 @@ public class SMPFXController {
     }
     
     public void setTimeSigCustom(ActionEvent e) {
-        Window owner = ((Node) e.getSource()).getScene().getWindow();
-        String str = Dialog.showTextDialog(null, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
+        String str = DialogUtils.showInput(Values.PROGRAM_NAME, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...");
         if (str.isEmpty())
             return;
         
@@ -599,31 +619,31 @@ public class SMPFXController {
             }
             
         } catch (IllegalArgumentException ee) {
-            Dialog.showDialog(ee.getMessage());
+            DialogUtils.showInfo(ee.getMessage());
         }
     }
     
     @FXML
     public void tempoUp(ActionEvent e) {
-        StateMachine.setTempo(StateMachine.getTempo() + 1);
+        model.setTempo(model.getTempo() + 1);
     }
     
     @FXML
     public void tempoDown(ActionEvent e) {
-        StateMachine.setTempo(StateMachine.getTempo() - 1);
+        model.setTempo(model.getTempo() - 1);
     }
     
     public void switchMode() {
-        if (StateMachine.isPlaybackActive())
+        if (model.isPlaybackActive())
             return;
 
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
-            StateMachine.setMode(SMPMode.ARRANGEMENT);
+            model.setMode(SMPMode.ARRANGEMENT);
             break;
 
         case ARRANGEMENT:
-            StateMachine.setMode(SMPMode.SONG);
+            model.setMode(SMPMode.SONG);
             break;
         }
     }
@@ -694,7 +714,7 @@ public class SMPFXController {
     }
     
     public void newSongOrArrangement(Window owner) {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             newSong(owner);
             break;
@@ -710,9 +730,9 @@ public class SMPFXController {
             staff.setSequence(new Song());
             staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             staff.resetLocation();
-            StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
+            model.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
             getNameTextField().clear();
-            StateMachine.setSongModified(false);
+            model.setSongModified(false);
         }
     }
     
@@ -721,7 +741,7 @@ public class SMPFXController {
             staff.setArrangement(new Arrangement());
             getNameTextField().clear();
             arrangementList.getItems().clear();
-            StateMachine.setArrModified(false);
+            model.setArrangementModified(false);
         }
     }
     
@@ -731,7 +751,7 @@ public class SMPFXController {
     }
     
     public void save(Window owner) {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             Platform.runLater(() -> saveSong(owner));
             break;
@@ -745,7 +765,7 @@ public class SMPFXController {
     private void saveArrangement(Window owner) {
         String chosenSongName = getNameTextField().getText();
         if (!Utilities.legalFileName(chosenSongName)) {
-        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
+            DialogUtils.showInfo(Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"));
             return;
         }
         
@@ -763,8 +783,8 @@ public class SMPFXController {
             
             saveArrTxt(fOut, out);
             fOut.close();
-            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            StateMachine.setArrModified(false);
+            model.setCurrentDirectory(new File(outputFile.getParent()));
+            model.setArrangementModified(false);
         } catch (IOException e) {
             log.error("Error in saveArrangement:", e);
         }
@@ -781,74 +801,24 @@ public class SMPFXController {
     public void saveSong(Window owner) {
         String chosenSongName = getNameTextField().getText();
         if (!Utilities.legalFileName(chosenSongName)) {
-        	Dialog.showDialog(null, Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"), owner);
+            DialogUtils.showInfo(Utilities.getIllegalCharsDialogText("Illegal file name!\nPlease avoid those characters:"));
             return;
         }
         
-        try {
-        	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
-            if (outputFile == null)
-                return;
-            FileOutputStream fOut = new FileOutputStream(outputFile);
-            Song out = staff.getSequence();
-            out.setTempo(StateMachine.getTempo());
-            saveSongTxt(fOut, out);
-            fOut.close();
-            StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-            StateMachine.setSongModified(false);
-        } catch (IOException e) {
-            log.error("Error in saveSong:", e);
-        }
-    }
-
-    public void saveSongTxt(FileOutputStream fOut, Song seq)
-            throws IOException {
-        PrintStream pr = new PrintStream(fOut);
-        TimeSignature t = seq.getTimeSignature();
-        if (t == null) {
-            t = TimeSignature.FOUR_FOUR;
-        }
-        pr.printf("TEMPO: %f, EXT: %d, TIME: %s, SOUNDSET: %s\r\n", seq.getTempo(),
-                Utilities.longFromBool(seq.getNoteExtensions()), t, seq.getSoundset());
+    	File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
+        if (outputFile == null)
+            return;
         
-        for (int i = 0; i < seq.getLength(); i++) {
-            if (seq.getLine(i).getNotes().isEmpty()) {
-                continue;
-            }
-            pr.print("" + (i / t.top() + 1) + ":" + (i % t.top()) + ",");
-            List<Note> line = seq.getLine(i).getNotes();
-            for (int j = 0; j < line.size(); j++) {
-                pr.print(noteToString(line.get(j)) + ",");
-            }
-            pr.printf("VOL: %d\r\n", seq.getLine(i).getVolume());
-        }
-        pr.close();
-
-        // when we change the soundfont for a song in the arr, we should store
-        // the new soundfont in cache
-        Task<Void> soundsetsTaskSave = new Task<Void>() {
-            @Override
-            public Void call() {
-                List<Song> seqs = staff.getArrangement().getSequences();
-                String currSeqName = getNameTextField().getText();
-                for (Song seq : seqs) 
-                    if (seq.getTitle().equals(currSeqName)) {
-                        soundPlayer.storeInCache();
-                        break;
-                    }
-                return null;
-            }
-        };
+        Song song = staff.getSequence();
+        song.setTempo(model.getTempo());
         
-        new Thread(soundsetsTaskSave).start();
-    }
-    
-    private static String noteToString(Note note) {
-        String instName = note.getInstrument().toString();
-        String noteName = Values.getNoteName(note.getVerticalPosition());
-        String noteAcc = note.getAccidental().getToken();
-        String muteName = note.getMuteModifier().getToken();
-        return instName + " " + noteName + noteAcc + muteName;
+        fnSaveSong.accept(new SaveSongParameters(
+                outputFile, song,
+                staff.getArrangement().getSequences(),
+                chosenSongName));
+        
+        model.setCurrentDirectory(new File(outputFile.getParent()));
+        model.setSongModified(false);
     }
     
     @FXML
@@ -857,7 +827,7 @@ public class SMPFXController {
     }
 
     public void load(Window owner) {
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             Platform.runLater(() -> loadSong(owner));
             break;
@@ -876,11 +846,11 @@ public class SMPFXController {
         	File inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
-        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        	model.setCurrentDirectory(new File(inputFile.getParent()));
         	loadSong(inputFile, owner);
         	
         } catch (Exception e) {
-        	Dialog.showDialog(null, "Not a valid song file.", owner);
+            DialogUtils.showInfo("Not a valid song file.");
         }
     }
 
@@ -890,19 +860,19 @@ public class SMPFXController {
             staff.populateStaff(loaded);
             getModifySongManager().reset();
             getNameTextField().setText(loaded.getTitle());
-            StateMachine.setNoteExtensions(loaded.getNoteExtensions());
-            StateMachine.setSongModified(false);
+            model.setNoteExtensions(loaded.getNoteExtensions());
+            model.setSongModified(false);
             
         } catch (FileNotFoundException e) {
-            Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
+            DialogUtils.showInfo(PROMPT_ERROR, String.format("File %s not found!", inputFile));
             log.error("File not found error in loadSong:", e);
             
         } catch (IOException e) {
-            Dialog.showDialog(PROMPT_ERROR, "An IO exception occurred while reading file " + inputFile + "!", owner);
+            DialogUtils.showInfo(PROMPT_ERROR, String.format("An IO exception occurred while reading file %s!", inputFile));
             log.error("IO error in loadSong:", e);
             
         } catch (Exception e) {
-            Dialog.showDialog(PROMPT_ERROR, "An error occurred while reading file " + inputFile + "!", owner);
+            DialogUtils.showInfo(PROMPT_ERROR, String.format("An error occurred while reading file %s!", inputFile));
             log.error("Error in loadSong:", e);
         }
     }
@@ -917,7 +887,7 @@ public class SMPFXController {
         	inputFile = FileChooserManager.open(null);
         	if (inputFile == null)
         		return;
-        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        	model.setCurrentDirectory(new File(inputFile.getParent()));
         	Arrangement loaded = ArrangementDecoders.SMP.getDecoder().decode(inputFile);
         	staff.populateStaffArrangement(loaded);
             
@@ -926,20 +896,20 @@ public class SMPFXController {
             	arrangementList.getItems().add(seq);
             }
             
-        	StateMachine.setSongModified(false);
-        	StateMachine.setArrModified(false);
+        	model.setSongModified(false);
+        	model.setArrangementModified(false);
         	
         } catch (ParseException | StreamCorruptedException
         		| NullPointerException e) {
         	try {
         		Arrangement loaded = ArrangementDecoders.MPC.getDecoder().decode(inputFile);
-        		StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+        		model.setCurrentDirectory(new File(inputFile.getParent()));
         		staff.populateStaffArrangement(loaded);
-        		StateMachine.setSongModified(false);
+        		model.setSongModified(false);
         		
         	} catch (Exception e1) {
         	    log.error("Error in loadArrangement:", e1);
-        		Dialog.showDialog(null, "Not a valid arrangement file.", owner);
+        	    DialogUtils.showInfo("Not a valid arrangement file.");
         	}
         	
         } catch (IOException e) {
@@ -983,15 +953,6 @@ public class SMPFXController {
     /** @return The HBox that holds the volume bars. */
     public HBox getVolumeBars() {
         return volumeBars;
-    }
-
-    public void setImagesHolder(Map<ImageIndex, Image> imagesHolder) {
-        this.imagesHolder = imagesHolder;
-    }
-
-    /** @since v1.1.2 */
-    public void setSoundPlayer(SoundPlayer soundPlayer) {
-        this.soundPlayer = soundPlayer;
     }
     
     public AnchorPane getBasePane() {

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import backend.songs.NoteLine;
-import gui.SMPFXController;
 import gui.Staff;
 import gui.Values;
 import javafx.beans.value.ChangeListener;
@@ -25,6 +24,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import me.dc37.smp.models.SMPAppModel;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 @SuppressWarnings("unused")
 public class StaffClipboard {
@@ -32,7 +33,7 @@ public class StaffClipboard {
     public static final Color HIGHLIGHT_FILL = new Color(0.5, 0.5, 0.5, 0.5);
     
     private Staff theStaff;
-    private SMPFXController controller;
+    private SMPAppViewFXController controller;
     private Pane rubberBandLayer;
     private StaffRubberBand rubberBand;
     private StaffRubberBandEventHandler rbeh;
@@ -55,7 +56,7 @@ public class StaffClipboard {
      */
     private ChangeListener<Number> highlightedVolumesRedrawer;
 
-    public StaffClipboard(StaffRubberBand rb, Staff st, SMPFXController ct) {
+    public StaffClipboard(StaffRubberBand rb, Staff st, SMPAppViewFXController ct, SMPAppModel model) {
 
         rubberBand = rb;
         theStaff = st;
@@ -65,12 +66,12 @@ public class StaffClipboard {
         copiedData = new HashMap<>();
         
         //TODO: merge staffclipboard and staffclipboardapi together
-        theAPI = new StaffClipboardAPI(this, theStaff, ct.getModifySongManager());
+        theAPI = new StaffClipboardAPI(model, this, theStaff, ct.getModifySongManager());
 
         redrawUI(ct);
         
         rubberBandLayer = controller.getBasePane();
-        rbeh = new StaffRubberBandEventHandler(rubberBand, controller, rubberBandLayer, this);
+        rbeh = new StaffRubberBandEventHandler(rubberBand, controller, rubberBandLayer, this, model);
         
         // NOTE: Always call redrawUI before calling this!
         new HardcodedRubberBandEventHandlerInitializer().initialize(rbeh, controller);
@@ -80,7 +81,7 @@ public class StaffClipboard {
         initializeHighlightedVolumes(ct);
     }
 
-    private void initializeHighlightedVolumes(SMPFXController ct) {
+    private void initializeHighlightedVolumes(SMPAppViewFXController ct) {
         
         final ObservableList<Node> volumeBars = ct.getVolumeBars().getChildren();
         ImageView theVolBar = (ImageView) ((StackPane)volumeBars.get(0)).getChildren().get(0);
@@ -120,7 +121,7 @@ public class StaffClipboard {
      * 
      * @param ct
      */
-    private void redrawUI(SMPFXController ct) {
+    private void redrawUI(SMPAppViewFXController ct) {
         AnchorPane basePane = ct.getBasePane();
         basePane.applyCss();//requestLayout??
         basePane.layout();

@@ -1,9 +1,9 @@
 package gui.components;
 
-import gui.SMPFXController;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 /**
  * Use this to add several eventhandlers and a focus listener to the song name
@@ -20,7 +20,7 @@ import javafx.scene.input.MouseEvent;
 public class SongNameController {
 
     TextField songName;
-    SMPFXController controller;
+    SMPAppViewFXController controller;
 
     /**
      * The event handler that will handle unfocusing the TextField and
@@ -30,7 +30,7 @@ public class SongNameController {
 
     boolean mouseExited = false;
 
-    public SongNameController(TextField tf, SMPFXController ct) {
+    public SongNameController(TextField tf, SMPAppViewFXController ct) {
         this.songName = tf;
         controller = ct;
 

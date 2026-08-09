@@ -19,6 +19,7 @@ import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
 
 /**
  * Loads the soundfonts that will be used to play sounds.
@@ -75,7 +76,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
             
             setLoadStatus(1);
             
-            soundPlayer = new SoundPlayer(theSynthesizer, bank, chan);
+            soundPlayer = new SoundPlayer(SMPAppModel.getInstance(), theSynthesizer, bank, chan);
             
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException | NullPointerException e) {
             // Can't recover.

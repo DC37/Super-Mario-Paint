@@ -31,6 +31,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
+import me.dc37.smp.models.SMPAppModel;
+import me.dc37.smp.views.DialogUtils;
+import me.dc37.smp.views.SMPAppViewFXController;
 
 @Slf4j
 public class OptionsMenu {
@@ -59,12 +62,15 @@ public class OptionsMenu {
     /** Make the bars visible */
     private CheckBox numsVisibleBox;
     
-    SMPFXController controller;
+    SMPAppViewFXController controller;
     Staff staff;
     
-    public OptionsMenu(SMPFXController controller, Staff staff) {
+    private final SMPAppModel model;
+    
+    public OptionsMenu(SMPAppViewFXController controller, Staff staff, SMPAppModel model) {
         this.controller = controller;
         this.staff = staff;
+        this.model = model;
     }
     
     /** Opens up an options dialog. */
@@ -102,7 +108,7 @@ public class OptionsMenu {
         numsVisibleBox = makeNumsVisibleCheckbox();
 
         // Hide some options while in arranger mode, due to them being impractical (Tempo multiplier, Soundfont binder) - seymour
-        switch (StateMachine.getMode()) {
+        switch (model.getMode()) {
         case SONG:
             soundfontsOptions.getChildren().addAll(sfLabel, soundfontsMenu, bindBox);
             vBox.getChildren().addAll(label, defaultVolume, timesigLabel, timesigField,
@@ -183,7 +189,7 @@ public class OptionsMenu {
         for (String filename : listOfFiles) {
             availableSoundfonts.getItems().add(filename);
 
-            if (filename.equals(StateMachine.getCurrentSoundset()))
+            if (filename.equals(model.getCurrentSoundset()))
                 availableSoundfonts.getSelectionModel().selectLast();
         }
 
@@ -276,13 +282,13 @@ public class OptionsMenu {
         if (num <= 1)
             return;
         
-        double currTempo = StateMachine.getTempo();
+        double currTempo = model.getTempo();
         double newTempo = currTempo * num;
         
-        TimeSignature currTimesig = StateMachine.getTimeSignature();
+        TimeSignature currTimesig = model.getTimeSignature();
         TimeSignature newTimesig = TimeSignature.multiply(currTimesig, num);
         
-        CommandInterface cmd = new MultiplyTempoCommand(staff, num, currTempo, newTempo, currTimesig, newTimesig);
+        CommandInterface cmd = new MultiplyTempoCommand(model, staff, num, currTempo, newTempo, currTimesig, newTimesig);
         cmd.redo();
         
         controller.getModifySongManager().execute(cmd);
@@ -301,7 +307,7 @@ public class OptionsMenu {
         String newSoundset = (String) bindBox.getUserData();
         if(!staff.getSequence().getSoundset().equals(newSoundset)) {
             staff.getSequence().setSoundset(newSoundset);
-            StateMachine.setSongModified(true);
+            model.setSongModified(true);
         }
     }
     
@@ -357,7 +363,7 @@ public class OptionsMenu {
         
         if (destSf.exists()) {
             String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-            if (!Dialog.showYesNoDialog("Options", mssg, owner))
+            if (!DialogUtils.showQuestion("Options", mssg))
                 return false;
         }
         
