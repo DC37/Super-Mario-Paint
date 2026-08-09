@@ -36,12 +36,12 @@ import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.events.KeyboardHandlerMaker;
 import gui.loaders.ImageIndex;
+import gui.tasks.SoundsetSaveTask;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -803,23 +803,15 @@ public class SMPFXController {
     	if (!FileService.trySaveSong(fOut, seq))
     		return;
     	
+    	List<Song> seqs = staff.getArrangement().getSongs();
+        String currSeqName = getNameTextField().getText();
+    	
         // when we change the soundfont for a song in the arr, we should store
         // the new soundfont in cache
-        Task<Void> soundsetsTaskSave = new Task<Void>() {
-            @Override
-            public Void call() {
-                List<Song> seqs = staff.getArrangement().getSongs();
-                String currSeqName = getNameTextField().getText();
-                for (Song seq : seqs) 
-                    if (seq.getTitle().equals(currSeqName)) {
-                        soundPlayer.storeInCache();
-                        break;
-                    }
-                return null;
-            }
-        };
-        
-        new Thread(soundsetsTaskSave).start();
+    	SoundsetSaveTask soundsetSaveTask = new SoundsetSaveTask(
+    			soundPlayer, currSeqName, seqs);
+	    
+	    new Thread(soundsetSaveTask).start();
     }
     
     @FXML
