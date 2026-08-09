@@ -4,12 +4,12 @@ import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 
-import gui.Utilities;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceUtil;
 import javafx.scene.image.Image;
 import lombok.extern.slf4j.Slf4j;
+import utilities.ThreadUtils;
 
 /**
  * A class that loads all the necessary images for the program to function when
@@ -50,7 +50,7 @@ public class ImageLoader extends LoaderBase<Map<ImageIndex, Image>> {
             
             log.debug("Loaded image: {}{}", i.toString(), extension);
             
-            Utilities.tryWait(1);
+            ThreadUtils.tryWait(1);
         }
         
         setLoadStatus(1);

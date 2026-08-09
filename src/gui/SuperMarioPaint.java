@@ -36,6 +36,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import utilities.ThreadUtils;
 
 /**
  * Super Mario Paint <br>
@@ -124,7 +125,7 @@ public class SuperMarioPaint extends Application  {
         imgLd.start();
         
         do {
-            Utilities.tryWait(1);
+            ThreadUtils.tryWait(1);
             
             double imgStatus = imgLoader.getLoadStatus();
             double sfStatus = sfLoader.getLoadStatus();

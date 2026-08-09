@@ -20,6 +20,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import lombok.extern.slf4j.Slf4j;
 import utilities.MathUtils;
+import utilities.ThreadUtils;
 
 /**
  * The staff on which notes go. The staff keeps track of notes in terms of
@@ -501,7 +502,7 @@ public class Staff {
                         }
                     }
                     
-                    Utilities.tryWait(delayMillis, delayNanos);
+                    ThreadUtils.tryWait(delayMillis, delayNanos);
                 }
                 
                 StateMachine.setPlaybackActive(false);
@@ -602,7 +603,7 @@ public class Staff {
                             songPlaying = false;
                         }
                         
-                        Utilities.tryWait(delayMillis, delayNanos);
+                        ThreadUtils.tryWait(delayMillis, delayNanos);
                     }
                     
                     if (!arrPlaying)

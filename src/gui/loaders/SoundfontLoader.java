@@ -13,12 +13,12 @@ import javax.sound.midi.Soundbank;
 import backend.sound.SMPSynthesizer;
 import backend.sound.SoundPlayer;
 import gui.SMPInstrument;
-import gui.Utilities;
 import gui.Values;
 import gui.resources.FetchStrategy;
 import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 import lombok.extern.slf4j.Slf4j;
+import utilities.ThreadUtils;
 
 /**
  * Loads the soundfonts that will be used to play sounds.
@@ -47,7 +47,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
             theSynthesizer.ensureCapacity(45);
             for (Instrument i : theSynthesizer.getLoadedInstruments()) {
                 theSynthesizer.unloadInstrument(i);
-                Utilities.tryWait(1);
+                ThreadUtils.tryWait(1);
             }
             setLoadStatus(0.2);
             theSynthesizer.loadAllInstruments(bank);
@@ -68,7 +68,7 @@ public class SoundfontLoader extends LoaderBase<SoundPlayer> {
                 
                 log.info("Initialized Instrument: {}", i);
                 
-                Utilities.tryWait(1);
+                ThreadUtils.tryWait(1);
             }
             
             log.debug("Synth Latency: {}", theSynthesizer.getLatency());
