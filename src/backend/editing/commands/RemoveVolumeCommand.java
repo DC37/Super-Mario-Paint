@@ -1,26 +1,26 @@
 package backend.editing.commands;
 
-import backend.editing.CommandInterface;
+import backend.editing.SMPCommand;
 import backend.songs.NoteLine;
 
-public class RemoveVolumeCommand implements CommandInterface {
+public class RemoveVolumeCommand implements SMPCommand {
 
-    NoteLine theLine;
-    int theOldVolume;
+    NoteLine line;
+    int oldVolume;
     
     public RemoveVolumeCommand(NoteLine line, int oldVolume) {
-        theLine = line;
-        theOldVolume = oldVolume;
+        this.line = line;
+        this.oldVolume = oldVolume;
+    }
+    
+    @Override
+    public void undo() {
+        line.setVolume(oldVolume);
     }
     
     @Override
     public void redo() {
         //do nothing, AddVolumeCommand will handle this
-    }
-
-    @Override
-    public void undo() {
-        theLine.setVolume(theOldVolume);
     }
 
 }

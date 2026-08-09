@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import backend.editing.CommandInterface;
+import backend.editing.SMPCommand;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
 import gui.components.FileChooserManager;
@@ -282,7 +282,7 @@ public class OptionsMenu {
         TimeSignature currTimesig = StateMachine.getTimeSignature();
         TimeSignature newTimesig = TimeSignature.multiply(currTimesig, num);
         
-        CommandInterface cmd = new MultiplyTempoCommand(staff, num, currTempo, newTempo, currTimesig, newTimesig);
+        SMPCommand cmd = new MultiplyTempoCommand(staff, num, currTempo, newTempo, currTimesig, newTimesig);
         cmd.redo();
         
         controller.getModifySongManager().execute(cmd);

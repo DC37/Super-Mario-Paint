@@ -21,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommandManager {
     
-    protected Deque<List<CommandInterface>> undoStack;
-    protected Deque<List<CommandInterface>> redoStack;
+    protected Deque<List<SMPCommand>> undoStack;
+    protected Deque<List<SMPCommand>> redoStack;
 
-    private List<CommandInterface> nextCommands;
+    private List<SMPCommand> nextCommands;
     
     public CommandManager() {
         undoStack = new LinkedBlockingDeque<>(Values.MAX_UNDO_REDO_SIZE);
@@ -38,10 +38,10 @@ public class CommandManager {
         if (undoStack.isEmpty())
             return;
 
-        List<CommandInterface> commands = undoStack.pop();
+        List<SMPCommand> commands = undoStack.pop();
         /* undo needs reverse order on the commands */
         for(int i = commands.size() - 1; i >= 0; i--) {
-            CommandInterface command = commands.get(i);
+            SMPCommand command = commands.get(i);
             command.undo();
         }
 
@@ -53,8 +53,8 @@ public class CommandManager {
         if (redoStack.isEmpty())
             return;
 
-        List<CommandInterface> commands = redoStack.pop();
-        for(CommandInterface command : commands) {
+        List<SMPCommand> commands = redoStack.pop();
+        for(SMPCommand command : commands) {
             command.redo();
         }
 
@@ -69,7 +69,7 @@ public class CommandManager {
      * 
      * @param command
      */
-    public void execute(CommandInterface command) {
+    public void execute(SMPCommand command) {
 
         if (nextCommands == null)
             nextCommands = new ArrayList<>();

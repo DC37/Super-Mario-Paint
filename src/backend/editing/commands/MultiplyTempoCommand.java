@@ -1,6 +1,6 @@
 package backend.editing.commands;
 
-import backend.editing.CommandInterface;
+import backend.editing.SMPCommand;
 import backend.songs.NoteLine;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
@@ -8,42 +8,45 @@ import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
 
-public class MultiplyTempoCommand implements CommandInterface {
+public class MultiplyTempoCommand implements SMPCommand {
 
-    Staff theStaff;
-    int theMultiplyAmount;
-    double previousTempo;
+    Staff staff;
+    int multiplyAmount;
+    double oldTempo;
     double newTempo;
-    TimeSignature previousTimesig;
-    TimeSignature newTimesig;
+    TimeSignature oldTimeSig;
+    TimeSignature newTimeSig;
     
-    public MultiplyTempoCommand(Staff staff, int num, double previousTempo, double newTempo, TimeSignature previousTimesig, TimeSignature newTimesig) {
-        theStaff = staff;
-        this.theMultiplyAmount = num;
-        this.previousTempo = previousTempo;
+    public MultiplyTempoCommand(Staff staff, int multiplyAmount,
+    		double previousTempo, double newTempo,
+    		TimeSignature previousTimesig, TimeSignature newTimesig) {
+    	
+        this.staff = staff;
+        this.multiplyAmount = multiplyAmount;
+        this.oldTempo = previousTempo;
         this.newTempo = newTempo;
-        this.previousTimesig = previousTimesig;
-        this.newTimesig = newTimesig;
+        this.oldTimeSig = previousTimesig;
+        this.newTimeSig = newTimesig;
     }
     
     @Override
     public void redo() {
-        Song seq = theStaff.getSequence();
-        expand(seq, theMultiplyAmount);
-        seq.setTempo(newTempo);
+        Song song = staff.getSequence();
+        expand(song, multiplyAmount);
+        song.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
-        StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
-        theStaff.setTimeSignature(newTimesig);
+        StateMachine.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        staff.setTimeSignature(newTimeSig);
     }
 
     @Override
     public void undo() {
-        Song seq = theStaff.getSequence();
-        retract(seq, theMultiplyAmount);
-        seq.setTempo(previousTempo);
-        StateMachine.setTempo(previousTempo);
-        StateMachine.setMaxLine(Math.max(seq.getLength(), Values.DEFAULT_LINES_PER_SONG));
-        theStaff.setTimeSignature(previousTimesig);
+        Song song = staff.getSequence();
+        retract(song, multiplyAmount);
+        song.setTempo(oldTempo);
+        StateMachine.setTempo(oldTempo);
+        StateMachine.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        staff.setTimeSignature(oldTimeSig);
     }
     
     public void expand(Song seq, int n) {

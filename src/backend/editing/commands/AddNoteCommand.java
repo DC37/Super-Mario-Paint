@@ -1,27 +1,27 @@
 package backend.editing.commands;
 
-import backend.editing.CommandInterface;
+import backend.editing.SMPCommand;
 import backend.songs.Note;
 import backend.songs.NoteLine;
 
-public class AddNoteCommand implements CommandInterface {
+public class AddNoteCommand implements SMPCommand {
 
-    private NoteLine theLine;
-    private Note theNote;
+    private NoteLine line;
+    private Note note;
 
     public AddNoteCommand(NoteLine line, Note note) {
-        theLine = line;
-        theNote = note;
+        this.line = line;
+        this.note = note;
+    }
+    
+    @Override
+    public void undo() {
+        line.getNotes().remove(note);
     }
     
     @Override
     public void redo() {
-        theLine.getNotes().add(theNote);
-    }
-
-    @Override
-    public void undo() {
-        theLine.getNotes().remove(theNote);
+        line.getNotes().add(note);
     }
 
 }
