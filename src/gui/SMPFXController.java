@@ -730,67 +730,51 @@ public class SMPFXController {
     }
     
     public void save(Window owner) {
-        switch (StateMachine.getMode()) {
-        case SONG:
-            Platform.runLater(() -> saveSong(owner));
-            break;
-            
-        case ARRANGEMENT:
-            Platform.runLater(() -> saveArrangement(owner));
-            break;
-        }
+    	Platform.runLater(() -> save(owner, StateMachine.getMode()));
     }
-
-    private void saveArrangement(Window owner) {
-        String chosenSongName = getNameTextField().getText();
-        if (StringUtils.contains(chosenSongName, Values.getIllegalChars())) {
+    
+    private void save(Window owner, SMPMode mode) {
+    	String chosenName = getNameTextField().getText();
+        if (StringUtils.contains(chosenName, Values.getIllegalChars())) {
         	Dialog.showDialog(null, StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"), owner);
             return;
         }
         
-        File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
+        File outputFile = FileChooserManager.saveAs(owner, chosenName);
         if (outputFile == null)
             return;
         
+        switch (mode) {
+        case SONG:
+        	saveSong(outputFile, owner);
+        	break;
+        	
+        case ARRANGEMENT:
+        	saveArrangement(outputFile, owner);
+        	break;
+        }
+        
+        StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
+    }
+    
+    private void saveArrangement(File outputFile, Window owner) {
         Arrangement out = staff.getArrangement();
         for (int i = 0; i < out.getSongs().size(); i++) {
         	String name = arrangementList.getItems().get(i).getTitle();
         	out.getSongs().get(i).setTitle(name);
         }
         
-        saveArrTxt(outputFile, out);
+        FileService.trySaveArrangement(outputFile, out);
         
-        StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
         StateMachine.setArrModified(false);
     }
 
-    public void saveArrTxt(File fOut, Arrangement out) {
-    	FileService.trySaveArrangement(fOut, out);
-    }
-
-    public void saveSong(Window owner) {
-        String chosenSongName = getNameTextField().getText();
-        if (StringUtils.contains(chosenSongName, Values.getIllegalChars())) {
-        	Dialog.showDialog(null, StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"), owner);
-            return;
-        }
-        
-        File outputFile = FileChooserManager.saveAs(owner, chosenSongName);
-        if (outputFile == null)
-            return;
-        
+    public void saveSong(File outputFile, Window owner) {
         Song out = staff.getSequence();
         out.setTempo(StateMachine.getTempo());
         
-        saveSongTxt(outputFile, out);
-        
-        StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
-        StateMachine.setSongModified(false);
-    }
-
-    private void saveSongTxt(File fOut, Song seq) {
-    	if (!FileService.trySaveSong(fOut, seq))
-    		return;
+        if (!FileService.trySaveSong(outputFile, out))
+        	return;
     	
     	List<Song> seqs = staff.getArrangement().getSongs();
         String currSeqName = getNameTextField().getText();
@@ -801,6 +785,8 @@ public class SMPFXController {
     			soundPlayer, currSeqName, seqs);
 	    
 	    new Thread(soundsetSaveTask).start();
+        
+        StateMachine.setSongModified(false);
     }
     
     @FXML
