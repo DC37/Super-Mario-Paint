@@ -597,7 +597,7 @@ public class SMPFXController {
             }
             
         } catch (IllegalArgumentException ee) {
-        	DialogUtils.showInfo(ee.getMessage());
+        	DialogUtils.showError(ee.getMessage());
         }
     }
     
@@ -731,7 +731,7 @@ public class SMPFXController {
         	
         	String msg = String.format("%s%n%nTechnical reason:%n%s", errMsg, e.getMessage());
         	
-        	DialogUtils.showInfo(PROMPT_ERROR, msg);
+        	DialogUtils.showError(PROMPT_ERROR, msg);
         }
     }
     
@@ -747,7 +747,7 @@ public class SMPFXController {
     private void save(Window owner, SMPMode mode) {
     	String chosenName = getNameTextField().getText();
         if (StringUtils.containsAny(chosenName, Values.getIllegalChars())) {
-        	DialogUtils.showInfo(StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"));
+        	DialogUtils.showWarning(StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"));
             return;
         }
         

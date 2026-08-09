@@ -120,7 +120,7 @@ public class SplashScreen extends Preloader {
     @Override
     public boolean handleErrorNotification(ErrorNotification en) {
     	log.error("Exception encountered during load!", en.getCause());
-    	DialogUtils.showInfo(String.format(
+    	DialogUtils.showError(String.format(
     			"Super Mario Paint has encountered the following error:%n%s",
     			en.getCause().getMessage()));
         return false;
