@@ -398,7 +398,7 @@ public class SMPFXController {
         if (songIndex == -1)
         	return;
         
-        List<Song> seq = staff.getArrangement().getSequences();
+        List<Song> seq = staff.getArrangement().getSongs();
         Window owner = arrangementList.getScene().getWindow();
         
         if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, false))
@@ -756,9 +756,9 @@ public class SMPFXController {
             FileOutputStream fOut = new FileOutputStream(outputFile);
             Arrangement out = staff.getArrangement();
             
-            for (int i = 0; i < out.getSequences().size(); i++) {
+            for (int i = 0; i < out.getSongs().size(); i++) {
             	String name = arrangementList.getItems().get(i).getTitle();
-            	out.getSequences().get(i).setTitle(name);
+            	out.getSongs().get(i).setTitle(name);
             }
             
             saveArrTxt(fOut, out);
@@ -772,7 +772,7 @@ public class SMPFXController {
 
     public void saveArrTxt(FileOutputStream fOut, Arrangement out) {
         PrintStream pr = new PrintStream(fOut);
-        for (Song seq : out.getSequences()) {
+        for (Song seq : out.getSongs()) {
             pr.println(seq.getTitle());
         }
         pr.close();
@@ -829,7 +829,7 @@ public class SMPFXController {
         Task<Void> soundsetsTaskSave = new Task<Void>() {
             @Override
             public Void call() {
-                List<Song> seqs = staff.getArrangement().getSequences();
+                List<Song> seqs = staff.getArrangement().getSongs();
                 String currSeqName = getNameTextField().getText();
                 for (Song seq : seqs) 
                     if (seq.getTitle().equals(currSeqName)) {
@@ -922,7 +922,7 @@ public class SMPFXController {
         	staff.populateStaffArrangement(loaded);
             
             arrangementList.getItems().clear();
-            for (Song seq : loaded.getSequences()) {
+            for (Song seq : loaded.getSongs()) {
             	arrangementList.getItems().add(seq);
             }
             

@@ -69,7 +69,7 @@ public class MPCArrangementDecoder implements Decoder<Arrangement> {
             String st = inputFile.getParent() + File.separatorChar + s + "]MarioPaint.txt";
             File f = new File(st);
             Song seq = SequenceDecoders.MPC.getDecoder().decode(f);
-            theArr.getSequences().add(seq);
+            theArr.getSongs().add(seq);
         }
         return theArr;
     }

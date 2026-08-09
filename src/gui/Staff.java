@@ -321,7 +321,7 @@ public class Staff {
      *            The loaded arrangement.
      */
     public void populateStaffArrangement(Arrangement loaded) {
-    	Song first = loaded.getSequences().getFirst();
+    	Song first = loaded.getSongs().getFirst();
         populateStaff(first);
         
         setArrangement(loaded);
@@ -331,7 +331,7 @@ public class Staff {
             @Override
             public Void call() {
                 getSoundPlayer().clearCache();
-                for(Song s : loaded.getSequences()) {
+                for(Song s : loaded.getSongs()) {
                     try {
                         getSoundPlayer().loadToCache(s.getSoundset());
                     } catch (InvalidMidiDataException | IOException e) {
@@ -355,15 +355,15 @@ public class Staff {
         	return false;
         
         StateMachine.setArrModified(true);
-        getArrangement().getSequences().add(new Song(getSequence()));
+        getArrangement().getSongs().add(new Song(getSequence()));
         soundPlayer.storeInCache();
         return true;
     }
     
     public boolean deleteSongFromArrangement(int i) {
-        if (i >= 0 && i < getArrangement().getSequences().size()) {
+        if (i >= 0 && i < getArrangement().getSongs().size()) {
             StateMachine.setArrModified(true);
-            getArrangement().getSequences().remove(i);
+            getArrangement().getSongs().remove(i);
             return true;
             
         } else {
@@ -372,10 +372,10 @@ public class Staff {
     }
     
     public boolean moveSongInArrangement(int from, int to) {
-        if (from >= 0 && from < getArrangement().getSequences().size()) {
+        if (from >= 0 && from < getArrangement().getSongs().size()) {
             StateMachine.setArrModified(true);
-            Song ss = getArrangement().getSequences().remove(from);
-            getArrangement().getSequences().add(to, ss);
+            Song ss = getArrangement().getSongs().remove(from);
+            getArrangement().getSongs().add(to, ss);
             return true;
             
         } else {
@@ -565,13 +565,13 @@ public class Staff {
             @Override
             protected Staff call() throws Exception {
                 StateMachine.setArrangementSongIndex(0);
-                List<Song> seq = getArrangement().getSequences();
+                List<Song> seq = getArrangement().getSongs();
                 int endLine;
 
                 queue.set(0);
                 
                 for (int i = 0; i < seq.size(); i++) {
-                    setSequence(getArrangement().getSequences().get(i));
+                    setSequence(getArrangement().getSongs().get(i));
                     setSoundset(getSequence().getSoundset());
                     computeDelay(StateMachine.getTempo());
                     setTimeSignature(getSequence().getTimeSignature());

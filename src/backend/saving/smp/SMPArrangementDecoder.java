@@ -56,7 +56,7 @@ public class SMPArrangementDecoder implements Decoder<Arrangement> {
             f = new File(basePath + s + ".txt");
 			seqs.add(SequenceDecoders.SMP.getDecoder().decode(f));
         }
-		loaded.getSequences().addAll(seqs);
+		loaded.getSongs().addAll(seqs);
         return loaded;
     }
 

@@ -9,17 +9,17 @@ import java.util.List;
 public class Arrangement extends Sequence {
 
     /** The sequences in this arrangement. */
-    private final List<Song> sequences;
+    private final List<Song> songs;
 
     /** Default constructor. Makes an empty arrangement. */
     public Arrangement() {
-        sequences = new ArrayList<>();
+        songs = new ArrayList<>();
     }
 
     /**
      * Get the sequences in this arrangement.
      */
-    public List<Song> getSequences() {
-        return sequences;
+    public List<Song> getSongs() {
+        return songs;
     }
 }
