@@ -92,7 +92,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
             case O:
             	tryPerformFirstMatchingSubaction(ke,
             			new Subaction<>(KeyEvent::isControlDown,
-            					() -> source.load()));
+            					() -> source.load(Utilities.getOwner(ke))));
                 break;
                 
             case COMMA:
