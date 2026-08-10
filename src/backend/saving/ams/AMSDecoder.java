@@ -1,7 +1,7 @@
 package backend.saving.ams;
 
 import java.io.File;
-import java.text.ParseException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import backend.saving.Decoder;
@@ -24,13 +24,13 @@ public class AMSDecoder implements Decoder<Song> {
      * Decodes an Advanced Mario Sequencer song into an SMP-readable format.
      * @param in The input String that contains (supposedly) Advanced Mario
      * Sequencer data.
-     * @throws ParseException If someone tries to feed this method an invalid
+     * @throws IOException If someone tries to feed this method an invalid
      * text file.
      */
     @SuppressWarnings("unused") // Please remove when the implementation is done
-    private Song decode(String in) throws ParseException {
+    private Song decode(String in) throws IOException {
         if (!isValid(in)) {
-            throw new ParseException("Invalid File", 0);
+            throw new IOException("Invalid File");
         }
         String timeSig = null;
         String tempo = null;

@@ -3,7 +3,6 @@ package backend.saving.smp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +21,7 @@ public class SMPArrangementDecoder implements Decoder<Arrangement> {
      *            The file to load from.
      * @return A loaded arrangement file. The format is StaffArrangement.
      */
-    public Arrangement decode(File inputFile) throws IOException, ParseException {
+    public Arrangement decode(File inputFile) throws IOException {
     	String basePath = inputFile.getParent() + File.separatorChar;
         FileInputStream fIn = new FileInputStream(inputFile);
         Scanner sc = new Scanner(fIn);
@@ -48,7 +47,7 @@ public class SMPArrangementDecoder implements Decoder<Arrangement> {
      *            <code>ArrayList</code> of filenames and paths.
      * @return Hopefully, a decoded <code>StaffArrangement</code>
      */
-    private static Arrangement parseArrText(String basePath, List<String> read) throws ParseException, IOException {
+    private static Arrangement parseArrText(String basePath, List<String> read) throws IOException {
         Arrangement loaded = new Arrangement();
         File f = null;
 		List<Song> seqs = new ArrayList<>();

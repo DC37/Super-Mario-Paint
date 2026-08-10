@@ -26,14 +26,19 @@ public interface CheckedDecoder<T> extends Decoder<T> {
             
             @Override
             public Optional<T> decode(File in) throws IOException {
+            	IOException excTrace = null;
+            	
                 for (Decoder<? extends T> p : parsers) {
                     try {
                         T result = p.decode(in);
                         return Optional.of(result);
-                    } catch (ParseException e) {
-                        // Continue.
+                    } catch (IOException e) {
+                    	excTrace = new IOException(e.getMessage(), excTrace);
                     }
                 }
+                
+                if (excTrace != null)
+                	throw excTrace;
                 
                 return Optional.empty();
             }

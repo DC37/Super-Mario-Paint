@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
 
 import backend.saving.Decoder;
 import backend.saving.SequenceDecoders;
@@ -19,13 +18,10 @@ public class MPCArrangementDecoder implements Decoder<Arrangement> {
      * @param f
      *            The input file that we are reading from.
      * @return A decoded StaffArrangement, if successful.
-     * @throws ParseException
-     *             If the file is not the proper format.
      * @throws IOException
-     *             If the file is not readable.
+     *             If the file is malformed or not readable.
      */
-    public Arrangement decode(File f)
-            throws ParseException, IOException {
+    public Arrangement decode(File f) throws IOException {
         StringBuilder sb = new StringBuilder();
         
         try (
@@ -50,16 +46,14 @@ public class MPCArrangementDecoder implements Decoder<Arrangement> {
      * @param inputFile
      *            The location of the arrangement file.
      * @return A StaffArrangement (if successful).
-     * @throws ParseException
-     *             If the file is the wrong format.
      * @throws IOException
      *             If something goes wrong while attempting to read the files.
      */
-    private Arrangement parseFiles(String str, File inputFile)
-            throws ParseException, IOException {
+    private Arrangement parseFiles(String str, File inputFile) throws IOException {
         if (str == null || str.isEmpty()) {
-            throw new ParseException("Invalid Arr File.", 0);
+            throw new IOException("Invalid Arr File.");
         }
+        
         Arrangement theArr = new Arrangement();
         
         String inputFileName = inputFile.getName();
@@ -71,6 +65,7 @@ public class MPCArrangementDecoder implements Decoder<Arrangement> {
             Song seq = SequenceDecoders.MPC.getDecoder().decode(f);
             theArr.getSongs().add(seq);
         }
+        
         return theArr;
     }
 

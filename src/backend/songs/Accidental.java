@@ -1,5 +1,7 @@
 package backend.songs;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import gui.loaders.ImageIndex;
@@ -18,33 +20,17 @@ public enum Accidental {
     private int offset;
     private String token;
     
+    private static final Map<String, Accidental> LOOKUP_BY_TOKEN = new HashMap<>();
+    
+    static {
+    	for (Accidental acc : Accidental.values()) {
+    		LOOKUP_BY_TOKEN.put(acc.getToken(), acc);
+    	}
+    }
+    
     private Accidental(int value, String token) {
         this.offset = value;
         this.token = token;
-    }
-    
-    /**
-     * Get an {@code Accidental} from an offset value
-     * @param v Integer between {@code -2} and {@code 2}
-     * @return Accidental whose offset value is {@code v}
-     * @throws IllegalArgumentException if {@code v} is not in the specified
-     *      range
-     */
-    public static Accidental valueOf(int v) {
-        switch (v) {
-        case -2:
-            return DOUBLE_FLAT;
-        case -1:
-            return FLAT;
-        case 0:
-            return NATURAL;
-        case 1:
-            return SHARP;
-        case 2:
-            return DOUBLE_SHARP;
-        default:
-            throw new IllegalArgumentException("Cannot create Accidental from value " + v);
-        }
     }
     
     /**
@@ -95,6 +81,18 @@ public enum Accidental {
      */
     public ImageIndex getImgIdxSilhouette() {
     	return getImageIndexAs(ImageIndex::ofItemSilhouette);
+    }
+    
+    /**
+     * Get the {@code Accidental} that corresponds to the
+     * specified token.
+     *
+     * @param token The token to look for.
+     * @return The accidental corresponding to that token,
+     *         or {@code NATURAL} if not found.
+     */
+    public static Accidental ofToken(String token) {
+    	return LOOKUP_BY_TOKEN.getOrDefault(token, NATURAL);
     }
 
 }

@@ -1,5 +1,8 @@
 package backend.songs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Modifiers for notes: some notes on the staff are mute notes, whose purpose
  * is not to play sounds but to cancel previous notes.
@@ -17,6 +20,17 @@ public enum MuteModifier {
 	
 	/** Token that represent the mute modifier in a file. */
 	private String token;
+	
+	private static final Map<Integer, MuteModifier> LOOKUP_BY_TOKEN = new HashMap<>();
+	
+	static {
+		for (MuteModifier mm : MuteModifier.values()) {
+			char t = mm.getToken().isEmpty() ? '0' : mm.getToken().charAt(1);
+			int type = Integer.parseInt(String.format("%c", t));
+			
+			LOOKUP_BY_TOKEN.put(type, mm);
+		}
+	}
 	
 	/**
 	 * Creates a {@link MuteModifier} with the given token.
@@ -36,6 +50,18 @@ public enum MuteModifier {
 		return token;
 	}
 
+	/**
+     * Get the {@code MuteModifier} that corresponds to
+     * the specified type.
+     *
+     * @param type The numeric type to look for.
+     * @return The modifier corresponding to that type,
+     *         or {@code REGULAR} if not found.
+     */
+	public static MuteModifier ofType(int type) {
+		return LOOKUP_BY_TOKEN.getOrDefault(type, REGULAR);
+	}
+	
 	/**
 	 * Retrieves the {@link MuteModifier} that corresponds to the
 	 * given mute instrument/pitch flags.

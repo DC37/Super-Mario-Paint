@@ -3,7 +3,6 @@ package gui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -862,7 +861,7 @@ public class SMPFXController {
             Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
             log.error("File not found error in loadArrangement:", e);
             
-        } catch (ParseException | IOException e) {
+        } catch (IOException e) {
             Dialog.showDialog(PROMPT_ERROR, "An IO exception occurred while reading file " + inputFile + "!", owner);
             log.error("IO error in loadArrangement:", e);
             
