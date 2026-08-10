@@ -9,6 +9,7 @@ import backend.saving.Decoder;
 import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
 import backend.songs.Song;
+import utilities.ExceptionUtils;
 
 public class MPCArrangementDecoder implements Decoder<Arrangement, IOException> {
 
@@ -54,19 +55,25 @@ public class MPCArrangementDecoder implements Decoder<Arrangement, IOException> 
             throw new IOException("Invalid Arr File.");
         }
         
-        Arrangement theArr = new Arrangement();
-        
-        String inputFileName = inputFile.getName();
-        theArr.setTitle(inputFileName.substring(0, inputFileName.lastIndexOf(']')));
-
-        for (String s : str.split("\n")) {
-            String st = inputFile.getParent() + File.separatorChar + s + "]MarioPaint.txt";
-            File f = new File(st);
-            Song seq = SequenceDecoders.MPC.getDecoder().decode(f);
-            theArr.getSongs().add(seq);
+        try {
+	        Arrangement theArr = new Arrangement();
+	        
+	        String inputFileName = inputFile.getName();
+	        theArr.setTitle(inputFileName.substring(0, inputFileName.lastIndexOf(']')));
+	
+	        for (String s : str.split("\n")) {
+	            String st = inputFile.getParent() + File.separatorChar + s + "]MarioPaint.txt";
+	            File f = new File(st);
+	            Song seq = SequenceDecoders.MPC.getDecoder().decode(f);
+	            theArr.getSongs().add(seq);
+	        }
+	        
+	        return theArr;
+        } catch (IOException ioe) {
+        	throw ioe;
+        } catch (Exception e) {
+        	throw new IOException("Cannot parse a file of the MPC arrangement!", ExceptionUtils.maskIfNeeded(e));
         }
-        
-        return theArr;
     }
 
 }
