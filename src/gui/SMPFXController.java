@@ -748,7 +748,7 @@ public class SMPFXController {
     
     private void save(Window owner, SMPMode mode) {
     	String chosenName = getNameTextField().getText();
-        if (StringUtils.contains(chosenName, Values.getIllegalChars())) {
+        if (StringUtils.containsAny(chosenName, Values.getIllegalChars())) {
         	Dialog.showDialog(null, StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"), owner);
             return;
         }

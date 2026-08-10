@@ -1,11 +1,10 @@
 package utilities;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.Strings;
 
 public class StringUtils {
 
@@ -18,13 +17,12 @@ public class StringUtils {
 	 * @param haystack The list of characters to verify.
 	 * @return Whether the string contains any of the characters.
 	 */
-	public static boolean contains(String needle, List<Character> haystack) {
-		return Optional.ofNullable(needle)
-				.map(String::toCharArray)
-				.map(ArrayUtils::toObject)
-				.map(Arrays::asList)
-				.map(lc -> lc.stream().anyMatch(haystack::contains))
-				.orElse(false);
+	public static boolean containsAny(String needle, List<Character> haystack) {
+		String[] haystackArr = haystack.stream()
+				.map(Object::toString)
+				.toArray(len -> new String[len]);
+		
+		return Strings.CS.containsAny(needle, haystackArr);
 	}
 	
 	/**
