@@ -1,5 +1,6 @@
 package backend.saving;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import backend.saving.ams.AMSArrangementDecoder;
@@ -13,17 +14,17 @@ public enum ArrangementDecoders {
 	AMS(new AMSArrangementDecoder()),
 	SMP(new SMPArrangementDecoder());
 	
-	private Decoder<Arrangement> decoder;
+	private Decoder<Arrangement, IOException> decoder;
 	
-	private ArrangementDecoders(Decoder<Arrangement> decoder) {
+	private ArrangementDecoders(Decoder<Arrangement, IOException> decoder) {
 		this.decoder = decoder;
 	}
 	
-	public Decoder<Arrangement> getDecoder() {
+	public Decoder<Arrangement, IOException> getDecoder() {
 		return decoder;
 	}
 	
-	public static Decoder<Optional<Arrangement>> getAllTryable() {
+	public static CheckedDecoder<Optional<Arrangement>> getAllTryable() {
 		// When loading an arrangement, it is assumed to be SMP first.
 		// If it doesn't work, it is then processed as an MPC file.
 		return CheckedDecoder.of(SMP.getDecoder(), MPC.getDecoder());

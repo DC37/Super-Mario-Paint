@@ -13,7 +13,7 @@ import backend.sound.SMPSoundfont;
  * @author RehdBlob
  * @since 2012.09.10
  */
-public class AMSDecoder implements Decoder<Song> {
+public class AMSDecoder implements Decoder<Song, IOException> {
 
     public Song decode(File file) {
     	// TODO: Implement reading for AMS songs.

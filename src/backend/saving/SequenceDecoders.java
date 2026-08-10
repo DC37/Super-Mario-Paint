@@ -1,5 +1,6 @@
 package backend.saving;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import backend.saving.ams.AMSDecoder;
@@ -13,13 +14,13 @@ public enum SequenceDecoders {
 	AMS(new AMSDecoder()),
 	SMP(new SMPDecoder());
 	
-	private Decoder<Song> decoder;
+	private Decoder<Song, IOException> decoder;
 	
-	private SequenceDecoders(Decoder<Song> decoder) {
+	private SequenceDecoders(Decoder<Song, IOException> decoder) {
 		this.decoder = decoder;
 	}
 	
-	public Decoder<Song> getDecoder() {
+	public Decoder<Song, IOException> getDecoder() {
 		return decoder;
 	}
 	

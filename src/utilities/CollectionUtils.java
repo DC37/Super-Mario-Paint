@@ -21,6 +21,18 @@ public class CollectionUtils {
     }
     
     /**
+     * Determines if the given reference {@link String} starts with
+     * any of the provided probes.
+     * 
+     * @param ref The reference to compare against
+     * @param probes One or more probe values to look for
+     * @return Whether at least the reference starts with any of the probes
+     */
+    public static boolean startsWithAny(String ref, String... probes) {
+    	return Arrays.asList(probes).stream().anyMatch(ref::startsWith);
+    }
+    
+    /**
      * Swaps two items of a boolean array, in-place.
      * 
      * @param items The boolean array to process

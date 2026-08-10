@@ -16,6 +16,7 @@ import backend.songs.Song;
 import backend.songs.TimeSignature;
 import gui.SMPInstrument;
 import gui.Values;
+import utilities.ExceptionUtils;
 
 /**
  * Decodes Mario Paint Composer songs into Super Mario Paint- readable songs.
@@ -23,7 +24,7 @@ import gui.Values;
  * @author RehdBlob
  * @since 2012.09.01
  */
-public class MPCDecoder implements Decoder<Song> {
+public class MPCDecoder implements Decoder<Song, IOException> {
 
     /**
      * Opens a file and decodes the Mario Paint Composer song data from it,
@@ -60,7 +61,7 @@ public class MPCDecoder implements Decoder<Song> {
     	} catch (IOException ioe) {
     		throw ioe;
     	} catch (Exception e) {
-    		throw new IOException("Error while trying to decode the MPC file!", e);
+    		throw new IOException("Error while trying to decode the MPC file!", ExceptionUtils.maskIfNeeded(e));
     	}
     }
 
@@ -87,7 +88,7 @@ public class MPCDecoder implements Decoder<Song> {
         } catch (IOException ioe) {
         	throw ioe;
         } catch (Exception e) {
-        	throw new IOException("Error while decoding the MPC file!", e);
+        	throw new IOException("Error while decoding the MPC file!", ExceptionUtils.maskIfNeeded(e));
         }
     }
 
@@ -123,7 +124,7 @@ public class MPCDecoder implements Decoder<Song> {
 	            sl.getNotes().add(sn);
 	        }
     	} catch (Exception e) {
-    		throw new IOException("Error while parsing the MPC note line!", e);
+    		throw new IOException("Error while parsing the MPC note line!", ExceptionUtils.maskIfNeeded(e));
     	}
     }
     
@@ -171,7 +172,7 @@ public class MPCDecoder implements Decoder<Song> {
     	} catch (IOException ioe) {
     		throw ioe;
     	} catch (Exception e) {
-    		throw new IOException("Error while building the MPC sequence!", e);
+    		throw new IOException("Error while building the MPC sequence!", ExceptionUtils.maskIfNeeded(e));
     	}
     }
 

@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
 
+import backend.CompositeException;
+
 /**
  * Parsers whose implementation does not throw {@link ParseException}.
  */
-public interface CheckedDecoder<T> extends Decoder<T> {
+public interface CheckedDecoder<T> extends Decoder<T, CompositeException> {
 
 	@Override
-    T decode(File in) throws IOException;
+    T decode(File in) throws CompositeException;
 	
 	/**
      * Try several parsers in sequence until one succeeds.
@@ -21,24 +23,24 @@ public interface CheckedDecoder<T> extends Decoder<T> {
      * @return Either the value returned by the first parser that succeeds, or empty
      */
 	@SafeVarargs
-	static <T> CheckedDecoder<Optional<T>> of(Decoder<? extends T>... parsers) {
+	static <T> CheckedDecoder<Optional<T>> of(Decoder<? extends T, IOException>... parsers) {
 		return new CheckedDecoder<>() {
             
             @Override
-            public Optional<T> decode(File in) throws IOException {
-            	IOException excTrace = null;
+            public Optional<T> decode(File in) throws CompositeException {
+            	CompositeException ce = new CompositeException();
             	
-                for (Decoder<? extends T> p : parsers) {
+            	for (Decoder<? extends T, IOException> p : parsers) {
                     try {
                         T result = p.decode(in);
                         return Optional.of(result);
                     } catch (IOException e) {
-                    	excTrace = new IOException(e.getMessage(), excTrace);
+                    	ce.addException(e, p.getClass().getSimpleName());
                     }
                 }
                 
-                if (excTrace != null)
-                	throw excTrace;
+                if (!ce.isEmpty())
+                	throw ce;
                 
                 return Optional.empty();
             }

@@ -19,10 +19,11 @@ import gui.SMPInstrument;
 import gui.Values;
 import utilities.CollectionUtils;
 import utilities.DataTypeUtils;
+import utilities.ExceptionUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class SMPDecoder implements Decoder<Song> {
+public class SMPDecoder implements Decoder<Song, IOException> {
     
     /**
      * Loads a song from the file specified.
@@ -50,7 +51,7 @@ public class SMPDecoder implements Decoder<Song> {
     	} catch (IOException ioe) {
     		throw ioe;
     	} catch (Exception e) {
-    		throw new IOException("Error while trying to decode the SMP file!", e);
+    		throw new IOException("Error while trying to decode the SMP file!", ExceptionUtils.maskIfNeeded(e));
     	}
     }
 
@@ -83,7 +84,7 @@ public class SMPDecoder implements Decoder<Song> {
 	            }
 	        }
         } catch (Exception e) {
-        	throw new IOException("Error while parsing SMP song properties!", e);
+        	throw new IOException("Error while parsing SMP song properties!", ExceptionUtils.maskIfNeeded(e));
         }
     }
     
@@ -123,7 +124,7 @@ public class SMPDecoder implements Decoder<Song> {
     	} catch (IOException ioe) {
     		throw ioe;
     	} catch (Exception e) {
-    		throw new IOException("Error while parsing SMP song lines!", e);
+    		throw new IOException("Error while parsing SMP song lines!", ExceptionUtils.maskIfNeeded(e));
     	}
     }
     

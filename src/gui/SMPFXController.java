@@ -1,7 +1,6 @@
 package gui;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -829,18 +828,14 @@ public class SMPFXController {
             getNameTextField().setText(loaded.getTitle());
             StateMachine.setNoteExtensions(loaded.getNoteExtensions());
             StateMachine.setSongModified(false);
-            
-        } catch (FileNotFoundException e) {
-            Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
-            log.error("File not found error in loadSong:", e);
-            
-        } catch (IOException e) {
-            Dialog.showDialog(PROMPT_ERROR, "An IO exception occurred while reading file " + inputFile + "!", owner);
-            log.error("IO error in loadSong:", e);
-            
         } catch (Exception e) {
-            Dialog.showDialog(PROMPT_ERROR, "An error occurred while reading file " + inputFile + "!", owner);
-            log.error("Error in loadSong:", e);
+        	log.error("Error in loadSong:", e);
+        	
+        	String msg = String.format(
+        			"An error occurred while reading file %s!%n%nTechnical reason:%n%s",
+        			inputFile, e.getMessage());
+        	
+        	Dialog.showDialog(PROMPT_ERROR, msg, owner);
         }
     }
     
@@ -856,19 +851,15 @@ public class SMPFXController {
             
             StateMachine.setSongModified(false);
         	StateMachine.setArrModified(false);
-            
-        } catch (FileNotFoundException e) {
-            Dialog.showDialog(PROMPT_ERROR, "File " + inputFile + "not found!", owner);
-            log.error("File not found error in loadArrangement:", e);
-            
-        } catch (IOException e) {
-            Dialog.showDialog(PROMPT_ERROR, "An IO exception occurred while reading file " + inputFile + "!", owner);
-            log.error("IO error in loadArrangement:", e);
-            
-        } catch (Exception e) {
-            Dialog.showDialog(PROMPT_ERROR, "An error occurred while reading file " + inputFile + "!", owner);
-            log.error("Error in loadArrangement:", e);
-        }
+    	} catch (Exception e) {
+    		log.error("Error in loadArrangement:", e);
+    		
+    		String msg = String.format(
+        			"An error occurred while reading file %s!%n%nTechnical reason:%n%s",
+        			inputFile, e.getMessage());
+        	
+        	Dialog.showDialog(PROMPT_ERROR, msg, owner);
+    	}
     }
     
     @FXML

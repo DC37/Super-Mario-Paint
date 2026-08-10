@@ -1,10 +1,9 @@
 package backend.saving;
 
 import java.io.File;
-import java.io.IOException;
 
-public interface Decoder<T> {
+public interface Decoder<T, E extends Exception> {
     
-    T decode(File in) throws IOException;
+    T decode(File in) throws E;
     
 }

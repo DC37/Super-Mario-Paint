@@ -12,7 +12,7 @@ import backend.saving.SequenceDecoders;
 import backend.songs.Arrangement;
 import backend.songs.Song;
 
-public class SMPArrangementDecoder implements Decoder<Arrangement> {
+public class SMPArrangementDecoder implements Decoder<Arrangement, IOException> {
 
     /**
      * Loads an arrangement from the file specified.
