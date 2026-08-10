@@ -743,18 +743,18 @@ public class SMPFXController {
         
         switch (mode) {
         case SONG:
-        	saveSong(outputFile, owner);
+        	saveSong(outputFile);
         	break;
         	
         case ARRANGEMENT:
-        	saveArrangement(outputFile, owner);
+        	saveArrangement(outputFile);
         	break;
         }
         
         StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
     }
     
-    private void saveArrangement(File outputFile, Window owner) {
+    private void saveArrangement(File outputFile) {
         Arrangement out = staff.getArrangement();
         for (int i = 0; i < out.getSongs().size(); i++) {
         	String name = arrangementList.getItems().get(i).getTitle();
@@ -766,7 +766,7 @@ public class SMPFXController {
         StateMachine.setArrModified(false);
     }
 
-    public void saveSong(File outputFile, Window owner) {
+    public void saveSong(File outputFile) {
         Song out = staff.getSequence();
         out.setTempo(StateMachine.getTempo());
         
