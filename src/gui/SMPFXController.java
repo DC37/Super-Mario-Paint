@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.sound.midi.MidiChannel;
 
+import org.apache.commons.lang3.function.FailableRunnable;
+
 import backend.BackendUtils;
 import backend.editing.ModifySongManager;
 import backend.saving.ArrangementDecoders;
@@ -721,6 +723,20 @@ public class SMPFXController {
         }
     }
     
+    private void tryOperation(String opName, String errMsg, Window owner,
+    		FailableRunnable<Exception> fnOperation) {
+    	
+        try {
+        	fnOperation.run();
+        } catch (Exception e) {
+        	log.error(String.format("Error in %s:", opName), e);
+        	
+        	String msg = String.format("%s%n%nTechnical reason:%n%s", errMsg, e.getMessage());
+        	
+        	Dialog.showDialog(PROMPT_ERROR, msg, owner);
+        }
+    }
+    
     @FXML
     public void save(ActionEvent e) {
         save(Utilities.getOwner(e));
@@ -743,47 +759,58 @@ public class SMPFXController {
         
         switch (mode) {
         case SONG:
-        	saveSong(outputFile);
+        	saveSong(outputFile, owner);
         	break;
         	
         case ARRANGEMENT:
-        	saveArrangement(outputFile);
+        	saveArrangement(outputFile, owner);
         	break;
         }
         
         StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
     }
     
-    private void saveArrangement(File outputFile) {
-        Arrangement out = staff.getArrangement();
-        for (int i = 0; i < out.getSongs().size(); i++) {
-        	String name = arrangementList.getItems().get(i).getTitle();
-        	out.getSongs().get(i).setTitle(name);
-        }
-        
-        FileService.trySaveArrangement(outputFile, out);
-        
-        StateMachine.setArrModified(false);
+    private void saveArrangement(File outputFile, Window owner) {
+    	tryOperation(
+    			"saveArrangement",
+    			String.format("An error occurred while writing file %s!", outputFile),
+    			owner,
+    			() -> {
+		    		Arrangement out = staff.getArrangement();
+			        for (int i = 0; i < out.getSongs().size(); i++) {
+			        	String name = arrangementList.getItems().get(i).getTitle();
+			        	out.getSongs().get(i).setTitle(name);
+			        }
+			        
+			        FileService.trySaveArrangement(outputFile, out);
+			        
+			        StateMachine.setArrModified(false);
+		    	});
     }
 
-    public void saveSong(File outputFile) {
-        Song out = staff.getSequence();
-        out.setTempo(StateMachine.getTempo());
-        
-        if (!FileService.trySaveSong(outputFile, out))
-        	return;
-    	
-    	List<Song> seqs = staff.getArrangement().getSongs();
-        String currSeqName = getNameTextField().getText();
-    	
-        // when we change the soundfont for a song in the arr, we should store
-        // the new soundfont in cache
-    	SoundsetSaveTask soundsetSaveTask = new SoundsetSaveTask(
-    			soundPlayer, currSeqName, seqs);
-	    
-	    new Thread(soundsetSaveTask).start();
-        
-        StateMachine.setSongModified(false);
+    public void saveSong(File outputFile, Window owner) {
+    	tryOperation(
+    			"saveSong",
+    			String.format("An error occurred while writing file %s!", outputFile),
+    			owner,
+    			() -> {
+    				Song out = staff.getSequence();
+			        out.setTempo(StateMachine.getTempo());
+			        
+			        FileService.trySaveSong(outputFile, out);
+			    	
+			    	List<Song> seqs = staff.getArrangement().getSongs();
+			        String currSeqName = getNameTextField().getText();
+			    	
+			        // when we change the soundfont for a song in the arr, we should store
+			        // the new soundfont in cache
+			    	SoundsetSaveTask soundsetSaveTask = new SoundsetSaveTask(
+			    			soundPlayer, currSeqName, seqs);
+				    
+				    new Thread(soundsetSaveTask).start();
+			        
+			        StateMachine.setSongModified(false);
+    			});
     }
     
     @FXML
@@ -799,67 +826,56 @@ public class SMPFXController {
     	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, mode == SMPMode.ARRANGEMENT))
             return;
     	
-    	try {
-        	File inputFile = FileChooserManager.open(null);
-        	if (inputFile == null)
-        		return;
-        	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
-        	
-        	switch (mode) {
-        	case SONG:
-        		loadSong(inputFile, owner);
-        		break;
-        		
-        	case ARRANGEMENT:
-        		loadArrangement(inputFile, owner);
-        		break;
-        	}
-        	
-        } catch (Exception e) {
-        	Dialog.showDialog(null, String.format("Not a valid %s file.", mode.toString().toLowerCase()), owner);
-        }
+    	File inputFile = FileChooserManager.open(null);
+    	if (inputFile == null)
+    		return;
+    	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
+    	
+    	switch (mode) {
+    	case SONG:
+    		loadSong(inputFile, owner);
+    		break;
+    		
+    	case ARRANGEMENT:
+    		loadArrangement(inputFile, owner);
+    		break;
+    	}
     }
 
     private void loadSong(File inputFile, Window owner) {
-        try {
-            Song loaded = SequenceDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
-            staff.populateStaff(loaded);
-            getModifySongManager().reset();
-            getNameTextField().setText(loaded.getTitle());
-            StateMachine.setNoteExtensions(loaded.getNoteExtensions());
-            StateMachine.setSongModified(false);
-        } catch (Exception e) {
-        	log.error("Error in loadSong:", e);
-        	
-        	String msg = String.format(
-        			"An error occurred while reading file %s!%n%nTechnical reason:%n%s",
-        			inputFile, e.getMessage());
-        	
-        	Dialog.showDialog(PROMPT_ERROR, msg, owner);
-        }
+    	tryOperation(
+    			"loadSong",
+    			String.format("An error occurred while reading file %s!", inputFile),
+    			owner,
+    			() -> {
+    				Song loaded = SequenceDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
+		            staff.populateStaff(loaded);
+		            
+		            getModifySongManager().reset();
+		            getNameTextField().setText(loaded.getTitle());
+		            
+		            StateMachine.setNoteExtensions(loaded.getNoteExtensions());
+		            StateMachine.setSongModified(false);
+    			});
     }
     
     private void loadArrangement(File inputFile, Window owner) {
-    	try {
-            Arrangement loaded = ArrangementDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
-            staff.populateStaffArrangement(loaded);
-            
-            arrangementList.getItems().clear();
-            for (Song seq : loaded.getSongs()) {
-            	arrangementList.getItems().add(seq);
-            }
-            
-            StateMachine.setSongModified(false);
-        	StateMachine.setArrModified(false);
-    	} catch (Exception e) {
-    		log.error("Error in loadArrangement:", e);
-    		
-    		String msg = String.format(
-        			"An error occurred while reading file %s!%n%nTechnical reason:%n%s",
-        			inputFile, e.getMessage());
-        	
-        	Dialog.showDialog(PROMPT_ERROR, msg, owner);
-    	}
+    	tryOperation(
+    			"loadArrangement",
+    			String.format("An error occurred while reading file %s!", inputFile),
+    			owner,
+    			() -> {
+    				Arrangement loaded = ArrangementDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
+		            staff.populateStaffArrangement(loaded);
+		            
+		            arrangementList.getItems().clear();
+		            for (Song seq : loaded.getSongs()) {
+		            	arrangementList.getItems().add(seq);
+		            }
+		            
+		            StateMachine.setSongModified(false);
+		        	StateMachine.setArrModified(false);
+    			});
     }
     
     @FXML

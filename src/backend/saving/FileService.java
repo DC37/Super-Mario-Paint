@@ -14,6 +14,7 @@ import backend.songs.TimeSignature;
 import gui.Values;
 import lombok.extern.slf4j.Slf4j;
 import utilities.DataTypeUtils;
+import utilities.ExceptionUtils;
 
 @Slf4j
 public class FileService {
@@ -22,13 +23,11 @@ public class FileService {
     
     private FileService() {}
     
-    public static boolean trySaveSong(File f, Song song) {
-        boolean successful = true;
-        
-        try (FileOutputStream fos = new FileOutputStream(f)) {
-            
-            PrintStream pr = new PrintStream(fos);
-            
+    public static void trySaveSong(File f, Song song) throws IOException {
+        try (
+        		FileOutputStream fos = new FileOutputStream(f);
+        		PrintStream pr = new PrintStream(fos);
+        ) { 
             TimeSignature t = Optional
                     .ofNullable(song.getTimeSignature())
                     .orElse(TimeSignature.FOUR_FOUR);
@@ -53,14 +52,11 @@ public class FileService {
                 pr.printf("VOL: %d%s", song.getLine(i).getVolume(), LINE_BREAK);
             }
             
-            pr.close();
-            
-        } catch (IOException | IllegalArgumentException e) {
-            successful = false;
-            log.error("Error while trying to save the song!", e);
+        } catch (IOException ioe) {
+            throw ioe;
+        } catch (Exception e) {
+        	throw new IOException("Error while trying to save the song!", ExceptionUtils.maskIfNeeded(e));
         }
-        
-        return successful;
     }
     
     private static String noteToString(Note note) {
@@ -72,25 +68,20 @@ public class FileService {
         return String.format("%s %s%s%s", instName, noteName, noteAcc, muteName);
     }
     
-    public static boolean trySaveArrangement(File f, Arrangement arrangement) {
-    	boolean successful = true;
-    	
-    	try (FileOutputStream fos = new FileOutputStream(f)) {
-    		
-    		PrintStream pr = new PrintStream(fos);
-    		
+    public static void trySaveArrangement(File f, Arrangement arrangement) throws IOException {
+    	try (
+    			FileOutputStream fos = new FileOutputStream(f);
+    			PrintStream pr = new PrintStream(fos);
+    	) {
             for (Song seq : arrangement.getSongs()) {
                 pr.println(seq.getTitle());
             }
-            
-            pr.close();
     		
-    	} catch (IOException | IllegalArgumentException e) {
-    		successful = false;
-    		log.error("Error while trying to save the arrangement!", e);
+    	} catch (IOException ioe) {
+    		throw ioe;
+    	} catch (Exception e) {
+    		throw new IOException("Error while trying to save the arrangement!", ExceptionUtils.maskIfNeeded(e));
     	}
-    	
-    	return successful;
     }
 	
 }
