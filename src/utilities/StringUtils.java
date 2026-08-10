@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 public class StringUtils {
 
 	private StringUtils() {}
@@ -19,7 +21,7 @@ public class StringUtils {
 	public static boolean contains(String needle, List<Character> haystack) {
 		return Optional.ofNullable(needle)
 				.map(String::toCharArray)
-				.map(Character[].class::cast)
+				.map(ArrayUtils::toObject)
 				.map(Arrays::asList)
 				.map(lc -> lc.stream().anyMatch(haystack::contains))
 				.orElse(false);
