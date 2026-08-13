@@ -35,20 +35,29 @@
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="228.0" spacing="14.0">
                           <children>
                             <SMPButton fx:id="saveButton" onAction="#save" fitHeight="28.0" fitWidth="54.0" focusTraversable="false">
+                              <imagePressed>
+                                <Image url="@sprites/SAVE_PRESSED.png"/>
+                              </imagePressed>
                               <imageReleased>
-                                <Image url="@sprites/SAVE.png"/>
+                                <Image url="@sprites/SAVE_RELEASED.png"/>
                               </imageReleased>
                             </SMPButton>
                             
                             <SMPButton fx:id="loadButton" onAction="#load" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
+                              <imagePressed>
+                                <Image url="@sprites/LOAD_PRESSED.png"/>
+                              </imagePressed>
                               <imageReleased>
-                                <Image url="@sprites/LOAD.png"/>
+                                <Image url="@sprites/LOAD_RELEASED.png"/>
                               </imageReleased>
                             </SMPButton>
                             
                             <SMPButton fx:id="newButton" onAction="#newSongOrArrangement" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
+                              <imagePressed>
+                                <Image url="@sprites/NEW_PRESSED.png"/>
+                              </imagePressed>
                               <imageReleased>
-                                <Image url="@sprites/NEW_SONG.png"/>
+                                <Image url="@sprites/NEW_RELEASED.png"/>
                               </imageReleased>
                             </SMPButton>
                           </children>
@@ -82,8 +91,11 @@
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="100.0">
                           <children>
                             <SMPButton fx:id="optionsButton" onAction="#options" fitHeight="28.0" fitWidth="80.0" focusTraversable="false">
+                              <imagePressed>
+                                <Image url="@sprites/OPTIONS_PRESSED.png"/>
+                              </imagePressed>
                               <imageReleased>
-                                <Image url="@sprites/OPTIONS.png"/>
+                                <Image url="@sprites/OPTIONS_RELEASED.png"/>
                               </imageReleased>
                             </SMPButton>
                           </children>

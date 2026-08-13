@@ -269,11 +269,6 @@ public enum ImageIndex {
     // Selected instrument background
     SEL_INST_SM (SMPResourceType.CONTROL),
     
-    // File operations
-    SAVE (SMPResourceType.CONTROL),
-    LOAD (SMPResourceType.CONTROL),
-    NEW_SONG (SMPResourceType.CONTROL),
-    
     // Arrangement operations
     ADD (SMPResourceType.CONTROL),
     DELETE (SMPResourceType.CONTROL),
@@ -286,7 +281,6 @@ public enum ImageIndex {
     TEMPO_LABEL (SMPResourceType.CONTROL),
     
     // Other
-    OPTIONS (SMPResourceType.CONTROL),
     MODE (SMPResourceType.CONTROL),
     
     /* CONTROLS END HERE */
@@ -331,6 +325,20 @@ public enum ImageIndex {
     
     TIMESIG_LABEL (SMPResourceType.BUTTON_LABEL),
 
+    // File operations
+    
+    SAVE_PRESSED (SMPResourceType.BUTTON_PRESSED),
+    SAVE_RELEASED (SMPResourceType.BUTTON),
+    
+    LOAD_PRESSED (SMPResourceType.BUTTON_PRESSED),
+    LOAD_RELEASED (SMPResourceType.BUTTON),
+    
+    NEW_PRESSED (SMPResourceType.BUTTON_PRESSED),
+    NEW_RELEASED (SMPResourceType.BUTTON),
+    
+    OPTIONS_PRESSED (SMPResourceType.BUTTON_PRESSED),
+    OPTIONS_RELEASED (SMPResourceType.BUTTON),
+    
     SCROLLBAR_LEFT1 (SMPResourceType.BUTTON),
     SCROLLBAR_LEFT1_PRESSED (SMPResourceType.BUTTON_PRESSED),
     
