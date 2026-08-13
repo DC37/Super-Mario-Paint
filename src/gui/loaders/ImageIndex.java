@@ -275,11 +275,6 @@ public enum ImageIndex {
     UP (SMPResourceType.CONTROL),
     DOWN (SMPResourceType.CONTROL),
     
-    // Tempo
-    TEMPO_PLUS (SMPResourceType.CONTROL),
-    TEMPO_MINUS (SMPResourceType.CONTROL),
-    TEMPO_LABEL (SMPResourceType.CONTROL),
-    
     // Other
     MODE (SMPResourceType.CONTROL),
     
@@ -338,6 +333,18 @@ public enum ImageIndex {
     
     OPTIONS_PRESSED (SMPResourceType.BUTTON_PRESSED),
     OPTIONS_RELEASED (SMPResourceType.BUTTON),
+    
+    // Tempo
+    
+    TEMPO_PLUS_PRESSED (SMPResourceType.BUTTON_PRESSED),
+    TEMPO_PLUS_RELEASED (SMPResourceType.BUTTON),
+    
+    TEMPO_MINUS_PRESSED (SMPResourceType.BUTTON_PRESSED),
+    TEMPO_MINUS_RELEASED (SMPResourceType.BUTTON),
+    
+    TEMPO_LABEL (SMPResourceType.BUTTON_LABEL),
+    
+    // Scrollbar
     
     SCROLLBAR_LEFT1 (SMPResourceType.BUTTON),
     SCROLLBAR_LEFT1_PRESSED (SMPResourceType.BUTTON_PRESSED),
