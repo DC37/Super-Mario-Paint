@@ -1,5 +1,6 @@
 package gui.components.buttons.v2;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -42,7 +43,7 @@ public abstract class SMPAbstractButton<B extends ButtonBase> extends Control {
 		fitWidth = new SimpleDoubleProperty(this, "fitWidth", 0.0);
 		fitHeight = new SimpleDoubleProperty(this, "fitHeight", 0.0);
 		
-		innerBtn.getStyleClass().add(getClassStyleCssName());
+		innerBtn.getStyleClass().addAll(getClassStyleCssNames());
 		innerBtn.focusTraversableProperty().bind(focusTraversableProperty());
 	}
 	
@@ -176,8 +177,8 @@ public abstract class SMPAbstractButton<B extends ButtonBase> extends Control {
 		return innerBtn;
 	}
 	
-	public String getClassStyleCssName() {
-		return STYLE_CLASS_IMAGE_BUTTON;
+	public List<String> getClassStyleCssNames() {
+		return List.of(STYLE_CLASS_IMAGE_BUTTON);
 	}
 	
 	@Override

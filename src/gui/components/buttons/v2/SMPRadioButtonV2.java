@@ -1,5 +1,8 @@
 package gui.components.buttons.v2;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 import javafx.scene.control.RadioButton;
 
 public class SMPRadioButtonV2 extends SMPAbstractToggleButton<RadioButton> {
@@ -15,8 +18,11 @@ public class SMPRadioButtonV2 extends SMPAbstractToggleButton<RadioButton> {
 	}
 	
 	@Override
-	public String getClassStyleCssName() {
-		return STYLE_CLASS_RADIO_NO_CIRCLE;
+	public List<String> getClassStyleCssNames() {
+		return Stream.concat(
+				super.getClassStyleCssNames().stream(),
+				List.of(STYLE_CLASS_RADIO_NO_CIRCLE).stream()
+		).toList();
 	}
 	
 }

@@ -23,7 +23,6 @@ import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
 import gui.components.ModeTypeStringConverter;
 import gui.components.SongNameController;
-import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.v2.SMPButtonV2;
 import gui.components.buttons.v2.SMPHoldButtonV2;
