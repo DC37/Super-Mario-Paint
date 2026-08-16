@@ -358,23 +358,23 @@
                                   
                                   <VBox spacing="0">
                                     <children>
-                                      <SMPHoldButton fx:id="tempoPlusButton" onHold="#tempoUp" fitHeight="32.0" fitWidth="14.0" focusTraversable="false" styleClass="smp-tempo-box-button">
+                                      <SMPHoldButtonV2 fx:id="tempoPlusButton" onHold="#tempoUp" fitHeight="32.0" fitWidth="14.0" focusTraversable="false" styleClass="smp-tempo-box-button">
                                         <imagePressed>
                                           <Image url="@sprites/TEMPO_PLUS_PRESSED.png"/>
                                         </imagePressed>
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_PLUS_RELEASED.png"/>
                                         </imageReleased>
-                                      </SMPHoldButton>
+                                      </SMPHoldButtonV2>
                                         
-                                      <SMPHoldButton fx:id="tempoMinusButton" onHold="#tempoDown" fitHeight="32.0" fitWidth="14.0" focusTraversable="false" styleClass="smp-tempo-box-button">
+                                      <SMPHoldButtonV2 fx:id="tempoMinusButton" onHold="#tempoDown" fitHeight="32.0" fitWidth="14.0" focusTraversable="false" styleClass="smp-tempo-box-button">
                                         <imagePressed>
                                           <Image url="@sprites/TEMPO_MINUS_PRESSED.png"/>
                                         </imagePressed>
                                         <imageReleased>
                                           <Image url="@sprites/TEMPO_MINUS_RELEASED.png"/>
                                         </imageReleased>
-                                      </SMPHoldButton>
+                                      </SMPHoldButtonV2>
                                     </children>
                                   </VBox>
                                 </children>
