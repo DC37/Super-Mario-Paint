@@ -203,14 +203,14 @@
                                   <Image url="@sprites/LOOP_LABEL.png"/>
                                 </ImageView>
                                 
-                                <SMPToggleButton fx:id="loopButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                <SMPToggleButtonV2 fx:id="loopButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                   <imagePressed>
                                     <Image url="@sprites/LOOP_PRESSED.png"/>
                                   </imagePressed>
                                   <imageReleased>
                                     <Image url="@sprites/LOOP_RELEASED.png"/>
                                   </imageReleased>
-                                </SMPToggleButton>
+                                </SMPToggleButtonV2>
                               </VBox>
                               
                               <VBox alignment="CENTER" spacing="2.0">
@@ -218,14 +218,14 @@
                                   <Image url="@sprites/MUTE_LABEL.png"/>
                                 </ImageView>
                                 
-                                <SMPToggleButton fx:id="muteButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                <SMPToggleButtonV2 fx:id="muteButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                   <imagePressed>
                                     <Image url="@sprites/MUTE_PRESSED.png"/>
                                   </imagePressed>
                                   <imageReleased>
                                     <Image url="@sprites/MUTE_RELEASED.png"/>
                                   </imageReleased>
-                                </SMPToggleButton>
+                                </SMPToggleButtonV2>
                               </VBox>
                               
                               <VBox alignment="CENTER" spacing="2.0">
@@ -233,14 +233,14 @@
                                   <Image url="@sprites/MUTE_A_LABEL.png"/>
                                 </ImageView>
                                 
-                                <SMPToggleButton fx:id="muteInstButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                <SMPToggleButtonV2 fx:id="muteInstButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                   <imagePressed>
                                     <Image url="@sprites/MUTE_A_PRESSED.png"/>
                                   </imagePressed>
                                   <imageReleased>
                                     <Image url="@sprites/MUTE_A_RELEASED.png"/>
                                   </imageReleased>
-                                </SMPToggleButton>
+                                </SMPToggleButtonV2>
                               </VBox>
                               
                               <VBox alignment="CENTER" spacing="2.0">
@@ -248,14 +248,14 @@
                                   <Image url="@sprites/CLIPBOARD_LABEL.png"/>
                                 </ImageView>
                                 
-                                <SMPToggleButton fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                <SMPToggleButtonV2 fx:id="clipboardButton" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                   <imagePressed>
                                     <Image url="@sprites/CLIPBOARD_PRESSED.png"/>
                                   </imagePressed>
                                   <imageReleased>
                                     <Image url="@sprites/CLIPBOARD_RELEASED.png"/>
                                   </imageReleased>
-                                </SMPToggleButton>
+                                </SMPToggleButtonV2>
                               </VBox>
                               
                               <VBox alignment="CENTER" spacing="2.0">
@@ -450,11 +450,11 @@
           <children>
             <HBox fx:id="topBoxRight" alignment="CENTER_RIGHT" layoutX="815.0" prefHeight="64.0" prefWidth="200.0" spacing="2.0">
               <children>
-                <SMPToggleButton fx:id="modeButton" fitHeight="24.0" fitWidth="80.0" focusTraversable="false">
+                <SMPToggleButtonV2 fx:id="modeButton" fitHeight="24.0" fitWidth="80.0" focusTraversable="false">
                   <imageReleased>
                     <Image url="@sprites/MODE.png" />
                   </imageReleased>
-                </SMPToggleButton>
+                </SMPToggleButtonV2>
                 
                 <StackPane id="StackPane">
                   <children>
