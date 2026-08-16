@@ -28,6 +28,7 @@ import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
+import gui.components.buttons.v2.SMPButtonV2;
 import gui.components.dialogs.DialogUtils;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
@@ -131,16 +132,16 @@ public class SMPFXController {
     private SMPRadioButton timeSigBtnCustom;
     
     @FXML
-    private SMPButton saveButton;
+    private SMPButtonV2 saveButton;
     
     @FXML
-    private SMPButton loadButton;
+    private SMPButtonV2 loadButton;
     
     @FXML
-    private SMPButton newButton;
+    private SMPButtonV2 newButton;
     
     @FXML
-    private SMPButton optionsButton;
+    private SMPButtonV2 optionsButton;
     
     @FXML
     private SMPHoldButton tempoPlusButton;
