@@ -23,10 +23,8 @@ import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
 import gui.components.ModeTypeStringConverter;
 import gui.components.SongNameController;
-import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
-import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.v2.SMPButtonV2;
 import gui.components.buttons.v2.SMPRadioButtonV2;
 import gui.components.buttons.v2.SMPToggleButtonV2;
@@ -120,16 +118,16 @@ public class SMPFXController {
     private SMPToggleButtonV2 clipboardButton;
     
     @FXML
-    private SMPRadioButton timeSigBtnFourFour;
+    private SMPRadioButtonV2 timeSigBtnFourFour;
     
     @FXML
-    private SMPRadioButton timeSigBtnThreeFour;
+    private SMPRadioButtonV2 timeSigBtnThreeFour;
     
     @FXML
-    private SMPRadioButton timeSigBtnSixEight;
+    private SMPRadioButtonV2 timeSigBtnSixEight;
     
     @FXML
-    private SMPRadioButton timeSigBtnCustom;
+    private SMPRadioButtonV2 timeSigBtnCustom;
     
     @FXML
     private SMPButtonV2 saveButton;
@@ -150,16 +148,16 @@ public class SMPFXController {
     private SMPHoldButton tempoMinusButton;
     
     @FXML
-    private SMPButton addButton;
+    private SMPButtonV2 addButton;
     
     @FXML
-    private SMPButton deleteButton;
+    private SMPButtonV2 deleteButton;
     
     @FXML
-    private SMPButton upButton;
+    private SMPButtonV2 upButton;
     
     @FXML
-    private SMPButton downButton;
+    private SMPButtonV2 downButton;
 
     @FXML
     private Parent arrangerView;
