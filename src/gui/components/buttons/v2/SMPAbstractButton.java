@@ -21,6 +21,8 @@ import javafx.scene.image.Image;
 
 public abstract class SMPAbstractButton<B extends ButtonBase> extends Control {
 	
+	protected static final String MSG_RADIO_BTN_REQUIRED = "This method only works with radio buttons!";
+	
 	protected static final String STYLE_CLASS_IMAGE_BUTTON = "smp-button";
 
 	protected final B innerBtn;
@@ -103,6 +105,18 @@ public abstract class SMPAbstractButton<B extends ButtonBase> extends Control {
 	public void setGraphic(Node value) {
 		innerBtn.setGraphic(value);
 	}
+	
+	public BooleanProperty selectedProperty() {
+		throw new NotImplementedException(MSG_RADIO_BTN_REQUIRED);
+	}
+	
+    public boolean isSelected() {
+    	throw new NotImplementedException(MSG_RADIO_BTN_REQUIRED);
+    }
+	
+	public void setSelected(boolean value) {
+		throw new NotImplementedException(MSG_RADIO_BTN_REQUIRED);
+    }
 	
 	/* Button methods END */
 	
