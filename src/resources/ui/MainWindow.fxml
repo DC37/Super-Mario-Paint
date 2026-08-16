@@ -174,28 +174,28 @@
                                   <Image url="@sprites/STOP_LABEL.png"/>
                                 </ImageView>
                                 
-                                <SMPRadioButton fx:id="stopButton" onAction="#stop" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                <SMPRadioButtonV2 fx:id="stopButton" onAction="#stop" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                   <imagePressed>
                                     <Image url="@sprites/STOP_PRESSED.png"/>
                                   </imagePressed>
                                   <imageReleased>
                                     <Image url="@sprites/STOP_RELEASED.png"/>
                                   </imageReleased>
-                                </SMPRadioButton>
+                                </SMPRadioButtonV2>
                               </VBox>
                               <VBox alignment="CENTER" spacing="2.0">
                                 <ImageView mouseTransparent="true" preserveRatio="true" smooth="false" fitHeight="14" fitWidth="44">
                                   <Image url="@sprites/PLAY_LABEL.png"/>
                                 </ImageView>
                                 
-                                <SMPRadioButton fx:id="playButton" onAction="#play" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                <SMPRadioButtonV2 fx:id="playButton" onAction="#play" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                   <imagePressed>
                                     <Image url="@sprites/PLAY_PRESSED.png"/>
                                   </imagePressed>
                                   <imageReleased>
                                     <Image url="@sprites/PLAY_RELEASED.png"/>
                                   </imageReleased>
-                                </SMPRadioButton>
+                                </SMPRadioButtonV2>
                               </VBox>
                               
                               <VBox alignment="CENTER" spacing="2.0">

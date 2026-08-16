@@ -29,6 +29,7 @@ import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
 import gui.components.buttons.v2.SMPButtonV2;
+import gui.components.buttons.v2.SMPRadioButtonV2;
 import gui.components.dialogs.DialogUtils;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
@@ -102,10 +103,10 @@ public class SMPFXController {
     private Text modeText;
 
     @FXML
-    private SMPRadioButton playButton;
+    private SMPRadioButtonV2 playButton;
 
     @FXML
-    private SMPRadioButton stopButton;
+    private SMPRadioButtonV2 stopButton;
 
     @FXML
     private SMPToggleButton loopButton;
@@ -886,11 +887,11 @@ public class SMPFXController {
     	return staff;
     }
     
-    public SMPRadioButton getStopButton() {
+    public SMPRadioButtonV2 getStopButton() {
     	return stopButton;
     }
     
-    public SMPRadioButton getPlayButton() {
+    public SMPRadioButtonV2 getPlayButton() {
     	return playButton;
     }
     
