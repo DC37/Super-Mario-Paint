@@ -27,9 +27,9 @@ import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
-import gui.components.buttons.SMPToggleButton;
 import gui.components.buttons.v2.SMPButtonV2;
 import gui.components.buttons.v2.SMPRadioButtonV2;
+import gui.components.buttons.v2.SMPToggleButtonV2;
 import gui.components.dialogs.DialogUtils;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
@@ -97,7 +97,7 @@ public class SMPFXController {
     private Staff staff;
 
     @FXML
-    private SMPToggleButton modeButton;
+    private SMPToggleButtonV2 modeButton;
 
     @FXML
     private Text modeText;
@@ -109,16 +109,16 @@ public class SMPFXController {
     private SMPRadioButtonV2 stopButton;
 
     @FXML
-    private SMPToggleButton loopButton;
+    private SMPToggleButtonV2 loopButton;
 
     @FXML
-    private SMPToggleButton muteButton;
+    private SMPToggleButtonV2 muteButton;
 
     @FXML
-    private SMPToggleButton muteInstButton;
+    private SMPToggleButtonV2 muteInstButton;
     
     @FXML
-    private SMPToggleButton clipboardButton;
+    private SMPToggleButtonV2 clipboardButton;
     
     @FXML
     private SMPRadioButton timeSigBtnFourFour;
