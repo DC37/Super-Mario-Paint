@@ -264,41 +264,41 @@
                                 </ImageView>
                                 
                                 <HBox alignment="CENTER" spacing="2.0">
-                                  <SMPRadioButton fx:id="timeSigBtnFourFour" onAction="#setTimeSigFourFour" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButtonV2 fx:id="timeSigBtnFourFour" onAction="#setTimeSigFourFour" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_4_4_PRESSED.png"/>
                                     </imagePressed>
                                     <imageReleased>
                                       <Image url="@sprites/TIMESIG_4_4_RELEASED.png"/>
                                     </imageReleased>
-                                  </SMPRadioButton>
+                                  </SMPRadioButtonV2>
                                   
-                                  <SMPRadioButton fx:id="timeSigBtnThreeFour" onAction="#setTimeSigThreeFour" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButtonV2 fx:id="timeSigBtnThreeFour" onAction="#setTimeSigThreeFour" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_3_4_PRESSED.png"/>
                                     </imagePressed>
                                     <imageReleased>
                                       <Image url="@sprites/TIMESIG_3_4_RELEASED.png"/>
                                     </imageReleased>
-                                  </SMPRadioButton>
+                                  </SMPRadioButtonV2>
                                   
-                                  <SMPRadioButton fx:id="timeSigBtnSixEight" onAction="#setTimeSigSixEight" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButtonV2 fx:id="timeSigBtnSixEight" onAction="#setTimeSigSixEight" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_6_8_PRESSED.png"/>
                                     </imagePressed>
                                     <imageReleased>
                                       <Image url="@sprites/TIMESIG_6_8_RELEASED.png"/>
                                     </imageReleased>
-                                  </SMPRadioButton>
+                                  </SMPRadioButtonV2>
                                   
-                                  <SMPRadioButton fx:id="timeSigBtnCustom" onAction="#setTimeSigCustom" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
+                                  <SMPRadioButtonV2 fx:id="timeSigBtnCustom" onAction="#setTimeSigCustom" fitHeight="32.0" fitWidth="32.0" focusTraversable="false">
                                     <imagePressed>
                                       <Image url="@sprites/TIMESIG_CUSTOM_PRESSED.png"/>
                                     </imagePressed>
                                     <imageReleased>
                                       <Image url="@sprites/TIMESIG_CUSTOM_RELEASED.png"/>
                                     </imageReleased>
-                                  </SMPRadioButton>
+                                  </SMPRadioButtonV2>
                                 </HBox>
                               </VBox>
                             </HBox>
@@ -309,29 +309,29 @@
                                 
                                 <VBox alignment="CENTER_LEFT" spacing="-2.0">
                                    <children>
-                                     <SMPButton fx:id="addButton" onAction="#addSongtoArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
+                                     <SMPButtonV2 fx:id="addButton" onAction="#addSongtoArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
                                        <imageReleased>
                                          <Image url="@sprites/ADD.png"/>
                                        </imageReleased>
-                                     </SMPButton>
+                                     </SMPButtonV2>
                                      
-                                     <SMPButton fx:id="deleteButton" onAction="#deleteSongFromArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
+                                     <SMPButtonV2 fx:id="deleteButton" onAction="#deleteSongFromArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
                                        <imageReleased>
                                          <Image url="@sprites/DELETE.png"/>
                                        </imageReleased>
-                                     </SMPButton>
+                                     </SMPButtonV2>
                                      
-                                     <SMPButton fx:id="upButton" onAction="#moveSongUpInArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
+                                     <SMPButtonV2 fx:id="upButton" onAction="#moveSongUpInArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
                                        <imageReleased>
                                          <Image url="@sprites/UP.png"/>
                                        </imageReleased>
-                                     </SMPButton>
+                                     </SMPButtonV2>
                                      
-                                     <SMPButton fx:id="downButton" onAction="#moveSongDownInArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
+                                     <SMPButtonV2 fx:id="downButton" onAction="#moveSongDownInArrangement" fitHeight="14.0" fitWidth="200.0" focusTraversable="false">
                                        <imageReleased>
                                          <Image url="@sprites/DOWN.png"/>
                                        </imageReleased>
-                                     </SMPButton>
+                                     </SMPButtonV2>
                                    </children>
                                 </VBox>
                               </children>
