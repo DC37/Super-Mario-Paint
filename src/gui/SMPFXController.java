@@ -26,6 +26,7 @@ import gui.components.SongNameController;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.v2.SMPButtonV2;
+import gui.components.buttons.v2.SMPHoldButtonV2;
 import gui.components.buttons.v2.SMPRadioButtonV2;
 import gui.components.buttons.v2.SMPToggleButtonV2;
 import gui.components.staff.StaffDisplayManager;
@@ -142,10 +143,10 @@ public class SMPFXController {
     private SMPButtonV2 optionsButton;
     
     @FXML
-    private SMPHoldButton tempoPlusButton;
+    private SMPHoldButtonV2 tempoPlusButton;
     
     @FXML
-    private SMPHoldButton tempoMinusButton;
+    private SMPHoldButtonV2 tempoMinusButton;
     
     @FXML
     private SMPButtonV2 addButton;
