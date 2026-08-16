@@ -28,10 +28,6 @@
 	-fx-font: 8pt "Arial";
 }
 
-.radio-button-no-circle {
-	-fx-padding: 2px;
-}
-
 /* Hide the circular radio box entirely */
 .radio-button-no-circle .radio,
 .radio-button-no-circle .dot {
