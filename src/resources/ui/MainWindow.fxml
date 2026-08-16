@@ -12,6 +12,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import gui.components.buttons.*?>
+<?import gui.components.buttons.v2.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
 <AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -34,32 +35,32 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="228.0" spacing="14.0">
                           <children>
-                            <SMPButton fx:id="saveButton" onAction="#save" fitHeight="28.0" fitWidth="54.0" focusTraversable="false">
+                            <SMPButtonV2 fx:id="saveButton" onAction="#save" fitHeight="28.0" fitWidth="54.0" focusTraversable="false">
                               <imagePressed>
                                 <Image url="@sprites/SAVE_PRESSED.png"/>
                               </imagePressed>
                               <imageReleased>
                                 <Image url="@sprites/SAVE_RELEASED.png"/>
                               </imageReleased>
-                            </SMPButton>
+                            </SMPButtonV2>
                             
-                            <SMPButton fx:id="loadButton" onAction="#load" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
+                            <SMPButtonV2 fx:id="loadButton" onAction="#load" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
                               <imagePressed>
                                 <Image url="@sprites/LOAD_PRESSED.png"/>
                               </imagePressed>
                               <imageReleased>
                                 <Image url="@sprites/LOAD_RELEASED.png"/>
                               </imageReleased>
-                            </SMPButton>
+                            </SMPButtonV2>
                             
-                            <SMPButton fx:id="newButton" onAction="#newSongOrArrangement" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
+                            <SMPButtonV2 fx:id="newButton" onAction="#newSongOrArrangement" fitHeight="28.0" fitWidth="58.0" focusTraversable="false">
                               <imagePressed>
                                 <Image url="@sprites/NEW_PRESSED.png"/>
                               </imagePressed>
                               <imageReleased>
                                 <Image url="@sprites/NEW_RELEASED.png"/>
                               </imageReleased>
-                            </SMPButton>
+                            </SMPButtonV2>
                           </children>
                         </HBox>
                       </children>
@@ -90,14 +91,14 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="56.0" prefWidth="100.0">
                           <children>
-                            <SMPButton fx:id="optionsButton" onAction="#options" fitHeight="28.0" fitWidth="80.0" focusTraversable="false">
+                            <SMPButtonV2 fx:id="optionsButton" onAction="#options" fitHeight="28.0" fitWidth="80.0" focusTraversable="false">
                               <imagePressed>
                                 <Image url="@sprites/OPTIONS_PRESSED.png"/>
                               </imagePressed>
                               <imageReleased>
                                 <Image url="@sprites/OPTIONS_RELEASED.png"/>
                               </imageReleased>
-                            </SMPButton>
+                            </SMPButtonV2>
                           </children>
                         </HBox>
                       </children>
