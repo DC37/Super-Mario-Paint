@@ -23,11 +23,11 @@ import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
 import gui.components.ModeTypeStringConverter;
 import gui.components.SongNameController;
-import gui.components.buttons.SMPInstrumentButton;
-import gui.components.buttons.v2.SMPButtonV2;
-import gui.components.buttons.v2.SMPHoldButtonV2;
-import gui.components.buttons.v2.SMPRadioButtonV2;
-import gui.components.buttons.v2.SMPToggleButtonV2;
+import gui.components.buttons.SMPButton;
+import gui.components.buttons.SMPHoldButton;
+import gui.components.buttons.SMPRadioButton;
+import gui.components.buttons.SMPToggleButton;
+import gui.components.buttons.old.SMPInstrumentButton;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.events.KeyboardHandlerMaker;
@@ -94,70 +94,70 @@ public class SMPFXController {
     private Staff staff;
 
     @FXML
-    private SMPToggleButtonV2 modeButton;
+    private SMPToggleButton modeButton;
 
     @FXML
     private Text modeText;
 
     @FXML
-    private SMPRadioButtonV2 playButton;
+    private SMPRadioButton playButton;
 
     @FXML
-    private SMPRadioButtonV2 stopButton;
+    private SMPRadioButton stopButton;
 
     @FXML
-    private SMPToggleButtonV2 loopButton;
+    private SMPToggleButton loopButton;
 
     @FXML
-    private SMPToggleButtonV2 muteButton;
+    private SMPToggleButton muteButton;
 
     @FXML
-    private SMPToggleButtonV2 muteInstButton;
+    private SMPToggleButton muteInstButton;
     
     @FXML
-    private SMPToggleButtonV2 clipboardButton;
+    private SMPToggleButton clipboardButton;
     
     @FXML
-    private SMPRadioButtonV2 timeSigBtnFourFour;
+    private SMPRadioButton timeSigBtnFourFour;
     
     @FXML
-    private SMPRadioButtonV2 timeSigBtnThreeFour;
+    private SMPRadioButton timeSigBtnThreeFour;
     
     @FXML
-    private SMPRadioButtonV2 timeSigBtnSixEight;
+    private SMPRadioButton timeSigBtnSixEight;
     
     @FXML
-    private SMPRadioButtonV2 timeSigBtnCustom;
+    private SMPRadioButton timeSigBtnCustom;
     
     @FXML
-    private SMPButtonV2 saveButton;
+    private SMPButton saveButton;
     
     @FXML
-    private SMPButtonV2 loadButton;
+    private SMPButton loadButton;
     
     @FXML
-    private SMPButtonV2 newButton;
+    private SMPButton newButton;
     
     @FXML
-    private SMPButtonV2 optionsButton;
+    private SMPButton optionsButton;
     
     @FXML
-    private SMPHoldButtonV2 tempoPlusButton;
+    private SMPHoldButton tempoPlusButton;
     
     @FXML
-    private SMPHoldButtonV2 tempoMinusButton;
+    private SMPHoldButton tempoMinusButton;
     
     @FXML
-    private SMPButtonV2 addButton;
+    private SMPButton addButton;
     
     @FXML
-    private SMPButtonV2 deleteButton;
+    private SMPButton deleteButton;
     
     @FXML
-    private SMPButtonV2 upButton;
+    private SMPButton upButton;
     
     @FXML
-    private SMPButtonV2 downButton;
+    private SMPButton downButton;
 
     @FXML
     private Parent arrangerView;
@@ -893,11 +893,11 @@ public class SMPFXController {
     	return staff;
     }
     
-    public SMPRadioButtonV2 getStopButton() {
+    public SMPRadioButton getStopButton() {
     	return stopButton;
     }
     
-    public SMPRadioButtonV2 getPlayButton() {
+    public SMPRadioButton getPlayButton() {
     	return playButton;
     }
     
