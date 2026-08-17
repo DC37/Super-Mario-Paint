@@ -5,6 +5,9 @@ import java.util.stream.Stream;
 
 import javafx.scene.control.RadioButton;
 
+/**
+ * <p>A radio button displayed as an image. See {@link SMPAbstractToggleButton}.</p>
+ */
 public class SMPRadioButtonV2 extends SMPAbstractToggleButton<RadioButton> {
 	
 	private static final String STYLE_CLASS_RADIO_NO_CIRCLE = "radio-button-no-circle";

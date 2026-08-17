@@ -20,6 +20,14 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.image.Image;
 
+/**
+ * The base class for SMP buttons in general. Includes a reference
+ * to the JavaFX target class via composition, which simplifies
+ * inheritance to just {@link Control}. The composed control can
+ * be any {@link ButtonBase}.
+ * 
+ * @param <B> The <code>ButtonBase</code> control to enhance.
+ */
 public abstract class SMPAbstractButton<B extends ButtonBase> extends Control {
 	
 	protected static final String MSG_RADIO_BTN_REQUIRED = "This method only works with radio buttons!";
