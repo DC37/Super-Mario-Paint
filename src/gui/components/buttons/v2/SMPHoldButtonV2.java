@@ -14,6 +14,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Subscription;
 
+/**
+ * <p>A button that is displayed as an image. This variant implements an optional action that
+ * is triggered repeatedly when the button is held.</p>
+ */
 public class SMPHoldButtonV2 extends SMPButtonV2 {
 
 	/**

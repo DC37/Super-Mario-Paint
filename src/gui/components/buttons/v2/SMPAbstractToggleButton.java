@@ -6,6 +6,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Skin;
 import javafx.scene.control.ToggleButton;
 
+/**
+ * The base class for SMP toggle buttons. It enhances functionality for
+ * any control that extends {@link ToggleButton}.
+ *  
+ * @param <B> The <code>ToggleButton</code> to enhance.
+ */
 public abstract class SMPAbstractToggleButton<B extends ToggleButton> extends SMPAbstractButton<B> {
 
 	protected SMPAbstractToggleButton(Supplier<B> fnCreateInnerBtn) {
