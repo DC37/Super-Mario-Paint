@@ -1,4 +1,4 @@
-package gui.components.buttons;
+package gui.components.buttons.old;
 import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 import javafx.beans.binding.Binding;

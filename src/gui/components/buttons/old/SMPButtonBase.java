@@ -1,4 +1,4 @@
-package gui.components.buttons;
+package gui.components.buttons.old;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;

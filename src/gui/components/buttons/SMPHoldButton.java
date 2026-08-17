@@ -1,4 +1,4 @@
-package gui.components.buttons.v2;
+package gui.components.buttons;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,7 +18,7 @@ import javafx.util.Subscription;
  * <p>A button that is displayed as an image. This variant implements an optional action that
  * is triggered repeatedly when the button is held.</p>
  */
-public class SMPHoldButtonV2 extends SMPButtonV2 {
+public class SMPHoldButton extends SMPButton {
 
 	/**
      * If set, this handler will trigger an action to repeat as long as the button is pressed
@@ -29,11 +29,11 @@ public class SMPHoldButtonV2 extends SMPButtonV2 {
     private Runnable handleOnHoldAction;
     private Subscription armedSubscription = Subscription.EMPTY;
     
-    public SMPHoldButtonV2() {
+    public SMPHoldButton() {
     	this(null);
     }
     
-    public SMPHoldButtonV2(String text) {
+    public SMPHoldButton(String text) {
     	super(text);
     	
     	// This is never actually handled like an event because idk how to do that tbh
