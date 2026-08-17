@@ -1,4 +1,4 @@
-package gui.components.buttons.v2;
+package gui.components.buttons;
 
 import java.util.function.Supplier;
 

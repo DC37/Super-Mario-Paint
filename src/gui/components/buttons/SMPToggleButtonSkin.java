@@ -1,4 +1,4 @@
-package gui.components.buttons.v2;
+package gui.components.buttons;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;

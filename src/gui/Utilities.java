@@ -1,6 +1,6 @@
 package gui;
 
-import gui.components.buttons.v2.SMPAbstractButton;
+import gui.components.buttons.SMPAbstractButton;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;

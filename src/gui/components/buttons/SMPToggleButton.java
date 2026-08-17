@@ -1,17 +1,17 @@
-package gui.components.buttons.v2;
+package gui.components.buttons;
 
 import javafx.scene.control.ToggleButton;
 
 /**
  * <p>A toggle button displayed as an image. See {@link SMPAbstractToggleButton}.</p>
  */
-public class SMPToggleButtonV2 extends SMPAbstractToggleButton<ToggleButton> {
+public class SMPToggleButton extends SMPAbstractToggleButton<ToggleButton> {
 
-	public SMPToggleButtonV2() {
+	public SMPToggleButton() {
 		this(null);
 	}
 	
-	public SMPToggleButtonV2(String text) {
+	public SMPToggleButton(String text) {
 		super(() -> new ToggleButton(text));
 	}
 	
