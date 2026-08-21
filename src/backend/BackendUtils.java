@@ -1,5 +1,7 @@
 package backend;
 
+import utilities.CollectionUtils;
+
 public class BackendUtils {
 
 	private BackendUtils() {}
@@ -16,6 +18,18 @@ public class BackendUtils {
 		if (instId == 15) return 16;
 		if (instId == 16) return 15;
 		return instId;
+	}
+	
+	/**
+	 * Given an array of note extensions, create another with
+	 * the entries of the coin and piranha swapped around.
+	 * 
+	 * @param noteExts The note extension array to process
+	 * @return A copy of the array, with the entries
+	 *         of the coin and piranha swapped.
+	 */
+	public static boolean[] swapCoinPiranhaNoteExtensions(boolean[] noteExts) {
+		return CollectionUtils.swapItems(noteExts, 15, 16);
 	}
 	
 }

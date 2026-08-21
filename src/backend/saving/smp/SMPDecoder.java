@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import backend.BackendUtils;
 import backend.saving.Decoder;
 import backend.songs.Accidental;
 import backend.songs.MuteModifier;
@@ -74,7 +75,7 @@ public class SMPDecoder implements Decoder<Song, IOException> {
 	                props.setNoteExtensions(
 	                        DataTypeUtils.unpackBits(
 	                        		Long.parseLong(num.trim()), Values.NUM_INSTRUMENTS),
-	                        exts -> CollectionUtils.swapItems(exts, 15, 16));
+	                        BackendUtils::swapCoinPiranhaNoteExtensions);
 	            } else if (spl.contains("TIME")) {
 	                props.setTimeSignature(
 	                        TimeSignature.valueOf(num.trim()));

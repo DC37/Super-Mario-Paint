@@ -1,6 +1,7 @@
 package backend.saving.smp;
 
-import java.util.function.Consumer;
+import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 import backend.songs.SongProperties;
 import backend.songs.TimeSignature;
@@ -34,11 +35,11 @@ public class SMPSongProperties implements SongProperties {
     }
     
     @Override
-    public void setNoteExtensions(boolean[] noteExtensions, Consumer<boolean[]> fnOnNoteExtensionsSet) {
-        this.noteExtensions = noteExtensions;
-        
-        if (fnOnNoteExtensionsSet != null)
-            fnOnNoteExtensionsSet.accept(noteExtensions);
+    public void setNoteExtensions(boolean[] noteExtensions, UnaryOperator<boolean[]> fnOnNoteExtensionsSet) {
+    	this.noteExtensions = Optional
+    			.ofNullable(fnOnNoteExtensionsSet)
+    			.orElse(ne -> ne)
+    			.apply(noteExtensions);
     }
     
     @Override

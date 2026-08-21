@@ -1,6 +1,6 @@
 package backend.songs;
 
-import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 public interface SongProperties {
 
@@ -9,7 +9,7 @@ public interface SongProperties {
     
     boolean[] getNoteExtensions();
     void setNoteExtensions(boolean[] noteExtensions);
-    void setNoteExtensions(boolean[] noteExtensions, Consumer<boolean[]> fnOnNoteExtensionsSet);
+    void setNoteExtensions(boolean[] noteExtensions, UnaryOperator<boolean[]> fnOnNoteExtensionsSet);
     
     TimeSignature getTimeSignature();
     void setTimeSignature(TimeSignature timeSignature);

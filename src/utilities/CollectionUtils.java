@@ -33,16 +33,22 @@ public class CollectionUtils {
     }
     
     /**
-     * Swaps two items of a boolean array, in-place.
+     * Returns a new copy of the boolean array, with the two
+     * items of the given indexes swapped.
      * 
      * @param items The boolean array to process
      * @param idx1 The first index to swap
      * @param idx2 The second index to swap
+     * @return a copy of the array, with the items swapped.
      */
-    public static void swapItems(boolean[] items, int idx1, int idx2) {
-        boolean tmp = items[idx1];
-        items[idx1] = items[idx2];
-        items[idx2] = tmp;
+    public static boolean[] swapItems(boolean[] items, int idx1, int idx2) {
+    	boolean[] newItems = items.clone();
+    	
+    	boolean tmp = newItems[idx1];
+    	newItems[idx1] = newItems[idx2];
+    	newItems[idx2] = tmp;
+    	
+    	return newItems;
     }
     
     /**
