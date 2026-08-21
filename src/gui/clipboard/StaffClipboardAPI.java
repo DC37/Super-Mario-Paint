@@ -217,7 +217,7 @@ public class StaffClipboardAPI {
             List<Note> ntList = lineSrc.getNotes();
             for (Note note : ntList) {
                 if (positionBegin <= note.getVerticalPosition() && note.getVerticalPosition() <= positionEnd
-                        && StateMachine.getFilteredNote(note.getInstrument().ordinal())) {
+                        && StateMachine.getFilteredNote(note.getInstrument().getEnumIndex())) {
                     // store the copied note at the relative line
                     selectNote(line, note);
                     // store the staffnoteline's volume at the relative line

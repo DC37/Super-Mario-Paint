@@ -2,6 +2,7 @@ package gui;
 
 import java.util.function.Function;
 
+import backend.BackendUtils;
 import gui.loaders.ImageIndex;
 
 /**
@@ -13,53 +14,87 @@ import gui.loaders.ImageIndex;
  */
 public enum SMPInstrument {
 
-	// COIN and PIRANHA channel identifiers are swapped to match soundfont conventions
+	// ATTENTION: DO NOT ALTER THE ORDER OF THESE INSTRUMENTS! 
 
-	MARIO (1),
-	MUSHROOM (2),
-	YOSHI (3),
-	STAR (4),
-	FLOWER (5),
-	GAMEBOY (6),
-	DOG (7),
-	CAT (8),
-	PIG (9),
-	SWAN (10),
-	FACE (11),
-	PLANE (12),
-	BOAT (13),
-	CAR (14),
-	HEART (15),
-	PIRANHA (17),
-	COIN (16),
-	SHYGUY (18),
-	BOO (19),
-	LUIGI (20),
-	PEACH (21),
-	FEATHER (22),
-	BULLETBILL (23),
-	GOOMBA (24),
-	BOBOMB (25),
-	SPINY (26),
-	FRUIT (27),
-	ONEUP (28),
-	MOON (29),
-	EGG (30),
-	GNOME (31),
+	MARIO,
+	MUSHROOM,
+	YOSHI,
+	STAR,
+	FLOWER,
+	GAMEBOY,
+	DOG,
+	CAT,
+	PIG,
+	SWAN,
+	FACE,
+	PLANE,
+	BOAT,
+	CAR,
+	HEART,
+	PIRANHA,
+	COIN,
+	SHYGUY,
+	BOO,
+	LUIGI,
+	PEACH,
+	FEATHER,
+	BULLETBILL,
+	GOOMBA,
+	BOBOMB,
+	SPINY,
+	FRUIT,
+	ONEUP,
+	MOON,
+	EGG,
+	GNOME,
     ;
+    
+	/**
+	 * Get the physical position of the instrument in the
+	 * enumeration of available instruments.
+	 * 
+	 * @note COIN and PIRANHA channel identifiers are NOT
+	 *       swapped in this method; use {@link #getIndex()}
+	 *       if you need the swap.
+	 * 
+	 * @see #getIndex()
+	 * 
+	 * @return The physical position of the instrument in
+	 *         the enumeration.
+	 */
+	public int getEnumIndex() {
+		return ordinal();
+	}
 	
 	/**
-     * The channel that the instrument is to be played on. For use
-     * by the MultiSynthesizer or SMPSynthesizer.
+	 * Get the instrument index, to be used in note extensions.
+	 * 
+	 * @note COIN and PIRANHA indexes are swapped to match
+     *       soundfont conventions; if you don't need this,
+     *       please use {@link #getEnumIndex()}.
+     *       
+     * @see #getEnumIndex()
+	 * 
+	 * @return The index number; first index is number zero.
+	 */
+	public int getIndex() {
+		return BackendUtils.swapCoinPiranhaInstrumentIdxs(getEnumIndex());
+	}
+	
+    /**
+     * Get the channel that the instrument is to be played on. For
+     * use by the MultiSynthesizer or SMPSynthesizer.
+     * 
+     * @note This method has the COIN and PIRANHA channel identifiers
+     *       swapped to match soundfont conventions. 
+     * 
+     * @see #getIndex()
+     * 
+     * @returns The channel number; first channel is #1.
      */
-    private int channel;
-    
-    private SMPInstrument(int channel) {
-        this.channel = channel;
-    }
-    
     public int getChannel() {
-    	return channel;
+    	// Add one to the index to get the channel number.
+    	return getIndex() + 1;
     }
     
     private ImageIndex getImageIndexAs(Function<String, ImageIndex> fnGetImgIdx) {

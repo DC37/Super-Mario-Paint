@@ -479,10 +479,10 @@ public class SMPFXController {
             
             // we go through bitwise computations to only set the property once
             if ((flt & mask) == mask) {
-                newFlt = 1 << inst.ordinal();
+                newFlt = 1 << inst.getEnumIndex();
                 
             } else {
-                newFlt = flt ^ (1 << inst.ordinal());
+                newFlt = flt ^ (1 << inst.getEnumIndex());
                 
                 if ((newFlt & mask) == 0) {
                     newFlt = -1;
@@ -515,13 +515,14 @@ public class SMPFXController {
             
             b.setOnAction(e -> onInstrumentButtonAction(inst));
             
-            vs[inst.ordinal()] = b;
+            vs[inst.getEnumIndex()] = b;
             n.getChildren().add(b);
         }
         
         StateMachine.noteExtensionsProperty().addListener(obs -> {
             for (SMPInstrument inst : SMPInstrument.values()) {
-                vs[inst.ordinal()].setSustainOn(StateMachine.getNoteExtension(inst.ordinal()));
+            	int idx = inst.getEnumIndex();
+                vs[idx].setSustainOn(StateMachine.getNoteExtension(idx));
             }
         });
         
@@ -529,8 +530,9 @@ public class SMPFXController {
             int diff = (int) oldv ^ (int) newv;
             for (SMPInstrument inst : SMPInstrument.values()) {
                 if ((diff & 1) == 1) {
-                    boolean ex = StateMachine.getFilteredNote(inst.ordinal());
-                    vs[inst.ordinal()].setActive(ex);
+                	int idx = inst.getEnumIndex();
+                    boolean ex = StateMachine.getFilteredNote(idx);
+                    vs[idx].setActive(ex);
                 }
                 diff >>= 1;
             }
