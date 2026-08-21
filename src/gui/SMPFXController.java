@@ -10,7 +10,6 @@ import javax.sound.midi.MidiChannel;
 
 import org.apache.commons.lang3.function.FailableRunnable;
 
-import backend.BackendUtils;
 import backend.editing.ModifySongManager;
 import backend.saving.ArrangementDecoders;
 import backend.saving.FileService;
@@ -465,12 +464,13 @@ public class SMPFXController {
     
     private void onInstrumentButtonAction(SMPInstrument inst) {
     	if (StateMachine.isShiftPressed()) {
-            boolean ex = StateMachine.getNoteExtension(inst.ordinal());
-            StateMachine.setNoteExtension(inst.ordinal(), !ex);
-            
-            int i = BackendUtils.swapCoinPiranhaInstrumentIdxs(inst.ordinal());
-            
-            staff.getSequence().getNoteExtensions()[i] = !ex;
+    		int physIdx = inst.getEnumIndex();
+    		int logIdx = inst.getIndex();
+    		
+    		boolean ex = StateMachine.getNoteExtension(physIdx);
+    		
+            StateMachine.setNoteExtension(physIdx, !ex);
+            staff.getSequence().getNoteExtensions()[logIdx] = !ex;
             
         } else if (StateMachine.isCtrlPressed()) {
             int flt = StateMachine.getFilteredNotes();
