@@ -9,9 +9,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.util.Subscription;
 
 /**
@@ -19,39 +19,27 @@ import javafx.util.Subscription;
  * is triggered repeatedly when the button is held.</p>
  */
 public class SMPHoldButton extends SMPButton {
-    
-    /**
+
+	/**
      * If set, this handler will trigger an action to repeat as long as the button is pressed
      */
-    private ObjectProperty<EventHandler<ActionEvent>> onHold;
-    public ObjectProperty<EventHandler<ActionEvent>> onHold() {
-        if (onHold == null) {
-            onHold = new SimpleObjectProperty<>(this, "onHold", null);
-        }
-        return onHold;
-    }
-    public EventHandler<ActionEvent> getOnHold() { return onHold().getValue(); }
-    public void setOnHold(EventHandler<ActionEvent> handler) { onHold().setValue(handler); }
-    // This is never actually handled like an event because idk how to do that tbh
+    private final ObjectProperty<EventHandler<ActionEvent>> onHold;
+    
+    private Timer repeatOnHoldTimer;
+    private Runnable handleOnHoldAction;
+    private Subscription armedSubscription = Subscription.EMPTY;
     
     public SMPHoldButton() {
-        super();
-        initialize();
+    	this(null);
     }
     
     public SMPHoldButton(String text) {
-        super(text);
-        initialize();
-    }
-    
-    public SMPHoldButton(String text, Image imageReleased) {
-        super(text, imageReleased);
-        initialize();
-    }
-    
-    public SMPHoldButton(String text, Image imageReleased, Image imagePressed) {
-        super(text, imageReleased, imagePressed);
-        initialize();
+    	super(text);
+    	
+    	// This is never actually handled like an event because idk how to do that tbh
+    	onHold = new SimpleObjectProperty<>(this, "onHold", null);
+    	
+    	initialize();
     }
     
     // We'll observe the onHold property so that setting it to some handler will set up the button
@@ -59,11 +47,6 @@ public class SMPHoldButton extends SMPButton {
     // repeat the action as we press, or cancels the ongoing timer.
     // Leaving onHold to null makes this a regular button with a possible onAction handler.
     // Please don't set both onAction and onHold, I have no idea what this would do.
-    
-    Timer repeatOnHoldTimer;
-    Runnable handleOnHoldAction;
-    Subscription armedSubscription = Subscription.EMPTY;
-    
     private void initialize() {
         handleOnHoldAction = () -> {
             if (isArmed()) {
@@ -80,7 +63,18 @@ public class SMPHoldButton extends SMPButton {
             }
         };
         
-        onHold().addListener(this::onHoldListener);
+        onHold.addListener(this::onHoldListener);
+        
+        getStyleClass().addListener((ListChangeListener<String>) change -> {
+        	while (change.next()) {
+        		if (change.wasAdded()) {
+        			innerBtn.getStyleClass().addAll(change.getAddedSubList());
+        		}
+        		if (change.wasRemoved()) {
+        			innerBtn.getStyleClass().removeAll(change.getRemoved());
+        		}
+        	}
+        });
     }
     
     private void onHoldListener(Observable obs) {
@@ -99,5 +93,21 @@ public class SMPHoldButton extends SMPButton {
     private void armedListener(Observable obs, Boolean oldv, Boolean newv) {
         handleOnHoldAction.run();
     }
-
+    
+    /* Extended properties START */
+    
+    public ObjectProperty<EventHandler<ActionEvent>> onHoldProperty() {
+        return onHold;
+    }
+    
+    public EventHandler<ActionEvent> getOnHold() {
+    	return onHold.get();
+    }
+    
+    public void setOnHold(EventHandler<ActionEvent> value) {
+    	onHold.set(value);
+    }
+    
+    /* Extended properties END */
+	
 }

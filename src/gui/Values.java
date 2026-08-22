@@ -7,7 +7,7 @@ import java.util.List;
 import backend.songs.NoteInfo;
 import backend.songs.Pitch;
 import backend.songs.TimeSignature;
-import gui.components.buttons.SMPInstrumentButtonGroup;
+import gui.components.buttons.old.SMPInstrumentButtonGroup;
 import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 

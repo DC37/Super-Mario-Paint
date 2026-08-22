@@ -1,5 +1,6 @@
 package gui;
 
+import gui.components.buttons.SMPAbstractButton;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
@@ -45,6 +46,13 @@ public class Utilities {
     public static void groupToggleBtns(ToggleGroup group, ToggleButton... toggles) {
     	for (ToggleButton tb: toggles) {
     		tb.setToggleGroup(group);
+    	}
+    }
+    
+    @SafeVarargs
+    public static <B extends ToggleButton> void groupToggleBtns(ToggleGroup group, SMPAbstractButton<B>... buttons) {
+    	for (SMPAbstractButton<B> btn: buttons) {
+    		btn.getInnerButton().setToggleGroup(group);
     	}
     }
     

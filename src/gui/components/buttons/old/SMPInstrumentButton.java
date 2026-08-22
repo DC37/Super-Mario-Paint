@@ -1,4 +1,4 @@
-package gui.components.buttons;
+package gui.components.buttons.old;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -9,12 +9,12 @@ import javafx.scene.control.Skin;
 import javafx.scene.image.Image;
 
 /**
- * <p>A version of {@link SMPButton} used specifically for instrument buttons in the top panel.</p>
+ * <p>A version of {@link SMPButtonOld} used specifically for instrument buttons in the top panel.</p>
  * 
  * <p>This defines properties that record the state of the instrument (filtered, sustain on/off) and sets up
  * a custom skin.</p>
  */
-public class SMPInstrumentButton extends SMPButton {
+public class SMPInstrumentButton extends SMPButtonOld {
     
     /**
      * Is this instrument active? (instruments are rendered inactive by filtering)

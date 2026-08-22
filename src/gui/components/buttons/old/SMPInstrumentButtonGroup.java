@@ -1,4 +1,4 @@
-package gui.components.buttons;
+package gui.components.buttons.old;
 
 import java.util.HashMap;
 import java.util.Iterator;

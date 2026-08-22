@@ -11,6 +11,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
+<?import gui.components.buttons.old.*?>
 <?import gui.components.buttons.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 

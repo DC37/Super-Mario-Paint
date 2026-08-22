@@ -27,3 +27,11 @@
 .smp-arranger .list-view {
 	-fx-font: 8pt "Arial";
 }
+
+/* Hide the circular radio box entirely */
+.radio-button-no-circle .radio,
+.radio-button-no-circle .dot {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-shape: null;
+}
