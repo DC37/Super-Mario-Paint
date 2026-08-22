@@ -28,6 +28,7 @@ import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPInstrumentButton;
 import gui.components.buttons.SMPRadioButton;
 import gui.components.buttons.SMPToggleButton;
+import gui.components.dialogs.DialogUtils;
 import gui.components.staff.StaffDisplayManager;
 import gui.components.staff.StaffMouseEventHandler;
 import gui.events.KeyboardHandlerMaker;
@@ -396,9 +397,8 @@ public class SMPFXController {
         	return;
         
         List<Song> seq = staff.getArrangement().getSongs();
-        Window owner = arrangementList.getScene().getWindow();
         
-        if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, false))
+        if (!confirmOperation(PROMPT_LOAD_CONFIRM, true, false))
         	return;
         
         staff.populateStaff(seq.get(songIndex));
@@ -444,8 +444,7 @@ public class SMPFXController {
     private void onTempoBoxMousePressed(MouseEvent evt) {
     	try {
             if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
-                Window owner = Utilities.getOwner(evt);
-                String tempo = Dialog.showTextDialog("Tempo", owner);
+                String tempo = DialogUtils.requestInput("Tempo");
                 StateMachine.setTempo(Double.parseDouble(tempo.trim()));
             }
         } catch (NumberFormatException e) {
@@ -539,7 +538,7 @@ public class SMPFXController {
         });
     }
     
-    public boolean confirmOperation(Window owner, String q, boolean checkForSong, boolean checkForArr) {
+    public boolean confirmOperation(String q, boolean checkForSong, boolean checkForArr) {
     	boolean songModified = checkForSong && StateMachine.isSongModified();
     	boolean arrModified = checkForArr && StateMachine.isArrModified();
     	
@@ -554,7 +553,7 @@ public class SMPFXController {
     	
     	boolean somethingWasModified = songModified || arrModified;
     	if (somethingWasModified) {
-    		return Dialog.showYesNoDialog("HOLD IT!", String.format("%s%n%s", whatWasModified, q), owner);
+    		return DialogUtils.showQuestion("HOLD IT!", String.format("%s%n%s", whatWasModified, q));
     	}
     	
     	return true;
@@ -581,8 +580,7 @@ public class SMPFXController {
     }
     
     public void setTimeSigCustom(ActionEvent e) {
-        Window owner = ((Node) e.getSource()).getScene().getWindow();
-        String str = Dialog.showTextDialog(null, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...", owner, true);
+        String str = DialogUtils.requestInput(Values.PROGRAM_NAME, "Enter time signature:", "4/4, 3/4, 6/8, 6+3, ...");
         if (str.isEmpty())
             return;
         
@@ -599,7 +597,7 @@ public class SMPFXController {
             }
             
         } catch (IllegalArgumentException ee) {
-            Dialog.showDialog(ee.getMessage());
+        	DialogUtils.showError(ee.getMessage());
         }
     }
     
@@ -690,23 +688,23 @@ public class SMPFXController {
     
     @FXML
     public void newSongOrArrangement(ActionEvent e) {
-        newSongOrArrangement(Utilities.getOwner(e));
+        newSongOrArrangement();
     }
     
-    public void newSongOrArrangement(Window owner) {
+    public void newSongOrArrangement() {
         switch (StateMachine.getMode()) {
         case SONG:
-            newSong(owner);
+            newSong();
             break;
             
         case ARRANGEMENT:
-            newArrangement(owner);
+            newArrangement();
             break;
         }
     }
     
-    public void newSong(Window owner) {
-        if (confirmOperation(owner, "Create a new song anyway?", true, false)) {
+    public void newSong() {
+        if (confirmOperation("Create a new song anyway?", true, false)) {
             staff.setSequence(new Song());
             staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             staff.resetLocation();
@@ -716,8 +714,8 @@ public class SMPFXController {
         }
     }
     
-    public void newArrangement(Window owner) {
-        if (confirmOperation(owner, "Create a new arrangement anyway?", false, true)) {
+    public void newArrangement() {
+        if (confirmOperation("Create a new arrangement anyway?", false, true)) {
             staff.setArrangement(new Arrangement());
             getNameTextField().clear();
             arrangementList.getItems().clear();
@@ -725,9 +723,7 @@ public class SMPFXController {
         }
     }
     
-    private void tryOperation(String opName, String errMsg, Window owner,
-    		FailableRunnable<Exception> fnOperation) {
-    	
+    private void tryOperation(String opName, String errMsg, FailableRunnable<Exception> fnOperation) {
         try {
         	fnOperation.run();
         } catch (Exception e) {
@@ -735,7 +731,7 @@ public class SMPFXController {
         	
         	String msg = String.format("%s%n%nTechnical reason:%n%s", errMsg, e.getMessage());
         	
-        	Dialog.showDialog(PROMPT_ERROR, msg, owner);
+        	DialogUtils.showError(PROMPT_ERROR, msg);
         }
     }
     
@@ -751,7 +747,7 @@ public class SMPFXController {
     private void save(Window owner, SMPMode mode) {
     	String chosenName = getNameTextField().getText();
         if (StringUtils.containsAny(chosenName, Values.getIllegalChars())) {
-        	Dialog.showDialog(null, StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"), owner);
+        	DialogUtils.showWarning(StringUtils.showList(Values.getIllegalChars(), "Illegal file name!\nPlease avoid those characters:\n"));
             return;
         }
         
@@ -761,22 +757,21 @@ public class SMPFXController {
         
         switch (mode) {
         case SONG:
-        	saveSong(outputFile, owner);
+        	saveSong(outputFile);
         	break;
         	
         case ARRANGEMENT:
-        	saveArrangement(outputFile, owner);
+        	saveArrangement(outputFile);
         	break;
         }
         
         StateMachine.setCurrentDirectory(new File(outputFile.getParent()));
     }
     
-    private void saveArrangement(File outputFile, Window owner) {
+    private void saveArrangement(File outputFile) {
     	tryOperation(
     			"saveArrangement",
     			String.format("An error occurred while writing file %s!", outputFile),
-    			owner,
     			() -> {
 		    		Arrangement out = staff.getArrangement();
 			        for (int i = 0; i < out.getSongs().size(); i++) {
@@ -790,11 +785,10 @@ public class SMPFXController {
 		    	});
     }
 
-    public void saveSong(File outputFile, Window owner) {
+    public void saveSong(File outputFile) {
     	tryOperation(
     			"saveSong",
     			String.format("An error occurred while writing file %s!", outputFile),
-    			owner,
     			() -> {
     				Song out = staff.getSequence();
 			        out.setTempo(StateMachine.getTempo());
@@ -825,30 +819,29 @@ public class SMPFXController {
     }
     
     private void load(Window owner, SMPMode mode) {
-    	if (!confirmOperation(owner, PROMPT_LOAD_CONFIRM, true, mode == SMPMode.ARRANGEMENT))
+    	if (!confirmOperation(PROMPT_LOAD_CONFIRM, true, mode == SMPMode.ARRANGEMENT))
             return;
     	
-    	File inputFile = FileChooserManager.open(null);
+    	File inputFile = FileChooserManager.open(owner);
     	if (inputFile == null)
     		return;
     	StateMachine.setCurrentDirectory(new File(inputFile.getParent()));
     	
     	switch (mode) {
     	case SONG:
-    		loadSong(inputFile, owner);
+    		loadSong(inputFile);
     		break;
     		
     	case ARRANGEMENT:
-    		loadArrangement(inputFile, owner);
+    		loadArrangement(inputFile);
     		break;
     	}
     }
 
-    private void loadSong(File inputFile, Window owner) {
+    private void loadSong(File inputFile) {
     	tryOperation(
     			"loadSong",
     			String.format("An error occurred while reading file %s!", inputFile),
-    			owner,
     			() -> {
     				Song loaded = SequenceDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
 		            staff.populateStaff(loaded);
@@ -861,11 +854,10 @@ public class SMPFXController {
     			});
     }
     
-    private void loadArrangement(File inputFile, Window owner) {
+    private void loadArrangement(File inputFile) {
     	tryOperation(
     			"loadArrangement",
     			String.format("An error occurred while reading file %s!", inputFile),
-    			owner,
     			() -> {
     				Arrangement loaded = ArrangementDecoders.getAllTryable().decode(inputFile).orElseThrow(IOException::new);
 		            staff.populateStaffArrangement(loaded);

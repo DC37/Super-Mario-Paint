@@ -2,6 +2,7 @@ package gui;
 
 import java.net.URL;
 
+import gui.components.dialogs.DialogUtils;
 import gui.resources.SMPResourceType;
 import gui.resources.SMPResourceUtil;
 import javafx.application.Preloader;
@@ -119,7 +120,9 @@ public class SplashScreen extends Preloader {
     @Override
     public boolean handleErrorNotification(ErrorNotification en) {
     	log.error("Exception encountered during load!", en.getCause());
-        Dialog.showDialog("Super Mario Paint has encountered the following error:\n" + en.getCause().getMessage());
+    	DialogUtils.showError(String.format(
+    			"Super Mario Paint has encountered the following error:%n%s",
+    			en.getCause().getMessage()));
         return false;
     }
 }

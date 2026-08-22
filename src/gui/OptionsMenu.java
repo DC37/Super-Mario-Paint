@@ -12,6 +12,7 @@ import backend.editing.SMPCommand;
 import backend.editing.commands.MultiplyTempoCommand;
 import backend.songs.TimeSignature;
 import gui.components.FileChooserManager;
+import gui.components.dialogs.DialogUtils;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -141,7 +142,7 @@ public class OptionsMenu {
                 return;
             }
             
-            if(!addSoundfont(sf, owner)) {
+            if(!addSoundfont(sf)) {
                 availableSoundfonts.getSelectionModel().selectPrevious();
                 return;
             }
@@ -349,7 +350,7 @@ public class OptionsMenu {
      * @return if soundfont exists in AppData now
      * @since v1.1.2
      */
-    private static boolean addSoundfont(File sf, Window owner) {
+    private static boolean addSoundfont(File sf) {
         String sfName = sf.getName();
         if(sfName.isEmpty())
             return false;
@@ -357,7 +358,7 @@ public class OptionsMenu {
         
         if (destSf.exists()) {
             String mssg = "A soundfont named '" + sfName + "' was already added.\nReplace it?";
-            if (!Dialog.showYesNoDialog("Options", mssg, owner))
+            if (!DialogUtils.showQuestion("Options", mssg))
                 return false;
         }
         

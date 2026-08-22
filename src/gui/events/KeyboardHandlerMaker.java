@@ -86,7 +86,7 @@ public class KeyboardHandlerMaker extends HandlerMaker<SMPFXController> {
             			new Subaction<>(ev -> !ev.isControlDown() && !ev.isAltDown(),
             					() -> StateMachine.setMutePressed(!StateMachine.isMutePressed())),
             			new Subaction<>(KeyEvent::isControlDown,
-            					() -> source.newSongOrArrangement(Utilities.getOwner(ke))));
+            					() -> source.newSongOrArrangement()));
             	break;
                 
             case O:
