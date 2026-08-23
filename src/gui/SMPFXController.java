@@ -373,7 +373,7 @@ public class SMPFXController {
     	StateMachine.setCtrlPressed(ctrlPressed);
     	StateMachine.setShiftPressed(event.isShiftDown());
     	
-    	if (ctrlPressed) {
+    	if (event.getEventType() == KeyEvent.KEY_PRESSED && ctrlPressed) {
             switch (event.getCode()) {
             case Y:
                 commandManager.redo();
