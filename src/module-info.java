@@ -7,10 +7,11 @@ module smp {
     requires transitive javafx.fxml;
     requires transitive javafx.graphics;
     
+    requires static lombok;
+    
     requires org.slf4j;
     requires ch.qos.logback.core;
     requires ch.qos.logback.classic;
-    requires lombok;
     
     requires org.apache.commons.lang3;
     
