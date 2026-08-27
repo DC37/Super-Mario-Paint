@@ -89,6 +89,6 @@ jlink {
     }
     
     jpackage {
-    	imageOptions.addAll("--icon", "${project.projectDir}/ICON.ico")
+    	imageOptions.addAll("--icon", "${project.projectDir}/ICON.png")
     }
 }
