@@ -82,7 +82,12 @@ public class SMPResourceUtil {
      */
     public static URL get(String name, SMPResourceType type) {
     	// https://stackoverflow.com/a/68321325
-        String fullName = String.format("/%s/%s", type.getPrefix(), name);
+        String fullName;
+        if (type == SMPResourceType.UNCATEGORIZED) {
+        	fullName = String.format("/%s", name);
+        } else {
+        	fullName = String.format("/%s/%s", type.getPrefix(), name);
+        }
         URL url = SMPResourceUtil.class.getResource(fullName);
         if (url == null)
             throw new NullPointerException("Cannot load resource: " + name + " of type " + type);
@@ -101,7 +106,12 @@ public class SMPResourceUtil {
      */
     public static InputStream getStream(String name, SMPResourceType type) {
     	// https://stackoverflow.com/a/68321325
-        String fullName = String.format("/%s/%s", type.getPrefix(), name);
+        String fullName;
+        if (type == SMPResourceType.UNCATEGORIZED) {
+        	fullName = String.format("/%s", name);
+        } else {
+        	fullName = String.format("/%s/%s", type.getPrefix(), name);
+        }
         InputStream inStream = SMPResourceUtil.class.getResourceAsStream(fullName);
         if (inStream == null)
             throw new NullPointerException("Cannot load resource: " + name + " of type " + type);
