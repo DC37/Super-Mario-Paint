@@ -39,7 +39,7 @@ sourceSets {
     main {
         java {
             setSrcDirs(listOf("src"))
-            exclude("resources/")
+            exclude("resources/**")
         }
 
         resources {
