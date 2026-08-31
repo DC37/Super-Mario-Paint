@@ -7,13 +7,13 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 import java.util.function.Consumer;
 
 import backend.sound.SoundPlayer;
+import gui.components.SMPIconService;
 import gui.components.dialogs.DialogUtils;
 import gui.loaders.ImageIndex;
 import gui.loaders.ImageLoader;
@@ -112,11 +112,6 @@ public class SuperMarioPaint extends Application  {
      */
     static Image headerIcon;
 
-    /**
-     * Random number generator (RNG) for icon selection.
-     */
-    private static final Random RNG = new Random();
-    
     /**
      * This should hopefully get something up on the screen quickly. This is
      * taken from http://docs.oracle.com/javafx/2/deployment/preloaders.htm
@@ -335,7 +330,7 @@ public class SuperMarioPaint extends Application  {
      *            Program arguments.
      */
     public static void main(String[] args) {
-        setHeaderIcon();
+    	headerIcon = SMPIconService.getHeaderIcon();
             
         try {
             System.setProperty("javafx.preloader", SplashScreen.class.getName());
@@ -347,31 +342,6 @@ public class SuperMarioPaint extends Application  {
     
     public void setCursor(SMPCursorType type) {
         primaryScene.setCursor(cursorImages.get(type));
-    }
-
-    /**
-     * Selects the header icon to use as Application Icon in the Window Title Bar.
-     * 
-     * <p>It sets the default icon 9 times out of 10, or a random instrument otherwise.
-     * 
-     * @implNote This cannot use the {@link ImageLoader} infrastructure, as images
-     * are loaded through it <i>after</i> the application starts the JavaFX scaffolding.
-     */
-    static void setHeaderIcon() {
-        int randValue = RNG.nextInt(10 * SMPInstrument.values().length);
-        
-        String iconName;
-        SMPResourceType iconType;
-        
-        if (randValue < SMPInstrument.values().length) {
-            iconName = SMPInstrument.values()[randValue].name();
-            iconType = SMPResourceType.INSTRUMENT;
-        } else {
-            iconName = "ICON";
-            iconType = SMPResourceType.UI;
-        }
-        
-        headerIcon = new Image(SMPResourceUtil.get(iconName + ".png", iconType).toString());
     }
     
 }
