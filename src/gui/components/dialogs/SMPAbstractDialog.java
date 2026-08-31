@@ -3,7 +3,9 @@ package gui.components.dialogs;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
+import gui.components.SMPIconService;
 import javafx.scene.control.Dialog;
+import javafx.stage.Stage;
 
 public abstract class SMPAbstractDialog<R, D extends Dialog<R>> {
 
@@ -33,6 +35,10 @@ public abstract class SMPAbstractDialog<R, D extends Dialog<R>> {
 	protected void customize() {
 		// Remove header from custom dialogs.
 		dialog.setHeaderText(null);
+		
+		// Set icon for the custom dialog.
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(SMPIconService.getHeaderIcon());
 	}
 	
 }
