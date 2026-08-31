@@ -12,6 +12,8 @@ public class SMPToggleButtonSkin<B extends ToggleButton> extends SMPButtonSkin<B
 	
 	@Override
 	public void install() {
+		SMPAbstractButton<B> smpBtn = getSkinnable();
+		
 		ObservableValue<Boolean> conditionPressed = Bindings.or(smpBtn.armedProperty(), smpBtn.selectedProperty());
 		imgSub = subscribeNodeProperty(conditionPressed, smpBtn.graphicProperty());
 	}

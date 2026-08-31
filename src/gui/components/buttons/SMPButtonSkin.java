@@ -21,20 +21,17 @@ public class SMPButtonSkin<B extends ButtonBase> extends SkinBase<SMPAbstractBut
     protected static Image DEFAULT_IMAGE_PRESSED = new Image(
     		SMPResourceUtil.getStream("GENERIC_BUTTON_PRESSED.png", SMPResourceType.BUTTON_PRESSED));
 	
-	protected final SMPAbstractButton<B> smpBtn;
-	
 	protected Subscription imgSub;
 	
 	protected SMPButtonSkin(SMPAbstractButton<B> smpBtn) {
 		super(smpBtn);
-		
-		this.smpBtn = smpBtn;
 		
 		getChildren().add(smpBtn.getInnerButton());
 	}
 	
 	@Override
 	public void install() {
+		SMPAbstractButton<B> smpBtn = getSkinnable();
 		imgSub = subscribeNodeProperty(smpBtn.armedProperty(), smpBtn.graphicProperty());
 	}
 	
@@ -55,11 +52,14 @@ public class SMPButtonSkin<B extends ButtonBase> extends SkinBase<SMPAbstractBut
             ObservableValue<Boolean> conditionPressed,
             ObjectProperty<Node> imageViewProperty)
     {
+    	SMPAbstractButton<B> smpBtn = getSkinnable();
+    	
         ImageView imageView = new ImageView();
         imageView.setPreserveRatio(true);
         imageView.setSmooth(false);
         imageView.fitHeightProperty().bind(smpBtn.fitHeightProperty());
         imageView.fitWidthProperty().bind(smpBtn.fitWidthProperty());
+        
         imageViewProperty.bind(new SimpleObjectProperty<>(imageView));
         ObjectProperty<Image> imageProperty = imageView.imageProperty();
         
@@ -91,6 +91,8 @@ public class SMPButtonSkin<B extends ButtonBase> extends SkinBase<SMPAbstractBut
             ObservableValue<Boolean> conditionPressed,
             ObjectProperty<Image> imageProperty)
     {
+    	SMPAbstractButton<B> smpBtn = getSkinnable();
+    	
         Binding<Image> imageBinding = imageBinding(conditionPressed,
         		smpBtn.imageReleasedProperty(), smpBtn.imagePressedProperty());
         imageProperty.bind(imageBinding);
