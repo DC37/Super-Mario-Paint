@@ -574,14 +574,17 @@ public class Staff {
                 for (int i = 0; i < seq.size(); i++) {
                     setSequence(getArrangement().getSongs().get(i));
                     setSoundset(getSequence().getSoundset());
+                    
+                    StateMachine.setTempo(getSequence().getTempo());
                     computeDelay(StateMachine.getTempo());
+                    
                     setTimeSignature(getSequence().getTimeSignature());
                     endLine = getSequence().getLength();
                     
                     StateMachine.setArrangementSongIndex(i);
                     StateMachine.setNoteExtensions(
                             getSequence().getNoteExtensions());
-                    StateMachine.setTempo(getSequence().getTempo());
+                    
                     StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
                     
                     index = 0;
