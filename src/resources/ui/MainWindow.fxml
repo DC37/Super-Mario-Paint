@@ -13,6 +13,7 @@
 <?import javafx.scene.text.*?>
 <?import gui.components.buttons.old.*?>
 <?import gui.components.buttons.*?>
+<?import gui.components.*?>
 <?scenebuilder-background-color 0xb4b4b4ff?>
 
 <AnchorPane id="AnchorPane" fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -411,11 +412,11 @@
                                 <Point3D />
                               </rotationAxis>
                             </Rectangle>
-                            <Slider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="390.0" minorTickCount="1" prefWidth="884.0">
+                            <StaffSlider fx:id="scrollbar" blockIncrement="1.0" majorTickUnit="4.0" max="390.0" minorTickCount="1" prefWidth="884.0">
                               <rotationAxis>
                                 <Point3D />
                               </rotationAxis>
-                            </Slider>
+                            </StaffSlider>
                           </children>
                         </StackPane>
                         

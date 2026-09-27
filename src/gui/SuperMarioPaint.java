@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
@@ -93,7 +94,9 @@ public class SuperMarioPaint extends Application  {
 
     /** This is the main application stage. */
     private Stage primaryStage;
-
+    
+    private AppDomainSynchronizer syncer;
+    
     /** This is the primary Scene on the main application stage. */
     private Scene primaryScene;
 
@@ -179,6 +182,9 @@ public class SuperMarioPaint extends Application  {
              * Changes the cursor image */
             setCursor(SMPCursorType.HAND_POINTING);
             
+            syncer = new AppDomainSynchronizer(StateMachine::sync);
+            syncer.start();
+            
             primaryStage.getIcons().add(headerIcon);
             primaryStage.show();
             
@@ -256,6 +262,9 @@ public class SuperMarioPaint extends Application  {
     @Override
     public void stop() {
 //      Platform.exit();
+    	Optional.ofNullable(syncer)
+    			.ifPresent(AppDomainSynchronizer::stop);
+    	
         System.exit(0);
     }
 

@@ -99,12 +99,12 @@ public class StaffRubberBand extends Rectangle {
             }
 
             if(relativeScrollOffset < 0){
-                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getMeasureLineNum()) / 4 + 1;
-                int numerator = (relativeScrollOffset + StateMachine.getMeasureLineNum()) % 4 + 1;
+                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getCurrentLine()) / 4 + 1;
+                int numerator = (relativeScrollOffset + StateMachine.getCurrentLine()) % 4 + 1;
                 outsideBoundText.setText(outsideBoundLineNum + " " + getFraction(numerator) + " . . .");
             } else {
-                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) / 4 + 1;
-                int numerator = (relativeScrollOffset + StateMachine.getMeasureLineNum() - 1) % 4 + 1;
+                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getCurrentLine() - 1) / 4 + 1;
+                int numerator = (relativeScrollOffset + StateMachine.getCurrentLine() - 1) % 4 + 1;
                 outsideBoundText.setText(". . . " + outsideBoundLineNum + " " + getFraction(numerator));
             }
 

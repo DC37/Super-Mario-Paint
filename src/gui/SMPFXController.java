@@ -23,6 +23,7 @@ import gui.clipboard.StaffRubberBand;
 import gui.components.FileChooserManager;
 import gui.components.ModeTypeStringConverter;
 import gui.components.SongNameController;
+import gui.components.StaffSlider;
 import gui.components.buttons.SMPButton;
 import gui.components.buttons.SMPHoldButton;
 import gui.components.buttons.SMPRadioButton;
@@ -189,7 +190,7 @@ public class SMPFXController {
 
     /** The scrollbar that moves the staff. */
     @FXML
-    private Slider scrollbar;
+    private StaffSlider scrollbar;
     
     @FXML
     private AnchorPane basePane;
@@ -325,13 +326,7 @@ public class SMPFXController {
         tempoBox.setOnMousePressed(this::onTempoBoxMousePressed);
         
         // Setup scrollbar
-        scrollbar.maxProperty().bind(Bindings.createIntegerBinding(
-                () -> Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0),
-                StateMachine.getMaxLineProperty()));
-        scrollbar.valueProperty().bindBidirectional(
-                StateMachine.getCurrentLineProperty());
-        
-        scrollbar.disableProperty().bind(StateMachine.getPlaybackActiveProperty());
+        scrollbar.prepare();
         
         // If the scrollbar is disabled, we give focus elsewhere
     	// to be able to handle key events (hitting space should stop playback)
@@ -341,10 +336,10 @@ public class SMPFXController {
         // Trigger a redraw, editing mode only
         InvalidationListener doRedraw = obv -> staff.redraw();
         
-        StateMachine.getCurrentLineProperty().addListener(doRedraw);
+        StateMachine.currentLineProperty().addListener(doRedraw);
         StateMachine.getTimeSignatureProperty().addListener(doRedraw);
         
-        StateMachine.setMeasureLineNum(0);
+        StateMachine.setCurrentLine(0);
         
         // Setup arrangement listview
         StateMachine.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);

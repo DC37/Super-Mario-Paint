@@ -110,10 +110,10 @@ public class StaffClipboardAPI {
                 StateMachine.setSongModified(true);
                 commandManager.execute(new RemoveNoteCommand(lineDest, note));
 
-                if (lineDest.getNotes().isEmpty() && 0 <= line - StateMachine.getMeasureLineNum()
-                        && line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+                if (lineDest.getNotes().isEmpty() && 0 <= line - StateMachine.getCurrentLine()
+                        && line - StateMachine.getCurrentLine() < Values.NOTELINES_IN_THE_WINDOW) {
                     StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
-                            .getVolHandler(line - StateMachine.getMeasureLineNum());
+                            .getVolHandler(line - StateMachine.getCurrentLine());
                     sveh.setVolumeVisible(false);
                     commandManager.execute(new RemoveVolumeCommand(lineDest, lineDest.getVolume()));
                 }
@@ -143,9 +143,9 @@ public class StaffClipboardAPI {
             if (lineDest.getNotes().isEmpty()) {
                 lineDest.setVolume(Values.getDefaultVolume());
                 
-                if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+                if (line - StateMachine.getCurrentLine() < Values.NOTELINES_IN_THE_WINDOW) {
                     StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
-                            .getVolHandler(line - StateMachine.getMeasureLineNum());
+                            .getVolHandler(line - StateMachine.getCurrentLine());
                     sveh.updateVolume();
                 }
 
@@ -183,9 +183,9 @@ public class StaffClipboardAPI {
                 lineDest.setVolume(lineSrc.getVolume());
                 commandManager.execute(new AddVolumeCommand(lineDest, lineDest.getVolume()));
                 
-                if (line - StateMachine.getMeasureLineNum() < Values.NOTELINES_IN_THE_WINDOW) {
+                if (line - StateMachine.getCurrentLine() < Values.NOTELINES_IN_THE_WINDOW) {
                     StaffVolumeEventHandler sveh = theStaff.getDisplayManager()
-                            .getVolHandler(line - StateMachine.getMeasureLineNum());
+                            .getVolHandler(line - StateMachine.getCurrentLine());
                     sveh.updateVolume();
                 }
                 
@@ -247,7 +247,7 @@ public class StaffClipboardAPI {
 
         //unhighlight volumes
         theStaffClipboard.getHighlightedVolumes().clear();
-        theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+        theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getCurrentLine());
 
         selection.clear();
         selectionLineBegin = Integer.MAX_VALUE;
@@ -328,9 +328,9 @@ public class StaffClipboardAPI {
             theStaffClipboard.getHighlightedVolumes().remove(line);
         
         // trigger the ChangeListener that will set the highlight effect
-        if (StateMachine.getMeasureLineNum() <= line
-                && line < StateMachine.getMeasureLineNum() + Values.NOTELINES_IN_THE_WINDOW)
-            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+        if (StateMachine.getCurrentLine() <= line
+                && line < StateMachine.getCurrentLine() + Values.NOTELINES_IN_THE_WINDOW)
+            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getCurrentLine());
     }
     
     public void selectNotesToggle(boolean selectNotes) {
@@ -357,7 +357,7 @@ public class StaffClipboardAPI {
         } else {
             //unhighlight volumes
             theStaffClipboard.getHighlightedVolumes().clear();
-            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getMeasureLineNum());
+            theStaffClipboard.getHighlightedVolumesRedrawer().changed(null, 0, StateMachine.getCurrentLine());
         }
     }
     
@@ -413,9 +413,9 @@ public class StaffClipboardAPI {
         rubberBand.end();
         theStaffClipboard.getRubberBandLayer().getChildren().remove(rubberBand);
 
-        int lb = rubberBand.getLineBegin() + StateMachine.getMeasureLineNum();
+        int lb = rubberBand.getLineBegin() + StateMachine.getCurrentLine();
         int pb = rubberBand.getPositionBegin();
-        int le = rubberBand.getLineEnd() + StateMachine.getMeasureLineNum();
+        int le = rubberBand.getLineEnd() + StateMachine.getCurrentLine();
         int pe = rubberBand.getPositionEnd();
         select(lb, pb, le, pe);
     }

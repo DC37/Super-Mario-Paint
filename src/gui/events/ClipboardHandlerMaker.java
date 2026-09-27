@@ -104,7 +104,7 @@ public class ClipboardHandlerMaker extends HandlerMaker<StaffRubberBandEventHand
    }
    
    private void paste() {
-	   int currentLine = getLine(source.getMouseX()) + StateMachine.getMeasureLineNum();
+	   int currentLine = getLine(source.getMouseX()) + StateMachine.getCurrentLine();
 	   log.info("PASTE @ {}", currentLine);
        source.getTheStaffClipboard().getAPI().paste(currentLine);
    }
