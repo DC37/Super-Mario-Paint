@@ -92,3 +92,9 @@ jlink {
     	imageOptions.addAll("--icon", "${project.projectDir}/ICON.png")
     }
 }
+
+tasks.withType<JavaExec> {
+    if (System.getProperty("DEBUG", "false") == "true") {
+        jvmArgs("-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=localhost:9099")
+    }
+}
