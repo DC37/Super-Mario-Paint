@@ -70,7 +70,7 @@ application {
     mainClass = "gui.SuperMarioPaint"
 }
 
-val javaVersion = JavaVersion.current()
+val javaVersion = JavaVersion.VERSION_21
 
 if (javaVersion >= JavaVersion.VERSION_11) {
     apply(plugin = "org.openjfx.javafxplugin")
