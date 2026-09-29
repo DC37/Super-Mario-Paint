@@ -25,10 +25,16 @@ public class AppModel {
      * Technically this is the first line that cannot be displayed.
      */
     private final StateInteger maxLine;
+    
+    /**
+     * Currently selected song in arranger mode. Set to -1 while in song mode.
+     */
+    private final StateInteger arrangementSongIndex;
 	
 	private AppModel() {
 		currentLine = new StateInteger(-1);
 		maxLine = new StateInteger(Values.DEFAULT_LINES_PER_SONG);
+		arrangementSongIndex = new StateInteger(-1);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -36,7 +42,7 @@ public class AppModel {
     	if (!Platform.isFxApplicationThread())
     		throw new IllegalStateException("Cannot sync state outside JavaFX context!");
     	
-    	StateItem[] items = new StateItem[] { currentLine, maxLine };
+    	StateItem[] items = new StateItem[] { currentLine, maxLine, arrangementSongIndex };
     	
     	for (StateItem i: items)
     		i.sync();
@@ -76,6 +82,18 @@ public class AppModel {
     
     public void setMaxLine(int num) {
         maxLine.set(num);
+    }
+    
+    public StateInteger arrangementSongIndexSource() {
+        return arrangementSongIndex;
+    }
+    
+    public int getArrangementSongIndex() {
+        return arrangementSongIndex.get();
+    }
+    
+    public void setArrangementSongIndex(int i) {
+        arrangementSongIndex.set(i);
     }
 	
 }

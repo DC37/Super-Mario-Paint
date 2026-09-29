@@ -49,6 +49,10 @@ public abstract class StateItem<T, V, P extends Property<V>> {
 	
 	public abstract ObservableValue<V> createBinding(Callable<T> calc, Observable... deps);
 	
+	public void bind(Property<V> prop) {
+		prop.bind(view);
+	}
+	
 	public void bind(Property<V> prop, UnaryOperator<T> calc) {
 		prop.bind(createBinding(
 				() -> calc.apply(mapFromView(view.getValue())),

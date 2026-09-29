@@ -565,7 +565,7 @@ public class Staff {
 
             @Override
             protected Staff call() throws Exception {
-                StateMachine.setArrangementSongIndex(0);
+                model.setArrangementSongIndex(0);
                 List<Song> seq = getArrangement().getSongs();
                 int endLine;
 
@@ -581,7 +581,7 @@ public class Staff {
                     setTimeSignature(getSequence().getTimeSignature());
                     endLine = getSequence().getLength();
                     
-                    StateMachine.setArrangementSongIndex(i);
+                    model.setArrangementSongIndex(i);
                     StateMachine.setNoteExtensions(
                             getSequence().getNoteExtensions());
                     

@@ -81,11 +81,6 @@ public class StateMachine {
     private static ObjectProperty<TimeSignature> currentTimeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
 
     /**
-     * Currently selected song in arranger mode. Set to -1 while in song mode.
-     */
-    private static IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
-
-    /**
      * This is the current tempo that the program is running at.
      */
     private static DoubleProperty tempo = new SimpleDoubleProperty(Values.DEFAULT_TEMPO);
@@ -201,18 +196,6 @@ public class StateMachine {
      */
     public static void setTempo(double num) {
         tempo.set(num);
-    }
-    
-    public static IntegerProperty getArrangementSongIndexProperty() {
-        return arrangementSongIndex;
-    }
-    
-    public static int getArrangementSongIndex() {
-        return arrangementSongIndex.get();
-    }
-    
-    public static void setArrangementSongIndex(int i) {
-        arrangementSongIndex.set(i);
     }
     
     public static BooleanProperty loopPressedProperty() {

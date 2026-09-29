@@ -345,12 +345,12 @@ public class SMPFXController {
         model.setCurrentLine(0);
         
         // Setup arrangement listview
-        StateMachine.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);
+        model.arrangementSongIndexSource().addListener(this::onArrangementSongIndexChanged);
         
         // Cleanup after a song or arrangement had finished running
         StateMachine.getPlaybackActiveProperty().addListener(obv -> {
             if (!StateMachine.isPlaybackActive()) {
-                StateMachine.setArrangementSongIndex(-1);
+                model.setArrangementSongIndex(-1);
                 stopButton.setSelected(true);
                 displayManager.resetPlayBars();
             }
@@ -452,7 +452,7 @@ public class SMPFXController {
     }
     
     private void onArrangementSongIndexChanged(Observable obv) {
-    	int idx = StateMachine.getArrangementSongIndex();
+    	int idx = model.getArrangementSongIndex();
         arrangementList.getSelectionModel().select(idx);
         if (idx != -1)
             Platform.runLater(() -> arrangementList.scrollTo(idx));
