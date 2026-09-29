@@ -62,6 +62,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
+import model.AppModel;
 import utilities.MathUtils;
 import utilities.StringUtils;
 
@@ -206,6 +207,8 @@ public class SMPFXController {
     /** Handles the options menu */
     private OptionsMenu optionsMenu;
     
+    private AppModel model = AppModel.getInstance();
+    
     /**
      * Zero-argument constructor (explicitly declared).
      */
@@ -336,10 +339,10 @@ public class SMPFXController {
         // Trigger a redraw, editing mode only
         InvalidationListener doRedraw = obv -> staff.redraw();
         
-        StateMachine.currentLineProperty().addListener(doRedraw);
+        model.currentLineSource().addListener(doRedraw);
         StateMachine.getTimeSignatureProperty().addListener(doRedraw);
         
-        StateMachine.setCurrentLine(0);
+        model.setCurrentLine(0);
         
         // Setup arrangement listview
         StateMachine.getArrangementSongIndexProperty().addListener(this::onArrangementSongIndexChanged);

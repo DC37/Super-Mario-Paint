@@ -38,6 +38,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import model.AppModel;
 import utilities.ThreadUtils;
 
 /**
@@ -109,6 +110,8 @@ public class SuperMarioPaint extends Application  {
     private SMPFXController controller = new SMPFXController();
     
     private Task<Void> preloaderTask;
+    
+    private AppModel model = AppModel.getInstance();
     
     /**
      * Header graphic for preloader and application windows. This has a small chance of being a random instrument.
@@ -182,7 +185,7 @@ public class SuperMarioPaint extends Application  {
              * Changes the cursor image */
             setCursor(SMPCursorType.HAND_POINTING);
             
-            syncer = new AppDomainSynchronizer(StateMachine::sync);
+            syncer = new AppDomainSynchronizer(model::sync);
             syncer.start();
             
             primaryStage.getIcons().add(headerIcon);

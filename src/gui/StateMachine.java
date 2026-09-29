@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import backend.songs.TimeSignature;
-import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -19,8 +18,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
-import model.StateInteger;
-import model.StateItem;
 
 /**
  * This is the state machine that keeps track of what state the main window is
@@ -83,12 +80,6 @@ public class StateMachine {
      */
     private static ObjectProperty<TimeSignature> currentTimeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
 
-    /**
-     * The current measure line number. Set to -1 as a special "uninitialized" value,
-     * to force the initial redraw.
-     */
-    private static StateInteger currentLine = new StateInteger(-1);
-    
     /**
      * The furthest you can reach by scrolling to the end of the sequence.
      * Technically this is the first line that cannot be displayed.
@@ -216,32 +207,6 @@ public class StateMachine {
      */
     public static void setTempo(double num) {
         tempo.set(num);
-    }
-    
-    public static IntegerProperty currentLineProperty() {
-        return currentLine.viewProperty();
-    }
-
-    /**
-     * Gets the current line number that we're on. Typically a value between 0
-     * and 383 for most files unless you've done fun stuff and removed the
-     * 96-measure limit.
-     *
-     * @return The current line number (left justify)
-     */
-    public static int getCurrentLine() {
-    	return currentLine.get();
-    }
-
-    /**
-     * Sets the current line number to whatever is given to this method.
-     *
-     * @param num
-     *            The number that we're trying to set our current line number
-     *            to.
-     */
-    public static void setCurrentLine(int num) {
-        currentLine.set(num);
     }
     
     public static IntegerProperty getMaxLineProperty() {
@@ -498,17 +463,6 @@ public class StateMachine {
     
     public static String getCurrentArrangementName() {
         return currentArrangementName.get();
-    }
-    
-    @SuppressWarnings("rawtypes")
-	public static void sync() {
-    	if (!Platform.isFxApplicationThread())
-    		throw new IllegalStateException("Cannot sync state outside JavaFX context!");
-    	
-    	StateItem[] items = new StateItem[] { currentLine };
-    	
-    	for (StateItem i: items)
-    		i.sync();
     }
 
 }

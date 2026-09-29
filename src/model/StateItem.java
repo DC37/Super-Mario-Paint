@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.Property;
 
 public abstract class StateItem<T, V, P extends Property<V>> {
@@ -11,15 +12,20 @@ public abstract class StateItem<T, V, P extends Property<V>> {
 		set(value);
 		
 		view = createView();
-		view.setValue(map(value));
+		view.setValue(mapToView(value));
 	}
 	
 	protected abstract void initializeSource();
 	protected abstract P createView();
 	
 	@SuppressWarnings("unchecked")
-	protected V map(T value) {
+	protected V mapToView(T value) {
 		return (V) value;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected T mapFromView(V value) {
+		return (T) value;
 	}
 	
 	public P viewProperty() {
@@ -33,7 +39,18 @@ public abstract class StateItem<T, V, P extends Property<V>> {
 		T s = get();
 		
 		if (view.getValue() != s)
-			view.setValue(map(s));
+			view.setValue(mapToView(s));
+	}
+	
+	public void bindBidirectional(Property<? extends V> prop) {
+		// "prop" here is of type P (extends Property<V>).
+		// prop.bindBidirectional(view);
+		
+		prop.addListener((obs, oldV, newV) -> set(mapFromView(newV)));
+	}
+	
+	public void addListener(InvalidationListener listener) {
+		view.addListener(listener);
 	}
 	
 }

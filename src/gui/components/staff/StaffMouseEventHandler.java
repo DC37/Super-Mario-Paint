@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import lombok.extern.slf4j.Slf4j;
+import model.AppModel;
 
 /**
  * THIS IS A MODIFIED VERSION OF REHDBLOB's STAFF EVENT HANDLER. IT IS MADE IN
@@ -54,6 +55,8 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     private Accidental acc = Accidental.NATURAL;
     
     private ModifySongManager commandManager;
+    
+    private AppModel model = AppModel.getInstance();
     
     /**
      * Constructor for this StaffEventHandler. This creates a handler that takes
@@ -169,7 +172,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
             removeNote();
         } else {        
             NoteLine s = theStaff.getSequence().getLine(
-                StateMachine.getCurrentLine() + lineTmp);
+                model.getCurrentLine() + lineTmp);
             placeNote(theInd, s.getVolume());
         }
     }
@@ -203,7 +206,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         theStaff.getDisplayManager().resetSilhouette();
 
         NoteLine temp = theStaff.getSequence().getLine(
-                line + StateMachine.getCurrentLine());
+                line + model.getCurrentLine());
 
         if (temp.getNotes().isEmpty()) {
             temp.setVolume(Values.getDefaultVolume());
@@ -242,7 +245,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
         theStaff.getDisplayManager().resetSilhouette();
 
         NoteLine temp = theStaff.getSequence().getLine(
-                line + StateMachine.getCurrentLine());
+                line + model.getCurrentLine());
 
         if (!temp.getNotes().isEmpty()) {
             List<Note> nt = temp.getNotes();
@@ -318,7 +321,7 @@ public class StaffMouseEventHandler implements EventHandler<MouseEvent> {
     @Override
     public String toString() {
         return String.format("Line: %d%nPosition: %d%nAccidental: %s",
-                StateMachine.getCurrentLine() + line,
+                model.getCurrentLine() + line,
                 position, acc);
     }
     

@@ -1,6 +1,5 @@
 package gui.clipboard;
 
-import gui.StateMachine;
 import gui.Values;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
@@ -8,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import model.AppModel;
 import utilities.MathUtils;
 
 /**
@@ -35,6 +35,8 @@ public class StaffRubberBand extends Rectangle {
     private int originLine = 0;
     
     private Text outsideBoundText = new Text();
+    
+    private AppModel model = AppModel.getInstance();
 
     public StaffRubberBand() {
         super();
@@ -99,12 +101,12 @@ public class StaffRubberBand extends Rectangle {
             }
 
             if(relativeScrollOffset < 0){
-                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getCurrentLine()) / 4 + 1;
-                int numerator = (relativeScrollOffset + StateMachine.getCurrentLine()) % 4 + 1;
+                int outsideBoundLineNum = (relativeScrollOffset + model.getCurrentLine()) / 4 + 1;
+                int numerator = (relativeScrollOffset + model.getCurrentLine()) % 4 + 1;
                 outsideBoundText.setText(outsideBoundLineNum + " " + getFraction(numerator) + " . . .");
             } else {
-                int outsideBoundLineNum = (relativeScrollOffset + StateMachine.getCurrentLine() - 1) / 4 + 1;
-                int numerator = (relativeScrollOffset + StateMachine.getCurrentLine() - 1) % 4 + 1;
+                int outsideBoundLineNum = (relativeScrollOffset + model.getCurrentLine() - 1) / 4 + 1;
+                int numerator = (relativeScrollOffset + model.getCurrentLine() - 1) % 4 + 1;
                 outsideBoundText.setText(". . . " + outsideBoundLineNum + " " + getFraction(numerator));
             }
 

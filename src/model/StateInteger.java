@@ -14,6 +14,11 @@ public class StateInteger extends StateItem<Integer, Number, IntegerProperty> {
 	}
 	
 	@Override
+	protected Integer mapFromView(Number value) {
+		return value.intValue();
+	}
+	
+	@Override
 	protected void initializeSource() {
 		source = new AtomicInteger();
 	}
