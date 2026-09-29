@@ -30,11 +30,17 @@ public class AppModel {
      * Currently selected song in arranger mode. Set to -1 while in song mode.
      */
     private final StateInteger arrangementSongIndex;
+    
+    /**
+     * This is the current tempo that the program is running at.
+     */
+    private final StateDouble tempo;
 	
 	private AppModel() {
 		currentLine = new StateInteger(-1);
 		maxLine = new StateInteger(Values.DEFAULT_LINES_PER_SONG);
 		arrangementSongIndex = new StateInteger(-1);
+		tempo = new StateDouble(Values.DEFAULT_TEMPO);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -42,7 +48,7 @@ public class AppModel {
     	if (!Platform.isFxApplicationThread())
     		throw new IllegalStateException("Cannot sync state outside JavaFX context!");
     	
-    	StateItem[] items = new StateItem[] { currentLine, maxLine, arrangementSongIndex };
+    	StateItem[] items = new StateItem[] { currentLine, maxLine, arrangementSongIndex, tempo };
     	
     	for (StateItem i: items)
     		i.sync();
@@ -94,6 +100,28 @@ public class AppModel {
     
     public void setArrangementSongIndex(int i) {
         arrangementSongIndex.set(i);
+    }
+    
+    public StateDouble tempoSource() {
+        return tempo;
+    }
+    
+    /**
+     * @return The tempo that this program is running at.
+     */
+    public double getTempo() {
+        return tempo.get();
+    }
+    
+    /**
+     * Sets the tempo to what we give it here.
+     *
+     * @param num
+     *            The tempo we want to set the program to run at.
+     * @return The current tempo.
+     */
+    public void setTempo(double num) {
+        tempo.set(num);
     }
 	
 }

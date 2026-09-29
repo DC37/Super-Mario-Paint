@@ -325,7 +325,7 @@ public class SMPFXController {
         StateMachine.currentArrangementNameProperty().addListener(obs -> staff.getArrangement().setTitle(StateMachine.getCurrentArrangementName()));
         
         // Set up tempo box
-        tempoIndicator.textProperty().bindBidirectional(StateMachine.getTempoProperty(), new NumberStringConverter());
+        model.tempoSource().bindBidirectional(tempoIndicator.textProperty(), new NumberStringConverter());
         tempoBox.setOnMousePressed(this::onTempoBoxMousePressed);
         
         // Setup scrollbar
@@ -443,7 +443,7 @@ public class SMPFXController {
     	try {
             if (!StateMachine.isPlaybackActive() && StateMachine.getMode() == SMPMode.SONG) {
                 String tempo = DialogUtils.requestInput("Tempo");
-                StateMachine.setTempo(Double.parseDouble(tempo.trim()));
+                model.setTempo(Double.parseDouble(tempo.trim()));
             }
         } catch (NumberFormatException e) {
             // Do nothing.
@@ -601,12 +601,12 @@ public class SMPFXController {
     
     @FXML
     public void tempoUp(ActionEvent e) {
-        StateMachine.setTempo(StateMachine.getTempo() + 1);
+        model.setTempo(model.getTempo() + 1);
     }
     
     @FXML
     public void tempoDown(ActionEvent e) {
-        StateMachine.setTempo(StateMachine.getTempo() - 1);
+        model.setTempo(model.getTempo() - 1);
     }
     
     public void switchMode() {
@@ -789,7 +789,7 @@ public class SMPFXController {
     			String.format("An error occurred while writing file %s!", outputFile),
     			() -> {
     				Song out = staff.getSequence();
-			        out.setTempo(StateMachine.getTempo());
+			        out.setTempo(model.getTempo());
 			        
 			        FileService.trySaveSong(outputFile, out);
 			    	

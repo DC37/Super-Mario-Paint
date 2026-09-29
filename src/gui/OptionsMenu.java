@@ -32,6 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
+import model.AppModel;
 
 @Slf4j
 public class OptionsMenu {
@@ -59,6 +60,8 @@ public class OptionsMenu {
     
     /** Make the bars visible */
     private CheckBox numsVisibleBox;
+    
+    private AppModel model = AppModel.getInstance();
     
     SMPFXController controller;
     Staff staff;
@@ -277,7 +280,7 @@ public class OptionsMenu {
         if (num <= 1)
             return;
         
-        double currTempo = StateMachine.getTempo();
+        double currTempo = model.getTempo();
         double newTempo = currTempo * num;
         
         TimeSignature currTimesig = StateMachine.getTimeSignature();

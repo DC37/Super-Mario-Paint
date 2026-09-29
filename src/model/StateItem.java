@@ -1,12 +1,15 @@
 package model;
 
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.function.UnaryOperator;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.util.StringConverter;
 
 public abstract class StateItem<T, V, P extends Property<V>> {
 
@@ -41,10 +44,10 @@ public abstract class StateItem<T, V, P extends Property<V>> {
 	public abstract void set(T value);
 	
 	public void sync() {
-		T s = get();
+		V s = mapToView(get());
 		
-		if (view.getValue() != s)
-			view.setValue(mapToView(s));
+		if (!Objects.equals(s, view.getValue()))
+			view.setValue(s);
 	}
 	
 	public abstract ObservableValue<V> createBinding(Callable<T> calc, Observable... deps);
@@ -62,6 +65,11 @@ public abstract class StateItem<T, V, P extends Property<V>> {
 	public void bindBidirectional(Property<V> prop) {
 		prop.bindBidirectional(view);
 		prop.addListener((obs, oldV, newV) -> set(mapFromView(newV)));
+	}
+	
+	public void bindBidirectional(StringProperty prop, StringConverter<V> fmt) {
+		prop.bindBidirectional(view, fmt);
+		prop.addListener((obs, oldV, newV) -> set(mapFromView(fmt.fromString(newV))));
 	}
 	
 	public void addListener(InvalidationListener listener) {

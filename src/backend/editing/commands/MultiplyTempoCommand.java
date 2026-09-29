@@ -5,7 +5,6 @@ import backend.songs.NoteLine;
 import backend.songs.Song;
 import backend.songs.TimeSignature;
 import gui.Staff;
-import gui.StateMachine;
 import gui.Values;
 import model.AppModel;
 
@@ -37,7 +36,7 @@ public class MultiplyTempoCommand implements SMPCommand {
         Song song = staff.getSequence();
         expand(song, multiplyAmount);
         song.setTempo(newTempo);
-        StateMachine.setTempo(newTempo);
+        model.setTempo(newTempo);
         model.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
         staff.setTimeSignature(newTimeSig);
     }
@@ -47,7 +46,7 @@ public class MultiplyTempoCommand implements SMPCommand {
         Song song = staff.getSequence();
         retract(song, multiplyAmount);
         song.setTempo(oldTempo);
-        StateMachine.setTempo(oldTempo);
+        model.setTempo(oldTempo);
         model.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
         staff.setTimeSignature(oldTimeSig);
     }
