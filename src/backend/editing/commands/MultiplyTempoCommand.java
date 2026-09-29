@@ -7,6 +7,7 @@ import backend.songs.TimeSignature;
 import gui.Staff;
 import gui.StateMachine;
 import gui.Values;
+import model.AppModel;
 
 public class MultiplyTempoCommand implements SMPCommand {
 
@@ -16,6 +17,8 @@ public class MultiplyTempoCommand implements SMPCommand {
     double newTempo;
     TimeSignature oldTimeSig;
     TimeSignature newTimeSig;
+    
+    private AppModel model = AppModel.getInstance();
     
     public MultiplyTempoCommand(Staff staff, int multiplyAmount,
     		double previousTempo, double newTempo,
@@ -35,7 +38,7 @@ public class MultiplyTempoCommand implements SMPCommand {
         expand(song, multiplyAmount);
         song.setTempo(newTempo);
         StateMachine.setTempo(newTempo);
-        StateMachine.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
         staff.setTimeSignature(newTimeSig);
     }
 
@@ -45,7 +48,7 @@ public class MultiplyTempoCommand implements SMPCommand {
         retract(song, multiplyAmount);
         song.setTempo(oldTempo);
         StateMachine.setTempo(oldTempo);
-        StateMachine.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setMaxLine(Math.max(song.getLength(), Values.DEFAULT_LINES_PER_SONG));
         staff.setTimeSignature(oldTimeSig);
     }
     

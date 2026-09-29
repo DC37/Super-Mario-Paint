@@ -706,7 +706,7 @@ public class SMPFXController {
             staff.setSequence(new Song());
             staff.setTimeSignature(Values.DEFAULT_TIME_SIGNATURE);
             staff.resetLocation();
-            StateMachine.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
+            model.setMaxLine(Values.DEFAULT_LINES_PER_SONG);
             getNameTextField().clear();
             StateMachine.setSongModified(false);
         }

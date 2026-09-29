@@ -1,7 +1,12 @@
 package model;
 
+import java.util.concurrent.Callable;
+import java.util.function.UnaryOperator;
+
 import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.Property;
+import javafx.beans.value.ObservableValue;
 
 public abstract class StateItem<T, V, P extends Property<V>> {
 
@@ -42,10 +47,16 @@ public abstract class StateItem<T, V, P extends Property<V>> {
 			view.setValue(mapToView(s));
 	}
 	
-	public void bindBidirectional(Property<? extends V> prop) {
-		// "prop" here is of type P (extends Property<V>).
-		// prop.bindBidirectional(view);
-		
+	public abstract ObservableValue<V> createBinding(Callable<T> calc, Observable... deps);
+	
+	public void bind(Property<V> prop, UnaryOperator<T> calc) {
+		prop.bind(createBinding(
+				() -> calc.apply(mapFromView(view.getValue())),
+				view));
+	}
+	
+	public void bindBidirectional(Property<V> prop) {
+		prop.bindBidirectional(view);
 		prop.addListener((obs, oldV, newV) -> set(mapFromView(newV)));
 	}
 	

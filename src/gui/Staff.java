@@ -156,7 +156,7 @@ public class Staff {
      *            is to be displayed.
      */
     public synchronized void setLocation(int num) {
-        int maxVal = Math.max(StateMachine.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0);
+        int maxVal = Math.max(model.getMaxLine() - Values.NOTELINES_IN_THE_WINDOW, 0);
         int newLoc = MathUtils.clamp(num, 0, maxVal);
         model.setCurrentLine(newLoc);
     }
@@ -181,9 +181,9 @@ public class Staff {
         if (skipAmount > 0 && newLoc < 0)
             newLoc = Integer.MAX_VALUE;
         
-        if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == StateMachine.getMaxLine()) {
-            int newSize = StateMachine.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
-            StateMachine.setMaxLine(Math.max(newSize, Values.DEFAULT_LINES_PER_SONG));
+        if (skipAmount > 0 && currLoc + Values.NOTELINES_IN_THE_WINDOW == model.getMaxLine()) {
+            int newSize = model.getMaxLine() + 2*Values.NOTELINES_IN_THE_WINDOW;
+            model.setMaxLine(Math.max(newSize, Values.DEFAULT_LINES_PER_SONG));
         }
         
         setLocation(newLoc);
@@ -302,7 +302,7 @@ public class Staff {
         setSequence(loaded);
         setTimeSignature(loaded.getTimeSignature());
         StateMachine.setTempo(loaded.getTempo());
-        StateMachine.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
+        model.setMaxLine(Math.max(loaded.getLength(), Values.DEFAULT_LINES_PER_SONG));
         resetLocation();
         StateMachine.setCurrentSongName(loaded.getTitle());
         StateMachine.setNoteExtensions(loaded.getNoteExtensions());
@@ -474,7 +474,7 @@ public class Staff {
 
                 computeDelay(StateMachine.getTempo());
                 
-                StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
+                model.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
 
                 queue.set(0);
                 
@@ -585,7 +585,7 @@ public class Staff {
                     StateMachine.setNoteExtensions(
                             getSequence().getNoteExtensions());
                     
-                    StateMachine.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
+                    model.setMaxLine(Math.max(endLine + Values.NOTELINES_IN_THE_WINDOW, Values.DEFAULT_LINES_PER_SONG));
                     
                     index = 0;
                     advance = false;

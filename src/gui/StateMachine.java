@@ -81,12 +81,6 @@ public class StateMachine {
     private static ObjectProperty<TimeSignature> currentTimeSignature = new SimpleObjectProperty<>(TimeSignature.FOUR_FOUR);
 
     /**
-     * The furthest you can reach by scrolling to the end of the sequence.
-     * Technically this is the first line that cannot be displayed.
-     */
-    private static IntegerProperty maxLine = new SimpleIntegerProperty(Values.DEFAULT_LINES_PER_SONG);
-    
-    /**
      * Currently selected song in arranger mode. Set to -1 while in song mode.
      */
     private static IntegerProperty arrangementSongIndex = new SimpleIntegerProperty(-1);
@@ -207,18 +201,6 @@ public class StateMachine {
      */
     public static void setTempo(double num) {
         tempo.set(num);
-    }
-    
-    public static IntegerProperty getMaxLineProperty() {
-        return maxLine;
-    }
-    
-    public static int getMaxLine() {
-        return maxLine.get();
-    }
-    
-    public static void setMaxLine(int num) {
-        maxLine.set(num);
     }
     
     public static IntegerProperty getArrangementSongIndexProperty() {

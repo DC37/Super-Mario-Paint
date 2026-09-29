@@ -1,5 +1,6 @@
 package model;
 
+import gui.Values;
 import javafx.application.Platform;
 
 public class AppModel {
@@ -18,9 +19,16 @@ public class AppModel {
      * "uninitialized" value, to force the initial redraw.
      */
     private final StateInteger currentLine;
+    
+    /**
+     * The furthest you can reach by scrolling to the end of the sequence.
+     * Technically this is the first line that cannot be displayed.
+     */
+    private final StateInteger maxLine;
 	
 	private AppModel() {
 		currentLine = new StateInteger(-1);
+		maxLine = new StateInteger(Values.DEFAULT_LINES_PER_SONG);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -28,7 +36,7 @@ public class AppModel {
     	if (!Platform.isFxApplicationThread())
     		throw new IllegalStateException("Cannot sync state outside JavaFX context!");
     	
-    	StateItem[] items = new StateItem[] { currentLine };
+    	StateItem[] items = new StateItem[] { currentLine, maxLine };
     	
     	for (StateItem i: items)
     		i.sync();
@@ -56,6 +64,18 @@ public class AppModel {
      */
     public void setCurrentLine(int num) {
         currentLine.set(num);
+    }
+    
+    public StateInteger maxLineSource() {
+        return maxLine;
+    }
+    
+    public int getMaxLine() {
+        return maxLine.get();
+    }
+    
+    public void setMaxLine(int num) {
+        maxLine.set(num);
     }
 	
 }
